@@ -5904,21 +5904,21 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 <h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h2>
 <p><em>NOTE: All dates should be logged in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format <strong>WITH</strong> UTC offset to ensure maximum portability</em></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2021-01-01T01:01:01-0700&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;AUTHN_login_success:joebob1&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 login successfully&quot;,
-    &quot;useragent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36&quot;,
-    &quot;source_ip&quot;: &quot;165.225.50.94&quot;,
-    &quot;host_ip&quot;: &quot;10.12.7.9&quot;,
-    &quot;hostname&quot;: &quot;portalauth.foobar.com&quot;,
-    &quot;protocol&quot;: &quot;https&quot;,
-    &quot;port&quot;: &quot;440&quot;,
-    &quot;request_uri&quot;: &quot;/api/v2/auth/&quot;,
-    &quot;request_method&quot;: &quot;POST&quot;,
-    &quot;region&quot;: &quot;AWS-US-WEST-2&quot;,
-    &quot;geo&quot;: &quot;USA&quot;
+    "datetime": "2021-01-01T01:01:01-0700",
+    "appid": "foobar.netportal_auth",
+    "event": "AUTHN_login_success:joebob1",
+    "level": "INFO",
+    "description": "User joebob1 login successfully",
+    "useragent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+    "source_ip": "165.225.50.94",
+    "host_ip": "10.12.7.9",
+    "hostname": "portalauth.foobar.com",
+    "protocol": "https",
+    "port": "440",
+    "request_uri": "/api/v2/auth/",
+    "request_method": "POST",
+    "region": "AWS-US-WEST-2",
+    "geo": "USA"
 }
 </code></pre></div>
 <h2 id="the-vocabulary">The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permanent link">&para;</a></h2>
@@ -5935,11 +5935,11 @@ All login events should be recorded including success.</p>
 INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_login_success:joebob1&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 login successfully&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_login_success:joebob1",
+    "level": "INFO",
+    "description": "User joebob1 login successfully",
     ...
 }
 </code></pre></div>
@@ -5951,11 +5951,11 @@ The user successfully logged in after previously failing.</p>
 INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_login_successafterfail:joebob1,2&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 login successfully&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_login_successafterfail:joebob1,2",
+    "level": "INFO",
+    "description": "User joebob1 login successfully",
     ...
 }
 </code></pre></div>
@@ -5967,11 +5967,11 @@ All login events should be recorded including failure.</p>
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_login_fail:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 login failed&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_login_fail:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 login failed",
     ...
 }
 </code></pre></div>
@@ -5983,11 +5983,11 @@ All login events should be recorded including failure.</p>
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_login_fail_max:joebob1,3&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 reached the login fail limit of 3&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_login_fail_max:joebob1,3",
+    "level": "WARN",
+    "description": "User joebob1 reached the login fail limit of 3",
     ...
 }
 </code></pre></div>
@@ -6006,11 +6006,11 @@ WARN</p>
 </ul>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_login_lock:joebob1,maxretries&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 login locked because maxretries exceeded&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_login_lock:joebob1,maxretries",
+    "level": "WARN",
+    "description": "User joebob1 login locked because maxretries exceeded",
     ...
 }
 </code></pre></div>
@@ -6022,11 +6022,11 @@ Every password change should be logged, including the userid that it was for.</p
 INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_password_change:joebob1&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 has successfully changed their password&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_password_change:joebob1",
+    "level": "INFO",
+    "description": "User joebob1 has successfully changed their password",
     ...
 }
 </code></pre></div>
@@ -6038,11 +6038,11 @@ An attempt to change a password that failed. May also trigger other events such 
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_password_change_fail:joebob1&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User joebob1 failed to change their password&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_password_change_fail:joebob1",
+    "level": "CRITICAL",
+    "description": "User joebob1 failed to change their password",
     ...
 }
 </code></pre></div>
@@ -6053,11 +6053,11 @@ When a user is logged in from one city and suddenly appears in another, too far 
 <p><strong>Level:</strong>: CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_impossible_travel:joebob1,US-OR,CN-SH&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User joebob1 has accessed the application in two distant cities at the same time&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_impossible_travel:joebob1,US-OR,CN-SH",
+    "level": "CRITICAL",
+    "description": "User joebob1 has accessed the application in two distant cities at the same time",
     ...
 }
 </code></pre></div>
@@ -6068,11 +6068,11 @@ When a token is created for service access it should be recorded</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;aws.foobar.com&quot;,
-    &quot;event&quot;: &quot;authn_token_created:app.foobarapi.prod,create,read,update&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;A token has been created for app.foobarapi.prod with create,read,update&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "aws.foobar.com",
+    "event": "authn_token_created:app.foobarapi.prod,create,read,update",
+    "level": "INFO",
+    "description": "A token has been created for app.foobarapi.prod with create,read,update",
     ...
 }
 </code></pre></div>
@@ -6083,11 +6083,11 @@ A token has been revoked for the given account.</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;aws.foobar.com&quot;,
-    &quot;event&quot;: &quot;authn_token_revoked:app.foobarapi.prod,xyz-abc-123-gfk&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;Token ID: xyz-abc-123-gfk was revoked for user app.foobarapi.prod&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "aws.foobar.com",
+    "event": "authn_token_revoked:app.foobarapi.prod,xyz-abc-123-gfk",
+    "level": "INFO",
+    "description": "Token ID: xyz-abc-123-gfk was revoked for user app.foobarapi.prod",
     ...
 }
 </code></pre></div>
@@ -6098,11 +6098,11 @@ A previously revoked token was attempted to be reused.</p>
 <p><strong>Level:</strong>: CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;aws.foobar.com&quot;,
-    &quot;event&quot;: &quot;authn_token_reuse:app.foobarapi.prod,xyz-abc-123-gfk&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User app.foobarapi.prod attempted to use token ID: xyz-abc-123-gfk which was previously revoked&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "aws.foobar.com",
+    "event": "authn_token_reuse:app.foobarapi.prod,xyz-abc-123-gfk",
+    "level": "CRITICAL",
+    "description": "User app.foobarapi.prod attempted to use token ID: xyz-abc-123-gfk which was previously revoked",
     ...
 }
 </code></pre></div>
@@ -6113,11 +6113,11 @@ When a token is deleted it should be recorded</p>
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authn_token_delete:foobarapi&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;The token for foobarapi has been deleted&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_token_delete:foobarapi",
+    "level": "WARN",
+    "description": "The token for foobarapi has been deleted",
     ...
 }
 </code></pre></div>
@@ -6130,11 +6130,11 @@ An attempt was made to access a resource which was unauthorized</p>
 <p><strong>Level:</strong>: CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authz_fail:joebob1,resource&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User joebob1 attempted to access a resource without entitlement&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authz_fail:joebob1,resource",
+    "level": "CRITICAL",
+    "description": "User joebob1 attempted to access a resource without entitlement",
     ...
 }
 </code></pre></div>
@@ -6145,11 +6145,11 @@ The user or entity entitlements was changed</p>
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authz_change:joebob1,user,admin&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 access was changed from user to admin&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authz_change:joebob1,user,admin",
+    "level": "WARN",
+    "description": "User joebob1 access was changed from user to admin",
     ...
 }
 </code></pre></div>
@@ -6160,11 +6160,11 @@ All activity by privileged users such as admin should be recorded.</p>
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;authz_admin:joebob1,user_privilege_change&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;Administrator joebob1 has updated privileges of user foobarapi from user to admin&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authz_admin:joebob1,user_privilege_change",
+    "level": "WARN",
+    "description": "Administrator joebob1 has updated privileges of user foobarapi from user to admin",
     ...
 }
 </code></pre></div>
@@ -6176,11 +6176,11 @@ Failure to perform encryption and decryption could be simply due to a system err
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;crypt_decrypt_fail:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 was unable to perform decryption&quot; + err,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "crypt_decrypt_fail:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 was unable to perform decryption" + err,
     ...
 }
 </code></pre></div>
@@ -6191,11 +6191,11 @@ Failure to perform encryption and decryption could be simply due to a system err
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;crypt_encrypt_fail:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 was unable to perform encryption&quot; + err,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "crypt_encrypt_fail:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 was unable to perform encryption" + err,
     ...
 }
 </code></pre></div>
@@ -6207,11 +6207,11 @@ Expected service limit ceilings should be established and alerted when exceeded,
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;excess_rate_limit_exceeded:app.foobarapi.prod,100000&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User app.foobarapi.prod has exceeded max:100000 requests&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "excess_rate_limit_exceeded:app.foobarapi.prod,100000",
+    "level": "WARN",
+    "description": "User app.foobarapi.prod has exceeded max:100000 requests",
     ...
 }
 </code></pre></div>
@@ -6222,11 +6222,11 @@ When a user exceeds the maximum number of concurrent sessions allowed it should 
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;excess_sessions_exceeded:app.foobarapi.prod,5&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User app.foobarapi.prod exceeded the max of 5 concurrent sessions&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "excess_sessions_exceeded:app.foobarapi.prod,5",
+    "level": "WARN",
+    "description": "User app.foobarapi.prod exceeded the max of 5 concurrent sessions",
     ...
 }
 </code></pre></div>
@@ -6238,11 +6238,11 @@ On successful file upload the first step in the validation process is that the u
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>    {
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;upload_complete:joebob1,user_generated_content.png,PNG&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 has uploaded user_generated_content.png&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "upload_complete:joebob1,user_generated_content.png,PNG",
+    "level": "INFO",
+    "description": "User joebob1 has uploaded user_generated_content.png",
     ...
 }
 </code></pre></div>
@@ -6253,11 +6253,11 @@ One step in good file upload validation is to move/rename the file and when prov
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;upload_stored:user_generated_content.png,kjsdhkrjhwijhsiuhdf000010202002&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;File user_generated_content.png was stored in the database with key abcdefghijk101010101&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "upload_stored:user_generated_content.png,kjsdhkrjhwijhsiuhdf000010202002",
+    "level": "INFO",
+    "description": "File user_generated_content.png was stored in the database with key abcdefghijk101010101",
     ...
 }
 </code></pre></div>
@@ -6268,11 +6268,11 @@ All file uploads should have some validation performed, both for correctness (is
 <p><strong>Level:</strong>: INFO|CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;upload_validation:filename,virusscan:FAILED&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;File user_generated_content.png FAILED virus scan and was purged&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "upload_validation:filename,virusscan:FAILED",
+    "level": "CRITICAL",
+    "description": "File user_generated_content.png FAILED virus scan and was purged",
     ...
 }
 </code></pre></div>
@@ -6283,11 +6283,11 @@ When a file is deleted for normal reasons it should be recorded.</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;upload_delete:joebob1,&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 has marked file abcdefghijk101010101 for deletion.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "upload_delete:joebob1,",
+    "level": "INFO",
+    "description": "User joebob1 has marked file abcdefghijk101010101 for deletion.",
     ...
 }
 </code></pre></div>
@@ -6300,11 +6300,11 @@ When input validation fails on the server-side it must either be because a) suff
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;input_validation_fail:(zip,date_of_birth),joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 submitted data that failed validation.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "input_validation_fail:(zip,date_of_birth),joebob1",
+    "level": "WARN",
+    "description": "User joebob1 submitted data that failed validation.",
     ...
 }
 </code></pre></div>
@@ -6316,11 +6316,11 @@ When server-side validation of a value against a discrete list of options (e.g. 
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-02-01T08:30:00-0500&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;appid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;input_validation_discrete_fail:country,joebob1&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARN&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;User joebob1 submitted an invalid value for the &#39;country&#39; field.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-02-01T08:30:00-0500"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"appid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foobar.netportal_auth"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input_validation_discrete_fail:country,joebob1"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WARN"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User joebob1 submitted an invalid value for the 'country' field."</span><span class="p">,</span>
 <span class="w">    </span><span class="err">...</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -6333,11 +6333,11 @@ When a user makes numerous requests for files that don't exist it often is an in
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_excess404:123.456.789.101,M@l1c10us-Hax0rB0t0-v1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;A user at 123.456.789.101 has generated a large number of 404 requests.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_excess404:123.456.789.101,M@l1c10us-Hax0rB0t0-v1",
+    "level": "WARN",
+    "description": "A user at 123.456.789.101 has generated a large number of 404 requests.",
     ...
 }
 </code></pre></div>
@@ -6349,11 +6349,11 @@ When a user submits data to a backend handler that was not expected it can indic
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User dr@evil.com included field creditcardnum in the request which is not handled by this service.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "level": "CRITICAL",
+    "description": "User dr@evil.com included field creditcardnum in the request which is not handled by this service.",
     ...
 }
 </code></pre></div>
@@ -6366,11 +6366,11 @@ When obvious attack tools are identified either by signature or by user agent th
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;Attack traffic indicating use of Nikto coming from 127.0.0.1&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)",
+    "level": "CRITICAL",
+    "description": "Attack traffic indicating use of Nikto coming from 127.0.0.1",
     ...
 }
 </code></pre></div>
@@ -6383,11 +6383,11 @@ When request input matches a SQL injection (SQLi) signature or heuristic (e.g., 
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_sqli:127.0.0.1,search,SQLI-UNION,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;Request from 127.0.0.1 contained a SQL injection pattern (rule SQLI-UNION) in parameter &#39;search&#39;.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_sqli:127.0.0.1,search,SQLI-UNION,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "level": "CRITICAL",
+    "description": "Request from 127.0.0.1 contained a SQL injection pattern (rule SQLI-UNION) in parameter 'search'.",
     ...
 }
 </code></pre></div>
@@ -6400,11 +6400,11 @@ When attempts are made from unauthorized origins they should of course be blocke
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;An illegal cross-origin request from 127.0.0.1 was referred from attack.evil.com&quot;
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com",
+    "level": "CRITICAL",
+    "description": "An illegal cross-origin request from 127.0.0.1 was referred from attack.evil.com"
     ...
 }
 </code></pre></div>
@@ -6416,11 +6416,11 @@ A common attack against authentication and authorization is to directly access a
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User joebob1 attempted to access an object to which they are not authorized&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "level": "CRITICAL",
+    "description": "User joebob1 attempted to access an object to which they are not authorized",
     ...
 }
 </code></pre></div>
@@ -6432,11 +6432,11 @@ When a state-changing request arrives without a valid anti-CSRF token (or with a
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_csrf:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;A state-changing request from joebob1 was missing a valid anti-CSRF token&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_csrf:joebob1",
+    "level": "WARN",
+    "description": "A state-changing request from joebob1 was missing a valid anti-CSRF token",
     ...
 }
 </code></pre></div>
@@ -6449,11 +6449,11 @@ When a browser reports a Content-Security-Policy violation to your report endpoi
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_csp_violation:203.0.113.7,script-src,https://foobar.com/dashboard,Mozilla/5.0&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;A CSP violation for directive script-src was reported by a browser at 203.0.113.7&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_csp_violation:203.0.113.7,script-src,https://foobar.com/dashboard,Mozilla/5.0",
+    "level": "WARN",
+    "description": "A CSP violation for directive script-src was reported by a browser at 203.0.113.7",
     ...
 }
 </code></pre></div>
@@ -6469,11 +6469,11 @@ When an MCP client or server detects indicators of prompt injection (for example
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.cooldevapp_mcp_toolname&quot;,
-    &quot;event&quot;: &quot;mcp_prompt_injection:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;A possible prompt injection has occurred&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_prompt_injection:joebob1",
+    "level": "WARN",
+    "description": "A possible prompt injection has occurred",
     ...
 }
 </code></pre></div>
@@ -6486,11 +6486,11 @@ When an MCP client or server detects a request pattern intended to exhaust resou
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.cooldevapp_mcp_toolname&quot;,
-    &quot;event&quot;: &quot;mcp_resource_exhaustion:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;Request blocked due to token budget overrun (tokens_in=18240, tokens_out=0, budget=8000)&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_resource_exhaustion:joebob1",
+    "level": "WARN",
+    "description": "Request blocked due to token budget overrun (tokens_in=18240, tokens_out=0, budget=8000)",
     ...
 }
 </code></pre></div>
@@ -6503,11 +6503,11 @@ When an MCP client or server detects that a tool may be malicious or tampered wi
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.cooldevapp_mcp_toolname&quot;,
-    &quot;event&quot;: &quot;mcp_tool_poisoning:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;Tool execution blocked (tool=\&quot;calendar_sync\&quot;, source=\&quot;https://marketplace.example/tools/calendar_sync\&quot;, version=\&quot;2.4.1\&quot;, signature=\&quot;missing\&quot;, policy=\&quot;allowlist_required\&quot;)&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_tool_poisoning:joebob1",
+    "level": "WARN",
+    "description": "Tool execution blocked (tool=\"calendar_sync\", source=\"https://marketplace.example/tools/calendar_sync\", version=\"2.4.1\", signature=\"missing\", policy=\"allowlist_required\")",
     ...
 }
 </code></pre></div>
@@ -6523,11 +6523,11 @@ Tracking changes to objects to which there are access control restrictions can u
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;permissions_changed:joebob1, /users/admin/some/important/path,0511,0777&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 changed permissions on /users/admin/some/important/path&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "permissions_changed:joebob1, /users/admin/some/important/path,0511,0777",
+    "level": "WARN",
+    "description": "User joebob1 changed permissions on /users/admin/some/important/path",
     ...
 }
 </code></pre></div>
@@ -6542,11 +6542,11 @@ When a new piece of data is created and marked as sensitive or placed into a dir
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sensitive_create:joebob1, /users/admin/some/important/path&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 created a new file in /users/admin/some/important/path&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sensitive_create:joebob1, /users/admin/some/important/path",
+    "level": "WARN",
+    "description": "User joebob1 created a new file in /users/admin/some/important/path",
     ...
 }
 </code></pre></div>
@@ -6558,11 +6558,11 @@ All data marked as sensitive or placed into a directory/table/repository where s
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sensitive_read:joebob1, /users/admin/some/important/path&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 read file /users/admin/some/important/path&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sensitive_read:joebob1, /users/admin/some/important/path",
+    "level": "WARN",
+    "description": "User joebob1 read file /users/admin/some/important/path",
     ...
 }
 </code></pre></div>
@@ -6574,11 +6574,11 @@ All data marked as sensitive or placed into a directory/table/repository where s
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sensitive_update:joebob1, /users/admin/some/important/path&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 modified file /users/admin/some/important/path&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sensitive_update:joebob1, /users/admin/some/important/path",
+    "level": "WARN",
+    "description": "User joebob1 modified file /users/admin/some/important/path",
     ...
 }
 </code></pre></div>
@@ -6590,11 +6590,11 @@ All data marked as sensitive or placed into a directory/table/repository where s
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sensitive_delete:joebob1, /users/admin/some/important/path&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 marked file /users/admin/some/important/path for deletion&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sensitive_delete:joebob1, /users/admin/some/important/path",
+    "level": "WARN",
+    "description": "User joebob1 marked file /users/admin/some/important/path for deletion",
     ...
 }
 </code></pre></div>
@@ -6609,11 +6609,11 @@ When a user reaches a part of the application out of sequence it may indicate in
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sequence_fail:joebob1&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User joebob1 has reached a part of the application out of the normal application flow.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sequence_fail:joebob1",
+    "level": "CRITICAL",
+    "description": "User joebob1 has reached a part of the application out of the normal application flow.",
     ...
 }
 </code></pre></div>
@@ -6626,11 +6626,11 @@ When a new authenticated session is created that session may be logged and activ
 INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>    {
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;session_created:joebob1&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 has started a new session&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "session_created:joebob1",
+    "level": "INFO",
+    "description": "User joebob1 has started a new session",
     ...
 }
 </code></pre></div>
@@ -6642,11 +6642,11 @@ When a user is warned of session to be expired/revoked and chooses to extend the
 INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;session_renewed:joebob1&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 was warned of expiring session and extended.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "session_renewed:joebob1",
+    "level": "INFO",
+    "description": "User joebob1 was warned of expiring session and extended.",
     ...
 }
 </code></pre></div>
@@ -6658,11 +6658,11 @@ When a session expires, especially in the case of an authenticated session or wi
 INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;session_expired:joebob1,revoked&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 session expired due to administrator revocation.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "session_expired:joebob1,revoked",
+    "level": "INFO",
+    "description": "User joebob1 session expired due to administrator revocation.",
     ...
 }
 </code></pre></div>
@@ -6674,11 +6674,11 @@ When a user explicitly logs out (as opposed to a timeout or administrative revoc
 INFO</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;session_logout:joebob1,kx12ab&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 logged out&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "session_logout:joebob1,kx12ab",
+    "level": "INFO",
+    "description": "User joebob1 logged out",
     ...
 }
 </code></pre></div>
@@ -6690,11 +6690,11 @@ In the case a user attempts to access systems with an expire session it may be h
 CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;session_use_after_expire:joebob1&quot;,
-    &quot;level&quot;: &quot;CRITICAL&quot;,
-    &quot;description&quot;: &quot;User joebob1 attempted access after session expired.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "session_use_after_expire:joebob1",
+    "level": "CRITICAL",
+    "description": "User joebob1 attempted access after session expired.",
     ...
 }
 </code></pre></div>
@@ -6707,11 +6707,11 @@ When a system is first started it can be valuable to log the startup, even if th
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sys_startup:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 spawned a new instance&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sys_startup:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 spawned a new instance",
     ...
 }
 </code></pre></div>
@@ -6723,11 +6723,11 @@ When a system is shut down it can be valuable to log the event, even if the syst
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sys_shutdown:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 stopped this instance&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sys_shutdown:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 stopped this instance",
     ...
 }
 </code></pre></div>
@@ -6739,11 +6739,11 @@ When a system is restarted it can be valuable to log the event, even if the syst
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sys_restart:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 initiated a restart&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sys_restart:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 initiated a restart",
     ...
 }
 </code></pre></div>
@@ -6755,11 +6755,11 @@ If possible to catch an unstable condition resulting in the crash of a system, l
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sys_crash:outofmemory,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;The system crashed due to Out of Memory error.&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sys_crash:outofmemory,
+    "level": "WARN",
+    "description": "The system crashed due to Out of Memory error.",
     ...
 }
 </code></pre></div>
@@ -6771,11 +6771,11 @@ If your systems contain agents responsible for file integrity, resources, loggin
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sys_monitor_disabled:joebob1,crowdstrike&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 has disabled CrowdStrike&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sys_monitor_disabled:joebob1,crowdstrike",
+    "level": "WARN",
+    "description": "User joebob1 has disabled CrowdStrike",
     ...
 }
 </code></pre></div>
@@ -6787,11 +6787,11 @@ If your systems contain agents responsible for file integrity, resources, loggin
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;sys_monitor_enabled:joebob1,crowdstrike&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 has enabled CrowdStrike&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "sys_monitor_enabled:joebob1,crowdstrike",
+    "level": "WARN",
+    "description": "User joebob1 has enabled CrowdStrike",
     ...
 }
 </code></pre></div>
@@ -6804,11 +6804,11 @@ When creating new users, logging the specifics of the user creation event is hel
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;user_created:joebob1,user1,admin:create,update,delete&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 created user1 with admin:create,update,delete privilege attributes&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "user_created:joebob1,user1,admin:create,update,delete",
+    "level": "WARN",
+    "description": "User joebob1 created user1 with admin:create,update,delete privilege attributes",
     ...
 }
 </code></pre></div>
@@ -6820,11 +6820,11 @@ When updating users, logging the specifics of the user update event is helpful, 
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;user_updated:joebob1,user1,admin:create,update,delete&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 updated user1 with attributes admin:create,update,delete privilege attributes&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "user_updated:joebob1,user1,admin:create,update,delete",
+    "level": "WARN",
+    "description": "User joebob1 updated user1 with attributes admin:create,update,delete privilege attributes",
     ...
 }
 </code></pre></div>
@@ -6836,11 +6836,11 @@ It is always best to archive users rather than deleting, except where required. 
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;user_archived:joebob1,user1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 archived user1&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "user_archived:joebob1,user1",
+    "level": "WARN",
+    "description": "User joebob1 archived user1",
     ...
 }
 </code></pre></div>
@@ -6852,11 +6852,11 @@ It is always best to archive users rather than deleting, except where required. 
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
-    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;user_deleted:joebob1,user1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 has deleted user1&quot;,
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "user_deleted:joebob1,user1",
+    "level": "WARN",
+    "description": "User joebob1 has deleted user1",
     ...
 }
 </code></pre></div>

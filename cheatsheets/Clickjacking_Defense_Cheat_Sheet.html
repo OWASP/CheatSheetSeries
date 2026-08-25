@@ -4509,14 +4509,14 @@
 <p>One way to defend against clickjacking is to include a "frame-breaker" script in each page that should not be framed. The following methodology will prevent a webpage from being framed even in legacy browsers, that do not support the X-Frame-Options-Header.</p>
 <p>In the document HEAD element, add the following:</p>
 <p>First apply an ID to the style element itself:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;antiClickjack&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span> <span class="na">id</span><span class="o">=</span><span class="s">"antiClickjack"</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="nt">body</span><span class="p">{</span><span class="k">display</span><span class="p">:</span><span class="kc">none</span><span class="w"> </span><span class="cp">!important</span><span class="p">;}</span>
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Then, delete that style by its ID immediately after in the script:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">self</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">top</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">antiClickjack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;antiClickjack&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">antiClickjack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"antiClickjack"</span><span class="p">);</span>
 <span class="w">        </span><span class="nx">antiClickjack</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">antiClickjack</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
@@ -4527,8 +4527,8 @@
 <h2 id="windowconfirm-protection">window.confirm() Protection<a class="headerlink" href="#windowconfirm-protection" title="Permanent link">&para;</a></h2>
 <p>The use of X-Frame-Options or a frame-breaking script is a more fail-safe method of clickjacking protection. However, in scenarios where content must be frameable, then a <code>window.confirm()</code> can be used to help mitigate Clickjacking by informing the user of the action they are about to perform.</p>
 <p>Invoking <code>window.confirm()</code> will display a popup that cannot be framed. If the <code>window.confirm()</code> originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the <code>window.confirm()</code> originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">action_confirm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">&quot;Are you sure you want to delete your youtube account?&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">action_confirm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">"Are you sure you want to delete your youtube account?"</span><span class="p">)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">action_confirm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">//... Perform action</span>
 <span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
@@ -4549,10 +4549,10 @@
 <span class="p">}</span>
 </code></pre></div>
 <p><strong>Attacker top frame:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;attacker2.html&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">"attacker2.html"</span><span class="p">&gt;</span>
 </code></pre></div>
 <p><strong>Attacker sub-frame:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">"http://www.victim.com"</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="the-onbeforeunload-event">The onBeforeUnload Event<a class="headerlink" href="#the-onbeforeunload-event" title="Permanent link">&para;</a></h3>
 <p>A user can manually cancel any navigation request submitted by a framed page. To exploit this, the framing page registers an <code>onBeforeUnload</code> handler which is called whenever the framing page is about to be unloaded due to navigation. The handler function returns a string that becomes part of a prompt displayed to the user.</p>
@@ -4560,11 +4560,11 @@
 <p>The attacker mounts this attack by registering an unload event on the top page using the following code:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">onbeforeunload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Asking the user nicely&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">"Asking the user nicely"</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.paypal.com&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">"http://www.paypal.com"</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>PayPal's frame busting code will generate a <code>BeforeUnload</code> event activating our function and prompting the user to cancel the navigation event.</p>
 <h3 id="no-content-flushing">No-Content Flushing<a class="headerlink" href="#no-content-flushing" title="Permanent link">&para;</a></h3>
@@ -4575,20 +4575,20 @@
 <span class="nx">setInterval</span><span class="p">(</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nx">killbust</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">){</span>
 <span class="w">    </span><span class="nx">killbust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://nocontent204.com&#39;</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'http://nocontent204.com'</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">},</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">"http://www.victim.com"</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="restricted-zones">Restricted zones<a class="headerlink" href="#restricted-zones" title="Permanent link">&para;</a></h3>
 <p>Most frame busting relies on JavaScript in the framed page to detect framing and bust itself out. If JavaScript is disabled in the context of the subframe, the frame busting code will not run. There are unfortunately several ways of restricting JavaScript in a subframe:</p>
 <p><strong>In Chrome:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span> <span class="na">sandbox</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">"http://www.victim.com"</span> <span class="na">sandbox</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
 </code></pre></div>
 <p><strong>Firefox:</strong></p>
 <p>Activate <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/designMode">designMode</a> in parent page. While designMode is still supported in modern browsers, its effectiveness as a clickjacking attack vector may vary in current browser versions.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">designMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;on&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">designMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"on"</span><span class="p">;</span>
 </code></pre></div>
 
 

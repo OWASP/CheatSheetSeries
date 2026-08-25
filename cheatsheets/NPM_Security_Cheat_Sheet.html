@@ -4630,9 +4630,9 @@
 <p>Disabling lifecycle scripts by default by adding <code>ignore-scripts=true</code> to your <code>.npmrc</code> file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like <a href="https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts"><code>@lavamoat/allow-scripts</code></a> to create an <em>allowlist</em> of packages authorized to run lifecycle scripts.</p>
 <p>Here's how the allowlist would look like in the <code>package.json</code> file on a project using the popular image processing package <a href="https://www.npmjs.com/package/sharp">sharp</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;lavamoat&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;allowScripts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;sharp&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="nt">"lavamoat"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"allowScripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"sharp"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -4694,21 +4694,21 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <div class="highlight"><pre><span></span><code><span class="c1">// sign-and-verify.js</span>
 <span class="c1">// npm install sigstore fs</span>
 
-<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;fs&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">sigstore</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;sigstore&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'fs'</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">sigstore</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'sigstore'</span><span class="p">;</span>
 
 <span class="c1">// Path to your built npm package (via `npm pack`)</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">artifact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-lib-1.0.0.tgz&#39;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">artifact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'my-lib-1.0.0.tgz'</span><span class="p">;</span>
 
 <span class="c1">// --- Sign ---</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">artifact</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">bundle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">sigstore</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">);</span>
 <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">artifact</span><span class="si">}</span><span class="sb">.sigstore.json`</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">bundle</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">));</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Signed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">artifact</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Signed:'</span><span class="p">,</span><span class="w"> </span><span class="nx">artifact</span><span class="p">);</span>
 
 <span class="c1">// --- Verify ---</span>
 <span class="k">await</span><span class="w"> </span><span class="nx">sigstore</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">bundle</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Verified OK!&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Verified OK!'</span><span class="p">);</span>
 </code></pre></div>
 <ul>
 <li>Prefer immutable, access-controlled registries or vetted mirrors (private registries, Verdaccio with an upstream cache, or <a href="#use-a-local-npm-proxy">approved mirrors</a>) and enable retention / immutability policies where available.</li>

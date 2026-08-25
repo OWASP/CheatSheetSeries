@@ -4559,7 +4559,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>User input is assumed to be non-network related and consists of the user's personal information.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">//Regex validation for a data having a simple format</span>
-<span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">)){</span>
+<span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">"[a-zA-Z0-9\\s\\-]{1,50}"</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">)){</span>
 <span class="w">    </span><span class="c1">//Continue the processing because the input data is valid</span>
 <span class="p">}</span><span class="k">else</span><span class="p">{</span>
 <span class="w">    </span><span class="c1">//Stop the processing and reject the request</span>
@@ -4626,13 +4626,13 @@ The user leverages the web application as a proxy to the HR system.</p>
 </li>
 </ul>
 <p>Example of execution of the proposed regex for Ruby:</p>
-<div class="highlight"><pre><span></span><code><span class="n">domain_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;owasp-test.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc-test.owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc.owasp.org&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org&quot;</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="n">domain_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">"owasp.org"</span><span class="p">,</span><span class="s2">"owasp-test.org"</span><span class="p">,</span><span class="s2">"doc-test.owasp.org"</span><span class="p">,</span><span class="s2">"doc.owasp.org"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"&lt;script&gt;alert(1)&lt;/script&gt;"</span><span class="p">,</span><span class="s2">"&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org"</span><span class="o">]</span>
 <span class="n">domain_names</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">domain_name</span><span class="o">|</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">domain_name</span><span class="w"> </span><span class="o">=~</span> <span class="sr">/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/</span><span class="w"> </span><span class="p">)</span>
-<span class="w">        </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;[i] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is VALID&quot;</span>
+<span class="w">        </span><span class="nb">puts</span><span class="w"> </span><span class="s2">"[i] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is VALID"</span>
 <span class="w">    </span><span class="k">else</span>
-<span class="w">        </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;[!] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is INVALID&quot;</span>
+<span class="w">        </span><span class="nb">puts</span><span class="w"> </span><span class="s2">"[!] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is INVALID"</span>
 <span class="w">    </span><span class="k">end</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -4662,17 +4662,17 @@ The user leverages the web application as a proxy to the HR system.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">dns.resolver</span>
 
 <span class="c1"># Configure the allowlist to check</span>
-<span class="n">DOMAINS_ALLOWLIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span> <span class="s2">&quot;labslinux&quot;</span><span class="p">]</span>
+<span class="n">DOMAINS_ALLOWLIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"owasp.org"</span><span class="p">,</span> <span class="s2">"labslinux"</span><span class="p">]</span>
 
 <span class="c1"># Configure the DNS resolver to use for all DNS queries</span>
 <span class="n">DNS_RESOLVER</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">Resolver</span><span class="p">()</span>
-<span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">nameservers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1.1.1.1&quot;</span><span class="p">]</span>
+<span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">nameservers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"1.1.1.1"</span><span class="p">]</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Verify if one of the DNS records resolve to a non public IP address.</span>
 <span class="sd">    Return a boolean indicating if any error has been detected.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">records</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
@@ -4681,42 +4681,42 @@ The user leverages the web application as a proxy to the HR system.</p>
                 <span class="n">ip</span> <span class="o">=</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_address</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
                 <span class="c1"># See https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.is_global</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">ip</span><span class="o">.</span><span class="n">is_global</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[!] DNS record type &#39;</span><span class="si">%s</span><span class="s2">&#39; for domain name &#39;</span><span class="si">%s</span><span class="s2">&#39; resolve to</span>
-                    <span class="n">a</span> <span class="n">non</span> <span class="n">public</span> <span class="n">IP</span> <span class="n">address</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="err">!</span><span class="s2">&quot; % (type, domain, value))</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">"[!] DNS record type '</span><span class="si">%s</span><span class="s2">' for domain name '</span><span class="si">%s</span><span class="s2">' resolve to</span>
+                    <span class="n">a</span> <span class="n">non</span> <span class="n">public</span> <span class="n">IP</span> <span class="n">address</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">'</span><span class="err">!</span><span class="s2">" % (type, domain, value))</span>
                     <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[!] &#39;</span><span class="si">%s</span><span class="s2">&#39; is not valid IP address!&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"[!] '</span><span class="si">%s</span><span class="s2">' is not valid IP address!"</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">error_detected</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Perform the check of the allowlist of domains.</span>
 <span class="sd">    Return a boolean indicating if any error has been detected.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">DOMAINS_ALLOWLIST</span><span class="p">:</span>
         <span class="c1"># Get the IPs of the current domain</span>
         <span class="c1"># See https://en.wikipedia.org/wiki/List_of_DNS_record_types</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># A = IPv4 address record</span>
-            <span class="n">ip_v4_records</span> <span class="o">=</span> <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+            <span class="n">ip_v4_records</span> <span class="o">=</span> <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">ip_v4_records</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[i] Cannot get A record for domain &#39;</span><span class="si">%s</span><span class="s2">&#39;: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">domain</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"[i] Cannot get A record for domain '</span><span class="si">%s</span><span class="s2">': </span><span class="si">%s</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">domain</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># AAAA = IPv6 address record</span>
-            <span class="n">ip_v6_records</span> <span class="o">=</span> <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">&quot;AAAA&quot;</span><span class="p">)</span>
+            <span class="n">ip_v6_records</span> <span class="o">=</span> <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">"AAAA"</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">ip_v6_records</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[i] Cannot get AAAA record for domain &#39;</span><span class="si">%s</span><span class="s2">&#39;: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">domain</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"[i] Cannot get AAAA record for domain '</span><span class="si">%s</span><span class="s2">': </span><span class="si">%s</span><span class="se">\n</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">domain</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
         <span class="c1"># Verify the IPs obtained</span>
-        <span class="k">if</span> <span class="n">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">ip_v4_records</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
-        <span class="ow">or</span> <span class="n">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">ip_v6_records</span><span class="p">,</span> <span class="s2">&quot;AAAA&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">ip_v4_records</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">ip_v6_records</span><span class="p">,</span> <span class="s2">"AAAA"</span><span class="p">):</span>
             <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="n">error_detected</span>
 
-<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">check</span><span class="p">():</span>
         <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>

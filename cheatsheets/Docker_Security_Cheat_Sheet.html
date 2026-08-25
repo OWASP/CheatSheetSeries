@@ -4405,7 +4405,7 @@
 If you really, <strong>really</strong> have to do this, you should secure it. Check how to do this following <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option">Docker official documentation</a>.</p>
 <p><strong>Do not expose <em>/var/run/docker.sock</em> to other containers</strong>. If you are running your docker image with <code>-v /var/run/docker.sock://var/run/docker.sock</code> or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker compose file is something like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"/var/run/docker.sock:/var/run/docker.sock"</span>
 </code></pre></div>
 <h3 id="rule-2-set-a-user">RULE #2 - Set a user<a class="headerlink" href="#rule-2-set-a-user" title="Permanent link">&para;</a></h3>
 <p>Configuring the container to use an unprivileged user is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:</p>
@@ -4460,7 +4460,7 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 <span class="w">        </span><span class="nt">capabilities</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">drop</span><span class="p">:</span>
 <span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALL</span>
-<span class="w">          </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;CHOWN&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">          </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"CHOWN"</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can configure a hardened default using the <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted"><code>Restricted</code> level</a> with built-in <a href="https://kubernetes.io/docs/concepts/security/pod-security-admission/">Pod Security admission controller</a>, if greater customization is desired consider using <a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks">Admission Webhooks</a> or a <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives">third party alternative</a>.</p>
 <h3 id="rule-4-prevent-in-container-privilege-escalation">RULE #4 - Prevent in-container privilege escalation<a class="headerlink" href="#rule-4-prevent-in-container-privilege-escalation" title="Permanent link">&para;</a></h3>
@@ -4499,7 +4499,7 @@ docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </sp
 <span class="w">  </span><span class="nt">web</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myimage</span>
 <span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8000:8000&quot;</span><span class="w">  </span><span class="c1"># safe — localhost only</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"127.0.0.1:8000:8000"</span><span class="w">  </span><span class="c1"># safe — localhost only</span>
 </code></pre></div>
 <p><strong>Option 2 — Use <code>ufw-docker</code> (or equivalent) to enforce firewall rules over Docker networks:</strong></p>
 <p>For UFW specifically, the <a href="https://github.com/chaifeng/ufw-docker">ufw-docker</a> project provides a script and supplemental <code>iptables</code> rules that patch Docker's networking to respect UFW policies, allowing you to use standard UFW commands to control traffic to containers:</p>
@@ -4542,13 +4542,13 @@ sudo<span class="w"> </span>ufw-docker<span class="w"> </span>allow<span class="
 <p>You can also do this for Kubernetes: <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/">Assign Memory Resources to Containers and Pods</a>, <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/">Assign CPU Resources to Containers and Pods</a> and <a href="https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/">Assign Extended Resources to a Container</a></p>
 <h3 id="rule-8-set-filesystem-and-volumes-to-read-only">RULE #8 - Set filesystem and volumes to read-only<a class="headerlink" href="#rule-8-set-filesystem-and-volumes-to-read-only" title="Permanent link">&para;</a></h3>
 <p><strong>Run containers with a read-only filesystem</strong> using <code>--read-only</code> flag. For example:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;whatever&quot; &gt; /tmp&#39;</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo "whatever" &gt; /tmp'</span>
 </code></pre></div>
 <p>If an application inside a container has to save something temporarily, combine <code>--read-only</code> flag with <code>--tmpfs</code> like this:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>--tmpfs<span class="w"> </span>/tmp<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;whatever&quot; &gt; /tmp/file&#39;</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>--tmpfs<span class="w"> </span>/tmp<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo "whatever" &gt; /tmp/file'</span>
 </code></pre></div>
 <p>The Docker Compose <code>compose.yml</code> equivalent would be:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3"</span>
 <span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">alpine</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine</span>
@@ -4629,7 +4629,7 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 </ul>
 <h3 id="rule-10-keep-the-docker-daemon-logging-level-at-info">RULE #10 - Keep the Docker daemon logging level at <code>info</code><a class="headerlink" href="#rule-10-keep-the-docker-daemon-logging-level-at-info" title="Permanent link">&para;</a></h3>
 <p>By default, the Docker daemon is configured to have a base logging level of <code>info</code>. This can be verified by checking the daemon configuration file <code>/etc/docker/daemon.json</code> for the<code>log-level</code> key. If the key is not present, the default logging level is <code>info</code>. Additionally, if the docker daemon is started with the <code>--log-level</code> option, the value of the <code>log-level</code> key in the configuration file will be overridden. To check if the Docker daemon is running with a different log level, you can use the following command:</p>
-<div class="highlight"><pre><span></span><code>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;[d]ockerd.*--log-level&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{for(i=1;i&lt;=NF;i++) if ($i ~ /--log-level/) print $i}&#39;</span>
+<div class="highlight"><pre><span></span><code>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'[d]ockerd.*--log-level'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{for(i=1;i&lt;=NF;i++) if ($i ~ /--log-level/) print $i}'</span>
 </code></pre></div>
 <p>Setting an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except the debug logs. Until and unless required, you should not run docker daemon at the 'debug' log level.</p>
 <h3 id="rule-11-run-docker-in-rootless-mode">Rule #11 - Run Docker in rootless mode<a class="headerlink" href="#rule-11-run-docker-in-rootless-mode" title="Permanent link">&para;</a></h3>
@@ -4646,7 +4646,7 @@ Rootless mode does not require root privileges even during the installation of t
 docker<span class="w"> </span>service<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>--secret<span class="w"> </span>my_secret<span class="w"> </span>nginx:latest
 </code></pre></div>
 <p>Or for Docker Compose:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.8&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.8"</span>
 <span class="nt">secrets</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">my_secret</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./super-secret-data.txt</span>

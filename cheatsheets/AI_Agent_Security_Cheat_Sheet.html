@@ -4682,9 +4682,9 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Agent has unrestricted shell access</span>
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;execute_command&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Execute any shell command&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;allowed_commands&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>  <span class="c1"># No restrictions</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"execute_command"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Execute any shell command"</span><span class="p">,</span>
+        <span class="s2">"allowed_commands"</span><span class="p">:</span> <span class="s2">"*"</span>  <span class="c1"># No restrictions</span>
     <span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
@@ -4692,28 +4692,28 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Safe: Restricted to specific, safe commands</span>
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;file_reader&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Read files from the reports directory&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;allowed_paths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;/app/reports/*&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;allowed_operations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;blocked_patterns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.env&quot;</span><span class="p">,</span> <span class="s2">&quot;*.key&quot;</span><span class="p">,</span> <span class="s2">&quot;*.pem&quot;</span><span class="p">,</span> <span class="s2">&quot;*secret*&quot;</span><span class="p">]</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"file_reader"</span><span class="p">,</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Read files from the reports directory"</span><span class="p">,</span>
+        <span class="s2">"allowed_paths"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"/app/reports/*"</span><span class="p">],</span>
+        <span class="s2">"allowed_operations"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"read"</span><span class="p">],</span>
+        <span class="s2">"blocked_patterns"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"*.env"</span><span class="p">,</span> <span class="s2">"*.key"</span><span class="p">,</span> <span class="s2">"*.pem"</span><span class="p">,</span> <span class="s2">"*secret*"</span><span class="p">]</span>
     <span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
 <h4 id="tool-authorization-middleware-example-python">Tool Authorization Middleware Example (Python)<a class="headerlink" href="#tool-authorization-middleware-example-python" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
 
-<span class="n">SENSITIVE_TOOLS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;send_email&quot;</span><span class="p">,</span> <span class="s2">&quot;execute_code&quot;</span><span class="p">,</span> <span class="s2">&quot;database_write&quot;</span><span class="p">,</span> <span class="s2">&quot;file_delete&quot;</span><span class="p">]</span>
+<span class="n">SENSITIVE_TOOLS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"send_email"</span><span class="p">,</span> <span class="s2">"execute_code"</span><span class="p">,</span> <span class="s2">"database_write"</span><span class="p">,</span> <span class="s2">"file_delete"</span><span class="p">]</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">require_confirmation</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="n">SENSITIVE_TOOLS</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_confirmed&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"user_confirmed"</span><span class="p">):</span>
                 <span class="k">return</span> <span class="p">{</span>
-                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;pending_confirmation&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Action &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; requires user approval&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">sanitize_for_display</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+                    <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"pending_confirmation"</span><span class="p">,</span>
+                    <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Action '</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">' requires user approval"</span><span class="p">,</span>
+                    <span class="s2">"params"</span><span class="p">:</span> <span class="n">sanitize_for_display</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
                 <span class="p">}</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wrapper</span>
@@ -4739,9 +4739,9 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Storing arbitrary user input in persistent memory</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">save_memory</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">user_message</span><span class="p">,</span> <span class="n">assistant_response</span><span class="p">):</span>
     <span class="n">agent</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">add</span><span class="p">({</span>
-        <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user_message</span><span class="p">,</span>  <span class="c1"># Could contain injection payload</span>
-        <span class="s2">&quot;assistant&quot;</span><span class="p">:</span> <span class="n">assistant_response</span><span class="p">,</span>
-        <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="s2">"user"</span><span class="p">:</span> <span class="n">user_message</span><span class="p">,</span>  <span class="c1"># Could contain injection payload</span>
+        <span class="s2">"assistant"</span><span class="p">:</span> <span class="n">assistant_response</span><span class="p">,</span>
+        <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="p">})</span>
 </code></pre></div>
 <h4 id="good-validated-and-isolated-memory">Good: Validated and isolated memory<a class="headerlink" href="#good-validated-and-isolated-memory" title="Permanent link">&para;</a></h4>
@@ -4758,7 +4758,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">encryption_key</span> <span class="o">=</span> <span class="n">encryption_key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">memories</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">memory_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;conversation&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">memory_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"conversation"</span><span class="p">):</span>
         <span class="c1"># Validate content</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_ITEM_LENGTH</span><span class="p">:</span>
             <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_ITEM_LENGTH</span><span class="p">]</span>
@@ -4772,34 +4772,34 @@
 
         <span class="c1"># Create integrity-checked memory entry</span>
         <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">memory_type</span><span class="p">,</span>
-            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
-            <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
-            <span class="s2">&quot;checksum&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_checksum</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+            <span class="s2">"content"</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="n">memory_type</span><span class="p">,</span>
+            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="s2">"user_id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+            <span class="s2">"checksum"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_checksum</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
         <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">memories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_enforce_limits</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve valid, non-expired memories.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Retrieve valid, non-expired memories."""</span>
         <span class="n">valid_memories</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">cutoff</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MEMORY_TTL_HOURS</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">mem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">memories</span><span class="p">:</span>
-            <span class="n">mem_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+            <span class="n">mem_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">mem_time</span> <span class="o">&gt;</span> <span class="n">cutoff</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verify_checksum</span><span class="p">(</span><span class="n">mem</span><span class="p">):</span>
-                <span class="n">valid_memories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+                <span class="n">valid_memories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="s2">"content"</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">valid_memories</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_contains_sensitive_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">sensitive_patterns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{3}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">\b&#39;</span><span class="p">,</span>  <span class="c1"># SSN</span>
-            <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{16}</span><span class="s1">\b&#39;</span><span class="p">,</span>              <span class="c1"># Credit card</span>
-            <span class="sa">r</span><span class="s1">&#39;password\s*[:=]\s*\S+&#39;</span><span class="p">,</span>   <span class="c1"># Passwords</span>
-            <span class="sa">r</span><span class="s1">&#39;api[_-]?key\s*[:=]\s*\S+&#39;</span> <span class="c1"># API keys</span>
+            <span class="sa">r</span><span class="s1">'\b\d</span><span class="si">{3}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">\b'</span><span class="p">,</span>  <span class="c1"># SSN</span>
+            <span class="sa">r</span><span class="s1">'\b\d</span><span class="si">{16}</span><span class="s1">\b'</span><span class="p">,</span>              <span class="c1"># Credit card</span>
+            <span class="sa">r</span><span class="s1">'password\s*[:=]\s*\S+'</span><span class="p">,</span>   <span class="c1"># Passwords</span>
+            <span class="sa">r</span><span class="s1">'api[_-]?key\s*[:=]\s*\S+'</span> <span class="c1"># API keys</span>
         <span class="p">]</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">sensitive_patterns</span><span class="p">)</span>
 
@@ -4822,19 +4822,19 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">RiskLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">LOW</span> <span class="o">=</span> <span class="s2">&quot;low&quot;</span>           <span class="c1"># Read operations, safe queries</span>
-    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="s2">&quot;medium&quot;</span>     <span class="c1"># Write operations, API calls</span>
-    <span class="n">HIGH</span> <span class="o">=</span> <span class="s2">&quot;high&quot;</span>         <span class="c1"># Financial, deletion, external comms</span>
-    <span class="n">CRITICAL</span> <span class="o">=</span> <span class="s2">&quot;critical&quot;</span> <span class="c1"># Irreversible, security-sensitive</span>
+    <span class="n">LOW</span> <span class="o">=</span> <span class="s2">"low"</span>           <span class="c1"># Read operations, safe queries</span>
+    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="s2">"medium"</span>     <span class="c1"># Write operations, API calls</span>
+    <span class="n">HIGH</span> <span class="o">=</span> <span class="s2">"high"</span>         <span class="c1"># Financial, deletion, external comms</span>
+    <span class="n">CRITICAL</span> <span class="o">=</span> <span class="s2">"critical"</span> <span class="c1"># Irreversible, security-sensitive</span>
 
 <span class="n">ACTION_RISK_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;search_documents&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
-    <span class="s2">&quot;read_file&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
-    <span class="s2">&quot;write_file&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">,</span>
-    <span class="s2">&quot;send_email&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
-    <span class="s2">&quot;execute_code&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
-    <span class="s2">&quot;database_delete&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
-    <span class="s2">&quot;transfer_funds&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
+    <span class="s2">"search_documents"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
+    <span class="s2">"read_file"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
+    <span class="s2">"write_file"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">,</span>
+    <span class="s2">"send_email"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
+    <span class="s2">"execute_code"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
+    <span class="s2">"database_delete"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
+    <span class="s2">"transfer_funds"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="nd">@dataclass</span>
@@ -4856,7 +4856,7 @@
 
         <span class="c1"># Auto-approve low-risk actions</span>
         <span class="k">if</span> <span class="n">risk_level</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_approve_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;approved&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">"approved"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"auto"</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 
         <span class="c1"># Queue for human review</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">PendingAction</span><span class="p">(</span>
@@ -4870,21 +4870,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pending_actions</span><span class="p">[</span><span class="n">action</span><span class="o">.</span><span class="n">action_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
 
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;approved&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="s2">&quot;pending&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;action_id&quot;</span><span class="p">:</span> <span class="n">action</span><span class="o">.</span><span class="n">action_id</span><span class="p">,</span>
-            <span class="s2">&quot;requires&quot;</span><span class="p">:</span> <span class="s2">&quot;human_approval&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;risk_level&quot;</span><span class="p">:</span> <span class="n">risk_level</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-            <span class="s2">&quot;preview&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_action_preview</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="s2">"approved"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">"pending"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">"action_id"</span><span class="p">:</span> <span class="n">action</span><span class="o">.</span><span class="n">action_id</span><span class="p">,</span>
+            <span class="s2">"requires"</span><span class="p">:</span> <span class="s2">"human_approval"</span><span class="p">,</span>
+            <span class="s2">"risk_level"</span><span class="p">:</span> <span class="n">risk_level</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s2">"preview"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_action_preview</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
         <span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_action_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">PendingAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"""</span>
 <span class="s2">        Action: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">tool_name</span><span class="si">}</span>
 <span class="s2">        Risk Level: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">risk_level</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span>
 <span class="s2">        Explanation: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">explanation</span><span class="si">}</span>
 <span class="s2">        Parameters: </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span>
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="s2">        """</span>
 </code></pre></div>
 <h4 id="high-impact-action-integrity-controls">High-Impact Action Integrity Controls<a class="headerlink" href="#high-impact-action-integrity-controls" title="Permanent link">&para;</a></h4>
 <p>For destructive, financial, administrative, or externally visible actions, add controls beyond a simple approval prompt:</p>
@@ -4915,23 +4915,23 @@
     <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
     <span class="n">reasoning</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 
-    <span class="nd">@validator</span><span class="p">(</span><span class="s1">&#39;tool_name&#39;</span><span class="p">)</span>
+    <span class="nd">@validator</span><span class="p">(</span><span class="s1">'tool_name'</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">validate_tool_allowed</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="n">allowed_tools</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">,</span> <span class="s2">&quot;read_file&quot;</span><span class="p">,</span> <span class="s2">&quot;calculator&quot;</span><span class="p">,</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">]</span>
+        <span class="n">allowed_tools</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"search"</span><span class="p">,</span> <span class="s2">"read_file"</span><span class="p">,</span> <span class="s2">"calculator"</span><span class="p">,</span> <span class="s2">"get_weather"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_tools</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tool &#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&#39; is not in allowed list&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Tool '</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">' is not in allowed list"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v</span>
 
-    <span class="nd">@validator</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="nd">@validator</span><span class="p">(</span><span class="s1">'parameters'</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">validate_no_sensitive_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
         <span class="n">sensitive_patterns</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="sa">r</span><span class="s1">&#39;api[_-]?key&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;token&#39;</span><span class="p">,</span>
-            <span class="sa">r</span><span class="s1">&#39;credential&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;private[_-]?key&#39;</span>
+            <span class="sa">r</span><span class="s1">'api[_-]?key'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'password'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'secret'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'token'</span><span class="p">,</span>
+            <span class="sa">r</span><span class="s1">'credential'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'private[_-]?key'</span>
         <span class="p">]</span>
         <span class="n">params_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">sensitive_patterns</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Parameters contain potentially sensitive data&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Parameters contain potentially sensitive data"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">OutputGuardrails</span><span class="p">:</span>
@@ -4943,33 +4943,33 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">validate_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_output</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="c1"># Check rate limits</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_limiter</span><span class="o">.</span><span class="n">allow</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="n">RateLimitExceeded</span><span class="p">(</span><span class="s2">&quot;Agent action rate limit exceeded&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">RateLimitExceeded</span><span class="p">(</span><span class="s2">"Agent action rate limit exceeded"</span><span class="p">)</span>
 
         <span class="c1"># Validate structure</span>
-        <span class="k">if</span> <span class="s2">&quot;tool_calls&quot;</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">[</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="s2">"tool_calls"</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">[</span><span class="s2">"tool_calls"</span><span class="p">]:</span>
                 <span class="n">validated</span> <span class="o">=</span> <span class="n">AgentToolCall</span><span class="p">(</span><span class="o">**</span><span class="n">call</span><span class="p">)</span>
 
         <span class="c1"># Filter PII from responses</span>
-        <span class="k">if</span> <span class="s2">&quot;response&quot;</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">:</span>
-            <span class="n">agent_output</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_pii</span><span class="p">(</span><span class="n">agent_output</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">"response"</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">:</span>
+            <span class="n">agent_output</span><span class="p">[</span><span class="s2">"response"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_pii</span><span class="p">(</span><span class="n">agent_output</span><span class="p">[</span><span class="s2">"response"</span><span class="p">])</span>
 
         <span class="c1"># Check for data exfiltration patterns</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_exfiltration_attempt</span><span class="p">(</span><span class="n">agent_output</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Potential data exfiltration detected&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Potential data exfiltration detected"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">agent_output</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_detect_exfiltration_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Detect attempts to exfiltrate data through tool calls.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Detect attempts to exfiltrate data through tool calls."""</span>
         <span class="n">suspicious_patterns</span> <span class="o">=</span> <span class="p">[</span>
             <span class="c1"># Encoding sensitive data in URLs</span>
-            <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="s2">&quot;http&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
-                <span class="n">p</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;base64&quot;</span><span class="p">,</span> <span class="s2">&quot;encode&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">]</span>
+            <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="s2">"http"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">p</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"base64"</span><span class="p">,</span> <span class="s2">"encode"</span><span class="p">,</span> <span class="s2">"password"</span><span class="p">]</span>
             <span class="p">),</span>
             <span class="c1"># Large data in webhook/API calls</span>
-            <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool_name&quot;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;http_request&quot;</span><span class="p">,</span> <span class="s2">&quot;webhook&quot;</span><span class="p">]</span> <span class="ow">and</span> 
-                     <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tool_name"</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"http_request"</span><span class="p">,</span> <span class="s2">"webhook"</span><span class="p">]</span> <span class="ow">and</span> 
+                     <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"parameters"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">pattern</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">suspicious_patterns</span><span class="p">)</span>
 </code></pre></div>
@@ -5004,11 +5004,11 @@
 
 <span class="k">class</span><span class="w"> </span><span class="nc">AgentMonitor</span><span class="p">:</span>
     <span class="n">ANOMALY_THRESHOLDS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;tool_calls_per_minute&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
-        <span class="s2">&quot;failed_tool_calls&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="s2">&quot;injection_attempts&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;sensitive_data_access&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="s2">&quot;cost_per_session_usd&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s2">"tool_calls_per_minute"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s2">"failed_tool_calls"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">"injection_attempts"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">"sensitive_data_access"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">"cost_per_session_usd"</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -5023,17 +5023,17 @@
         <span class="n">safe_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_sensitive</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
         <span class="n">event</span> <span class="o">=</span> <span class="n">AgentSecurityEvent</span><span class="p">(</span>
-            <span class="n">event_type</span><span class="o">=</span><span class="s2">&quot;tool_call&quot;</span><span class="p">,</span>
-            <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+            <span class="n">event_type</span><span class="o">=</span><span class="s2">"tool_call"</span><span class="p">,</span>
+            <span class="n">severity</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">,</span>
             <span class="n">agent_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
             <span class="n">session_id</span><span class="o">=</span><span class="n">session_id</span><span class="p">,</span>
             <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
             <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">(),</span>
             <span class="n">tool_name</span><span class="o">=</span><span class="n">tool_name</span><span class="p">,</span>
             <span class="n">details</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="n">safe_params</span><span class="p">,</span>
-                <span class="s2">&quot;result_status&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">),</span>
-                <span class="s2">&quot;execution_time_ms&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;execution_time_ms&quot;</span><span class="p">),</span>
+                <span class="s2">"parameters"</span><span class="p">:</span> <span class="n">safe_params</span><span class="p">,</span>
+                <span class="s2">"result_status"</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"status"</span><span class="p">),</span>
+                <span class="s2">"execution_time_ms"</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"execution_time_ms"</span><span class="p">),</span>
             <span class="p">}</span>
         <span class="p">)</span>
 
@@ -5054,36 +5054,36 @@
 
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emit_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">severity</span> <span class="o">==</span> <span class="s2">"CRITICAL"</span><span class="p">:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_alert</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_check_anomalies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">AgentSecurityEvent</span><span class="p">):</span>
         <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_metrics</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">&quot;tool_calls&quot;</span><span class="p">:</span> <span class="p">[],</span>
-            <span class="s2">&quot;failed_calls&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;total_cost&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">"tool_calls"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">"failed_calls"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"total_cost"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
         <span class="p">})</span>
 
-        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">())</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">"tool_calls"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">())</span>
 
         <span class="c1"># Check tool call rate</span>
-        <span class="n">recent_calls</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">]</span> 
+        <span class="n">recent_calls</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">"tool_calls"</span><span class="p">]</span> 
                        <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">seconds</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_calls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANOMALY_THRESHOLDS</span><span class="p">[</span><span class="s2">&quot;tool_calls_per_minute&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_calls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANOMALY_THRESHOLDS</span><span class="p">[</span><span class="s2">"tool_calls_per_minute"</span><span class="p">]:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_security_event</span><span class="p">(</span>
-                <span class="n">session_id</span><span class="p">,</span> <span class="s2">&quot;anomaly_detected&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
-                <span class="p">{</span><span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;excessive_tool_calls&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_calls</span><span class="p">)},</span>
+                <span class="n">session_id</span><span class="p">,</span> <span class="s2">"anomaly_detected"</span><span class="p">,</span> <span class="s2">"WARNING"</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">"reason"</span><span class="p">:</span> <span class="s2">"excessive_tool_calls"</span><span class="p">,</span> <span class="s2">"count"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_calls</span><span class="p">)},</span>
                 <span class="n">event</span><span class="o">.</span><span class="n">user_id</span>
             <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_redact_sensitive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Redact sensitive fields from log data.&quot;&quot;&quot;</span>
-        <span class="n">sensitive_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;api_key&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="s2">&quot;secret&quot;</span><span class="p">,</span> <span class="s2">&quot;credential&quot;</span><span class="p">}</span>
+<span class="w">        </span><span class="sd">"""Redact sensitive fields from log data."""</span>
+        <span class="n">sensitive_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"password"</span><span class="p">,</span> <span class="s2">"api_key"</span><span class="p">,</span> <span class="s2">"token"</span><span class="p">,</span> <span class="s2">"secret"</span><span class="p">,</span> <span class="s2">"credential"</span><span class="p">}</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">redact</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="k">return</span> <span class="p">{</span>
-                    <span class="n">k</span><span class="p">:</span> <span class="s2">&quot;***REDACTED***&quot;</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">sensitive_keys</span> <span class="k">else</span> <span class="n">redact</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="n">k</span><span class="p">:</span> <span class="s2">"***REDACTED***"</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">sensitive_keys</span> <span class="k">else</span> <span class="n">redact</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                 <span class="p">}</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -5117,7 +5117,7 @@
     <span class="n">SYSTEM</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SecureAgentBus</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Secure communication layer for multi-agent systems.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Secure communication layer for multi-agent systems."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signing_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">signing_key</span> <span class="o">=</span> <span class="n">signing_key</span>
@@ -5128,9 +5128,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">register_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trust_level</span><span class="p">:</span> <span class="n">AgentTrustLevel</span><span class="p">,</span>
                        <span class="n">allowed_recipients</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;trust_level&quot;</span><span class="p">:</span> <span class="n">trust_level</span><span class="p">,</span>
-            <span class="s2">&quot;allowed_recipients&quot;</span><span class="p">:</span> <span class="n">allowed_recipients</span><span class="p">,</span>
-            <span class="s2">&quot;allowed_message_types&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_allowed_types</span><span class="p">(</span><span class="n">trust_level</span><span class="p">)</span>
+            <span class="s2">"trust_level"</span><span class="p">:</span> <span class="n">trust_level</span><span class="p">,</span>
+            <span class="s2">"allowed_recipients"</span><span class="p">:</span> <span class="n">allowed_recipients</span><span class="p">,</span>
+            <span class="s2">"allowed_message_types"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_allowed_types</span><span class="p">(</span><span class="n">trust_level</span><span class="p">)</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">CircuitBreaker</span><span class="p">(</span>
             <span class="n">fail_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
@@ -5142,35 +5142,35 @@
         <span class="c1"># Validate sender</span>
         <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sender_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">sender</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown sender agent: </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown sender agent: </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="c1"># Check circuit breaker</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">sender_id</span><span class="p">]</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="s2">&quot;open&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Agent </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2"> is temporarily blocked&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">sender_id</span><span class="p">]</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="s2">"open"</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Agent </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2"> is temporarily blocked"</span><span class="p">)</span>
 
         <span class="c1"># Validate recipient authorization</span>
-        <span class="k">if</span> <span class="n">recipient_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;allowed_recipients&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">recipient_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">"allowed_recipients"</span><span class="p">]:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_security_event</span><span class="p">(</span>
-                <span class="s2">&quot;unauthorized_message_attempt&quot;</span><span class="p">,</span>
-                <span class="p">{</span><span class="s2">&quot;sender&quot;</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span> <span class="s2">&quot;recipient&quot;</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">}</span>
+                <span class="s2">"unauthorized_message_attempt"</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">"sender"</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span> <span class="s2">"recipient"</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">}</span>
             <span class="p">)</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Sender not authorized to message recipient&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Sender not authorized to message recipient"</span><span class="p">)</span>
 
         <span class="c1"># Validate message type</span>
-        <span class="k">if</span> <span class="n">message_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;allowed_message_types&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message type &#39;</span><span class="si">{</span><span class="n">message_type</span><span class="si">}</span><span class="s2">&#39; not allowed&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">message_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">"allowed_message_types"</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Message type '</span><span class="si">{</span><span class="n">message_type</span><span class="si">}</span><span class="s2">' not allowed"</span><span class="p">)</span>
 
         <span class="c1"># Sanitize payload</span>
-        <span class="n">sanitized_payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;trust_level&quot;</span><span class="p">])</span>
+        <span class="n">sanitized_payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sender</span><span class="p">[</span><span class="s2">"trust_level"</span><span class="p">])</span>
 
         <span class="c1"># Create signed message</span>
         <span class="n">signed_message</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;sender&quot;</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span>
-            <span class="s2">&quot;recipient&quot;</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">,</span>
-            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">message_type</span><span class="p">,</span>
-            <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="n">sanitized_payload</span><span class="p">,</span>
-            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
-            <span class="s2">&quot;signature&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sign_message</span><span class="p">(</span><span class="n">sender_id</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">,</span> 
+            <span class="s2">"sender"</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span>
+            <span class="s2">"recipient"</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">,</span>
+            <span class="s2">"type"</span><span class="p">:</span> <span class="n">message_type</span><span class="p">,</span>
+            <span class="s2">"payload"</span><span class="p">:</span> <span class="n">sanitized_payload</span><span class="p">,</span>
+            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="s2">"signature"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sign_message</span><span class="p">(</span><span class="n">sender_id</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">,</span> 
                                            <span class="n">message_type</span><span class="p">,</span> <span class="n">sanitized_payload</span><span class="p">)</span>
         <span class="p">}</span>
 
@@ -5179,25 +5179,25 @@
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">receive_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="c1"># Verify signature</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verify_signature</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Invalid message signature&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Invalid message signature"</span><span class="p">)</span>
 
         <span class="c1"># Check message freshness (prevent replay attacks)</span>
-        <span class="n">msg_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+        <span class="n">msg_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">])</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">msg_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Message expired (possible replay attack)&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Message expired (possible replay attack)"</span><span class="p">)</span>
 
         <span class="c1"># Validate recipient</span>
-        <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="s2">&quot;recipient&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">recipient_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Message recipient mismatch&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="s2">"recipient"</span><span class="p">]</span> <span class="o">!=</span> <span class="n">recipient_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Message recipient mismatch"</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">message</span><span class="p">[</span><span class="s2">&quot;payload&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">message</span><span class="p">[</span><span class="s2">"payload"</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">trust_level</span><span class="p">:</span> <span class="n">AgentTrustLevel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove sensitive data based on trust level.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Remove sensitive data based on trust level."""</span>
         <span class="k">if</span> <span class="n">trust_level</span> <span class="o">&lt;</span> <span class="n">AgentTrustLevel</span><span class="o">.</span><span class="n">PRIVILEGED</span><span class="p">:</span>
             <span class="c1"># Remove system-level fields for lower trust agents</span>
             <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> 
-                      <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_system&quot;</span><span class="p">)}</span>
+                      <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"_system"</span><span class="p">)}</span>
 
         <span class="c1"># Always sanitize potential injection content</span>
         <span class="k">return</span> <span class="n">sanitize_untrusted_content</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
@@ -5215,10 +5215,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DataClassification</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">PUBLIC</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span>
-    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="s2">&quot;internal&quot;</span>
-    <span class="n">CONFIDENTIAL</span> <span class="o">=</span> <span class="s2">&quot;confidential&quot;</span>
-    <span class="n">RESTRICTED</span> <span class="o">=</span> <span class="s2">&quot;restricted&quot;</span>  <span class="c1"># PII, financial, health</span>
+    <span class="n">PUBLIC</span> <span class="o">=</span> <span class="s2">"public"</span>
+    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="s2">"internal"</span>
+    <span class="n">CONFIDENTIAL</span> <span class="o">=</span> <span class="s2">"confidential"</span>
+    <span class="n">RESTRICTED</span> <span class="o">=</span> <span class="s2">"restricted"</span>  <span class="c1"># PII, financial, health</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DataProtectionPolicy</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -5226,22 +5226,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">handling_rules</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">classify_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataClassification</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically classify data based on content patterns.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Automatically classify data based on content patterns."""</span>
         <span class="n">patterns</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">DataClassification</span><span class="o">.</span><span class="n">RESTRICTED</span><span class="p">:</span> <span class="p">[</span>
-                <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{3}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">\b&#39;</span><span class="p">,</span>      <span class="c1"># SSN</span>
-                <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{16}</span><span class="s1">\b&#39;</span><span class="p">,</span>                  <span class="c1"># Credit card</span>
-                <span class="sa">r</span><span class="s1">&#39;\b[A-Z]</span><span class="si">{2}</span><span class="s1">\d{6,9}\b&#39;</span><span class="p">,</span>         <span class="c1"># Passport</span>
-                <span class="sa">r</span><span class="s1">&#39;diagnosis|prescription|patient&#39;</span><span class="p">,</span>  <span class="c1"># Health</span>
+                <span class="sa">r</span><span class="s1">'\b\d</span><span class="si">{3}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">\b'</span><span class="p">,</span>      <span class="c1"># SSN</span>
+                <span class="sa">r</span><span class="s1">'\b\d</span><span class="si">{16}</span><span class="s1">\b'</span><span class="p">,</span>                  <span class="c1"># Credit card</span>
+                <span class="sa">r</span><span class="s1">'\b[A-Z]</span><span class="si">{2}</span><span class="s1">\d{6,9}\b'</span><span class="p">,</span>         <span class="c1"># Passport</span>
+                <span class="sa">r</span><span class="s1">'diagnosis|prescription|patient'</span><span class="p">,</span>  <span class="c1"># Health</span>
             <span class="p">],</span>
             <span class="n">DataClassification</span><span class="o">.</span><span class="n">CONFIDENTIAL</span><span class="p">:</span> <span class="p">[</span>
-                <span class="sa">r</span><span class="s1">&#39;salary|compensation|bonus&#39;</span><span class="p">,</span>
-                <span class="sa">r</span><span class="s1">&#39;api[_-]?key|password|secret&#39;</span><span class="p">,</span>
-                <span class="sa">r</span><span class="s1">&#39;confidential|internal only&#39;</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">'salary|compensation|bonus'</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">'api[_-]?key|password|secret'</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">'confidential|internal only'</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="n">DataClassification</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">:</span> <span class="p">[</span>
-                <span class="sa">r</span><span class="s1">&#39;@company\.com&#39;</span><span class="p">,</span>
-                <span class="sa">r</span><span class="s1">&#39;internal|draft|not for distribution&#39;</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">'@company\.com'</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">'internal|draft|not for distribution'</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">}</span>
 
@@ -5253,22 +5253,22 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">apply_protection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">classification</span><span class="p">:</span> <span class="n">DataClassification</span><span class="p">,</span>
                          <span class="n">operation</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply appropriate protection based on classification.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Apply appropriate protection based on classification."""</span>
         <span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">DataClassification</span><span class="o">.</span><span class="n">RESTRICTED</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;include_in_context&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
-                <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
-                <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+                <span class="s2">"include_in_context"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+                <span class="s2">"log"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+                <span class="s2">"output"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
             <span class="p">},</span>
             <span class="n">DataClassification</span><span class="o">.</span><span class="n">CONFIDENTIAL</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;include_in_context&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
-                <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
-                <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
+                <span class="s2">"include_in_context"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
+                <span class="s2">"log"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+                <span class="s2">"output"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
             <span class="p">},</span>
             <span class="n">DataClassification</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;include_in_context&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-                <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
-                <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                <span class="s2">"include_in_context"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                <span class="s2">"log"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
+                <span class="s2">"output"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">}</span>
 
@@ -5276,12 +5276,12 @@
         <span class="k">return</span> <span class="n">handler</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_redact_fully</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;[REDACTED]&quot;</span>
+        <span class="k">return</span> <span class="s2">"[REDACTED]"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_mask_partially</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;****&quot;</span>
-        <span class="k">return</span> <span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+            <span class="k">return</span> <span class="s2">"****"</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"*"</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
 
 
 <span class="c1"># Usage in agent context building</span>
@@ -5295,12 +5295,12 @@
         <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">:</span>
             <span class="n">classification</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">classify_data</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="p">{})</span>
             <span class="n">protected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">apply_protection</span><span class="p">(</span>
-                <span class="n">doc</span><span class="p">,</span> <span class="n">classification</span><span class="p">,</span> <span class="s2">&quot;include_in_context&quot;</span>
+                <span class="n">doc</span><span class="p">,</span> <span class="n">classification</span><span class="p">,</span> <span class="s2">"include_in_context"</span>
             <span class="p">)</span>
             <span class="n">protected_docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">protected</span><span class="p">)</span>
 
         <span class="c1"># Combine and truncate</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">---</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">protected_docs</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">---</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">protected_docs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">context</span><span class="p">[:</span><span class="n">max_tokens</span> <span class="o">*</span> <span class="mi">4</span><span class="p">]</span>  <span class="c1"># Rough char estimate</span>
 </code></pre></div>
 <h3 id="9-secure-agent-testing-adversarial-validation">9. Secure Agent Testing &amp; Adversarial Validation<a class="headerlink" href="#9-secure-agent-testing-adversarial-validation" title="Permanent link">&para;</a></h3>

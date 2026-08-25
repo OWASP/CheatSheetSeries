@@ -4343,11 +4343,11 @@
 <p>Store this matrix in a machine-readable format (e.g., JSON, YAML, or structured test fixtures) rather than a spreadsheet. This allows testing frameworks to dynamically generate test cases, reducing manual maintenance as the authorization policy evolves.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Example Test Fixture Definition</span>
 <span class="nt">policies</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">resource</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/api/invoices/{id}&quot;</span>
-<span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GET&quot;</span>
-<span class="w">    </span><span class="nt">owner_role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tenant_user&quot;</span>
-<span class="w">    </span><span class="nt">allowed_roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;tenant_admin&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;system_auditor&quot;</span><span class="p p-Indicator">]</span>
-<span class="w">    </span><span class="nt">denied_roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;anonymous&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;different_tenant_user&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">resource</span><span class="p">:</span><span class="w"> </span><span class="s">"/api/invoices/{id}"</span>
+<span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">"GET"</span>
+<span class="w">    </span><span class="nt">owner_role</span><span class="p">:</span><span class="w"> </span><span class="s">"tenant_user"</span>
+<span class="w">    </span><span class="nt">allowed_roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"tenant_admin"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"system_auditor"</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">denied_roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"anonymous"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"different_tenant_user"</span><span class="p p-Indicator">]</span>
 <span class="w">    </span><span class="nt">expected_denial_code</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">403</span>
 </code></pre></div>
 <h2 id="regression-testing-patterns">Regression Testing Patterns<a class="headerlink" href="#regression-testing-patterns" title="Permanent link">&para;</a></h2>

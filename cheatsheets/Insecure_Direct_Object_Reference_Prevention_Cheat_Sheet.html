@@ -4074,10 +4074,10 @@
 </code></pre></div>
 <p>The 123 in the URL is a direct reference to the user's record in the database, often represented by the primary key. If an attacker changes this number to 124 and gains access to another user's information, the application is vulnerable to Insecure Direct Object Reference. This happens because the app didn't properly check if the user had permission to view data for user 124 before displaying it.</p>
 <p>In some cases, the identifier may not be in the URL, but rather in the POST body, as shown in the following example:</p>
-<div class="highlight"><pre><span></span><code>&lt;form action=&quot;/update_profile&quot; method=&quot;post&quot;&gt;
+<div class="highlight"><pre><span></span><code>&lt;form action="/update_profile" method="post"&gt;
   &lt;!-- Other fields for updating name, email, etc. --&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;user_id&quot; value=&quot;12345&quot;&gt;
-  &lt;button type=&quot;submit&quot;&gt;Update Profile&lt;/button&gt;
+  &lt;input type="hidden" name="user_id" value="12345"&gt;
+  &lt;button type="submit"&gt;Update Profile&lt;/button&gt;
 &lt;/form&gt;
 </code></pre></div>
 <p>In this example, the application allows users to update their profiles by submitting a form with the user ID in a hidden field. If the app doesn't perform proper access control on the server-side, attackers can manipulate the "user_id" field to modify profiles of other users without authorization.</p>

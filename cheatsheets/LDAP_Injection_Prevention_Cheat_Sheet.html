@@ -4339,7 +4339,7 @@ directory service. For general information about LDAP please visit <a href="http
 Java Naming and Directory Interface (JNDI) metacharacters and LDAP special characters — are listed in the following list.</p>
 <p>The <a href="https://ldapwiki.com/wiki/Wiki.jsp?page=DN%20Escape%20Values">exhaustive list</a> is the following: <code>\ # + &lt; &gt; , ; " =</code> and leading or trailing spaces.</p>
 <p>Some "special" characters that are allowed in Distinguished Names and do not need to be escaped include:</p>
-<div class="highlight"><pre><span></span><code>* ( ) . &amp; - _ [ ] ` ~ | @ $ % ^ ? : { } ! &#39;
+<div class="highlight"><pre><span></span><code>* ( ) . &amp; - _ [ ] ` ~ | @ $ % ^ ? : { } ! '
 </code></pre></div>
 <h4 id="search-filter-escaping">Search Filter Escaping<a class="headerlink" href="#search-filter-escaping" title="Permanent link">&para;</a></h4>
 <p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users with certain attributes, you may do so with search filters.</p>
@@ -4358,16 +4358,16 @@ Java Naming and Directory Interface (JNDI) metacharacters and LDAP special chara
 <h4 id="safe-java-escaping-example">Safe Java Escaping Example<a class="headerlink" href="#safe-java-escaping-example" title="Permanent link">&para;</a></h4>
 <p>The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
 only letters and spaces.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// String userSN = &quot;Sherlock Holmes&quot;; // Valid</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// String userSN = "Sherlock Holmes"; // Valid</span>
 <span class="c1">// ... beginning of LDAPInjection.searchRecord()...</span>
 <span class="n">sc</span><span class="p">.</span><span class="na">setSearchScope</span><span class="p">(</span><span class="n">SearchControls</span><span class="p">.</span><span class="na">SUBTREE_SCOPE</span><span class="p">);</span>
-<span class="n">String</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dc=example,dc=com&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"dc=example,dc=com"</span><span class="p">;</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">userSN</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[\\w\\s]*&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Invalid input&quot;</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">userSN</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">"[\\w\\s]*"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Invalid input"</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(sn = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userSN</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"(sn = "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userSN</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")"</span><span class="p">;</span>
 <span class="c1">// ... remainder of LDAPInjection.searchRecord()... </span>
 </code></pre></div>
 <p>When a database field must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
@@ -4379,17 +4379,17 @@ occur before the validation step (source: <a href="https://wiki.sei.cmu.edu/conf
 <h4 id="insecure-vs-secure-java-ldap-query-construction">Insecure vs Secure Java LDAP Query Construction<a class="headerlink" href="#insecure-vs-secure-java-ldap-query-construction" title="Permanent link">&para;</a></h4>
 <p>❌ <strong>Insecure Example (vulnerable to LDAP Injection)</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1">// User input directly concatenated into the filter</span>
-<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(&amp;(uid=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)(objectClass=person))&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"(&amp;(uid="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">")(objectClass=person))"</span><span class="p">;</span>
 <span class="n">NamingEnumeration</span><span class="o">&lt;</span><span class="n">SearchResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="s">&quot;ou=users,dc=example,dc=com&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">,</span><span class="w"> </span><span class="n">controls</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="s">"ou=users,dc=example,dc=com"</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">,</span><span class="w"> </span><span class="n">controls</span><span class="p">);</span>
 
 
 <span class="err">✅</span><span class="w"> </span><span class="n">Secure</span><span class="w"> </span><span class="nf">Example</span><span class="w"> </span><span class="p">(</span><span class="n">using</span><span class="w"> </span><span class="n">parameterized</span><span class="w"> </span><span class="n">filter</span><span class="p">)</span>
 
 <span class="c1">// User input safely passed as a parameter</span>
-<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(&amp;(uid={0})(objectClass=person))&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"(&amp;(uid={0})(objectClass=person))"</span><span class="p">;</span>
 <span class="n">NamingEnumeration</span><span class="o">&lt;</span><span class="n">SearchResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span>
-<span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="s">&quot;ou=users,dc=example,dc=com&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">controls</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="s">"ou=users,dc=example,dc=com"</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">controls</span><span class="p">);</span>
 </code></pre></div>
 <h4 id="safe-c-sharp-net-tba-example">Safe C Sharp .NET TBA Example<a class="headerlink" href="#safe-c-sharp-net-tba-example" title="Permanent link">&para;</a></h4>
 <p><a href="https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/">.NET AntiXSS</a> (now the Encoder class) has LDAP encoding functions including <code>Encoder.LdapFilterEncode(string)</code>, <code>Encoder.LdapDistinguishedNameEncode(string)</code> and <code>Encoder.LdapDistinguishedNameEncode(string, bool, bool)</code>.</p>

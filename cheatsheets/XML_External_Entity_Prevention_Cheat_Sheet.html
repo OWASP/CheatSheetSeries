@@ -5392,7 +5392,7 @@
 <p>For more information on XXE, please visit <a href="https://en.wikipedia.org/wiki/XML_external_entity_attack">XML External Entity (XXE)</a>.</p>
 <h2 id="general-guidance">General Guidance<a class="headerlink" href="#general-guidance" title="Permanent link">&para;</a></h2>
 <p><strong>The safest way to prevent XXE is always to disable DTDs (External Entities) completely.</strong> Depending on the parser, the method should be similar to the following:</p>
-<div class="highlight"><pre><span></span><code><span class="n">factory</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">factory</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://apache.org/xml/features/disallow-doctype-decl"</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 </code></pre></div>
 <p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion Laughs</a>. <strong>If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.</strong></p>
 <h3 id="xml-parser-security-features-matrix">XML Parser Security Features Matrix<a class="headerlink" href="#xml-parser-security-features-matrix" title="Permanent link">&para;</a></h3>
@@ -5553,7 +5553,7 @@
 <div class="highlight"><pre><span></span><code>&lt;cfset parseroptions = structnew()&gt;
 &lt;cfset parseroptions.ALLOWEXTERNALENTITIES = false&gt;
 &lt;cfscript&gt;
-a = XmlParse(&quot;xml.xml&quot;, false, parseroptions);
+a = XmlParse("xml.xml", false, parseroptions);
 writeDump(a);
 &lt;/cfscript&gt;
 </code></pre></div>
@@ -5596,10 +5596,10 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">    </span><span class="c1">// This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all</span>
 <span class="w">    </span><span class="c1">// XML entity attacks are prevented</span>
 <span class="w">    </span><span class="c1">// Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl</span>
-<span class="w">    </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"http://apache.org/xml/features/disallow-doctype-decl"</span><span class="p">;</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// and these as well, per Timothy Morgan&#39;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
+<span class="w">    </span><span class="c1">// and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setXIncludeAware</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// remaining parser logic</span>
@@ -5607,17 +5607,17 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// This should catch a failed setFeature feature</span>
 <span class="w">    </span><span class="c1">// NOTE: Each call to setFeature() should be in its own try/catch otherwise subsequent calls will be skipped.</span>
-<span class="w">    </span><span class="c1">// This is only important if you&#39;re ignoring errors for multi-provider support.</span>
-<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FEATURE</span>
-<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; is not supported by your XML processor.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// This is only important if you're ignoring errors for multi-provider support.</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">"ParserConfigurationException was thrown. The feature '"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FEATURE</span>
+<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">"' is not supported by your XML processor."</span><span class="p">);</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SAXException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// On Apache, this should be thrown when disallowing DOCTYPE</span>
-<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">warning</span><span class="p">(</span><span class="s">&quot;A DOCTYPE was passed into the XML document&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">warning</span><span class="p">(</span><span class="s">"A DOCTYPE was passed into the XML document"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// XXE that points to a file that doesn&#39;t exist</span>
-<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;IOException occurred, XXE may still possible: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="w">    </span><span class="c1">// XXE that points to a file that doesn't exist</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">"IOException occurred, XXE may still possible: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span>
 
@@ -5638,16 +5638,16 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">    </span><span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities</span>
 <span class="w">    </span><span class="c1">// JDK7+ - http://xml.org/sax/features/external-general-entities</span>
 <span class="w">    </span><span class="c1">//This feature has to be used together with the following one, otherwise it will not protect you from XXE for sure</span>
-<span class="w">    </span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">"http://xml.org/sax/features/external-general-entities"</span><span class="p">,</span>
 
 <span class="w">    </span><span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities</span>
 <span class="w">    </span><span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities</span>
 <span class="w">    </span><span class="c1">// JDK7+ - http://xml.org/sax/features/external-parameter-entities</span>
 <span class="w">    </span><span class="c1">//This feature has to be used together with the previous one, otherwise it will not protect you from XXE for sure</span>
-<span class="w">    </span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">"http://xml.org/sax/features/external-parameter-entities"</span><span class="p">,</span>
 
 <span class="w">    </span><span class="c1">// Disable external DTDs as well</span>
-<span class="w">    </span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>
+<span class="w">    </span><span class="s">"http://apache.org/xml/features/nonvalidating/load-external-dtd"</span>
 <span class="p">}</span>
 
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">feature</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">featuresToDisable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -5655,43 +5655,43 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">        </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"> </span>
 <span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// This should catch a failed setFeature feature</span>
-<span class="w">        </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">feature</span>
-<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; is probably not supported by your XML processor.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">"ParserConfigurationException was thrown. The feature '"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">feature</span>
+<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s">"' is probably not supported by your XML processor."</span><span class="p">);</span>
 <span class="w">        </span><span class="p">...</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Add these as per Timothy Morgan&#39;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
+<span class="w">    </span><span class="c1">// Add these as per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setXIncludeAware</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setExpandEntityReferences</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// As stated in the documentation, &quot;Feature for Secure Processing (FSP)&quot; is the central mechanism that will</span>
+<span class="w">    </span><span class="c1">// As stated in the documentation, "Feature for Secure Processing (FSP)" is the central mechanism that will</span>
 <span class="w">    </span><span class="c1">// help you safeguard XML processing. It instructs XML processors, such as parsers, validators, </span>
 <span class="w">    </span><span class="c1">// and transformers, to try and process XML securely, and the FSP can be used as an alternative to</span>
 <span class="w">    </span><span class="c1">// dbf.setExpandEntityReferences(false); to allow some safe level of Entity Expansion</span>
 <span class="w">    </span><span class="c1">// Exists from JDK6.</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">FEATURE_SECURE_PROCESSING</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// And, per Timothy Morgan: &quot;If for some reason support for inline DOCTYPEs are a requirement, then</span>
+<span class="w">    </span><span class="c1">// And, per Timothy Morgan: "If for some reason support for inline DOCTYPEs are a requirement, then</span>
 <span class="w">    </span><span class="c1">// ensure the entity settings are disabled (as shown above) and beware that SSRF attacks</span>
 <span class="w">    </span><span class="c1">// (http://cwe.mitre.org/data/definitions/918.html) and denial</span>
-<span class="w">    </span><span class="c1">// of service attacks (such as billion laughs or decompression bombs via &quot;jar:&quot;) are a risk.&quot;</span>
+<span class="w">    </span><span class="c1">// of service attacks (such as billion laughs or decompression bombs via "jar:") are a risk."</span>
 
 <span class="w">    </span><span class="c1">// remaining parser logic</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// This should catch a failed setFeature feature</span>
-<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;XMLConstants.FEATURE_SECURE_PROCESSING&#39;&quot;</span>
-<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; is probably not supported by your XML processor.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">"ParserConfigurationException was thrown. The feature 'XMLConstants.FEATURE_SECURE_PROCESSING'"</span>
+<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">" is probably not supported by your XML processor."</span><span class="p">);</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SAXException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// On Apache, this should be thrown when disallowing DOCTYPE</span>
-<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">warning</span><span class="p">(</span><span class="s">&quot;A DOCTYPE was passed into the XML document&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">warning</span><span class="p">(</span><span class="s">"A DOCTYPE was passed into the XML document"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// XXE that points to a file that doesn&#39;t exist</span>
-<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;IOException occurred, XXE may still possible: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="w">    </span><span class="c1">// XXE that points to a file that doesn't exist</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">"IOException occurred, XXE may still possible: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span>
 
@@ -5720,9 +5720,9 @@ Example code disabling DTDs (doctypes) altogether:</p>
 </code></pre></div>
 <p>or if you can't completely disable DTDs:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// This causes XMLStreamException to be thrown if external DTDs are accessed.</span>
-<span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 <span class="c1">// disable external entities</span>
-<span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">"javax.xml.stream.isSupportingExternalEntities"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
 <p>The setting <code>xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");</code> is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the <a href="#validator">Validator</a> section for the specific configuration.</p>
 <h3 id="oracle-dom-parser">Oracle DOM Parser<a class="headerlink" href="#oracle-dom-parser" title="Permanent link">&para;</a></h3>
@@ -5742,31 +5742,31 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <h3 id="transformerfactory">TransformerFactory<a class="headerlink" href="#transformerfactory" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.transform.TransformerFactory</code> from XXE, do this:</p>
 <div class="highlight"><pre><span></span><code><span class="n">TransformerFactory</span><span class="w"> </span><span class="n">tf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TransformerFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
-<span class="n">tf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<span class="n">tf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_STYLESHEET</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">tf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<span class="n">tf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_STYLESHEET</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="validator">Validator<a class="headerlink" href="#validator" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.validation.Validator</code> from XXE, do this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">SchemaFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SchemaFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="p">);</span>
-<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">SchemaFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SchemaFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span><span class="p">);</span>
+<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 <span class="n">Schema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">newSchema</span><span class="p">();</span>
 <span class="n">Validator</span><span class="w"> </span><span class="n">validator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">schema</span><span class="p">.</span><span class="na">newValidator</span><span class="p">();</span>
-<span class="n">validator</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<span class="n">validator</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">validator</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<span class="n">validator</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="schemafactory">SchemaFactory<a class="headerlink" href="#schemafactory" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.validation.SchemaFactory</code> from XXE, do this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">SchemaFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SchemaFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="p">);</span>
-<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">SchemaFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SchemaFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">"http://www.w3.org/2001/XMLSchema"</span><span class="p">);</span>
+<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 <span class="n">Schema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">newSchema</span><span class="p">(</span><span class="n">Source</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="saxtransformerfactory">SAXTransformerFactory<a class="headerlink" href="#saxtransformerfactory" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.transform.sax.SAXTransformerFactory</code> from XXE, do this:</p>
 <div class="highlight"><pre><span></span><code><span class="n">SAXTransformerFactory</span><span class="w"> </span><span class="n">sf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SAXTransformerFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
-<span class="n">sf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<span class="n">sf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_STYLESHEET</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">sf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<span class="n">sf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_STYLESHEET</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 <span class="n">sf</span><span class="p">.</span><span class="na">newXMLFilter</span><span class="p">(</span><span class="n">Source</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Note: Use of the following <code>XMLConstants</code> requires JAXP 1.5, which was added to Java in 7u40 and Java 8:</strong></p>
@@ -5778,30 +5778,30 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <h3 id="xmlreader">XMLReader<a class="headerlink" href="#xmlreader" title="Permanent link">&para;</a></h3>
 <p>To protect the Java <code>org.xml.sax.XMLReader</code> from an XXE attack, do this:</p>
 <div class="highlight"><pre><span></span><code><span class="n">XMLReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMLReaderFactory</span><span class="p">.</span><span class="na">createXMLReader</span><span class="p">();</span>
-<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
-<span class="c1">// This may not be strictly required as DTDs shouldn&#39;t be allowed at all, per previous line.</span>
-<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
-<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
-<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://apache.org/xml/features/disallow-doctype-decl"</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="c1">// This may not be strictly required as DTDs shouldn't be allowed at all, per previous line.</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://apache.org/xml/features/nonvalidating/load-external-dtd"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://xml.org/sax/features/external-general-entities"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://xml.org/sax/features/external-parameter-entities"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="saxreader">SAXReader<a class="headerlink" href="#saxreader" title="Permanent link">&para;</a></h3>
 <p>To protect a Java <code>org.dom4j.io.SAXReader</code> from an XXE attack, do this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
-<span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
-<span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://apache.org/xml/features/disallow-doctype-decl"</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://xml.org/sax/features/external-general-entities"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://xml.org/sax/features/external-parameter-entities"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
 <p>If your code does not have all of these lines, you could be vulnerable to an XXE attack.</p>
 <h3 id="saxbuilder">SAXBuilder<a class="headerlink" href="#saxbuilder" title="Permanent link">&para;</a></h3>
 <p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from an XXE attack, disallow DTDs (doctypes) entirely:</p>
 <div class="highlight"><pre><span></span><code><span class="n">SAXBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXBuilder</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://apache.org/xml/features/disallow-doctype-decl"</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
 <span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">fileName</span><span class="p">));</span>
 </code></pre></div>
 <p>Alternatively, if DTDs can't be completely disabled, disable external entities and entity expansion:</p>
 <div class="highlight"><pre><span></span><code><span class="n">SAXBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXBuilder</span><span class="p">();</span>
-<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
-<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
-<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://xml.org/sax/features/external-general-entities"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://xml.org/sax/features/external-parameter-entities"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">"http://apache.org/xml/features/nonvalidating/load-external-dtd"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 <span class="n">builder</span><span class="p">.</span><span class="na">setExpandEntities</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 <span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">fileName</span><span class="p">));</span>
 </code></pre></div>
@@ -5809,7 +5809,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <p>For APIs that take an <code>EntityResolver</code>, you can neutralize an XML parser's ability to resolve entities by <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS17-J.+Prevent+XML+External+Entity+Attacks">supplying a no-op implementation</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">NoOpEntityResolver</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">EntityResolver</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">InputSource</span><span class="w"> </span><span class="nf">resolveEntity</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">publicId</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">systemId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StringReader</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StringReader</span><span class="p">(</span><span class="s">""</span><span class="p">));</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 
@@ -5819,7 +5819,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="n">documentBuilder</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">NoOpEntityResolver</span><span class="p">());</span>
 </code></pre></div>
 <p>or more simply:</p>
-<div class="highlight"><pre><span></span><code><span class="n">EntityResolver</span><span class="w"> </span><span class="n">noop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">publicId</span><span class="p">,</span><span class="w"> </span><span class="n">systemId</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StringReader</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">));</span>
+<div class="highlight"><pre><span></span><code><span class="n">EntityResolver</span><span class="w"> </span><span class="n">noop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">publicId</span><span class="p">,</span><span class="w"> </span><span class="n">systemId</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StringReader</span><span class="p">(</span><span class="s">""</span><span class="p">));</span>
 <span class="n">xmlReader</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="n">noop</span><span class="p">);</span>
 <span class="n">documentBuilder</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="n">noop</span><span class="p">);</span>
 </code></pre></div>
@@ -5843,8 +5843,8 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <p><strong>Since <code>javax.xml.xpath.XPathExpression</code> can not be configured securely by itself, the untrusted data must be parsed through another securable XML parser first.</strong></p>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
-<span class="n">df</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
-<span class="n">df</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">df</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<span class="n">df</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 <span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">df</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
 <span class="n">String</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XPathExpression</span><span class="p">().</span><span class="na">evaluate</span><span class="p">(</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span>
 <span class="w">                            </span><span class="k">new</span><span class="w"> </span><span class="n">ByteArrayInputStream</span><span class="p">(</span><span class="n">xml</span><span class="p">.</span><span class="na">getBytes</span><span class="p">()))</span><span class="w"> </span><span class="p">);</span>
@@ -5913,9 +5913,9 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <p>The following example shows how it is made safe:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadXML</span><span class="p">()</span>
 <span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="kt">string</span><span class="w"> </span><span class="n">xxePayload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &#39;file:///C:/Users/testdata2.txt&#39;&gt;]&gt;&quot;</span>
-<span class="w">                     </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&lt;doc&gt;&amp;win;&lt;/doc&gt;&quot;</span><span class="p">;</span>
-<span class="w">   </span><span class="kt">string</span><span class="w"> </span><span class="n">xml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;?xml version=&#39;1.0&#39; ?&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">xxePayload</span><span class="p">;</span>
+<span class="w">   </span><span class="kt">string</span><span class="w"> </span><span class="n">xxePayload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM 'file:///C:/Users/testdata2.txt'&gt;]&gt;"</span>
+<span class="w">                     </span><span class="o">+</span><span class="w"> </span><span class="s">"&lt;doc&gt;&amp;win;&lt;/doc&gt;"</span><span class="p">;</span>
+<span class="w">   </span><span class="kt">string</span><span class="w"> </span><span class="n">xml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"&lt;?xml version='1.0' ?&gt;"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">xxePayload</span><span class="p">;</span>
 
 <span class="w">   </span><span class="n">XmlDocument</span><span class="w"> </span><span class="n">xmlDoc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XmlDocument</span><span class="p">();</span>
 <span class="w">   </span><span class="c1">// Setting this to NULL disables DTDs - Its NOT null by default.</span>
@@ -5960,7 +5960,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <p>This is due to the fact that it implements <code>IXPathNavigable</code> objects like <code>XmlDocument</code>, which are also unsafe by default in versions prior to 4.5.2.</p>
 <p>You can make <code>XPathNavigator</code> safe by giving it a safe parser like <code>XmlReader</code> (which is safe by default) in the <code>XPathDocument</code>'s constructor.</p>
 <p>Here is an example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">XmlReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XmlReader</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;example.xml&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">XmlReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XmlReader</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="s">"example.xml"</span><span class="p">);</span>
 <span class="n">XPathDocument</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XPathDocument</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
 <span class="n">XPathNavigator</span><span class="w"> </span><span class="n">nav</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doc</span><span class="p">.</span><span class="n">CreateNavigator</span><span class="p">();</span>
 <span class="kt">string</span><span class="w"> </span><span class="n">xml</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nav</span><span class="p">.</span><span class="n">InnerXml</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>

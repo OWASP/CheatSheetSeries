@@ -4459,8 +4459,8 @@
 <p>Please note, many client side frameworks and libraries offer client side query parameterization. These libraries often just build queries with string concatenation before sending raw queries to a server. Please ensure that query parameterization is done server-side!</p>
 <h3 id="prepared-statement-examples">Prepared Statement Examples<a class="headerlink" href="#prepared-statement-examples" title="Permanent link">&para;</a></h3>
 <h4 id="using-java-built-in-feature">Using Java built-in feature<a class="headerlink" href="#using-java-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
-<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span><span class="p">;</span><span class="w">  </span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"customerName"</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"SELECT account_balance FROM user_data WHERE user_name = ? "</span><span class="p">;</span><span class="w">  </span>
 <span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span>
 <span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span>
 <span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span>
@@ -4469,8 +4469,8 @@
 <div class="highlight"><pre><span></span><code><span class="c1">// HQL</span>
 <span class="nd">@Entity</span><span class="w"> </span><span class="c1">// declare as entity;</span>
 <span class="nd">@NamedQuery</span><span class="p">(</span>
-<span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">&quot;findByDescription&quot;</span><span class="p">,</span>
-<span class="w"> </span><span class="n">query</span><span class="o">=</span><span class="s">&quot;FROM Inventory i WHERE i.productDescription = :productDescription&quot;</span>
+<span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">"findByDescription"</span><span class="p">,</span>
+<span class="w"> </span><span class="n">query</span><span class="o">=</span><span class="s">"FROM Inventory i WHERE i.productDescription = :productDescription"</span>
 <span class="p">)</span>
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Inventory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span><span class="w"> </span><span class="p">{</span>
 <span class="w"> </span><span class="nd">@Id</span>
@@ -4480,24 +4480,24 @@
 
 <span class="c1">// Use case</span>
 <span class="c1">// This should REALLY be validated too</span>
-<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"Product-Description"</span><span class="p">);</span>
 <span class="c1">// Perform input validation to detect attacks</span>
 <span class="n">List</span><span class="o">&lt;</span><span class="n">Inventory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span>
-<span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">&quot;findByDescription&quot;</span><span class="p">)</span>
-<span class="w"> </span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span>
+<span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">"findByDescription"</span><span class="p">)</span>
+<span class="w"> </span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">"productDescription"</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span>
 
 <span class="c1">// Criteria API</span>
 <span class="c1">// This should REALLY be validated too</span>
-<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"Product-Description"</span><span class="p">);</span>
 <span class="c1">// Perform input validation to detect attacks</span>
 <span class="n">Inventory</span><span class="w"> </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Inventory</span><span class="p">)</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span>
-<span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span>
+<span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"productDescription"</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span>
 </code></pre></div>
 <h4 id="using-net-built-in-feature">Using .NET built-in feature<a class="headerlink" href="#using-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"SELECT account_balance FROM user_data WHERE user_name = ?"</span><span class="p">;</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
 <span class="w">   </span><span class="n">OleDbCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OleDbCommand</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
-<span class="w">   </span><span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OleDbParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">CustomerName</span><span class="w"> </span><span class="n">Name</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span>
+<span class="w">   </span><span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OleDbParameter</span><span class="p">(</span><span class="s">"customerName"</span><span class="p">,</span><span class="w"> </span><span class="n">CustomerName</span><span class="w"> </span><span class="n">Name</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span>
 <span class="w">   </span><span class="n">OleDbDataReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">();</span>
 <span class="w">   </span><span class="c1">// …</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">OleDbException</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -4505,40 +4505,40 @@
 <span class="p">}</span>
 </code></pre></div>
 <h4 id="using-asp-net-built-in-feature">Using ASP .NET built-in feature<a class="headerlink" href="#using-asp-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM Customers WHERE CustomerId = @CustomerId&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"SELECT * FROM Customers WHERE CustomerId = @CustomerId"</span><span class="p">;</span>
 <span class="n">SqlCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlCommand</span><span class="p">(</span><span class="n">sql</span><span class="p">);</span>
-<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">SqlDbType</span><span class="p">.</span><span class="n">Int</span><span class="p">));</span>
-<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">[</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">].</span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="s">"@CustomerId"</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">SqlDbType</span><span class="p">.</span><span class="n">Int</span><span class="p">));</span>
+<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">[</span><span class="s">"@CustomerId"</span><span class="p">].</span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 </code></pre></div>
 <h4 id="using-ruby-with-activerecord">Using Ruby with ActiveRecord<a class="headerlink" href="#using-ruby-with-activerecord" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1">## Create</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;owasp&#39;</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'owasp'</span><span class="p">)</span>
 <span class="c1">## Read</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;name = ?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">"name = ?"</span><span class="p">,</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
 <span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">name</span><span class="w"> </span><span class="p">})</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name = :name&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">"name = :name"</span><span class="p">,</span><span class="w"> </span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
 <span class="c1">## Update</span>
-<span class="n">project</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;owasp&#39;</span><span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'owasp'</span><span class="p">)</span>
 <span class="c1">## Delete</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'name'</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="using-ruby-built-in-feature">Using Ruby built-in feature<a class="headerlink" href="#using-ruby-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">insert_new_user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="n">prepare</span><span class="w"> </span><span class="s2">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
-<span class="n">insert_new_user</span><span class="o">.</span><span class="n">execute</span><span class="w"> </span><span class="s1">&#39;aizatto&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;20&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;male&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="n">insert_new_user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="n">prepare</span><span class="w"> </span><span class="s2">"INSERT INTO users (name, age, gender) VALUES (?, ? ,?)"</span>
+<span class="n">insert_new_user</span><span class="o">.</span><span class="n">execute</span><span class="w"> </span><span class="s1">'aizatto'</span><span class="p">,</span><span class="w"> </span><span class="s1">'20'</span><span class="p">,</span><span class="w"> </span><span class="s1">'male'</span>
 </code></pre></div>
 <h4 id="using-php-with-php-data-objects">Using PHP with PHP Data Objects<a class="headerlink" href="#using-php-with-php-data-objects" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="x">$stmt = $dbh-&gt;prepare(&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;);</span>
-<span class="x">$stmt-&gt;bindParam(&#39;:name&#39;, $name);</span>
-<span class="x">$stmt-&gt;bindParam(&#39;:value&#39;, $value);</span>
+<div class="highlight"><pre><span></span><code><span class="x">$stmt = $dbh-&gt;prepare("INSERT INTO REGISTRY (name, value) VALUES (:name, :value)");</span>
+<span class="x">$stmt-&gt;bindParam(':name', $name);</span>
+<span class="x">$stmt-&gt;bindParam(':value', $value);</span>
 </code></pre></div>
 <h4 id="using-cold-fusion-built-in-feature">Using Cold Fusion built-in feature<a class="headerlink" href="#using-cold-fusion-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>&lt;cfquery name = &quot;getFirst&quot; dataSource = &quot;cfsnippets&quot;&gt;
+<div class="highlight"><pre><span></span><code>&lt;cfquery name = "getFirst" dataSource = "cfsnippets"&gt;
     SELECT * FROM #strDatabasePrefix#_courses WHERE intCourseID =
-    &lt;cfqueryparam value = #intCourseID# CFSQLType = &quot;CF_SQL_INTEGER&quot;&gt;
+    &lt;cfqueryparam value = #intCourseID# CFSQLType = "CF_SQL_INTEGER"&gt;
 &lt;/cfquery&gt;
 </code></pre></div>
 <h4 id="using-perl-with-database-independent-interface">Using PERL with Database Independent Interface<a class="headerlink" href="#using-perl-with-database-independent-interface" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">my</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">my</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"INSERT INTO foo (bar, baz) VALUES ( ?, ? )"</span><span class="p">;</span>
 <span class="k">my</span><span class="w"> </span><span class="nv">$sth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$dbh</span><span class="o">-&gt;</span><span class="n">prepare</span><span class="p">(</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="p">);</span>
 <span class="nv">$sth</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span><span class="w"> </span><span class="nv">$bar</span><span class="p">,</span><span class="w"> </span><span class="nv">$baz</span><span class="w"> </span><span class="p">);</span>
 </code></pre></div>
@@ -4551,7 +4551,7 @@
 <span class="c1">// Using build-in macros (compile time checks)</span>
 <span class="kd">let</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqlx</span><span class="p">::</span><span class="n">query_as</span><span class="o">!</span><span class="p">(</span>
 <span class="w">        </span><span class="n">User</span><span class="p">,</span>
-<span class="w">        </span><span class="s">&quot;SELECT * FROM users WHERE name = ?&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">"SELECT * FROM users WHERE name = ?"</span><span class="p">,</span>
 <span class="w">        </span><span class="n">username</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pool</span><span class="p">)</span>
@@ -4560,7 +4560,7 @@
 
 <span class="c1">// Using built-in functions</span>
 <span class="kd">let</span><span class="w"> </span><span class="n">users</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqlx</span><span class="p">::</span><span class="n">query_as</span><span class="p">::</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span>
-<span class="w">        </span><span class="s">&quot;SELECT * FROM users WHERE name = ?&quot;</span>
+<span class="w">        </span><span class="s">"SELECT * FROM users WHERE name = ?"</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">username</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pool</span><span class="p">)</span>
@@ -4583,8 +4583,8 @@
 <div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">AnotherSafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">)</span>
 <span class="w">          </span><span class="k">AS</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span>
 <span class="k">BEGIN</span>
-<span class="w">   </span><span class="n">stmt</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SELECT balance FROM accounts_table WHERE user_ID = :1</span>
-<span class="s1">            AND department = :2&#39;</span><span class="p">;</span>
+<span class="w">   </span><span class="n">stmt</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s1">'SELECT balance FROM accounts_table WHERE user_ID = :1</span>
+<span class="s1">            AND department = :2'</span><span class="p">;</span>
 <span class="w">   </span><span class="k">EXECUTE</span><span class="w"> </span><span class="k">IMMEDIATE</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="p">;</span>
 <span class="w">   </span><span class="k">RETURN</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
 <span class="k">END</span><span class="p">;</span>
@@ -4600,10 +4600,10 @@
 <p>Bind variables are used to tell the database that the inputs to this dynamic SQL are 'data' and not possibly code:</p>
 <div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span>
 <span class="w">   </span><span class="k">DECLARE</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SELECT balance FROM accounts_table WHERE &#39;</span>
-<span class="w">                 </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;user_ID = @UID AND department = @DPT&#39;</span>
+<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'SELECT balance FROM accounts_table WHERE '</span>
+<span class="w">                 </span><span class="o">+</span><span class="w"> </span><span class="s1">'user_ID = @UID AND department = @DPT'</span>
 <span class="w">   </span><span class="k">EXEC</span><span class="w"> </span><span class="n">sp_executesql</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="p">,</span>
-<span class="w">                      </span><span class="s1">&#39;@UID VARCHAR(20), @DPT VARCHAR(10)&#39;</span><span class="p">,</span>
+<span class="w">                      </span><span class="s1">'@UID VARCHAR(20), @DPT VARCHAR(10)'</span><span class="p">,</span>
 <span class="w">                      </span><span class="o">@</span><span class="n">UID</span><span class="o">=@</span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="o">@</span><span class="n">DPT</span><span class="o">=@</span><span class="n">Dept</span>
 <span class="k">END</span>
 </code></pre></div>

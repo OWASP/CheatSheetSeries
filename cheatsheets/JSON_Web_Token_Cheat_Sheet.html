@@ -4447,24 +4447,24 @@
 </code></pre></div>
 <p>The first part (<a href="https://datatracker.ietf.org/doc/html/rfc7515#section-4"><strong>protected header</strong></a>) can be decoded into:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;alg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;typ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT&quot;</span>
+<span class="w">  </span><span class="nt">"alg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HS256"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"typ"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JWT"</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>The second part (<a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4"><strong>claims</strong></a>) can be decoded into:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;admin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;iat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1516239022</span>
+<span class="w">  </span><span class="nt">"sub"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"admin"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"iat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1516239022</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>The last part (<strong>signature</strong>) guarantees the authenticity of both the header and the claims, either using a public/private key pair (digital signature) or a shared secret (MAC), depending on the <code>alg</code> header value. For our example, it is computed as:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">base64url</span><span class="p">(</span>
 <span class="w">    </span><span class="nx">HMACSHA256</span><span class="p">(</span>
-<span class="w">        </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&quot;</span>
-<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;.&quot;</span>
-<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"</span>
+<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s2">"."</span>
+<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s2">"eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0"</span><span class="p">,</span>
 <span class="w">        </span><span class="nx">key</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="p">)</span>
@@ -4606,10 +4606,10 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
 
 <span class="c1"># Using a password/passphrase is not OK:</span>
-<span class="n">bad_secret</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;MyProject2026&quot;</span>
+<span class="n">bad_secret</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"MyProject2026"</span>
 
 <span class="c1"># Using a hardcoded secret is not OK:</span>
-<span class="n">bad_secret</span> <span class="o">=</span> <span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;KYkbbclxtjJMiHzoPvuahOfarej0VV-nQZPFxK0hyro=&#39;</span><span class="p">)</span>
+<span class="n">bad_secret</span> <span class="o">=</span> <span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="sa">b</span><span class="s1">'KYkbbclxtjJMiHzoPvuahOfarej0VV-nQZPFxK0hyro='</span><span class="p">)</span>
 
 <span class="c1"># Not a secure randomness source:</span>
 <span class="n">bad_secret</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randbytes</span><span class="p">(</span><span class="mi">256</span><span class="o">//</span><span class="mi">8</span><span class="p">)</span>
@@ -4812,10 +4812,10 @@
 <p>Some JWT implementations would accept to use a public key intended for public-key digital signature as if it was a secret key used for MAC verification. In this context, an attacker could forge a MAC-based JWT by using the public key of the real issuer as if it was a secret key.</p>
 <p>This threat is also called “key confusion” or “algorithm confusion”.</p>
 <p>Example of legitimate token issuance:</p>
-<div class="highlight"><pre><span></span><code><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="p">,</span> <span class="n">private_key_bytes</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;ES256&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="p">,</span> <span class="n">private_key_bytes</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"ES256"</span><span class="p">)</span>
 </code></pre></div>
 <p>Example of attacker forging a token based on key type confusion:</p>
-<div class="highlight"><pre><span></span><code><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">"HS256"</span><span class="p">)</span>
 </code></pre></div>
 <p>Example of validation potentially vulnerable to key type confusion:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># If the token is using a MAC, the library might interpret the public key bytes as a MAC secret:</span>
@@ -4829,15 +4829,15 @@
 <li>if possible, hardcode the accepted algorithms and do not mix public-key digital signatures algorithms and MAC algorithms.</li>
 </ul>
 <p>Example of validation not vulnerable because MAC algorithms are not accepted:</p>
-<div class="highlight"><pre><span></span><code><span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ES256&quot;</span><span class="p">])</span>
+<div class="highlight"><pre><span></span><code><span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">"ES256"</span><span class="p">])</span>
 </code></pre></div>
 <p>Example of validation not vulnerable because the key is strictly typed:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">joserfc</span><span class="w"> </span><span class="kn">import</span> <span class="n">jwt</span><span class="p">,</span> <span class="n">jwk</span>
 
-<span class="c1"># {&quot;kty&quot;:&quot;EC&quot;,</span>
-<span class="c1">#  &quot;crv&quot;:&quot;P-256&quot;,</span>
-<span class="c1">#  &quot;x&quot;:&quot;f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU&quot;,</span>
-<span class="c1">#  &quot;y&quot;:&quot;x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0&quot;}</span>
+<span class="c1"># {"kty":"EC",</span>
+<span class="c1">#  "crv":"P-256",</span>
+<span class="c1">#  "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",</span>
+<span class="c1">#  "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"}</span>
 <span class="n">public_key</span> <span class="o">=</span> <span class="n">jwk</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="n">jwk</span><span class="p">)</span>
 <span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
 </code></pre></div>
@@ -4873,15 +4873,15 @@
 </ul>
 <p>The issuer includes a <code>status</code> claim in the JWT. This claims contains the URI of the associated TSL and the index of the status of the JWT within this list:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;iss&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://issuer.example/&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NsxuACbpJ9N7Ix96aWrYxHX-EZ4&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;iat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1783635268</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;nbf&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1783635268</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;exp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1783653268</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;status_list&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;idx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://issuer.example/tsl/JAffke55FR5gtJQ_rtktWkSaTlI&quot;</span>
+<span class="w">    </span><span class="nt">"iss"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://issuer.example/"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"sub"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NsxuACbpJ9N7Ix96aWrYxHX-EZ4"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"iat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1783635268</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"nbf"</span><span class="p">:</span><span class="w"> </span><span class="mi">1783635268</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"exp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1783653268</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"status_list"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"idx"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://issuer.example/tsl/JAffke55FR5gtJQ_rtktWkSaTlI"</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
@@ -4891,14 +4891,14 @@
 <p>In some cases, the consumer of the token might want to maintain a JWT denylist. This might be for example used a simple form of JWT replay protection or as a workaround for the “stateless session” invalidation problem.</p>
 <p>A JWT deny list can typically be implemented based on the  <code>jti</code> and <code>iss</code> claims:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">revoke_token</span><span class="p">(</span><span class="n">claims</span><span class="p">):</span>
-    <span class="n">jti</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;jti&quot;</span><span class="p">)</span>
-    <span class="n">iss</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;iss&quot;</span><span class="p">)</span>
-    <span class="n">exp</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;exp&quot;</span><span class="p">)</span>
+    <span class="n">jti</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"jti"</span><span class="p">)</span>
+    <span class="n">iss</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"iss"</span><span class="p">)</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"exp"</span><span class="p">)</span>
     <span class="n">deny_list</span><span class="o">.</span><span class="n">insert</span><span class="p">((</span><span class="n">jti</span><span class="p">,</span> <span class="n">iss</span><span class="p">),</span> <span class="n">exp</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">is_token_revoked</span><span class="p">(</span><span class="n">claims</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">jti</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;jti&quot;</span><span class="p">)</span>
-    <span class="n">iss</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;iss&quot;</span><span class="p">)</span>
+    <span class="n">jti</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"jti"</span><span class="p">)</span>
+    <span class="n">iss</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"iss"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">deny_list</span><span class="o">.</span><span class="n">contains</span><span class="p">((</span><span class="n">jti</span><span class="p">,</span> <span class="n">iss</span><span class="p">))</span>
 </code></pre></div>
 <p>Depending on the application and the type of JWT, other claims might be more suitable.</p>
@@ -4909,8 +4909,8 @@
 </ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Not secure. Might be vulnerable to JWT malleability:</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">unsafe_revoke_token</span><span class="p">(</span><span class="n">claims</span><span class="p">):</span>
-    <span class="n">exp</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;exp&quot;</span><span class="p">)</span>
-    <span class="n">token_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"exp"</span><span class="p">)</span>
+    <span class="n">token_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
     <span class="n">deny_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">token_hash</span><span class="p">,</span> <span class="n">exp</span><span class="p">)</span>
 </code></pre></div>
 <p>Before implementing such a JWT denylist, you should consider whether there is a better solution for your problem:</p>

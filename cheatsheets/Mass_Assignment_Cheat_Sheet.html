@@ -4619,10 +4619,10 @@
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
 <p>Suppose there is a form for editing a user's account information:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;userid&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">text</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">"userid"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">"password"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">"email"</span> <span class="na">text</span><span class="o">=</span><span class="s">"text"</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>  
 </code></pre></div>
 <p>Here is the object that the form is binding to:</p>
@@ -4636,10 +4636,10 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>Here is the controller handling the request:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/addUser&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"/addUser"</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
 <span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">submit</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">   </span><span class="n">userService</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;successPage&quot;</span><span class="p">;</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">"successPage"</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Here is the typical request:</p>
@@ -4688,7 +4688,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <span class="w">    </span><span class="nd">@InitBinder</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;userid&quot;</span><span class="p">,</span><span class="s">&quot;password&quot;</span><span class="p">,</span><span class="s">&quot;email&quot;</span><span class="o">]</span><span class="p">);</span>
+<span class="w">        </span><span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">"userid"</span><span class="p">,</span><span class="s">"password"</span><span class="p">,</span><span class="s">"email"</span><span class="o">]</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">...</span>
 <span class="p">}</span>
@@ -4701,7 +4701,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <span class="w">   </span><span class="nd">@InitBinder</span>
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
 <span class="w">   </span><span class="p">{</span>
-<span class="w">      </span><span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;isAdmin&quot;</span><span class="o">]</span><span class="p">);</span>
+<span class="w">      </span><span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">"isAdmin"</span><span class="o">]</span><span class="p">);</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="p">...</span>
 <span class="p">}</span>
@@ -4717,17 +4717,17 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <span class="p">});</span>
 
 <span class="nx">UserSchema</span><span class="p">.</span><span class="nx">statics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+<span class="w">    </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'userid'</span><span class="p">,</span><span class="w"> </span><span class="s1">'password'</span><span class="p">,</span><span class="w"> </span><span class="s1">'email'</span><span class="p">]</span>
 <span class="p">};</span>
 
-<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
 
-<span class="nx">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
+<span class="nx">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">'underscore'</span><span class="p">);</span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="p">));</span>
 </code></pre></div>
 <p>Take a look <a href="http://underscorejs.org/#pick">here</a> for the documentation.</p>
 <h4 id="block-listing_1">Block-listing<a class="headerlink" href="#block-listing_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">massAssign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-mass-assign&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">massAssign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose-mass-assign'</span><span class="p">);</span>
 
 <span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
 <span class="w">    </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
@@ -4738,7 +4738,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 
 <span class="nx">UserSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">massAssign</span><span class="p">);</span>
 
-<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
 
 <span class="cm">/** Static method, useful for creation **/</span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
@@ -4748,8 +4748,8 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <span class="nx">user</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
 
 <span class="cm">/** Static massUpdate method **/</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bhelx&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">isAdmin</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="p">};</span>
-<span class="nx">User</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="w"> </span><span class="s1">&#39;_id&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">someId</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">$set</span><span class="o">:</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massUpdate</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="s1">'bhelx'</span><span class="p">,</span><span class="w"> </span><span class="nx">isAdmin</span><span class="o">:</span><span class="w"> </span><span class="s1">'true'</span><span class="w"> </span><span class="p">};</span>
+<span class="nx">User</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="w"> </span><span class="s1">'_id'</span><span class="o">:</span><span class="w"> </span><span class="nx">someId</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">$set</span><span class="o">:</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massUpdate</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
 </code></pre></div>
 <p>Take a look <a href="https://www.npmjs.com/package/mongoose-mass-assign">here</a> for the documentation.</p>
 <h3 id="ruby-on-rails">Ruby On Rails<a class="headerlink" href="#ruby-on-rails" title="Permanent link">&para;</a></h3>
@@ -4773,7 +4773,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
     <span class="k">private</span> <span class="nv">$email</span><span class="p">;</span>
     <span class="k">private</span> <span class="nv">$isAdmin</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$fillable </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span><span class="s1">&#39;password&#39;</span><span class="p">,</span><span class="s1">&#39;email&#39;</span><span class="p">);</span>
+    <span class="k">protected</span> <span class="nv">$fillable </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'userid'</span><span class="p">,</span><span class="s1">'password'</span><span class="p">,</span><span class="s1">'email'</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment">here</a> for the documentation.</p>
@@ -4791,7 +4791,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
     <span class="k">private</span> <span class="nv">$email</span><span class="p">;</span>
     <span class="k">private</span> <span class="nv">$isAdmin</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$guarded </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;isAdmin&#39;</span><span class="p">);</span>
+    <span class="k">protected</span> <span class="nv">$guarded </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'isAdmin'</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment">here</a> for the documentation.</p>

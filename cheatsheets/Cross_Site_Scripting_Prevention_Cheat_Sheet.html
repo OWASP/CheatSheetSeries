@@ -4633,12 +4633,12 @@
 <div class="highlight"><pre><span></span><code><span class="err">&amp;</span>    <span class="ni">&amp;amp;</span>
 <span class="err">&lt;</span>    <span class="ni">&amp;lt;</span>
 &gt;    <span class="ni">&amp;gt;</span>
-&quot;    <span class="ni">&amp;quot;</span>
-&#39;    <span class="ni">&amp;#x27;</span>
+"    <span class="ni">&amp;quot;</span>
+'    <span class="ni">&amp;#x27;</span>
 </code></pre></div>
 <h3 id="output-encoding-for-html-attribute-contexts">Output Encoding for “HTML Attribute Contexts”<a class="headerlink" href="#output-encoding-for-html-attribute-contexts" title="Permanent link">&para;</a></h3>
 <p>“HTML Attribute Contexts” occur when a variable is placed in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML attribute encoding to variables being placed in most HTML attributes. A list of safe HTML attributes is provided in the <strong>Safe Sinks</strong> section.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">&quot;$varUnsafe&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">"$varUnsafe"</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">”*x”</span> <span class="na">onblur</span><span class="o">=</span><span class="s">”alert(1)*”</span><span class="p">&gt;</span> // Example Attack
 </code></pre></div>
 <p><strong>It’s critical to use quotation marks like <code>"</code> or <code>'</code> to surround your variables.</strong> Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.</p>
@@ -4647,9 +4647,9 @@
 <p>“JavaScript Contexts” refers to the situation where variables are placed into inline JavaScript and then embedded in an HTML document. This situation commonly occurs in programs that heavily use custom JavaScript that is embedded in their web pages.</p>
 <p>However, the only ‘safe’ location for placing variables in JavaScript is inside a “quoted data value”. All other contexts are unsafe and you should not place variable data in them.</p>
 <p>Examples of “Quoted Data Values”</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="err">&#39;</span><span class="nx">$varUnsafe</span><span class="err">’</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="err">'</span><span class="nx">$varUnsafe</span><span class="err">’</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">x</span><span class="o">=</span><span class="err">’</span><span class="nx">$varUnsafe</span><span class="err">’</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">onmouseover</span><span class="o">=</span><span class="s">&quot;&#39;$varUnsafe&#39;&quot;</span><span class="err">&lt;/</span><span class="na">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">onmouseover</span><span class="o">=</span><span class="s">"'$varUnsafe'"</span><span class="err">&lt;/</span><span class="na">div</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Encode all characters using the <code>\xHH</code> format. Encoding libraries often have a <code>EncodeForJavaScript</code> or similar to support this function.</p>
 <p>Please look at the <a href="https://owasp.org/www-project-java-encoder/">OWASP Java Encoder JavaScript encoding examples</a> for examples of proper JavaScript use that requires minimal encoding.</p>
@@ -4657,8 +4657,8 @@
 <h3 id="output-encoding-for-css-contexts">Output Encoding for “CSS Contexts”<a class="headerlink" href="#output-encoding-for-css-contexts" title="Permanent link">&para;</a></h3>
 <p>“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks. <strong>Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">$</span><span class="n">varUnsafe</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$varUnsafe&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;property : $varUnsafe&quot;</span><span class="p">&gt;</span>Oh no<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"$varUnsafe"</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">"property : $varUnsafe"</span><span class="p">&gt;</span>Oh no<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>If you're using JavaScript to change a CSS property, look into using
 <code>style.property = x</code>.
@@ -4666,13 +4666,13 @@ This is a <strong>Safe Sink</strong> and will automatically CSS encode data in i
 <p>When inserting variables into CSS properties, ensure the data is properly encoded and sanitized to prevent injection attacks. Avoid placing variables directly into selectors or other CSS contexts.</p>
 <h3 id="output-encoding-for-url-contexts">Output Encoding for “URL Contexts”<a class="headerlink" href="#output-encoding-for-url-contexts" title="Permanent link">&para;</a></h3>
 <p>“URL Contexts” refer to variables placed into a URL. Most commonly, a developer will add a parameter or URL fragment to a URL base that is then displayed or used in some operation. Use URL Encoding for these scenarios.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://www.owasp.org?test=$varUnsafe&quot;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"http://www.owasp.org?test=$varUnsafe"</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
 </code></pre></div>
 <p>Encode all characters with the <code>%HH</code> encoding format. Make sure any attributes are fully quoted, same as JS and CSS.</p>
 <h4 id="common-mistake">Common Mistake<a class="headerlink" href="#common-mistake" title="Permanent link">&para;</a></h4>
 <p>There will be situations where you use a URL in different contexts. The most common one would be adding it to an <code>href</code> or <code>src</code> attribute of an <code>&lt;a&gt;</code> tag. In these scenarios, you should do URL encoding, followed by HTML attribute encoding.</p>
-<div class="highlight"><pre><span></span><code>url = &quot;https://site.com?data=&quot; + urlencode(parameter)
-<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;attributeEncode(url)&#39;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code>url = "https://site.com?data=" + urlencode(parameter)
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'attributeEncode(url)'</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>If you're using JavaScript to construct a URL Query Value, look into using <code>window.encodeURIComponent(x)</code>. This is a <strong>Safe Sink</strong> and will automatically URL encode data in it.</p>
 <h3 id="dangerous-contexts">Dangerous Contexts<a class="headerlink" href="#dangerous-contexts" title="Permanent link">&para;</a></h3>
@@ -4681,7 +4681,7 @@ This is a <strong>Safe Sink</strong> and will automatically CSS encode data in i
 <span class="cm">&lt;!-- Inside an HTML comment --&gt;</span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="nt">Directly</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">CSS</span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">ToDefineAnAttribute</span><span class="o">=</span><span class="s">test</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="nt">ToDefineATag</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/test&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">ToDefineATag</span> <span class="na">href</span><span class="o">=</span><span class="s">"/test"</span> <span class="p">/&gt;</span>
 </code></pre></div>
 <p>Other areas to be careful with include:</p>
 <ul>

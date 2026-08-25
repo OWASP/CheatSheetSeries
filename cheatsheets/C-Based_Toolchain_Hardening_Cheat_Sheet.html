@@ -4557,9 +4557,9 @@
 <p>When using auto configuration tools, there are a few files of interest worth mentioning. The files are part of the Autotools chain and include <code>m4</code> and the various <code>*.in</code>, <code>*.ac</code> (Autoconf), and <code>*.am</code> (Automake) files. At times, you will have to open them, or the resulting makefiles, to tune the "stock" configuration.</p>
 <p>There are three downsides to the command-line configuration tools in the toolchain: (1) they often ignore user requests, (2) they cannot create configurations, and (3) security is often not a goal.</p>
 <p>To demonstrate the first issue, configure your project with the following: <code>configure</code> <code>CFLAGS="-Wall</code> <code>-fPIE"</code> <code>CXXFLAGS="-Wall</code> <code>-fPIE"</code> <code>LDFLAGS="-pie"</code>. You will probably find that Autotools ignored your request, which means the command below will not produce expected results. As a workaround, you will have to open an <code>m4</code> script, <code>makefile.in</code> or <code>makefile.am</code>, and fix the configuration.</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>configure<span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-Wall -Wextra -Wconversion -fPIE -Wno-unused-parameter</span>
-<span class="s2">    -Wformat=2 -Wformat-security -fstack-protector-all -Wstrict-overflow&quot;</span>
-<span class="w">    </span><span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-pie -z,noexecstack -z,noexecheap -z,relro -z,now&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>configure<span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">"-Wall -Wextra -Wconversion -fPIE -Wno-unused-parameter</span>
+<span class="s2">    -Wformat=2 -Wformat-security -fstack-protector-all -Wstrict-overflow"</span>
+<span class="w">    </span><span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">"-pie -z,noexecstack -z,noexecheap -z,relro -z,now"</span>
 </code></pre></div>
 <p>For the second point, you will probably be disappointed to learn <a href="https://lists.gnu.org/archive/html/automake/2012-12/msg00019.html">Automake does not support the concept of configurations</a>. It's not entirely Autoconf's or Automake's fault - <em>Make</em> and its inability to detect changes is the underlying problem. Specifically, <em>Make</em> only <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html">checks modification times of prerequisites and targets</a>, and does not check things like <code>CFLAGS</code> and <code>CXXFLAGS</code>. The net effect is you will not receive expected results when you issue <code>make</code> <code>debug</code> and then <code>make</code> <code>test</code> or <code>make</code> <code>release</code>.</p>
 <p>Finally, you will probably be disappointed to learn tools such as Autoconf and Automake miss many security related opportunities and ship insecure out of the box. There are a number of compiler switches and linker flags that improve the defensive posture of a program, but they are not 'on' by default. Tools like Autoconf - which are supposed to handle this situation - often provide settings to serve the lowest of all denominators.</p>
@@ -4595,7 +4595,7 @@ endif
 …
 
 ## Merge ESAPI flags with user supplied flags. We perform the extra step to ensure
-## user options follow our options, which should give user option&#39;s a preference.
+## user options follow our options, which should give user option's a preference.
 override CFLAGS := $(ESAPI_CFLAGS) $(CFLAGS)
 override CXXFLAGS := $(ESAPI_CXXFLAGS) $(CXXFLAGS)
 override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
@@ -4607,7 +4607,7 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 </code></pre></div>
 <p>When you want the release build, Make will do nothing because it considers everything up to date despite the fact <code>CFLAGS</code> and <code>CXXFLAGS</code> have changed. Hence, your program will actually be in a debug configuration and risk a <code>SIGABRT</code> at runtime because debug instrumentation is present (recall <code>assert</code> calls <code>abort()</code> when <code>NDEBUG</code> is <strong>not</strong> defined). In essence, you have DoS'd yourself due to <code>make</code>.</p>
 <p>In addition, many projects do not honor the user's command-line. ESAPI C++ does its best to ensure a user's flags are honored via <code>override</code> as shown above, but other projects do not. For example, consider a project that should be built with Position Independent Executable (PIE or ASLR) enabled and data execution prevention (DEP) enabled. Dismissing user settings combined with insecure out of the box settings (and not picking them up during auto-setup or auto-configure) means a program built with the following will likely have neither defense:</p>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-fPIE&quot;</span><span class="w"> </span><span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-fPIE&quot;</span><span class="w"> </span><span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-pie -z,noexecstack, -z,noexecheap&quot;</span>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">"-fPIE"</span><span class="w"> </span><span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">"-fPIE"</span><span class="w"> </span><span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">"-pie -z,noexecstack, -z,noexecheap"</span>
 </code></pre></div>
 <p>Defenses such as ASLR and DEP are especially important on Linux because <a href="https://linux.die.net/man/5/elf">Data Execution - not Prevention - is the norm</a>.</p>
 <h3 id="integration">Integration<a class="headerlink" href="#integration" title="Permanent link">&para;</a></h3>
@@ -4621,10 +4621,10 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 </code></pre></div>
 <p><em>Note Well</em>: you might want engines, especially on Ivy Bridge microarchitectures (3rd generation Intel Core i5 and i7 processors). To have OpenSSL use the processor's random number generator (via the <code>rdrand</code> instruction), you will need to call OpenSSL's <code>ENGINE_load_rdrand()</code> function and then <code>ENGINE_set_default</code> with <code>ENGINE_METHOD_RAND</code>. See <a href="https://wiki.openssl.org/index.php/Random_Numbers">OpenSSL's Random Numbers</a> for details.</p>
 <p>If you configure without the switches, then you will likely have vulnerable code/libraries and risk failing an audit. If the program is a remote server, then the following command will reveal if compression is active on the channel:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;GET / HTTP1.0&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>&lt;nowiki&gt;example.com:443&lt;/nowiki&gt;
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"GET / HTTP1.0"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>&lt;nowiki&gt;example.com:443&lt;/nowiki&gt;
 </code></pre></div>
 <p><code>nm</code> or <code>openssl</code> <code>s_client</code> will show that compression is enabled in the client. In fact, any symbol within the <code>OPENSSL_NO_COMP</code> preprocessor macro will bear witness since <code>-no-comp</code> is translated into a <code>CFLAGS</code> define.</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>nm<span class="w"> </span>/usr/local/ssl/iphoneos/lib/libcrypto.a<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;(COMP_CTX_new|COMP_CTX_free)&quot;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>nm<span class="w"> </span>/usr/local/ssl/iphoneos/lib/libcrypto.a<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"(COMP_CTX_new|COMP_CTX_free)"</span>
 <span class="m">0000000000000110</span><span class="w"> </span>T<span class="w"> </span>COMP_CTX_free
 <span class="m">0000000000000000</span><span class="w"> </span>T<span class="w"> </span>COMP_CTX_new
 </code></pre></div>
@@ -4666,8 +4666,8 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 <span class="cp">##  define ESAPI_ASSERT1(exp) {                                    \</span>
 <span class="cp">    if(!(exp)) {                                                  \</span>
 <span class="cp">        std::ostringstream oss;                                     \</span>
-<span class="cp">        oss &lt;&lt; &quot;Assertion failed: &quot; &lt;&lt; (char*)(__FILE__) &lt;&lt; &quot;(&quot;     \</span>
-<span class="cp">            &lt;&lt; (int)__LINE__ &lt;&lt; &quot;): &quot; &lt;&lt; (char*)(__func__)          \</span>
+<span class="cp">        oss &lt;&lt; "Assertion failed: " &lt;&lt; (char*)(__FILE__) &lt;&lt; "("     \</span>
+<span class="cp">            &lt;&lt; (int)__LINE__ &lt;&lt; "): " &lt;&lt; (char*)(__func__)          \</span>
 <span class="cp">            &lt;&lt; std::endl;                                           \</span>
 <span class="cp">        std::cerr &lt;&lt; oss.str();                                     \</span>
 <span class="cp">        raise(SIGTRAP);                                             \</span>
@@ -4676,9 +4676,9 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 <span class="cp">##  define ESAPI_ASSERT2(exp, msg) {                               \</span>
 <span class="cp">    if(!(exp)) {                                                  \</span>
 <span class="cp">        std::ostringstream oss;                                     \</span>
-<span class="cp">        oss &lt;&lt; &quot;Assertion failed: &quot; &lt;&lt; (char*)(__FILE__) &lt;&lt; &quot;(&quot;     \</span>
-<span class="cp">            &lt;&lt; (int)__LINE__ &lt;&lt; &quot;): &quot; &lt;&lt; (char*)(__func__)          \</span>
-<span class="cp">            &lt;&lt; &quot;: \&quot;&quot; &lt;&lt; (msg) &lt;&lt; &quot;\&quot;&quot; &lt;&lt; std::endl;                \</span>
+<span class="cp">        oss &lt;&lt; "Assertion failed: " &lt;&lt; (char*)(__FILE__) &lt;&lt; "("     \</span>
+<span class="cp">            &lt;&lt; (int)__LINE__ &lt;&lt; "): " &lt;&lt; (char*)(__func__)          \</span>
+<span class="cp">            &lt;&lt; ": \"" &lt;&lt; (msg) &lt;&lt; "\"" &lt;&lt; std::endl;                \</span>
 <span class="cp">        std::cerr &lt;&lt; oss.str();                                     \</span>
 <span class="cp">        raise(SIGTRAP);                                             \</span>
 <span class="cp">    }                                                             \</span>
@@ -4709,7 +4709,7 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 <span class="w">            </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sigaction</span><span class="w"> </span><span class="p">(</span><span class="n">SIGTRAP</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">old_handler</span><span class="p">);</span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="c1">// Failed</span>
 
-<span class="w">            </span><span class="c1">// Don&#39;t step on another&#39;s handler</span>
+<span class="w">            </span><span class="c1">// Don't step on another's handler</span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">old_handler</span><span class="p">.</span><span class="n">sa_handler</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
 
 <span class="w">            </span><span class="n">new_handler</span><span class="p">.</span><span class="n">sa_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">DebugTrapHandler</span><span class="o">::</span><span class="n">NullHandler</span><span class="p">;</span>
@@ -4794,12 +4794,12 @@ b) -fstack-protector guards functions with high risk objects such as C strings, 
 <span class="nv">EGREP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>egrep
 …
 
-<span class="nv">GCC_COMPILER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>CXX<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;^gcc version&#39;</span><span class="k">)</span>
-<span class="nv">GCC41_OR_LATER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>CXX<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;^gcc version (4\.[1-9]|[5-9])&#39;</span><span class="k">)</span>
+<span class="nv">GCC_COMPILER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>CXX<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">'^gcc version'</span><span class="k">)</span>
+<span class="nv">GCC41_OR_LATER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>CXX<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">'^gcc version (4\.[1-9]|[5-9])'</span><span class="k">)</span>
 …
 
-<span class="nv">GNU_LD210_OR_LATER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>LD<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;^gnu ld .* (2\.1[0-9]|2\.[2-9])&#39;</span><span class="k">)</span>
-<span class="nv">GNU_LD214_OR_LATER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>LD<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;^gnu ld .* (2\.1[4-9]|2\.[2-9])&#39;</span><span class="k">)</span>
+<span class="nv">GNU_LD210_OR_LATER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>LD<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">'^gnu ld .* (2\.1[0-9]|2\.[2-9])'</span><span class="k">)</span>
+<span class="nv">GNU_LD214_OR_LATER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>shell<span class="w"> </span><span class="k">$(</span>LD<span class="k">)</span><span class="w"> </span>-v<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">$(</span>EGREP<span class="k">)</span><span class="w"> </span>-i<span class="w"> </span>-c<span class="w"> </span><span class="s1">'^gnu ld .* (2\.1[4-9]|2\.[2-9])'</span><span class="k">)</span>
 …
 
 ifeq<span class="w"> </span><span class="o">(</span><span class="k">$(</span>GCC_COMPILER<span class="k">)</span>,1<span class="o">)</span>
@@ -4837,7 +4837,7 @@ ifeq<span class="w"> </span><span class="o">(</span><span class="k">$(</span>GNU
 <span class="w">    </span><span class="nv">MY_LD_FLAGS</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span>-pie
 endif
 
-<span class="c1">## Use &#39;override&#39; to honor the user&#39;s command line</span>
+<span class="c1">## Use 'override' to honor the user's command line</span>
 override<span class="w"> </span>CFLAGS<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>MY_CC_FLAGS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>CFLAGS<span class="k">)</span>
 override<span class="w"> </span>CXXFLAGS<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>MY_CC_FLAGS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>CXXFLAGS<span class="k">)</span>
 override<span class="w"> </span>LDFLAGS<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="k">$(</span>MY_LD_FLAGS<span class="k">)</span><span class="w"> </span><span class="k">$(</span>LDFLAGS<span class="k">)</span>
@@ -4876,12 +4876,12 @@ override<span class="w"> </span>LDFLAGS<span class="w"> </span>:<span class="o">
 
 <span class="n">ASSERT</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
-<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? X is negative.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"WTF??? X is negative."</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
-<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;x is greater than y&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"x is greater than y"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
 <span class="k">else</span>
-<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;x is not greater than y&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"x is not greater than y"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
 </code></pre></div>
 <p>Notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with <code>x</code>. Just run the program and wait for it to tell you there is a problem. If there is a problem, the program will snap the debugger (and more importantly, not call a useless <code>abort()</code> as specified by Posix). It beats the snot out of <code>printf</code>s that are removed when no longer needed or that pollute outputs.</p>
 <p>Another conversion problem you will encounter is conversion between types, and <code>-Wconversion</code> will also catch it for you. The following will always have an opportunity to fail, and should light up like a Christmas tree:</p>
@@ -4895,7 +4895,7 @@ override<span class="w"> </span>LDFLAGS<span class="w"> </span>:<span class="o">
 
 <span class="n">ASSERT</span><span class="p">(</span><span class="n">cstr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">cstr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">))</span>
-<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port string is not valid.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"WTF??? Port string is not valid."</span><span class="p">);</span>
 
 <span class="n">istringstream</span><span class="w"> </span><span class="nf">iss</span><span class="p">(</span><span class="n">cstr</span><span class="p">);</span>
 <span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
@@ -4903,16 +4903,16 @@ override<span class="w"> </span>LDFLAGS<span class="w"> </span>:<span class="o">
 
 <span class="n">ASSERT</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">iss</span><span class="p">.</span><span class="n">fail</span><span class="p">()));</span>
 <span class="k">if</span><span class="p">(</span><span class="n">iss</span><span class="p">.</span><span class="n">fail</span><span class="p">())</span>
-<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Failed to read port.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"WTF??? Failed to read port."</span><span class="p">);</span>
 
 <span class="c1">// Should this be a port above the reserved range ([0-1024] on Unix)?</span>
 <span class="n">ASSERT</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
-<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port is too small&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"WTF??? Port is too small"</span><span class="p">);</span>
 
 <span class="n">ASSERT</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;</span><span class="p">(</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()));</span>
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;</span><span class="p">(</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">())))</span>
-<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port is too large&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"WTF??? Port is too large"</span><span class="p">);</span>
 
 <span class="c1">// OK to use port</span>
 <span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
@@ -4923,12 +4923,12 @@ override<span class="w"> </span>LDFLAGS<span class="w"> </span>:<span class="o">
 <div class="highlight"><pre><span></span><code><span class="kt">char</span><span class="w"> </span><span class="n">path</span><span class="p">[</span><span class="n">PATH_MAX</span><span class="p">];</span>
 <span class="err">…</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;%s/%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">GetDirectory</span><span class="p">(),</span><span class="w"> </span><span class="n">GetObjectName</span><span class="p">());</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">),</span><span class="w"> </span><span class="s">"%s/%s"</span><span class="p">,</span><span class="w"> </span><span class="n">GetDirectory</span><span class="p">(),</span><span class="w"> </span><span class="n">GetObjectName</span><span class="p">());</span>
 <span class="n">ASSERT</span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
 <span class="n">ASSERT</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">)));</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Unable to build full object name&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"WTF??? Unable to build full object name"</span><span class="p">);</span>
 
 <span class="c1">// OK to use path</span>
 <span class="err">…</span>
@@ -4949,7 +4949,7 @@ override<span class="w"> </span>LDFLAGS<span class="w"> </span>:<span class="o">
 <span class="mi">24</span><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
 <span class="mi">25</span><span class="w">    </span><span class="p">}</span>
 <span class="mi">26</span>
-<span class="mi">27</span><span class="w">    </span><span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%s/create&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">selinux_mnt</span><span class="p">);</span>
+<span class="mi">27</span><span class="w">    </span><span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">"%s/create"</span><span class="p">,</span><span class="w"> </span><span class="n">selinux_mnt</span><span class="p">);</span>
 <span class="mi">28</span><span class="w">    </span><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDWR</span><span class="p">);</span>
 </code></pre></div>
 <p>Unlike other examples, the above code will not debug itself, and you will have to set breakpoints and trace calls to determine the point of first failure. (And the code above gambles that the truncated file does not exist or is not under an adversary's control by blindly performing the <code>open</code>).</p>

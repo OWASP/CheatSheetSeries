@@ -5174,15 +5174,15 @@
 <div class="highlight"><pre><span></span><code><span class="cm">/*No DB framework used here in order to show the real use of</span>
 <span class="cm">  Prepared Statement from Java API*/</span>
 <span class="cm">/*Open connection with H2 database and use it*/</span>
-<span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;org.h2.Driver&quot;</span><span class="p">);</span>
-<span class="n">String</span><span class="w"> </span><span class="n">jdbcUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:h2:file:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">).</span><span class="na">getAbsolutePath</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/target/db&quot;</span><span class="p">;</span>
+<span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">"org.h2.Driver"</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">jdbcUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"jdbc:h2:file:"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">"."</span><span class="p">).</span><span class="na">getAbsolutePath</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"/target/db"</span><span class="p">;</span>
 <span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">jdbcUrl</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">    </span><span class="cm">/* Sample A: Select data using Prepared Statement*/</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select * from color where friendly_name = ?&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"select * from color where friendly_name = ?"</span><span class="p">;</span>
 <span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
 <span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"yellow"</span><span class="p">);</span>
 <span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="n">colors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
@@ -5191,10 +5191,10 @@
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/* Sample B: Insert data using Prepared Statement*/</span>
-<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;insert into color(friendly_name, red, green, blue) values(?, ?, ?, ?)&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"insert into color(friendly_name, red, green, blue) values(?, ?, ?, ?)"</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">;</span>
 <span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"orange"</span><span class="p">);</span>
 <span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">);</span>
 <span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">125</span><span class="p">);</span>
 <span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">);</span>
@@ -5202,19 +5202,19 @@
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">   </span><span class="cm">/* Sample C: Update data using Prepared Statement*/</span>
-<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;update color set blue = ? where friendly_name = ?&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"update color set blue = ? where friendly_name = ?"</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">updatedRecordCount</span><span class="p">;</span>
 <span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">"orange"</span><span class="p">);</span>
 <span class="w">        </span><span class="n">updatedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">   </span><span class="cm">/* Sample D: Delete data using Prepared Statement*/</span>
-<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;delete from color where friendly_name = ?&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"delete from color where friendly_name = ?"</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">deletedRecordCount</span><span class="p">;</span>
 <span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">"orange"</span><span class="p">);</span>
 <span class="w">        </span><span class="n">deletedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
 
@@ -5233,14 +5233,14 @@
 <div class="highlight"><pre><span></span><code><span class="n">EntityManager</span><span class="w"> </span><span class="n">entityManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="cm">/* Get a ref on EntityManager to access DB */</span>
-<span class="w">    </span><span class="n">entityManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Persistence</span><span class="p">.</span><span class="na">createEntityManagerFactory</span><span class="p">(</span><span class="s">&quot;testJPA&quot;</span><span class="p">).</span><span class="na">createEntityManager</span><span class="p">();</span>
+<span class="w">    </span><span class="n">entityManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Persistence</span><span class="p">.</span><span class="na">createEntityManagerFactory</span><span class="p">(</span><span class="s">"testJPA"</span><span class="p">).</span><span class="na">createEntityManager</span><span class="p">();</span>
 
 <span class="w">    </span><span class="cm">/* Define parameterized query prototype using named parameter to enhance readability */</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">queryPrototype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select c from Color c where c.friendlyName = :colorName&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">queryPrototype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"select c from Color c where c.friendlyName = :colorName"</span><span class="p">;</span>
 
 <span class="w">    </span><span class="cm">/* Create the query, set the named parameter and execute the query */</span>
 <span class="w">    </span><span class="n">Query</span><span class="w"> </span><span class="n">queryObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entityManager</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="n">queryPrototype</span><span class="p">);</span>
-<span class="w">    </span><span class="n">Color</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="n">queryObject</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;colorName&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">).</span><span class="na">getSingleResult</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Color</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="n">queryObject</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">"colorName"</span><span class="p">,</span><span class="w"> </span><span class="s">"yellow"</span><span class="p">).</span><span class="na">getSingleResult</span><span class="p">();</span>
 
 <span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">entityManager</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">entityManager</span><span class="p">.</span><span class="na">isOpen</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
@@ -5261,7 +5261,7 @@
 <div class="highlight"><pre><span></span><code><span class="cm">/* The context taken is, for example, to perform a PING against a computer.</span>
 <span class="cm">* The prevention is to use the feature provided by the Java API instead of building</span>
 <span class="cm">* a system command as String and execute it */</span>
-<span class="n">InetAddress</span><span class="w"> </span><span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">);</span>
+<span class="n">InetAddress</span><span class="w"> </span><span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">"localhost"</span><span class="p">);</span>
 <span class="kd">var</span><span class="w"> </span><span class="n">reachable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">host</span><span class="p">.</span><span class="na">isReachable</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
 </code></pre></div>
 <h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
@@ -5313,23 +5313,23 @@
 
 <span class="cm">/*Load XML file*/</span>
 <span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dbf</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
-<span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;src/test/resources/SampleXPath.xml&quot;</span><span class="p">));</span>
+<span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">"src/test/resources/SampleXPath.xml"</span><span class="p">));</span>
 
 <span class="cm">/* Create and configure parameter resolver */</span>
-<span class="n">String</span><span class="w"> </span><span class="n">bid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bk102&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">bid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"bk102"</span><span class="p">;</span>
 <span class="n">SimpleVariableResolver</span><span class="w"> </span><span class="n">variableResolver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleVariableResolver</span><span class="p">();</span>
-<span class="n">variableResolver</span><span class="p">.</span><span class="na">addVariable</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">QName</span><span class="p">(</span><span class="s">&quot;bookId&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">bid</span><span class="p">);</span>
+<span class="n">variableResolver</span><span class="p">.</span><span class="na">addVariable</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">QName</span><span class="p">(</span><span class="s">"bookId"</span><span class="p">),</span><span class="w"> </span><span class="n">bid</span><span class="p">);</span>
 
 <span class="cm">/*Create and configure XPATH expression*/</span>
 <span class="n">XPath</span><span class="w"> </span><span class="n">xpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XPathFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">().</span><span class="na">newXPath</span><span class="p">();</span>
 <span class="n">xpath</span><span class="p">.</span><span class="na">setXPathVariableResolver</span><span class="p">(</span><span class="n">variableResolver</span><span class="p">);</span>
-<span class="n">XPathExpression</span><span class="w"> </span><span class="n">xPathExpression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xpath</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;//book[@id=$bookId]&quot;</span><span class="p">);</span>
+<span class="n">XPathExpression</span><span class="w"> </span><span class="n">xPathExpression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xpath</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">"//book[@id=$bookId]"</span><span class="p">);</span>
 
 <span class="cm">/* Apply expression on XML document */</span>
 <span class="n">Object</span><span class="w"> </span><span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xPathExpression</span><span class="p">.</span><span class="na">evaluate</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span><span class="w"> </span><span class="n">XPathConstants</span><span class="p">.</span><span class="na">NODESET</span><span class="p">);</span>
 <span class="n">NodeList</span><span class="w"> </span><span class="n">nodesList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">NodeList</span><span class="p">)</span><span class="w"> </span><span class="n">nodes</span><span class="p">;</span>
 <span class="n">Element</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="n">nodesList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="kd">var</span><span class="w"> </span><span class="n">containsRalls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">book</span><span class="p">.</span><span class="na">getTextContent</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;Ralls, Kim&quot;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="n">containsRalls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">book</span><span class="p">.</span><span class="na">getTextContent</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">"Ralls, Kim"</span><span class="p">);</span>
 </code></pre></div>
 <h4 id="references_3">References<a class="headerlink" href="#references_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -5343,26 +5343,26 @@
 <h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">INPUT WAY: Receive data from user</span>
-<span class="cm">Here it&#39;s recommended to use strict input validation using allowlist approach.</span>
+<span class="cm">Here it's recommended to use strict input validation using allowlist approach.</span>
 <span class="cm">In fact, you ensure that only allowed characters are part of the input received.</span>
 <span class="cm">*/</span>
 
-<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You user login is owasp-user01&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"You user login is owasp-user01"</span><span class="p">;</span>
 
 <span class="cm">/* First we check that the value contains only expected character*/</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">))</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">"[a-zA-Z0-9\\s\\-]{1,50}"</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">))</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="cm">/* If the first check pass then ensure that potential dangerous character</span>
 <span class="cm">that we have allowed for business requirement are not used in a dangerous way.</span>
-<span class="cm">For example here we have allowed the character &#39;-&#39;, and, this can</span>
+<span class="cm">For example here we have allowed the character '-', and, this can</span>
 <span class="cm">be used in SQL injection so, we</span>
 <span class="cm">ensure that this character is not used is a continuous form.</span>
 <span class="cm">Use the API COMMONS LANG v3 to help in String analysis...</span>
 <span class="cm">*/</span>
-<span class="n">If</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">countMatches</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;--&quot;</span><span class="p">))</span>
+<span class="n">If</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">countMatches</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">),</span><span class="w"> </span><span class="s">"--"</span><span class="p">))</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
 <span class="p">}</span>
@@ -5374,18 +5374,18 @@
 <span class="cm">Use the OWASP Java Encoder API to handle HTML tag encoding (escaping)</span>
 <span class="cm">*/</span>
 
-<span class="n">String</span><span class="w"> </span><span class="n">outputToUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span>
-<span class="n">outputToUser</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;script&gt;alert(22);&lt;/script&gt;&lt;img src=&#39;#&#39; onload=&#39;javascript:alert(23);&#39;&gt;&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">outputToUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;"</span><span class="p">;</span>
+<span class="n">outputToUser</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">"&lt;script&gt;alert(22);&lt;/script&gt;&lt;img src='#' onload='javascript:alert(23);'&gt;"</span><span class="p">;</span>
 
-<span class="cm">/* Create a sanitizing policy that only allow tag &#39;&lt;p&gt;&#39; and &#39;&lt;strong&gt;&#39;*/</span>
-<span class="n">PolicyFactory</span><span class="w"> </span><span class="n">policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HtmlPolicyBuilder</span><span class="p">().</span><span class="na">allowElements</span><span class="p">(</span><span class="s">&quot;p&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;strong&quot;</span><span class="p">).</span><span class="na">toFactory</span><span class="p">();</span>
+<span class="cm">/* Create a sanitizing policy that only allow tag '&lt;p&gt;' and '&lt;strong&gt;'*/</span>
+<span class="n">PolicyFactory</span><span class="w"> </span><span class="n">policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HtmlPolicyBuilder</span><span class="p">().</span><span class="na">allowElements</span><span class="p">(</span><span class="s">"p"</span><span class="p">,</span><span class="w"> </span><span class="s">"strong"</span><span class="p">).</span><span class="na">toFactory</span><span class="p">();</span>
 
 <span class="cm">/* Sanitize the output that will be sent to user*/</span>
 <span class="n">String</span><span class="w"> </span><span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy</span><span class="p">.</span><span class="na">sanitize</span><span class="p">(</span><span class="n">outputToUser</span><span class="p">);</span>
 
 <span class="cm">/* Encode HTML Tag*/</span>
 <span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Encode</span><span class="p">.</span><span class="na">forHtml</span><span class="p">(</span><span class="n">safeOutput</span><span class="p">);</span>
-<span class="n">String</span><span class="w"> </span><span class="n">finalSafeOutputExpected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">finalSafeOutputExpected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;"</span><span class="p">;</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">finalSafeOutputExpected</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">safeOutput</span><span class="p">))</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
@@ -5407,23 +5407,23 @@
 <p>As there many NoSQL database system and each one use an API for call, it's important to ensure that user input received and used to build the API call expression does not contain any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.</p>
 <h4 id="example-mongodb">Example - MongoDB<a class="headerlink" href="#example-mongodb" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="cm">/* Here use MongoDB as target NoSQL DB */</span>
-<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Brooklyn&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Brooklyn"</span><span class="p">;</span>
 
 <span class="cm">/* First ensure that the input do no contains any special characters</span>
 <span class="cm">for the current NoSQL DB call API,</span>
-<span class="cm">here they are: &#39; &quot; \ ; { } $</span>
+<span class="cm">here they are: ' " \ ; { } $</span>
 <span class="cm">*/</span>
 <span class="c1">//Avoid regexp this time in order to made validation code</span>
 <span class="c1">//more easy to read and understand...</span>
 <span class="n">ArrayList</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">specialCharsList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;\\&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;;&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;}&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;$&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">"'"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">"\""</span><span class="p">);</span>
+<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">"\\"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">";"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">"{"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">"}"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">add</span><span class="p">(</span><span class="s">"$"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">};</span>
 
@@ -5442,18 +5442,18 @@
 <span class="cm">/* Then perform query on database using API to build expression */</span>
 <span class="c1">//Connect to the local MongoDB instance</span>
 <span class="k">try</span><span class="p">(</span><span class="n">MongoClient</span><span class="w"> </span><span class="n">mongoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MongoClient</span><span class="p">()){</span>
-<span class="w">    </span><span class="n">MongoDatabase</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mongoClient</span><span class="p">.</span><span class="na">getDatabase</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">MongoDatabase</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mongoClient</span><span class="p">.</span><span class="na">getDatabase</span><span class="p">(</span><span class="s">"test"</span><span class="p">);</span>
 <span class="w">    </span><span class="c1">//Use API query builder to create call expression</span>
 <span class="w">    </span><span class="c1">//Create expression</span>
-<span class="w">    </span><span class="n">Bson</span><span class="w"> </span><span class="n">expression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eq</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Bson</span><span class="w"> </span><span class="n">expression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eq</span><span class="p">(</span><span class="s">"borough"</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">);</span>
 <span class="w">    </span><span class="c1">//Perform call</span>
-<span class="w">    </span><span class="n">FindIterable</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="w"> </span><span class="n">restaurants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="na">getCollection</span><span class="p">(</span><span class="s">&quot;restaurants&quot;</span><span class="p">).</span><span class="na">find</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span>
+<span class="w">    </span><span class="n">FindIterable</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="w"> </span><span class="n">restaurants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="na">getCollection</span><span class="p">(</span><span class="s">"restaurants"</span><span class="p">).</span><span class="na">find</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span>
 <span class="w">    </span><span class="c1">//Verify result consistency</span>
 <span class="w">    </span><span class="n">restaurants</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Block</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nd">@Override</span>
 <span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="w"> </span><span class="n">doc</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">restBorough</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="n">doc</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">);</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="s">&quot;Brooklyn&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">restBorough</span><span class="p">))</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">restBorough</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="n">doc</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">"borough"</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="s">"Brooklyn"</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">restBorough</span><span class="p">))</span>
 <span class="w">            </span><span class="p">{</span>
 <span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
 <span class="w">            </span><span class="p">}</span>
@@ -5485,24 +5485,24 @@ introduced in
 <a href="https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0">Log4j 2.14.0</a>
 and limit the size of strings to 500 bytes using the
 <a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength"><code>maxStringLength</code> configuration attribute</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://logging.apache.org/xml/ns&quot;</span>
-<span class="w">               </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<span class="w">               </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"https://logging.apache.org/xml/ns"</span>
+<span class="w">               </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+<span class="w">               </span><span class="na">xsi:schemaLocation=</span><span class="s">"</span>
 <span class="s">                   https://logging.apache.org/xml/ns</span>
-<span class="s">                   https://logging.apache.org/xml/ns/log4j-config-2.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="s">                   https://logging.apache.org/xml/ns/log4j-config-2.xsd"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;Appenders&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Socket</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;SOCKET&quot;</span>
-<span class="w">            </span><span class="na">host=</span><span class="s">&quot;localhost&quot;</span>
-<span class="w">            </span><span class="na">port=</span><span class="s">&quot;12345&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Socket</span><span class="w"> </span><span class="na">name=</span><span class="s">"SOCKET"</span>
+<span class="w">            </span><span class="na">host=</span><span class="s">"localhost"</span>
+<span class="w">            </span><span class="na">port=</span><span class="s">"12345"</span><span class="nt">&gt;</span>
 <span class="w">      </span><span class="cm">&lt;!-- Limit the size of any string field in the produced JSON document to 500 bytes --&gt;</span>
-<span class="w">      </span><span class="nt">&lt;JsonTemplateLayout</span><span class="w"> </span><span class="na">maxStringLength=</span><span class="s">&quot;500&quot;</span>
-<span class="w">                          </span><span class="na">nullEventDelimiterEnabled=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;JsonTemplateLayout</span><span class="w"> </span><span class="na">maxStringLength=</span><span class="s">"500"</span>
+<span class="w">                          </span><span class="na">nullEventDelimiterEnabled=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/Socket&gt;</span>
 <span class="w">  </span><span class="nt">&lt;/Appenders&gt;</span>
 <span class="w">  </span><span class="nt">&lt;Loggers&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="nt">&lt;AppenderRef</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;SOCKET&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Root</span><span class="w"> </span><span class="na">level=</span><span class="s">"DEBUG"</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;AppenderRef</span><span class="w"> </span><span class="na">ref=</span><span class="s">"SOCKET"</span><span class="nt">/&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/Root&gt;</span>
 <span class="w">  </span><span class="nt">&lt;/Loggers&gt;</span>
 <span class="nt">&lt;/Configuration&gt;</span>
@@ -5522,12 +5522,12 @@ for more tips.</p>
 <span class="c1">//</span>
 <span class="c1">// Use parameterized logging to add user data to a message</span>
 <span class="c1">// The pattern should be a compile-time constant</span>
-<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Login failed for user {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">"Login failed for user {}."</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">);</span>
 <span class="c1">// BAD!</span>
 <span class="c1">//</span>
-<span class="c1">// Don&#39;t mix string concatenation and parameters</span>
+<span class="c1">// Don't mix string concatenation and parameters</span>
 <span class="c1">// If `username` contains `{}`, the exception will leak into the message</span>
-<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Failure for user &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; and role {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">"Failure for user "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" and role {}."</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">);</span>
 <span class="p">...</span>
 </code></pre></div>
 <p>See
@@ -5539,29 +5539,29 @@ for more information.</p>
 introduced in
 <a href="https://logback.qos.ch/news.html#1.3.8">Logback 1.3.8</a>.
 In the example below, Logback is configured to roll on 10 log files of 5 MiB each:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
 <span class="cp">&lt;!DOCTYPE configuration&gt;</span>
 <span class="nt">&lt;configuration&gt;</span>
-<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.classic.encoder.JsonEncoder&quot;</span><span class="nt">/&gt;</span>
-<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">/&gt;</span>
-<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">/&gt;</span>
-<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">"ch.qos.logback.classic.encoder.JsonEncoder"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">"ch.qos.logback.core.rolling.FixedWindowRollingPolicy"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">"ch.qos.logback.core.rolling.RollingFileAppender"</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">"ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"</span><span class="nt">/&gt;</span>
 
-<span class="w">  </span><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">"RollingFile"</span><span class="w"> </span><span class="na">class=</span><span class="s">"RollingFileAppender"</span><span class="nt">&gt;</span>
 <span class="w">    </span><span class="nt">&lt;file&gt;</span>app.log<span class="nt">&lt;/file&gt;</span>
-<span class="w">    </span><span class="nt">&lt;rollingPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;rollingPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">"FixedWindowRollingPolicy"</span><span class="nt">&gt;</span>
 <span class="w">      </span><span class="nt">&lt;fileNamePattern&gt;</span>app-%i.log<span class="nt">&lt;/fileNamePattern&gt;</span>
 <span class="w">      </span><span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
 <span class="w">      </span><span class="nt">&lt;maxIndex&gt;</span>10<span class="nt">&lt;/maxIndex&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/rollingPolicy&gt;</span>
-<span class="w">    </span><span class="nt">&lt;triggeringPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;triggeringPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">"SizeBasedTriggeringPolicy"</span><span class="nt">&gt;</span>
 <span class="w">      </span><span class="nt">&lt;maxFileSize&gt;</span>5MB<span class="nt">&lt;/maxFileSize&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/triggeringPolicy&gt;</span>
-<span class="w">    </span><span class="nt">&lt;encoder</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;JsonEncoder&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;encoder</span><span class="w"> </span><span class="na">class=</span><span class="s">"JsonEncoder"</span><span class="nt">/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;/appender&gt;</span>
 
-<span class="w">  </span><span class="nt">&lt;root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;SOCKET&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;root</span><span class="w"> </span><span class="na">level=</span><span class="s">"DEBUG"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">"SOCKET"</span><span class="nt">/&gt;</span>
 <span class="w">  </span><span class="nt">&lt;/root&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div>
@@ -5575,12 +5575,12 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 <span class="c1">//</span>
 <span class="c1">// Use parameterized logging to add user data to a message</span>
 <span class="c1">// The pattern should be a compile-time constant</span>
-<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Login failed for user {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">"Login failed for user {}."</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">);</span>
 <span class="c1">// BAD!</span>
 <span class="c1">//</span>
-<span class="c1">// Don&#39;t mix string concatenation and parameters</span>
+<span class="c1">// Don't mix string concatenation and parameters</span>
 <span class="c1">// If `username` contains `{}`, the exception will leak into the message</span>
-<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Failure for user &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; and role {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">"Failure for user "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" and role {}."</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">);</span>
 <span class="p">...</span>
 </code></pre></div>
 <h4 id="references_6">References<a class="headerlink" href="#references_6" title="Permanent link">&para;</a></h4>
@@ -5642,14 +5642,14 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 <span class="w">        </span><span class="c1">// Read the keyset into a KeysetHandle.</span>
 <span class="w">        </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span>
 <span class="w">        </span><span class="n">TinkJsonProtoKeysetFormat</span><span class="p">.</span><span class="na">parseKeyset</span><span class="p">(</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="w"> </span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/home/fredbloggs/aead_test_keyset.json&quot;</span><span class="p">)),</span><span class="w"> </span><span class="n">UTF_8</span><span class="p">),</span><span class="w"> </span><span class="n">InsecureSecretKeyAccess</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="w"> </span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">"/home/fredbloggs/aead_test_keyset.json"</span><span class="p">)),</span><span class="w"> </span><span class="n">UTF_8</span><span class="p">),</span><span class="w"> </span><span class="n">InsecureSecretKeyAccess</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
 
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;This message to be encrypted&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"This message to be encrypted"</span><span class="p">;</span>
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// Add some relevant context about the encrypted data that should be verified</span>
 <span class="w">        </span><span class="c1">// on decryption</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: fredbloggs@example.com&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Sender: fredbloggs@example.com"</span><span class="p">;</span>
 
 <span class="w">        </span><span class="c1">// Encrypt the message</span>
 <span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipherText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AesGcmSimple</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">metadata</span><span class="p">,</span><span class="w"> </span><span class="n">handle</span><span class="p">);</span>
@@ -5714,7 +5714,7 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 <span class="w">        </span><span class="n">SecureRandom</span><span class="w"> </span><span class="n">random</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SecureRandom</span><span class="p">();</span>
 <span class="w">        </span><span class="n">random</span><span class="p">.</span><span class="na">nextBytes</span><span class="p">(</span><span class="n">nonce</span><span class="p">);</span>
 
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;This message to be encrypted&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"This message to be encrypted"</span><span class="p">;</span>
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// Encrypt the message</span>
@@ -5729,8 +5729,8 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 
 <span class="kd">class</span> <span class="nc">AesGcmSimple</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AES&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">CIPHER_ALGORITHM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AES/GCM/NoPadding&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"AES"</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">CIPHER_ALGORITHM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"AES/GCM/NoPadding"</span><span class="p">;</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">KEY_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">TAG_LENGTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IV_LENGTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
@@ -5804,8 +5804,8 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 
 <span class="w">        </span><span class="c1">// Generate ECC key pair for Alice</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">alice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HybridSimple</span><span class="p">(</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/alicesmith/private_keyset.json&quot;</span><span class="p">),</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/alicesmith/public_keyset.json&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">"/home/alicesmith/private_keyset.json"</span><span class="p">),</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">"/home/alicesmith/public_keyset.json"</span><span class="p">)</span>
 
 <span class="w">        </span><span class="p">);</span>
 
@@ -5813,8 +5813,8 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 
 <span class="w">        </span><span class="c1">// Generate ECC key pair for Bob</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">bob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HybridSimple</span><span class="p">(</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/bobjones/private_keyset.json&quot;</span><span class="p">),</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/bobjones/public_keyset.json&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">"/home/bobjones/private_keyset.json"</span><span class="p">),</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">"/home/bobjones/public_keyset.json"</span><span class="p">)</span>
 
 <span class="w">        </span><span class="p">);</span>
 
@@ -5824,36 +5824,36 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 <span class="w">        </span><span class="c1">// obtain a new shared secret to avoid a long lived shared secret.</span>
 
 <span class="w">        </span><span class="c1">// Alice encrypts a message to send to Bob</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, Bob!&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello, Bob!"</span><span class="p">;</span>
 
 <span class="w">        </span><span class="c1">// Add some relevant context about the encrypted data that should be verified</span>
 <span class="w">        </span><span class="c1">// on decryption</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: alicesmith@example.com&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Sender: alicesmith@example.com"</span><span class="p">;</span>
 
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret being sent from Alice to Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret being sent from Alice to Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">cipherText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">bobPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext</span><span class="p">,</span><span class="w"> </span><span class="n">metadata</span><span class="p">);</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Ciphertext being sent from Alice to Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText</span><span class="p">));</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Ciphertext being sent from Alice to Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText</span><span class="p">));</span>
 
 
 <span class="w">        </span><span class="c1">// Bob decrypts the message</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">decrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="na">decrypt</span><span class="p">(</span><span class="n">cipherText</span><span class="p">,</span><span class="w"> </span><span class="n">metadata</span><span class="p">);</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret received by Bob from Alice: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret received by Bob from Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted</span><span class="p">);</span>
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
 
 <span class="w">        </span><span class="c1">// Bob encrypts a message to send to Alice</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, Alice!&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello, Alice!"</span><span class="p">;</span>
 
 <span class="w">        </span><span class="c1">// Add some relevant context about the encrypted data that should be verified</span>
 <span class="w">        </span><span class="c1">// on decryption</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: bobjones@example.com&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Sender: bobjones@example.com"</span><span class="p">;</span>
 
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret being sent from Bob to Alice: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret being sent from Bob to Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">);</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">cipherText2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">alicePublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">,</span><span class="w"> </span><span class="n">metadata2</span><span class="p">);</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Ciphertext being sent from Bob to Alice: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText2</span><span class="p">));</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Ciphertext being sent from Bob to Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText2</span><span class="p">));</span>
 
 <span class="w">        </span><span class="c1">// Bob decrypts the message</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">decrypted2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="na">decrypt</span><span class="p">(</span><span class="n">cipherText2</span><span class="p">,</span><span class="w"> </span><span class="n">metadata2</span><span class="p">);</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret received by Alice from Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret received by Alice from Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted2</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="nf">getKeysetHandle</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">filename</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span>
@@ -5938,33 +5938,33 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 <span class="w">        </span><span class="c1">// obtain a new shared secret to avoid a long lived shared secret.</span>
 
 <span class="w">        </span><span class="c1">// Alice encrypts a message to send to Bob</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">//, Bob!&quot;;</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret being sent from Alice to Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello"</span><span class="p">;</span><span class="w"> </span><span class="c1">//, Bob!";</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret being sent from Alice to Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
 
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">retPair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">bobPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">retPair</span><span class="p">.</span><span class="na">getKey</span><span class="p">();</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">cipherText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">retPair</span><span class="p">.</span><span class="na">getValue</span><span class="p">();</span>
 
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Both cipherText and nonce being sent from Alice to Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">nonce</span><span class="p">));</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Both cipherText and nonce being sent from Alice to Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">nonce</span><span class="p">));</span>
 
 
 <span class="w">        </span><span class="c1">// Bob decrypts the message</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">decrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="na">decrypt</span><span class="p">(</span><span class="n">alicePublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">cipherText</span><span class="p">,</span><span class="w"> </span><span class="n">nonce</span><span class="p">);</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret received by Bob from Alice: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret received by Bob from Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted</span><span class="p">);</span>
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
 
 <span class="w">        </span><span class="c1">// Bob encrypts a message to send to Alice</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">//, Alice!&quot;;</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret being sent from Bob to Alice: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">plaintext2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello"</span><span class="p">;</span><span class="w"> </span><span class="c1">//, Alice!";</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret being sent from Bob to Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">);</span>
 
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">retPair2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">alicePublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">);</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">nonce2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">retPair2</span><span class="p">.</span><span class="na">getKey</span><span class="p">();</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">cipherText2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">retPair2</span><span class="p">.</span><span class="na">getValue</span><span class="p">();</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Both cipherText2 and nonce2 being sent from Bob to Alice: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">nonce2</span><span class="p">));</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Both cipherText2 and nonce2 being sent from Bob to Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">cipherText2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Base64</span><span class="p">.</span><span class="na">getEncoder</span><span class="p">().</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">nonce2</span><span class="p">));</span>
 
 <span class="w">        </span><span class="c1">// Bob decrypts the message</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">decrypted2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="na">decrypt</span><span class="p">(</span><span class="n">bobPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">cipherText2</span><span class="p">,</span><span class="w"> </span><span class="n">nonce2</span><span class="p">);</span>
-<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret received by Alice from Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted2</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Secret received by Alice from Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted2</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">class</span> <span class="nc">ECDHSimple</span><span class="w"> </span><span class="p">{</span>
@@ -5976,8 +5976,8 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">ECDHSimple</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">KeyPairGenerator</span><span class="w"> </span><span class="n">keyPairGenerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyPairGenerator</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;EC&quot;</span><span class="p">);</span>
-<span class="w">        </span><span class="n">ECGenParameterSpec</span><span class="w"> </span><span class="n">ecSpec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ECGenParameterSpec</span><span class="p">(</span><span class="s">&quot;secp256r1&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Using secp256r1 curve</span>
+<span class="w">        </span><span class="n">KeyPairGenerator</span><span class="w"> </span><span class="n">keyPairGenerator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyPairGenerator</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">"EC"</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ECGenParameterSpec</span><span class="w"> </span><span class="n">ecSpec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ECGenParameterSpec</span><span class="p">(</span><span class="s">"secp256r1"</span><span class="p">);</span><span class="w"> </span><span class="c1">// Using secp256r1 curve</span>
 <span class="w">        </span><span class="n">keyPairGenerator</span><span class="p">.</span><span class="na">initialize</span><span class="p">(</span><span class="n">ecSpec</span><span class="p">);</span>
 <span class="w">        </span><span class="n">keyPair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keyPairGenerator</span><span class="p">.</span><span class="na">generateKeyPair</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
@@ -6008,8 +6008,8 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">AesKeyNonce</span><span class="w"> </span><span class="nf">generateAESParams</span><span class="p">(</span><span class="n">Key</span><span class="w"> </span><span class="n">partnerPublicKey</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">nonce</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">        </span><span class="c1">// Derive the secret based on this side&#39;s private key and the other side&#39;s public key</span>
-<span class="w">        </span><span class="n">KeyAgreement</span><span class="w"> </span><span class="n">keyAgreement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyAgreement</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;ECDH&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// Derive the secret based on this side's private key and the other side's public key</span>
+<span class="w">        </span><span class="n">KeyAgreement</span><span class="w"> </span><span class="n">keyAgreement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KeyAgreement</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">"ECDH"</span><span class="p">);</span>
 <span class="w">        </span><span class="n">keyAgreement</span><span class="p">.</span><span class="na">init</span><span class="p">(</span><span class="n">keyPair</span><span class="p">.</span><span class="na">getPrivate</span><span class="p">());</span>
 <span class="w">        </span><span class="n">keyAgreement</span><span class="p">.</span><span class="na">doPhase</span><span class="p">(</span><span class="n">partnerPublicKey</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 <span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keyAgreement</span><span class="p">.</span><span class="na">generateSecret</span><span class="p">();</span>
@@ -6018,7 +6018,7 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 
 <span class="w">        </span><span class="c1">// Copy first 32 bytes as the key</span>
 <span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">copyOfRange</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">AesGcmSimple</span><span class="p">.</span><span class="na">KEY_SIZE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">8</span><span class="p">));</span>
-<span class="w">        </span><span class="n">aesKeyNonce</span><span class="p">.</span><span class="na">Key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SecretKeySpec</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">length</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;AES&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">aesKeyNonce</span><span class="p">.</span><span class="na">Key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SecretKeySpec</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">length</span><span class="p">,</span><span class="w"> </span><span class="s">"AES"</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// Passed in nonce will be used.</span>
 <span class="w">        </span><span class="n">aesKeyNonce</span><span class="p">.</span><span class="na">Nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nonce</span><span class="p">;</span>

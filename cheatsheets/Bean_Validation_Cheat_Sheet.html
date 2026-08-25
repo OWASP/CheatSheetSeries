@@ -4338,7 +4338,7 @@
 
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Article</span><span class="w">  </span><span class="p">{</span>
 <span class="w"> </span><span class="c1">//Constraint: Alpha Numeric article titles only using a regular expression</span>
-<span class="w"> </span><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">)</span>
+<span class="w"> </span><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"[a-zA-Z0-9 ]"</span><span class="p">)</span>
 <span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">articleTitle</span><span class="p">;</span>
 <span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getArticleTitle</span><span class="p">()</span><span class="w">  </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w">  </span><span class="n">articleTitle</span><span class="p">;</span>
@@ -4360,19 +4360,19 @@
 
 <span class="w"> </span><span class="p">...</span>
 
-<span class="w"> </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/postArticle&quot;</span><span class="p">,</span><span class="w">  </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="w"> </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"/postArticle"</span><span class="p">,</span><span class="w">  </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
 <span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="nd">@ResponseBody</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">postArticle</span><span class="p">(</span><span class="nd">@Valid</span><span class="w">  </span><span class="n">Article</span><span class="w">  </span><span class="n">article</span><span class="p">,</span><span class="w">  </span><span class="n">BindingResult</span><span class="w">  </span><span class="n">result</span><span class="p">,</span>
 <span class="w"> </span><span class="n">HttpServletResponse</span><span class="w">  </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w">  </span><span class="o">=</span><span class="w">  </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">   </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w">  </span><span class="o">=</span><span class="w">  </span><span class="s">""</span><span class="p">;</span>
 <span class="w">   </span><span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
 <span class="w">   </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
 <span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="n">ObjectError</span><span class="w">  </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w">  </span><span class="n">errors</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;ERROR: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+<span class="w">    </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">"ERROR: "</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="w">   </span><span class="k">return</span><span class="w">  </span><span class="n">errorMessage</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="k">return</span><span class="w">  </span><span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+<span class="w">   </span><span class="k">return</span><span class="w">  </span><span class="s">"Validation Successful"</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="w"> </span><span class="p">}</span>
 <span class="p">}</span>
@@ -4414,21 +4414,21 @@
 
 <span class="w"> </span><span class="p">...</span>
 
-<span class="w"> </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/registerCustomer&quot;</span><span class="p">,</span><span class="w">  </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="w"> </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"/registerCustomer"</span><span class="p">,</span><span class="w">  </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
 <span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="nd">@ResponseBody</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">registerCustomer</span><span class="p">(</span><span class="nd">@Valid</span><span class="w"> </span><span class="n">Customer</span><span class="w"> </span><span class="n">customer</span><span class="p">,</span><span class="w"> </span><span class="n">BindingResult</span><span class="w"> </span><span class="n">result</span><span class="p">,</span>
 <span class="w"> </span><span class="n">HttpServletResponse</span><span class="w">  </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">   </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
 <span class="w">   </span><span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
 <span class="w">   </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
 
 <span class="w">   </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="n">ObjectError</span><span class="w">  </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w">  </span><span class="n">errors</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;ERROR: &quot;</span><span class="w">  </span><span class="o">+</span><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+<span class="w">    </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">"ERROR: "</span><span class="w">  </span><span class="o">+</span><span class="w">  </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="w">   </span><span class="k">return</span><span class="w">  </span><span class="n">errorMessage</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="k">return</span><span class="w">  </span><span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+<span class="w">   </span><span class="k">return</span><span class="w">  </span><span class="s">"Validation Successful"</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="w"> </span><span class="p">}</span>
 <span class="p">}</span>
@@ -4471,21 +4471,21 @@
 
 <span class="p">...</span>
 
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;/sendMessage&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/sendMessage"</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
 <span class="kd">public</span><span class="w"> </span><span class="nd">@ResponseBody</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">sendMessage</span><span class="p">(</span><span class="nd">@Valid</span><span class="w"> </span><span class="n">Message</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">BindingResult</span><span class="w"> </span><span class="n">result</span><span class="p">,</span>
 <span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">){</span>
 
 <span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">()){</span>
-<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
 <span class="w">      </span><span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
 <span class="w">      </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
 <span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="n">ObjectError</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">errors</span><span class="p">){</span>
-<span class="w">         </span><span class="n">errorMessage</span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;ERROR: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+<span class="w">         </span><span class="n">errorMessage</span><span class="o">+=</span><span class="w"> </span><span class="s">"ERROR: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">errorMessage</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="w">   </span><span class="k">else</span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="s">"Validation Successful"</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="p">}</span>
 <span class="p">}</span>
@@ -4541,21 +4541,21 @@
 
 <span class="w">   </span><span class="p">...</span>
 
-<span class="w">   </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;/scheduleVisit&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="w">   </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/scheduleVisit"</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="nd">@ResponseBody</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">scheduleVisit</span><span class="p">(</span><span class="nd">@Valid</span><span class="w"> </span><span class="n">DoctorVisit</span><span class="w"> </span><span class="n">doctorvisit</span><span class="p">,</span><span class="w"> </span><span class="n">BindingResult</span><span class="w"> </span><span class="n">result</span><span class="p">,</span>
 <span class="w">   </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">){</span>
 
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">()){</span>
-<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
 <span class="w">         </span><span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
 <span class="w">         </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
 <span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="n">ObjectError</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">errors</span><span class="p">){</span>
-<span class="w">            </span><span class="n">errorMessage</span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;ERROR: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+<span class="w">            </span><span class="n">errorMessage</span><span class="o">+=</span><span class="w"> </span><span class="s">"ERROR: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
 <span class="w">         </span><span class="p">}</span>
 <span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="n">errorMessage</span><span class="p">;</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">      </span><span class="k">else</span><span class="p">{</span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="s">"Validation Successful"</span><span class="p">;</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="p">}</span>
@@ -4600,21 +4600,21 @@
 
 <span class="w">   </span><span class="p">...</span>
 
-<span class="w">   </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;/postReview&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="w">   </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/postReview"</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="nd">@ResponseBody</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">postReview</span><span class="p">(</span><span class="nd">@Valid</span><span class="w"> </span><span class="n">Review</span><span class="w"> </span><span class="n">review</span><span class="p">,</span><span class="w"> </span><span class="n">BindingResult</span><span class="w"> </span><span class="n">result</span><span class="p">,</span>
 <span class="w">   </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">){</span>
 
 <span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">()){</span>
-<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
 <span class="w">         </span><span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
 <span class="w">         </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
 <span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="n">ObjectError</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">errors</span><span class="p">){</span>
-<span class="w">            </span><span class="n">errorMessage</span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;ERROR: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+<span class="w">            </span><span class="n">errorMessage</span><span class="o">+=</span><span class="w"> </span><span class="s">"ERROR: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
 <span class="w">         </span><span class="p">}</span>
 <span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="n">errorMessage</span><span class="p">;</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">       </span><span class="k">else</span><span class="p">{</span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="s">"Validation Successful"</span><span class="p">;</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="p">}</span>
@@ -4639,7 +4639,7 @@
 <p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/">documentation</a>.</p>
 <h2 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h2>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s">&quot;article.title.error&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"[a-zA-Z0-9 ]"</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s">"article.title.error"</span><span class="p">)</span>
 <span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">articleTitle</span><span class="p">;</span>
 </code></pre></div>
 <p>Spring MVC will then look up a message with ID <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/">documentation</a>.</p>

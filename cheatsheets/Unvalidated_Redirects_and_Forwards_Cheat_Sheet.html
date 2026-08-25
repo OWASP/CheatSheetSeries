@@ -4156,25 +4156,25 @@
 <h2 id="safe-url-redirects">Safe URL Redirects<a class="headerlink" href="#safe-url-redirects" title="Permanent link">&para;</a></h2>
 <p>When we want to redirect a user automatically to another page (without an action of the visitor such as clicking on a hyperlink) you might implement a code such as the following:</p>
 <p>Java</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;http://www.mysite.com&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">"http://www.mysite.com"</span><span class="p">);</span>
 </code></pre></div>
 <p>PHP</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
 <span class="cm">/* Redirect browser */</span>
-<span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Location: http://www.mysite.com&quot;</span><span class="p">);</span>
+<span class="nb">header</span><span class="p">(</span><span class="s2">"Location: http://www.mysite.com"</span><span class="p">);</span>
 <span class="cm">/* Exit to prevent the rest of the code from executing */</span>
 <span class="k">exit</span><span class="p">;</span>
 <span class="cp">?&gt;</span>
 </code></pre></div>
 <p>ASP .NET</p>
-<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">"~/folder/Login.aspx"</span><span class="p">)</span>
 </code></pre></div>
 <p>Rails</p>
 <div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">login_path</span>
 </code></pre></div>
 <p>Rust actix web</p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span><span class="p">::</span><span class="n">Found</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span><span class="p">::</span><span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https://mysite.com/&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span><span class="p">::</span><span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="s">"https://mysite.com/"</span><span class="p">))</span>
 <span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span>
 </code></pre></div>
 <p>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.</p>
@@ -4182,14 +4182,14 @@
 <p>The following examples demonstrate unsafe redirect and forward code.</p>
 <h3 id="dangerous-url-redirect-example-1">Dangerous URL Redirect Example 1<a class="headerlink" href="#dangerous-url-redirect-example-1" title="Permanent link">&para;</a></h3>
 <p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">GET or POST</a>) and redirects to that URL:</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span>
+<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"url"</span><span class="p">));</span>
 </code></pre></div>
 <p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL. Additionally, the PHP code after this <code>header()</code> function will continue to execute, so if the user configures their browser to ignore the redirect, they may be able to access the rest of the page.</p>
-<div class="highlight"><pre><span></span><code><span class="x">$redirect_url = $_GET[&#39;url&#39;];</span>
-<span class="x">header(&quot;Location: &quot; . $redirect_url);</span>
+<div class="highlight"><pre><span></span><code><span class="x">$redirect_url = $_GET['url'];</span>
+<span class="x">header("Location: " . $redirect_url);</span>
 </code></pre></div>
 <p>A similar example of C# .NET Vulnerable Code:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">"url"</span><span class="p">];</span>
 <span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
 </code></pre></div>
 <p>And in Rails:</p>
@@ -4223,12 +4223,12 @@
 <span class="w">       </span><span class="p">}</span>
 <span class="w">       </span><span class="k">else</span>
 <span class="w">       </span><span class="p">{</span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Home&quot;</span><span class="p">);</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">"Index"</span><span class="p">,</span><span class="w"> </span><span class="s">"Home"</span><span class="p">);</span>
 <span class="w">       </span><span class="p">}</span>
 <span class="w">     </span><span class="p">}</span>
 <span class="w">     </span><span class="k">else</span>
 <span class="w">     </span><span class="p">{</span>
-<span class="w">       </span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span>
+<span class="w">       </span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">""</span><span class="p">,</span><span class="w"> </span><span class="s">"The user name or password provided is incorrect."</span><span class="p">);</span>
 <span class="w">     </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span>
 
@@ -4248,9 +4248,9 @@
 <span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span>
 <span class="w">                    </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getQueryString</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">"fwd"</span><span class="p">))</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">fwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">fwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"fwd"</span><span class="p">);</span>
 <span class="w">      </span><span class="k">try</span>
 <span class="w">      </span><span class="p">{</span>
 <span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">getRequestDispatcher</span><span class="p">(</span><span class="n">fwd</span><span class="p">).</span><span class="na">forward</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span>

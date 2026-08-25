@@ -4414,10 +4414,10 @@
 <h4 id="always-use-wss-websocket-secure">Always Use WSS (WebSocket Secure)<a class="headerlink" href="#always-use-wss-websocket-secure" title="Permanent link">&para;</a></h4>
 <p>Never use unencrypted <code>ws://</code> connections in production. Unencrypted <code>ws://</code> connections allow eavesdropping and tampering.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Secure - always use this</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">(</span><span class="s1">&#39;wss://app.example.com/socket&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">(</span><span class="s1">'wss://app.example.com/socket'</span><span class="p">);</span>
 
 <span class="c1">// Insecure - never use in production</span>
-<span class="c1">// const socket = new WebSocket(&#39;ws://app.example.com/socket&#39;);</span>
+<span class="c1">// const socket = new WebSocket('ws://app.example.com/socket');</span>
 </code></pre></div>
 <p>See the <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a> for more details.</p>
 <h4 id="websocket-protocol-configuration">WebSocket Protocol Configuration<a class="headerlink" href="#websocket-protocol-configuration" title="Permanent link">&para;</a></h4>
@@ -4454,7 +4454,7 @@
 <p>Validate the <code>Origin</code> header on every handshake. Always use an explicit allowlist of trusted origins. Browsers include this header and malicious JavaScript cannot override it.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">wss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span>
 <span class="w">  </span><span class="nx">verifyClient</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">info</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">allowedOrigins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;https://app.example.com&#39;</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">allowedOrigins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">'https://app.example.com'</span><span class="p">];</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">allowedOrigins</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">origin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Rejected unauthorized origin: </span><span class="si">${</span><span class="nx">info</span><span class="p">.</span><span class="nx">origin</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 <span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
@@ -4473,7 +4473,7 @@
 <div class="highlight"><pre><span></span><code><span class="c1">// Example: Close WebSocket on session expiry</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">validateSession</span><span class="p">(</span><span class="nx">ws</span><span class="p">,</span><span class="w"> </span><span class="nx">sessionId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isSessionValid</span><span class="p">(</span><span class="nx">sessionId</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Session expired&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">'Session expired'</span><span class="p">);</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
@@ -4486,12 +4486,12 @@
 <p>Rotate tokens in long-lived connections to prevent hijacked sessions from persisting.</p>
 <h4 id="message-level-authorization">Message-Level Authorization<a class="headerlink" href="#message-level-authorization" title="Permanent link">&para;</a></h4>
 <p>Don't assume WebSocket connection equals unlimited access. Check authorization for each action:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 
 <span class="w">  </span><span class="c1">// Check authorization for each action</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;delete_user&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">user</span><span class="p">.</span><span class="nx">hasRole</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Access denied&#39;</span><span class="p">}));</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'delete_user'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">user</span><span class="p">.</span><span class="nx">hasRole</span><span class="p">(</span><span class="s1">'admin'</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'error'</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Access denied'</span><span class="p">}));</span>
 <span class="w">    </span><span class="k">return</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
@@ -4502,17 +4502,17 @@
 <p>Treat all WebSocket messages as untrusted input. WebSocket messages can carry injection payloads such as SQLi, XSS, and command injection.</p>
 <p><strong>Validate message structure and content</strong> using JSON schemas and allow-lists. Set reasonable size limits (typically 64KB or less) and implement rate limiting to prevent message flooding.</p>
 <p><strong>For binary data</strong>, verify file types using magic numbers rather than trusting content-type headers. Scan uploads for malware when appropriate, and use safe deserialization for protocols like protobuf or MessagePack.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">isBinary</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">isBinary</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isBinary</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Validate binary data</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">MAX_BINARY_SIZE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1009</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Message too large&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1009</span><span class="p">,</span><span class="w"> </span><span class="s1">'Message too large'</span><span class="p">);</span>
 <span class="w">      </span><span class="k">return</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="c1">// Check file type by magic numbers</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isValidFileType</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Invalid file type&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">'Invalid file type'</span><span class="p">);</span>
 <span class="w">      </span><span class="k">return</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
@@ -4521,12 +4521,12 @@
 <span class="p">});</span>
 </code></pre></div>
 <p><strong>To prevent message replay attacks</strong> include timestamps or nonces in messages and reject duplicates to ensure old messages cannot be maliciously resent.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 
 <span class="w">  </span><span class="c1">// Check timestamp or nonce to prevent replay</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isValidNonce</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">nonce</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Replay detected&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">'Replay detected'</span><span class="p">);</span>
 <span class="w">    </span><span class="k">return</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
@@ -4538,7 +4538,7 @@
 <span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 
 <span class="c1">// Dangerous - enables code execution</span>
-<span class="c1">// const message = eval(&#39;(&#39; + data + &#39;)&#39;);</span>
+<span class="c1">// const message = eval('(' + data + ')');</span>
 </code></pre></div>
 <p>See the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a> for more details.</p>
 <h3 id="service-tunneling-risks">Service Tunneling Risks<a class="headerlink" href="#service-tunneling-risks" title="Permanent link">&para;</a></h3>

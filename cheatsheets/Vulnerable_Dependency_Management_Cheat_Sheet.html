@@ -4604,12 +4604,12 @@
 <p><em>Example using java code in which the impacted function suffers from a <a href="https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/">Remote Code Execution</a> issue:</em></p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">callFunctionWithRCEIssue</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">externalInput</span><span class="p">){</span>
 <span class="w">    </span><span class="c1">//Apply input validation on the external input using regex</span>
-<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">externalInput</span><span class="p">)){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">"[a-zA-Z0-9]{1,50}"</span><span class="p">,</span><span class="w"> </span><span class="n">externalInput</span><span class="p">)){</span>
 <span class="w">        </span><span class="c1">//Call the flawed function using safe input</span>
 <span class="w">        </span><span class="n">functionWithRCEIssue</span><span class="p">(</span><span class="n">externalInput</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span>
 <span class="w">        </span><span class="c1">//Log the detection of exploitation</span>
-<span class="w">        </span><span class="n">SecurityLogger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Exploitation of the RCE issue XXXXX detected !&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">SecurityLogger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">"Exploitation of the RCE issue XXXXX detected !"</span><span class="p">);</span>
 <span class="w">        </span><span class="c1">//Raise an exception leading to a generic error send to the client...</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>

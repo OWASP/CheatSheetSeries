@@ -5198,13 +5198,13 @@
 </ul>
 <h3 id="command-line-pattern-detection">Command-Line Pattern Detection<a class="headerlink" href="#command-line-pattern-detection" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Find hardcoded secrets</span>
-grep<span class="w"> </span>-ri<span class="w"> </span><span class="s2">&quot;password\s*=\|api_key\s*=\|secret\s*=&quot;</span><span class="w"> </span>source/
+grep<span class="w"> </span>-ri<span class="w"> </span><span class="s2">"password\s*=\|api_key\s*=\|secret\s*="</span><span class="w"> </span>source/
 
 <span class="c1"># Find unsafe functions</span>
-grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;eval(\|exec(\|innerHTML\|document\.write&quot;</span><span class="w"> </span>source/
+grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">"eval(\|exec(\|innerHTML\|document\.write"</span><span class="w"> </span>source/
 
 <span class="c1"># Find potential injections</span>
-grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;SELECT.*+\|executeQuery.*+&quot;</span><span class="w"> </span>source/
+grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">"SELECT.*+\|executeQuery.*+"</span><span class="w"> </span>source/
 </code></pre></div>
 <h3 id="manual-review-focus-areas">Manual Review Focus Areas<a class="headerlink" href="#manual-review-focus-areas" title="Permanent link">&para;</a></h3>
 <p><strong>Human Expertise Advantages:</strong></p>

@@ -4123,14 +4123,14 @@
 <h3 id="use-new-set-or-new-map">Use "new Set()" or "new Map()"<a class="headerlink" href="#use-new-set-or-new-map" title="Permanent link">&para;</a></h3>
 <p>Developers should use <code>new Set()</code> or <code>new Map()</code> instead of using object literals:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">allowedTags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Set</span><span class="p">();</span>
-<span class="nx">allowedTags</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="nx">allowedTags</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)){</span>
+<span class="nx">allowedTags</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'b'</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">allowedTags</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'b'</span><span class="p">)){</span>
 <span class="w">  </span><span class="c1">//...</span>
 <span class="p">}</span>
 
 <span class="kd">let</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Map</span><span class="p">();</span>
-<span class="nx">options</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;spaces&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">spaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;spaces&#39;</span><span class="p">)</span>
+<span class="nx">options</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'spaces'</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">spaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'spaces'</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="if-objects-or-object-literals-are-required">If objects or object literals are required<a class="headerlink" href="#if-objects-or-object-literals-are-required" title="Permanent link">&para;</a></h3>
 <p>If objects have to be used then they should be created using the <code>Object.create(null)</code> API to ensure they don't inherit from the Object prototype:</p>

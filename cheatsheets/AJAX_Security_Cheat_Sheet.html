@@ -4723,22 +4723,22 @@ This applies to:</p>
 <li>Keylogging user inputs.</li>
 </ul>
 <h6 id="vulnerable-example">Vulnerable Example<a class="headerlink" href="#vulnerable-example" title="Permanent link">&para;</a></h6>
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span><span class="w"> </span>
-<span class="w">    </span><span class="c1">// DANGER! The server may have returned a payload that executes scripts, for example: &lt;img src=abc onerror=alert(&#39;xss!&#39;)&gt;.</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'content'</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">// DANGER! The server may have returned a payload that executes scripts, for example: &lt;img src=abc onerror=alert('xss!')&gt;.</span>
 </code></pre></div>
 <h5 id="when-is-innerhtml-acceptable">When is <code>innerHTML</code> acceptable?<a class="headerlink" href="#when-is-innerhtml-acceptable" title="Permanent link">&para;</a></h5>
 <p>The fundamental security rule is to never use innerHTML with untrusted data. However, in limited cases, such as legacy monolithic applications with no viable alternatives, innerHTML may be used cautiously:</p>
 <ul>
 <li><strong>Static, Hardcoded HTML</strong>: For small, fixed HTML snippets that are part of your application’s source code and contain no user input:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;footer&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;p&gt;© 2025 My Company. All rights reserved.&lt;/p&gt;&#39;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'footer'</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'&lt;p&gt;© 2025 My Company. All rights reserved.&lt;/p&gt;'</span><span class="p">;</span>
 </code></pre></div>
 <ul>
 <li><strong>Sanitized HTML</strong>: For user-generated HTML (e.g., in rich text editors), sanitize with a library like <a href="DOM_Clobbering_Prevention_Cheat_Sheet.html#1-html-sanitization">DOMPurify</a> before using innerHTML:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;dompurify&#39;</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;img src=abc onerror=alert(&quot;xss&quot;)&gt;&#39;</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">userInput</span><span class="p">);</span><span class="w"> </span><span class="c1">// Safe, removes malicious code</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'dompurify'</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'&lt;img src=abc onerror=alert("xss")&gt;'</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'content'</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">userInput</span><span class="p">);</span><span class="w"> </span><span class="c1">// Safe, removes malicious code</span>
 </code></pre></div>
 <h5 id="alternatives">Alternatives<a class="headerlink" href="#alternatives" title="Permanent link">&para;</a></h5>
 <ul>
@@ -4749,13 +4749,13 @@ This applies to:</p>
 <p>In AJAX and monolithic server-side rendering applications (e.g., PHP, ASP.NET), dynamic Document Object Model (DOM) updates are common for rendering text-only content from APIs or user inputs.</p>
 <h5 id="what-is-textcontent">What is <code>textContent</code>?<a class="headerlink" href="#what-is-textcontent" title="Permanent link">&para;</a></h5>
 <p>The <code>textContent</code> property sets or gets the plain text content of an element. It treats inserted HTML tags as literal text and does not parse them. It is ideal for most text-only updates, such as displaying user comments, etc.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;script&gt;alert(&quot;OWASP&quot;)&lt;/script&gt;&#39;</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">userInput</span><span class="p">;</span><span class="w"> </span><span class="c1">// Displays plain text</span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'&lt;script&gt;alert("OWASP")&lt;/script&gt;'</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'content'</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">userInput</span><span class="p">;</span><span class="w"> </span><span class="c1">// Displays plain text</span>
 </code></pre></div>
 <h5 id="what-is-innertext">What is <code>innerText</code>?<a class="headerlink" href="#what-is-innertext" title="Permanent link">&para;</a></h5>
 <p>The <code>innerText</code> property sets or gets the visible text content of an element, respecting CSS styling (e.g., ignoring text in <code>display: none</code> elements). It also reflects rendered text formatting, such as line breaks or spacing.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;OWASP&#39;</span><span class="p">;</span><span class="w"> </span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">).</span><span class="nx">innerText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">userInput</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'OWASP'</span><span class="p">;</span><span class="w"> </span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'content'</span><span class="p">).</span><span class="nx">innerText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">userInput</span><span class="p">;</span>
 </code></pre></div>
 <h5 id="when-to-use-textcontent-vs-innertext">When to Use <code>textContent</code> vs. <code>innerText</code><a class="headerlink" href="#when-to-use-textcontent-vs-innertext" title="Permanent link">&para;</a></h5>
 <ul>
@@ -4807,13 +4807,13 @@ This applies to:</p>
 <h5 id="always-return-json-with-an-object-on-the-outside">Always return JSON with an object on the outside<a class="headerlink" href="#always-return-json-with-an-object-on-the-outside" title="Permanent link">&para;</a></h5>
 <p>Always have the outside primitive be an object for JSON strings:</p>
 <p><strong>Exploitable:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inside an array&quot;</span><span class="p">}]</span>
+<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inside an array"</span><span class="p">}]</span>
 </code></pre></div>
 <p><strong>Not exploitable:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not inside an array&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not inside an array"</span><span class="p">}</span>
 </code></pre></div>
 <p><strong>Also not exploitable:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inside an array&quot;</span><span class="p">}]}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inside an array"</span><span class="p">}]}</span>
 </code></pre></div>
 <h4 id="avoid-writing-serialization-code-server-side">Avoid writing serialization code server-side<a class="headerlink" href="#avoid-writing-serialization-code-server-side" title="Permanent link">&para;</a></h4>
 <p>Remember reference vs. value types; use a reviewed library.</p>

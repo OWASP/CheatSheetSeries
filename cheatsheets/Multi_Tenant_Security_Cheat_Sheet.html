@@ -4257,8 +4257,8 @@
 
 <div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Tenant ID from request header without validation/query parameterization</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_tenant_data</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X-Tenant-ID&quot;</span><span class="p">)</span>  <span class="c1"># Attacker can modify!</span>
-    <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM data WHERE tenant_id = :tid&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tid&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
+    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"X-Tenant-ID"</span><span class="p">)</span>  <span class="c1"># Attacker can modify!</span>
+    <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM data WHERE tenant_id = :tid"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tid"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
 </code></pre></div>
 
 </details>
@@ -4271,7 +4271,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="c1"># Thread-safe tenant context</span>
-<span class="n">current_tenant</span><span class="p">:</span> <span class="n">ContextVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span><span class="s1">&#39;current_tenant&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">current_tenant</span><span class="p">:</span> <span class="n">ContextVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span><span class="s1">'current_tenant'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantContext</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">roles</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
@@ -4281,27 +4281,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">is_validated</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantMiddleware</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract and validate tenant context from authenticated session.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Extract and validate tenant context from authenticated session."""</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">):</span>
         <span class="c1"># Get tenant from verified JWT claims - NOT from headers</span>
         <span class="n">token_claims</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">verified_claims</span>  <span class="c1"># Set by auth middleware</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">token_claims</span> <span class="ow">or</span> <span class="s2">&quot;tenant_id&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">token_claims</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Missing tenant context&quot;</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token_claims</span> <span class="ow">or</span> <span class="s2">"tenant_id"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">token_claims</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Missing tenant context"</span><span class="p">})</span>
 
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">token_claims</span><span class="p">[</span><span class="s2">&quot;tenant_id&quot;</span><span class="p">]</span>
+        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">token_claims</span><span class="p">[</span><span class="s2">"tenant_id"</span><span class="p">]</span>
 
         <span class="c1"># Validate tenant exists and is active</span>
         <span class="n">tenant</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_service</span><span class="o">.</span><span class="n">get_active_tenant</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">tenant</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid tenant&quot;</span><span class="p">})</span>
+            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Invalid tenant"</span><span class="p">})</span>
 
         <span class="c1"># Set tenant context for this request</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">TenantContext</span><span class="p">(</span>
             <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="o">=</span><span class="n">token_claims</span><span class="p">[</span><span class="s2">&quot;sub&quot;</span><span class="p">],</span>
-            <span class="n">roles</span><span class="o">=</span><span class="n">token_claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;roles&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">token_claims</span><span class="p">[</span><span class="s2">"sub"</span><span class="p">],</span>
+            <span class="n">roles</span><span class="o">=</span><span class="n">token_claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"roles"</span><span class="p">,</span> <span class="p">[])</span>
         <span class="p">)</span>
         <span class="n">token</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
@@ -4312,12 +4312,12 @@
             <span class="n">current_tenant</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">require_tenant</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator ensuring tenant context is present.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Decorator ensuring tenant context is present."""</span>
     <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">is_validated</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Tenant context required&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant context required"</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wrapper</span>
 </code></pre></div>
@@ -4367,11 +4367,11 @@
 <span class="c1">-- Create policy that restricts access to current tenant</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="n">tenant_isolation_policy</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span>
 <span class="w">    </span><span class="k">FOR</span><span class="w"> </span><span class="k">ALL</span>
-<span class="w">    </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;app.current_tenant&#39;</span><span class="p">)::</span><span class="n">uuid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">'app.current_tenant'</span><span class="p">)::</span><span class="n">uuid</span><span class="p">);</span>
 
 <span class="k">CREATE</span><span class="w"> </span><span class="n">POLICY</span><span class="w"> </span><span class="n">tenant_isolation_policy</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">customers</span>
 <span class="w">    </span><span class="k">FOR</span><span class="w"> </span><span class="k">ALL</span>
-<span class="w">    </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;app.current_tenant&#39;</span><span class="p">)::</span><span class="n">uuid</span><span class="p">);</span>
+<span class="w">    </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">'app.current_tenant'</span><span class="p">)::</span><span class="n">uuid</span><span class="p">);</span>
 
 <span class="c1">-- Force RLS for table owners too (important!)</span>
 <span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">FORCE</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="k">SECURITY</span><span class="p">;</span>
@@ -4389,14 +4389,14 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantMixin</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin that adds tenant_id to all models.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Mixin that adds tenant_id to all models."""</span>
 
     <span class="nd">@declared_attr</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">tenant_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">36</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareSession</span><span class="p">(</span><span class="n">Session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Session that automatically filters by tenant.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Session that automatically filters by tenant."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -4405,39 +4405,39 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">tenant_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tenant_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Tenant ID not set on session&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant ID not set on session"</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tenant_id</span>
 
 <span class="c1"># Automatically add tenant filter to all queries</span>
-<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">Query</span><span class="p">,</span> <span class="s2">&quot;before_compile&quot;</span><span class="p">,</span> <span class="n">retval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">Query</span><span class="p">,</span> <span class="s2">"before_compile"</span><span class="p">,</span> <span class="n">retval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">add_tenant_filter</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
     <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">tenant_id</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;No tenant context for query&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"No tenant context for query"</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">column_descriptions</span><span class="p">:</span>
-        <span class="n">entity</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entity&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">entity</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s1">&#39;tenant_id&#39;</span><span class="p">):</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'entity'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">entity</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s1">'tenant_id'</span><span class="p">):</span>
             <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="n">tenant_id</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">query</span>
 
 <span class="c1"># Automatically set tenant_id on insert</span>
-<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">TenantMixin</span><span class="p">,</span> <span class="s2">&quot;before_insert&quot;</span><span class="p">,</span> <span class="n">propagate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">TenantMixin</span><span class="p">,</span> <span class="s2">"before_insert"</span><span class="p">,</span> <span class="n">propagate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_tenant_on_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
     <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Cannot insert without tenant context&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot insert without tenant context"</span><span class="p">)</span>
     <span class="n">target</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
 
 <span class="c1"># Secure session factory</span>
 <span class="nd">@contextmanager</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tenant_session</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a tenant-scoped database session.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a tenant-scoped database session."""</span>
     <span class="n">session</span> <span class="o">=</span> <span class="n">TenantAwareSession</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">)</span>
 
     <span class="c1"># Set PostgreSQL RLS context</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SELECT set_config(&#39;app.current_tenant&#39;, :tenant_id, true);&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SELECT set_config('app.current_tenant', :tenant_id, true);"</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">session</span>
@@ -4462,12 +4462,12 @@
 <summary>Bad example: Direct object reference without tenant validation</summary>
 
 <div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Only checks resource_id, not tenant ownership</span>
-<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/api/documents/</span><span class="si">{document_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/api/documents/</span><span class="si">{document_id}</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_document</span><span class="p">(</span><span class="n">document_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Document</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Document</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">document_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">doc</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">doc</span>  <span class="c1"># Could return another tenant&#39;s document!</span>
+    <span class="k">return</span> <span class="n">doc</span>  <span class="c1"># Could return another tenant's document!</span>
 </code></pre></div>
 
 </details>
@@ -4478,10 +4478,10 @@
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">UUID</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Type</span>
 
-<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantScopedRepository</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Repository that enforces tenant isolation on all operations.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Repository that enforces tenant isolation on all operations."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">session</span><span class="p">:</span> <span class="n">Session</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
@@ -4491,34 +4491,34 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">tenant_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Tenant context required&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant context required"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get resource only if it belongs to current tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Get resource only if it belongs to current tenant."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">resource_id</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>  <span class="c1"># Always include tenant check</span>
         <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">list_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;List resources for current tenant only.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""List resources for current tenant only."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>
         <span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">limit</span><span class="p">)</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create resource with tenant_id automatically set.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="s1">&#39;tenant_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;tenant_id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Cannot create resource for different tenant&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">"""Create resource with tenant_id automatically set."""</span>
+        <span class="k">if</span> <span class="s1">'tenant_id'</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">'tenant_id'</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot create resource for different tenant"</span><span class="p">)</span>
 
-        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;tenant_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">'tenant_id'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>
         <span class="n">instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">instance</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete resource only if it belongs to current tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Delete resource only if it belongs to current tenant."""</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">resource_id</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>
@@ -4526,13 +4526,13 @@
         <span class="k">return</span> <span class="n">result</span> <span class="o">&gt;</span> <span class="mi">0</span>
 
 <span class="c1"># Usage</span>
-<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/api/documents/</span><span class="si">{document_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/api/documents/</span><span class="si">{document_id}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nd">@require_tenant</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_document</span><span class="p">(</span><span class="n">document_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">db</span><span class="p">:</span> <span class="n">Session</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_db</span><span class="p">)):</span>
     <span class="n">repo</span> <span class="o">=</span> <span class="n">TenantScopedRepository</span><span class="p">(</span><span class="n">Document</span><span class="p">,</span> <span class="n">db</span><span class="p">)</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="n">document_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">doc</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s2">&quot;Document not found&quot;</span><span class="p">)</span>  <span class="c1"># Don&#39;t reveal if it exists for other tenant</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s2">"Document not found"</span><span class="p">)</span>  <span class="c1"># Don't reveal if it exists for other tenant</span>
     <span class="k">return</span> <span class="n">doc</span>
 </code></pre></div>
 
@@ -4550,7 +4550,7 @@
 
 <div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Cache key collision between tenants</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_user_preferences</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;preferences:</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># Same key for different tenants!</span>
+    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"preferences:</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">"</span>  <span class="c1"># Same key for different tenants!</span>
     <span class="n">cached</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cached</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
@@ -4568,24 +4568,24 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareCache</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cache implementation with tenant isolation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Cache implementation with tenant isolation."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redis_client</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redis</span> <span class="o">=</span> <span class="n">redis_client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default_ttl</span> <span class="o">=</span> <span class="mi">3600</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build tenant-scoped cache key.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Build tenant-scoped cache key."""</span>
         <span class="c1"># Validate key format to prevent injection</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">key</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid cache key format&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">key</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'{'</span><span class="p">,</span> <span class="s1">'}'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\r</span><span class="s1">'</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid cache key format"</span><span class="p">)</span>
 
         <span class="c1"># Use hash of tenant_id to prevent key enumeration</span>
         <span class="n">tenant_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;t:</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"t:</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get cached value for current tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Get cached value for current tenant."""</span>
         <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">tenant_id</span>
         <span class="n">full_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
 
@@ -4593,29 +4593,29 @@
         <span class="k">if</span> <span class="n">cached</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
             <span class="c1"># Verify tenant_id in cached data matches (defense in depth)</span>
-            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;_tenant_id&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">tenant_id</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"_tenant_id"</span><span class="p">)</span> <span class="o">!=</span> <span class="n">tenant_id</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">full_key</span><span class="p">)</span>  <span class="c1"># Purge potentially poisoned entry</span>
                 <span class="k">return</span> <span class="kc">None</span>
-            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ttl</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set cached value for current tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Set cached value for current tenant."""</span>
         <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">tenant_id</span>
         <span class="n">full_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
 
         <span class="c1"># Include tenant_id in cached data for verification</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;_tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">value</span>
+            <span class="s2">"_tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+            <span class="s2">"value"</span><span class="p">:</span> <span class="n">value</span>
         <span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">setex</span><span class="p">(</span><span class="n">full_key</span><span class="p">,</span> <span class="n">ttl</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ttl</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">invalidate_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invalidate all cache entries for a tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Invalidate all cache entries for a tenant."""</span>
         <span class="n">tenant_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
-        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;t:</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">:*&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"t:</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">:*"</span>
 
         <span class="n">cursor</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -4626,7 +4626,7 @@
                 <span class="k">break</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">tenant_cached</span><span class="p">(</span><span class="n">key_template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ttl</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator for tenant-aware caching.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Decorator for tenant-aware caching."""</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -4644,7 +4644,7 @@
     <span class="k">return</span> <span class="n">decorator</span>
 
 <span class="c1"># Usage</span>
-<span class="nd">@tenant_cached</span><span class="p">(</span><span class="s2">&quot;user_prefs:</span><span class="si">{user_id}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">1800</span><span class="p">)</span>
+<span class="nd">@tenant_cached</span><span class="p">(</span><span class="s2">"user_prefs:</span><span class="si">{user_id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">1800</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_user_preferences</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="c1"># This is automatically cached per-tenant</span>
     <span class="k">return</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">fetch_preferences</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
@@ -4668,10 +4668,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantTier</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">FREE</span> <span class="o">=</span> <span class="s2">&quot;free&quot;</span>
-    <span class="n">STARTER</span> <span class="o">=</span> <span class="s2">&quot;starter&quot;</span>
-    <span class="n">BUSINESS</span> <span class="o">=</span> <span class="s2">&quot;business&quot;</span>
-    <span class="n">ENTERPRISE</span> <span class="o">=</span> <span class="s2">&quot;enterprise&quot;</span>
+    <span class="n">FREE</span> <span class="o">=</span> <span class="s2">"free"</span>
+    <span class="n">STARTER</span> <span class="o">=</span> <span class="s2">"starter"</span>
+    <span class="n">BUSINESS</span> <span class="o">=</span> <span class="s2">"business"</span>
+    <span class="n">ENTERPRISE</span> <span class="o">=</span> <span class="s2">"enterprise"</span>
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">RateLimitConfig</span><span class="p">:</span>
@@ -4687,17 +4687,17 @@
 <span class="p">}</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantRateLimiter</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Per-tenant rate limiting with tier support.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Per-tenant rate limiting with tier support."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redis_client</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redis</span> <span class="o">=</span> <span class="n">redis_client</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_rate_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tenant_tier</span><span class="p">:</span> <span class="n">TenantTier</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check and update rate limit for tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Check and update rate limit for tenant."""</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">TIER_LIMITS</span><span class="p">[</span><span class="n">tenant_tier</span><span class="p">]</span>
         <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">minute_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;rl:</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">:min:</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">day_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;rl:</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">:day:</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">86400</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">minute_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"rl:</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">:min:</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+        <span class="n">day_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"rl:</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">:day:</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">86400</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
 
         <span class="n">pipe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span>
 
@@ -4714,28 +4714,28 @@
         <span class="c1"># Check limits</span>
         <span class="k">if</span> <span class="n">minute_count</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;minute_limit_exceeded&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;retry_after&quot;</span><span class="p">:</span> <span class="mi">60</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">%</span> <span class="mi">60</span><span class="p">),</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span>
+                <span class="s2">"allowed"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">"reason"</span><span class="p">:</span> <span class="s2">"minute_limit_exceeded"</span><span class="p">,</span>
+                <span class="s2">"retry_after"</span><span class="p">:</span> <span class="mi">60</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">%</span> <span class="mi">60</span><span class="p">),</span>
+                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span>
             <span class="p">}</span>
 
         <span class="k">if</span> <span class="n">day_count</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;daily_limit_exceeded&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;retry_after&quot;</span><span class="p">:</span> <span class="mi">86400</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">%</span> <span class="mi">86400</span><span class="p">),</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span>
+                <span class="s2">"allowed"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">"reason"</span><span class="p">:</span> <span class="s2">"daily_limit_exceeded"</span><span class="p">,</span>
+                <span class="s2">"retry_after"</span><span class="p">:</span> <span class="mi">86400</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">%</span> <span class="mi">86400</span><span class="p">),</span>
+                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span>
             <span class="p">}</span>
 
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;remaining_minute&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span> <span class="o">-</span> <span class="n">minute_count</span><span class="p">,</span>
-            <span class="s2">&quot;remaining_day&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span> <span class="o">-</span> <span class="n">day_count</span>
+            <span class="s2">"allowed"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">"remaining_minute"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span> <span class="o">-</span> <span class="n">minute_count</span><span class="p">,</span>
+            <span class="s2">"remaining_day"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span> <span class="o">-</span> <span class="n">day_count</span>
         <span class="p">}</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">RateLimitMiddleware</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Middleware that enforces tenant rate limits.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Middleware that enforces tenant rate limits."""</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">):</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
@@ -4748,22 +4748,22 @@
             <span class="n">tenant</span><span class="o">.</span><span class="n">tier</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;allowed&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s2">"allowed"</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span>
                 <span class="n">status_code</span><span class="o">=</span><span class="mi">429</span><span class="p">,</span>
-                <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span><span class="p">,</span> <span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">},</span>
+                <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Rate limit exceeded"</span><span class="p">,</span> <span class="s2">"details"</span><span class="p">:</span> <span class="n">result</span><span class="p">},</span>
                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-                    <span class="s2">&quot;Retry-After&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;retry_after&quot;</span><span class="p">])),</span>
-                    <span class="s2">&quot;X-RateLimit-Limit&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]),</span>
-                    <span class="s2">&quot;X-RateLimit-Remaining&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span>
+                    <span class="s2">"Retry-After"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"retry_after"</span><span class="p">])),</span>
+                    <span class="s2">"X-RateLimit-Limit"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"limit"</span><span class="p">]),</span>
+                    <span class="s2">"X-RateLimit-Remaining"</span><span class="p">:</span> <span class="s2">"0"</span>
                 <span class="p">}</span>
             <span class="p">)</span>
 
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_next</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
         <span class="c1"># Add rate limit headers</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;X-RateLimit-Remaining-Minute&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;remaining_minute&quot;</span><span class="p">])</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;X-RateLimit-Remaining-Day&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;remaining_day&quot;</span><span class="p">])</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"X-RateLimit-Remaining-Minute"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"remaining_minute"</span><span class="p">])</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"X-RateLimit-Remaining-Day"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"remaining_day"</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">response</span>
 </code></pre></div>
@@ -4788,42 +4788,42 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantFileStorage</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;S3-based file storage with tenant isolation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""S3-based file storage with tenant isolation."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bucket_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kms_key_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bucket</span> <span class="o">=</span> <span class="n">bucket_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;s3&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="s1">&#39;s3v4&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">'s3'</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="s1">'s3v4'</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kms_key_id</span> <span class="o">=</span> <span class="n">kms_key_id</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_tenant_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate tenant-specific path prefix.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Generate tenant-specific path prefix."""</span>
         <span class="c1"># Use hashed prefix to prevent enumeration</span>
         <span class="n">tenant_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;tenants/</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"tenants/</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build full S3 key with tenant isolation.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Build full S3 key with tenant isolation."""</span>
         <span class="c1"># Sanitize file path to prevent traversal</span>
-        <span class="n">safe_path</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">safe_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">safe_path</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'..'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">safe_path</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
                          <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Upload file for tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Upload file for tenant."""</span>
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;ContentType&#39;</span><span class="p">:</span> <span class="n">content_type</span><span class="p">,</span>
-            <span class="s1">&#39;Metadata&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">&#39;tenant-id&#39;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-                <span class="s1">&#39;uploaded-at&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="s1">'ContentType'</span><span class="p">:</span> <span class="n">content_type</span><span class="p">,</span>
+            <span class="s1">'Metadata'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'tenant-id'</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+                <span class="s1">'uploaded-at'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
             <span class="p">}</span>
         <span class="p">}</span>
 
         <span class="c1"># Use tenant-specific KMS key if available</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kms_key_id</span><span class="p">:</span>
-            <span class="n">extra_args</span><span class="p">[</span><span class="s1">&#39;ServerSideEncryption&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;aws:kms&#39;</span>
-            <span class="n">extra_args</span><span class="p">[</span><span class="s1">&#39;SSEKMSKeyId&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kms_key_id</span>
+            <span class="n">extra_args</span><span class="p">[</span><span class="s1">'ServerSideEncryption'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'aws:kms'</span>
+            <span class="n">extra_args</span><span class="p">[</span><span class="s1">'SSEKMSKeyId'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kms_key_id</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span>
             <span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
@@ -4832,36 +4832,36 @@
             <span class="o">**</span><span class="n">extra_args</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"key"</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="s2">"size"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)}</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get file only if it belongs to tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Get file only if it belongs to tenant."""</span>
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
 
             <span class="c1"># Verify tenant ownership from metadata</span>
-            <span class="n">metadata_tenant</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Metadata&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tenant-id&#39;</span><span class="p">)</span>
+            <span class="n">metadata_tenant</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'tenant-id'</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">metadata_tenant</span> <span class="o">!=</span> <span class="n">tenant_id</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Tenant mismatch in file metadata&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant mismatch in file metadata"</span><span class="p">)</span>
 
-            <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;Body&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">'Body'</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">NoSuchKey</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_presigned_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                                <span class="n">expiration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">,</span> 
-                               <span class="n">operation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;get_object&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate presigned URL with tenant validation.&quot;&quot;&quot;</span>
+                               <span class="n">operation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'get_object'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Generate presigned URL with tenant validation."""</span>
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="c1"># Include tenant_id in the signed URL for validation</span>
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">generate_presigned_url</span><span class="p">(</span>
             <span class="n">ClientMethod</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span>
             <span class="n">Params</span><span class="o">=</span><span class="p">{</span>
-                <span class="s1">&#39;Bucket&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
-                <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+                <span class="s1">'Bucket'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
+                <span class="s1">'Key'</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
             <span class="p">},</span>
             <span class="n">ExpiresIn</span><span class="o">=</span><span class="n">expiration</span>
         <span class="p">)</span>
@@ -4869,16 +4869,16 @@
         <span class="k">return</span> <span class="n">url</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete_tenant_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete all files for a tenant (for offboarding).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Delete all files for a tenant (for offboarding)."""</span>
         <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
 
-        <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s1">&#39;list_objects_v2&#39;</span><span class="p">)</span>
+        <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s1">'list_objects_v2'</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">):</span>
-            <span class="n">objects</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Contents&#39;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">objects</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Contents'</span><span class="p">,</span> <span class="p">[])</span>
             <span class="k">if</span> <span class="n">objects</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">delete_objects</span><span class="p">(</span>
                     <span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
-                    <span class="n">Delete</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Objects&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">]}</span>
+                    <span class="n">Delete</span><span class="o">=</span><span class="p">{</span><span class="s1">'Objects'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'Key'</span><span class="p">:</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'Key'</span><span class="p">]}</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">]}</span>
                 <span class="p">)</span>
 </code></pre></div>
 
@@ -4901,11 +4901,11 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">PROVISIONING</span> <span class="o">=</span> <span class="s2">&quot;provisioning&quot;</span>
-    <span class="n">ACTIVE</span> <span class="o">=</span> <span class="s2">&quot;active&quot;</span>
-    <span class="n">SUSPENDED</span> <span class="o">=</span> <span class="s2">&quot;suspended&quot;</span>
-    <span class="n">OFFBOARDING</span> <span class="o">=</span> <span class="s2">&quot;offboarding&quot;</span>
-    <span class="n">DELETED</span> <span class="o">=</span> <span class="s2">&quot;deleted&quot;</span>
+    <span class="n">PROVISIONING</span> <span class="o">=</span> <span class="s2">"provisioning"</span>
+    <span class="n">ACTIVE</span> <span class="o">=</span> <span class="s2">"active"</span>
+    <span class="n">SUSPENDED</span> <span class="o">=</span> <span class="s2">"suspended"</span>
+    <span class="n">OFFBOARDING</span> <span class="o">=</span> <span class="s2">"offboarding"</span>
+    <span class="n">DELETED</span> <span class="o">=</span> <span class="s2">"deleted"</span>
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantProvisioningResult</span><span class="p">:</span>
@@ -4916,7 +4916,7 @@
     <span class="n">storage_prefix</span><span class="p">:</span> <span class="nb">str</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantLifecycleManager</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manages secure tenant onboarding and offboarding.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Manages secure tenant onboarding and offboarding."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span> <span class="n">audit_log</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
@@ -4926,13 +4926,13 @@
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">provision_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">admin_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                                <span class="n">tier</span><span class="p">:</span> <span class="n">TenantTier</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TenantProvisioningResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Securely provision a new tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Securely provision a new tenant."""</span>
         <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
 
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;tenant_provisioning_started&quot;</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-            <span class="s2">&quot;tenant_name&quot;</span><span class="p">:</span> <span class="n">tenant_name</span><span class="p">,</span>
-            <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="n">tier</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_provisioning_started"</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+            <span class="s2">"tenant_name"</span><span class="p">:</span> <span class="n">tenant_name</span><span class="p">,</span>
+            <span class="s2">"tier"</span><span class="p">:</span> <span class="n">tier</span><span class="o">.</span><span class="n">value</span>
         <span class="p">})</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -4945,8 +4945,8 @@
             <span class="p">)</span>
 
             <span class="c1"># 2. Create isolated database schema (if using schema isolation)</span>
-            <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tenant_</span><span class="si">{</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CREATE SCHEMA </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"tenant_</span><span class="si">{</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span><span class="w"> </span><span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CREATE SCHEMA </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_schema_migrations</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span>
 
             <span class="c1"># 3. Generate API credentials</span>
@@ -4964,9 +4964,9 @@
             <span class="c1"># 6. Activate tenant</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update_tenant_status</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">TenantStatus</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
 
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;tenant_provisioning_completed&quot;</span><span class="p">,</span> <span class="p">{</span>
-                <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-                <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="n">schema_name</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_provisioning_completed"</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+                <span class="s2">"schema"</span><span class="p">:</span> <span class="n">schema_name</span>
             <span class="p">})</span>
 
             <span class="k">return</span> <span class="n">TenantProvisioningResult</span><span class="p">(</span>
@@ -4978,17 +4978,17 @@
             <span class="p">)</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;tenant_provisioning_failed&quot;</span><span class="p">,</span> <span class="p">{</span>
-                <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-                <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_provisioning_failed"</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+                <span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="p">})</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_failed_provisioning</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
             <span class="k">raise</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">offboard_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
                              <span class="n">retain_days</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Securely offboard a tenant with data retention.&quot;&quot;&quot;</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;tenant_offboarding_started&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
+<span class="w">        </span><span class="sd">"""Securely offboard a tenant with data retention."""</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_offboarding_started"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
 
         <span class="c1"># 1. Mark tenant as offboarding (prevents new operations)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update_tenant_status</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">TenantStatus</span><span class="o">.</span><span class="n">OFFBOARDING</span><span class="p">)</span>
@@ -5003,30 +5003,30 @@
         <span class="n">deletion_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">retain_days</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">schedule_tenant_deletion</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">deletion_date</span><span class="p">)</span>
 
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;tenant_offboarding_completed&quot;</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-            <span class="s2">&quot;export_location&quot;</span><span class="p">:</span> <span class="n">export_location</span><span class="p">,</span>
-            <span class="s2">&quot;scheduled_deletion&quot;</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_offboarding_completed"</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+            <span class="s2">"export_location"</span><span class="p">:</span> <span class="n">export_location</span><span class="p">,</span>
+            <span class="s2">"scheduled_deletion"</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
         <span class="p">})</span>
 
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;offboarding_complete&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;data_export&quot;</span><span class="p">:</span> <span class="n">export_location</span><span class="p">,</span>
-            <span class="s2">&quot;final_deletion&quot;</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"offboarding_complete"</span><span class="p">,</span>
+            <span class="s2">"data_export"</span><span class="p">:</span> <span class="n">export_location</span><span class="p">,</span>
+            <span class="s2">"final_deletion"</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
         <span class="p">}</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_tenant_deletion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Permanently delete all tenant data.&quot;&quot;&quot;</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;tenant_deletion_started&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
+<span class="w">        </span><span class="sd">"""Permanently delete all tenant data."""</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_deletion_started"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
 
         <span class="c1"># 1. Delete database schema/data</span>
-        <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tenant_</span><span class="si">{</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DROP SCHEMA IF EXISTS </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2"> CASCADE&quot;</span><span class="p">)</span>
+        <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"tenant_</span><span class="si">{</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span><span class="w"> </span><span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"DROP SCHEMA IF EXISTS </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2"> CASCADE"</span><span class="p">)</span>
 
         <span class="c1"># For shared table model, delete rows</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-            <span class="s2">&quot;DELETE FROM shared_table WHERE tenant_id = :tid&quot;</span><span class="p">,</span>
-            <span class="p">{</span><span class="s2">&quot;tid&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">}</span>
+            <span class="s2">"DELETE FROM shared_table WHERE tenant_id = :tid"</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">"tid"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">}</span>
         <span class="p">)</span>
 
         <span class="c1"># 2. Delete cached data</span>
@@ -5041,7 +5041,7 @@
         <span class="c1"># 5. Mark as deleted (keep minimal audit record)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update_tenant_status</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">TenantStatus</span><span class="o">.</span><span class="n">DELETED</span><span class="p">)</span>
 
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;tenant_deletion_completed&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_deletion_completed"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
 </code></pre></div>
 
 </details>
@@ -5062,17 +5062,17 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareLogger</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Logger that automatically includes tenant context.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Logger that automatically includes tenant context."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">structlog</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_enrich_with_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add tenant context to log entry.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Add tenant context to log entry."""</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">ctx</span><span class="p">:</span>
-            <span class="n">event_data</span><span class="p">[</span><span class="s2">&quot;tenant_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
-            <span class="n">event_data</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span>
+            <span class="n">event_data</span><span class="p">[</span><span class="s2">"tenant_id"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
+            <span class="n">event_data</span><span class="p">[</span><span class="s2">"user_id"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span>
         <span class="k">return</span> <span class="n">event_data</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -5085,63 +5085,63 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_enrich_with_tenant</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">security_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">severity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log security-relevant events.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Log security-relevant events."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s2">&quot;security_event&quot;</span><span class="p">,</span>
+            <span class="s2">"security_event"</span><span class="p">,</span>
             <span class="n">event_type</span><span class="o">=</span><span class="n">event_type</span><span class="p">,</span>
             <span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">,</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_enrich_with_tenant</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantAuditLog</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Immutable audit log with tenant isolation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Immutable audit log with tenant isolation."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> 
                   <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Record audit entry.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Record audit entry."""</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">&quot;system&quot;</span><span class="p">)</span>
+        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"system"</span><span class="p">)</span>
 
         <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span>
-            <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-            <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
-            <span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="n">details</span><span class="p">,</span>
-            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">(),</span>
-            <span class="s2">&quot;ip_address&quot;</span><span class="p">:</span> <span class="n">get_client_ip</span><span class="p">(),</span>
-            <span class="s2">&quot;user_agent&quot;</span><span class="p">:</span> <span class="n">get_user_agent</span><span class="p">()</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span>
+            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+            <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"action"</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
+            <span class="s2">"details"</span><span class="p">:</span> <span class="n">details</span><span class="p">,</span>
+            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">(),</span>
+            <span class="s2">"ip_address"</span><span class="p">:</span> <span class="n">get_client_ip</span><span class="p">(),</span>
+            <span class="s2">"user_agent"</span><span class="p">:</span> <span class="n">get_user_agent</span><span class="p">()</span>
         <span class="p">}</span>
 
         <span class="c1"># Insert into append-only audit table</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"""</span>
 <span class="s2">            INSERT INTO audit_log </span>
 <span class="s2">            (id, tenant_id, user_id, action, details, timestamp, ip_address, user_agent)</span>
 <span class="s2">            VALUES (:id, :tenant_id, :user_id, :action, :details, :timestamp, :ip_address, :user_agent)</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+<span class="s2">        """</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_tenant_audit_trail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
                                      <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
                                      <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve audit trail for a specific tenant.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Retrieve audit trail for a specific tenant."""</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
         <span class="c1"># Ensure requester can only access their own audit logs</span>
-        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">tenant_id</span> <span class="ow">and</span> <span class="s2">&quot;admin&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ctx</span><span class="o">.</span><span class="n">roles</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Cannot access other tenant&#39;s audit logs&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">tenant_id</span> <span class="ow">and</span> <span class="s2">"admin"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ctx</span><span class="o">.</span><span class="n">roles</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot access other tenant's audit logs"</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="s2">"""</span>
 <span class="s2">            SELECT * FROM audit_log </span>
 <span class="s2">            WHERE tenant_id = :tenant_id </span>
 <span class="s2">            AND timestamp BETWEEN :start AND :end</span>
 <span class="s2">            ORDER BY timestamp DESC</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">start_date</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="n">end_date</span><span class="p">})</span>
+<span class="s2">        """</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span> <span class="s2">"start"</span><span class="p">:</span> <span class="n">start_date</span><span class="p">,</span> <span class="s2">"end"</span><span class="p">:</span> <span class="n">end_date</span><span class="p">})</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">CrossTenantAccessMonitor</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Monitor and alert on potential cross-tenant access attempts.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Monitor and alert on potential cross-tenant access attempts."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_service</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alerts</span> <span class="o">=</span> <span class="n">alert_service</span>
@@ -5149,36 +5149,36 @@
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_access</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">requested_tenant</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
                           <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check for cross-tenant access attempts.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Check for cross-tenant access attempts."""</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">requested_tenant</span><span class="p">:</span>
             <span class="c1"># Log violation</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">security_event</span><span class="p">(</span>
-                <span class="s2">&quot;cross_tenant_access_attempt&quot;</span><span class="p">,</span>
-                <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;HIGH&quot;</span><span class="p">,</span>
+                <span class="s2">"cross_tenant_access_attempt"</span><span class="p">,</span>
+                <span class="n">severity</span><span class="o">=</span><span class="s2">"HIGH"</span><span class="p">,</span>
                 <span class="n">requested_tenant</span><span class="o">=</span><span class="n">requested_tenant</span><span class="p">,</span>
                 <span class="n">resource_type</span><span class="o">=</span><span class="n">resource_type</span><span class="p">,</span>
                 <span class="n">resource_id</span><span class="o">=</span><span class="n">resource_id</span>
             <span class="p">)</span>
 
             <span class="c1"># Track violations per user</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">"</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
             <span class="c1"># Alert on repeated attempts</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">alerts</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
-                    <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;CRITICAL&quot;</span><span class="p">,</span>
-                    <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Repeated cross-tenant access attempts detected&quot;</span><span class="p">,</span>
+                    <span class="n">severity</span><span class="o">=</span><span class="s2">"CRITICAL"</span><span class="p">,</span>
+                    <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Repeated cross-tenant access attempts detected"</span><span class="p">,</span>
                     <span class="n">details</span><span class="o">=</span><span class="p">{</span>
-                        <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
-                        <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">,</span>
-                        <span class="s2">&quot;attempts&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                        <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+                        <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">,</span>
+                        <span class="s2">"attempts"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
                     <span class="p">}</span>
                 <span class="p">)</span>
 
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">&quot;Access denied: resource belongs to different tenant&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Access denied: resource belongs to different tenant"</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
