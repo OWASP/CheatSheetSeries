@@ -34,7 +34,7 @@ cs_index_title_template = "# Index Alphabetical\n\n"
 # Scan all CS files
 index = {}
 cs_count = 0
-cheatsheets = [f.name for f in os.scandir("../cheatsheets") if f.is_file()]
+cheatsheets = sorted(f.name for f in os.scandir("../cheatsheets") if f.is_file())
 for cheatsheet in cheatsheets:
     letter = cheatsheet[0].upper()
     if letter not in index:
