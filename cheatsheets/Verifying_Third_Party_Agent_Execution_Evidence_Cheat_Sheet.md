@@ -33,9 +33,9 @@ A component that writes its own execution log can omit the call that mattered, r
 
 **Outcome.** Most agent telemetry shipping today is a supplier assertion, and it is worth saying so plainly: SDK-emitted spans, a framework's own traces, an MCP server's logs, and a hosted provider's export are all fed by the component and handled downstream by a single party. Independently re-checkable needs an input the component did not choose and a party with no stake in the answer. A supplier who will not describe the path scores no information. Where the answer is supplier assertion and you still have to proceed:
 
-- Corroborate against a record your own side produces, such as a gateway or egress log covering the same calls.
-- Contract for a copy delivered to a party the supplier cannot edit.
-- Size the decision so this record is not its only basis.
+- Corroborate against a record your own side produces, such as a gateway or egress log covering the same calls. Where you have no leverage over the supplier at all, this is the move that always remains: run the component behind a gateway, proxy, or egress point you control, and record there.
+- Contract for a copy delivered to a party the supplier cannot edit. This needs procurement leverage that a team adopting a community component will not have.
+- Size the decision so this record is not its only basis. A supplier assertion is adequate for debugging, capacity planning, and detecting non-adversarial failure; it is not adequate as the sole basis for incident attribution, a customer-facing breach statement, a compliance attestation, or a contractual dispute.
 
 ### 2. Was the record witnessed while the work ran, or assembled afterwards?
 
@@ -89,7 +89,7 @@ Reviewers read absence as evidence: no denied call means nothing was denied. Tha
 
 If a component keeps executing when its recorder is unreachable, an empty record and a clean run are indistinguishable, and the cheapest attack is to break the recording path instead of forging anything. The [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html#attacks-on-logs) lists this under Accountability: an attacker prevents writes in order to cover their tracks.
 
-- Get the behavior on the unavailable path in writing. Continue-and-drop, buffer-and-retry, and halt are three different behaviors under load.
+- Get the behavior on the unavailable path in writing where you have the leverage to ask, and read the documentation and the source where you do not. Continue-and-drop, buffer-and-retry, and halt are three different behaviors under load.
 - Read the overflow behavior, not the happy path. A bounded buffer that overwrites oldest-first under pressure is continue-and-drop at the moment it matters.
 - Look for delivery failures recorded where the component has no reach. [ASVS 16.4.3](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md) asks that logs are "securely transmitted to a logically separate system", which is where a gap marker has to land.
 - [ASVS 16.5.3](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md) separately asks that an application "fails gracefully and securely, including when an exception occurs, preventing fail-open conditions". That is the component's own behavior.
