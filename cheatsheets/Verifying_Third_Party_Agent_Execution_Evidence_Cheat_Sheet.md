@@ -136,7 +136,7 @@ Three things sit outside the six questions, and a reviewer is better off knowing
 
 - The live channel between agent and server. Message signing, nonces, tool-definition pinning, and mutual signing are in [Section 7 of the MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-protection).
 - Records your own systems produce. Protecting logs at rest and in transit is in the [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html).
-- Runs spanning several parties. The interesting failure is at the seams: one agent's record shows a delegation and the counterparty has no record of receiving it, while both answer all six questions well.
+- Runs spanning several parties. The failure to watch for is at the seams: one agent's record shows a delegation and the counterparty has no record of receiving it, while both answer all six questions well. For the payments-scoped version of this problem, see [Cross-Agent Payment Accountability](https://cheatsheetseries.owasp.org/cheatsheets/AML_Sanctions_AI_Agent_Payments_Cheat_Sheet.html#section-9-cross-agent-payment-accountability).
 
 ## References
 
