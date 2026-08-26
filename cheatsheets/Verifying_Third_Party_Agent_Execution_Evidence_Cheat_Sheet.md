@@ -58,6 +58,7 @@ A record assembled after execution, from state the component still controls, inh
 A correctly signed record whose subject is named loosely, as "the agent" or "the latest build", can be presented next to a different artifact than the one it describes. Nothing is forged and no signature fails; the reviewer draws a conclusion about the thing in front of them from evidence about something else.
 
 - Look for the subject identified by content, using a cryptographic digest of the artifact, image, configuration, or transcript described.
+- Check which algorithm that digest uses. The [in-toto DigestSet](https://github.com/in-toto/attestation/blob/main/spec/v1/digest_set.md) permits `md5`, `sha1`, and Git SHA-1 object IDs alongside stronger options, tells consumers they "MUST only accept algorithms that they consider secure", and recommends "at least `sha256`". Treat SHA-256 as the floor.
 - The [in-toto Statement layer](https://github.com/in-toto/attestation/blob/main/spec/v1/statement.md) is one worked example: every subject element "MUST have `digest` set" and subjects "are matched purely by digest".
 - Recompute the digest over the artifact you received through your own channel, not over a copy shipped in the same bundle as the record.
 - Check that the subject separates this execution from another run of the same artifact.
@@ -95,9 +96,9 @@ If a component keeps executing when its recorder is unreachable, an empty record
 - [ASVS 16.5.3](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md) separately asks that an application "fails gracefully and securely, including when an exception occurs, preventing fail-open conditions". That is the component's own behavior.
 - Interrupt the recording path in your own environment and watch whether execution continues.
 - Where the component is hosted, ask for gap markers from a real outage.
-- An operator who has never recorded a gap is telling you the marker is not emitted.
+- Treat "we have never recorded a gap" as unverified until they can show you one, from a real outage or from a test they run for you.
 
-**Outcome.** A gap marker landing in a system the component does not control, or an interruption you performed yourself, is independently re-checkable. Documented fail-closed behavior you have not seen exercised is a supplier assertion. Treat "no findings" from a recorder that may have been fail-open as no information about that execution. Completeness is what this question tests; the accuracy of what was written is question 1.
+**Outcome.** A gap marker landing in a system the component does not control, or an interruption you performed yourself, is independently re-checkable. Documented fail-closed behavior you have not seen exercised is a supplier assertion. Treat "no findings" from a recorder that may have been fail-open as no information about that execution. Fail-closed is not automatically the right choice: halting on an unreachable recorder turns a recording outage into an availability incident and hands an attacker a cheap denial-of-service lever, so the right point on that scale depends on how sensitive the action is. What matters for review is that the behavior is documented, exercised, and marks the gap. Completeness is what this question tests; the accuracy of what was written is question 1.
 
 ### 6. Can the record be verified by someone who cannot also produce one?
 
@@ -138,4 +139,5 @@ Three things sit outside the six questions, and a reviewer is better off knowing
 - [RFC 9334: Remote ATtestation procedureS (RATS) Architecture](https://datatracker.ietf.org/doc/html/rfc9334)
 - [RFC 9942: CBOR Object Signing and Encryption (COSE) Receipts](https://datatracker.ietf.org/doc/html/rfc9942)
 - [in-toto Attestation Framework: Statement layer](https://github.com/in-toto/attestation/blob/main/spec/v1/statement.md)
+- [in-toto Attestation Framework: DigestSet](https://github.com/in-toto/attestation/blob/main/spec/v1/digest_set.md)
 - [SLSA v1.2: Verifying artifacts](https://slsa.dev/spec/v1.2/verifying-artifacts)
