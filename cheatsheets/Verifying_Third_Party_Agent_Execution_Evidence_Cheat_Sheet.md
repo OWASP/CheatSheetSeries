@@ -72,7 +72,8 @@ Reviewers read absence as evidence: no denied call means nothing was denied. Tha
 
 - Check whether the record states its window. A window you inferred from the entries present is not a stated one.
 - Treat a transparency log as detection of removal after entry. It says nothing about an entry that was never made.
-- [RFC 9162](https://datatracker.ietf.org/doc/html/rfc9162) describes an append-only log built on Merkle Trees, which can prove that any particular instance "of the log is a superset of any particular previous instance".
+- [RFC 9162](https://datatracker.ietf.org/doc/html/rfc9162) describes an append-only log built on Merkle Trees, which can prove that "any particular instance of the log is a superset of any particular previous instance".
+- A log is itself a party. RFC 9162 notes that its auditing mechanisms "can be circumvented by a misbehaving log that shows different, inconsistent views of itself to different clients", so "it is necessary to treat each log as a trusted third party". Credit an inclusion proof only where the log's tree heads are witnessed or gossiped outside the log operator, and apply question 1 to that operator.
 - [Sigstore's Rekor](https://docs.sigstore.dev/logging/overview/) is one deployed instance of such a log.
 - Find out what forces an event into that log when it occurs, and whether that mechanism is under the observed component's control.
 - Discount a sequence number the producer maintains, since it counts what the producer chose to count.
@@ -81,7 +82,7 @@ Reviewers read absence as evidence: no denied call means nothing was denied. Tha
 - Check that it reaches the record you are handed.
 - Where you cannot run the component, ask for a sandbox tenant, and failing that cross-check against records from your own side of the boundary.
 
-**Outcome.** Coverage is independently re-checkable when something outside the producer saw the sequence: an independent log, your own boundary records, or an event you injected and found. A window backed only by the producer's own numbering is a supplier assertion. An undated selection, or a window you had to infer, gives no information about this execution.
+**Outcome.** Coverage is independently re-checkable when something outside the producer saw the sequence: an independent log whose tree heads are witnessed outside its operator, your own boundary records, or an event you injected and found. A window backed only by the producer's own numbering is a supplier assertion. An undated selection, or a window you had to infer, gives no information about this execution.
 
 ### 5. What happened if recording or delivery failed?
 
@@ -105,7 +106,7 @@ If the key material needed to check a record is the key material needed to creat
 - A public key permits checking without conferring the ability to produce; a shared secret does not.
 - Count whose keys these are. Two keys held by one party are one party.
 - Check what the check depends on while it runs. Asking the producer's service whether a record is valid returns the claim under review.
-- Fetching public trust material, such as a root or an inclusion proof from an independent log, is a different dependency and carries no such defect.
+- Fetching public trust material, such as a root or an inclusion proof from an independent log whose tree heads are witnessed outside its operator, is a different dependency and carries no such defect.
 - Look for the format and signature suite stated in the record, so the check runs against a general-purpose implementation.
 - Pin your own roots of trust, and treat a change to them as a decision. A key delivered alongside the record it authenticates adds nothing.
 - [SLSA's verification guidance](https://slsa.dev/spec/v1.2/verifying-artifacts) shows the shape: configure "the verifier's roots of trust" as a map from recognized producer identities to what will be believed from each.
