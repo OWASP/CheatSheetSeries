@@ -45,12 +45,13 @@ A record assembled after execution, from state the component still controls, inh
 - A timestamp field inside the record is an assertion by the producer.
 - [RFC 3161](https://datatracker.ietf.org/doc/html/rfc3161) countersigning is stronger, but the authority "may be operated as a Trusted Third Party (TTP) service, though other operational models may be appropriate".
 - Apply question 1 to whoever operates that authority.
-- Look for a bound in the other direction, since contemporaneity is a claim about how early the record was fixed.
+- Look for a bound in the other direction, since a claim that the record was made during the run is a claim about how early it was fixed.
 - [RFC 9334 Section 10](https://datatracker.ietf.org/doc/html/rfc9334#section-10) gives three approaches. Send a nonce to be signed into the record, and on a match "the appraising entity knows that the Claims were signed after the nonce was generated".
+- RFC 9334 calls this epoch "rough": a nonce dates the signature, not the entries, since "[t]he time between the creation of Claims and the collection of Claims is indistinguishable".
 - A challenge issued mid-run also reaches components that never produce a discrete finished document.
 - Read whether the record covers one execution or several, and whether per-step material survives.
 
-**Outcome.** A countersignature from an authority the supplier does not operate, or a nonce you supplied, makes the timing independently re-checkable. A producer-asserted timestamp, or a countersignature from the supplier's own authority, is a supplier assertion. No timing evidence at all, or entries aggregated across runs with nothing per-step surviving, gives no information about this execution.
+**Outcome.** A countersignature from an authority the supplier does not operate, or a nonce you supplied, makes the *signing* time independently re-checkable. That bounds when the record was fixed; it does not by itself establish that the entries were captured as the work ran. A producer-asserted timestamp, or a countersignature from the supplier's own authority, is a supplier assertion. No timing evidence at all, or entries aggregated across runs with nothing per-step surviving, gives no information about this execution.
 
 ### 3. What is the record about, and is that thing named precisely enough to re-check?
 
@@ -108,8 +109,10 @@ If the key material needed to check a record is the key material needed to creat
 - Check what the check depends on while it runs. Asking the producer's service whether a record is valid returns the claim under review.
 - Fetching public trust material, such as a root or an inclusion proof from an independent log whose tree heads are witnessed outside its operator, is a different dependency and carries no such defect.
 - Look for the format and signature suite stated in the record, so the check runs against a general-purpose implementation.
+- Check the record against an algorithm set your verification policy fixes in advance. Never let the record's own header choose the algorithm or key type, and bind each pinned key to exactly one algorithm: [RFC 8725 Section 3.1](https://datatracker.ietf.org/doc/html/rfc8725#section-3.1) requires that libraries "MUST enable the caller to specify a supported set of algorithms and MUST NOT use any other algorithms when performing cryptographic operations".
 - Pin your own roots of trust, and treat a change to them as a decision. A key delivered alongside the record it authenticates adds nothing.
-- [SLSA's verification guidance](https://slsa.dev/spec/v1.2/verifying-artifacts) shows the shape: configure "the verifier's roots of trust" as a map from recognized producer identities to what will be believed from each.
+- Check the signing key's status and validity window as of the time the record was signed, not as of today. Where a key may later be rotated or compromised, an independent timestamp (question 2) is what keeps an old signature meaningful.
+- [SLSA's verification guidance](https://slsa.dev/spec/v1.2/verifying-artifacts) shows the shape: configure "the verifier's roots of trust" as a map from recognized builder identities to what will be believed from each.
 
 **Outcome.** A signature checkable against a root you pinned, with a stated suite and no call to the producer, is independently re-checkable, and what it establishes is who asserted the record and that the bytes are unchanged. A shared-secret receipt, or a check that queries the producer's service, is a supplier assertion. An unsigned export gives no information beyond what the producer chose to send.
 
@@ -130,6 +133,7 @@ Three things sit outside the six questions, and a reviewer is better off knowing
 - [OWASP ASVS 5.0, V16 Security Logging and Error Handling](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md)
 - [RFC 2104: HMAC: Keyed-Hashing for Message Authentication](https://datatracker.ietf.org/doc/html/rfc2104)
 - [RFC 3161: Internet X.509 Public Key Infrastructure Time-Stamp Protocol (TSP)](https://datatracker.ietf.org/doc/html/rfc3161)
+- [RFC 8725: JSON Web Token Best Current Practices](https://datatracker.ietf.org/doc/html/rfc8725)
 - [RFC 9162: Certificate Transparency Version 2.0](https://datatracker.ietf.org/doc/html/rfc9162)
 - [RFC 9334: Remote ATtestation procedureS (RATS) Architecture](https://datatracker.ietf.org/doc/html/rfc9334)
 - [RFC 9942: CBOR Object Signing and Encryption (COSE) Receipts](https://datatracker.ietf.org/doc/html/rfc9942)
