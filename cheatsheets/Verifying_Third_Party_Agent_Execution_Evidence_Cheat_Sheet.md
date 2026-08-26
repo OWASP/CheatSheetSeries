@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A team that adopts an agent, an MCP server, or a skill it did not build ends up holding a record of what that component did, and someone has to say what that record establishes. [MCP Security](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#10-monitoring-logging-auditing) and [AI Agent Security](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html#6-monitoring-observability) both tell you to log every tool invocation, and each of those instructions is satisfied by a record the observed component wrote about itself. This cheat sheet covers the other side of that exchange, where the record was produced by the same party it describes. It gives a reviewer six questions to ask of such a record, and a way to score the answers.
+A team that adopts an agent, a Model Context Protocol (MCP) server, or a skill it did not build ends up holding a record of what that component did, and someone has to say what that record establishes. [MCP Security](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#10-monitoring-logging-auditing) and [AI Agent Security](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html#6-monitoring-observability) both tell you to log every tool invocation, and you can satisfy both instructions with a record the observed component wrote about itself. This cheat sheet covers what happens next: how to judge a record whose producer is the same party it describes. It gives a reviewer six questions to ask of such a record, and a way to score the answers.
 
 ## Three Review Outcomes
 
@@ -14,11 +14,11 @@ Score each question below with one of three outcomes. The weakest answer bounds 
 | Supplier assertion | A claim by an interested party. It may well be true, but nothing in the record establishes it. | Operational awareness, plus anything the supplier has no incentive to misstate. |
 | No information about this execution | The record cannot distinguish a clean run from no run at all. | Nothing. |
 
-Three activities get called verification, and this sheet keeps them apart: reading a record or re-running the producer's own tool over it is re-checking, watching an event as it happens is witnessing, and re-checking offline as a party who trusts neither the component nor its operator is what these questions test. The [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html#verification) uses the word in its own sense, of testing that logging works as specified, and both senses are in ordinary use across this series.
+Three different activities are called verification, and this sheet keeps them apart: **re-checking** is reading a record or re-running the producer's own tool over it; **witnessing** is watching an event as it happens; **independent re-checking** is checking offline as a party who trusts neither the component nor its operator. The six questions below test the third. The [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html#verification) uses the word in its own sense, of testing that logging works as specified, and both senses are in ordinary use across this series.
 
 ## Six Questions to Ask About an Execution Record
 
-These are questions about a record as an artifact, so they apply to a plain signed JSON log, a structured attestation such as an [in-toto Statement](https://github.com/in-toto/attestation/blob/main/spec/v1/statement.md), a [COSE receipt](https://datatracker.ietf.org/doc/html/rfc9942), or a supplier's proprietary export. Each closes with the outcome that common answers map to.
+These are questions about a record as an artifact, so they apply to a plain signed JSON log, a structured attestation such as an [in-toto Statement](https://github.com/in-toto/attestation/blob/main/spec/v1/statement.md), a [COSE (CBOR Object Signing and Encryption) receipt](https://datatracker.ietf.org/doc/html/rfc9942), or a supplier's proprietary export. Each closes with the outcome that common answers map to.
 
 ### 1. Could the component the record describes have written or altered it?
 
@@ -31,7 +31,7 @@ A component that writes its own execution log can omit the call that mattered, r
 - If it will, that signature is worth what a readable key is worth.
 - Look for a copy landing where the component cannot change it. [ASVS 16.4.2](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md) asks that logs "cannot be modified".
 
-**Outcome.** Most agent telemetry shipping today is a supplier assertion, and it is worth saying so plainly: SDK-emitted spans, a framework's own traces, an MCP server's logs, and a hosted provider's export are all fed by the component and handled downstream by a single party. Independently re-checkable needs an input the component did not choose and a party with no stake in the answer. A supplier who will not describe the path scores no information. Where the answer is supplier assertion and you still have to proceed:
+**Outcome:** Most agent telemetry shipping today is a supplier assertion: SDK-emitted spans, a framework's own traces, an MCP server's logs, and a hosted provider's export are all fed by the component and handled downstream by a single party. Independently re-checkable needs an input the component did not choose and a party with no stake in the answer. A supplier who will not describe the path scores no information. Where the answer is supplier assertion and you still have to proceed:
 
 - Corroborate against a record your own side produces, such as a gateway or egress log covering the same calls. Where you have no leverage over the supplier at all, this is the move that always remains: run the component behind a gateway, proxy, or egress point you control, and record there.
 - Contract for a copy delivered to a party the supplier cannot edit. This needs procurement leverage that a team adopting a community component will not have.
@@ -39,7 +39,7 @@ A component that writes its own execution log can omit the call that mattered, r
 
 ### 2. Was the record witnessed while the work ran, or assembled afterwards?
 
-A record assembled after execution, from state the component still controls, inherits every weakness of that state, and the artifact looks identical either way. Capture during the run narrows the window in which an account can be composed to fit a known outcome.
+A record assembled after execution, from state the component still controls, inherits every weakness of that state, but the artifact looks identical either way. Capture during the run narrows the window in which an account can be composed to fit a known outcome.
 
 - Treat a timestamp applied over a finished record as a bound on how late it was written.
 - A timestamp field inside the record is an assertion by the producer.
@@ -51,7 +51,7 @@ A record assembled after execution, from state the component still controls, inh
 - A challenge issued mid-run also reaches components that never produce a discrete finished document.
 - Read whether the record covers one execution or several, and whether per-step material survives.
 
-**Outcome.** A countersignature from an authority the supplier does not operate, or a nonce you supplied, makes the *signing* time independently re-checkable. That bounds when the record was fixed; it does not by itself establish that the entries were captured as the work ran. A producer-asserted timestamp, or a countersignature from the supplier's own authority, is a supplier assertion. No timing evidence at all, or entries aggregated across runs with nothing per-step surviving, gives no information about this execution.
+**Outcome:** A countersignature from an authority the supplier does not operate, or a nonce you supplied, makes the *signing* time independently re-checkable. That bounds when the record was fixed; it does not by itself establish that the entries were captured as the work ran. A producer-asserted timestamp, or a countersignature from the supplier's own authority, is a supplier assertion. No timing evidence at all, or entries aggregated across runs with nothing per-step surviving, gives no information about this execution.
 
 ### 3. What is the record about, and is that thing named precisely enough to re-check?
 
@@ -66,7 +66,7 @@ A correctly signed record whose subject is named loosely, as "the agent" or "the
 - Read which run-determining inputs the record enumerates, and treat anything unenumerated as uncovered.
 - A digest over an agent binary says nothing about the tool definitions, prompts, model version, or policy the run used.
 
-**Outcome.** A digest you can recompute from your own copy is independently re-checkable, and what it establishes is which artifact the claim is about. A name without a digest, or a digest that does not vary per run, is a supplier assertion about identity. A record that identifies neither the artifact nor the execution gives no information about this execution.
+**Outcome:** A digest you can recompute from your own copy is independently re-checkable, and what it establishes is which artifact the claim is about. A name without a digest, or a digest that does not vary per run, is a supplier assertion about identity. A record that identifies neither the artifact nor the execution gives no information about this execution.
 
 ### 4. If something was left out, would you be able to tell?
 
@@ -84,7 +84,7 @@ Reviewers read absence as evidence: no denied call means nothing was denied. Tha
 - Check that it reaches the record you are handed.
 - Where you cannot run the component, ask for a sandbox tenant, and failing that cross-check against records from your own side of the boundary.
 
-**Outcome.** Coverage is independently re-checkable when something outside the producer saw the sequence: an independent log whose tree heads are witnessed outside its operator, your own boundary records, or an event you injected and found. A window backed only by the producer's own numbering is a supplier assertion. An undated selection, or a window you had to infer, gives no information about this execution.
+**Outcome:** Coverage is independently re-checkable when something outside the producer saw the sequence: an independent log whose tree heads are witnessed outside its operator, your own boundary records, or an event you injected and found. A window backed only by the producer's own numbering is a supplier assertion. An undated selection, or a window you had to infer, gives no information about this execution.
 
 ### 5. What happened if recording or delivery failed?
 
@@ -98,11 +98,11 @@ If a component keeps executing when its recorder is unreachable, an empty record
 - Where the component is hosted, ask for gap markers from a real outage.
 - Treat "we have never recorded a gap" as unverified until they can show you one, from a real outage or from a test they run for you.
 
-**Outcome.** A gap marker landing in a system the component does not control, or an interruption you performed yourself, is independently re-checkable. Documented fail-closed behavior you have not seen exercised is a supplier assertion. Treat "no findings" from a recorder that may have been fail-open as no information about that execution. Fail-closed is not automatically the right choice: halting on an unreachable recorder turns a recording outage into an availability incident and hands an attacker a cheap denial-of-service lever, so the right point on that scale depends on how sensitive the action is. What matters for review is that the behavior is documented, exercised, and marks the gap. Completeness is what this question tests; the accuracy of what was written is question 1.
+**Outcome:** A gap marker landing in a system the component does not control, or an interruption you performed yourself, is independently re-checkable. Documented fail-closed behavior you have not seen exercised is a supplier assertion. Treat "no findings" from a recorder that may have been fail-open as no information about that execution. Fail-closed is not automatically the right choice: halting on an unreachable recorder turns a recording outage into an availability incident and hands an attacker a cheap denial-of-service lever, so the right point on that scale depends on how sensitive the action is. What matters for review is that the behavior is documented, exercised, and marks the gap. Completeness is what this question tests; the accuracy of what was written is question 1.
 
 ### 6. Can the record be verified by someone who cannot also produce one?
 
-If the key material needed to check a record is the key material needed to create one, every party who can check can also forge, and the record cannot settle a disagreement between them. [RFC 2104](https://datatracker.ietf.org/doc/html/rfc2104) describes message authentication codes as "used between two parties that share a secret key in order to validate information transmitted between these parties". A shared-secret receipt is a reasonable control between a client and a server that already trust each other, and it carries nothing to the third party a reviewer is.
+If the key material needed to check a record is the key material needed to create one, every party who can check can also forge, and the record cannot settle a disagreement between them. [RFC 2104](https://datatracker.ietf.org/doc/html/rfc2104) describes message authentication codes as "used between two parties that share a secret key in order to validate information transmitted between these parties". A shared-secret receipt is a reasonable control between a client and a server that already trust each other, but it proves nothing to a reviewer, who is a third party.
 
 - Check what a reviewer must hold to run the check.
 - A public key permits checking without conferring the ability to produce; a shared secret does not.
@@ -115,7 +115,7 @@ If the key material needed to check a record is the key material needed to creat
 - Check the signing key's status and validity window as of the time the record was signed, not as of today. Where a key may later be rotated or compromised, an independent timestamp (question 2) is what keeps an old signature meaningful.
 - [SLSA's verification guidance](https://slsa.dev/spec/v1.2/verifying-artifacts) shows the shape: configure "the verifier's roots of trust" as a map from recognized builder identities to what will be believed from each.
 
-**Outcome.** A signature checkable against a root you pinned, with a stated suite and no call to the producer, is independently re-checkable, and what it establishes is who asserted the record and that the bytes are unchanged. A shared-secret receipt, or a check that queries the producer's service, is a supplier assertion. An unsigned export gives no information beyond what the producer chose to send.
+**Outcome:** A signature checkable against a root you pinned, with a stated suite and no call to the producer, is independently re-checkable, and what it establishes is who asserted the record and that the bytes are unchanged. A shared-secret receipt, or a check that queries the producer's service, is a supplier assertion. An unsigned export gives no information beyond what the producer chose to send.
 
 ## Four Record Types Scored
 
