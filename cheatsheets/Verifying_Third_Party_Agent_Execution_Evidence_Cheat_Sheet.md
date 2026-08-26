@@ -117,6 +117,19 @@ If the key material needed to check a record is the key material needed to creat
 
 **Outcome.** A signature checkable against a root you pinned, with a stated suite and no call to the producer, is independently re-checkable, and what it establishes is who asserted the record and that the bytes are unchanged. A shared-secret receipt, or a check that queries the producer's service, is a supplier assertion. An unsigned export gives no information beyond what the producer chose to send.
 
+## Four Record Types Scored
+
+The six questions are indifferent to format, so running them over four common record types shows what each one actually buys. Scores are for the record as it typically arrives, before the reviewer does any of the work the questions name.
+
+| Record | Q1 origin | Q2 timing | Q3 subject | Q4 coverage | Q5 failure | Q6 check |
+|---|---|---|---|---|---|---|
+| Hosted agent's [OpenTelemetry](https://opentelemetry.io/docs/concepts/signals/traces/) spans, exported by the vendor | Assertion | Assertion | Assertion | None | None | None |
+| Self-hosted MCP server stdout you capture yourself | Assertion | Re-checkable | None | Assertion | None | None |
+| [in-toto Statement](https://github.com/in-toto/attestation/blob/main/spec/v1/statement.md) signed by the supplier | Assertion | Assertion | Re-checkable | None | None | Re-checkable |
+| Receipt anchored in a transparency log witnessed outside its operator | Re-checkable | Re-checkable | Re-checkable | Assertion | None | Re-checkable |
+
+Re-checkable, assertion and none abbreviate the three outcomes above. Read the table across rather than down. No row is independently re-checkable on all six, and no row reaches that outcome on question 4 or question 5 at all, because neither asks what the bytes say; both ask what the recorder was positioned to see and whether it could decline to write. The strongest row still scores no information on question 5. The self-hosted row is the one a reader can move without anyone's permission, since controlling the host makes injecting an event and interrupting the recording path both available.
+
 ## What These Questions Do Not Cover
 
 Three things sit outside the six questions, and a reviewer is better off knowing they are outside than assuming they were covered.
