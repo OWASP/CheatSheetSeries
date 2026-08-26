@@ -6,12 +6,12 @@ A team that adopts an agent, an MCP server, or a skill it did not build ends up 
 
 ## Three Review Outcomes
 
-Score each question below with one of three outcomes, and score the record no higher than its weakest answer. [MCP08:2025 Lack of Audit and Telemetry](https://owasp.org/www-project-mcp-top-10/2025/MCP08-2025%E2%80%93Lack-of-Audit-and-Telemetry) recommends "cryptographic hashing (HMAC, SHA-256) to log files for integrity" and "audit trail self-verification, where logs cross-reference session data for consistency". Both are sound for an operator who holds the logs and the key. A reviewer holds neither.
+Score each question below with one of three outcomes. The weakest answer bounds what the record can settle in a dispute with the supplier; it does not bound what the record is worth operationally. [MCP08:2025 Lack of Audit and Telemetry](https://owasp.org/www-project-mcp-top-10/2025/MCP08-2025%E2%80%93Lack-of-Audit-and-Telemetry) recommends "cryptographic hashing (HMAC, SHA-256) to log files for integrity" and "audit trail self-verification, where logs cross-reference session data for consistency". Both are sound for an operator who holds the logs and the key. A reviewer holds neither.
 
-| Outcome | What it means | What it will carry |
+| Outcome | What it means | What the record can support |
 |---|---|---|
-| Independently re-checkable | A party who cannot produce the record can confirm it, from material the producer does not control when the check runs. | A disagreement with the supplier. |
-| Supplier assertion | A claim by an interested party. It may well be true, and nothing in the record establishes it. | Operational awareness, and anything the supplier has no incentive to misstate. |
+| Independently re-checkable | A party who cannot produce the record can confirm it, from material the producer does not control when the check runs. | Enough weight to settle a disagreement with the supplier. |
+| Supplier assertion | A claim by an interested party. It may well be true, but nothing in the record establishes it. | Operational awareness, plus anything the supplier has no incentive to misstate. |
 | No information about this execution | The record cannot distinguish a clean run from no run at all. | Nothing. |
 
 Three activities get called verification, and this sheet keeps them apart: reading a record or re-running the producer's own tool over it is re-checking, watching an event as it happens is witnessing, and re-checking offline as a party who trusts neither the component nor its operator is what these questions test. The [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html#verification) uses the word in its own sense, of testing that logging works as specified, and both senses are in ordinary use across this series.
