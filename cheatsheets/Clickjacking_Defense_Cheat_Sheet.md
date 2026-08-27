@@ -86,12 +86,12 @@ Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For e
 - **Per-page policy specification**: The policy needs to be specified for every page, which can complicate deployment. Providing the ability to enforce it for the entire site, at login time for instance, could simplify adoption.
 - **Problems with multi-domain sites**: The current implementation does not allow the website administrator to provide a list of domains that are allowed to frame the page. While listing allowed domains can be dangerous, in some cases a website administrator might have no choice but to use more than one hostname.
 - **ALLOW-FROM browser support**: The ALLOW-FROM option is obsolete and no longer works in modern browsers. BE CAREFUL ABOUT DEPENDING ON ALLOW-FROM. If you apply it and the browser does not support it, then you will have NO clickjacking defense in place.
-- **Multiple options not supported**: There is no way to allow the current site and a third-party site to frame the same response. Browsers only honour one X-Frame-Options header and only one value on that header.
+- **Multiple options not supported**: There is no way to allow the current site and a third-party site to frame the same response. Browsers only honor one X-Frame-Options header and only one value on that header.
 - **Nested Frames don't work with SAMEORIGIN and ALLOW-FROM**: In the following situation, the `http://framed.invalid/child` frame does not load because ALLOW-FROM applies to the top-level browsing context, not that of the immediate parent. The solution is to use ALLOW-FROM in both the parent and child frames (but this prevents the child frame loading if the `//framed.invalid/parent` page is loaded as the top level document).
 
 ![NestedFrames](../assets/Clickjacking_Defense_Cheat_Sheet_NestedFrames.png)
 
-- **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it has been obsoleted in favour of the frame-ancestors directive from the CSP Level 2 specification.
+- **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it has been obsoleted in favor of the frame-ancestors directive from the CSP Level 2 specification.
 - **Proxies** Web proxies are notorious for adding and stripping headers. If a web proxy strips the X-Frame-Options header then the site loses its framing protection.
 
 ## Defending with SameSite Cookies
@@ -108,7 +108,7 @@ If the Clickjacking attack does not require the user to be authenticated, this a
 
 Additionally, while `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), there are still some users (approximately 6% as of November 2020) with browsers that do not support it.
 
-The use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
+The use of this attribute should be considered as part of a defense-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
 
 ## Best-for-now Legacy Browser Frame Breaking Script
 

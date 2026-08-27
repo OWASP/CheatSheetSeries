@@ -1,0 +1,34 @@
+name: Index Drift Check
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'cheatsheets/**'
+      - 'Index.md'
+      - 'scripts/Update_CheatSheets_Index.py'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Save committed Index.md
+        run: cp Index.md Index.md.committed
+
+      - name: Regenerate Index.md
+        run: cd scripts && python Update_CheatSheets_Index.py
+
+      - name: Check for drift
+        run: |
+          if ! diff -u Index.md.committed Index.md; then
+            echo "::error::Index.md is out of date. Run 'cd scripts && python Update_CheatSheets_Index.py' and commit the result."
+            exit 1
+          fi
+          echo "Index.md is up to date."
