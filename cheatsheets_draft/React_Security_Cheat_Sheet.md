@@ -114,7 +114,7 @@ Avoid storing sensitive values in React component state longer than necessary.Co
 
 Storing authentication tokens in localStorage or sessionStorage is a common pattern in React applications but creates significant risk. Both storage mechanisms are accessible to any JavaScript running on the page including third-party scripts, browser extensions, and Cross-Site Scripting (XSS) payloads. A single XSS vulnerability anywhere in the application is sufficient for an attacker to read and exfiltrate all stored tokens.
 
-httpOnly cookies cannot be read by JavaScript at all. The browser holds them internally and attaches them automatically to outgoing requests. This makes them inaccessible to scripts running on the page regardless of their origin.
+httpOnly cookies cannot be read by JavaScript at all. The browser holds them internally and attaches them automatically to outgoing requests. This makes them inaccessible to scripts running on the page regardless of their origin. Automatic attachment is also what exposes cookie-based sessions to Cross-Site Request Forgery (CSRF): pair httpOnly cookies with the `SameSite` attribute, as shown below, and anti-CSRF tokens where required. See the [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
 
 ```jsx
 // ❌ Unsafe — accessible to any script on the page
@@ -288,7 +288,7 @@ The HTML sanitization guidance in the XSS Prevention section applies equally to 
 
 ### JSON State Serialization
 
-For guidance on the risk of using JSON.stringify to embed state in `<script>` tags during SSR hydration, see the Avoid JSON Injection in Server-Side Rendered State subsection in the XSS Prevention section.
+Embedding state into `<script>` tags with `JSON.stringify` during SSR hydration allows attacker-controlled strings such as `</script>` to break out of the script context and inject markup. Escape HTML-significant characters before embedding state, using a library such as [serialize-javascript](https://github.com/yahoo/serialize-javascript); modern frameworks such as Next.js escape their serialized payloads automatically, so this applies mainly to hand-rolled SSR setups. See the [OWASP Cross-Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html) for output encoding in script contexts.
 
 ### Authorize Inside Server Actions
 
