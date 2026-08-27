@@ -18,9 +18,9 @@ For a comprehensive overview of XSS, see the [OWASP Cross-Site Scripting Prevent
 
 ### Avoid Unsafe HTML Injection with dangerouslySetInnerHTML
 
-React provides `dangerouslySetInnerHTML` as an escape hatch for rendering raw HTML from rich text editors or a Content Management System(CMS). Without sanitization it allows injected scripts to execute in the browser.
+React provides `dangerouslySetInnerHTML` as an escape hatch for rendering raw HTML from rich text editors or a Content Management System (CMS). Without sanitization, it allows injected scripts to execute in the browser.
 
-Where possible, render untrusted content as text using JSX expressions. React escapes these automatically. Use `dangerouslySetInnerHTML` when raw HTML rendering is genuinely required, and sanitize untrusted input first using  library such as [DOMPurify](https://github.com/cure53/DOMPurify).
+Where possible, render untrusted content as text using JSX expressions. React escapes these automatically. Use `dangerouslySetInnerHTML` when raw HTML rendering is genuinely required, and sanitize untrusted input first using a library such as [DOMPurify](https://github.com/cure53/DOMPurify).
 
 ```jsx
 // rawHTML is untrusted input e.g. from a CMS or rich text editor
@@ -36,17 +36,18 @@ Unsanitized content can also enable DOM Clobbering. See the [OWASP DOM Clobberin
 
 Any attribute that renders a URL is a potential injection sink. React does not sanitize URL-bearing attributes. Common sinks include `href`, `src`, `action`, `formaction`, `data`, `srcset`, and `ping`, as well as `href` and `xlink:href` inside inline SVG elements.
 
-Reject any untrusted URL whose scheme is not `https:` or `http:`.
+Validate untrusted URLs against an allow-list of expected schemes, defaulting to `https:` and `http:` and adding schemes such as `mailto:` or `tel:` only where the application requires them. Never allow `javascript:` or `data: in navigable attributes.
 
 ```jsx
 // ❌ Unsafe — untrusted URL rendered without validation
 <a href={untrustedUrl}>Click here</a>
 
-// ✅ Safe — reject dangerous schemes
+// ✅ Safe — validate against a scheme allow-list
+const ALLOWED_SCHEMES = ['https:', 'http:']; // add 'mailto:', 'tel:' only if your application requires them
 let isSafe = false;
 try {
   const url = new URL(untrustedUrl);
-  isSafe = url.protocol === 'https:' || url.protocol === 'http:';
+  isSafe = ALLOWED_SCHEMES.includes(url.protocol);
 } catch {
   isSafe = false;
 }
@@ -107,7 +108,7 @@ For guidance on avoiding dynamic code execution patterns such as `eval()` and `n
 
 ## Sensitive Data Exposure
 
-Avoid storing sensitive values in React component state longer than necessary. Session recording tools and browser extensions can access React's internal Fiber tree, including state values that are never rendered into the DOM.
+Avoid storing sensitive values in React component state longer than necessary.Component state is not private at runtime: any script running in the same page can traverse React's internal Fiber tree and read component props and state, even when those values are never rendered into the DOM. The [React Developer Tools](https://react.dev/learn/react-developer-tools) browser extension demonstrates this access by inspecting live component state, and measurement research on session-replay scripts has [documented third-party collection of page content and user input](https://webtransparency.cs.princeton.edu/no_boundaries/).
 
 ### Store Authentication Tokens in httpOnly Cookies
 
@@ -291,10 +292,9 @@ For guidance on the risk of using JSON.stringify to embed state in `<script>` ta
 
 ### Authorize Inside Server Actions
 
-Server Actions are async functions marked with the 'use server' directive. Next.js automatically exposes each Server Action as a publicly accessible HTTP POST endpoint. Developers often treat Server Actions as internal functions, but any authenticated or unauthenticated client can call them directly by crafting an HTTP request to the generated endpoint.
+Server Actions are async functions marked with the `'use server'` directive. Next.js exposes each Server Action as a publicly accessible HTTP endpoint invoked via POST, and the [official Next.js security guidance](https://nextjs.org/blog/security-nextjs-server-components-actions) states that Server Actions must be treated the same as public API endpoints. Developers often treat Server Actions as internal functions, but any authenticated or unauthenticated client can call them directly by crafting an HTTP request to the generated endpoint.
 
-Every Server Action that accesses or modifies data must independently validate the current user's session and verify that the user is authorized to operate on the specific resource identified in the request. Failing to check resource ownership enables Insecure Direct Object Reference (IDOR) attacks where an attacker substitutes another
-user's resource identifier to access or modify data they do not own.
+Every Server Action that accesses or modifies data must independently validate the current user's session and verify that the user is authorized to operate on the specific resource identified in the request. Failing to check resource ownership enables Insecure Direct Object Reference (IDOR) attacks where an attacker substitutes another user's resource identifier to access or modify data they do not own.
 
 ```jsx
 // Illustrative example — not production-ready
@@ -346,5 +346,4 @@ React applications share the same npm supply chain risks as any JavaScript proje
 ## References
 
 - [DOMPurify](https://github.com/cure53/DOMPurify)
-- [serialize-javascript](https://github.com/yahoo/serialize-javascript)
 - [sanitize-html](https://github.com/apostrophecms/sanitize-html)
