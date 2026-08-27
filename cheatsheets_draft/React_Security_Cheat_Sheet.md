@@ -342,8 +342,3 @@ async function AdminPage() {
 ## Dependency and Supply Chain Security
 
 React applications share the same npm supply chain risks as any JavaScript project. See the [OWASP Software Component Verification Standard](https://owasp.org/www-project-software-component-verification-standard/) for comprehensive guidance.
-
-## References
-
-- [DOMPurify](https://github.com/cure53/DOMPurify)
-- [sanitize-html](https://github.com/apostrophecms/sanitize-html)
