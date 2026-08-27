@@ -1,4 +1,4 @@
-# WebAuthn Security Cheat Sheet
+# Passkey Security Cheat Sheet
 
 ## Introduction
 
