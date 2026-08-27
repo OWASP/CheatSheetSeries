@@ -173,7 +173,15 @@ Use the **JSON Canonicalization Scheme (JCS), [RFC 8785](https://www.rfc-editor.
 - Canonicalize every receipt with RFC 8785 (JCS) before signing, and again before verifying.
 - Sign over the hash of the canonical bytes, not raw or pretty-printed JSON.
 - Record the canonicalization, hash, and signature algorithm in the receipt (for example `canon: jcs`, `alg: ecdsa-p256-sha256`) so any verifier can reproduce it.
-- Derive a stable **content address** (`action_ref`) for each action: `action_ref = HEX(SHA-256(JCS({agent_id, action_type, scope, timestamp_ms})))`. This 64-character hex string uniquely and recomputably identifies the action across systems, enabling cross-system receipt correlation without replaying the full event log. This construct originates from [OWASP Agentic Skills Top 10 AST09](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast09.md), where it is specified as normative implementation guidance for execution receipts.
+- Derive a stable **content address** (`action_ref`) for each action: `action_ref = HEX(SHA-256(JCS({agent_id, action_type, scope, timestamp_ms})))`. This 64-character hex string uniquely and recomputably identifies the action across systems, enabling cross-system receipt correlation without replaying the full event log. [OWASP Agentic Skills Top 10 AST09](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast09.md) names `action_ref` as a "content-derived join key, independently recomputable" in the outcome receipt. It does not specify a construction. The SHA-256-over-JCS formula above is one way to satisfy that property and is a proposed pattern, not a standardised one.
+
+> **What in this section is standardised, and what is not.** RFC 8785 (JCS) and
+> RFC 8032 (Ed25519) are published IETF specifications, and the canonicalization and
+> signature behaviours described above follow from them directly. The `action_ref`
+> content address, the receipt field set, and the correlation pattern built on them are
+> proposed patterns. No RFC, NIST publication, or published audit framework specifies
+> them, and no conformance suite currently tests them. Treat them as one worked
+> implementation of the underlying requirement rather than as a standard to conform to.
 
 ### Don't
 
@@ -240,7 +248,7 @@ The controls in this cheat sheet map to common AML and sanctions obligations. Th
 | Sanctions-list freshness in receipt (Section 10) | Obligation to screen against current lists; sanctions-evasion controls |
 | Fail-closed enforcement (Section 5) | Blocking obligations for sanctioned parties |
 | Trust-tiered limits (Section 6) | Risk-based approach (FATF Recommendation 1); monitoring thresholds |
-| Signed receipt with `action_ref` content address (Sections 4, 8-10) | EU AI Act Article 12 (automatic tamper-evident logging for high-risk AI systems, enforcement December 2, 2027); ISO/IEC 42001 Annex A (AI management system records) |
+| Signed receipt with `action_ref` content address (Sections 4, 8-10) | EU AI Act Article 12, which requires that high-risk systems "shall technically allow for the automatic recording of events (logs) over the lifetime of the system". Article 12 requires the record to exist; it does not require it to be signed, tamper-evident, or produced by a party other than the system being logged. Most of the Act applies from 2 August 2026, and Article 6(1) from 2 August 2027. |
 
 ### Do
 
