@@ -144,32 +144,65 @@ Minimum policy items:
 
 ## Practical CI/CD snippets & patterns
 
-**GitHub Actions (example)** — generate CycloneDX and upload as artifact, then sign with cosign.
+**GitHub Actions (example)** — generate CycloneDX SBOM, scan for vulnerabilities with [Grype](https://github.com/anchore/grype), upload artifact, sign and attest provenance keylessly with [Sigstore / Cosign](https://docs.sigstore.dev/), and publish to [Dependency-Track](https://docs.dependencytrack.org/).
 
 ```yaml
-name: Build and SBOM
+name: Build, SBOM, Scan, Attest & Publish
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Required for Sigstore keyless OIDC signing
     steps:
-      - uses: actions/checkout@v4
-      - name: Build
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Build artifact
         run: ./gradlew assemble
+
       - name: Generate SBOM
         run: |
           syft packages dir:./build/libs -o cyclonedx-json > sbom.json
-      - name: Upload SBOM
+
+      - name: Scan SBOM for vulnerabilities
+        run: |
+          grype sbom:sbom.json --fail-on high
+
+      - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
         with:
           name: sbom
           path: sbom.json
-      - name: Sign Artifact & SBOM
-        run: |
-          cosign sign --key ${{ secrets.COSIGN_KEY }} my-registry/my-app:${{ github.sha }}
-          cosign sign-blob --key ${{ secrets.COSIGN_KEY }} --output-signature sbom.json.sig sbom.json
+
       - name: Push image
         run: ./push-image.sh
+
+      - name: Sign image & SBOM (Keyless OIDC)
+        run: |
+          cosign sign --yes my-registry/my-app:${{ github.sha }}
+          cosign sign-blob --yes --output-signature sbom.json.sig sbom.json
+
+      - name: Attest SBOM to image
+        run: |
+          cosign attest --yes --predicate sbom.json --type cyclonedx my-registry/my-app:${{ github.sha }}
+
+      - name: Publish SBOM to Dependency-Track
+        env:
+          DT_API_KEY: ${{ secrets.DT_API_KEY }}
+        run: |
+          curl -X "POST" "https://dtrack.example.com/api/v1/bom" \
+            -H "X-Api-Key: $DT_API_KEY" \
+            -H "Content-Type: multipart/form-data" \
+            -F "projectName=my-app" \
+            -F "projectVersion=${{ github.ref_name }}" \
+            -F "autoCreate=true" \
+            -F "bom=@sbom.json"
 ```
 
 **Fail-fast vs Warn**: In CI, fail the pipeline if SBOM generation fails, but avoid failing builds on non-actionable low-severity findings — instead surface results to triage dashboards.
