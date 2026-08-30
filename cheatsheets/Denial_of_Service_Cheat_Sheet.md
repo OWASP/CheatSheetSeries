@@ -14,7 +14,7 @@ Because anti-DoS methods cannot be one-step solutions, your developers and appli
 
 ![DDOSFlow](../assets/Denial_of_Service_Cheat_Sheet_FlowDDOS.png)
 
-This DoS system inventory should look for potential places where DoS attacks can cause problems and highlight any single points of system failures, which can range from programming related errors to resource exhaustion. It should give you a clear picture of what issues are at stake (e.g. bottlenecks, etc.). **To resolve problems, a solid understanding of your environment is essential to develop suitable defence mechanisms**. These could be aligned with:
+This DoS system inventory should look for potential places where DoS attacks can cause problems and highlight any single points of system failures, which can range from programming related errors to resource exhaustion. It should give you a clear picture of what issues are at stake (e.g. bottlenecks, etc.). **To resolve problems, a solid understanding of your environment is essential to develop suitable defense mechanisms**. These could be aligned with:
 
 1. Scaling options (**up** = inner hardware components, **out** = the number of complete components).
 2. Existing conceptual / logical techniques (such as applying redundancy measurements, bulk-heading, etc. - which expands your in-house capabilities).
@@ -115,7 +115,7 @@ Rate limiting is the process of controlling traffic rate from and to a server or
 ### ISP-Level remediations
 
 - **Filter invalid sender addresses using edge routers**, in accordance with RFC 2267, to filter out IP-spoofing attacks done with the goal of bypassing block lists.
-- **Check your ISP services in terms of DDOS beforehand** (support for multiple internet access points, enough bandwidth (xx-xxx Gbit/s) and special hardware for traffic analysis and defence on application level
+- **Check your ISP services in terms of DDOS beforehand** (support for multiple internet access points, enough bandwidth (xx-xxx Gbit/s) and special hardware for traffic analysis and defense on application level
 
 ### Global-Level remediations: Commercial cloud filter services
 
