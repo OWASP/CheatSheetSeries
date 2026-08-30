@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**120** cheat sheets available.
+**121** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -269,6 +269,8 @@
 [User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
 
 ## V
+
+[Verifying Third Party Agent Execution Evidence Cheat Sheet](cheatsheets/Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.md)
 
 [Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md) ![Html](assets/Index_Html.svg)
 
