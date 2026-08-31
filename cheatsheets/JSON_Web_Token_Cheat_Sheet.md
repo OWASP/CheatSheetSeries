@@ -269,9 +269,13 @@ Before implementing such a JWT denylist, you should consider whether there is a 
 
 ## Token Confidentiality and JWE
 
-### Why Signed Tokens Do Not Provide Confidentiality
+### Signed JWTs are not confidential
 
-A signed JWT (JWS) provides integrity and authentication, it proves the token was not tampered with and who issued it. However, the payload is only base64url encoded, not encrypted. Anyone who intercepts a JWS can trivially decode the payload and read all claims. Do not store personally identifiable information (PII) or other sensitive data in a signed JWT expecting it to be protected from disclosure.
+A signed JWT ([JSON Web Signature](https://datatracker.ietf.org/doc/html/rfc7515), JWS) provides integrity and authenticity, but not confidentiality. The payload is only base64url encoded, not encrypted, so anyone who obtains the token can read every claim. With a MAC (`HS*`), a valid signature also only proves that the token was produced by some holder of the shared secret, see [Public-key Signatures vs. MAC](#public-key-signatures-vs-mac).
+
+TLS prevents the token from being read in transit, but the claims remain exposed elsewhere: in application logs, in browser storage, in referrer headers, and to any intermediary that terminates TLS.
+
+[Omitting privacy-sensitive information from a JWT is the simplest way of minimizing privacy issues](https://datatracker.ietf.org/doc/html/rfc7519#section-12). Prefer keeping sensitive data server-side behind an opaque reference token. Use JWE only when the claims must travel with the token to a party that cannot resolve them with the issuer.
 
 ### Using JWE for Claim Confidentiality
 
