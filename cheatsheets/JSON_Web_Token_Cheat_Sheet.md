@@ -277,12 +277,12 @@ TLS prevents the token from being read in transit, but the claims remain exposed
 
 [Omitting privacy-sensitive information from a JWT is the simplest way of minimizing privacy issues](https://datatracker.ietf.org/doc/html/rfc7519#section-12). Prefer keeping sensitive data server-side behind an opaque reference token. Use JWE only when the claims must travel with the token to a party that cannot resolve them with the issuer.
 
-### Using JWE for Claim Confidentiality
+### Using JWE
 
-When claim confidentiality is required, use [JSON Web Encryption (JWE) — RFC 7516](https://www.rfc-editor.org/rfc/rfc7516). JWE encrypts the payload using authenticated encryption (AEAD), with two algorithm layers:
+When claims must be kept confidential, use [JSON Web Encryption (JWE)](https://datatracker.ietf.org/doc/html/rfc7516). JWE uses two algorithms:
 
-- `alg` — the key encryption algorithm, used to protect the Content Encryption Key (CEK) for the intended recipient (e.g. `RSA-OAEP`)
-- `enc` — the content encryption algorithm, an AEAD algorithm used to encrypt the actual payload (e.g. `A256GCM`)
+- **`alg`:** the key management algorithm, which [encrypts or agrees upon](https://datatracker.ietf.org/doc/html/rfc7518#section-4.1) the Content Encryption Key (CEK) for the intended recipient (for example `RSA-OAEP-256` or `ECDH-ES+A256KW`).
+- **`enc`:** the content encryption algorithm, which encrypts the payload using authenticated encryption (for example `A256GCM`).
 
 When both integrity and confidentiality are needed, use a **nested JWT**: sign the claims first (JWS), then encrypt the resulting signed token (JWE) ([RFC 7519, Section 11.2](https://www.rfc-editor.org/rfc/rfc7519#section-11.2)).This ensures the signature covers the actual claims while the outer JWE provides confidentiality. Set the `cty` header to `JWT` in the outer JWE to signal nesting
 ([RFC 7516, Section 4.1.12](https://www.rfc-editor.org/rfc/rfc7516#section-4.1.12)).
