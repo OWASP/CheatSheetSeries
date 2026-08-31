@@ -2434,6 +2434,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Nextjs_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nextjs Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="NoSQL_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -3989,6 +4017,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remediation-and-maintained-backports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediation and maintained backports
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -4605,6 +4650,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remediation-and-maintained-backports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediation and maintained backports
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -4755,6 +4817,13 @@
 <p><strong>Step 3:</strong></p>
 <p>If possible, create a unit test that mimics the vulnerability in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.</p>
 <p>If you have a set of automated unit or integration or functional or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.</p>
+<p>A patch written in-house does not get the benefit of the doubt that an upstream release gets, so hold it to an explicit bar before considering the vulnerability handled:</p>
+<ul>
+<li>The test reproducing the vulnerability fails against the unpatched dependency and passes against the patched one. A test that passes in both cases proves nothing about the patch.</li>
+<li>The tests of the dependency itself still pass, which catches behavior that the patch broke but the application does not exercise directly.</li>
+<li>The alert raised by the detection tool is suppressed per <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">CVE</a> only once the two points above hold. Suppressing the alert, or changing a version string so that the tool stops matching it, records a fix but does not make one.</li>
+</ul>
+<p>Expect the tool to keep flagging the dependency even after a correct patch, because <a href="https://access.redhat.com/security/updates/backporting">looking at the version number of a package will not tell you whether the fix is present</a>. That is a reporting problem to be handled with a scoped suppression, not a reason to change the patch.</p>
 <h3 id="case-4">Case 4<a class="headerlink" href="#case-4" title="Permanent link">&para;</a></h3>
 <h4 id="context_4">Context<a class="headerlink" href="#context_4" title="Permanent link">&para;</a></h4>
 <p>The vulnerable dependency is found during one of the following situation in which the provider is not aware of the vulnerability:</p>
@@ -4844,6 +4913,16 @@
 </li>
 </ul>
 </li>
+</ul>
+<h3 id="remediation-and-maintained-backports">Remediation and maintained backports<a class="headerlink" href="#remediation-and-maintained-backports" title="Permanent link">&para;</a></h3>
+<p>The tools above detect vulnerable dependencies, they do not fix them. When the fixed version cannot be adopted, the patch still has to come from somewhere: either the development team maintains it or someone else does.</p>
+<p>Linux distribution security teams are the reference model for the second option. <a href="https://www.debian.org/security/faq">Debian</a> and <a href="https://access.redhat.com/security/updates/backporting">Red Hat</a> both backport security fixes into the version shipped in the stable release instead of upgrading it. When the dependency is consumed as an operating system package, take the distribution's patched build rather than maintaining a private patch.</p>
+<p>Language ecosystem packages are rarely covered that way, so the choice there is between maintaining the patch in-house and paying someone to maintain it. Judge either option on the same criteria as a detection tool, plus:</p>
+<ul>
+<li>Coverage of the ecosystems, version lines and severities the project depends on, with a published response time.</li>
+<li>Publication of the patch itself and of its provenance, so that the change can be reviewed instead of being trusted blindly.</li>
+<li>Delivery as a compatible artifact through a registry or proxy that the build already uses, so that no manifest rewrite is required.</li>
+<li>A documented way out, so that leaving the source does not mean re-patching everything from scratch.</li>
 </ul>
 
 
