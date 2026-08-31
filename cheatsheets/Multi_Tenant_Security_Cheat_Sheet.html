@@ -2435,6 +2435,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Database Isolation Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#do-not-use-an-rls-bypassing-role-for-tenant-scoped-request-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scope-tenant-context-to-the-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope Tenant Context to the Transaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-tenant-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Tenant Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2460,13 +2499,41 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-api-security-rate-limiting" class="md-nav__link">
+  <a href="#5-api-asynchronous-work-resource-controls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. API Security &amp; Rate Limiting
+        5. API, Asynchronous Work &amp; Resource Controls
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="5. API, Asynchronous Work &amp; Resource Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-security-rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Security &amp; Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tenant-aware-asynchronous-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tenant-Aware Asynchronous Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4138,6 +4205,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Database Isolation Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#do-not-use-an-rls-bypassing-role-for-tenant-scoped-request-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scope-tenant-context-to-the-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope Tenant Context to the Transaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-tenant-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Tenant Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4163,13 +4269,41 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-api-security-rate-limiting" class="md-nav__link">
+  <a href="#5-api-asynchronous-work-resource-controls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. API Security &amp; Rate Limiting
+        5. API, Asynchronous Work &amp; Resource Controls
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="5. API, Asynchronous Work &amp; Resource Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-security-rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Security &amp; Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tenant-aware-asynchronous-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tenant-Aware Asynchronous Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4268,22 +4402,23 @@
 <li><strong>Privilege Escalation Across Tenants</strong>: Exploiting admin functions to access other tenants.</li>
 <li><strong>Tenant Context Injection</strong>: Manipulating tenant identifiers in requests, tokens, or headers.</li>
 <li><strong>Shared Resource Poisoning</strong>: Cache poisoning, queue injection, or storage pollution affecting other tenants.</li>
-<li><strong>Insecure Tenant Onboarding/Offboarding</strong>: Incomplete provisioning or data retention after deletion.</li>
+<li><strong>Insecure Tenant Onboarding/Offboarding</strong>: Incomplete provisioning, unauthorized residual access, or retention beyond policy.</li>
 <li><strong>Audit &amp; Compliance Gaps</strong>: Insufficient tenant-specific logging for regulatory requirements.</li>
 </ul>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
 <h3 id="1-tenant-identification-context-management">1. Tenant Identification &amp; Context Management<a class="headerlink" href="#1-tenant-identification-context-management" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Establish tenant context early in the request lifecycle (middleware/interceptor).</li>
-<li>Use cryptographically secure, non-guessable tenant identifiers.</li>
-<li>Never trust client-supplied tenant IDs without validation.</li>
-<li>Bind tenant context to the authenticated user session.</li>
-<li>Propagate tenant context securely through all application layers.</li>
+<li>For tenant-scoped operations, establish tenant context early in the request lifecycle (middleware/interceptor).</li>
+<li>Choose identifiers appropriate to their exposure risk. Opaque, random identifiers can reduce enumeration, but they are not authorization controls.</li>
+<li>Treat client-supplied tenant identifiers as selectors only. Verify that the authenticated principal is authorized to act in the selected tenant.</li>
+<li>Bind tenant context to a server-verified identity and current tenant membership or service authorization.</li>
+<li>Propagate server-verified tenant context to components that need it for tenant-sensitive decisions or observability; do not let downstream components replace it with unverified input.</li>
 </ul>
 <details>
 <summary>Bad example: Trusting client-supplied tenant ID</summary>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Tenant ID from request header without validation/query parameterization</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: The header selects a tenant without checking the caller's membership.</span>
+<span class="c1"># Query parameterization prevents injection, not cross-tenant access.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_tenant_data</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"X-Tenant-ID"</span><span class="p">)</span>  <span class="c1"># Attacker can modify!</span>
     <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM data WHERE tenant_id = :tid"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tid"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
@@ -4292,14 +4427,11 @@
 </details>
 
 <details>
-<summary>Good example: Deriving tenant from authenticated session</summary>
+<summary>Good example: Verifying tenant context against authenticated identity</summary>
 
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextvars</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextVar</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-
-<span class="c1"># Thread-safe tenant context</span>
-<span class="n">current_tenant</span><span class="p">:</span> <span class="n">ContextVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span><span class="s1">'current_tenant'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantContext</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">roles</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
@@ -4308,11 +4440,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">roles</span> <span class="o">=</span> <span class="n">roles</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_validated</span> <span class="o">=</span> <span class="kc">True</span>
 
+<span class="c1"># Request-local tenant context</span>
+<span class="n">current_tenant</span><span class="p">:</span> <span class="n">ContextVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">TenantContext</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span>
+    <span class="s1">'current_tenant'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantMiddleware</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Extract and validate tenant context from authenticated session."""</span>
+<span class="w">    </span><span class="sd">"""Verify tenant context against authenticated identity and membership."""</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">):</span>
-        <span class="c1"># Get tenant from verified JWT claims - NOT from headers</span>
+        <span class="c1"># A verified claim may select the tenant, but authorization still</span>
+        <span class="c1"># depends on the issuer's guarantees or a current membership check.</span>
         <span class="n">token_claims</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">verified_claims</span>  <span class="c1"># Set by auth middleware</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">token_claims</span> <span class="ow">or</span> <span class="s2">"tenant_id"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">token_claims</span><span class="p">:</span>
@@ -4320,16 +4458,18 @@
 
         <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">token_claims</span><span class="p">[</span><span class="s2">"tenant_id"</span><span class="p">]</span>
 
-        <span class="c1"># Validate tenant exists and is active</span>
-        <span class="n">tenant</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_service</span><span class="o">.</span><span class="n">get_active_tenant</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">tenant</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Invalid tenant"</span><span class="p">})</span>
+        <span class="n">principal_id</span> <span class="o">=</span> <span class="n">token_claims</span><span class="p">[</span><span class="s2">"sub"</span><span class="p">]</span>
+        <span class="n">membership</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_service</span><span class="o">.</span><span class="n">get_active_membership</span><span class="p">(</span>
+            <span class="n">principal_id</span><span class="p">,</span> <span class="n">tenant_id</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">membership</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Tenant access denied"</span><span class="p">})</span>
 
         <span class="c1"># Set tenant context for this request</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">TenantContext</span><span class="p">(</span>
             <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="o">=</span><span class="n">token_claims</span><span class="p">[</span><span class="s2">"sub"</span><span class="p">],</span>
-            <span class="n">roles</span><span class="o">=</span><span class="n">token_claims</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"roles"</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">principal_id</span><span class="p">,</span>
+            <span class="n">roles</span><span class="o">=</span><span class="n">membership</span><span class="o">.</span><span class="n">roles</span>
         <span class="p">)</span>
         <span class="n">token</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
@@ -4358,30 +4498,30 @@
 <thead>
 <tr>
 <th>Strategy</th>
-<th>Isolation Level</th>
-<th>Use Case</th>
+<th>Potential Boundary</th>
+<th>Conditions and Trade-Offs</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Separate Databases</td>
-<td>Highest</td>
-<td>Regulated industries, enterprise clients</td>
+<td>Database and credential boundary</td>
+<td>Strong when credentials, network access, administrative paths, and backups are isolated; higher operational cost</td>
 </tr>
 <tr>
 <td>Separate Schemas</td>
-<td>High</td>
-<td>Balance of isolation and manageability</td>
+<td>Namespace and database-role boundary</td>
+<td>Requires disciplined grants, role separation, <code>search_path</code> handling, and migrations</td>
 </tr>
 <tr>
 <td>Shared Tables (Row-Level)</td>
-<td>Medium</td>
-<td>Cost-sensitive, high tenant count</td>
+<td>Policy and row boundary</td>
+<td>Requires enforceable tenant ownership, policy coverage for classified tenant-owned tables, constrained request roles, and negative-path tests</td>
 </tr>
 <tr>
 <td>Hybrid</td>
-<td>Variable</td>
-<td>Different tiers for different customers</td>
+<td>Varies by workload or tier</td>
+<td>Document and test the boundary used for each data class</td>
 </tr>
 </tbody>
 </table>
@@ -4401,32 +4541,50 @@
 <span class="w">    </span><span class="k">FOR</span><span class="w"> </span><span class="k">ALL</span>
 <span class="w">    </span><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="n">tenant_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_setting</span><span class="p">(</span><span class="s1">'app.current_tenant'</span><span class="p">)::</span><span class="n">uuid</span><span class="p">);</span>
 
-<span class="c1">-- Force RLS for table owners too (important!)</span>
+<span class="c1">-- Force RLS for table owners (not superusers or BYPASSRLS roles)</span>
 <span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">FORCE</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="k">SECURITY</span><span class="p">;</span>
 <span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">FORCE</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="k">LEVEL</span><span class="w"> </span><span class="k">SECURITY</span><span class="p">;</span>
 </code></pre></div>
 
 </details>
 
+<h4 id="do-not-use-an-rls-bypassing-role-for-tenant-scoped-request-paths">Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths<a class="headerlink" href="#do-not-use-an-rls-bypassing-role-for-tenant-scoped-request-paths" title="Permanent link">&para;</a></h4>
+<p><code>FORCE ROW LEVEL SECURITY</code> applies policies to a table owner. It does not constrain a superuser or a role with the <code>BYPASSRLS</code> attribute; PostgreSQL documents that <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">both always bypass row security</a>.</p>
+<ul>
+<li>Connect the normal application request path with a least-privileged role that is neither a superuser nor a <code>BYPASSRLS</code> role.</li>
+<li>Reserve privileged connections for migrations and explicitly authorized administrative jobs.</li>
+<li>Do not serve ordinary tenant-scoped requests through a privileged connection. A privileged job must explicitly authorize and constrain its tenant set or cross-tenant operation because RLS will not do so.</li>
+<li>Check the deployed request role, not only the role declared in source-controlled configuration. PostgreSQL exposes <code>rolsuper</code> and <code>rolbypassrls</code> in <a href="https://www.postgresql.org/docs/current/view-pg-roles.html"><code>pg_roles</code></a>.</li>
+</ul>
+<h4 id="scope-tenant-context-to-the-transaction">Scope Tenant Context to the Transaction<a class="headerlink" href="#scope-tenant-context-to-the-transaction" title="Permanent link">&para;</a></h4>
+<p>The example policy depends on <code>current_setting('app.current_tenant')</code>. Because it omits the optional <code>missing_ok =&gt; true</code> argument, PostgreSQL raises an error if the setting does not exist instead of returning <code>NULL</code>; that is a deliberate fail-closed choice. The <a href="https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SET"><code>current_setting</code> documentation</a> describes both behaviors.</p>
+<p>A normal <code>SET</code> persists until the session ends after its transaction commits, while <a href="https://www.postgresql.org/docs/current/sql-set.html"><code>SET LOCAL</code> lasts only for the current transaction</a>. When an application or connection pool reuses a database session without resetting it, session-scoped tenant state can therefore be inherited by the next request.</p>
+<ul>
+<li>Begin a transaction, set the tenant context with <code>SET LOCAL</code>, or call <code>set_config('app.current_tenant', tenant_id, true)</code>, then execute queries that depend on that setting in the same transaction. The <code>true</code> argument makes <a href="https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SET"><code>set_config</code> transaction-local</a>.</li>
+<li>Re-establish the tenant context for every transaction. Never assume a newly borrowed connection has the correct setting.</li>
+<li>Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.</li>
+<li>Commit or roll back before returning the connection to the pool.</li>
+</ul>
 <details>
 <summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">event</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">String</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Query</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.ext.declarative</span><span class="w"> </span><span class="kn">import</span> <span class="n">declared_attr</span>
+SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">event</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">text</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">declared_attr</span><span class="p">,</span> <span class="n">with_loader_criteria</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantMixin</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Mixin that adds tenant_id to all models."""</span>
+<span class="w">    </span><span class="sd">"""Mixin that adds tenant_id to models that inherit it."""</span>
 
     <span class="nd">@declared_attr</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">tenant_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">36</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareSession</span><span class="p">(</span><span class="n">Session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Session that automatically filters by tenant."""</span>
+<span class="w">    </span><span class="sd">"""Session carrying tenant context for participating ORM operations."""</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span>
 
@@ -4436,38 +4594,50 @@
             <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant ID not set on session"</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tenant_id</span>
 
-<span class="c1"># Automatically add tenant filter to all queries</span>
-<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">Query</span><span class="p">,</span> <span class="s2">"before_compile"</span><span class="p">,</span> <span class="n">retval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">add_tenant_filter</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
-    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">tenant_id</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"No tenant context for query"</span><span class="p">)</span>
+<span class="c1"># Add tenant criteria to ORM SELECTs issued through TenantAwareSession.</span>
+<span class="c1"># with_loader_criteria propagates this rule to eager and lazy relationship loads.</span>
+<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">TenantAwareSession</span><span class="p">,</span> <span class="s2">"do_orm_execute"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_tenant_filter</span><span class="p">(</span><span class="n">execute_state</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">execute_state</span><span class="o">.</span><span class="n">is_select</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">is_column_load</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">is_relationship_load</span>
+    <span class="p">):</span>
+        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">tenant_id</span>
+        <span class="n">execute_state</span><span class="o">.</span><span class="n">statement</span> <span class="o">=</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">options</span><span class="p">(</span>
+            <span class="n">with_loader_criteria</span><span class="p">(</span>
+                <span class="n">TenantMixin</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">model</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="n">tenant_id</span><span class="p">,</span>
+                <span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">column_descriptions</span><span class="p">:</span>
-        <span class="n">entity</span> <span class="o">=</span> <span class="n">desc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'entity'</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">entity</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s1">'tenant_id'</span><span class="p">):</span>
-            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="n">tenant_id</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">query</span>
-
-<span class="c1"># Automatically set tenant_id on insert</span>
-<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">TenantMixin</span><span class="p">,</span> <span class="s2">"before_insert"</span><span class="p">,</span> <span class="n">propagate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">set_tenant_on_insert</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot insert without tenant context"</span><span class="p">)</span>
-    <span class="n">target</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
+<span class="c1"># Set and validate tenant_id for new mapped objects in this session.</span>
+<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">TenantAwareSession</span><span class="p">,</span> <span class="s2">"before_flush"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_tenant_on_insert</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">flush_context</span><span class="p">,</span> <span class="n">instances</span><span class="p">):</span>
+    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">tenant_id</span>
+    <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">new</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">TenantMixin</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">tenant_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Object tenant does not match session"</span><span class="p">)</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span>
 
 <span class="c1"># Secure session factory</span>
 <span class="nd">@contextmanager</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">tenant_session</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Create a tenant-scoped database session."""</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">tenant_id</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant session requires verified context"</span><span class="p">)</span>
+
     <span class="n">session</span> <span class="o">=</span> <span class="n">TenantAwareSession</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">)</span>
 
-    <span class="c1"># Set PostgreSQL RLS context</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SELECT set_config('app.current_tenant', :tenant_id, true);"</span><span class="p">)</span>
-
     <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># The final true makes the tenant context transaction-local</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="n">text</span><span class="p">(</span><span class="s2">"SELECT set_config('app.current_tenant', :tenant_id, true)"</span><span class="p">),</span>
+            <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">}</span>
+        <span class="p">)</span>
         <span class="k">yield</span> <span class="n">session</span>
         <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -4479,12 +4649,22 @@
 
 </details>
 
+<p>This ORM helper is defense in depth, not complete enforcement. It applies tenant criteria to ORM SELECTs issued through <code>TenantAwareSession</code>, with the criteria propagated to relationship loaders. Raw SQL, Core connections, bulk operations, and code using another session type require separate controls; use database policies or constrained roles as the final boundary where possible.</p>
+<h4 id="verify-tenant-isolation">Verify Tenant Isolation<a class="headerlink" href="#verify-tenant-isolation" title="Permanent link">&para;</a></h4>
+<p>Test isolation through the same role, connection path, and pooling mode used by the application. A privileged test connection can make a correct policy appear broken, while a test that never exercises the deployed request role can miss a bypass.</p>
+<ul>
+<li><strong>Test the authorization matrix.</strong> For each RLS-protected table, prove that expected cross-tenant operations are denied and expected same-tenant operations succeed. Where sharing or platform administration is intentional, test the exact permitted path and prove that it grants no broader access.</li>
+<li><strong>Discover coverage.</strong> Derive the expected tenant-scoped table inventory from the schema or an explicit classification, then compare it with PostgreSQL's <a href="https://www.postgresql.org/docs/current/catalog-pg-class.html"><code>pg_class.relrowsecurity</code> and <code>relforcerowsecurity</code></a> and the <a href="https://www.postgresql.org/docs/current/view-pg-policies.html"><code>pg_policies</code></a> view. Fail when a new table has no classification, RLS is disabled, or the expected policy is absent.</li>
+<li><strong>Assert the request role.</strong> In the deployed environment, fail a configuration test if the request-path role has <code>rolsuper</code> or <code>rolbypassrls</code> set.</li>
+<li><strong>Exercise connection reuse.</strong> Run requests for two tenants over reused connections and prove the second request cannot observe the first request's tenant context.</li>
+</ul>
+<p>A hand-maintained table list can drift: the same omission that leaves RLS off a new table can also leave that table out of the test. Prefer schema-derived discovery, or gate schema changes so each new table must be classified as tenant-scoped, intentionally shared, or otherwise isolated.</p>
 <h3 id="3-preventing-cross-tenant-data-access-idor-prevention">3. Preventing Cross-Tenant Data Access (IDOR Prevention)<a class="headerlink" href="#3-preventing-cross-tenant-data-access-idor-prevention" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Always validate that requested resources belong to the current tenant.</li>
-<li>Use composite keys (tenant_id + resource_id) for all lookups.</li>
-<li>Implement authorization checks at the data access layer, not just API layer.</li>
-<li>Avoid exposing sequential or guessable IDs.</li>
+<li>For each tenant-scoped resource, verify that the authenticated principal can act in the resource's tenant.</li>
+<li>Include tenant scope in the lookup or authorization policy when ownership is tenant-specific. A composite key (<code>tenant_id</code> + <code>resource_id</code>) is one option, not a universal requirement.</li>
+<li>Enforce authorization at a boundary traversed by every tenant-owned access path. Add data-layer checks as defense in depth where the architecture supports them.</li>
+<li>Treat opaque or random identifiers as defense in depth against enumeration, not as a substitute for authorization.</li>
 </ul>
 <details>
 <summary>Bad example: Direct object reference without tenant validation</summary>
@@ -4509,7 +4689,7 @@
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantScopedRepository</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
-<span class="w">    </span><span class="sd">"""Repository that enforces tenant isolation on all operations."""</span>
+<span class="w">    </span><span class="sd">"""Repository that scopes the operations provided below to one tenant."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">session</span><span class="p">:</span> <span class="n">Session</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
@@ -4526,7 +4706,7 @@
 <span class="w">        </span><span class="sd">"""Get resource only if it belongs to current tenant."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">resource_id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>  <span class="c1"># Always include tenant check</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>  <span class="c1"># Tenant-owned resource</span>
         <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">list_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
@@ -4568,17 +4748,21 @@
 
 <h3 id="4-cache-session-isolation">4. Cache &amp; Session Isolation<a class="headerlink" href="#4-cache-session-isolation" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Prefix all cache keys with tenant identifier.</li>
-<li>Use separate cache namespaces or instances for sensitive tenants.</li>
-<li>Implement cache key validation to prevent injection.</li>
-<li>Set appropriate TTLs and validate tenant on cache retrieval.</li>
+<li>Classify each cached value as global, tenant-scoped, or user-scoped.</li>
+<li>Include the tenant identifier in every cache key whose value or authorization varies by tenant.</li>
+<li>Give intentionally shared entries an explicit global namespace and document why they are safe to share.</li>
+<li>Include every other attribute that changes the result, such as user, locale, feature set, or permission version.</li>
+<li>Authorize the request before reading a protected cached value; cache-key separation does not replace authorization.</li>
+<li>Use separate cache instances for tenants that require stronger physical isolation.</li>
+<li>Choose TTL and invalidation behavior from freshness and authorization risk. Immutable, versioned global entries may not require expiry.</li>
 </ul>
 <details>
-<summary>Bad example: Shared cache without tenant isolation</summary>
+<summary>Bad example: Tenant-scoped data stored under a shared key</summary>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Cache key collision between tenants</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: user IDs are not guaranteed to be unique across tenants,</span>
+<span class="c1"># and the key incorrectly places tenant-scoped data in a global namespace.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_user_preferences</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"preferences:</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">"</span>  <span class="c1"># Same key for different tenants!</span>
+    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"global:user-preferences:</span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">"</span>
     <span class="n">cached</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cached</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
@@ -4588,106 +4772,54 @@
 </details>
 
 <details>
-<summary>Good example: Tenant-isolated caching</summary>
+<summary>Good example: Explicit tenant and global cache scopes</summary>
 
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareCache</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Cache implementation with tenant isolation."""</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">tenant_cache_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">resource</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">item_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"tenant:</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">resource</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">item_id</span><span class="si">}</span><span class="s2">"</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redis_client</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">redis</span> <span class="o">=</span> <span class="n">redis_client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">default_ttl</span> <span class="o">=</span> <span class="mi">3600</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">global_cache_key</span><span class="p">(</span><span class="n">resource</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"global:</span><span class="si">{</span><span class="n">resource</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">"</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Build tenant-scoped cache key."""</span>
-        <span class="c1"># Validate key format to prevent injection</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">key</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'{'</span><span class="p">,</span> <span class="s1">'}'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\r</span><span class="s1">'</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid cache key format"</span><span class="p">)</span>
-
-        <span class="c1"># Use hash of tenant_id to prevent key enumeration</span>
-        <span class="n">tenant_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"t:</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Get cached value for current tenant."""</span>
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">tenant_id</span>
-        <span class="n">full_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-
-        <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_key</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">cached</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
-            <span class="c1"># Verify tenant_id in cached data matches (defense in depth)</span>
-            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"_tenant_id"</span><span class="p">)</span> <span class="o">!=</span> <span class="n">tenant_id</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">full_key</span><span class="p">)</span>  <span class="c1"># Purge potentially poisoned entry</span>
-                <span class="k">return</span> <span class="kc">None</span>
-            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ttl</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Set cached value for current tenant."""</span>
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">tenant_id</span>
-        <span class="n">full_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-
-        <span class="c1"># Include tenant_id in cached data for verification</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"_tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-            <span class="s2">"value"</span><span class="p">:</span> <span class="n">value</span>
-        <span class="p">}</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">setex</span><span class="p">(</span><span class="n">full_key</span><span class="p">,</span> <span class="n">ttl</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ttl</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">invalidate_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Invalidate all cache entries for a tenant."""</span>
-        <span class="n">tenant_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
-        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"t:</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">:*"</span>
-
-        <span class="n">cursor</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">cursor</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">keys</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="o">*</span><span class="n">keys</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">cursor</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">break</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">tenant_cached</span><span class="p">(</span><span class="n">key_template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ttl</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Decorator for tenant-aware caching."""</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">get_tenant_cache</span><span class="p">()</span>
-            <span class="n">cache_key</span> <span class="o">=</span> <span class="n">key_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-            <span class="n">cached</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">cached</span>
-
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="n">ttl</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">result</span>
-        <span class="k">return</span> <span class="n">wrapper</span>
-    <span class="k">return</span> <span class="n">decorator</span>
-
-<span class="c1"># Usage</span>
-<span class="nd">@tenant_cached</span><span class="p">(</span><span class="s2">"user_prefs:</span><span class="si">{user_id}</span><span class="s2">"</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">1800</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_user_preferences</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="c1"># This is automatically cached per-tenant</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">fetch_preferences</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+    <span class="c1"># These application-specific helpers derive tenant context from the</span>
+    <span class="c1"># verified session and enforce access before the cache lookup.</span>
+    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">require_authenticated_tenant</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">authorize_user_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+
+    <span class="c1"># Preferences vary by tenant, so tenant_id is part of the key.</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">tenant_cache_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="s2">"user-preferences"</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cached</span> <span class="o">:=</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
+
+    <span class="n">preferences</span> <span class="o">=</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">fetch_preferences</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+    <span class="n">redis</span><span class="o">.</span><span class="n">setex</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">1800</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">preferences</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">preferences</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_country_codes</span><span class="p">():</span>
+    <span class="c1"># This versioned reference data is identical and authorized for all tenants.</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">global_cache_key</span><span class="p">(</span><span class="s2">"country-codes"</span><span class="p">,</span> <span class="s2">"v1"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cached</span> <span class="o">:=</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
+
+    <span class="n">country_codes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">fetch_public_country_codes</span><span class="p">()</span>
+    <span class="n">redis</span><span class="o">.</span><span class="n">setex</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">86400</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">country_codes</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">country_codes</span>
 </code></pre></div>
 
 </details>
 
-<h3 id="5-api-security-rate-limiting">5. API Security &amp; Rate Limiting<a class="headerlink" href="#5-api-security-rate-limiting" title="Permanent link">&para;</a></h3>
+<h3 id="5-api-asynchronous-work-resource-controls">5. API, Asynchronous Work &amp; Resource Controls<a class="headerlink" href="#5-api-asynchronous-work-resource-controls" title="Permanent link">&para;</a></h3>
+<h4 id="api-security-rate-limiting">API Security &amp; Rate Limiting<a class="headerlink" href="#api-security-rate-limiting" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Implement per-tenant rate limiting and quotas.</li>
-<li>Apply tenant-specific API throttling.</li>
-<li>Validate tenant context on every API request.</li>
-<li>Use separate API keys per tenant.</li>
-<li>Implement tenant-aware request signing for B2B APIs.</li>
+<li>When tenants share capacity or quotas, include tenant identity as one rate-limit dimension alongside any required global, endpoint, user, or IP limits.</li>
+<li>Rate limits at the HTTP boundary do not constrain every shared resource. Where tenant load can affect other tenants, apply tenant-aware limits or scheduling to the relevant bottlenecks, such as concurrent work, queued messages, database connections, fan-out, CPU, or memory. Retain global safety limits, and isolate a worker or resource pool when the risk or service commitment justifies the operational cost. The <a href="https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html">AWS SaaS Lens</a> describes scaling, throttling, and selective resource isolation as complementary noisy-neighbor controls.</li>
+<li>Validate server-verified tenant context on every tenant-scoped API request. Public or global endpoints need no artificial tenant context.</li>
+<li>Bind API credentials to explicit tenant sets, environments, and permission scopes. An intentionally cross-tenant service identity must be separately authorized and least privileged.</li>
+<li>When B2B request signing is required, bind the signature to the security-relevant request context, such as tenant selection, target audience, method, path, body digest, and expiration, as applicable.</li>
 </ul>
+<p>The limits below are illustrative. Choose production limits from capacity, abuse risk, and contractual quotas, and mount tenant-aware middleware only on routes where tenant context is required.</p>
 <details>
 <summary>Tenant-Aware Rate Limiting</summary>
 
@@ -4715,7 +4847,7 @@
 <span class="p">}</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantRateLimiter</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Per-tenant rate limiting with tier support."""</span>
+<span class="w">    </span><span class="sd">"""One tenant dimension in a broader rate-limiting strategy."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redis_client</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redis</span> <span class="o">=</span> <span class="n">redis_client</span>
@@ -4763,12 +4895,15 @@
         <span class="p">}</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">RateLimitMiddleware</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Middleware that enforces tenant rate limits."""</span>
+<span class="w">    </span><span class="sd">"""Middleware for routes that require tenant-scoped rate limits."""</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">):</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="p">:</span>
-            <span class="k">return</span> <span class="k">await</span> <span class="n">call_next</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span>
+                <span class="n">status_code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span>
+                <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Tenant context required"</span><span class="p">}</span>
+            <span class="p">)</span>
 
         <span class="n">tenant</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_service</span><span class="o">.</span><span class="n">get_tenant</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_limiter</span><span class="o">.</span><span class="n">check_rate_limit</span><span class="p">(</span>
@@ -4798,25 +4933,34 @@
 
 </details>
 
+<h4 id="tenant-aware-asynchronous-work">Tenant-Aware Asynchronous Work<a class="headerlink" href="#tenant-aware-asynchronous-work" title="Permanent link">&para;</a></h4>
+<p>Classify asynchronous work as global, tenant-scoped, or explicitly cross-tenant. A shared queue or topic is not itself a tenant-isolation boundary. <a href="https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging">Microsoft's multitenant messaging guidance</a> describes the trade-off between shared and dedicated messaging infrastructure and the need for application-enforced isolation when infrastructure is shared.</p>
+<ul>
+<li>For tenant-scoped work, derive tenant context from the authenticated producer and bind it to the message through trusted broker routing, authenticated metadata, or an integrity-protected payload. Do not let an unverified message field replace the producer's authorized scope.</li>
+<li>At the consumer, authenticate the producer or broker path, re-establish tenant context, and authorize the operation and target resource. Re-check time-sensitive membership or permission when delayed execution could make the original decision stale.</li>
+<li>Scope idempotency and deduplication keys, retry state, dead-letter access, and per-tenant ordering when their data or effects vary by tenant. Global jobs and authorized cross-tenant jobs should use explicit identities and scopes rather than a fabricated tenant.</li>
+<li>Apply tenant-aware queue depth, concurrency, and throughput controls when a shared worker fleet or broker is susceptible to noisy-neighbor load; retain service-wide limits for aggregate exhaustion.</li>
+</ul>
 <h3 id="6-file-storage-blob-isolation">6. File Storage &amp; Blob Isolation<a class="headerlink" href="#6-file-storage-blob-isolation" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Use tenant-prefixed paths for all file storage.</li>
-<li>Implement storage access policies per tenant.</li>
-<li>Validate tenant ownership before serving files.</li>
-<li>Use signed URLs with tenant context embedded.</li>
-<li>Encrypt files at rest with tenant-specific keys (for high-security requirements).</li>
+<li>Classify stored objects as global, tenant-scoped, or user-scoped. Keep intentionally shared assets in an explicit global namespace.</li>
+<li>Partition tenant-scoped objects with a tenant-aware key, bucket, account, or enforceable storage policy.</li>
+<li>Authorize access to the exact object and operation before serving it or generating a signed URL.</li>
+<li>Limit signed URLs to the required object and method, with a lifetime appropriate to the operation and revocation model. The tenant identifier does not need to appear in the URL when authorization happened before signing.</li>
+<li>Use tenant-specific encryption keys when the risk or compliance model requires cryptographic isolation. A shared managed key with enforced access context can also be appropriate.</li>
 </ul>
 <details>
-<summary>Secure Multi-Tenant File Storage</summary>
+<summary>Illustrative Tenant-Scoped File Storage</summary>
 
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">boto3</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">botocore.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">PurePosixPath</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantFileStorage</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""S3-based file storage with tenant isolation."""</span>
+<span class="w">    </span><span class="sd">"""Illustrative S3 helper for tenant-scoped objects."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bucket_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kms_key_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bucket</span> <span class="o">=</span> <span class="n">bucket_name</span>
@@ -4825,19 +4969,23 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_tenant_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Generate tenant-specific path prefix."""</span>
-        <span class="c1"># Use hashed prefix to prevent enumeration</span>
-        <span class="n">tenant_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"tenants/</span><span class="si">{</span><span class="n">tenant_hash</span><span class="si">}</span><span class="s2">"</span>
+        <span class="c1"># Naming is not authorization. Accept only the application's canonical</span>
+        <span class="c1"># tenant identifier format so it cannot alter the object-key structure.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[A-Za-z0-9_-]{1,128}"</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid tenant identifier"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"tenants/</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Build full S3 key with tenant isolation."""</span>
-        <span class="c1"># Sanitize file path to prevent traversal</span>
-        <span class="n">safe_path</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'..'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">safe_path</span><span class="si">}</span><span class="s2">"</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">PurePosixPath</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">parts</span> <span class="ow">or</span> <span class="n">path</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">".."</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">parts</span> <span class="ow">or</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">"</span> <span class="ow">in</span> <span class="n">file_path</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid object path"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
                          <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Upload file for tenant."""</span>
+        <span class="k">await</span> <span class="n">authorize_file_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="s2">"put_object"</span><span class="p">)</span>
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span>
@@ -4864,6 +5012,7 @@
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">"""Get file only if it belongs to tenant."""</span>
+        <span class="k">await</span> <span class="n">authorize_file_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="s2">"get_object"</span><span class="p">)</span>
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -4878,13 +5027,13 @@
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">NoSuchKey</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_presigned_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                               <span class="n">expiration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">,</span> 
-                               <span class="n">operation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'get_object'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Generate presigned URL with tenant validation."""</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate_presigned_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                     <span class="n">expiration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">,</span>
+                                     <span class="n">operation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'get_object'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Authorize and sign one object operation for a verified tenant."""</span>
+        <span class="k">await</span> <span class="n">authorize_file_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">operation</span><span class="p">)</span>
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
-        <span class="c1"># Include tenant_id in the signed URL for validation</span>
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">generate_presigned_url</span><span class="p">(</span>
             <span class="n">ClientMethod</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span>
             <span class="n">Params</span><span class="o">=</span><span class="p">{</span>
@@ -4897,8 +5046,10 @@
         <span class="k">return</span> <span class="n">url</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete_tenant_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Delete all files for a tenant (for offboarding)."""</span>
-        <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">"""Delete current objects; versions and backups follow retention policy."""</span>
+        <span class="c1"># The delimiter prevents a tenant such as "acme" from matching</span>
+        <span class="c1"># another tenant's "acme-west" prefix.</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/"</span>
 
         <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s1">'list_objects_v2'</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">):</span>
@@ -4916,16 +5067,17 @@
 <ul>
 <li>Implement secure tenant provisioning with isolated resources.</li>
 <li>Generate unique encryption keys per tenant where required.</li>
-<li>Ensure complete data deletion on tenant offboarding.</li>
+<li>Apply a documented retention and deletion policy across active stores, caches, object versions, replicas, exports, and backups. Restrict any legally required retained records.</li>
 <li>Maintain audit trail of provisioning/deprovisioning.</li>
-<li>Implement data export for tenant portability.</li>
+<li>Provide tenant data export when contract, regulation, or product policy requires it.</li>
 </ul>
 <details>
-<summary>Secure Tenant Lifecycle Management</summary>
+<summary>Illustrative Tenant Lifecycle Management</summary>
 
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -4977,7 +5129,8 @@
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CREATE SCHEMA </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_schema_migrations</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span>
 
-            <span class="c1"># 3. Generate API credentials</span>
+            <span class="c1"># 3. Generate a high-entropy random API credential.</span>
+            <span class="c1"># SHA-256 is used for this random key, not for a user password.</span>
             <span class="n">api_key</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
             <span class="n">api_key_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">api_key</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">store_api_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">api_key_hash</span><span class="p">)</span>
@@ -5013,8 +5166,8 @@
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_failed_provisioning</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
             <span class="k">raise</span>
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">offboard_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-                             <span class="n">retain_days</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">offboard_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">retain_days</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                              <span class="n">export_required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Securely offboard a tenant with data retention."""</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_offboarding_started"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
 
@@ -5024,8 +5177,10 @@
         <span class="c1"># 2. Revoke all active sessions and API keys</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_revoke_all_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
 
-        <span class="c1"># 3. Export data for compliance/portability</span>
-        <span class="n">export_location</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_tenant_data</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
+        <span class="c1"># 3. Export data only when the applicable policy requires it</span>
+        <span class="n">export_location</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">export_required</span><span class="p">:</span>
+            <span class="n">export_location</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_tenant_data</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
 
         <span class="c1"># 4. Schedule data deletion after retention period</span>
         <span class="n">deletion_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">retain_days</span><span class="p">)</span>
@@ -5040,11 +5195,11 @@
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"offboarding_complete"</span><span class="p">,</span>
             <span class="s2">"data_export"</span><span class="p">:</span> <span class="n">export_location</span><span class="p">,</span>
-            <span class="s2">"final_deletion"</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="s2">"scheduled_active_store_deletion"</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
         <span class="p">}</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_tenant_deletion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Permanently delete all tenant data."""</span>
+<span class="w">        </span><span class="sd">"""Apply the active-store deletion stage of the retention policy."""</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_deletion_started"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
 
         <span class="c1"># 1. Delete database schema/data</span>
@@ -5069,18 +5224,22 @@
         <span class="c1"># 5. Mark as deleted (keep minimal audit record)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update_tenant_status</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">TenantStatus</span><span class="o">.</span><span class="n">DELETED</span><span class="p">)</span>
 
+        <span class="c1"># Verify replicas, exports, object versions, backups, and legal holds</span>
+        <span class="c1"># through their own retention-policy controls.</span>
+
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_deletion_completed"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
 </code></pre></div>
 
 </details>
 
+<p>The SHA-256 example applies only to the high-entropy random credential created by <a href="https://docs.python.org/3/library/secrets.html#secrets.token_urlsafe"><code>secrets.token_urlsafe(32)</code></a>. A fast digest does not make a low-entropy or user-chosen secret safe against offline guessing. Store passwords according to the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a>, using a suitable password-hashing function rather than this API-key pattern.</p>
 <h3 id="8-logging-monitoring-audit">8. Logging, Monitoring &amp; Audit<a class="headerlink" href="#8-logging-monitoring-audit" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Include tenant context in all log entries.</li>
-<li>Implement tenant-isolated audit trails.</li>
-<li>Monitor for cross-tenant access attempts.</li>
-<li>Set up alerts for tenant isolation violations.</li>
-<li>Ensure compliance with tenant-specific retention policies.</li>
+<li>Include server-verified tenant context in tenant-scoped security and audit events; global infrastructure events may have no tenant.</li>
+<li>A centralized audit store is acceptable when read access enforces tenant scope and cross-tenant access requires an explicit platform permission.</li>
+<li>Monitor denied or unexpected cross-tenant access attempts without treating explicitly authorized platform operations as violations.</li>
+<li>Alert on tenant-isolation control failures and suspicious denial patterns.</li>
+<li>Apply the documented access and retention policy for each audit-data class.</li>
 </ul>
 <details>
 <summary>Tenant-Aware Logging & Monitoring</summary>
@@ -5088,9 +5247,10 @@
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">structlog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareLogger</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Logger that automatically includes tenant context."""</span>
+<span class="w">    </span><span class="sd">"""Logger that includes verified tenant context when one is active."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">structlog</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
@@ -5122,7 +5282,7 @@
         <span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TenantAuditLog</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Immutable audit log with tenant isolation."""</span>
+<span class="w">    </span><span class="sd">"""Audit API with tenant-aware reads and append-only writes."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
@@ -5131,11 +5291,19 @@
                   <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Record audit entry."""</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"system"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">ctx</span>
+            <span class="ow">and</span> <span class="n">tenant_id</span>
+            <span class="ow">and</span> <span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">has_permission</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"platform:audit:write"</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot write another tenant's audit log"</span><span class="p">)</span>
+
+        <span class="n">effective_tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"system"</span><span class="p">)</span>
 
         <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">"id"</span><span class="p">:</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span>
-            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">effective_tenant_id</span><span class="p">,</span>
             <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s2">"action"</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
             <span class="s2">"details"</span><span class="p">:</span> <span class="n">details</span><span class="p">,</span>
@@ -5144,7 +5312,8 @@
             <span class="s2">"user_agent"</span><span class="p">:</span> <span class="n">get_user_agent</span><span class="p">()</span>
         <span class="p">}</span>
 
-        <span class="c1"># Insert into append-only audit table</span>
+        <span class="c1"># This API only appends. Database permissions, tamper-evident storage,</span>
+        <span class="c1"># or WORM controls must enforce the required immutability properties.</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"""</span>
 <span class="s2">            INSERT INTO audit_log </span>
 <span class="s2">            (id, tenant_id, user_id, action, details, timestamp, ip_address, user_agent)</span>
@@ -5157,9 +5326,16 @@
 <span class="w">        </span><span class="sd">"""Retrieve audit trail for a specific tenant."""</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
-        <span class="c1"># Ensure requester can only access their own audit logs</span>
-        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">tenant_id</span> <span class="ow">and</span> <span class="s2">"admin"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ctx</span><span class="o">.</span><span class="n">roles</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot access other tenant's audit logs"</span><span class="p">)</span>
+        <span class="c1"># Tenant audit readers and platform auditors are distinct permissions;</span>
+        <span class="c1"># a tenant-local admin is not implicitly a platform auditor.</span>
+        <span class="n">can_read_tenant</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">ctx</span>
+            <span class="ow">and</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="n">tenant_id</span>
+            <span class="ow">and</span> <span class="n">has_permission</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"tenant:audit:read"</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">can_read_platform</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">and</span> <span class="n">has_permission</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"platform:audit:read"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">can_read_tenant</span> <span class="ow">or</span> <span class="n">can_read_platform</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Audit access denied"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="s2">"""</span>
 <span class="s2">            SELECT * FROM audit_log </span>
@@ -5180,8 +5356,10 @@
 <span class="w">        </span><span class="sd">"""Check for cross-tenant access attempts."""</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">requested_tenant</span><span class="p">:</span>
-            <span class="c1"># Log violation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="ow">not</span> <span class="k">await</span> <span class="n">authorize_tenant_access</span><span class="p">(</span>
+            <span class="n">ctx</span><span class="p">,</span> <span class="n">requested_tenant</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">resource_id</span>
+        <span class="p">):</span>
+            <span class="c1"># Log a denied attempt, not an explicitly authorized platform action</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">security_event</span><span class="p">(</span>
                 <span class="s2">"cross_tenant_access_attempt"</span><span class="p">,</span>
                 <span class="n">severity</span><span class="o">=</span><span class="s2">"HIGH"</span><span class="p">,</span>
@@ -5191,22 +5369,24 @@
             <span class="p">)</span>
 
             <span class="c1"># Track violations per user</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">principal_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"anonymous"</span>
+            <span class="n">source_tenant</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"none"</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">principal_id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">source_tenant</span><span class="si">}</span><span class="s2">"</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
 
             <span class="c1"># Alert on repeated attempts</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">alerts</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
                     <span class="n">severity</span><span class="o">=</span><span class="s2">"CRITICAL"</span><span class="p">,</span>
-                    <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Repeated cross-tenant access attempts detected"</span><span class="p">,</span>
+                    <span class="n">message</span><span class="o">=</span><span class="s2">"Repeated cross-tenant access attempts detected"</span><span class="p">,</span>
                     <span class="n">details</span><span class="o">=</span><span class="p">{</span>
-                        <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
-                        <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">,</span>
+                        <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">principal_id</span><span class="p">,</span>
+                        <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">source_tenant</span><span class="p">,</span>
                         <span class="s2">"attempts"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
                     <span class="p">}</span>
                 <span class="p">)</span>
 
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Access denied: resource belongs to different tenant"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Access denied"</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
@@ -5214,33 +5394,47 @@
 <h2 id="dos-and-donts">Do's and Don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
 <p><strong>Do:</strong></p>
 <ul>
-<li>Derive tenant context from authenticated, verified tokens.</li>
-<li>Use database-level isolation (RLS, schemas) as defense in depth.</li>
-<li>Include tenant_id in all resource queries, cache keys, and storage paths.</li>
-<li>Implement per-tenant rate limiting and quotas.</li>
-<li>Log tenant context with every operation.</li>
-<li>Validate tenant ownership at the data access layer.</li>
-<li>Use separate encryption keys for high-security tenants.</li>
-<li>Implement complete data deletion for offboarding.</li>
-<li>Monitor and alert on cross-tenant access attempts.</li>
+<li>Derive tenant context from a server-verified identity and current membership or service authorization.</li>
+<li>Use an enforceable isolation boundary appropriate to the data and threat model; database controls such as RLS or schema and credential separation can provide defense in depth.</li>
+<li>Include tenant scope in queries, cache keys, and storage boundaries when the resource or result varies by tenant.</li>
+<li>Include tenant identity in rate limits and quotas when tenants share capacity or have tenant-level entitlements; retain any needed global, endpoint, user, or IP limits.</li>
+<li>Bound tenant consumption of other shared bottlenecks, such as queued work, concurrency, database connections, and compute, when those resources can create cross-tenant availability impact.</li>
+<li>Carry verified tenant context through tenant-scoped asynchronous work and re-establish authorization at the consumer.</li>
+<li>Log verified tenant context for tenant-scoped security and audit events.</li>
+<li>Enforce tenant ownership at a boundary traversed by every tenant-owned access path.</li>
+<li>Use separate encryption keys when the risk or compliance model requires cryptographic isolation.</li>
+<li>Apply and verify the documented retention and deletion policy during offboarding.</li>
+<li>Monitor and alert on denied or unexpected cross-tenant access attempts.</li>
+<li>For shared-table PostgreSQL RLS that uses a tenant setting, prefer transaction-local context and re-establish it for each transaction.</li>
+<li>For shared-table PostgreSQL RLS, inventory classified tenant-owned tables and test cross-tenant denial for each one.</li>
+<li>Verify that the ordinary tenant-request database role cannot bypass row security when RLS is the isolation boundary.</li>
 </ul>
 <p><strong>Don't:</strong></p>
 <ul>
-<li>Trust tenant IDs from client headers or request parameters.</li>
-<li>Use shared cache keys without tenant prefixes.</li>
-<li>Expose sequential or guessable tenant/resource IDs.</li>
-<li>Allow queries without tenant filters (even for admins without explicit override).</li>
-<li>Store tenant data without tenant_id columns.</li>
-<li>Share API keys or credentials across tenants.</li>
-<li>Skip tenant validation for "internal" services.</li>
-<li>Retain tenant data indefinitely after offboarding.</li>
+<li>Treat tenant IDs from client headers or request parameters as authorization proof; they are selectors that require server-side verification.</li>
+<li>Use a shared cache key for data or authorization that varies by tenant.</li>
+<li>Rely on identifier complexity to prevent cross-tenant access.</li>
+<li>Allow an ordinary tenant-owned request path to perform an unscoped query; make any cross-tenant administrative path explicit, separately authorized, and auditable.</li>
+<li>Store tenant-owned data without an enforceable tenant association or isolation boundary; a literal <code>tenant_id</code> column is not required by every architecture.</li>
+<li>Give a tenant-scoped credential access to other tenants. Explicitly cross-tenant service credentials require their own least-privileged scope and controls.</li>
+<li>Skip authorization merely because a service is internal.</li>
+<li>Treat a tenant identifier in a queued message as authorization proof without authenticating the producer path and authorizing the consumer operation.</li>
+<li>Allow one tenant unbounded consumption of a shared queue, worker pool, connection pool, or other resource that can degrade other tenants.</li>
+<li>Retain tenant data beyond the documented retention policy without a contractual or legal basis and appropriate access restrictions.</li>
 <li>Log sensitive tenant data in plain text.</li>
+<li>Serve ordinary tenant-scoped PostgreSQL RLS request paths with a superuser or <code>BYPASSRLS</code> role.</li>
+<li>Use a session-scoped database tenant setting across pooled requests without reliable reset-on-checkout or equivalent isolation and connection-reuse tests; prefer transaction-local settings.</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://owasp.org/www-project-cloud-tenant-isolation/">OWASP Cloud Tenant Isolation</a></li>
 <li><a href="Authorization_Cheat_Sheet.html">OWASP Authorization Cheat Sheet</a></li>
 <li><a href="https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/tenant-isolation.html">AWS SaaS Tenant Isolation Strategies</a></li>
+<li><a href="https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html">AWS SaaS Performance Efficiency Guidance</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging">Microsoft Multitenant Messaging Guidance</a></li>
+<li><a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">PostgreSQL Row Security Policies</a></li>
+<li><a href="https://www.postgresql.org/docs/current/sql-set.html">PostgreSQL SET</a></li>
+<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria">SQLAlchemy ORM Query Events</a></li>
 </ul>
 
 
