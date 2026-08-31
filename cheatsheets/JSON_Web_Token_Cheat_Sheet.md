@@ -284,8 +284,16 @@ When claims must be kept confidential, use [JSON Web Encryption (JWE)](https://d
 - **`alg`:** the key management algorithm, which [encrypts or agrees upon](https://datatracker.ietf.org/doc/html/rfc7518#section-4.1) the Content Encryption Key (CEK) for the intended recipient (for example `RSA-OAEP-256` or `ECDH-ES+A256KW`).
 - **`enc`:** the content encryption algorithm, which encrypts the payload using authenticated encryption (for example `A256GCM`).
 
-When both integrity and confidentiality are needed, use a **nested JWT**: sign the claims first (JWS), then encrypt the resulting signed token (JWE) ([RFC 7519, Section 11.2](https://www.rfc-editor.org/rfc/rfc7519#section-11.2)).This ensures the signature covers the actual claims while the outer JWE provides confidentiality. Set the `cty` header to `JWT` in the outer JWE to signal nesting
-([RFC 7516, Section 4.1.12](https://www.rfc-editor.org/rfc/rfc7516#section-4.1.12)).
+JWE provides confidentiality and ciphertext integrity, **not** issuer authentication. With a public-key `alg`, anyone holding the recipient's public key can produce a token that decrypts successfully, so never make authorization decisions on claims from an unsigned JWE.
+
+When both authenticity and confidentiality are needed, use a **nested JWT**: sign the claims first (JWS), then encrypt the result (JWE). This [prevents attacks in which the signature is stripped, leaving just an encrypted message, as well as providing privacy for the signer](https://datatracker.ietf.org/doc/html/rfc7519#section-11.2). In the outer JWE, the `cty` header [MUST be set to `JWT`](https://datatracker.ietf.org/doc/html/rfc7519#section-5.2) to signal the nesting.
+
+When consuming a nested JWT, decrypt the outer JWE **and** verify the inner JWS signature, rejecting the token if either step fails. [Both the outer and the inner operations MUST be validated](https://datatracker.ietf.org/doc/html/rfc8725#section-3.3): successful decryption on its own proves nothing about who issued the claims.
+
+Two further requirements apply to JWE:
+
+- Accept only an allowlisted `alg`/`enc` pair and bind each key to a single algorithm. Never let the token header select the algorithm, because this [enables a downgrade attack that can recover the CEK](https://datatracker.ietf.org/doc/html/rfc7516#section-11.4).
+- Do not compress the claims before encryption (the `zip` header), because [compressed data often reveals information about the plaintext](https://datatracker.ietf.org/doc/html/rfc8725#section-3.6).
 
 **Note:**
 
