@@ -8,6 +8,8 @@ Modern advertising platforms make AI-driven financial decisions on every ad requ
 
 Acronyms and specialized terms used throughout this cheat sheet. Each is also glossed inline the first time it appears in the body.
 
+Foundational sources for the vocabulary below: [IAB Tech Lab OpenRTB](https://github.com/InteractiveAdvertisingBureau/openrtb2.x) for the protocol terms, [NIST AI 100-2e2025](https://csrc.nist.gov/pubs/ai/100/2/e2025/final) for the adversarial-ML terms, and the [EU AI Act (Regulation 2024/1689)](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) for the regulatory terms.
+
 | Term | Meaning |
 |---|---|
 | **DSP / SSP** | Demand-Side Platform (buyer's software, e.g. The Trade Desk, DV360) / Supply-Side Platform (seller's software, e.g. Magnite, PubMatic, OpenX). |
@@ -51,7 +53,7 @@ Acronyms and specialized terms used throughout this cheat sheet. Each is also gl
 
 Advertising is not one system. It is a family of markets that share one property: **an AI model sits between the user and the money**. Common roles across every mode:
 
-- **Buyer**: advertiser or their agent. A **DSP** (Demand-Side Platform, e.g. The Trade Desk, DV360, Amazon DSP) is software that buys ad slots on the advertiser's behalf. Wants to reach a user at a price.
+- **Buyer**: advertiser or their agent. A **DSP** (Demand-Side Platform, e.g. The Trade Desk, DV360, Amazon DSP) is software that buys ad slots on the advertiser's behalf via the [OpenRTB protocol](https://github.com/InteractiveAdvertisingBureau/openrtb2.x). Wants to reach a user at a price.
 - **Seller**: publisher, retailer, streaming service, DOOH network, app developer. Owns the place the ad shows up: a web page, an app screen, a video-ad break, a search-results page, a product-listing page, a billboard slot.
 - **Middleman**: **SSP** (Supply-Side Platform, e.g. Magnite, PubMatic, OpenX; software that sells the seller's inventory), exchange, ad server, retailer ad platform, mediation network (routes app ad requests across multiple ad networks), attribution vendor (measures which ad drove which conversion). Runs the marketplace or the measurement.
 - **User**: the person the ad reaches, or the query the ad answers.

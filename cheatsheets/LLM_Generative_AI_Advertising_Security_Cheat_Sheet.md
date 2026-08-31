@@ -250,7 +250,7 @@ The Art. 50(4) editorial-responsibility carveout attaches only to AI-generated *
 **LLM security standards:**
 
 - [OWASP LLM Top 10 (2025)](https://genai.owasp.org/llm-top-10/): [LLM01 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/), [LLM02 Sensitive Information Disclosure](https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/), [LLM04 Data and Model Poisoning](https://genai.owasp.org/llmrisk/llm042025-data-and-model-poisoning/), [LLM06 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/), [LLM07 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/), [LLM08 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/), [LLM09 Misinformation](https://genai.owasp.org/llmrisk/llm092025-misinformation/), [LLM10 Unbounded Consumption](https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/)
-- [MITRE ATLAS](https://atlas.mitre.org/): technique-page URLs return HTTP 404 to non-browser fetchers; the resolvable source of truth is the YAML at [mitre-atlas/atlas-data](https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/ATLAS.yaml)
+- [MITRE ATLAS](https://atlas.mitre.org/): technique pages such as `AML.T0051` render in browsers; the machine-readable YAML at [mitre-atlas/atlas-data](https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/ATLAS.yaml) is the source for automated fetching.
 - [NIST AI 100-2e2025 (final 2025-03-24)](https://csrc.nist.gov/pubs/ai/100/2/e2025/final): Adversarial Machine Learning Taxonomy, Section 2.2.4 Evasion attacks in the real world
 
 **Academic anchors:**
@@ -308,7 +308,7 @@ Compact reference for terms not glossed inline. See body for links to primary so
 | HITL | Human-in-the-loop approval |
 | KV cache | Key/Value cache: intermediate attention state |
 | Paged-attention backend | Memory-block layout used by vLLM and modern serving stacks that fragments attention state into fixed pages for reuse |
-| C2PA | Coalition for Content Provenance and Authenticity |
+| [C2PA](https://spec.c2pa.org/specifications/specifications/2.1/index.html) | Coalition for Content Provenance and Authenticity |
 | Deep fake | AI-generated content resembling a real person (EU AI Act Art. 3(60)) |
 | Provider vs. deployer | EU AI Act roles under Art. 50 |
 | Denial-of-wallet | Attacker inflates cost per call rather than dropping serve-rate |
@@ -319,8 +319,8 @@ Compact reference for terms not glossed inline. See body for links to primary so
 | DSSE | Dead Simple Signing Envelope |
 | in-toto statement | Structured claim about an artifact in the in-toto attestation framework |
 | ML-BOM | Machine-readable bill of materials for ML models and their training datasets (CycloneDX) |
-| MITRE ATLAS | Adversarial ML tactics-techniques knowledge base |
-| OWASP LLM Top 10 (2025) | Top-ten LLM risks per the OWASP GenAI Security Project |
+| [MITRE ATLAS](https://atlas.mitre.org/) | Adversarial ML tactics-techniques knowledge base |
+| [OWASP LLM Top 10 (2025)](https://genai.owasp.org/llm-top-10/) | Top-ten LLM risks per the OWASP GenAI Security Project |
 | SSAI | Server-Side Ad Insertion |
 | VAST | Video Ad Serving Template (IAB Tech Lab XML format) |
 | Query cluster | Set of semantically related queries sharing the same policy anchors |
