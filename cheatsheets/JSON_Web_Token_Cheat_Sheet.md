@@ -16,7 +16,7 @@ JWTs are used in a wide range of applications such as:
 
 In its most common form (signed JWT), this information is protected by the generating application (**issuer**) using a signature to ensure it has not been tampered with. This signature prevents attackers, such as a malicious client or user, from forging a token or modifying the claims in an existing token, for example changing the user role from a simple user to an admin or altering the client's login. The JWT can be seen as a protected identity card or certificate about a user, an application, etc. An application (**presenter**) presents the token to a consuming application (**audience**) which can verify the token's authenticity and validity and take decisions or actions based on these claims.
 
-JWT can also provide confidentiality of the claims (encrypted JWT). See the [Token Confidentiality and JWE](#token-confidentiality-and-jwe)   section below for a brief introduction.
+JWT can also provide confidentiality of the claims (encrypted JWT). Encryption itself is only introduced briefly in [Token Confidentiality and JWE](#token-confidentiality-and-jwe), but many aspects of this cheat sheet also apply to encrypted JWTs.
 
 ## Token Structure
 
