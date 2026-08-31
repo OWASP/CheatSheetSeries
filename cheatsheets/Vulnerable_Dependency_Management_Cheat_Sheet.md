@@ -296,3 +296,16 @@ It's important to ensure, during the selection process of a vulnerable dependenc
         - [Full support](https://renovatebot.com/docs/) for many languages and package manager.
     - [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
         - [Full support](https://requires.io/features/): Python only.
+
+### Remediation and maintained backports
+
+The tools above detect vulnerable dependencies, they do not fix them. When the fixed version cannot be adopted, the patch still has to come from somewhere: either the development team maintains it or someone else does.
+
+Linux distribution security teams are the reference model for the second option. [Debian](https://www.debian.org/security/faq) and [Red Hat](https://access.redhat.com/security/updates/backporting) both backport security fixes into the version shipped in the stable release instead of upgrading it. When the dependency is consumed as an operating system package, take the distribution's patched build rather than maintaining a private patch.
+
+Language ecosystem packages are rarely covered that way, so the choice there is between maintaining the patch in-house and paying someone to maintain it. Judge either option on the same criteria as a detection tool, plus:
+
+- Coverage of the ecosystems, version lines and severities the project depends on, with a published response time.
+- Publication of the patch itself and of its provenance, so that the change can be reviewed instead of being trusted blindly.
+- Delivery as a compatible artifact through a registry or proxy that the build already uses, so that no manifest rewrite is required.
+- A documented way out, so that leaving the source does not mean re-patching everything from scratch.
