@@ -324,6 +324,55 @@ References:
 - [RFC 8725, Do Not Trust Received Claims](https://datatracker.ietf.org/doc/html/rfc8725#name-do-not-trust-received-claim);
 - [CVE-2018-0114](https://nvd.nist.gov/vuln/detail/CVE-2018-0114), a key embedded in the JWS header trusted for verification.
 
+### Cross-JWT and token type confusion
+
+When an application or authorization server issues different kinds of JWTs for different purposes (such as access tokens, ID tokens, logout tokens, refresh tokens, or password-reset tokens) that are signed with the same key, a token issued for one purpose might be accepted by an endpoint expecting a different token type if the verifier does not check the token's intended context.
+
+For example, an attacker could obtain an ID token or an email verification token, and present it to an API endpoint expecting an access token. If both tokens share common claims (such as `sub`) and are signed by the same trusted key, a verifier that does not distinguish the token type might treat the ID token as an authorized access token. This vulnerability is known as "cross-JWT confusion" or "token type confusion" (see [RFC 8725 §2.11](https://datatracker.ietf.org/doc/html/rfc8725#name-use-explicit-typing)).
+
+Mitigations:
+
+- **Use explicit typing (`typ` header parameter):** The issuer should set the `typ` header parameter to a specific media type (or explicit type) distinguishing the token's purpose, such as `"typ": "at+jwt"` for OAuth 2.0 Access Tokens ([RFC 9068](https://datatracker.ietf.org/doc/html/rfc9068)) or `"typ": "logout+jwt"` for Back-Channel Logout Tokens ([RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693)).
+- **Validate `typ` at the verifier:** The verifier must explicitly check that the `typ` header matches the expected token type for that endpoint and reject tokens with mismatched or missing types when explicit typing is enforced.
+- **Use distinct signing keys or separate audiences:** If explicit typing cannot be used (e.g. legacy systems), use distinct cryptographic keys for different token purposes, or strictly validate distinct `aud` (audience) and `iss` values per token type.
+
+Example of token with explicit typing:
+
+```json
+{
+  "typ": "at+jwt",
+  "alg": "ES256",
+  "kid": "auth-key-2026"
+}
+```
+
+Example of validation enforcing explicit token type:
+
+```python
+import jwt
+
+# Decode and verify signature, issuer, and audience
+payload = jwt.decode(
+    token,
+    public_key,
+    algorithms=["ES256"],
+    audience="https://api.example.com",
+    issuer="https://auth.example.com",
+    options={"require": ["exp", "iss", "aud"]},
+)
+
+# Enforce explicit token type to prevent cross-JWT confusion
+header = jwt.get_unverified_header(token)
+if header.get("typ") != "at+jwt":
+    raise jwt.InvalidTokenError("Invalid token type: expected at+jwt")
+```
+
+References:
+
+- [RFC 8725 §2.11, Use Explicit Typing](https://datatracker.ietf.org/doc/html/rfc8725#name-use-explicit-typing);
+- [RFC 9068, JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068);
+- [Draft ietf-oauth-rfc8725bis, JWT Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis).
+
 ## JWT revocation
 
 ### Token Status List
