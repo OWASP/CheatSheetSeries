@@ -333,8 +333,9 @@ For example, an attacker could obtain an ID token or an email verification token
 Mitigations:
 
 - **Use explicit typing (`typ` header parameter):** The issuer should set the `typ` header parameter to a specific media type (or explicit type) distinguishing the token's purpose, such as `"typ": "at+jwt"` for OAuth 2.0 Access Tokens ([RFC 9068](https://datatracker.ietf.org/doc/html/rfc9068)) or `"typ": "logout+jwt"` for Back-Channel Logout Tokens ([RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693)).
+- **Define custom media types for application-specific tokens:** For custom or internal token types (such as password-reset, email verification, or step-up authentication tokens), define and enforce a dedicated media type (e.g. `example-reset+jwt` or `application/vnd.example.reset+jwt`) to prevent them from being substituted for general access tokens.
 - **Validate `typ` at the verifier:** The verifier must explicitly check that the `typ` header matches the expected token type for that endpoint and reject tokens with mismatched or missing types when explicit typing is enforced.
-- **Use distinct signing keys or separate audiences:** If explicit typing cannot be used (e.g. legacy systems), use distinct cryptographic keys for different token purposes, or strictly validate distinct `aud` (audience) and `iss` values per token type.
+- **Caveat for legacy and standard tokens lacking explicit media types:** Some standard specifications (notably OpenID Connect Core 1.0 ID Tokens) do not define an explicit media type and often omit `typ` or set it to generic `JWT`. In cross-system environments where explicit typing cannot be interoperably enforced, rely on **distinct cryptographic signing keys** or strict **audience (`aud`) and issuer (`iss`) isolation** to prevent cross-token replay.
 
 Example of token with explicit typing:
 
