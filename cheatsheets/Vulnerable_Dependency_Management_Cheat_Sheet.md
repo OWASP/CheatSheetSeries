@@ -302,8 +302,6 @@ It's important to ensure, during the selection process of a vulnerable dependenc
         - [Full support](https://jfrog.com/integration/) for many languages and package manager.
     - [Renovate](https://renovatebot.com) (allow to detect old dependencies):
         - [Full support](https://renovatebot.com/docs/) for many languages and package manager.
-    - [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
-        - [Full support](https://requires.io/features/): Python only.
 
 ### Remediation and maintained backports
 
