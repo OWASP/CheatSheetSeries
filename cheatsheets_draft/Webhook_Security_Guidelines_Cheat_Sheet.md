@@ -90,7 +90,7 @@ Abrupt rotation causes delivery failures if the new secret is deployed before th
 
 ---
 
-### 4. Authentication (Defence in Depth)
+### 4. Authentication (defense in Depth)
 
 HMAC signing verifies payload integrity but does not authenticate the transport connection itself. Layering an additional authentication mechanism limits exposure if a signing secret is ever compromised.
 
@@ -174,7 +174,7 @@ See [Input Validation Cheat Sheet](../cheatsheets/Input_Validation_Cheat_Sheet.m
 
 ### 10. HTTP Method Restriction
 
-Webhook endpoints should only accept `POST` requests. Allowing other methods unnecessarily expands the attack surface and may expose unintended framework behaviour.
+Webhook endpoints should only accept `POST` requests. Allowing other methods unnecessarily expands the attack surface and may expose unintended framework behavior.
 
 - Accept **only the methods required** — typically `POST`.
 - Return `405 Method Not Allowed` for all others.

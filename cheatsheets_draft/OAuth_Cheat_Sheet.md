@@ -38,7 +38,7 @@ OAuth 2.0 defines these four most important roles:
 
 #### Resource Owner
 
-The Resource Owner is the person or entity that can grant access to a certain resource. Typically, this is the end-user of an application.
+The Resource Owner is the person or entity that can grant access to a certain resource. Typically, this is the end user of an application.
 
 #### Resource Server
 
@@ -46,7 +46,7 @@ The Resource Server is the server hosting the protected resource and deciding wh
 
 #### Client
 
-The Client is the application that accesses a protected resource (on the [Resource Server]) on behalf, and with the authorization of a [Resource Owner] (end-user).
+The Client is the application that accesses a protected resource (on the [Resource Server]) on behalf, and with the authorization of a [Resource Owner] (end user).
 
 #### Authorization Server
 

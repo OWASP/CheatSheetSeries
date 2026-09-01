@@ -75,7 +75,7 @@ return <div dangerouslySetInnerHTML={ { __html: clean } } />;
 
 Component-level encapsulation and Shadow DOM do not prevent browser extensions from reading DOM content. Extensions can pierce closed Shadow DOM boundaries using the [`openOrClosedShadowRoot()`](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/dom/openOrClosedShadowRoot) API regardless of encapsulation strategy.
 
-### Avoid Prop Injection via the Spread Operator
+### Avoid Prop Injection via the spread syntax
 
 Spreading untrusted objects into components allows attackers to inject props the component was never intended to receive, including `dangerouslySetInnerHTML`. Filter against an allowlist of known safe prop names before spreading, or destructure only the props your component expects.
 
