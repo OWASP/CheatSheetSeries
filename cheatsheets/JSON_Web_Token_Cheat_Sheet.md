@@ -324,6 +324,46 @@ References:
 - [RFC 8725, Do Not Trust Received Claims](https://datatracker.ietf.org/doc/html/rfc8725#name-do-not-trust-received-claim);
 - [CVE-2018-0114](https://nvd.nist.gov/vuln/detail/CVE-2018-0114), a key embedded in the JWS header trusted for verification.
 
+### Issuer and audience confusion
+
+A JWT contains the `iss` (issuer) and `aud` (audience) claims to identify who created the token and for whom the token was issued. If a recipient verifies only the cryptographic signature and token expiration without strictly validating `iss` and `aud`, an attacker can reuse a valid token across different contexts, environments, or services.
+
+For example, an attacker can obtain a valid token issued for a low-privilege service (or an external tenant in a multi-tenant system) and replay it against a high-privilege service or internal API. If the recipient does not enforce that its own identifier is present in `aud`, it accepts the token. Similarly, in multi-issuer environments or identity federation architectures, missing `iss` validation allows tokens issued by an untrusted or separate identity provider (e.g., a test/staging IdP) to be accepted if both use compatible key structures.
+
+Mitigations:
+
+- Always validate that the `iss` claim matches the expected issuer string exactly (case-sensitive comparison, including exact protocol and path).
+- Always validate that the recipient's identifier is present in the `aud` claim (whether `aud` is formatted as a single string or an array of strings).
+- Require `iss` and `aud` claims to be present in tokens, rejecting tokens where these claims are missing.
+- In multi-tenant environments, verify that the issuer corresponds to the expected tenant and fetch verification keys only from an explicit allowlist associated with that issuer.
+
+Example of strict issuer and audience validation in Python with PyJWT:
+
+```python
+import jwt
+
+# Validates signature, expiration, exact issuer, and recipient audience
+decoded_payload = jwt.decode(
+    token,
+    public_key,
+    algorithms=["RS256"],
+    audience="https://api.example.com/v1/payments",
+    issuer="https://auth.example.com/",
+    options={
+        "require": ["exp", "iss", "aud"],
+        "verify_aud": True,
+        "verify_iss": True,
+    },
+)
+```
+
+References:
+
+- [RFC 8725 §2.7 (Validate Issuer and Subject)](https://datatracker.ietf.org/doc/html/rfc8725#section-2.7);
+- [RFC 8725 §2.8 (Validate Audience)](https://datatracker.ietf.org/doc/html/rfc8725#section-2.8);
+- [RFC 9207 (OAuth 2.0 Authorization Server Issuer Identification)](https://datatracker.ietf.org/doc/html/rfc9207);
+- [RFC 7519 §4.1.1 and §4.1.3](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1).
+
 ## JWT revocation
 
 ### Token Status List
