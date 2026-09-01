@@ -363,8 +363,10 @@ payload = jwt.decode(
 )
 
 # Enforce explicit token type to prevent cross-JWT confusion
+# RFC 7515 §4.1.9 & RFC 9068: typ is case-insensitive, and "application/" prefix may be omitted
 header = jwt.get_unverified_header(token)
-if header.get("typ") != "at+jwt":
+token_type = str(header.get("typ", "")).lower()
+if token_type not in ["at+jwt", "application/at+jwt"]:
     raise jwt.InvalidTokenError("Invalid token type: expected at+jwt")
 ```
 
