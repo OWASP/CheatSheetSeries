@@ -182,6 +182,56 @@ bad_secret = secrets.token_bytes(128//8)
 meh_secret_for_hs512 = secrets.token_bytes(256//8)
 ```
 
+### Header fields
+
+The following table lists some important JWT (JOSE) header parameters for security purpose.
+
+| Parameter       | Semantic                               | Security impact
+|-----------------|----------------------------------------|----------------
+| `alg`           | Signature algorithm                    | Signature algorithm used, risk of key type confusion
+| `typ`           | Media type                             | Protection against token type confusion
+| `jku`           | Verification key (URL to the JWK)      | Risk of untrusted key usage, risk or SSRF
+| `x5u`           | Verification key (URL to certificate)  | Risk of untrusted key usage, risk or SSRF
+| `jwk`           | Verification key (JWK)                 | Risk of untrusted key usage
+| `kid`           | Verification key (key ID)              | Risk of untrusted key usage
+| `x5c`           | Verification key (certificate chain)   | Risk of untrusted key usage
+| `x5t`           | Verification key (certificate hash)    | Risk of untrusted key usage
+| `x5t#S256`      | Verification key (certificate hash)    | Risk of untrusted key usage
+
+See the [header parameters subregistry](https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters) for a list of standard JWT (JOSE) header parameters.
+
+### Claims
+
+The following table lists some important JWT claims for security purpose.
+
+| Parameter       | Semantic                               | Security impact
+|-----------------|----------------------------------------|----------------
+| `exp`           | Expiration                             | Token validity
+| `nbf`           | Not valid before                       | Token validity
+| `status`        | Reference to token status list         | Token revocation, risk of SSRF
+| `iss`           | Issuer                                 | Scoping of claims (eg. `iss`), risk of untrusted issuer, risk of SSRF
+| `aud`           | Audience                               | Protection against audience confusion
+| `sub`, `sub_id` | Subject identifier                     | Subject/user identification, risk of cross-issuer user impersonation
+| `jti`           | Token identifier                       | Audit (logs)
+| `iat`           | Issuance timestamp                     | Audit (logs)
+| `azp`           | Authorized Party (OIDC)                | Audit (logs), authorization
+| `client_id`     | Client (OAuth 2)                       | Audit (logs), authorization
+| `auth_time`     | Authentication timestamp (OIDC)        | Enforcing authentication freshness
+| `acr`           | Authentication class                   | Enforcing authentication strength (eg. MFA)
+| `amr`           | Authentication method reference        | Enforcing authentication strength (eg. MFA)
+| `cnf`           | Token holder (public) key              | Sender constrained token
+| `may_act`       | Authorized Actor (impersonation/delegation) | Risk of cross-issuer user impersonation
+| `act`           | Actor (delegation, “on behalf of”)     | Audit (logs), risk of invalid actor imputation
+| `scope`         | Token restriction (OAuth 2)            | Authorization
+| `roles`         | User roles                             | Authorization, risk of spoofed cross-issuer authorization
+| `groups`        | User groups                            | Authorization, risk of spoofed cross-issuer authorization
+| `entitlements`  | User entitlements                      | Authorization, risk of spoofed cross-issuer authorization
+| `authorization_details` | Fine grained authorizations    | Authorization, risk of spoofed cross-issuer authorization
+
+See the [JSON Web Token Claims subregistry](https://www.iana.org/assignments/jwt/jwt.xhtml) for a list of standard JWT claims.
+
+Many implementation have built-in support for validating core JWT claims such as `nbf`, `exp`, `iss` and `aud`.
+
 ## Threats on JWTs
 
 See [RFC 8725](https://datatracker.ietf.org/doc/html/rfc8725#name-threats-and-vulnerabilities) for a discussion on threats and vulnerabilities related to JWT.
