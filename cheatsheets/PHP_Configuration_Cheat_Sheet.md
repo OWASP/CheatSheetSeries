@@ -17,7 +17,7 @@ For general PHP codebase security please refer to the two following great guides
 
 Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. `/var/www/mysite`), and `session.cookie_domain` (e.g. `ExampleSite.com`).
 
-You should be running a [supported version of PHP](https://www.php.net/supported-versions.php) (as of this writing, 8.1 is the oldest version receiving security support from PHP, though distribution vendors often provide extended support). Review the [core `php.ini` directives](https://www.php.net/manual/ini.core.php) in the PHP Manual for a complete reference on every value in the `php.ini` configuration file.
+Run a PHP branch that is listed on the official [Supported Versions](https://www.php.net/supported-versions.php) page and plan upgrades before its security-support end date. Distribution vendors may provide separate extended support, but that does not make the upstream PHP branch supported. Review the [core `php.ini` directives](https://www.php.net/manual/ini.core.php) in the PHP Manual for a complete reference on every value in the `php.ini` configuration file.
 
 You can find a copy of the following values in a [ready-to-go `php.ini` file here](https://github.com/danehrlich1/very-secure-php-ini).
 
