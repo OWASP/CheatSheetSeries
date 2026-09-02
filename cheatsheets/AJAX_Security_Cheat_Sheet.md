@@ -1,4 +1,4 @@
-# AJAX Security Cheat Sheet
+# Asynchronous Web Communication Security Cheat Sheet
 
 ## Introduction
 

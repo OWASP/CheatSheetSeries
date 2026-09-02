@@ -10,7 +10,7 @@
 
 [AI Agent Security Cheat Sheet](cheatsheets/AI_Agent_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
-[AJAX Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
+[Asynchronous Web Communication Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
 
 [AML Sanctions AI Agent Payments Cheat Sheet](cheatsheets/AML_Sanctions_AI_Agent_Payments_Cheat_Sheet.md)
 
