@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**122** cheat sheets available.
+**121** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -145,8 +145,6 @@
 ## L
 
 [LDAP Injection Prevention Cheat Sheet](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
-
-[LLM and Generative AI Security in Advertising Cheat Sheet](cheatsheets/LLM_Generative_AI_Advertising_Security_Cheat_Sheet.md)
 
 [LLM Prompt Injection Prevention Cheat Sheet](cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
