@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**120** cheat sheets available.
+**121** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -287,6 +287,8 @@
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Cpp](assets/Index_Cpp.svg) ![Php](assets/Index_Php.svg)
 
 [XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg) ![Bash](assets/Index_Bash.svg)
+
+[XPath Injection Prevention Cheat Sheet](cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Python](assets/Index_Python.svg) ![Php](assets/Index_Php.svg)
 
 [XSS Filter Evasion Cheat Sheet](cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Php](assets/Index_Php.svg)
 
