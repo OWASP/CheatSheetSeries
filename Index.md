@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**120** cheat sheets available.
+**121** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -175,6 +175,8 @@
 [NPM Security Cheat Sheet](cheatsheets/NPM_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg) ![Bash](assets/Index_Bash.svg)
 
 [Network Segmentation Cheat Sheet](cheatsheets/Network_Segmentation_Cheat_Sheet.md)
+
+[Nextjs Security Cheat Sheet](cheatsheets/Nextjs_Security_Cheat_Sheet.md)
 
 [NoSQL Security Cheat Sheet](cheatsheets/NoSQL_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
