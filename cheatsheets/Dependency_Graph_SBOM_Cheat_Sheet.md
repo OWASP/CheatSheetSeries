@@ -144,35 +144,135 @@ Minimum policy items:
 
 ## Practical CI/CD snippets & patterns
 
-**GitHub Actions (example)** — generate CycloneDX and upload as artifact, then sign with cosign.
+**GitHub Actions (example)** — build, scan, generate SBOM from built image, sign with [keyless/OIDC cosign](https://docs.sigstore.dev/cosign/signing/overview/), attest, and publish to Dependency-Track.
+
+This example demonstrates a complete secure SBOM workflow using [keyless signing](https://docs.sigstore.dev/cosign/signing/overview/) (no static keys), [vulnerability scanning with Grype](https://oss.anchore.com/docs/guides/vulnerability/getting-started/), [SBOM attestation](https://github.com/aquasecurity/trivy/blob/main/docs/guide/supply-chain/attestation/sbom.md), and [Dependency-Track integration](https://docs.dependencytrack.org/usage/cicd/).
 
 ```yaml
-name: Build and SBOM
+name: Build, Scan, and SBOM
 on: [push]
+
+permissions:
+  contents: read
+  id-token: write  # Required for keyless cosign signing
+  packages: write  # Required to push signature layers to registry
+
 jobs:
-  build:
+  build-scan-attest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Build
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Build application
         run: ./gradlew assemble
-      - name: Generate SBOM
+
+      - name: Build and push container image
+        id: build-push
         run: |
-          syft packages dir:./build/libs -o cyclonedx-json > sbom.json
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v4
-        with:
-          name: sbom
-          path: sbom.json
-      - name: Sign Artifact & SBOM
+          # Build image
+          docker build -t ghcr.io/${{ github.repository }}:latest .
+          # Login to registry (required before signing)
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          # Push and capture digest
+          DIGEST=$(docker push ghcr.io/${{ github.repository }}:latest | grep 'digest:' | awk '{print $3}')
+          echo "digest=${DIGEST}" >> $GITHUB_OUTPUT
+          echo "Pushed image with digest: ${DIGEST}"
+
+      - name: Generate SBOM from built image
+        env:
+          IMAGE_REF: ghcr.io/${{ github.repository }}@${{ steps.build-push.outputs.digest }}
         run: |
-          cosign sign --key ${{ secrets.COSIGN_KEY }} my-registry/my-app:${{ github.sha }}
-          cosign sign-blob --key ${{ secrets.COSIGN_KEY }} --output-signature sbom.json.sig sbom.json
-      - name: Push image
-        run: ./push-image.sh
+          # Generate SBOM from the BUILT IMAGE (not local build dir) to include OS packages and base image layers
+          syft packages "${IMAGE_REF}" -o cyclonedx-json > sbom.json
+
+      - name: Scan image for vulnerabilities with Grype
+        env:
+          IMAGE_REF: ghcr.io/${{ github.repository }}@${{ steps.build-push.outputs.digest }}
+        run: |
+          # Fail pipeline if high or critical vulnerabilities found
+          grype "${IMAGE_REF}" --fail-on high -o json > grype-results.json || exit 1
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
+
+      - name: Sign container image by digest (keyless)
+        env:
+          IMAGE_REF: ghcr.io/${{ github.repository }}@${{ steps.build-push.outputs.digest }}
+        run: |
+          # Sign by DIGEST (not tag) using keyless/OIDC flow
+          # WARNING: --yes suppresses confirmation and publishes image digest, repo name, and workflow identity to public Rekor log
+          cosign sign --yes "${IMAGE_REF}"
+
+      - name: Attest SBOM to image (CycloneDX)
+        env:
+          IMAGE_REF: ghcr.io/${{ github.repository }}@${{ steps.build-push.outputs.digest }}
+        run: |
+          # Attach SBOM as a CycloneDX attestation (NOT SLSA provenance)
+          cosign attest --yes --type cyclonedx --predicate sbom.json "${IMAGE_REF}"
+
+      - name: Sign SBOM blob (keyless)
+        run: |
+          # Sign SBOM using bundle format (includes signature, cert, and Rekor proof)
+          cosign sign-blob --yes --bundle sbom.json.sigstore.json sbom.json
+
+      - name: Upload SBOM to Dependency-Track
+        env:
+          DT_API_KEY: ${{ secrets.DT_API_KEY }}
+          DT_PROJECT_UUID: ${{ secrets.DT_PROJECT_UUID }}
+          DT_URL: ${{ secrets.DT_URL }}
+        run: |
+          # Use --fail-with-body so auth/size failures don't leave step green
+          curl --fail-with-body -X "POST" "${DT_URL}/api/v1/bom" \
+            -H "Content-Type: multipart/form-data" \
+            -H "X-Api-Key: ${DT_API_KEY}" \
+            -F "project=${DT_PROJECT_UUID}" \
+            -F "bom=@sbom.json"
+
+      - name: Verification example - Image signature
+        env:
+          IMAGE_REF: ghcr.io/${{ github.repository }}@${{ steps.build-push.outputs.digest }}
+          WORKFLOW_IDENTITY: ${{ github.server_url }}/${{ github.repository }}/.github/workflows/${{ github.workflow }}@${{ github.ref }}
+        run: |
+          # Verify image signature with explicit identity pinning
+          # Without these flags, ANY keyless signature from ANY GitHub Actions workflow would verify
+          cosign verify \
+            --certificate-identity="${WORKFLOW_IDENTITY}" \
+            --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+            "${IMAGE_REF}"
+
+      - name: Verification example - SBOM blob
+        run: |
+          # Verify SBOM blob signature using bundle
+          cosign verify-blob \
+            --bundle sbom.json.sigstore.json \
+            --certificate-identity="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/.github/workflows/${GITHUB_WORKFLOW}@${GITHUB_REF}" \
+            --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+            sbom.json
 ```
 
-**Fail-fast vs Warn**: In CI, fail the pipeline if SBOM generation fails, but avoid failing builds on non-actionable low-severity findings — instead surface results to triage dashboards.
+**Key security controls explained:**
+
+1. **No command injection**: Untrusted values (`github.repository`, `github.ref`, etc.) are [passed through `env:` blocks](https://securitylab.github.com/resources/github-actions-untrusted-input/), never interpolated directly into `run:` shell blocks, preventing `$(...)` command execution.
+
+2. **Sign by digest, not tag**: Image is [signed by immutable digest](https://github.com/sigstore/cosign/blob/main/doc/cosign_sign.md) (`@sha256:...`) after push resolves it, preventing race conditions and tag tampering.
+
+3. **Current bundle format**: SBOM blob signing uses [`--bundle` format](https://docs.sigstore.dev/cosign/signing/signing_with_blobs/) (signature + certificate + Rekor proof), not deprecated `--output-signature`.
+
+4. **Explicit verification**: Includes [`cosign verify`](https://github.com/sigstore/cosign/blob/main/doc/cosign_verify.md) examples that pin `--certificate-identity` and `--certificate-oidc-issuer` — without these, any GitHub Actions signature would verify, defeating origin verification.
+
+5. **SBOM from built image**: SBOM is generated from the pushed image (via digest), not from `dir:./build/libs`, ensuring base image and OS packages are included in scan scope.
+
+6. **Fail-with-body on Dependency-Track upload**: `curl --fail-with-body` ensures [401/403/500 errors fail the step](https://docs.dependencytrack.org/usage/cicd/), not silently succeed.
+
+7. **Correct permissions**: Declares `id-token: write` (for OIDC signing) and `packages: write` (to push signature layers), plus explicit registry login before signing.
+
+8. **Rekor transparency caveat**: Documents that `--yes` [publishes image digest and workflow identity to the public Rekor log](https://docs.sigstore.dev/cosign/signing/overview/).
+
+9. **Correct attestation type**: Uses `--type cyclonedx` for [SBOM attestation](https://github.com/aquasecurity/trivy/blob/main/docs/guide/supply-chain/attestation/sbom.md), not `slsaprovenance` (only for actual SLSA generators).
+
+10. **Pinned actions**: Pins `actions/checkout` and `sigstore/cosign-installer` to commit SHAs, not floating tags.
+
+**Fail-fast vs Warn**: The [Grype scan with `--fail-on high`](https://oss.anchore.com/docs/guides/vulnerability/filter-results/) gates the pipeline (exits non-zero if high/critical CVEs found), running BEFORE push/sign steps. Low-severity findings can be surfaced to dashboards without blocking.
 
 ## Example workflows (short)
 
