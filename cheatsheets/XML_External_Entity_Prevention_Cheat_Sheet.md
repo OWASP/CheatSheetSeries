@@ -199,8 +199,9 @@ Where no feature is recognized, an ignore-all resolver is the fallback, because 
 
 ``` java
 // Empty content, not null: null tells the parser to resolve the reference itself.
+DocumentBuilder builder = ...;
 EntityResolver ignoreAll = (publicId, systemId) -> new InputSource(new StringReader(""));
-documentBuilder.setEntityResolver(ignoreAll);
+builder.setEntityResolver(ignoreAll);
 ```
 
 ### DOM: DocumentBuilderFactory
@@ -305,7 +306,7 @@ Other libraries follow the same pattern: check whether the one you use accepts a
 // Create a hardened reader
 XMLReader reader = ...;
 
-// Validator.validate() takes the same SAXSource
+// Transformer.transform() and Validator.validate() both accept a SAXSource
 transformer.transform(new SAXSource(reader, new InputSource(inputStream)), result);
 ```
 
@@ -318,7 +319,7 @@ Two gaps leave a hardened factory producing an unhardened object:
 
 #### XPath takes a DOM
 
-The contract leaves the context type implementation-dependent: [`XPath.evaluate`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/xpath/XPath.html#evaluate(java.lang.String,java.lang.Object)) notes only that it usually accepts `Node`". Parse the document yourself with a hardened `DocumentBuilder` and evaluate against the resulting `Document`. Avoid the `InputSource` overloads: they build the document with a `DocumentBuilderFactory` you never get to configure.
+The contract leaves the context type implementation-dependent: [`XPath.evaluate`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/xpath/XPath.html#evaluate(java.lang.String,java.lang.Object)) notes only that it usually accepts `Node`. Parse the document yourself with a hardened `DocumentBuilder` and evaluate against the resulting `Document`. Avoid the `InputSource` overloads: they build the document with a `DocumentBuilderFactory` you never get to configure.
 
 #### JAXB takes a StAX reader
 
