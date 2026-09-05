@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet provides guidance on preventing XPath injection vulnerabilities in applications that use XPath to query XML data. XPath injection occurs when untrusted input is concatenated into XPath expressions, allowing attackers to manipulate query logic and access unauthorized data.
+This cheat sheet provides guidance on preventing [XPath injection](https://cwe.mitre.org/data/definitions/643.html) vulnerabilities in applications that use XPath to query XML data. XPath injection occurs when untrusted input is concatenated into XPath expressions, allowing attackers to manipulate query logic and access unauthorized data.
 
 ## What is XPath Injection?
 
@@ -211,7 +211,7 @@ String xpathQuery = "//users/user[username=" + escaped + "]";
 
 ### Least Privilege Data Access
 
-Structure XML documents and XPath queries to enforce least privilege:
+Structure XML documents and XPath queries to enforce [least privilege](https://owasp.org/www-community/Access_Control):
 
 - **Separate sensitive and non-sensitive data** into different XML documents
 - **Design XPath expressions** to return only the minimum necessary data
@@ -274,6 +274,8 @@ Document xmlDocument = builder.parse(new InputSource(new StringReader(xmlContent
 ## Platform-Specific Guidance
 
 ### Python (lxml)
+
+[Python's lxml library](https://lxml.de/xpathxslt.html) supports XPath variables through keyword arguments:
 
 ```python
 # Safe: Using XPath variables in lxml
