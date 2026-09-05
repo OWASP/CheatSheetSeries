@@ -4999,7 +4999,7 @@
 <li><code>img-src</code> specifies the URLs that images can be loaded from.</li>
 <li><code>manifest-src</code> specifies the URLs that application manifests may be loaded from.</li>
 <li><code>media-src</code> specifies the URLs from which video, audio and text track resources can be loaded from.</li>
-<li><code>prefetch-src</code> specifies the URLs from which resources can be prefetched from.</li>
+<li><code>prefetch-src</code> was an experimental directive for prefetch/prerender resource URLs. It was <strong>removed from the CSP Level 3 specification</strong> and is ignored by modern browsers — do not rely on it for defense. Constrain scripts, styles, and default fetches with the standard fetch directives instead.</li>
 <li><code>object-src</code> specifies the URLs from which plugins can be loaded from.</li>
 <li><code>script-src</code> specifies the locations from which a script can be executed from. It is a fallback directive for other script-like directives.<ul>
 <li><code>script-src-elem</code> controls the location from which execution of script requests and blocks can occur.</li>
