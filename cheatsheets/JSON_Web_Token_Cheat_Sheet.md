@@ -326,43 +326,56 @@ References:
 
 ### Issuer and audience confusion
 
-A JWT contains the `iss` (issuer) and `aud` (audience) claims to identify who created the token and for whom the token was issued. If a recipient verifies only the cryptographic signature and token expiration without strictly validating `iss` and `aud`, an attacker can reuse a valid token across different contexts, environments, or services.
+A JWT carries the `iss` (issuer) claim to say who created it and the `aud` (audience) claim to say who it was created for. A recipient that verifies only the signature and the expiration accepts any token signed by a key it trusts, whoever issued it and whoever it was issued for. An attacker holding such a token, whether legitimately issued to them or obtained from a service they control, can replay it against a different recipient. RFC 8725 calls this a substitution attack.
 
-For example, an attacker can obtain a valid token issued for a low-privilege service (or an external tenant in a multi-tenant system) and replay it against a high-privilege service or internal API. If the recipient does not enforce that its own identifier is present in `aud`, it accepts the token. Similarly, in multi-issuer environments or identity federation architectures, missing `iss` validation allows tokens issued by an untrusted or separate identity provider (e.g., a test/staging IdP) to be accepted if both use compatible key structures.
+Two variants are worth separating, because different checks defeat them.
+
+**Audience confusion.** An attacker presents a token issued for one service to a second service that trusts the same issuer. If the second service does not require its own identifier in `aud`, the token is accepted: a token minted for a low-privilege service is replayed against an internal API, and the attacker gains access that was never granted.
+
+**Issuer confusion.** An attacker presents a token from a different issuer, such as a staging identity provider, a partner tenant, or a self-service account at a public identity provider. Comparing the `iss` string alone does not stop this if the verifier resolves its verification key independently of `iss`. A verifier that looks up the key by `kid` across the union of several trusted issuers' JWK Sets will accept a token whose `iss` names one issuer and whose `kid` names a key belonging to another: the signature verifies against the key that `kid` selected, and the `iss` and `aud` comparisons pass because the attacker set both to what the verifier expects. No key needs to be stolen, and the deployment need not be multi-tenant.
 
 Mitigations:
 
-- Always validate that the `iss` claim matches the expected issuer string exactly (case-sensitive comparison, including exact protocol and path).
-- Always validate that the recipient's identifier is present in the `aud` claim (whether `aud` is formatted as a single string or an array of strings).
-- Require `iss` and `aud` claims to be present in tokens, rejecting tokens where these claims are missing.
-- In multi-tenant environments, verify that the issuer corresponds to the expected tenant and fetch verification keys only from an explicit allowlist associated with that issuer.
+- Validate that `iss` matches the expected issuer exactly, as a case-sensitive comparison of the whole string including scheme and path.
+- Select the verification key from the set bound to the validated `iss`, for example that issuer's `jwks_uri`; never verify against a union of keys from several issuers. In multi-tenant deployments this means resolving the key set from an allowlist keyed by issuer rather than searching every tenant's keys.
+- Validate that the recipient's own identifier is present in `aud`, whether `aud` is a single string or an array of strings.
+- Reject tokens in which `iss` or `aud` is missing. RFC 7519 makes both claims optional, so this is a deployment decision rather than a specification requirement, but a verifier with no `iss` has nothing to bind the key to, and one with no `aud` cannot tell whether the token was meant for it.
 
-Example of strict issuer and audience validation in Python with PyJWT:
+The related case, where the key material itself is taken from the token rather than merely selected by it, is covered in [Trusting key material named in the token header](#trusting-key-material-named-in-the-token-header). Where verification uses a MAC, see also the secret reuse bullets under [MAC](#mac).
+
+Example of strict validation in Python with PyJWT, resolving the key from the expected issuer's JWK Set rather than accepting one supplied independently:
 
 ```python
 import jwt
 
-# Validates signature, expiration, exact issuer, and recipient audience
+ISSUER = "https://auth.example.com/"
+AUDIENCE = "https://api.example.com/v1/payments"
+
+# Keys come from this issuer's JWK Set only (its published jwks_uri),
+# so a `kid` naming a key of some other trusted issuer cannot verify
+# this token.
+jwks_client = jwt.PyJWKClient("https://auth.example.com/.well-known/jwks.json")
+signing_key = jwks_client.get_signing_key_from_jwt(token)
+
 decoded_payload = jwt.decode(
     token,
-    public_key,
-    algorithms=["RS256"],
-    audience="https://api.example.com/v1/payments",
-    issuer="https://auth.example.com/",
-    options={
-        "require": ["exp", "iss", "aud"],
-        "verify_aud": True,
-        "verify_iss": True,
-    },
+    signing_key,
+    algorithms=["ES256"],
+    issuer=ISSUER,
+    audience=AUDIENCE,
+    options={"require": ["exp", "iss", "aud"]},
 )
 ```
 
+Note: in PyJWT the `issuer` and `audience` arguments perform the validation. The `verify_iss` and `verify_aud` options are enabled by default and gate checks that do nothing on their own, so a token is only checked against an expected issuer and audience when those arguments are passed.
+
 References:
 
-- [RFC 8725 §2.7 (Validate Issuer and Subject)](https://datatracker.ietf.org/doc/html/rfc8725#section-2.7);
-- [RFC 8725 §2.8 (Validate Audience)](https://datatracker.ietf.org/doc/html/rfc8725#section-2.8);
-- [RFC 9207 (OAuth 2.0 Authorization Server Issuer Identification)](https://datatracker.ietf.org/doc/html/rfc9207);
-- [RFC 7519 §4.1.1 and §4.1.3](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1).
+- [RFC 8725, Substitution Attacks](https://datatracker.ietf.org/doc/html/rfc8725#name-substitution-attacks);
+- [RFC 8725, Validate Issuer and Subject](https://datatracker.ietf.org/doc/html/rfc8725#name-validate-issuer-and-subject);
+- [RFC 8725, Use and Validate Audience](https://datatracker.ietf.org/doc/html/rfc8725#name-use-and-validate-audience);
+- [RFC 7519, "iss" (Issuer) Claim](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.1);
+- [RFC 7519, "aud" (Audience) Claim](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3).
 
 ## JWT revocation
 
