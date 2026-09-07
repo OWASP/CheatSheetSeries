@@ -326,7 +326,7 @@ References:
 
 ### Cross-JWT and token type confusion
 
-When an application or authorization server issues different kinds of JWTs for different purposes (such as access tokens, ID tokens, logout tokens, refresh tokens, or password-reset tokens) that are signed with the same key, a token issued for one purpose might be accepted by an endpoint expecting a different token type if the verifier does not check the token's intended context.
+When an application or authorization server issues different kinds of JWTs for different purposes, such as access tokens, ID tokens, logout tokens or password-reset tokens, and signs them with the same key, a token issued for one purpose might be accepted by an endpoint expecting a different token type if the verifier does not check the token's intended context. Refresh tokens belong here as well where a deployment issues them as JWTs, though they are more often opaque strings whose format is internal to the authorization server.
 
 For example, an attacker could obtain an ID token or an email verification token, and present it to an API endpoint expecting an access token. If both tokens share common claims (such as `sub`) and are signed by the same trusted key, a verifier that does not distinguish the token type might treat the ID token as an authorized access token. This vulnerability is known as "cross-JWT confusion" or "token type confusion" (see [RFC 8725 §2.8, Cross-JWT Confusion](https://datatracker.ietf.org/doc/html/rfc8725#name-cross-jwt-confusion)).
 
@@ -337,7 +337,7 @@ Mitigations:
 - **Validate `typ` at the verifier:** The verifier must explicitly check that the `typ` header matches the expected token type for that endpoint and reject tokens with mismatched or missing types when explicit typing is enforced.
 - **Caveat for legacy and standard tokens lacking explicit media types:** Some standard specifications (notably OpenID Connect Core 1.0 ID Tokens) do not define an explicit media type and often omit `typ` or set it to generic `JWT`. In cross-system environments where explicit typing cannot be interoperably enforced, rely on **distinct cryptographic signing keys** or strict **audience (`aud`) and issuer (`iss`) isolation** to prevent cross-token replay. RFC 8725 §3.12 sets out these fallbacks, requiring the validation rules for different kinds of JWTs to be mutually exclusive.
 
-Example of token with explicit typing:
+Example of a JOSE header with explicit typing:
 
 ```json
 {
