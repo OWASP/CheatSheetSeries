@@ -326,47 +326,20 @@ References:
 
 ### Cross-JWT and token type confusion
 
-When an application or authorization server issues different kinds of JWTs for different purposes, such as access tokens, ID tokens, logout tokens or password-reset tokens, and signs them with the same key, a token issued for one purpose might be accepted by an endpoint expecting a different token type if the verifier does not check the token's intended context. Refresh tokens belong here as well where a deployment issues them as JWTs, though they are more often opaque strings whose format is internal to the authorization server.
-
-For example, an attacker could obtain an ID token or an email verification token, and present it to an API endpoint expecting an access token. If both tokens share common claims (such as `sub`) and are signed by the same trusted key, a verifier that does not distinguish the token type might treat the ID token as an authorized access token. This vulnerability is known as "cross-JWT confusion" or "token type confusion" (see [RFC 8725 §2.8, Cross-JWT Confusion](https://datatracker.ietf.org/doc/html/rfc8725#name-cross-jwt-confusion)).
+Cross-JWT (or token type) confusion occurs when a token issued for one purpose (such as an ID or password-reset token) is accepted by an endpoint expecting another (such as an access token) because both share common claims and are signed by the same key (see [RFC 8725 §2.8](https://datatracker.ietf.org/doc/html/rfc8725#name-cross-jwt-confusion)).
 
 Mitigations:
 
-- **Use explicit typing (`typ` header parameter):** The issuer should set the `typ` header parameter to a specific media type (or explicit type) distinguishing the token's purpose, such as `"typ": "at+jwt"` for OAuth 2.0 Access Tokens ([RFC 9068](https://datatracker.ietf.org/doc/html/rfc9068)) or `"typ": "logout+jwt"` for Back-Channel Logout Tokens ([OpenID Connect Back-Channel Logout 1.0](https://openid.net/specs/openid-connect-backchannel-1_0.html)).
-- **Define custom media types for application-specific tokens:** For custom or internal token types (such as password-reset, email verification, or step-up authentication tokens), define and enforce a dedicated media type (e.g. `example-reset+jwt` or `application/vnd.example.reset+jwt`) to prevent them from being substituted for general access tokens.
-- **Validate `typ` at the verifier:** The verifier must explicitly check that the `typ` header matches the expected token type for that endpoint and reject tokens with mismatched or missing types when explicit typing is enforced.
-- **Caveat for legacy and standard tokens lacking explicit media types:** Some standard specifications (notably OpenID Connect Core 1.0 ID Tokens) do not define an explicit media type and often omit `typ` or set it to generic `JWT`. In cross-system environments where explicit typing cannot be interoperably enforced, rely on **distinct cryptographic signing keys** or strict **audience (`aud`) and issuer (`iss`) isolation** to prevent cross-token replay. RFC 8725 §3.12 sets out these fallbacks, requiring the validation rules for different kinds of JWTs to be mutually exclusive.
-
-Example of a JOSE header with explicit typing:
-
-```json
-{
-  "typ": "at+jwt",
-  "alg": "ES256",
-  "kid": "auth-key-2026"
-}
-```
+- **Use explicit typing (`typ`):** Set the `typ` header parameter to a specific media type distinguishing the token's purpose, such as `"at+jwt"` for OAuth 2.0 access tokens ([RFC 9068](https://datatracker.ietf.org/doc/html/rfc9068)), `"logout+jwt"` for logout tokens, or custom types (e.g., `example-reset+jwt`) for internal tokens.
+- **Validate `typ` at the verifier:** Reject tokens with missing or unexpected `typ` values for that endpoint. Note that `typ` is case-insensitive and the `application/` prefix may be omitted ([RFC 7515 §4.1.9](https://datatracker.ietf.org/doc/html/rfc7515#section-4.1.9)).
+- **Use distinct keys or mutually exclusive validation:** Where explicit typing cannot be enforced interoperably (e.g., standard OIDC ID tokens omitting `typ`), use **separate signing keys** or strict **`iss` and `aud` isolation** so that validation rules for different token kinds remain mutually exclusive ([RFC 8725 §3.12](https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali)).
 
 Example of validation enforcing explicit token type:
 
 ```python
-import jwt
-
-# Decode and verify signature, issuer, and audience
-payload = jwt.decode(
-    token,
-    public_key,
-    algorithms=["ES256"],
-    audience="https://api.example.com",
-    issuer="https://auth.example.com",
-    options={"require": ["exp", "iss", "aud"]},
-)
-
 # Enforce explicit token type to prevent cross-JWT confusion
-# RFC 7515 §4.1.9 & RFC 9068: typ is case-insensitive, and "application/" prefix may be omitted
 header = jwt.get_unverified_header(token)
-token_type = str(header.get("typ", "")).lower()
-if token_type not in ["at+jwt", "application/at+jwt"]:
+if str(header.get("typ", "")).lower() not in ["at+jwt", "application/at+jwt"]:
     raise jwt.InvalidTokenError("Invalid token type: expected at+jwt")
 ```
 
@@ -374,8 +347,7 @@ References:
 
 - [RFC 8725 §3.11, Use Explicit Typing](https://datatracker.ietf.org/doc/html/rfc8725#name-use-explicit-typing);
 - [RFC 8725 §3.12, Use Mutually Exclusive Validation Rules for Different Kinds of JWTs](https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali);
-- [RFC 9068, JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068);
-- [Draft ietf-oauth-rfc8725bis, JWT Best Current Practice](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc8725bis).
+- [RFC 9068, JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068).
 
 ## JWT revocation
 
