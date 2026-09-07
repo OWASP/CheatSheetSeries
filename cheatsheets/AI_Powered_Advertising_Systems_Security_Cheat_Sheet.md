@@ -1,8 +1,8 @@
-# AI-Powered Advertising Systems Security Cheat Sheet
+# AI Powered Advertising Systems Security Cheat Sheet
 
 ## Introduction
 
-Modern advertising platforms make AI-driven financial decisions on every ad request. This cheat sheet is a concise checklist of ad-tech-specific controls that stop the AI itself from becoming the attack surface, across every ad-serving mode (programmatic served via the [IAB Tech Lab OpenRTB specification](https://github.com/InteractiveAdvertisingBureau/openrtb2.x), search, retail media, CTV/OTT which stands for Connected TV and Over-The-Top streaming ads, DOOH or Digital-Out-of-Home screens, direct-sold, native, mobile mediation) and both classical machine learning (ML) and generative AI (including large language models or LLMs, and vision-language models or VLMs; generic LLM risks catalogued in the [OWASP LLM Top 10 (2025)](https://genai.owasp.org/llm-top-10/)) on the live serving path.
+Modern advertising platforms make AI-driven financial decisions on every ad request. This cheat sheet is a concise checklist of ad-tech-specific controls that stop the AI itself from becoming the attack surface. It applies across every ad-serving mode: programmatic served via the [IAB Tech Lab OpenRTB specification](https://github.com/InteractiveAdvertisingBureau/openrtb2.x), search, retail media, CTV/OTT (Connected TV and Over-The-Top streaming ads), DOOH (Digital-Out-of-Home screens), direct-sold, native, and mobile mediation. It covers both classical machine learning (ML) and generative AI on the live serving path, including large language models (LLMs) and vision-language models (VLMs); generic LLM risks are catalogued in the [OWASP LLM Top 10 (2025)](https://genai.owasp.org/llm-top-10/).
 
 Each section pairs the primary controls with a compact threat / defense / evidence / runtime-signal table so a reviewer can trace each threat to how it is stopped, verified, and monitored.
 
@@ -79,7 +79,7 @@ Every outcome callback is money and a training label in one packet.
 - Pin the certificate identity to a specific `partner_id`, using the Subject Alternative Name (SAN), Common Name (CN), or Subject Public Key Info (SPKI) hash, not just a trusted issuer. See the [OWASP JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html) for generic JWT hardening.
 - Auth incidents are data incidents: rotate credentials, mark exposure-window rows suspect, invalidate per-partner weights, invalidate model artifacts.
 - Tier every agentic tool by risk. HITL (human-in-the-loop) approvals bind a six-tuple: actor, tool, target, normalized parameters, timestamp, expiry ([OWASP LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)). Generic agentic patterns in the [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html).
-- Kill-switch fallback: a warm, pre-deployed rules-based bidder that a single control-plane flip diverts traffic to.
+- Kill-switch fallback: a warm, pre-deployed rules-based bidder. A single control-plane flip diverts campaign traffic to it while the agent is quarantined.
 - Quarantine reward events past the fraud-adjudication lag; cap the maximum policy shift per epoch.
 
 | Threat | Defense | Evidence | Runtime signal |
