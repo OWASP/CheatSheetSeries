@@ -64,78 +64,118 @@ function validateBaseline(value) {
     !value ||
     typeof value !== "object" ||
     Array.isArray(value) ||
-    !exactKeys(value, ["failures", "generatedFrom", "schemaVersion"])
+    !exactKeys(value, ["batches", "schemaVersion"])
   ) {
-    throw new Error("baseline must contain only schemaVersion, generatedFrom, and failures");
+    throw new Error("baseline must contain only schemaVersion and batches");
   }
-  if (value.schemaVersion !== 1) {
-    throw new Error("baseline schemaVersion must be 1");
+  if (value.schemaVersion !== 2) {
+    throw new Error("baseline schemaVersion must be 2");
   }
-
-  const provenance = value.generatedFrom;
-  if (
-    !provenance ||
-    typeof provenance !== "object" ||
-    Array.isArray(provenance) ||
-    !exactKeys(provenance, [
-      "baseCommit",
-      "workflowJobId",
-      "workflowRunId",
-      "workflowUrl",
-    ]) ||
-    !/^[0-9a-f]{40}$/.test(provenance.baseCommit) ||
-    !Number.isSafeInteger(provenance.workflowRunId) ||
-    provenance.workflowRunId <= 0 ||
-    !Number.isSafeInteger(provenance.workflowJobId) ||
-    provenance.workflowJobId <= 0 ||
-    provenance.workflowUrl !==
-      `https://github.com/OWASP/CheatSheetSeries/actions/runs/${provenance.workflowRunId}/job/${provenance.workflowJobId}`
-  ) {
-    throw new Error("baseline generatedFrom provenance is malformed");
-  }
-  if (!Array.isArray(value.failures)) {
-    throw new Error("baseline failures must be an array");
+  if (!Array.isArray(value.batches) || value.batches.length === 0) {
+    throw new Error("baseline batches must be a nonempty array");
   }
 
   const byKey = new Map();
-  let previousKey = null;
-  for (const [index, failure] of value.failures.entries()) {
+  for (const [batchIndex, batch] of value.batches.entries()) {
     if (
-      !failure ||
-      typeof failure !== "object" ||
-      Array.isArray(failure) ||
-      !exactKeys(failure, ["file", "observedStatus", "url"])
+      !batch ||
+      typeof batch !== "object" ||
+      Array.isArray(batch) ||
+      !exactKeys(batch, ["failures", "generatedFrom"])
     ) {
-      throw new Error(`baseline failure ${index} has an invalid shape`);
-    }
-    if (
-      typeof failure.file !== "string" ||
-      !failure.file.startsWith("cheatsheets/") ||
-      !failure.file.endsWith(".md") ||
-      path.posix.normalize(failure.file) !== failure.file ||
-      failure.file.includes("\\") ||
-      typeof failure.url !== "string" ||
-      failure.url.length === 0 ||
-      /[\r\n]/.test(failure.url) ||
-      !Number.isInteger(failure.observedStatus) ||
-      failure.observedStatus < 0 ||
-      failure.observedStatus > 599
-    ) {
-      throw new Error(`baseline failure ${index} is malformed`);
+      throw new Error(`baseline batch ${batchIndex} has an invalid shape`);
     }
 
-    const key = tupleKey(failure.file, failure.url);
-    if (byKey.has(key)) {
-      throw new Error(`baseline contains a duplicate tuple: ${failure.file} ${failure.url}`);
+    const provenance = batch.generatedFrom;
+    if (
+      !provenance ||
+      typeof provenance !== "object" ||
+      Array.isArray(provenance) ||
+      !exactKeys(provenance, [
+        "attemptCount",
+        "checkedHead",
+        "contentBaseCommit",
+        "workflowJobId",
+        "workflowRunId",
+        "workflowUrl",
+      ]) ||
+      !Number.isSafeInteger(provenance.attemptCount) ||
+      provenance.attemptCount <= 0 ||
+      !/^[0-9a-f]{40}$/.test(provenance.checkedHead) ||
+      !/^[0-9a-f]{40}$/.test(provenance.contentBaseCommit) ||
+      !Number.isSafeInteger(provenance.workflowRunId) ||
+      provenance.workflowRunId <= 0 ||
+      !Number.isSafeInteger(provenance.workflowJobId) ||
+      provenance.workflowJobId <= 0 ||
+      provenance.workflowUrl !==
+        `https://github.com/OWASP/CheatSheetSeries/actions/runs/${provenance.workflowRunId}/job/${provenance.workflowJobId}`
+    ) {
+      throw new Error(`baseline batch ${batchIndex} provenance is malformed`);
     }
-    if (previousKey !== null && key < previousKey) {
-      throw new Error("baseline failures must be sorted by file and URL");
+    if (!Array.isArray(batch.failures)) {
+      throw new Error(`baseline batch ${batchIndex} failures must be an array`);
     }
-    previousKey = key;
-    byKey.set(key, failure);
+
+    let previousKey = null;
+    for (const [failureIndex, failure] of batch.failures.entries()) {
+      const expectedKeys =
+        provenance.attemptCount === 1
+          ? ["file", "observedStatus", "url"]
+          : ["file", "observedStatuses", "url"];
+      if (
+        !failure ||
+        typeof failure !== "object" ||
+        Array.isArray(failure) ||
+        !exactKeys(failure, expectedKeys)
+      ) {
+        throw new Error(
+          `baseline batch ${batchIndex} failure ${failureIndex} has an invalid shape`,
+        );
+      }
+      const observedStatuses =
+        provenance.attemptCount === 1
+          ? [failure.observedStatus]
+          : failure.observedStatuses;
+      if (
+        typeof failure.file !== "string" ||
+        !failure.file.startsWith("cheatsheets/") ||
+        !failure.file.endsWith(".md") ||
+        path.posix.normalize(failure.file) !== failure.file ||
+        failure.file.includes("\\") ||
+        typeof failure.url !== "string" ||
+        failure.url.length === 0 ||
+        /[\r\n]/.test(failure.url) ||
+        !Array.isArray(observedStatuses) ||
+        observedStatuses.length !== provenance.attemptCount ||
+        observedStatuses.some(
+          (status) =>
+            !Number.isInteger(status) || status < 0 || status > 599,
+        )
+      ) {
+        throw new Error(`baseline batch ${batchIndex} failure ${failureIndex} is malformed`);
+      }
+
+      const key = tupleKey(failure.file, failure.url);
+      if (byKey.has(key)) {
+        throw new Error(
+          `baseline contains a duplicate tuple: ${failure.file} ${failure.url}`,
+        );
+      }
+      if (previousKey !== null && key < previousKey) {
+        throw new Error(
+          `baseline batch ${batchIndex} failures must be sorted by file and URL`,
+        );
+      }
+      previousKey = key;
+      byKey.set(key, {
+        file: failure.file,
+        url: failure.url,
+        observedStatus: observedStatuses.at(-1),
+      });
+    }
   }
 
-  return { byKey, provenance };
+  return { byKey };
 }
 
 function readJson(file, description) {
@@ -280,7 +320,7 @@ function writeOutputs({ known, recovered, transient, unexpected }) {
     markdownRows("Known Markdown link failures", known, "known"),
     markdownRows("Recovered or stale baseline entries", recovered, "recovered"),
     markdownRows(
-      "Transient unbaselined network failures recovered on confirmation",
+      "Transient unbaselined network failures",
       transient,
       "transient",
     ),
@@ -494,8 +534,12 @@ function main() {
           : history.values.findLast((value) => Number.isInteger(value)),
         attempts: formatAttemptHistory(history.values),
       };
-      if (isNetworkUrl(history.url) && !finalFailure) {
-        transient.push({ ...row, status: "recovered" });
+      const persistentNetworkFailure =
+        isNetworkUrl(history.url) &&
+        history.values.length === NETWORK_ATTEMPT_LIMIT &&
+        history.values.every(Number.isInteger);
+      if (isNetworkUrl(history.url) && !persistentNetworkFailure) {
+        transient.push({ ...row, status: "not persistent" });
       } else {
         unexpected.push(row);
       }
@@ -524,7 +568,7 @@ function main() {
   }
 
   console.log(
-    `[+] No unexpected link failures; ${known.length} known failure(s) remain, ${recovered.length} baseline row(s) are recovered or stale, and ${transient.length} transient network failure(s) recovered on confirmation.`,
+    `[+] No unexpected link failures; ${known.length} known failure(s) remain, ${recovered.length} baseline row(s) are recovered or stale, and ${transient.length} network failure(s) were not persistent across every observation.`,
   );
   return 0;
 }

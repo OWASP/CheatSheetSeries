@@ -66,7 +66,7 @@ function main() {
     summary = [
       "# Markdown link check passed",
       "",
-      `No unexpected failures were found. ${knownCount} exact known-failure tuple(s) remain; ${recoveredCount} baseline row(s) are recovered or stale; ${transientCount} unbaselined network failure(s) recovered on confirmation.`,
+      `No unexpected failures were found. ${knownCount} exact known-failure tuple(s) remain; ${recoveredCount} baseline row(s) are recovered or stale; ${transientCount} unbaselined network failure(s) were not persistent across every observation.`,
       "",
     ].join("\n");
   }

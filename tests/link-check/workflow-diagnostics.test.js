@@ -104,7 +104,10 @@ test("a successful run reports known and recovered counts without a comment", (t
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.summary, /2 exact known-failure tuple\(s\) remain/);
   assert.match(result.summary, /1 baseline row\(s\) are recovered or stale/);
-  assert.match(result.summary, /1 unbaselined network failure\(s\) recovered/);
+  assert.match(
+    result.summary,
+    /1 unbaselined network failure\(s\) were not persistent across every observation/,
+  );
   assert.match(result.output, /^should_comment=false$/m);
 });
 

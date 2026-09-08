@@ -14,15 +14,29 @@ const realChecker = path.join(
 );
 const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
 const provenance = {
-  baseCommit: "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+  attemptCount: 1,
+  checkedHead: "daae48ab4c94803f0250ff9beb5e4f815091e259",
+  contentBaseCommit: "e5420b90672011aa84d3e5de3c3e38f704a5033d",
   workflowRunId: 34185231643,
   workflowJobId: 101932122278,
   workflowUrl:
     "https://github.com/OWASP/CheatSheetSeries/actions/runs/34185231643/job/101932122278",
 };
+const supplementalProvenance = {
+  attemptCount: 3,
+  checkedHead: "47a37a9226052e03a516a536e9431813e23878b9",
+  contentBaseCommit: "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+  workflowRunId: 34228838406,
+  workflowJobId: 102069549060,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/34228838406/job/102069549060",
+};
 
 function baseline(failures = []) {
-  return { schemaVersion: 1, generatedFrom: provenance, failures };
+  return {
+    schemaVersion: 2,
+    batches: [{ generatedFrom: provenance, failures }],
+  };
 }
 
 function writeFiles(root, files) {
@@ -149,13 +163,32 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
   const value = JSON.parse(
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
-  assert.deepEqual(value.generatedFrom, provenance);
-  assert.equal(value.failures.length, 168);
-  assert.equal(new Set(value.failures.map(({ file }) => file)).size, 62);
+  assert.equal(value.schemaVersion, 2);
+  assert.equal(value.batches.length, 2);
+  assert.deepEqual(value.batches[0].generatedFrom, provenance);
+  assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
+  assert.equal(value.batches[0].failures.length, 168);
+  assert.equal(value.batches[1].failures.length, 7);
+  const failures = value.batches.flatMap((batch) => batch.failures);
+  assert.equal(failures.length, 175);
+  assert.equal(new Set(failures.map(({ file }) => file)).size, 64);
   assert.equal(
-    new Set(value.failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    168,
+    new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
+    175,
   );
+  assert.ok(
+    value.batches[1].failures.every(
+      ({ observedStatuses }) =>
+        observedStatuses.length === 3 && observedStatuses.every(Number.isInteger),
+    ),
+  );
+  for (const inconsistentUrl of [
+    "https://github.com/jdereg/json-io/blob/master/user-guide.md#non-typed-usage",
+    "https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md",
+    "https://azure.microsoft.com/nl-nl/services/key-vault/",
+  ]) {
+    assert.equal(failures.some(({ url }) => url === inconsistentUrl), false);
+  }
 });
 
 test("a valid local-link fixture exits zero", (t) => {
@@ -227,7 +260,7 @@ test("an exact known tuple is nonblocking and separately reported", (t) => {
   assert.match(result.known, /\[known\] missing\.md → Status: 400; baseline observed 404/);
   assert.equal(result.unexpected, "");
   assert.deepEqual(
-    JSON.parse(fs.readFileSync(result.baselinePath, "utf8")).failures,
+    JSON.parse(fs.readFileSync(result.baselinePath, "utf8")).batches[0].failures,
     [
       {
         file: "cheatsheets/known.md",
@@ -236,6 +269,31 @@ test("an exact known tuple is nonblocking and separately reported", (t) => {
       },
     ],
   );
+});
+
+test("an exact tuple from a multi-observation evidence batch is known", (t) => {
+  const result = runLinkCheck(t, {
+    baselineContents: JSON.stringify({
+      schemaVersion: 2,
+      batches: [
+        {
+          generatedFrom: supplementalProvenance,
+          failures: [
+            {
+              file: "cheatsheets/known.md",
+              url: "missing.md",
+              observedStatuses: [404, 404, 404],
+            },
+          ],
+        },
+      ],
+    }),
+    files: { "known.md": "# Known\n\n[Missing target](missing.md)\n" },
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.known, /\[known\] missing\.md → Status: 400; baseline observed 404/);
+  assert.equal(result.unexpected, "");
 });
 
 test("the same URL in a different file remains fatal", (t) => {
@@ -349,6 +407,79 @@ test("a transient unbaselined network tuple is confirmed, visible, and nonfatal"
   assert.equal(result.unexpected, "");
 });
 
+test("a network tuple failing only on the final observation is transient", (t) => {
+  const checker = canonicalChecker(t);
+  const invocationLog = path.join(
+    os.tmpdir(),
+    `link-check-late-${process.pid}-${Date.now()}`,
+  );
+  t.after(() => fs.rmSync(invocationLog, { force: true }));
+  const persistentUrl = "https://persistent.invalid/trigger";
+  const lateUrl = "https://transient.invalid/late";
+  const result = runLinkCheck(t, {
+    checker,
+    env: {
+      FAKE_CHECKER_INVOCATIONS: invocationLog,
+      FAKE_CHECKER_ATTEMPTS: JSON.stringify({
+        "late.md": [
+          [{ url: persistentUrl, status: 503 }],
+          [{ url: persistentUrl, status: 503 }],
+          [
+            { url: persistentUrl, status: 503 },
+            { url: lateUrl, status: 429 },
+          ],
+        ],
+      }),
+    },
+    files: { "late.md": "# Late\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.equal(fs.readFileSync(invocationLog, "utf8").trim().split(/\r?\n/).length, 3);
+  assert.match(result.known, /\[transient\].*transient\.invalid\/late/);
+  assert.match(result.known, /attempts: 1=not failing, 2=not failing, 3=429/);
+  assert.doesNotMatch(result.unexpected, /transient\.invalid\/late/);
+  assert.match(result.unexpected, /persistent\.invalid\/trigger/);
+});
+
+test("a network tuple that fails, recovers, and fails is transient", (t) => {
+  const checker = canonicalChecker(t);
+  const invocationLog = path.join(
+    os.tmpdir(),
+    `link-check-intermittent-${process.pid}-${Date.now()}`,
+  );
+  t.after(() => fs.rmSync(invocationLog, { force: true }));
+  const persistentUrl = "https://persistent.invalid/trigger";
+  const flakyUrl = "https://transient.invalid/intermittent";
+  const result = runLinkCheck(t, {
+    checker,
+    env: {
+      FAKE_CHECKER_INVOCATIONS: invocationLog,
+      FAKE_CHECKER_ATTEMPTS: JSON.stringify({
+        "intermittent.md": [
+          [
+            { url: persistentUrl, status: 503 },
+            { url: flakyUrl, status: 429 },
+          ],
+          [{ url: persistentUrl, status: 503 }],
+          [
+            { url: persistentUrl, status: 503 },
+            { url: flakyUrl, status: 500 },
+          ],
+        ],
+      }),
+    },
+    files: { "intermittent.md": "# Intermittent\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.equal(fs.readFileSync(invocationLog, "utf8").trim().split(/\r?\n/).length, 3);
+  assert.match(result.known, /\[transient\].*transient\.invalid\/intermittent/);
+  assert.match(result.known, /attempts: 1=429, 2=recovered, 3=500/);
+  assert.doesNotMatch(result.unexpected, /transient\.invalid\/intermittent/);
+  assert.match(result.unexpected, /persistent\.invalid\/trigger/);
+});
+
 test("a persistent unbaselined network tuple remains fatal after bounded attempts", (t) => {
   const checker = canonicalChecker(t);
   const invocationLog = path.join(
@@ -361,7 +492,11 @@ test("a persistent unbaselined network tuple remains fatal after bounded attempt
     checker,
     env: {
       FAKE_CHECKER_ATTEMPTS: JSON.stringify({
-        "persistent.md": [[{ url, status: 503 }]],
+        "persistent.md": [
+          [{ url, status: 503 }],
+          [{ url, status: 429 }],
+          [{ url, status: 502 }],
+        ],
       }),
       FAKE_CHECKER_INVOCATIONS: invocationLog,
     },
@@ -374,7 +509,7 @@ test("a persistent unbaselined network tuple remains fatal after bounded attempt
   assert.match(result.raw, /attempt 2\/3/);
   assert.match(result.raw, /attempt 3\/3/);
   assert.match(result.unexpected, /persistent\.invalid\/failing/);
-  assert.match(result.unexpected, /attempts: 1=503, 2=503, 3=503/);
+  assert.match(result.unexpected, /attempts: 1=503, 2=429, 3=502/);
 });
 
 test("a missing baseline is fatal before checker invocation", (t) => {
@@ -398,8 +533,70 @@ test("a malformed baseline is fatal", async (t) => {
     assert.notEqual(result.status, 0);
     assert.match(
       result.raw,
-      /baseline must contain only schemaVersion, generatedFrom, and failures/,
+      /baseline must contain only schemaVersion and batches/,
     );
+    assert.equal(result.unexpected, "");
+  });
+  await t.test("batch without provenance", (subtest) => {
+    const result = runLinkCheck(subtest, {
+      baselineContents: JSON.stringify({
+        schemaVersion: 2,
+        batches: [
+          {
+            failures: [
+              {
+                file: "cheatsheets/valid.md",
+                url: "https://example.invalid/missing-source",
+                observedStatus: 404,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(result.raw, /baseline batch 0 has an invalid shape/);
+    assert.equal(result.unexpected, "");
+  });
+  await t.test("malformed provenance", (subtest) => {
+    const result = runLinkCheck(subtest, {
+      baselineContents: JSON.stringify({
+        schemaVersion: 2,
+        batches: [
+          {
+            generatedFrom: { ...provenance, checkedHead: "unknown" },
+            failures: [
+              {
+                file: "cheatsheets/valid.md",
+                url: "https://example.invalid/bad-source",
+                observedStatus: 404,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(result.raw, /baseline batch 0 provenance is malformed/);
+    assert.equal(result.unexpected, "");
+  });
+  await t.test("duplicate tuple across evidence batches", (subtest) => {
+    const failure = {
+      file: "cheatsheets/valid.md",
+      url: "https://example.invalid/duplicate",
+      observedStatus: 404,
+    };
+    const result = runLinkCheck(subtest, {
+      baselineContents: JSON.stringify({
+        schemaVersion: 2,
+        batches: [
+          { generatedFrom: provenance, failures: [failure] },
+          { generatedFrom: provenance, failures: [failure] },
+        ],
+      }),
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(result.raw, /baseline contains a duplicate tuple/);
     assert.equal(result.unexpected, "");
   });
 });

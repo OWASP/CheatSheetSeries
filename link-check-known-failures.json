@@ -1,12 +1,16 @@
 {
-  "schemaVersion": 1,
-  "generatedFrom": {
-    "baseCommit": "e5420b90672011aa84d3e5de3c3e38f704a5033d",
-    "workflowRunId": 34185231643,
-    "workflowJobId": 101932122278,
-    "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/34185231643/job/101932122278"
-  },
-  "failures": [
+  "schemaVersion": 2,
+  "batches": [
+    {
+      "generatedFrom": {
+        "attemptCount": 1,
+        "checkedHead": "daae48ab4c94803f0250ff9beb5e4f815091e259",
+        "contentBaseCommit": "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+        "workflowRunId": 34185231643,
+        "workflowJobId": 101932122278,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/34185231643/job/101932122278"
+      },
+      "failures": [
     {
       "file": "cheatsheets/Abuse_Case_Cheat_Sheet.md",
       "url": "https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements.html",
@@ -846,6 +850,55 @@
       "file": "cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md",
       "url": "http://help.dottoro.com/ljfvvdnm.php",
       "observedStatus": 404
+    }
+      ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "47a37a9226052e03a516a536e9431813e23878b9",
+        "contentBaseCommit": "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+        "workflowRunId": 34228838406,
+        "workflowJobId": 102069549060,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/34228838406/job/102069549060"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/Cryptographic_Storage_Cheat_Sheet.md",
+          "url": "https://azure.microsoft.com/en-gb/services/key-vault/",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/Denial_of_Service_Cheat_Sheet.md",
+          "url": "https://www.baeldung.com/cs/distributed-systems-prevent-single-point-failure",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Deserialization_Cheat_Sheet.md",
+          "url": "https://macrosec.tech/index.php/2021/06/29/exploiting-insecuredeserialization-bugs-found-in-the-wild-python-pickles.",
+          "observedStatuses": [409, 409, 409]
+        },
+        {
+          "file": "cheatsheets/Error_Handling_Cheat_Sheet.md",
+          "url": "https://www.baeldung.com/exception-handling-for-rest-with-spring",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+          "url": "https://www.baeldung.com/jackson-field-serializable-deserializable-or-not",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Secrets_Management_Cheat_Sheet.md",
+          "url": "https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/Subdomain_Takeover_Prevention_Cheat_Sheet.md",
+          "url": "https://crt.sh",
+          "observedStatuses": [502, 502, 502]
+        }
+      ]
     }
   ]
 }
