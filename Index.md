@@ -282,6 +282,8 @@
 
 [WebSocket Security Cheat Sheet](cheatsheets/WebSocket_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg)
 
+[Web Cache Security Cheat Sheet](cheatsheets/Web_Cache_Security_Cheat_Sheet.md)
+
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
 
 ## X
