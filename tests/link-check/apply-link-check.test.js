@@ -9,66 +9,154 @@ const repoRoot = path.resolve(__dirname, "../..");
 const realChecker = path.join(
   repoRoot,
   "node_modules",
-  ".bin",
+  "markdown-link-check",
   "markdown-link-check",
 );
+const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
+const provenance = {
+  baseCommit: "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+  workflowRunId: 34185231643,
+  workflowJobId: 101932122278,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/34185231643/job/101932122278",
+};
 
-function runLinkCheck(t, { checker = realChecker, files }) {
+function baseline(failures = []) {
+  return { schemaVersion: 1, generatedFrom: provenance, failures };
+}
+
+function writeFiles(root, files) {
+  for (const [name, contents] of Object.entries(files)) {
+    const file = path.join(root, name);
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, contents);
+  }
+}
+
+function createChecker(t, source) {
+  const checkerRoot = fs.mkdtempSync(
+    path.join(os.tmpdir(), "cheatsheet-fake-checker-"),
+  );
+  const checker = path.join(checkerRoot, "checker.js");
+  t.after(() => fs.rmSync(checkerRoot, { recursive: true, force: true }));
+  fs.writeFileSync(checker, source);
+  return checker;
+}
+
+function canonicalChecker(t) {
+  return createChecker(
+    t,
+    [
+      'const fs = require("node:fs");',
+      'const path = require("node:path");',
+      "const file = process.argv.at(-1);",
+      "let attemptIndex = 0;",
+      "if (process.env.FAKE_CHECKER_INVOCATIONS) {",
+      "  const previous = fs.existsSync(process.env.FAKE_CHECKER_INVOCATIONS)",
+      '    ? fs.readFileSync(process.env.FAKE_CHECKER_INVOCATIONS, "utf8").split(/\\r?\\n/)',
+      "    : [];",
+      "  attemptIndex = previous.filter((entry) => entry === file).length;",
+      '  fs.appendFileSync(process.env.FAKE_CHECKER_INVOCATIONS, `${file}\\n`);',
+      "}",
+      'const byFile = JSON.parse(process.env.FAKE_CHECKER_FAILURES || "{}");',
+      'const attemptsByFile = JSON.parse(process.env.FAKE_CHECKER_ATTEMPTS || "{}");',
+      "const attempts = attemptsByFile[path.basename(file)];",
+      "const attempt = Array.isArray(attempts) && attempts.length > 0",
+      "  ? attempts[Math.min(attemptIndex, attempts.length - 1)]",
+      "  : null;",
+      'if (attempt && attempt.internal === "crash") {',
+      '  process.stderr.write("planned checker crash\\n");',
+      "  process.exit(42);",
+      "}",
+      "const failures = Array.isArray(attempt) ? attempt : (byFile[path.basename(file)] || []);",
+      'console.log(`FILE: ${file}`);',
+      "for (const failure of failures) {",
+      '  console.log(`  [✖] ${failure.url}`);',
+      "}",
+      'console.log(`\\n  ${failures.length} links checked.\\n`);',
+      "if (failures.length > 0) {",
+      '  console.log(`  ERROR: ${failures.length} dead link${failures.length === 1 ? "" : "s"} found!`);',
+      "  for (const failure of failures) {",
+      '    console.log(`  [✖] ${failure.url} → Status: ${failure.status}`);',
+      "  }",
+      "  process.exitCode = 1;",
+      "}",
+      "",
+    ].join("\n"),
+  );
+}
+
+function runLinkCheck(
+  t,
+  {
+    baselineContents = JSON.stringify(baseline()),
+    checker = realChecker,
+    configContents = "{}\n",
+    env = {},
+    files = { "valid.md": "# Valid\n" },
+    missingBaseline = false,
+    missingConfig = false,
+  } = {},
+) {
   const fixtureRoot = fs.mkdtempSync(
     path.join(os.tmpdir(), "cheatsheet-link-check-"),
   );
   const targetDir = path.join(fixtureRoot, "cheatsheets");
   const config = path.join(fixtureRoot, "markdown-link-check-config.json");
-  const log = path.join(fixtureRoot, "log");
+  const baselinePath = path.join(fixtureRoot, "link-check-known-failures.json");
+  const raw = path.join(fixtureRoot, "raw.log");
+  const known = path.join(fixtureRoot, "known.md");
+  const unexpected = path.join(fixtureRoot, "unexpected.md");
 
   t.after(() => fs.rmSync(fixtureRoot, { recursive: true, force: true }));
   fs.mkdirSync(targetDir);
-  fs.writeFileSync(config, "{}\n");
-  for (const [name, content] of Object.entries(files)) {
-    fs.writeFileSync(path.join(targetDir, name), content);
+  writeFiles(targetDir, files);
+  if (!missingConfig) {
+    fs.writeFileSync(config, configContents);
+  }
+  if (!missingBaseline) {
+    fs.writeFileSync(baselinePath, `${baselineContents}\n`);
   }
 
-  const result = spawnSync("npm", ["run", "link-check", "--silent"], {
+  const result = spawnSync(npmCommand, ["run", "link-check", "--silent"], {
     cwd: repoRoot,
     encoding: "utf8",
     env: {
       ...process.env,
+      ...env,
+      MARKDOWN_LINK_CHECK_BASELINE: baselinePath,
       MARKDOWN_LINK_CHECK_BIN: checker,
       MARKDOWN_LINK_CHECK_CONFIG: config,
-      MARKDOWN_LINK_CHECK_LOG: log,
+      MARKDOWN_LINK_CHECK_KNOWN: known,
+      MARKDOWN_LINK_CHECK_LOG: raw,
       MARKDOWN_LINK_CHECK_TARGET: targetDir,
+      MARKDOWN_LINK_CHECK_UNEXPECTED: unexpected,
     },
   });
 
+  const read = (file) => (fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "");
   return {
     ...result,
-    log: fs.existsSync(log) ? fs.readFileSync(log, "utf8") : "",
+    baselinePath,
+    known: read(known),
+    raw: read(raw),
     targetDir,
+    unexpected: read(unexpected),
   };
 }
 
-function createFailingChecker(t) {
-  const fixtureRoot = fs.mkdtempSync(
-    path.join(os.tmpdir(), "cheatsheet-failing-checker-"),
+test("the committed baseline has exact reviewed provenance and tuples", () => {
+  const value = JSON.parse(
+    fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
-  const checker = path.join(fixtureRoot, "markdown-link-check");
-  t.after(() => fs.rmSync(fixtureRoot, { recursive: true, force: true }));
-  fs.writeFileSync(
-    checker,
-    [
-      "#!/bin/bash",
-      'printf \'FILE: %s\\n\' "$3"',
-      'if [[ "$3" == *failing.md ]]; then',
-      '  printf \'checker crashed for %s\\n\' "$3" >&2',
-      "  exit 42",
-      "fi",
-      'printf \'[✓] local fixture\\n\'',
-      "",
-    ].join("\n"),
-    { mode: 0o755 },
+  assert.deepEqual(value.generatedFrom, provenance);
+  assert.equal(value.failures.length, 168);
+  assert.equal(new Set(value.failures.map(({ file }) => file)).size, 62);
+  assert.equal(
+    new Set(value.failures.map(({ file, url }) => `${file}\0${url}`)).size,
+    168,
   );
-  return checker;
-}
+});
 
 test("a valid local-link fixture exits zero", (t) => {
   const result = runLinkCheck(t, {
@@ -79,48 +167,426 @@ test("a valid local-link fixture exits zero", (t) => {
   });
 
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /No error found by the link validator/);
-  assert.match(result.log, /FILE: .*valid\.md/);
+  assert.match(result.stdout, /No unexpected link failures/);
+  assert.match(result.raw, /FILE: .*valid\.md/);
+  assert.equal(result.unexpected, "");
 });
 
-test("a broken local link exits nonzero and leaves workflow diagnostics", (t) => {
+test("a broken local link exits nonzero with only unexpected diagnostics", (t) => {
   const result = runLinkCheck(t, {
-    files: {
-      "broken.md": "# Broken\n\n[Missing target](missing.md)\n",
-    },
+    files: { "broken.md": "# Broken\n\n[Missing target](missing.md)\n" },
   });
 
   assert.notEqual(result.status, 0);
   assert.doesNotMatch(result.stdout, /All good/);
-  assert.match(result.log, /FILE: .*broken\.md/);
-  assert.match(result.log, /ERROR:/);
-  assert.match(result.log, /\[✖\] missing\.md/);
+  assert.match(result.raw, /ERROR:/);
+  assert.equal(result.known, "");
+  assert.match(result.unexpected, /FILE: cheatsheets\/broken\.md/);
+  assert.match(result.unexpected, /\[✖\] missing\.md → Status: 400/);
 });
 
-test("a missing checker exits nonzero and cannot report success", (t) => {
-  const result = runLinkCheck(t, {
-    checker: path.join(os.tmpdir(), "missing-markdown-link-check"),
-    files: { "valid.md": "# Valid\n" },
-  });
-
-  assert.notEqual(result.status, 0);
-  assert.doesNotMatch(result.stdout, /All good/);
-  assert.match(result.stderr, /Link checker executable is unavailable/);
-  assert.match(result.log, /Link checker executable is unavailable/);
-});
-
-test("any failing per-file invocation makes the command fail", (t) => {
-  const checker = createFailingChecker(t);
+test("an unbaselined non-network failure is not retried", (t) => {
+  const checker = canonicalChecker(t);
+  const invocationLog = path.join(
+    os.tmpdir(),
+    `link-check-local-${process.pid}-${Date.now()}`,
+  );
+  t.after(() => fs.rmSync(invocationLog, { force: true }));
   const result = runLinkCheck(t, {
     checker,
-    files: {
-      "failing.md": "# Failing\n",
-      "valid.md": "# Valid\n",
+    env: {
+      FAKE_CHECKER_FAILURES: JSON.stringify({
+        "local.md": [{ url: "missing.md", status: 400 }],
+      }),
+      FAKE_CHECKER_INVOCATIONS: invocationLog,
     },
+    files: { "local.md": "# Local\n" },
   });
 
   assert.notEqual(result.status, 0);
-  assert.doesNotMatch(result.stdout, /All good/);
-  assert.match(result.log, /checker crashed for .*failing\.md/);
-  assert.match(result.log, /FILE: .*valid\.md/);
+  assert.equal(fs.readFileSync(invocationLog, "utf8").trim().split(/\r?\n/).length, 1);
+  assert.match(result.raw, /attempt 1\/3/);
+  assert.doesNotMatch(result.raw, /attempt 2\/3/);
+});
+
+test("an exact known tuple is nonblocking and separately reported", (t) => {
+  const result = runLinkCheck(t, {
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/known.md",
+          url: "missing.md",
+          observedStatus: 404,
+        },
+      ]),
+    ),
+    files: { "known.md": "# Known\n\n[Missing target](missing.md)\n" },
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.known, /\[known\] missing\.md → Status: 400; baseline observed 404/);
+  assert.equal(result.unexpected, "");
+  assert.deepEqual(
+    JSON.parse(fs.readFileSync(result.baselinePath, "utf8")).failures,
+    [
+      {
+        file: "cheatsheets/known.md",
+        url: "missing.md",
+        observedStatus: 404,
+      },
+    ],
+  );
+});
+
+test("the same URL in a different file remains fatal", (t) => {
+  const result = runLinkCheck(t, {
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/known.md",
+          url: "missing.md",
+          observedStatus: 400,
+        },
+      ]),
+    ),
+    files: { "different.md": "# Different\n\n[Missing target](missing.md)\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.unexpected, /FILE: cheatsheets\/different\.md/);
+  assert.doesNotMatch(result.known, /\[recovered\] missing\.md/);
+});
+
+test("an exact baseline row is recovered only after its file is assessed", (t) => {
+  const result = runLinkCheck(t, {
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/assessed.md",
+          url: "missing.md",
+          observedStatus: 400,
+        },
+      ]),
+    ),
+    files: { "assessed.md": "# Assessed\n" },
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.known, /\[recovered\] missing\.md/);
+  assert.match(result.known, /Status: not failing/);
+});
+
+test("a different URL on a known domain remains fatal", (t) => {
+  const checker = canonicalChecker(t);
+  const result = runLinkCheck(t, {
+    checker,
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/domain.md",
+          url: "https://example.invalid/old",
+          observedStatus: 404,
+        },
+      ]),
+    ),
+    env: {
+      FAKE_CHECKER_FAILURES: JSON.stringify({
+        "domain.md": [{ url: "https://example.invalid/new", status: 404 }],
+      }),
+    },
+    files: { "domain.md": "# Domain\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.unexpected, /https:\/\/example\.invalid\/new/);
+  assert.doesNotMatch(result.unexpected, /example\.invalid\/old/);
+});
+
+for (const status of [0, 403, 404, 429, 500]) {
+  test(`a new status ${status} failure remains fatal`, (t) => {
+    const checker = canonicalChecker(t);
+    const url = `https://status.invalid/${status}`;
+    const result = runLinkCheck(t, {
+      checker,
+      env: {
+        FAKE_CHECKER_FAILURES: JSON.stringify({
+          "status.md": [{ url, status }],
+        }),
+      },
+      files: { "status.md": "# Status\n" },
+    });
+
+    assert.notEqual(result.status, 0);
+    assert.match(result.unexpected, new RegExp(`Status: ${status}`));
+  });
+}
+
+test("a transient unbaselined network tuple is confirmed, visible, and nonfatal", (t) => {
+  const checker = canonicalChecker(t);
+  const invocationLog = path.join(
+    os.tmpdir(),
+    `link-check-transient-${process.pid}-${Date.now()}`,
+  );
+  t.after(() => fs.rmSync(invocationLog, { force: true }));
+  const url = "https://transient.invalid/flaky";
+  const result = runLinkCheck(t, {
+    checker,
+    env: {
+      FAKE_CHECKER_ATTEMPTS: JSON.stringify({
+        "transient.md": [[{ url, status: 429 }], []],
+      }),
+      FAKE_CHECKER_INVOCATIONS: invocationLog,
+    },
+    files: { "transient.md": "# Transient\n" },
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(fs.readFileSync(invocationLog, "utf8").trim().split(/\r?\n/).length, 2);
+  assert.match(result.raw, /attempt 1\/3/);
+  assert.match(result.raw, /attempt 2\/3/);
+  assert.match(result.known, /\[transient\].*transient\.invalid\/flaky/);
+  assert.match(result.known, /attempts: 1=429, 2=recovered/);
+  assert.equal(result.unexpected, "");
+});
+
+test("a persistent unbaselined network tuple remains fatal after bounded attempts", (t) => {
+  const checker = canonicalChecker(t);
+  const invocationLog = path.join(
+    os.tmpdir(),
+    `link-check-persistent-${process.pid}-${Date.now()}`,
+  );
+  t.after(() => fs.rmSync(invocationLog, { force: true }));
+  const url = "https://persistent.invalid/failing";
+  const result = runLinkCheck(t, {
+    checker,
+    env: {
+      FAKE_CHECKER_ATTEMPTS: JSON.stringify({
+        "persistent.md": [[{ url, status: 503 }]],
+      }),
+      FAKE_CHECKER_INVOCATIONS: invocationLog,
+    },
+    files: { "persistent.md": "# Persistent\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.equal(fs.readFileSync(invocationLog, "utf8").trim().split(/\r?\n/).length, 3);
+  assert.match(result.raw, /attempt 1\/3/);
+  assert.match(result.raw, /attempt 2\/3/);
+  assert.match(result.raw, /attempt 3\/3/);
+  assert.match(result.unexpected, /persistent\.invalid\/failing/);
+  assert.match(result.unexpected, /attempts: 1=503, 2=503, 3=503/);
+});
+
+test("a missing baseline is fatal before checker invocation", (t) => {
+  const result = runLinkCheck(t, { missingBaseline: true });
+  assert.notEqual(result.status, 0);
+  assert.match(result.raw, /Known-failure baseline is unavailable/);
+  assert.equal(result.unexpected, "");
+});
+
+test("a malformed baseline is fatal", async (t) => {
+  await t.test("invalid JSON", (subtest) => {
+    const result = runLinkCheck(subtest, { baselineContents: "{not json" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.raw, /Known-failure baseline is malformed/);
+    assert.equal(result.unexpected, "");
+  });
+  await t.test("invalid schema", (subtest) => {
+    const result = runLinkCheck(subtest, {
+      baselineContents: JSON.stringify({ ...baseline(), extra: true }),
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(
+      result.raw,
+      /baseline must contain only schemaVersion, generatedFrom, and failures/,
+    );
+    assert.equal(result.unexpected, "");
+  });
+});
+
+test("a missing or malformed config is fatal", async (t) => {
+  await t.test("missing", (subtest) => {
+    const result = runLinkCheck(subtest, { missingConfig: true });
+    assert.notEqual(result.status, 0);
+    assert.match(result.raw, /Link checker configuration is unavailable/);
+    assert.equal(result.unexpected, "");
+  });
+  await t.test("malformed", (subtest) => {
+    const result = runLinkCheck(subtest, { configContents: "{not json" });
+    assert.notEqual(result.status, 0);
+    assert.match(result.raw, /Link checker configuration is malformed/);
+    assert.equal(result.unexpected, "");
+  });
+});
+
+test("a missing checker remains fatal even when its tuple is baselined", (t) => {
+  const result = runLinkCheck(t, {
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/valid.md",
+          url: "missing.md",
+          observedStatus: 400,
+        },
+      ]),
+    ),
+    checker: path.join(os.tmpdir(), "missing-markdown-link-check.js"),
+  });
+  assert.notEqual(result.status, 0);
+  assert.match(result.raw, /Link checker executable is unavailable/);
+  assert.equal(result.unexpected, "");
+});
+
+test("a crashing checker without canonical diagnostics is fatal", (t) => {
+  const checker = createChecker(t, 'process.stderr.write("crash\\n"); process.exit(42);\n');
+  const result = runLinkCheck(t, {
+    checker,
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/valid.md",
+          url: "missing.md",
+          observedStatus: 400,
+        },
+      ]),
+    ),
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.raw, /crash/);
+  assert.match(result.raw, /checker exited with unexpected status 42/);
+  assert.doesNotMatch(result.known, /\[recovered\]/);
+  assert.doesNotMatch(result.known, /Status: not failing/);
+  assert.equal(result.unexpected, "");
+});
+
+test("a crashing checker with canonical-looking output is still internal and is not retried", (t) => {
+  const checker = createChecker(
+    t,
+    [
+      "const file = process.argv.at(-1);",
+      "console.log(`FILE: ${file}`);",
+      'console.log("  1 link checked.");',
+      'console.error("  ERROR: 1 dead link found!");',
+      'console.log("  [✖] https://crash.invalid/failure → Status: 503");',
+      "process.exit(42);",
+      "",
+    ].join("\n"),
+  );
+  const result = runLinkCheck(t, { checker });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.raw, /attempt 1\/3/);
+  assert.doesNotMatch(result.raw, /attempt 2\/3/);
+  assert.match(result.raw, /checker exited with unexpected status 42/);
+  assert.doesNotMatch(result.known, /\[transient\]/);
+  assert.equal(result.unexpected, "");
+});
+
+test("an internal retry failure cannot turn a network failure into success", (t) => {
+  const checker = canonicalChecker(t);
+  const invocationLog = path.join(
+    os.tmpdir(),
+    `link-check-internal-retry-${process.pid}-${Date.now()}`,
+  );
+  t.after(() => fs.rmSync(invocationLog, { force: true }));
+  const url = "https://transient.invalid/then-crash";
+  const result = runLinkCheck(t, {
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/internal.md",
+          url: "https://known.invalid/unassessed",
+          observedStatus: 404,
+        },
+      ]),
+    ),
+    checker,
+    env: {
+      FAKE_CHECKER_ATTEMPTS: JSON.stringify({
+        "internal.md": [[{ url, status: 429 }], { internal: "crash" }, []],
+      }),
+      FAKE_CHECKER_INVOCATIONS: invocationLog,
+    },
+    files: { "internal.md": "# Internal\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.equal(fs.readFileSync(invocationLog, "utf8").trim().split(/\r?\n/).length, 2);
+  assert.match(result.raw, /attempt 1\/3/);
+  assert.match(result.raw, /attempt 2\/3/);
+  assert.doesNotMatch(result.raw, /attempt 3\/3/);
+  assert.match(result.raw, /planned checker crash/);
+  assert.doesNotMatch(result.known, /\[transient\]/);
+  assert.doesNotMatch(result.known, /\[recovered\]/);
+  assert.equal(result.unexpected, "");
+});
+
+test("a silent zero-exit checker is fatal", (t) => {
+  const checker = createChecker(t, "process.exit(0);\n");
+  const result = runLinkCheck(t, { checker });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.raw, /successful checker result lacks the expected FILE header/);
+  assert.equal(result.unexpected, "");
+});
+
+test("every enumerated Markdown fixture is invoked", (t) => {
+  const checker = canonicalChecker(t);
+  const invocationLog = path.join(
+    os.tmpdir(),
+    `link-check-invocations-${process.pid}-${Date.now()}`,
+  );
+  t.after(() => fs.rmSync(invocationLog, { force: true }));
+  const result = runLinkCheck(t, {
+    checker,
+    env: { FAKE_CHECKER_INVOCATIONS: invocationLog },
+    files: {
+      "a.md": "# A\n",
+      "nested/b.md": "# B\n",
+      "nested/c.md": "# C\n",
+      "nested/ignored.txt": "not Markdown\n",
+    },
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  const invoked = fs
+    .readFileSync(invocationLog, "utf8")
+    .trim()
+    .split(/\r?\n/)
+    .map((file) => path.relative(result.targetDir, file).split(path.sep).join("/"))
+    .sort();
+  assert.deepEqual(invoked, ["a.md", "nested/b.md", "nested/c.md"]);
+});
+
+test("unexpected output excludes exact known rows in a mixed failure", (t) => {
+  const checker = canonicalChecker(t);
+  const knownUrl = "https://mixed.invalid/known";
+  const newUrl = "https://mixed.invalid/new";
+  const result = runLinkCheck(t, {
+    checker,
+    baselineContents: JSON.stringify(
+      baseline([
+        {
+          file: "cheatsheets/mixed.md",
+          url: knownUrl,
+          observedStatus: 403,
+        },
+      ]),
+    ),
+    env: {
+      FAKE_CHECKER_FAILURES: JSON.stringify({
+        "mixed.md": [
+          { url: knownUrl, status: 500 },
+          { url: newUrl, status: 429 },
+        ],
+      }),
+    },
+    files: { "mixed.md": "# Mixed\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.known, /mixed\.invalid\/known/);
+  assert.doesNotMatch(result.unexpected, /mixed\.invalid\/known/);
+  assert.match(result.unexpected, /mixed\.invalid\/new/);
 });

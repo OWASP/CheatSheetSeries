@@ -12,12 +12,12 @@
   },
   "scripts": {
     "test": "npm run lint-markdown && npm run lint-terminology && npm run test:link-check",
-    "test:link-check": "node --test tests/link-check/*.test.js",
+    "test:link-check": "node --test tests/link-check/apply-link-check.test.js tests/link-check/workflow-diagnostics.test.js",
     "lint-terminology": "textlint ./cheatsheets/",
     "lint-terminology-fix": "textlint --fix ./cheatsheets/",
     "lint-markdown": "markdownlint ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
     "lint-markdown-fix": "markdownlint --fix ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
-    "link-check": "bash scripts/Apply_Link_Check.sh"
+    "link-check": "node scripts/Check_Markdown_Links.js"
   },
   "repository": {
     "type": "git",
