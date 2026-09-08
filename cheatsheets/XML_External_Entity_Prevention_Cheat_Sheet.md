@@ -177,30 +177,35 @@ The JAXP API offers two ways to stop a parser from fetching external content: re
 
 Resolvers give fine-grained control over how external DTD subsets and entities are resolved. On DOM and SAX they are set through ordinary methods: [`DocumentBuilder.setEntityResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html#setEntityResolver(org.xml.sax.EntityResolver)) and [`XMLReader.setEntityResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/org/xml/sax/XMLReader.html#setEntityResolver(org.xml.sax.EntityResolver)). On StAX, `javax.xml.stream.resolver` is one of the properties [`XMLInputFactory` marks as required](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLInputFactory.html).
 
-SEI CERT's [recommended solution](https://cmu-sei.github.io/secure-coding-standards/sei-cert-oracle-coding-standard-for-java/rules/input-validation-and-data-sanitization-ids/ids17-j) is a resolver that checks the identifier against an allowlist and returns an empty `InputSource` for everything else. Where nothing external is ever legitimate, it collapses to:
+SEI CERT's [recommended solution](https://cmu-sei.github.io/secure-coding-standards/sei-cert-oracle-coding-standard-for-java/rules/input-validation-and-data-sanitization-ids/ids17-j) is a resolver that checks the identifier against an allowlist and returns an empty `InputSource` for everything else, relying on the parser to then fail with a `MalformedURLException`. Refusing outright is firmer and reports the refusal as what it is. Where nothing external is ever legitimate:
 
 ``` java
-// Empty content, not null: null tells the parser to resolve the reference itself.
-EntityResolver ignoreAll = (publicId, systemId) -> new InputSource(new StringReader(""));
+// Throw, do not return null: null tells the parser to resolve the reference itself.
+EntityResolver denyAll = (publicId, systemId) -> {
+    throw new SAXException("External references are not allowed: " + systemId);
+};
 
 // Neither factory carries the resolver, so set it on every object they create.
 DocumentBuilder builder = ...;
-builder.setEntityResolver(ignoreAll);
+builder.setEntityResolver(denyAll);
 
 XMLReader reader = ...;
-reader.setEntityResolver(ignoreAll);
+reader.setEntityResolver(denyAll);
 ```
 
-StAX carries a trap. An [`XMLResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLResolver.html) must return an `InputStream`, `XMLStreamReader` or `XMLEventReader`; any other value is undefined, and the built-in JDK parser treats it as `null` — so an empty string, the obvious way to return nothing, fetches the external resource after all.
+For StAX, use an [`XMLResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLResolver.html):
 
 ``` java
-// An empty stream, which is one of the three types the contract allows.
-XMLResolver ignoreAll = (publicId, systemId, baseURI, namespace) -> InputStream.nullInputStream();
+XMLResolver denyAll = (publicId, systemId, baseURI, namespace) -> {
+    throw new XMLStreamException("External references are not allowed: " + systemId);
+};
 
 // Unlike DOM and SAX, the StAX factory passes its resolver to every reader it creates.
 XMLInputFactory xmlInputFactory = ...;
-xmlInputFactory.setProperty(XMLInputFactory.RESOLVER, ignoreAll);
+xmlInputFactory.setProperty(XMLInputFactory.RESOLVER, denyAll);
 ```
+
+If you prefer to return empty content instead of throwing, StAX carries a trap. An `XMLResolver` may return only an `InputStream`, `XMLStreamReader` or `XMLEventReader`; `null` tells the processor to resolve the entity itself, and any other value is undefined — the built-in JDK parser maps it to `null`. An empty string, the obvious way to return nothing, therefore fetches the external resource after all. Return `InputStream.nullInputStream()` instead.
 
 **A resolver does not limit entity expansion.** Nested internal entities need no external resource, so a parser that accepts a DOCTYPE declaration is still exposed to the [entity expansion attacks](XML_Security_Cheat_Sheet.md#xml-entity-expansion) described in the XML Security Cheat Sheet. Enable the implementation's processing limits with [`FEATURE_SECURE_PROCESSING`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING).
 
