@@ -161,7 +161,7 @@ Support for external XML entities is disabled by default as of Lucee 5.4.2.10 an
 Java is exposed to XXE for two structural reasons, and both have to be dealt with before any individual recipe matters:
 
 - **The parser is chosen at deployment time.** JAXP factories are pluggable, so the implementation a `newInstance()` call returns depends on the classpath rather than on your code.
-- **Almost no security setting is mandatory.** The features that disable external entity resolution are optional, so a parser is free not to recognize them and throw an exception, which users often swallow.
+- **Almost no security setting is mandatory.** The features that disable external entity resolution are optional, so a parser is free not to recognize them and throw an exception, which users often swallow. The resolver hooks are the exception: every implementation has to honor those.
 
 ### Pick the implementation
 
@@ -169,11 +169,46 @@ Java is exposed to XXE for two structural reasons, and both have to be dealt wit
 
 [`newDefaultInstance()`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html#newDefaultInstance()) (Java 9 and later; `newDefaultFactory()` for StAX) bypasses the lookup and returns the built-in implementation. Prefer it when your XML needs are modest: you then know which settings apply. The cost is that an operator can no longer substitute a faster or more capable parser.
 
-### Fail closed
+### Prefer universal solutions
+
+The JAXP API offers two ways to stop a parser from fetching external content: resolvers and features. Only the former is required to work on every implementation.
+
+#### Resolvers
+
+Resolvers give fine-grained control over how external DTD subsets and entities are resolved. On DOM and SAX they are set through ordinary methods: [`DocumentBuilder.setEntityResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html#setEntityResolver(org.xml.sax.EntityResolver)) and [`XMLReader.setEntityResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/org/xml/sax/XMLReader.html#setEntityResolver(org.xml.sax.EntityResolver)). On StAX, `javax.xml.stream.resolver` is one of the properties [`XMLInputFactory` marks as required](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLInputFactory.html).
+
+SEI CERT's [recommended solution](https://cmu-sei.github.io/secure-coding-standards/sei-cert-oracle-coding-standard-for-java/rules/input-validation-and-data-sanitization-ids/ids17-j) is a resolver that checks the identifier against an allowlist and returns an empty `InputSource` for everything else. Where nothing external is ever legitimate, it collapses to:
+
+``` java
+// Empty content, not null: null tells the parser to resolve the reference itself.
+EntityResolver ignoreAll = (publicId, systemId) -> new InputSource(new StringReader(""));
+
+// Neither factory carries the resolver, so set it on every object they create.
+DocumentBuilder builder = ...;
+builder.setEntityResolver(ignoreAll);
+
+XMLReader reader = ...;
+reader.setEntityResolver(ignoreAll);
+```
+
+StAX carries a trap. An [`XMLResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLResolver.html) must return an `InputStream`, `XMLStreamReader` or `XMLEventReader`; any other value is undefined, and the built-in JDK parser treats it as `null` — so an empty string, the obvious way to return nothing, fetches the external resource after all.
+
+``` java
+// An empty stream, which is one of the three types the contract allows.
+XMLResolver ignoreAll = (publicId, systemId, baseURI, namespace) -> InputStream.nullInputStream();
+
+// Unlike DOM and SAX, the StAX factory passes its resolver to every reader it creates.
+XMLInputFactory xmlInputFactory = ...;
+xmlInputFactory.setProperty(XMLInputFactory.RESOLVER, ignoreAll);
+```
+
+**A resolver does not limit entity expansion.** Nested internal entities need no external resource, so a parser that accepts a DOCTYPE declaration is still exposed to the [entity expansion attacks](XML_Security_Cheat_Sheet.md#xml-entity-expansion) described in the XML Security Cheat Sheet. Enable the implementation's processing limits with [`FEATURE_SECURE_PROCESSING`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING).
+
+#### Parser features
 
 Since [version 1.3 in Java 5](https://docs.oracle.com/javase/1.5.0/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean)), JAXP mandates only one security-related setting. Both [`DocumentBuilderFactory.setFeature`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,boolean)) and [`SAXParserFactory.setFeature`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/SAXParserFactory.html#setFeature(java.lang.String,boolean)) state that all implementations are required to support `FEATURE_SECURE_PROCESSING`; `XMLInputFactory` carries no such requirement. Twenty years on it remains the only one, and it merely enables the implementation's processing limits — it does not block external access.
 
-Everything that does block external access is optional:
+Every **feature** that blocks external access is optional:
 
 - `ACCESS_EXTERNAL_DTD`, `ACCESS_EXTERNAL_SCHEMA` and `ACCESS_EXTERNAL_STYLESHEET` arrived with JAXP 1.5, which still only the JDK's built-in implementation provides — [Apache Xerces](https://xerces.apache.org/xerces2-j/) does not.
 - `disallow-doctype-decl` and `load-external-dtd` are Apache extensions, in Xerces' own `http://apache.org/xml/features/` namespace.
@@ -184,24 +219,14 @@ A parser that does not recognize one says so: `SAXNotRecognizedException` from S
 ``` java
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 try {
-    // Primary defense: reject any document carrying a DOCTYPE.
-    dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-    dbf.setXIncludeAware(false);
+    // Any of the settings listed for your implementation below.
+    dbf.setFeature(feature, safeValue);
 } catch (ParserConfigurationException e) {
     // The parser did not recognize the feature, so nothing was hardened.
     // Refuse to parse rather than continuing with an unconfigured factory.
     throw new IllegalStateException("Unable to secure the XML parser", e);
 }
 DocumentBuilder builder = dbf.newDocumentBuilder();
-```
-
-Where no feature is recognized, an ignore-all resolver is the fallback, because the resolver interfaces *are* part of the API every implementation must provide. SEI CERT recommends [supplying a no-op implementation](https://wiki.sei.cmu.edu/confluence/display/java/IDS17-J.+Prevent+XML+External+Entity+Attacks):
-
-``` java
-// Empty content, not null: null tells the parser to resolve the reference itself.
-DocumentBuilder builder = ...;
-EntityResolver ignoreAll = (publicId, systemId) -> new InputSource(new StringReader(""));
-builder.setEntityResolver(ignoreAll);
 ```
 
 ### DOM: DocumentBuilderFactory
@@ -213,7 +238,7 @@ DOM has four maintained implementations:
 - The built-in Android parser, which [builds a DOM using kXML](https://android.googlesource.com/platform/libcore/+/refs/heads/main/luni/src/main/java/org/apache/harmony/xml/parsers/DocumentBuilderImpl.java),
 - The [Oracle XML Developer's Kit](https://docs.oracle.com/en/database/oracle/oracle-database/21/adxdk/security-considerations-oracle-xml-developers-kit.html), whose JAXP binding recognizes only `FEATURE_SECURE_PROCESSING`, and which is also usable directly through its own API (covered below).
 
-Disabling DTDs outright is the primary defense and stops nearly every XXE variant. The settings available to do it differ by implementation:
+Disabling DOCTYPE declarations outright is the best fail-fast option: a document that cannot declare a DOCTYPE cannot declare an entity. The settings available to do it differ by implementation:
 
 | Setting                                                                                                                                          | Safe value         | Recognized by                        | Effect                                                                       |
 |--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------|------------------------------------------------------------------------------|
@@ -272,8 +297,6 @@ xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
 ```
 
 StAX has no equivalent of `FEATURE_SECURE_PROCESSING`, so entity-expansion bounds are whatever the implementation applies on its own.
-
-If you install an [`XMLResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLResolver.html) instead, note that it must return an `InputStream`, `XMLStreamReader` or `XMLEventReader`. Any other value is undefined and may be treated as `null`, which is what the built-in JDK parser does, causing the external resource to be fetched.
 
 ### Oracle DOM Parser
 
