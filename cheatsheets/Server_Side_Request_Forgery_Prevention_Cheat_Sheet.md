@@ -245,6 +245,8 @@ Do not accept complete URLs from the user because URL are difficult to validate 
 
 If network related information is really needed then only accept a valid IP address or domain name.
 
+**Validate with an allowlist, not with a parser.** Compare the target against an explicit allowlist of permitted hosts, and pass the allowlisted value downstream rather than the user's original string. Where a URL must be parsed at all, treat disagreement between two parsers as a rejection rather than something to reconcile: the [WHATWG URL Standard](https://url.spec.whatwg.org/#host-parsing) and [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-3.2) do not always read the same host from the same string, so a host that is not read identically by every convention in play should never reach a fetch.
+
 ##### Network layer
 
 The objective of the Network layer security is to prevent the *VulnerableApplication* from performing calls to arbitrary applications. Only allowed *routes* will be available for this application in order to limit its network access to only those that it should communicate with.
