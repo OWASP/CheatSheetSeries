@@ -4,18 +4,20 @@
   "description": "OWASP CSS Project",
   "main": "index.js",
   "devDependencies": {
+    "markdown-link-check": "3.14.2",
     "markdownlint-cli": "^0.49.1",
     "textlint": "^15.8.0",
     "textlint-filter-rule-comments": "^1.2.2",
     "textlint-rule-terminology": "^5.2.12"
   },
   "scripts": {
-    "test": "npm run lint-markdown && npm run lint-terminology",
+    "test": "npm run lint-markdown && npm run lint-terminology && npm run test:link-check",
+    "test:link-check": "node --test tests/link-check/*.test.js",
     "lint-terminology": "textlint ./cheatsheets/",
     "lint-terminology-fix": "textlint --fix ./cheatsheets/",
     "lint-markdown": "markdownlint ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
     "lint-markdown-fix": "markdownlint --fix ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
-    "link-check": "find  cheatsheets -name \\*.md -exec markdown-link-check -c markdown-link-check-config.json 1> log 2> err {} \\; && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
+    "link-check": "bash scripts/Apply_Link_Check.sh"
   },
   "repository": {
     "type": "git",
