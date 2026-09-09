@@ -254,7 +254,7 @@ Disabling DOCTYPE declarations outright is the best fail-fast option: a document
 | [`external-general-entities`](https://xerces.apache.org/xerces2-j/features.html#external-general-entities)                                       | `false`            | Optional SAX2 feature                | Ignores external general entities                                            |
 | [`external-parameter-entities`](https://xerces.apache.org/xerces2-j/features.html#external-parameter-entities)                                   | `false`            | Optional SAX2 feature                | Ignores external parameter entities                                          |
 | [`load-external-dtd`](https://xerces.apache.org/xerces2-j/features.html#nonvalidating/load-external-dtd)                                         | `false`            | Xerces and derivatives               | Ignores the external subset (non-validating only)                            |
-| [`FEATURE_SECURE_PROCESSING`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) | `true`             | Required of DOM and SAX; not Android | Enables the implementation's own processing limits                           |
+| [`FEATURE_SECURE_PROCESSING`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) | `true`             | Required of DOM and SAX (JAXP)       | Enables the implementation's own processing limits                           |
 
 To secure `DocumentBuilderFactory` through features:
 
