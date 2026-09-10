@@ -245,7 +245,9 @@ Do not accept complete URLs from the user because URL are difficult to validate 
 
 If network related information is really needed then only accept a valid IP address or domain name.
 
-**Validate with an allowlist, not with a parser.** Compare the target against an explicit allowlist of permitted hosts, and pass the allowlisted value downstream rather than the user's original string. Where a URL must be parsed at all, treat disagreement between two parsers as a rejection rather than something to reconcile: the [WHATWG URL Standard](https://url.spec.whatwg.org/#host-parsing) and [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-3.2) do not always read the same host from the same string, so a host that is not read identically by every convention in play should never reach a fetch.
+**Match the host against an allowlist, and forward what you matched.** Parse the target, compare the resulting host against an explicit allowlist of permitted destinations, and pass that allowlisted host downstream rather than the user's original string, so the component that performs the fetch never re-parses attacker-controlled text.
+
+**Treat parser disagreement as a rejection.** Where a URL crosses a service boundary as a string and is parsed again at the other end, the two parsers can read different hosts from it and neither is wrong: the [WHATWG URL Standard](https://url.spec.whatwg.org/#host-parsing) and [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-3.2) do not always agree. Reject a URL whose host is not read identically by every convention in play, rather than reconciling the readings.
 
 ##### Network layer
 
