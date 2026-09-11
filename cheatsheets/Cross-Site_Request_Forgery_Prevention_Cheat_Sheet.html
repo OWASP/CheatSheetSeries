@@ -5295,7 +5295,7 @@
 
 <h1 id="cross-site-request-forgery-prevention-cheat-sheet">Cross-Site Request Forgery Prevention Cheat Sheet<a class="headerlink" href="#cross-site-request-forgery-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>A <a href="https://owasp.org/www-community/attacks/csrf">Cross-Site Request Forgery (CSRF)</a> attack occurs when a malicious web site, email, blog, instant message, or program tricks an authenticated user's web browser into performing an unwanted action on a trusted site. If a target user is authenticated to the site, unprotected target sites cannot distinguish between legitimate authorized requests and forged authenticated requests.</p>
+<p>A <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery">Cross-Site Request Forgery (CSRF)</a> attack occurs when a malicious web site, email, blog, instant message, or program tricks an authenticated user's web browser into performing an unwanted action on a trusted site. If a target user is authenticated to the site, unprotected target sites cannot distinguish between legitimate authorized requests and forged authenticated requests.</p>
 <p>Since browser requests automatically include all cookies including session cookies, this attack works unless proper authorization is used, which means that the target site's challenge-response mechanism does not verify the identity and authority of the requester. In effect, CSRF attacks make a target system perform attacker-specified functions via the victim's browser without the victim's knowledge (normally until after the unauthorized actions have been committed).</p>
 <p>However, successful CSRF attacks can only exploit the capabilities exposed by the vulnerable application and the user's privileges. Depending on the user's credentials, the attacker can transfer funds, change a password, make an unauthorized purchase, elevate privileges for a target account, or take any action that the user is permitted to do.</p>
 <p>In short, the following principles should be followed to defend against CSRF:</p>
@@ -6167,7 +6167,7 @@ In contrast, frameworks like React and Vue require developers to implement this 
 <h2 id="references-in-related-cheat-sheets">References in Related Cheat Sheets<a class="headerlink" href="#references-in-related-cheat-sheets" title="Permanent link">&para;</a></h2>
 <h3 id="csrf">CSRF<a class="headerlink" href="#csrf" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://owasp.org/www-community/attacks/csrf">OWASP Cross-Site Request Forgery (CSRF)</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery">OWASP Testing for Cross-Site Request Forgery</a></li>
 <li><a href="https://portswigger.net/web-security/csrf">PortSwigger Web Security Academy</a></li>
 <li><a href="https://infosec.mozilla.org/guidelines/web_security#csrf-prevention">Mozilla Web Security Cheat Sheet</a></li>
 <li><a href="https://medium.com/keylogged/common-csrf-prevention-misconceptions-67fd026d94a8">Common CSRF Prevention Misconceptions</a></li>
