@@ -1,0 +1,904 @@
+{
+  "schemaVersion": 2,
+  "batches": [
+    {
+      "generatedFrom": {
+        "attemptCount": 1,
+        "checkedHead": "daae48ab4c94803f0250ff9beb5e4f815091e259",
+        "contentBaseCommit": "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+        "workflowRunId": 34185231643,
+        "workflowJobId": 101932122278,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/34185231643/job/101932122278"
+      },
+      "failures": [
+    {
+      "file": "cheatsheets/Abuse_Case_Cheat_Sheet.md",
+      "url": "https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements.html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Authorization_Cheat_Sheet.md",
+      "url": "https://dzone.com/articles/simple-attribute-based-access-control-with-spring",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Authorization_Cheat_Sheet.md",
+      "url": "https://resources.infosecinstitute.com/information-and-asset-classification/",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Authorization_Cheat_Sheet.md",
+      "url": "https://us-cert.cisa.gov/bsi/articles/knowledge/principles/least-privilege",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Authorization_Cheat_Sheet.md",
+      "url": "https://www.veracode.com/sites/default/files/pdf/resources/sossreports/state-of-software-security-volume-10-veracode-report.pdf",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://archive.codeplex.com/?p=safeint",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/customize-exploit-protection",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/exploit-protection",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://gcc.gnu.org/onlinedocs/gcc/Spec-Files.html",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://groups.google.com/g/fa.linux.kernel/c/jjk_K4HOemQ/",
+      "observedStatus": 429
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://linux.die.net/man/5/elf",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://lists.gnu.org/archive/html/autoconf/2012-12/msg00038.html",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://pdfs.semanticscholar.org/9d92/fa9eaa6ca12888d303deffe8bc392b85c09f.pdf",
+      "observedStatus": 202
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/questions/14927033/boost-hardening-guide-preprocessor-macros",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://www.conifersystems.com/whitepapers/gnu-make/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+      "url": "https://www.schneier.com/academic/paperfiles/paper-ssl-revised.pdf",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/CI_CD_Security_Cheat_Sheet.md",
+      "url": "https://azure.microsoft.com/mediahandler/files/resourcefiles/3-ways-to-mitigate-risk-using-private-package-feeds/3%20Ways%20to%20Mitigate%20Risk%20When%20Using%20Private%20Package%20Feeds%20-%20v1.0.pdf",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/CI_CD_Security_Cheat_Sheet.md",
+      "url": "https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/CI_CD_Security_Cheat_Sheet.md",
+      "url": "https://dzone.com/articles/jenkins-log-monitoring-with-elk",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/CI_CD_Security_Cheat_Sheet.md",
+      "url": "https://www.akeyless.io/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/CI_CD_Security_Cheat_Sheet.md",
+      "url": "https://www.hashicorp.com/products/vault",
+      "observedStatus": 429
+    },
+    {
+      "file": "cheatsheets/Content_Security_Policy_Cheat_Sheet.md",
+      "url": "https://report-uri.com/home/hash",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Content_Security_Policy_Cheat_Sheet.md",
+      "url": "https://www.appsecmonkey.com/blog/content-security-policy-header/",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://security.stackexchange.com/a/22936",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/a/30539335",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/a/8656417",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/questions/22397072/are-there-any-browsers-that-set-the-origin-header-to-null-for-privacy-sensitiv",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md",
+      "url": "http://jtidy.sourceforge.net/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Database_Security_Cheat_Sheet.md",
+      "url": "https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Database_Security_Cheat_Sheet.md",
+      "url": "https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Database_Security_Cheat_Sheet.md",
+      "url": "https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Denial_of_Service_Cheat_Sheet.md",
+      "url": "https://www.esecurityplanet.com/networks/types-of-ddos-attacks/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Denial_of_Service_Cheat_Sheet.md",
+      "url": "https://www.ibm.com/docs/en/baw/23.x?topic=issues-best-practices-high-jvm-cpu-utilization",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Deserialization_Cheat_Sheet.md",
+      "url": "http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#websphere",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Deserialization_Cheat_Sheet.md",
+      "url": "https://bitbucket.org/snakeyaml/snakeyaml/wiki/CVE-2022-1471",
+      "observedStatus": 202
+    },
+    {
+      "file": "cheatsheets/Docker_Security_Cheat_Sheet.md",
+      "url": "https://docs.docker.com/engine/security/selinux/",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/DotNet_Security_Cheat_Sheet.md",
+      "url": "http://windowsupdate.microsoft.com/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/DotNet_Security_Cheat_Sheet.md",
+      "url": "https://github.com/microsoft/code-with-engineering-playbook/blob/main/docs/observability/README.md",
+      "observedStatus": 429
+    },
+    {
+      "file": "cheatsheets/Drone_Security_Cheat_Sheet.md",
+      "url": "https://devzone.nordicsemi.com/f/nordic-q-a/17165/ble-just-works-pairing",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Drone_Security_Cheat_Sheet.md",
+      "url": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/security_hardening/encrypting-block-devices-using-luks_security-hardening",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Error_Handling_Cheat_Sheet.md",
+      "url": "https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Error_Handling_Cheat_Sheet.md",
+      "url": "https://www.toptal.com/java/spring-boot-rest-api-error-handling",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/File_Upload_Cheat_Sheet.md",
+      "url": "https://security.stackexchange.com/a/8625/118367",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://about.gitlab.com/blog/2019/07/03/security-release-gitlab-12-dot-0-dot-3-released/#authorization-issues-in-graphql",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://foundation.graphql.org/",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa3-excessive-data-exposure.md",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa8-injection.md",
+      "observedStatus": 429
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://lab.wallarm.com/graphql-batching-attack/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://linuxhint.com/linux_ulimit_command/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://nordicapis.com/security-points-to-consider-before-implementing-graphql/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/a/53277955/1200388",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://vulners.com/hackerone/H1:435066",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://vulners.com/myhack58/MYHACK58:62201994269",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://www.apollographql.com/blog/query-batching-in-apollo-63acfd859862/",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://www.apollographql.com/blog/securing-your-graphql-api-from-malicious-queries-16130a324a6b",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://www.cloudflare.com/learning/ddos/glossary/denial-of-service/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/GraphQL_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/graphql-depth-limit",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/HTML5_Security_Cheat_Sheet.md",
+      "url": "https://sqlite.org/wasm/doc/trunk/about.md",
+      "observedStatus": 503
+    },
+    {
+      "file": "cheatsheets/HTTP_Headers_Cheat_Sheet.md",
+      "url": "https://blog.mozilla.org/security/2016/08/26/mitigating-mime-confusion-attacks-in-firefox/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/HTTP_Headers_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/helmet",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md",
+      "url": "https://dzone.com/articles/infrastructure-as-code-security",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md",
+      "url": "https://securityboulevard.com/2020/04/shifting-cloud-security-left-with-infrastructure-as-code/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Injection_Prevention_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/Automated_Audit_using_SQLMap",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/JAAS_Cheat_Sheet.md",
+      "url": "https://jaasbook.wordpress.com/2009/09/27/intro/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Java_Security_Cheat_Sheet.md",
+      "url": "https://arxiv.org/ftp/arxiv/papers/1506/1506.04082.pdf",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Java_Security_Cheat_Sheet.md",
+      "url": "https://ckarande.gitbooks.io/owasp-nodegoat-tutorial/content/tutorial/a1_-_sql_and_nosql_injection.html",
+      "observedStatus": 401
+    },
+    {
+      "file": "cheatsheets/Java_Security_Cheat_Sheet.md",
+      "url": "https://crypto.stackexchange.com/a/66500",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Key_Management_Cheat_Sheet.md",
+      "url": "https://media.defense.gov/2025/May/30/2003728741/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS.PDF",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Kubernetes_Security_Cheat_Sheet.md",
+      "url": "https://blog.styra.com/blog/open-policy-agent-authorization-for-the-cloud",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Kubernetes_Security_Cheat_Sheet.md",
+      "url": "https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Kubernetes_Security_Cheat_Sheet.md",
+      "url": "https://techbeacon.com/enterprise-it/hackers-guide-kubernetes-security",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Kubernetes_Security_Cheat_Sheet.md",
+      "url": "https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md",
+      "url": "https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.md",
+      "url": "https://atlas.mitre.org/techniques/AML.T0051",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Logging_Cheat_Sheet.md",
+      "url": "https://owasp.org/www-project-security-logging/",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+      "url": "http://flexjson.sourceforge.net/#Serialization",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+      "url": "http://json-lib.sourceforge.net/advanced.html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+      "url": "https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/a/27986860",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/mongoose-mass-assign",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md",
+      "url": "https://gist.github.com/vladgolubev/80c5523336ddec3859c0e90d9a070882",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Mobile_Application_Security_Cheat_Sheet.md",
+      "url": "https://owasp.org/www-project-mobile-top-10/2023-risks/m1-insecure-authentication-authorization.html",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Mobile_Application_Security_Cheat_Sheet.md",
+      "url": "https://support.apple.com/guide/iphone/change-siri-accessibility-settings-iphaff1d606/ios.",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Multifactor_Authentication_Cheat_Sheet.md",
+      "url": "https://fidoalliance.org/fido2/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Multifactor_Authentication_Cheat_Sheet.md",
+      "url": "https://fidoalliance.org/specifications/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Multifactor_Authentication_Cheat_Sheet.md",
+      "url": "https://www.enisa.europa.eu/publications/handbook-on-security-of-personal-data-processing/@@download/fullReport",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/NPM_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/sharp",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/NodeJS_Docker_Cheat_Sheet.md",
+      "url": "https://www.fastify.io/docs/latest/Server/",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/Security_by_Design_Principles",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/acl",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/bunyan",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/csurf",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/express-mongo-sanitize",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/helmet",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/hpp",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/mongoose",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/nocache",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/pino",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/raw-body",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/sanitize-html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/svg-captcha",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/toobusy-js",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/validator",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/winston",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Password_Storage_Cheat_Sheet.md",
+      "url": "Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation",
+      "observedStatus": 400
+    },
+    {
+      "file": "cheatsheets/Password_Storage_Cheat_Sheet.md",
+      "url": "https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Password_Storage_Cheat_Sheet.md",
+      "url": "https://soatok.blog/2024/11/27/beyond-bcrypt/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Password_Storage_Cheat_Sheet.md",
+      "url": "https://tobtu.com/minimum-password-settings/",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Pinning_Cheat_Sheet.md",
+      "url": "https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md",
+      "observedStatus": 429
+    },
+    {
+      "file": "cheatsheets/Pinning_Cheat_Sheet.md",
+      "url": "https://github.com/dialogs/electron-ssl-pinning",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Pinning_Cheat_Sheet.md",
+      "url": "https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.html",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Pinning_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/Data_Validation",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/RAG_Security_Cheat_Sheet.md",
+      "url": "https://genai.owasp.org/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Ruby_on_Rails_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/SAML_Security_Cheat_Sheet.md",
+      "url": "http://www.webtrust.org/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/Category:OWASP_Code_Review_Project",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/Reviewing_Code_for_SQL_Injection",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/Secrets_Management_Cheat_Sheet.md",
+      "url": "https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Secrets_Management_Cheat_Sheet.md",
+      "url": "https://xebia.com/from-build-to-run-pointers-on-secure-deployment/",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Secrets_Management_Cheat_Sheet.md",
+      "url": "https://xebia.com/ten-pitfalls-you-should-look-out-for-in-aws-iam/",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.md",
+      "url": "https://www.iso.org/standard/27001",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Secure_Code_Review_Cheat_Sheet.md",
+      "url": "https://wiki.sei.cmu.edu/confluence/display/seccode",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Secure_Code_Review_Cheat_Sheet.md",
+      "url": "https://www.iso.org/standard/44378.html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.md",
+      "url": "https://genai.owasp.org/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md",
+      "url": "https://www.scmagazine.com/news/vulnerability-management/style-sheet-vulnerability-allowed-attacker-to-hijack-linkedin-pages",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://stackoverflow.com/a/26987741",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://www.cyber.gov.au/acsc/view-all-content/publications/implementing-network-segmentation-and-segregation",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/ip-address",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/is-valid-domain",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Session_Management_Cheat_Sheet.md",
+      "url": "https://media.blackhat.com/bh-eu-11/Raul_Siles/BlackHat_EU_2011_Siles_SAP_Session-Slides.pdf",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Session_Management_Cheat_Sheet.md",
+      "url": "https://media.blackhat.com/bh-eu-11/Raul_Siles/BlackHat_EU_2011_Siles_SAP_Session-WP.pdf",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.md",
+      "url": "https://media.defense.gov/2022/Sep/01/2003068942/-1/-1/0/ESF_SECURING_THE_SOFTWARE_SUPPLY_CHAIN_DEVELOPERS.PDF",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md",
+      "url": "https://www.sqreen.com/web-application-security/what-is-dast",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md",
+      "url": "https://www.sqreen.com/web-application-security/what-is-sast",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md",
+      "url": "https://www.veracode.com/sites/default/files/pdf/resources/whitepapers/what-is-rasp.pdf",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Third_Party_Payment_Gateway_Integration_Cheat_Sheet.md",
+      "url": "https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/10-Test-Payment-Functionality",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Third_Party_Payment_Gateway_Integration_Cheat_Sheet.md",
+      "url": "https://www.payway.com/blog/carding-explained-how-to-stop-a-silent-threat-to-your-business",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Threat_Modeling_Cheat_Sheet.md",
+      "url": "https://safecode.org/wp-content/uploads/2017/05/SAFECode_TM_Whitepaper.pdf",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Transaction_Authorization_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/OWASP_Anti-Malware_-_Knowledge_Base",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/Transaction_Authorization_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/OWASP_Anti-Malware_Project_-_Awareness_Program",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/Transport_Layer_Security_Cheat_Sheet.md",
+      "url": "https://cryptcheck.fr/",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/Transport_Layer_Security_Cheat_Sheet.md",
+      "url": "https://www.immuniweb.com/ssl/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md",
+      "url": "http://googlewebmastercentral.blogspot.com/2009/01/open-redirect-urls-is-your-site-being.html",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/User_Privacy_Protection_Cheat_Sheet.md",
+      "url": "https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/User_Privacy_Protection_Cheat_Sheet.md",
+      "url": "https://wiki.owasp.org/index.php/Guide_to_Cryptography",
+      "observedStatus": 500
+    },
+    {
+      "file": "cheatsheets/Virtual_Patching_Cheat_Sheet.md",
+      "url": "https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/modsecurity-advanced-topic-of-the-week-automated-virtual-patching-using-owasp-zed-attack-proxy",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md",
+      "url": "https://github.com/disclose/disclose/tree/master/terms",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md",
+      "url": "https://huntr.dev/bounties",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md",
+      "url": "https://vuls.cert.org/confluence/display/CVD/The+CERT+Guide+to+Coordinated+Vulnerability+Disclosure",
+      "observedStatus": 404
+    },
+    {
+      "file": "cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md",
+      "url": "https://www.openbugbounty.org",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md",
+      "url": "https://www.npmjs.com/package/npm-audit-html",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md",
+      "url": "https://www.whitehatsec.com/glossary/content/false-positive",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/Web_Service_Security_Cheat_Sheet.md",
+      "url": "https://www.ws-attacks.org/XML_Entity_Expansion",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "http://stackoverflow.com/questions/14307442/is-it-safe-to-use-xmldecoder-to-read-document-files",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "http://www.cvedetails.com/cve/CVE-2014-6517/",
+      "observedStatus": 403
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "https://gitlab.gnome.org/GNOME/libxml2/commit/4629ee02ac649c27f9c0cf98ba017c6b5526070f",
+      "observedStatus": 406
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "https://helpx.adobe.com/coldfusion/cfml-reference/coldfusion-functions/functions-t-z/xmlparse.html",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "https://pivotal.io/security/cve-2013-4152",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "https://pivotal.io/security/cve-2013-7315",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+      "url": "https://vsecurity.com//download/papers/XMLDTDEntityAttacks.pdf",
+      "observedStatus": 0
+    },
+    {
+      "file": "cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md",
+      "url": "http://help.dottoro.com/ljfvvdnm.php",
+      "observedStatus": 404
+    }
+      ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "47a37a9226052e03a516a536e9431813e23878b9",
+        "contentBaseCommit": "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+        "workflowRunId": 34228838406,
+        "workflowJobId": 102069549060,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/34228838406/job/102069549060"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/Cryptographic_Storage_Cheat_Sheet.md",
+          "url": "https://azure.microsoft.com/en-gb/services/key-vault/",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/Denial_of_Service_Cheat_Sheet.md",
+          "url": "https://www.baeldung.com/cs/distributed-systems-prevent-single-point-failure",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Deserialization_Cheat_Sheet.md",
+          "url": "https://macrosec.tech/index.php/2021/06/29/exploiting-insecuredeserialization-bugs-found-in-the-wild-python-pickles.",
+          "observedStatuses": [409, 409, 409]
+        },
+        {
+          "file": "cheatsheets/Error_Handling_Cheat_Sheet.md",
+          "url": "https://www.baeldung.com/exception-handling-for-rest-with-spring",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+          "url": "https://www.baeldung.com/jackson-field-serializable-deserializable-or-not",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Secrets_Management_Cheat_Sheet.md",
+          "url": "https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/Subdomain_Takeover_Prevention_Cheat_Sheet.md",
+          "url": "https://crt.sh",
+          "observedStatuses": [502, 502, 502]
+        }
+      ]
+    }
+  ]
+}
