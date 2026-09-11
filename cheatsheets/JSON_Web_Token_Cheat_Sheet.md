@@ -337,9 +337,21 @@ Mitigations:
 Example of validation enforcing explicit token type:
 
 ```python
-# Enforce explicit token type to prevent cross-JWT confusion
-header = jwt.get_unverified_header(token)
-if str(header.get("typ", "")).lower() not in ["at+jwt", "application/at+jwt"]:
+import jwt
+
+# Verify signature and standard claims first
+decoded = jwt.decode_complete(
+    token,
+    public_key,
+    algorithms=["ES256"],
+    audience="https://api.example.com",
+    issuer="https://auth.example.com",
+    options={"require": ["exp", "iss", "aud"]},
+)
+
+# Enforce explicit token type from the verified header
+typ = str(decoded["header"].get("typ", "")).lower()
+if typ not in ["at+jwt", "application/at+jwt"]:
     raise jwt.InvalidTokenError("Invalid token type: expected at+jwt")
 ```
 
