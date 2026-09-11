@@ -279,7 +279,7 @@ The same lineages apply, except that Android's SAX reader is [based on `expat`](
 - `SAXParserFactory` exposes only a feature API, so anything expressed as a property has to be set on the `XMLReader` obtained from `SAXParser.getXMLReader()`.
 - Get the reader through `SAXParserFactory` rather than the `XMLReaderFactory.createXMLReader()` shown in older guidance, which has been deprecated since Java 9.
 
-More importantly, **`SAXParser.parse(source, DefaultHandler)` installs that handler as the reader's `EntityResolver`**, silently replacing any resolver you configured with one that returns `null`. That happens in [`SAXParser` itself](https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.xml/share/classes/javax/xml/parsers/SAXParser.java#L389-L392) rather than in an implementation, so no parser escapes it.
+More importantly, **`SAXParser.parse(source, DefaultHandler)` installs that handler as the reader's `EntityResolver`**, silently replacing any resolver you configured with one that returns `null`. Use the configured `XMLReader.parse(...)` directly, or override the handler's `resolveEntity` to reject external references; do not use this `SAXParser` overload after installing a resolver. That happens in [`SAXParser` itself](https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.xml/share/classes/javax/xml/parsers/SAXParser.java#L389-L392) rather than in an implementation, so no parser escapes it.
 
 ### StAX: XMLInputFactory
 
@@ -343,7 +343,7 @@ On the built-in JDK implementations, `ACCESS_EXTERNAL_DTD` set on the factory is
 Two gaps leave a hardened factory producing an unhardened object:
 
 - A `SchemaFactory`'s resolver is not inherited, by contract (see [`setResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver))). Install it again on the `Schema`s, `Validator`s, or `ValidatorHandler`s created from it.
-- `getAssociatedStylesheet` discards your reader on older implementations (see [XALANJ-2849](https://issues.apache.org/jira/browse/XALANJ-2849) and older JDK versions), scanning with a parser of its own. Pass it a `DOMSource` you parsed yourself, and treat the `Source` it returns as untrusted: its system identifier comes from document content, so re-parse that identifier rather than handing the `Source` to `newTransformer`.
+- `getAssociatedStylesheet` discards your reader on older implementations (see [XALANJ-2849](https://issues.apache.org/jira/browse/XALANJ-2849) and older JDK versions), scanning with a parser of its own. Pass it a `DOMSource` you parsed yourself, but treat the returned `Source` and its system identifier as untrusted: allowlist or resolve that identifier through an access policy before fetching or handing it to `newTransformer`.
 
 #### XPath takes a DOM
 
