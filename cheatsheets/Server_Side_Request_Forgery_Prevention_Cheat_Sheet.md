@@ -245,9 +245,9 @@ Do not accept complete URLs from the user because URL are difficult to validate 
 
 If network related information is really needed then only accept a valid IP address or domain name.
 
-**Match the host against an allowlist, and forward what you matched.** Parse the target, compare the resulting host against an explicit allowlist of permitted destinations, and pass that allowlisted host downstream rather than the user's original string, so the component that performs the fetch never re-parses attacker-controlled text.
+**Match the host against an allowlist, and forward what you matched.** Parse the target, compare the resulting host against an explicit allowlist of permitted destinations, and pass that allowlisted host downstream rather than the user's original string. What travels onward is then a value the application selected from its own list, so nothing further along has to parse the original input again.
 
-**Treat parser disagreement as a rejection.** Where a URL crosses a service boundary as a string and is parsed again at the other end, the two parsers can read different hosts from it and neither is wrong: the [WHATWG URL Standard](https://url.spec.whatwg.org/#host-parsing) and [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-3.2) do not always agree. Reject a URL whose host is not read identically by every convention in play, rather than reconciling the readings.
+**Treat parser disagreement as a rejection.** Where a URL crosses a service boundary as a string and is parsed again at the other end, two implementations can read different hosts from the same bytes. `http://example.com\@evil.com` is such a string: a parser following the [WHATWG URL Standard](https://url.spec.whatwg.org/#url-parsing) treats the backslash under a special scheme as a path separator and reads the host as `example.com`, while the `userinfo` grammar in [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-3.2.1) does not admit a backslash at all, so a strict parser rejects the string outright and a lenient one reads the host as `evil.com`. Reject a URL whose host is not read identically by every parser in play, rather than reconciling the readings.
 
 ##### Network layer
 
