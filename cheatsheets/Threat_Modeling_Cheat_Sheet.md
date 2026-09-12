@@ -91,6 +91,19 @@ STRIDE provides valuable structure for responding to the question of "what can g
 
 After possible threats have been identified, people will frequently rank them. In theory, ranking should be based on the mathematical product of an identified threat's likelihood and its impact. A threat that is likely to occur and result in serious damage would be prioritized much higher than one that is unlikely to occur and would only have a moderate impact. However, these both can be challenging to calculate, and they ignore the work to fix a problem. Some advocate for including that in a single prioritization.
 
+#### Choosing an Additional Technique
+
+STRIDE is a useful starting point for analyzing a technical design, but it is not intended to cover every type of concern. Select an additional technique when the scope requires a different view. The [Software Engineering Institute comparison of threat modeling methods](https://www.sei.cmu.edu/documents/569/2018_019_001_524597.pdf) explains that methods focus on different concerns and may be combined.
+
+| When the team needs to analyze | Consider | How it complements STRIDE |
+| ------------------------------ | -------- | ------------------------- |
+| A high-value attacker goal or multi-step attack | Attack trees | Start with the attacker's goal and decompose the alternative or required paths to reach it. |
+| Abuse of a valid workflow or business rule | Misuse or abuse cases | Explore actions performed out of order, repeatedly, concurrently, or for an unintended outcome. |
+| Privacy properties and harms | LINDDUN | Apply privacy-specific prompts that are not fully represented by STRIDE's security properties. |
+| Business impact and organization-wide risk | PASTA or OCTAVE | Use a broader, risk-centric process when the scope extends beyond a software design. |
+
+Do not add techniques only to make the model appear comprehensive. State why each technique fits the scope and record any concerns it does not address.
+
 ### Response and Mitigations
 
 Equipped with an understanding of both the system and applicable threats, it is now time to answer "what are we going to do about it"?. Each threat identified earlier must have a response. Threat responses are similar, but not identical, to risk responses. [Adam Shostack](https://shostack.org/resources/threat-modeling) lists the following responses:
@@ -112,6 +125,21 @@ Finally, it is time to answer the question "did we do a good enough job"? The th
 - For identified threats for which mitigation is the desired response, have mitigation strategies been developed which reduce risk to an acceptable level?
 - Has the threat model been formally documented? Are artifacts from the threat model process stored in such a way that it can be accessed by those with "need to know"?
 - Can the agreed upon mitigations be tested? Can success or failure of the requirements and recommendations from the threat model be measured?
+
+### Worked Example: Password Reset
+
+This compact example shows how to connect a system model to threats, responses, and verification. It is not a complete password-reset design; use the [OWASP Forgot Password Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html) for implementation guidance.
+
+The modeled flow contains a browser, web application, identity service, token store, and email provider. Trust boundaries exist between the browser and application and between the organization and email provider. The important data flows are the reset request, reset link, token validation, and password change.
+
+| ID | Threat scenario | Response and limitation | Verification |
+| -- | --------------- | ----------------------- | ------------ |
+| TM-01 | An attacker distinguishes registered accounts using response content or timing. | Follow OWASP guidance to [return consistent messages and response times](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html). This does not hide account information exposed by other features. | Compare responses and timing for registered and unregistered addresses. |
+| TM-02 | An attacker replays a reset token after it has been used. | Follow OWASP guidance that reset tokens must be [single-use, linked to a user, and expire](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html). This does not protect a valid token stolen from the user's mailbox. | Confirm that reuse and use after expiry fail. |
+| TM-03 | A client supplies another account identifier with a valid token. | Enforce OWASP's requirement that the token is [linked to the user in the database](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html) instead of trusting a mutable client identifier. | Submit another account identifier and confirm that no other account changes. |
+| TM-04 | An attacker sends repeated reset requests to flood a user or exhaust email-provider capacity. | Apply OWASP's recommended [protections against excessive automated submissions](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html), but do not lock the account in response to reset requests. | Exercise the limits and confirm that ordinary recovery remains available. |
+
+Each threat is specific to the modeled flow, has an actionable response, states what the response does not protect against, and identifies how the team can verify it.
 
 ## Threat Modeling and the Development Team
 
