@@ -324,6 +324,43 @@ References:
 - [RFC 8725, Do Not Trust Received Claims](https://datatracker.ietf.org/doc/html/rfc8725#name-do-not-trust-received-claim);
 - [CVE-2018-0114](https://nvd.nist.gov/vuln/detail/CVE-2018-0114), a key embedded in the JWS header trusted for verification.
 
+### Cross-JWT and token type confusion
+
+Cross-JWT (or token type) confusion occurs when a token issued for one purpose (such as an ID or password-reset token) is accepted by an endpoint expecting another (such as an access token) because both share common claims and are signed by the same key (see [RFC 8725 §2.8](https://datatracker.ietf.org/doc/html/rfc8725#name-cross-jwt-confusion)).
+
+Mitigations:
+
+- **Use explicit typing (`typ`):** Set the `typ` header parameter to a specific media type distinguishing the token's purpose, such as `"at+jwt"` for OAuth 2.0 access tokens ([RFC 9068](https://datatracker.ietf.org/doc/html/rfc9068)), `"logout+jwt"` for logout tokens, or custom types (e.g., `example-reset+jwt`) for internal tokens.
+- **Validate `typ` at the verifier:** Reject tokens with missing or unexpected `typ` values for that endpoint. Note that `typ` is case-insensitive and the `application/` prefix may be omitted ([RFC 7515 §4.1.9](https://datatracker.ietf.org/doc/html/rfc7515#section-4.1.9)).
+- **Use distinct keys or mutually exclusive validation:** Where explicit typing cannot be enforced interoperably (e.g., standard OIDC ID tokens omitting `typ`), use **separate signing keys** or strict **`iss` and `aud` isolation** so that validation rules for different token kinds remain mutually exclusive ([RFC 8725 §3.12](https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali)).
+
+Example of validation enforcing explicit token type:
+
+```python
+import jwt
+
+# Verify signature and standard claims first
+decoded = jwt.decode_complete(
+    token,
+    public_key,
+    algorithms=["ES256"],
+    audience="https://api.example.com",
+    issuer="https://auth.example.com",
+    options={"require": ["exp", "iss", "aud"]},
+)
+
+# Enforce explicit token type from the verified header
+typ = str(decoded["header"].get("typ", "")).lower()
+if typ not in ["at+jwt", "application/at+jwt"]:
+    raise jwt.InvalidTokenError("Invalid token type: expected at+jwt")
+```
+
+References:
+
+- [RFC 8725 §3.11, Use Explicit Typing](https://datatracker.ietf.org/doc/html/rfc8725#name-use-explicit-typing);
+- [RFC 8725 §3.12, Use Mutually Exclusive Validation Rules for Different Kinds of JWTs](https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali);
+- [RFC 9068, JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068).
+
 ## JWT revocation
 
 ### Token Status List
