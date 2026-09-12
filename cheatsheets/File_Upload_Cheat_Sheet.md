@@ -52,6 +52,9 @@ Ensure that the validation occurs after decoding the filename, and that a proper
 
 - Double extensions, _e.g._ `.jpg.php`, where it circumvents easily the regex `\.jpg`
 - Null bytes, _e.g._ `.php%00.jpg`, where `.jpg` gets truncated and `.php` becomes the new extension
+- Case manipulation, _e.g._ `.pHp`, `.phP`, to bypass case-sensitive blocklist filters
+- Alternative extensions that may be mapped to the same server-side interpreter depending on configuration, _e.g._ `.phtml`, `.php5`, `.pht` for PHP, or `.jsp`/`.jspx`, `.asp`/`.aspx` for Java/.NET ([PortSwigger](https://portswigger.net/web-security/file-upload))
+- Windows NTFS Alternate Data Streams, _e.g._ `shell.asp:.jpg` or `shell.php::$DATA`, where the colon is interpreted as a stream separator and the actual file created on disk carries the extension before the colon - reject any filename containing a colon (`:`) ([OWASP - Unrestricted File Upload](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload))
 - Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.
 
 Refer to the [Input Validation CS](Input_Validation_Cheat_Sheet.md) to properly parse and process the extension.
@@ -99,6 +102,8 @@ In order to avoid the above mentioned threat, creating a **random string** as a 
     - Restrict the use of a leading hyphen or spaces to make it safer to use shell scripts to process files.
     - If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.
 
+On Windows/NTFS, a long filename is automatically given an 8.3 short name alias by the file system, _e.g._ `web.config` may also be reachable as `WEB~1.CON` ([Microsoft `fsutil 8dot3name`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-8dot3name)). If an overwrite or collision check validates only the long filename supplied by the user, an attacker who can predict the short alias of an existing sensitive file may reference it directly to overwrite that file, bypassing an exact-name or extension check. Generating the stored filename server-side, as recommended above, removes this risk, since the attacker no longer controls which file is targeted. Where that isn't possible, short filename generation can be disabled at the file system level (`fsutil behavior set disable8dot3 1`) — see the [Microsoft `fsutil 8dot3name`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-8dot3name) and [`fsutil behavior`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-behavior) documentation.
+
 ### File Content Validation
 
 As mentioned in the [Public File Retrieval](#public-file-retrieval) section, file content can contain malicious, inappropriate, or illegal data.
@@ -125,6 +130,8 @@ The location where the files should be stored must be chosen based on security a
    - If read access is required, setting proper controls is a must (_e.g._ internal IP, authorized user, etc.)
 
 Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.
+
+Be aware that an attacker may attempt to upload a web server configuration file (_e.g._ `.htaccess`, `web.config`) into the upload directory. If the web server allows per-directory configuration overrides, such a file could be used to change how that directory handles file types, for example mapping an otherwise harmless extension to be executed by the server. As a second layer of defense, disable per directory configuration overrides on upload directories at the web server level (_e.g._ Apache `AllowOverride None`, locked IIS handler mappings), in addition to storing files outside the webroot as recommended above.
 
 > Some files are emailed or processed once they are uploaded, and are not stored on the server. It is essential to conduct the security measures discussed in this sheet before doing any actions on them.
 
