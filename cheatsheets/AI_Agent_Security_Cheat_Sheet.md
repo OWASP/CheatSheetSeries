@@ -356,6 +356,7 @@ class OutputGuardrails:
 - Maintain audit trails for compliance and forensics.
 - Log structured decision metadata for high-risk actions, including action classification, risk score when applicable, authorization outcome, approval identifier, execution result, and policy version.
 - Monitor for drift in approval behavior, repeated approval bypass attempts, elevated privilege usage, abnormal tool invocation frequency, and sudden increases in high-risk actions.
+- When the logs come from a component you did not build, see the [Verifying Third-Party Agent Execution Evidence Cheat Sheet](Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.md) for how to judge what such a record establishes.
 
 #### Agent Monitoring
 

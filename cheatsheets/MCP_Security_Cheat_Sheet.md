@@ -123,6 +123,7 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - Alert on unusual patterns: new tools being called, admin-level queries, abnormal call frequency.
 - Redact secrets and PII from logs.
 - Conduct regular security audits and simulated attacks against MCP setups.
+- When the logs come from a component you did not build, see the [Verifying Third-Party Agent Execution Evidence Cheat Sheet](Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.md) for how to judge what such a record establishes.
 
 ### 11. Consent & Installation Security
 

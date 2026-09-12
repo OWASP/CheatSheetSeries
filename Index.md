@@ -272,6 +272,8 @@
 
 ## V
 
+[Verifying Third Party Agent Execution Evidence Cheat Sheet](cheatsheets/Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.md)
+
 [Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md) ![Html](assets/Index_Html.svg)
 
 [Vulnerability Disclosure Cheat Sheet](cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md)
