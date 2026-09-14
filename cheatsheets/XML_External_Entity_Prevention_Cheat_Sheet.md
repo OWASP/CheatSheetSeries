@@ -357,7 +357,7 @@ Two gaps leave a hardened factory producing an unhardened object:
 
 Three ways to restrict the second group, most precise first:
 
-1. A [`CatalogResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/catalog/CatalogResolver.html) (Java 9 and later, or [XML Resolver](https://www.xmlresolver.org/) before it) maps each identifier you expect to a local file and denies everything else.
+1. A [`CatalogResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/catalog/CatalogResolver.html) (Java 9 and later, or [XML Resolver](https://www.xmlresolver.org/) before it) maps each identifier you expect to a local file and, under the default [`RESOLVE=strict`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/catalog/CatalogFeatures.Feature.html#RESOLVE), throws on everything else.
 2. A [`URIResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/URIResolver.html) for TrAX or an [`LSResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/Validator.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver)) for validation, where the allowlist needs logic a catalog cannot express.
 3. [`ACCESS_EXTERNAL_STYLESHEET`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_STYLESHEET) and [`ACCESS_EXTERNAL_SCHEMA`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_SCHEMA), on the implementations that offer them: a protocol filter, so permitting a scheme permits every URI that uses it.
 
