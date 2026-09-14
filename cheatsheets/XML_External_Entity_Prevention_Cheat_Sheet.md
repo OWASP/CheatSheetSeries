@@ -378,7 +378,7 @@ Object result = jaxbContext.createUnmarshaller().unmarshal(xsr);
 
 ### java.beans.XMLDecoder
 
-`XMLDecoder` is not an XXE path: its handler denies every external entity. It is still unsafe for **untrusted** data as a deserialization risk — see the [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#other-deserialization-libraries-and-formats).
+`XMLDecoder` is not an XXE path: its handler [returns an empty source for every external entity](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/java.desktop/share/classes/com/sun/beans/decoder/DocumentHandler.java#L249-L251). It is still unsafe for **untrusted** data as a deserialization risk — see the [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#other-deserialization-libraries-and-formats).
 
 ### Secure JAXP factory sources
 
