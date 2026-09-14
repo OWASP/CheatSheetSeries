@@ -8,6 +8,17 @@
 
 /cheatsheets/Nextjs_Security_Cheat_Sheet.md @jharvieux @mackowski @jmanico
 
+## Kadir Arslan (KadirArslan)
+
+/cheatsheets/Secure_AI_Model_Ops_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+/cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+/cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+/cheatsheets/NoSQL_Security_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+/cheatsheets/AI_Agent_Security_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+/cheatsheets/MCP_Security_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+/cheatsheets/Bot_Management_and_Anti-Automation_Cheat_Sheet.md @KadirArslan @mackowski @jmanico
+
 ## Kevin W. Wall (kwwall)
 
 /cheatsheets/Authentication_Cheat_Sheet.md @kwwall @mackowski @jmanico
