@@ -321,6 +321,8 @@ These libraries do not parse XML themselves, and both let you supply the parser.
 | [dom4j](https://dom4j.github.io/) | [`SAXReader.setXMLReader(XMLReader)`](https://javadoc.io/doc/org.dom4j/dom4j/latest/org/dom4j/io/SAXReader.html#setXMLReader(org.xml.sax.XMLReader)), or the matching constructor               |
 | [JDOM](https://www.jdom.org/)     | [`SAXBuilder(XMLReaderJDOMFactory)`](https://www.jdom.org/docs/apidocs/org/jdom2/input/SAXBuilder.html#SAXBuilder-org.jdom2.input.sax.XMLReaderJDOMFactory-), whose factory returns your reader |
 
+**dom4j overrides the resolver on the reader you supply.** Every `read()` installs the `SAXReader`'s own `EntityResolver` on your `XMLReader`. When you have not set one, a default allow-all resolver is used. Pass your ignore-all/deny-all resolver to [`SAXReader.setEntityResolver`](https://javadoc.io/doc/org.dom4j/dom4j/latest/org/dom4j/io/SAXReader.html#setEntityResolver(org.xml.sax.EntityResolver)) as well. JDOM's `SAXBuilder` replaces the resolver only when you set one explicitly.
+
 Other libraries follow the same pattern: check whether the one you use accepts a parser, and give it a hardened one. If it exposes no such control, parse the untrusted content yourself first and hand the resulting document to the library.
 
 ### Interfaces that need a parser
