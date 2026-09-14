@@ -343,7 +343,7 @@ XMLReader reader = ...;
 transformer.transform(new SAXSource(reader, new InputSource(inputStream)), result);
 ```
 
-On the built-in JDK implementations, `ACCESS_EXTERNAL_DTD` set on the factory is copied onto the reader, so it also covers the source document.
+On JAXP 1.5 implementations, `ACCESS_EXTERNAL_DTD` set on the factory is copied onto internally created readers, so the above workaround is not necessary.
 
 Two gaps leave a hardened factory producing an unhardened object:
 
