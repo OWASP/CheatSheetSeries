@@ -345,7 +345,7 @@ On the built-in JDK implementations, `ACCESS_EXTERNAL_DTD` set on the factory is
 
 Two gaps leave a hardened factory producing an unhardened object:
 
-- A `SchemaFactory`'s resolver is not inherited, by contract (see [`setResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver))). Install it again on the `Schema`s, `Validator`s, or `ValidatorHandler`s created from it.
+- A `SchemaFactory`'s resolver is not inherited, by contract (see [`setResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver))). After creating a `Schema`, install the resolver on each `Validator` or `ValidatorHandler` created from it.
 - `getAssociatedStylesheet` discards your reader on older implementations (see [XALANJ-2849](https://issues.apache.org/jira/browse/XALANJ-2849) and older JDK versions), scanning with a parser of its own. Pass it a `DOMSource` you parsed yourself, but treat the returned `Source` and its system identifier as untrusted: allowlist or resolve that identifier through an access policy before fetching or handing it to `newTransformer`.
 
 **These interfaces also fetch on their own behalf.** The style sheet or schema is normally yours rather than the attacker's, and splitting one across files is ordinary practice, so these channels should be **restricted**, not closed:
