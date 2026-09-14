@@ -215,7 +215,7 @@ Since [version 1.3 in Java 5](https://docs.oracle.com/javase/1.5.0/docs/api/java
 
 Every **feature** that blocks external access is optional:
 
-- `ACCESS_EXTERNAL_DTD`, `ACCESS_EXTERNAL_SCHEMA` and `ACCESS_EXTERNAL_STYLESHEET` arrived with JAXP 1.5, which still only the JDK's built-in implementation provides — [Apache Xerces](https://xerces.apache.org/xerces2-j/) does not.
+- `ACCESS_EXTERNAL_DTD`, `ACCESS_EXTERNAL_SCHEMA` and `ACCESS_EXTERNAL_STYLESHEET` arrived with JAXP 1.5, and each factory's Javadoc requires ["implementations that implement JAXP 1.5 or newer"](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html#setAttribute(java.lang.String,java.lang.Object)) to support the ones that apply to it — but implementing JAXP 1.5 is itself optional, and a decade on few do: the JDK's built-in implementation, [Saxon](https://www.saxonica.com/html/documentation13/configuration/config-features.html#ALLOWED_PROTOCOLS) and [Woodstox](https://github.com/FasterXML/woodstox/issues/162) 7.2 and later.
 - `disallow-doctype-decl` and `load-external-dtd` are Apache extensions, in Xerces' own `http://apache.org/xml/features/` namespace.
 - `external-general-entities` and `external-parameter-entities` are optional SAX2 features.
 
