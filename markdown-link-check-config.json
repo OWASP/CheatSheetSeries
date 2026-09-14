@@ -19,6 +19,9 @@
         "pattern": "csrc.nist.gov"
     },
     {
+        "pattern": "atlas.mitre.org"
+    },
+    {
         "pattern": "www.exploit-db.com"
     }
   ],
