@@ -286,7 +286,7 @@ More importantly, **`SAXParser.parse(source, DefaultHandler)` installs that hand
 
 ### StAX: XMLInputFactory
 
-StAX has two implementations, the built-in JDK reader and [Woodstox](https://github.com/FasterXML/woodstox), and is absent from both Android and the Oracle XDK.
+StAX implementations include the built-in JDK reader, [Woodstox](https://github.com/FasterXML/woodstox) and [Aalto](https://github.com/FasterXML/aalto-xml); it is absent from both Android and the Oracle XDK.
 
 The StAX specification **does** support security-related properties, but they default to `true` or are unspecified:
 
@@ -378,7 +378,7 @@ Object result = jaxbContext.createUnmarshaller().unmarshal(xsr);
 
 ### java.beans.XMLDecoder
 
-[`XMLDecoder.readObject()`](https://docs.oracle.com/en/java/javase/25/docs/api/java.desktop/java/beans/XMLDecoder.html#readObject()) has the rare privilege of joining together the dangers of XXE with the power of object binding. Don't use it for **untrusted** data.
+[`XMLDecoder`](https://docs.oracle.com/en/java/javase/25/docs/api/java.desktop/java/beans/XMLDecoder.html) is ["used just like the `ObjectInputStream`"](https://docs.oracle.com/en/java/javase/25/docs/api/java.desktop/java/beans/XMLDecoder.html): its input drives object construction, so don't use it for **untrusted** data. It is not an XXE path — its handler returns an empty source for every external entity.
 
 ### Secure JAXP factory sources
 
