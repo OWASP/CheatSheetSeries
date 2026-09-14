@@ -339,12 +339,17 @@ XMLReader reader = ...;
 transformer.transform(new SAXSource(reader, new InputSource(inputStream)), result);
 ```
 
-On the built-in JDK implementations, `ACCESS_EXTERNAL_DTD` set on the factory is copied onto the reader, so it also covers the source document. Set `ACCESS_EXTERNAL_SCHEMA` and `ACCESS_EXTERNAL_STYLESHEET` as well, to block the schema and style sheet references the factory resolves on its own behalf, such as `xs:include` and `xsl:import`.
+On the built-in JDK implementations, `ACCESS_EXTERNAL_DTD` set on the factory is copied onto the reader, so it also covers the source document.
 
 Two gaps leave a hardened factory producing an unhardened object:
 
 - A `SchemaFactory`'s resolver is not inherited, by contract (see [`setResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver))). Install it again on the `Schema`s, `Validator`s, or `ValidatorHandler`s created from it.
 - `getAssociatedStylesheet` discards your reader on older implementations (see [XALANJ-2849](https://issues.apache.org/jira/browse/XALANJ-2849) and older JDK versions), scanning with a parser of its own. Pass it a `DOMSource` you parsed yourself, but treat the returned `Source` and its system identifier as untrusted: allowlist or resolve that identifier through an access policy before fetching or handing it to `newTransformer`.
+
+**These interfaces also fetch on their own behalf.** The style sheet or schema is normally yours rather than the attacker's, and splitting one across files is ordinary practice, so these channels should be **restricted**, not closed:
+
+- **TrAX** resolves the `xml-stylesheet` processing instruction, `xsl:import`, `xsl:include` and the `document()` function. On built-in JDK implementations restrict them with [`ACCESS_EXTERNAL_STYLESHEET`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_STYLESHEET). On other implementations, install a [`URIResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/URIResolver.html).
+- **Validation** resolves `schemaLocation`, `xs:import` and `xs:include`. On built-in JDK implementations restrict them with [`ACCESS_EXTERNAL_SCHEMA`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_SCHEMA). On other implementations, install an `LSResourceResolver` as described above.
 
 #### XPath takes a DOM
 
