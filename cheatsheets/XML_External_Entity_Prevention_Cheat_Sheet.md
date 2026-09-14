@@ -329,7 +329,7 @@ Other libraries follow the same pattern: give them a hardened parser, or parse t
 
 ### Interfaces that need a parser
 
-`TransformerFactory`, `SchemaFactory`, `Validator`, `XPathFactory` and the JAXB `Unmarshaller` are not parsers. They *consume* one, and if you do not supply it, they build their own. Give them one you hardened; which kind depends on the interface.
+`TransformerFactory`, `SchemaFactory`, `Validator`, `XPath`, `XPathExpression` and the JAXB `Unmarshaller` are not parsers. They *consume* one, and if you do not supply it, they build their own. Give them one you hardened; which kind depends on the interface.
 
 #### TrAX and validation take a SAX parser
 
