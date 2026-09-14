@@ -223,15 +223,16 @@ A parser that does not recognize one says so: `SAXNotRecognizedException` from S
 
 ``` java
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+final DocumentBuilder builder;
 try {
     // Any of the settings listed for your implementation below.
     dbf.setFeature(feature, safeValue);
+    builder = dbf.newDocumentBuilder();
 } catch (ParserConfigurationException e) {
     // The parser did not recognize the feature, so nothing was hardened.
     // Refuse to parse rather than continuing with an unconfigured factory.
     throw new IllegalStateException("Unable to secure the XML parser", e);
 }
-DocumentBuilder builder = dbf.newDocumentBuilder();
 ```
 
 ### DOM: DocumentBuilderFactory
