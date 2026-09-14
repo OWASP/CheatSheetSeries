@@ -219,17 +219,19 @@ Every **feature** that blocks external access is optional:
 - `disallow-doctype-decl` and `load-external-dtd` are Apache extensions, in Xerces' own `http://apache.org/xml/features/` namespace.
 - `external-general-entities` and `external-parameter-entities` are optional SAX2 features.
 
-A parser that does not recognize one says so: `SAXNotRecognizedException` from SAX, `ParserConfigurationException` from JAXP. **That exception means the hardening was not applied.** Catching it and continuing — as many published examples do — leaves you parsing untrusted XML with an unconfigured parser, which is the exact situation the recipe was meant to prevent.
+A parser that does not recognize one says so: `SAXNotRecognizedException` from SAX, `ParserConfigurationException` from `setFeature`, `IllegalArgumentException` from `setAttribute`. **Any of them means the hardening was not applied.** Catching it and continuing — as many published examples do — leaves you parsing untrusted XML with an unconfigured parser, which is the exact situation the recipe was meant to prevent.
 
 ``` java
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 final DocumentBuilder builder;
 try {
-    // Any of the settings listed for your implementation below.
-    dbf.setFeature(feature, safeValue);
+    // A boolean feature from the table below.
+    dbf.setFeature(feature, safeFeatureValue);
+    // A string attribute from the table below.
+    dbf.setAttribute(attribute, safeAttributeValue);
     builder = dbf.newDocumentBuilder();
-} catch (ParserConfigurationException e) {
-    // The parser did not recognize the feature, so nothing was hardened.
+} catch (ParserConfigurationException | IllegalArgumentException e) {
+    // The parser did not recognize the setting, so nothing was hardened.
     // Refuse to parse rather than continuing with an unconfigured factory.
     throw new IllegalStateException("Unable to secure the XML parser", e);
 }
@@ -244,7 +246,7 @@ DOM has four maintained implementations:
 - The built-in Android parser, which [builds a DOM using kXML](https://android.googlesource.com/platform/libcore/+/refs/heads/main/luni/src/main/java/org/apache/harmony/xml/parsers/DocumentBuilderImpl.java),
 - The [Oracle XML Developer's Kit](https://docs.oracle.com/en/database/oracle/oracle-database/21/adxdk/security-considerations-oracle-xml-developers-kit.html), whose JAXP binding recognizes only `FEATURE_SECURE_PROCESSING`, and which is also usable directly through its own API (covered below).
 
-Disabling DOCTYPE declarations outright is the best fail-fast option: a document that cannot declare a DOCTYPE cannot declare an entity. The settings available to do it differ by implementation:
+Disabling DOCTYPE declarations outright is the best fail-fast option: a document that cannot declare a DOCTYPE cannot declare an entity. The settings available to do it differ by implementation, and so does [the call that applies them](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/module-summary.html#Processor): rows with a boolean safe value are features, set with `setFeature`; rows with a string value are attributes, set with `setAttribute`.
 
 | Setting                                                                                                                                          | Safe value         | Recognized by                        | Effect                                                                       |
 |--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|--------------------------------------|------------------------------------------------------------------------------|
@@ -257,7 +259,7 @@ Disabling DOCTYPE declarations outright is the best fail-fast option: a document
 | [`load-external-dtd`](https://xerces.apache.org/xerces2-j/features.html#nonvalidating/load-external-dtd)                                         | `false`            | Xerces and derivatives               | Ignores the external subset (non-validating only)                            |
 | [`FEATURE_SECURE_PROCESSING`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) | `true`             | Required of DOM and SAX (JAXP)       | Enables the implementation's own processing limits                           |
 
-To secure `DocumentBuilderFactory` through features:
+To secure `DocumentBuilderFactory`:
 
 - Use `disallow-doctype-decl` on the JVM, where a Xerces-derived parser is usually present.
 
