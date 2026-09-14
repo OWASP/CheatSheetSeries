@@ -205,7 +205,7 @@ XMLInputFactory xmlInputFactory = ...;
 xmlInputFactory.setProperty(XMLInputFactory.RESOLVER, denyAll);
 ```
 
-If you prefer to return empty content instead of throwing, StAX carries a trap. An `XMLResolver` must return one of the types its Javadoc enumerates; anything else may be treated as `null`, which tells the processor to resolve the entity itself. An empty string, the obvious way to return nothing, therefore fetches the external resource after all. Return `InputStream.nullInputStream()` instead.
+If you prefer to return empty content instead of throwing, StAX carries a trap. An `XMLResolver` must return one of the types its Javadoc enumerates. Anything else is undefined and [may be treated as `null`](https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.xml/share/classes/com/sun/xml/internal/stream/StaxEntityResolverWrapper.java#L71-L84), which tells the processor to resolve the entity itself. An empty string, the obvious way to return nothing, therefore fetches the external resource after all. Return `InputStream.nullInputStream()` instead.
 
 **A resolver does not limit entity expansion.** Nested internal entities need no external resource, so a parser that accepts a DOCTYPE declaration is still exposed to the [entity expansion attacks](XML_Security_Cheat_Sheet.md#xml-entity-expansion) described in the XML Security Cheat Sheet. Enable the implementation's processing limits with [`FEATURE_SECURE_PROCESSING`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING).
 
