@@ -1,12 +1,14 @@
 # Index Alphabetical
 
-**121** cheat sheets available.
+**122** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
 [A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [G](Index.md#g) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) [N](Index.md#n) [O](Index.md#o) [P](Index.md#p) [Q](Index.md#q) [R](Index.md#r) [S](Index.md#s) [T](Index.md#t) [U](Index.md#u) [V](Index.md#v) [W](Index.md#w) [X](Index.md#x) [Z](Index.md#z)
 
 ## A
+
+[AI-Powered Advertising Systems Security Cheat Sheet](cheatsheets/AI-Powered_Advertising_Systems_Security_Cheat_Sheet.md)
 
 [AI Agent Security Cheat Sheet](cheatsheets/AI_Agent_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 

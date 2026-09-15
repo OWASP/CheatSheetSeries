@@ -209,7 +209,7 @@ Most fetch directives have a certain [fallback list specified in w3](https://www
 - `img-src` specifies the URLs that images can be loaded from.
 - `manifest-src` specifies the URLs that application manifests may be loaded from.
 - `media-src` specifies the URLs from which video, audio and text track resources can be loaded from.
-- `prefetch-src` specifies the URLs from which resources can be prefetched from.
+- `prefetch-src` was an experimental directive for prefetch/prerender resource URLs. It was __removed from the CSP Level 3 specification__ and is ignored by modern browsers — do not rely on it for defense. Constrain scripts, styles, and default fetches with the standard fetch directives instead.
 - `object-src` specifies the URLs from which plugins can be loaded from.
 - `script-src` specifies the locations from which a script can be executed from. It is a fallback directive for other script-like directives.
     - `script-src-elem` controls the location from which execution of script requests and blocks can occur.
