@@ -89,6 +89,7 @@ Prior to running the tests, 2 output paths are possible:
 - All tests succeed, and thus the update can be pushed to production.
 - One or several tests failed, several output paths are possible:
     - Failure is due to change in some function calls (_e.g._ signature, argument, package, etc.). The development team must update their code to fit the new library. Once that is done, re-run the tests.
+    - The fixed version cannot be adopted at all (_e.g._ the fix only ships in a new major version that breaks the application, or the vulnerable version is pinned by a transitive dependency). Apply [Case 5](#case-5), using [Case 2](#case-2) as an interim mitigation.
     - Technical incompatibility of the released dependency (_e.g._ require a more recent runtime version) which leads to the following actions:
     1. Raise the issue to the provider.
     2. Apply [Case 2](#case-2) while waiting for the provider's feedback.
@@ -202,6 +203,14 @@ If possible, create a unit test that mimics the vulnerability in order to ensure
 
 If you have a set of automated unit or integration or functional or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.
 
+A patch written in-house does not get the benefit of the doubt that an upstream release gets, so hold it to an explicit bar before considering the vulnerability handled:
+
+- The test reproducing the vulnerability fails against the unpatched dependency and passes against the patched one. A test that passes in both cases proves nothing about the patch.
+- The tests of the dependency itself still pass, which catches behavior that the patch broke but the application does not exercise directly.
+- The alert raised by the detection tool is suppressed per [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) only once the two points above hold. Suppressing the alert, or changing a version string so that the tool stops matching it, records a fix but does not make one.
+
+Expect the tool to keep flagging the dependency even after a correct patch, because [looking at the version number of a package will not tell you whether the fix is present](https://access.redhat.com/security/updates/backporting). That is a reporting problem to be handled with a scoped suppression, not a reason to change the patch.
+
 ### Case 4
 
 #### Context
@@ -224,6 +233,44 @@ Inform the provider about the vulnerability by sharing the post with them.
 **Step 2:**
 
 Using the information from the full disclosure post or the pentester's exploitation feedback, if the provider collaborates then apply [Case 2](#case-2), otherwise apply [Case 3](#case-3), and instead of analyzing the CVE information, the team needs to analyze the information from the full disclosure post/pentester's exploitation feedback.
+
+### Case 5
+
+#### Context
+
+A fixed version has been released by the provider, but the project cannot adopt it:
+
+- The fix only ships in a new major version that breaks the application code.
+- The vulnerable version is pinned by a [transitive dependency](https://en.wikipedia.org/wiki/Transitive_dependency) that has not been updated yet.
+- The version line in use is no longer maintained and the fix landed only on a newer line.
+
+This is not [Case 3](#case-3): the fix exists and is public, so nothing has to be invented, but it has to be moved onto the version line that the project can actually run. That practice is called _backporting_, and operating system vendors have handled the same problem this way for years. [Debian](https://www.debian.org/security/faq) states that "instead of upgrading to a new release we backport security fixes to the version that was shipped in the stable release", and [Red Hat](https://access.redhat.com/security/updates/backporting) defines backporting as "the action of taking a fix for a security flaw out of the most recent version of an upstream software package and applying that fix to an older version".
+
+#### Ideal condition of application of the approach
+
+The upstream fix can be identified (a commit, a patch file, or an advisory precise enough to locate the change), the source of the version in use is available, and automated tests exist for the application features using the dependency.
+
+#### Approach
+
+**Step 1:**
+
+Confirm that the upgrade is really blocked by attempting it on a testing environment as described in [Case 1](#case-1). Backporting is cheaper than a major upgrade in the short term and more expensive over the life of the project, so it must be a deliberate choice rather than the first reflex. Record the exact blocker (breaking API, transitive pin, unsupported runtime), because that is the condition to re-test later.
+
+**Step 2:**
+
+Isolate the security-relevant change from the rest of the upstream release. Fix commits are frequently bundled with refactoring, renaming and unrelated bugfixes that must not be carried over, and the fix may rely on internal functions that do not exist in the older line, in which case the same check has to be re-implemented instead of cherry-picked. Keep the patch minimal: the goal is to block the vulnerability without changing any existing legitimate behavior.
+
+**Step 3:**
+
+Verify the patch rather than assume it. A test reproducing the vulnerability must fail against the unpatched dependency and pass against the patched one, and both the dependency's own test suite and the application tests must still pass. Silencing the scanner or bumping a version string is not remediation.
+
+**Step 4:**
+
+Distribute the patched artifact so that every build resolves it: publish it to the internal registry or proxy that the build already trusts, instead of committing a locally built file into each project. Give it a version identifier that remains traceable to the upstream version it derives from, and record its provenance (source commit, CVE, who produced it) so that the next reader can audit it. Expect detection tools to keep flagging the dependency, because [looking at the version number of a package will not tell you whether a backported fix is present](https://access.redhat.com/security/updates/backporting); suppress the alert per CVE as described in the note of [Case 2](#case-2).
+
+**Step 5:**
+
+Treat the patch as a standing commitment and not a one-off task. Every new upstream release of the dependency has to be re-patched, and every new CVE affecting it adds another patch to carry. Before deciding to maintain patches in-house, size that recurring work against acquiring maintained backports from a provider whose business is producing them. Drop the backport as soon as the fixed version becomes adoptable: re-test the blocker recorded in step 1 at each dependency review, then go back to [Case 1](#case-1).
 
 ## Tools
 
@@ -255,5 +302,16 @@ It's important to ensure, during the selection process of a vulnerable dependenc
         - [Full support](https://jfrog.com/integration/) for many languages and package manager.
     - [Renovate](https://renovatebot.com) (allow to detect old dependencies):
         - [Full support](https://renovatebot.com/docs/) for many languages and package manager.
-    - [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
-        - [Full support](https://requires.io/features/): Python only.
+
+### Remediation and maintained backports
+
+The tools above detect vulnerable dependencies, they do not fix them. When the fixed version cannot be adopted, the patch still has to come from somewhere: either the development team maintains it or someone else does.
+
+Linux distribution security teams are the reference model for the second option. [Debian](https://www.debian.org/security/faq) and [Red Hat](https://access.redhat.com/security/updates/backporting) both backport security fixes into the version shipped in the stable release instead of upgrading it. When the dependency is consumed as an operating system package, take the distribution's patched build rather than maintaining a private patch.
+
+Language ecosystem packages are rarely covered that way, so the choice there is between maintaining the patch in-house and paying someone to maintain it. Judge either option on the same criteria as a detection tool, plus:
+
+- Coverage of the ecosystems, version lines and severities the project depends on, with a published response time.
+- Publication of the patch itself and of its provenance, so that the change can be reviewed instead of being trusted blindly.
+- Delivery as a compatible artifact through a registry or proxy that the build already uses, so that no manifest rewrite is required.
+- A documented way out, so that leaving the source does not mean re-patching everything from scratch.
