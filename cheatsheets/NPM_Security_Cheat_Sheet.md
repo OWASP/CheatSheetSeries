@@ -171,6 +171,8 @@ It is recommended that security researchers follow a responsible disclosure prog
 
 Enabling two-factor authentication (2FA) is a critical npm security best practice. npm requires 2FA or a granular access token configured to bypass 2FA for package publishing. For interactive publishing, require 2FA and disallow token-based publishing where practical.
 
+npm supports two 2FA modes for an account:
+
 - Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.
 - Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.
 
