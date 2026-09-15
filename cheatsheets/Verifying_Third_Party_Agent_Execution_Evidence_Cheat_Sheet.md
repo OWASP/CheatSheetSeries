@@ -6,7 +6,7 @@ A team that adopts an agent, a Model Context Protocol (MCP) server, or a skill i
 
 ## Three Review Outcomes
 
-Score each question below with one of three outcomes. The weakest answer bounds what the record can settle in a dispute with the supplier; it does not bound what the record is worth operationally. [MCP08:2025 Lack of Audit and Telemetry](https://owasp.org/www-project-mcp-top-10/2025/MCP08-2025%E2%80%93Lack-of-Audit-and-Telemetry) recommends "cryptographic hashing (HMAC, SHA-256) to log files for integrity" and "audit trail self-verification, where logs cross-reference session data for consistency". Both are sound for an operator who holds the logs and the key. A reviewer holds neither.
+Score each question below with one of three outcomes. The weakest answer bounds what the record can settle in a dispute with the supplier; it does not bound what the record is worth operationally. [MCP08:2025 Lack of Audit and Telemetry](https://github.com/OWASP/www-project-mcp-top-10/blob/main/2025/MCP08-2025%E2%80%93Lack-of-Audit-and-Telemetry.md) recommends "cryptographic hashing (HMAC, SHA-256) to log files for integrity" and "audit trail self-verification, where logs cross-reference session data for consistency". Both are sound for an operator who holds the logs and the key. A reviewer holds neither.
 
 | Outcome | What it means | What the record can support |
 |---|---|---|
