@@ -111,6 +111,24 @@ Below are some protocols used by drone systems to communicate. This can be eithe
    - Tools like **ArduPilot** and **PX4** support MAVLink 2.0 security enhancements. They have been thoroughly tested and are therefore recommended.
 
    - Utilize **end-to-end encryption**! Either through TLS or DTLS is fine and good.
+     
+Recent CVEs underscore the risk of unauthenticated MAVLink. The absence of default authentication is not theoretical — it has produced critical, remotely-reachable vulnerabilities across both dominant open-source autopilots:
+
+   - CVE-2026-1579 (PX4, CVSS 9.8, CISA ICSA-26-090-02, CWE-306): with MAVLink 2 message signing disabled, an unauthenticated party can send SERIAL_CONTROL to obtain interactive shell access.
+     
+   - CVE-2026-38971 (ArduPilot ArduPlane ≤ 4.6.3, CVSS 9.1, CWE-125): an out-of-bounds read in the SERIAL_CONTROL handler (GCS_serial_control.cpp), reachable over MAVLink by an unauthenticated attacker — flight-controller memory disclosure and denial of service.
+   
+   - CVE-2026-32743 and related PX4 issues (CWE-121): MAVLink-reachable stack buffer overflows in the log handler cause denial of service.
+   
+   - CVE-2020-10283 (MAVLink): an earlier command-injection issue from missing ground-control-station identity verification — the weakness is long-standing, not new.
+   
+Defense-in-depth beyond message signing. Because signing is frequently disabled in the field and any software mitigation runs in the same trust domain an attacker may have compromised, consider enforcing protocol integrity out-of-band:
+
+   - Header validation — system-ID allowlisting and sequence-continuity checks to reject spoofed or replayed frames.
+     
+   - Typed-payload validation — reject non-finite parameter values (PARAM_SET) and bound FTP path lengths to defeat malformed-value and buffer-overflow classes.
+     
+   - Hardware-enforced enforcement point — where the autopilot firmware cannot be modified or trusted, a bump-in-the-wire validation device placed between the companion computer and the flight controller can apply the above checks in a separate hardware domain, independent of a potentially compromised software stack.
 
 2. **CAN (Controller Area Network) Bus** – A communication protocol used between internal drone system components (e.g., flight controllers, ESCs, GPS modules).
 
@@ -201,3 +219,9 @@ There are multiple GitHub repos that help with drone attack [simulations](https:
 - [OWASP Internet of Things](https://owasp.org/www-project-internet-of-things/)
 
 - [Trusted Firmware](https://www.trustedfirmware.org/)
+  
+- [CVE-2026-1579 – PX4 MAVLink unauthenticated shell access (CISA ICSA-26-090-02)](https://www.cisa.gov/news-events/ics-advisories/icsa-26-090-02)
+  
+- [CVE-2026-38971 – ArduPilot MAVLink SERIAL_CONTROL out-of-bounds read](https://www.cve.org/CVERecord?id=CVE-2026-38971)
+
+- [CVE-2020-10283 – MAVLink missing GCS authentication](https://www.cve.org/CVERecord?id=CVE-2020-10283)
