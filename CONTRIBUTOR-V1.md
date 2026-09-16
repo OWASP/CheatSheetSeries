@@ -4,7 +4,7 @@ If you want to modify something regarding the mention made to you (typo/link to 
 
 Sorting applied on the name is an alphabetical one.
 
-## [AJAX Security Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/AJAX_Security_Cheat_Sheet.md)
+## [Asynchronous Web Communication Security Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/AJAX_Security_Cheat_Sheet.md)
 
 - Michael Eddington
 - Til Mas

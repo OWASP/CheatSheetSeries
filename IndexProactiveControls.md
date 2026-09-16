@@ -42,7 +42,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 ## [C4. Encode and Escape Data](https://top10proactive.owasp.org/archive/2018/c4-encode-escape-data/)
 
-[AJAX Security Cheat Sheet (Client Side)](cheatsheets/AJAX_Security_Cheat_Sheet.md#client-side-javascript)
+[Asynchronous Web Communication Security Cheat Sheet (Client Side)](cheatsheets/AJAX_Security_Cheat_Sheet.md#client-side-javascript)
 
 [Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
