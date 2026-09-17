@@ -185,7 +185,7 @@ Refer to the [Docker and iptables documentation](https://docs.docker.com/engine/
 
 - **AppArmor**: Apply per-container AppArmor profiles to enforce mandatory access controls. [Docker AppArmor](https://docs.docker.com/engine/security/apparmor/)
 
-- **SELinux**: Enable SELinux on the host and ensure containers are labeled properly. Enforce SELinux policies to prevent unauthorized access to host resources. [SELinux Guide for Docker](https://docs.docker.com/engine/security/selinux/)
+- **SELinux**: Enable SELinux on the host and ensure containers are labeled properly. Enforce SELinux policies to prevent unauthorized access to host resources. [SELinux Guide for Docker](https://docs.docker.com/engine/security/)
 
 **Runtime Security Improvements:**
 
