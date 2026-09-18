@@ -8,6 +8,13 @@ You are the lead reviewer for the OWASP Cheat Sheet Series, triaging a contribut
 
 Apply the rules in [AGENTS.md](../../AGENTS.md), [CONTRIBUTING.md](../../CONTRIBUTING.md), and [GUIDELINE.md](../../GUIDELINE.md).
 
+## Runtime compatibility
+
+- This workflow must work in runtimes that **do** or **do not** support Claude-style slash commands, custom subagents, or shared cross-agent context.
+- Use **platform-native GitHub tools/APIs** when available. If they are unavailable, fall back to `gh` and local `git`.
+- If the runtime cannot launch independent reviewer agents, perform the same five review dimensions yourself in this conversation. Do **not** fail just because subagents are unavailable.
+- Never assume another agent can see this conversation's context unless the runtime explicitly guarantees it. Re-send all required inputs when delegating.
+
 ## Input
 
 `$ARGUMENTS`
@@ -18,7 +25,16 @@ Apply the rules in [AGENTS.md](../../AGENTS.md), [CONTRIBUTING.md](../../CONTRIB
 
 ## Step 1 — Gather context
 
-**PR mode** (use `gh`; the repo is `OWASP/CheatSheetSeries`):
+**PR mode** (the repo is `OWASP/CheatSheetSeries`):
+
+Preferred: use platform-native GitHub PR tools/APIs to fetch:
+
+- PR metadata: number, title, author, body, additions, deletions, changed files, state, URL
+- unified diff
+- changed-file list
+- CI/check status
+
+Fallback with `gh`:
 
 ```bash
 gh auth status          # if not authenticated, tell the user to run `gh auth login` and stop
@@ -37,11 +53,13 @@ Then read the **full current content** of each changed `cheatsheets/*.md` (and `
 - **Scope:** count changed `cheatsheets(_draft)?/*.md` files and net added lines. CI limits are **3 files** and **1500 net additions** (without a linked issue). Note violations.
 - **Issue link / AI disclosure:** does the PR body reference a tracking issue where required, and complete the **AI Tool Usage** disclosure? A blank AI-disclosure section is grounds to close.
 - **Single-topic focus:** is this one coherent change, or unrelated edits bundled together?
-- **CI status (PR mode):** `gh pr checks <N>` — note failing markdownlint/textlint/link-check/scope/citation checks (don't re-do their mechanical work; build on it).
+- **CI status (PR mode):** use platform-native check/status tools if available; otherwise `gh pr checks <N>` — note failing markdownlint/textlint/link-check/scope/citation checks (don't re-do their mechanical work; build on it).
 
-## Step 3 — Fan out specialized reviewers (in parallel)
+## Step 3 — Evaluate the five review dimensions
 
-Launch all five subagents **in a single message** so they run concurrently (subagents do **not** share this conversation's context). Pass each one, inline in its prompt: the PR title and body (intent), the unified diff (`gh pr diff <N>`), the full current content of each changed cheat sheet, and the file paths so they can read more if needed.
+Preferred path when the runtime supports independent reviewer agents: launch all five reviewers in parallel. Pass each one, inline in its prompt: the PR title and body (intent), the unified diff, the full current content of each changed cheat sheet, and the file paths so they can read more if needed.
+
+Fallback path when the runtime does **not** support independent agents: review the same five dimensions yourself, explicitly and separately, before consolidating. Use repo files plus fetched sources as evidence. Do not skip a dimension just because you are running single-agent.
 
 1. `cheatsheet-security-reviewer` — is the security advice correct, current, and safe?
 2. `cheatsheet-practicality-reviewer` — is it actionable and realistic for a developer? (may be N/A)
@@ -97,7 +115,7 @@ Print this report:
 
 ## Step 6 — Optional post (only if `--post` and PR mode)
 
-Show the "Suggested reply to author" and **ask for explicit confirmation** before posting. Only on a clear yes:
+Show the "Suggested reply to author" and **ask for explicit confirmation** before posting. Only on a clear yes, use a platform-native PR comment tool if available; otherwise:
 
 ```bash
 gh pr comment <N> --body-file <file>
