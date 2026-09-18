@@ -4441,6 +4441,9 @@
 <ul>
 <li>Double extensions, <em>e.g.</em> <code>.jpg.php</code>, where it circumvents easily the regex <code>\.jpg</code></li>
 <li>Null bytes, <em>e.g.</em> <code>.php%00.jpg</code>, where <code>.jpg</code> gets truncated and <code>.php</code> becomes the new extension</li>
+<li>Case manipulation, <em>e.g.</em> <code>.pHp</code>, <code>.phP</code>, to bypass case-sensitive blocklist filters</li>
+<li>Alternative extensions that may be mapped to the same server-side interpreter depending on configuration, <em>e.g.</em> <code>.phtml</code>, <code>.php5</code>, <code>.pht</code> for PHP, or <code>.jsp</code>/<code>.jspx</code>, <code>.asp</code>/<code>.aspx</code> for Java/.NET (<a href="https://portswigger.net/web-security/file-upload">PortSwigger</a>)</li>
+<li>Windows NTFS Alternate Data Streams, <em>e.g.</em> <code>shell.asp:.jpg</code> or <code>shell.php::$DATA</code>, where the colon is interpreted as a stream separator and the actual file created on disk carries the extension before the colon - reject any filename containing a colon (<code>:</code>) (<a href="https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload">OWASP - Unrestricted File Upload</a>)</li>
 <li>Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.</li>
 </ul>
 <p>Refer to the <a href="Input_Validation_Cheat_Sheet.html">Input Validation CS</a> to properly parse and process the extension.</p>
@@ -4477,6 +4480,7 @@ to bypass such a check.</p>
 </ul>
 </li>
 </ul>
+<p>On Windows/NTFS, a long filename is automatically given an 8.3 short name alias by the file system, <em>e.g.</em> <code>web.config</code> may also be reachable as <code>WEB~1.CON</code> (<a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-8dot3name">Microsoft <code>fsutil 8dot3name</code></a>). If an overwrite or collision check validates only the long filename supplied by the user, an attacker who can predict the short alias of an existing sensitive file may reference it directly to overwrite that file, bypassing an exact-name or extension check. Generating the stored filename server-side, as recommended above, removes this risk, since the attacker no longer controls which file is targeted. Where that isn't possible, short filename generation can be disabled at the file system level (<code>fsutil behavior set disable8dot3 1</code>) — see the <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-8dot3name">Microsoft <code>fsutil 8dot3name</code></a> and <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-behavior"><code>fsutil behavior</code></a> documentation.</p>
 <h3 id="file-content-validation">File Content Validation<a class="headerlink" href="#file-content-validation" title="Permanent link">&para;</a></h3>
 <p>As mentioned in the <a href="#public-file-retrieval">Public File Retrieval</a> section, file content can contain malicious, inappropriate, or illegal data.</p>
 <p>Based on the expected type, special file content validation can be applied:</p>
@@ -4497,6 +4501,7 @@ to bypass such a check.</p>
    - If read access is required, setting proper controls is a must (<em>e.g.</em> internal IP, authorized user, etc.)</li>
 </ol>
 <p>Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.</p>
+<p>Be aware that an attacker may attempt to upload a web server configuration file (<em>e.g.</em> <code>.htaccess</code>, <code>web.config</code>) into the upload directory. If the web server allows per-directory configuration overrides, such a file could be used to change how that directory handles file types, for example mapping an otherwise harmless extension to be executed by the server. As a second layer of defense, disable per directory configuration overrides on upload directories at the web server level (<em>e.g.</em> Apache <code>AllowOverride None</code>, locked IIS handler mappings), in addition to storing files outside the webroot as recommended above.</p>
 <blockquote>
 <p>Some files are emailed or processed once they are uploaded, and are not stored on the server. It is essential to conduct the security measures discussed in this sheet before doing any actions on them.</p>
 </blockquote>
