@@ -2638,10 +2638,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-use-npm-author-tokens" class="md-nav__link">
+  <a href="#9-minimize-npm-access-token-use" class="md-nav__link">
     <span class="md-ellipsis">
       
-        9) Use npm author tokens
+        9) Minimize npm Access Token Use
       
     </span>
   </a>
@@ -4469,10 +4469,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-use-npm-author-tokens" class="md-nav__link">
+  <a href="#9-minimize-npm-access-token-use" class="md-nav__link">
     <span class="md-ellipsis">
       
-        9) Use npm author tokens
+        9) Minimize npm Access Token Use
       
     </span>
   </a>
@@ -4777,12 +4777,13 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <p>When security vulnerabilities are found, they pose a potentially serious threat if they are publicised without prior warning or appropriate remedial action for users who cannot protect themselves.</p>
 <p>It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, its impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.</p>
 <h2 id="8-enable-2fa">8) Enable 2FA<a class="headerlink" href="#8-enable-2fa" title="Permanent link">&para;</a></h2>
-<p>Enabling two-factor authentication (2FA) is a critical npm security best practice. The npm registry supports two modes for enabling 2FA in a user’s account:</p>
+<p>Enabling two-factor authentication (2FA) is a critical npm security best practice. npm requires 2FA or a granular access token configured to bypass 2FA for package publishing. For interactive publishing, require 2FA and disallow token-based publishing where practical.</p>
+<p>npm supports two 2FA modes for an account:</p>
 <ul>
 <li>Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.</li>
 <li>Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.</li>
 </ul>
-<p>To get started, see the official documentation: <a href="https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification">Requiring 2FA</a>.</p>
+<p>To get started, see the official documentation for <a href="https://docs.npmjs.com/configuring-two-factor-authentication/">configuring 2FA</a> and <a href="https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification/">requiring 2FA for package publishing</a>.</p>
 <p>Equip yourself with an authentication application, such as Google Authenticator, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (&gt;=5.5.1):</p>
 <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>profile<span class="w"> </span>enable-2fa<span class="w"> </span>auth-and-writes
 </code></pre></div>
@@ -4792,13 +4793,10 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <li><a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning">About secret scanning</a></li>
 <li><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure">Best practices for securing accounts</a></li>
 </ul>
-<h2 id="9-use-npm-author-tokens">9) Use npm author tokens<a class="headerlink" href="#9-use-npm-author-tokens" title="Permanent link">&para;</a></h2>
-<p>Every time you log in with the npm CLI, a token is generated for your user and authenticates you to the npm registry. Tokens make it easy to perform npm registry-related actions during CI and automated procedures, such as accessing private modules on the registry or publishing new versions from a build step.</p>
-<p>Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create a read-only token that is restricted to a specific IPv4 address range is as follows:</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>token<span class="w"> </span>create<span class="w"> </span>--read-only<span class="w"> </span>--cidr<span class="o">=</span><span class="m">192</span>.0.2.0/24
-</code></pre></div>
-<p>To verify which tokens are created for your user or to revoke tokens in cases of emergency, you can use <code>npm token list</code> or <code>npm token revoke</code> respectively.</p>
-<p>Ensure you are following this npm security best practice by protecting and minimizing the exposure of your npm tokens.</p>
+<h2 id="9-minimize-npm-access-token-use">9) Minimize npm Access Token Use<a class="headerlink" href="#9-minimize-npm-access-token-use" title="Permanent link">&para;</a></h2>
+<p>Classic npm tokens have been revoked. Prefer <a href="https://docs.npmjs.com/trusted-publishers/">trusted publishing with OpenID Connect</a> for supported CI/CD publishing workflows because it avoids stored, long-lived publishing credentials.</p>
+<p>When a token is still required, use a <a href="https://docs.npmjs.com/about-access-tokens/">granular access token</a> with only the packages, organizations, and permissions needed. Use read-only access for dependency installation, set the shortest practical expiration, restrict source IP ranges where stable, and enable bypassing 2FA only for non-interactive workflows that cannot use trusted publishing. Store the token in a CI secret store and never commit it.</p>
+<p>Review tokens regularly with <code>npm token list</code> and immediately revoke unnecessary or exposed tokens with <code>npm token revoke &lt;token-id&gt;</code>.</p>
 <h2 id="10-understanding-typosquatting-and-slopsquatting-attacks">10) Understanding typosquatting and slopsquatting attacks<a class="headerlink" href="#10-understanding-typosquatting-and-slopsquatting-attacks" title="Permanent link">&para;</a></h2>
 <h3 id="typosquatting-attacks">Typosquatting attacks<a class="headerlink" href="#typosquatting-attacks" title="Permanent link">&para;</a></h3>
 <p>Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors publish malicious modules to the npm registry with names that look much like existing popular modules. These malicious packages exploit common typing errors or visual similarities to trick developers into installing them instead of the legitimate packages they intended to use.</p>
@@ -4818,7 +4816,7 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <li>In team environments, add <code>npm view &lt;package-name&gt;</code> as a CI check for any new AI-suggested dependencies before they reach production.</li>
 </ul>
 <h2 id="11-use-trusted-publishers-for-secure-package-publishing">11) Use trusted publishers for secure package publishing<a class="headerlink" href="#11-use-trusted-publishers-for-secure-package-publishing" title="Permanent link">&para;</a></h2>
-<p>Traditional npm publishing relies on long-lived tokens that can be compromised or accidentally exposed. Trusted publishing with OpenID Connect (OIDC) provides a more secure alternative by using short-lived, workflow-specific credentials that are automatically generated during CI/CD processes. Trusted publishing currently supports GitHub Actions and GitLab CI/CD Pipelines.</p>
+<p>Traditional npm publishing relies on long-lived tokens that can be compromised or accidentally exposed. Trusted publishing with OpenID Connect (OIDC) provides a more secure alternative by using short-lived, workflow-specific credentials that are automatically generated during CI/CD processes. Check the <a href="https://docs.npmjs.com/trusted-publishers/">official trusted publishing documentation</a> for the current supported providers and runner restrictions.</p>
 <h3 id="how-trusted-publishing-works">How trusted publishing works<a class="headerlink" href="#how-trusted-publishing-works" title="Permanent link">&para;</a></h3>
 <p>Trusted publishing creates a trust relationship between npm and your CI/CD provider using OIDC. When you configure a trusted publisher for your package, npm will accept publishes from the specific workflow you've authorized, in addition to traditional authentication methods like npm tokens and manual publishes. The npm CLI automatically detects OIDC environments and uses them for authentication before falling back to traditional tokens.</p>
 <p>This approach eliminates the security risks associated with long-lived write tokens, which can be compromised, accidentally exposed in logs, or require manual rotation. Instead, each publish uses short-lived, cryptographically-signed tokens that are specific to your workflow and cannot be extracted or reused.</p>
