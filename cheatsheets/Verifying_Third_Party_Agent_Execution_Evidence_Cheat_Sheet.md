@@ -30,10 +30,11 @@ A component that writes its own execution log can omit the call that mattered, r
 - Check whether the signing service will sign arbitrary content on the component's request.
 - If it will, that signature is worth what a readable key is worth.
 - Look for a copy landing where the component cannot change it. [ASVS 16.4.2](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x25-V16-Security-Logging-and-Error-Handling.md) asks that logs "cannot be modified".
+- Anchoring the record in a transparency log does not raise this count. A log appends what it is given without appraising it. [RFC 9162](https://datatracker.ietf.org/doc/html/rfc9162#section-1) says the logs "do not themselves prevent misissuance". Anchoring buys tamper-evidence after entry and public discoverability. It does not add a second party who would have to cooperate.
 
 **Outcome:** Most agent telemetry shipping today is a supplier assertion: SDK-emitted spans, a framework's own traces, an MCP server's logs, and a hosted provider's export are all fed by the component and handled downstream by a single party. Independently re-checkable needs an input the component did not choose and a party with no stake in the answer. A supplier who will not describe the path scores no information. Where the answer is supplier assertion and you still have to proceed:
 
-- Corroborate against a record your own side produces, such as a gateway or egress log covering the same calls. Where you have no leverage over the supplier at all, this is the move that always remains: run the component behind a gateway, proxy, or egress point you control, and record there.
+- Corroborate against a record your own side produces, such as a gateway or egress log covering the same calls. Where you have no leverage over the supplier at all, this is usually the move that remains: run the component behind a gateway, proxy, or egress point you control, and record there. A boundary recorder sees only what crosses that boundary. It does not see a local stdio MCP server's file writes or in-process tool calls. Request bodies are also out of its reach where the TLS connection ends somewhere you do not control, and there it cannot tell you whether an argument was rewritten.
 - Contract for a copy delivered to a party the supplier cannot edit. This needs procurement leverage that a team adopting a community component will not have.
 - Size the decision so this record is not its only basis. A supplier assertion is adequate for debugging, capacity planning, and detecting non-adversarial failure; it is not adequate as the sole basis for incident attribution, a customer-facing breach statement, a compliance attestation, or a contractual dispute.
 
@@ -76,7 +77,7 @@ Reviewers read absence as evidence: no denied call means nothing was denied. Tha
 - Treat a transparency log as detection of removal after entry. It says nothing about an entry that was never made.
 - [RFC 9162](https://datatracker.ietf.org/doc/html/rfc9162) describes an append-only log built on Merkle Trees, which can prove that "any particular instance of the log is a superset of any particular previous instance".
 - A log is itself a party. RFC 9162 notes that its auditing mechanisms "can be circumvented by a misbehaving log that shows different, inconsistent views of itself to different clients", so "it is necessary to treat each log as a trusted third party". Credit an inclusion proof only where the log's tree heads are witnessed or gossiped outside the log operator, and apply question 1 to that operator.
-- [Sigstore's Rekor](https://docs.sigstore.dev/logging/overview/) is one deployed instance of such a log.
+- [Sigstore's Rekor](https://docs.sigstore.dev/logging/overview/) is one deployed instance of such a log. Check the witness policy of the specific log you rely on before crediting an inclusion proof, since a log can be append-only and still publish checkpoints nobody outside its operator co-signs.
 - Find out what forces an event into that log when it occurs, and whether that mechanism is under the observed component's control.
 - Discount a sequence number the producer maintains, since it counts what the producer chose to count.
 - Gap detection needs a sequence advanced from outside the producer's control, such as an independent log's tree size.
@@ -124,11 +125,11 @@ The six questions are indifferent to format, so running them over four common re
 | Record | Q1 origin | Q2 timing | Q3 subject | Q4 coverage | Q5 failure | Q6 check |
 |---|---|---|---|---|---|---|
 | Hosted agent's [OpenTelemetry](https://opentelemetry.io/docs/concepts/signals/traces/) spans, exported by the vendor | Assertion | Assertion | Assertion | None | None | None |
-| Self-hosted MCP server stdout you capture yourself | Assertion | Re-checkable | None | Assertion | None | None |
+| Self-hosted MCP server stdout you capture yourself | Assertion | Assertion | None | Assertion | None | None |
 | [in-toto Statement](https://github.com/in-toto/attestation/blob/main/spec/v1/statement.md) signed by the supplier | Assertion | Assertion | Re-checkable | None | None | Re-checkable |
-| Receipt anchored in a transparency log witnessed outside its operator | Re-checkable | Re-checkable | Re-checkable | Assertion | None | Re-checkable |
+| Receipt anchored in a transparency log witnessed outside its operator | Assertion | Re-checkable | Re-checkable | Assertion | None | Re-checkable |
 
-Re-checkable, assertion and none abbreviate the three outcomes above. Read the table across rather than down. No row is independently re-checkable on all six, and no row reaches that outcome on question 4 or question 5 at all, because neither asks what the bytes say; both ask what the recorder was positioned to see and whether it could decline to write. The strongest row still scores no information on question 5. The self-hosted row is the one a reader can move without anyone's permission, since controlling the host makes injecting an event and interrupting the recording path both available.
+Re-checkable, assertion and none abbreviate the three outcomes above. Read each row as a whole. What matters is the mix of outcomes for one record type; a single column compared across types tells you little. No row is independently re-checkable on all six, and no row reaches that outcome on question 4 or question 5. Both outcomes name routes that do reach it. Every one of those routes runs through work the reviewer has not yet done at the point these scores apply. The strongest row still scores no information on question 5. Row 2's assertions come from you, and that helps your own investigation and carries no weight in a dispute with the supplier. The self-hosted row is the one a reader can move without anyone's permission. Controlling the host makes injecting an event and interrupting the recording path both available.
 
 ## What These Questions Do Not Cover
 
