@@ -25,34 +25,41 @@ jobs:
         node-version: 20.x
     - name: Install dependencies
       run: npm ci --ignore-scripts
+    - name: Run link-check regression tests
+      id: regression
+      run: npm run test:link-check
     - name: Run link check
+      id: linkcheck
       run: npm run link-check
     - name: Show broken links
       id: brokenlinks
-      if: failure()
+      if: failure() && steps.linkcheck.outcome == 'failure'
       run: |
-        awk '
-          /^FILE:/ { file=$0; in_errors=0; file_printed=0; next }
-          /^[[:space:]]*ERROR:/ { in_errors=1; next }
-          in_errors && /^[[:space:]]*\[✖\]/ {
-            if (!file_printed) { print file; file_printed=1 }
-            print
-          }
-        ' log > brokenlinks
-        rm -f err log
-        if [[ -s brokenlinks ]]; then
-          cat brokenlinks
-          {
-            echo 'links<<EOF'
-            echo '**Following links are broken:**'
-            cat brokenlinks
-            echo 'EOF'
-          } >> "$GITHUB_OUTPUT"
+        if [[ ! -f log ]]; then
+          echo 'links=Link check failed before producing a log. The checker may be unavailable.' >> "$GITHUB_OUTPUT"
         else
-          echo 'links=Link check failed, but no broken-link details could be extracted.' >> "$GITHUB_OUTPUT"
+          awk '
+            /^FILE:/ { file=$0; file_printed=0; next }
+            /\[✖\]/ {
+              if (file != "" && !file_printed) { print file; file_printed=1 }
+              print
+            }
+          ' log > brokenlinks
+          if [[ -s brokenlinks ]]; then
+            cat brokenlinks
+            {
+              echo 'links<<EOF'
+              echo '**Following links are broken:**'
+              cat brokenlinks
+              echo 'EOF'
+            } >> "$GITHUB_OUTPUT"
+          else
+            echo 'links=Link check failed, but no broken-link details could be extracted.' >> "$GITHUB_OUTPUT"
+          fi
         fi
+        rm -f err log
     - name: Send comment to PR with broken links
-      if: failure() && github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request' && steps.brokenlinks.outcome == 'success'
       uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
       with:
         message: ${{ steps.brokenlinks.outputs.links }}

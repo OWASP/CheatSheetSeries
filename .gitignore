@@ -2,6 +2,8 @@
 .vscode
 # Audit result files
 *.out
+/log
+/err
 # Website generation stuff
 TOC.md
 node_modules/
