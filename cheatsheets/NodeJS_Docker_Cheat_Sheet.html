@@ -4508,7 +4508,7 @@ start()
 <li>The handler waits for clean up operations like database connections, ongoing HTTP requests and others.</li>
 <li>The handler then terminates the Node.js process.</li>
 </ol>
-<p>Specifically with Fastify, we can have our handler call on <a href="https://www.fastify.io/docs/latest/Server/">fastify.close()</a> which returns a promise that we will await, and Fastify will also take care to respond to every new connection with the HTTP status code 503 to signal that the application is unavailable.</p>
+<p>Specifically with Fastify, we can have our handler call on <a href="https://fastify.dev/docs/latest/Reference/Server/#close">fastify.close()</a> which returns a promise that we will await, and Fastify will also take care to respond to every new connection with the HTTP status code 503 to signal that the application is unavailable.</p>
 <p>Let’s add our event handler:</p>
 <div class="highlight"><pre><span></span><code>async function closeGracefully(signal) {
    console.log(`*^!@4=&gt; Received signal to terminate: ${signal}`)

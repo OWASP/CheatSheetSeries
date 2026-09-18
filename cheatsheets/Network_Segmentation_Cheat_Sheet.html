@@ -4488,7 +4488,7 @@ An example of such segmentation:
 <p>As you can see, there is only one incoming access to each network, access is opened up to the balancer in the network. However, in this case, segmentation no longer works, access control between applications from different network segments is performed at the 7th level of the OSI model using a balancer.</p>
 <h2 id="network-security-policy">Network security policy<a class="headerlink" href="#network-security-policy" title="Permanent link">&para;</a></h2>
 <p>The organization must define a "paper" policy that describes firewall rules and basic allowed network access.
-This policy is at least useful:</p>
+This policy is at least useful for:</p>
 <ul>
 <li>network administrators;</li>
 <li>security representatives;</li>
@@ -4506,8 +4506,8 @@ This policy is at least useful:</p>
 <h4 id="secure-logging">Secure logging<a class="headerlink" href="#secure-logging" title="Permanent link">&para;</a></h4>
 <p>It is important that in the event of a compromise of any information system, its logs are not subsequently modified by an attacker. To do this, you can do the following: copy the logs to a separate server, for example, using the syslog protocol, which does not allow an attacker to modify the logs, syslog only allows you to add new events to the logs.
 The network security policy for this activity looks like this:
-<img alt="Logging" src="https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_logs.drawio.png" />
-In this example, we are also talking about application logs that may contain security events, as well as potentially important events that may indicate an attack.</p>
+<img alt="Logging" src="https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_logs.drawio.png" /></p>
+<p>In this example, we are also talking about application logs that may contain security events, as well as potentially important events that may indicate an attack.</p>
 <h4 id="permissions-for-monitoring-systems">Permissions for monitoring systems<a class="headerlink" href="#permissions-for-monitoring-systems" title="Permanent link">&para;</a></h4>
 <p>Suppose a company uses Zabbix as an IT monitoring system. In this case, the policy might look like this:
 <img alt="Zabbix-Example" src="https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_Monitoring.drawio.png" /></p>
