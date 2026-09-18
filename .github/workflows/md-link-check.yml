@@ -39,6 +39,9 @@ jobs:
           echo 'links=Link check failed before producing a log. The checker may be unavailable.' >> "$GITHUB_OUTPUT"
         else
           awk '
+            {
+              gsub(/\033\[[0-9;]*[A-Za-z]/, "")
+            }
             /^FILE:/ { file=$0; file_printed=0; next }
             /\[✖\]/ {
               if (file != "" && !file_printed) { print file; file_printed=1 }
@@ -59,7 +62,7 @@ jobs:
         fi
         rm -f err log
     - name: Send comment to PR with broken links
-      if: github.event_name == 'pull_request' && steps.brokenlinks.outcome == 'success'
+      if: github.event_name == 'pull_request' && steps.brokenlinks.outcome == 'success' && github.event.pull_request.head.repo.full_name == github.repository
       uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
       with:
         message: ${{ steps.brokenlinks.outputs.links }}

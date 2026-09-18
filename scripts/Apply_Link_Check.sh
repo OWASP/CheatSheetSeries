@@ -6,10 +6,10 @@
 # Never prints "All good" unless every targeted file was actually checked
 # and the checker reported no errors.
 
-set -u
+set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$ROOT" || exit 1
+cd "$ROOT"
 
 CONFIG="${MARKDOWN_LINK_CHECK_CONFIG:-$ROOT/markdown-link-check-config.json}"
 CHECKER="${MARKDOWN_LINK_CHECK:-$ROOT/node_modules/.bin/markdown-link-check}"
@@ -21,7 +21,12 @@ fail_tooling() {
   exit 1
 }
 
-if [[ ! -x "$CHECKER" ]]; then
+strip_ansi() {
+  # Remove CSI sequences so FILE:/[✖] parsing does not depend on TTY color.
+  sed -E 's/\x1B\[[0-9;]*[A-Za-z]//g' "$@"
+}
+
+if [[ ! -f "$CHECKER" || ! -x "$CHECKER" ]]; then
   fail_tooling "markdown-link-check is not available at $CHECKER
 Install dependencies with: npm ci --ignore-scripts"
 fi
@@ -66,7 +71,7 @@ trap 'rm -f "$tmp_out" "$tmp_err"' EXIT
 
 invocation_failed=0
 for file in "${files[@]}"; do
-  if FORCE_COLOR=0 NO_COLOR=1 "$CHECKER" -c "$CONFIG" "$file" >"$tmp_out" 2>"$tmp_err"; then
+  if FORCE_COLOR=0 NO_COLOR=1 CLICOLOR=0 "$CHECKER" -c "$CONFIG" "$file" >"$tmp_out" 2>"$tmp_err"; then
     file_status=0
   else
     file_status=$?
@@ -75,12 +80,15 @@ for file in "${files[@]}"; do
   # Keep stdout and stderr together in log so the workflow can extract FILE:
   # and [✖] lines. markdown-link-check 3.x prints ERROR: on stderr.
   {
-    cat "$tmp_out"
-    cat "$tmp_err"
+    strip_ansi "$tmp_out"
+    strip_ansi "$tmp_err"
   } | tee -a "$LOG"
-  cat "$tmp_err" | tee -a "$ERR" >&2
+  strip_ansi "$tmp_err" | tee -a "$ERR" >&2
 
   if [[ "$file_status" -ne 0 ]]; then
+    invocation_failed=1
+  elif ! strip_ansi "$tmp_out" "$tmp_err" | grep -q "FILE:"; then
+    echo "markdown-link-check produced no FILE: output for $file" >&2
     invocation_failed=1
   fi
 done

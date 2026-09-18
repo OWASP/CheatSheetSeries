@@ -2,14 +2,14 @@
 # Regression tests for fail-closed Markdown link checking (issue #2407).
 # Uses local fixtures only; does not scan the live cheatsheets corpus.
 
-set -u
+set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$ROOT" || exit 1
+cd "$ROOT"
 
 SCRIPT="$ROOT/scripts/Apply_Link_Check.sh"
 FIXTURES="$ROOT/tests/link-check/fixtures"
-CRASH_CHECKER="$ROOT/tests/link-check/fake-checkers/crash.sh"
+FAKE_CHECKERS="$ROOT/tests/link-check/fake-checkers"
 failures=0
 
 run_case() {
@@ -20,8 +20,10 @@ run_case() {
 
   local out
   local status
+  set +e
   out="$("$@" 2>&1)"
   status=$?
+  set -e
 
   if [[ "$expected_status" -eq 0 ]]; then
     if [[ "$status" -ne 0 ]]; then
@@ -65,18 +67,29 @@ run_case "broken-link fixture exits non-zero" 1 0 \
   bash "$SCRIPT" "$FIXTURES/broken"
 
 run_case "missing checker exits non-zero" 1 0 \
-  env MARKDOWN_LINK_CHECK="$ROOT/tests/link-check/fake-checkers/missing-checker" \
+  env MARKDOWN_LINK_CHECK="$FAKE_CHECKERS/missing-checker" \
   bash "$SCRIPT" "$FIXTURES/valid"
 
 run_case "crashing checker exits non-zero" 1 0 \
-  env MARKDOWN_LINK_CHECK="$CRASH_CHECKER" \
+  env MARKDOWN_LINK_CHECK="$FAKE_CHECKERS/crash.sh" \
   bash "$SCRIPT" "$FIXTURES/valid"
 
-bash "$SCRIPT" "$FIXTURES/broken" >/dev/null 2>&1 || true
-if grep -q "FILE:" "$ROOT/log" && grep -q "✖" "$ROOT/log"; then
-  echo "PASS: broken-link details written to log"
+run_case "silent checker exits non-zero" 1 0 \
+  env MARKDOWN_LINK_CHECK="$FAKE_CHECKERS/silent.sh" \
+  bash "$SCRIPT" "$FIXTURES/valid"
+
+run_case "ANSI-colored broken output exits non-zero" 1 0 \
+  env MARKDOWN_LINK_CHECK="$FAKE_CHECKERS/colored-broken.sh" \
+  bash "$SCRIPT" "$FIXTURES/valid"
+
+set +e
+env MARKDOWN_LINK_CHECK="$FAKE_CHECKERS/colored-broken.sh" \
+  bash "$SCRIPT" "$FIXTURES/valid" >/dev/null 2>&1
+set -e
+if grep -qE '^FILE:' "$ROOT/log" && grep -qE '\[✖\]' "$ROOT/log"; then
+  echo "PASS: ANSI-colored broken-link details written to log"
 else
-  echo "FAIL: log is missing FILE: or [✖] details for the workflow comment step"
+  echo "FAIL: log is missing a leading FILE: or [✖] line after ANSI stripping"
   failures=$((failures + 1))
 fi
 
