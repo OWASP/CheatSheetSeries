@@ -26,34 +26,21 @@ jobs:
     - name: Install dependencies
       run: npm ci --ignore-scripts
     - name: Run link check
+      id: link_check
       run: npm run link-check
-    - name: Show broken links
-      id: brokenlinks
-      if: failure()
-      run: |
-        awk '
-          /^FILE:/ { file=$0; in_errors=0; file_printed=0; next }
-          /^[[:space:]]*ERROR:/ { in_errors=1; next }
-          in_errors && /^[[:space:]]*\[✖\]/ {
-            if (!file_printed) { print file; file_printed=1 }
-            print
-          }
-        ' log > brokenlinks
-        rm -f err log
-        if [[ -s brokenlinks ]]; then
-          cat brokenlinks
-          {
-            echo 'links<<EOF'
-            echo '**Following links are broken:**'
-            cat brokenlinks
-            echo 'EOF'
-          } >> "$GITHUB_OUTPUT"
-        else
-          echo 'links=Link check failed, but no broken-link details could be extracted.' >> "$GITHUB_OUTPUT"
-        fi
-    - name: Send comment to PR with broken links
-      if: failure() && github.event_name == 'pull_request'
+    - name: Prepare link check diagnostics
+      id: link_check_diagnostics
+      if: always()
+      env:
+        LINK_CHECK_EVENT_NAME: ${{ github.event_name }}
+        LINK_CHECK_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+        LINK_CHECK_OUTCOME: ${{ steps.link_check.outcome }}
+        LINK_CHECK_REPOSITORY: ${{ github.repository }}
+      run: node scripts/Prepare_Link_Check_Diagnostics.js
+    - name: Send comment with unexpected broken links
+      if: always() && steps.link_check_diagnostics.outputs.should_comment == 'true'
       uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
       with:
-        message: ${{ steps.brokenlinks.outputs.links }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        message: '**Following unexpected links are broken:**'
+        file-path: link-check-unexpected.md
+        github-token: ${{ github.token }}
