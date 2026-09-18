@@ -139,6 +139,28 @@ Three things sit outside the six questions, and a reviewer is better off knowing
 - Records your own systems produce. Protecting logs at rest and in transit is in the [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html).
 - Runs spanning several parties. The failure to watch for is at the seams: one agent's record shows a delegation and the counterparty has no record of receiving it, while both answer all six questions well. For the payments-scoped version of this problem, see [Cross-Agent Payment Accountability](https://cheatsheetseries.owasp.org/cheatsheets/AML_Sanctions_AI_Agent_Payments_Cheat_Sheet.html#section-9-cross-agent-payment-accountability).
 
+## Do's and Don'ts
+
+### Do
+
+- Count the parties who would have to cooperate to produce a record for a run that never happened; a recorder the supplier operates is one party however many hosts it spans.
+- Recompute the subject digest over a copy you obtained independently, not over the copy shipped with the record.
+- Send a nonce to be signed into the record, and read it as a bound on the signing time.
+- Inject an event you expect to see, such as a denied call, and check that it reaches the record.
+- Interrupt the recording path yourself, and watch whether execution continues without it.
+- Record the same calls at an egress point you control, which sees what crosses that boundary and nothing else.
+- Fix the algorithm set in your verification policy in advance, as [RFC 8725 Section 3.1](https://datatracker.ietf.org/doc/html/rfc8725#section-3.1) requires.
+
+### Don't
+
+- Count anchoring in a transparency log as an extra party, because a log appends what it is given without appraising it.
+- Credit an inclusion proof from a log whose tree heads nobody outside its operator co-signs.
+- Accept a subject named as "the agent", or a digest that is identical across runs.
+- Read absence as evidence. A recorder that could not write an entry produces the same clean record as a run with nothing to report.
+- Trust a sequence number the producer maintains, since it counts only what the producer chose to count.
+- Accept "we have never recorded a gap" as evidence, until they show you a gap marker from a real outage or a test they run for you.
+- Treat a shared-secret receipt, or an answer from the producer's own service, as proof to a third party.
+
 ## References
 
 - [MCP Security Cheat Sheet](MCP_Security_Cheat_Sheet.md)
