@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**122** cheat sheets available.
+**123** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -133,6 +133,8 @@
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
 
 [JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Python](assets/Index_Python.svg) ![Json](assets/Index_Json.svg)
+
+[JavaScript and TypeScript Security Cheat Sheet](cheatsheets/JavaScript_and_TypeScript_Security_Cheat_Sheet.md)
 
 [Java Security Cheat Sheet](cheatsheets/Java_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
 
