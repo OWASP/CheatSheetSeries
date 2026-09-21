@@ -99,3 +99,5 @@ This repo ships an aggressive, multi-dimensional review workflow that is written
 ```
 
 It evaluates security, developer practicality, links/source quality, duplication & placement, and language, then returns a single verdict — **MERGE / REQUEST_CHANGES / CLOSE** — with evidence. When the runtime supports independent reviewers it can fan them out in parallel; otherwise it falls back to a single-agent review of the same dimensions. See [`.claude/commands/review-cheatsheet-pr.md`](.claude/commands/review-cheatsheet-pr.md). Use it to triage the backlog and fact-check sources at scale.
+
+The same review contract is mirrored for GitHub-native tooling in [`.github/skills/code-review/SKILL.md`](.github/skills/code-review/SKILL.md), which Copilot code review picks up, with the authoring conventions in [`.github/instructions/cheatsheets.instructions.md`](.github/instructions/cheatsheets.instructions.md). Keep them in step: a rule that changes in one belongs in the others.
