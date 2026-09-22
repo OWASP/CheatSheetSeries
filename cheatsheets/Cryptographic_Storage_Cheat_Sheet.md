@@ -35,7 +35,7 @@ For symmetric encryption **AES** with a key that's at least **128 bits** (ideall
 
 For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **Curve25519** as a preferred algorithm. If ECC is not available and  **RSA** must be used, then ensure that the key is at least **2048 bits**.
 
-#### Post-Quantum Consideration
+### Post-Quantum Consideration
 
 RSA and ECC-based public-key cryptography (including Curve25519) are not post-quantum secure. A future cryptographically relevant quantum computer could break them, which matters for data that must remain confidential over long periods.
 
