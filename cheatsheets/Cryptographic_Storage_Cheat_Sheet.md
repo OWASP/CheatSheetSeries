@@ -35,6 +35,14 @@ For symmetric encryption **AES** with a key that's at least **128 bits** (ideall
 
 For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **Curve25519** as a preferred algorithm. If ECC is not available and  **RSA** must be used, then ensure that the key is at least **2048 bits**.
 
+#### Post-Quantum Consideration
+
+RSA and ECC-based public-key cryptography (including Curve25519) are not post-quantum secure. A future cryptographically relevant quantum computer could break them, which matters for data that must remain confidential over long periods.
+
+Where post-quantum key establishment is required, use standardized mechanisms such as **ML-KEM (NIST FIPS 203)**, typically in a hybrid construction alongside a classical algorithm during migration.
+
+For broader migration guidance, see the proposed [Post-Quantum Cryptography Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/issues/2403).
+
 Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:
 
 - Key size.
