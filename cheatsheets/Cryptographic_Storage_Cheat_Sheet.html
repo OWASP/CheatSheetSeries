@@ -1296,6 +1296,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#post-quantum-consideration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Quantum Consideration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#custom-algorithms" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4254,6 +4265,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#post-quantum-consideration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Quantum Consideration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#custom-algorithms" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4461,6 +4483,10 @@
 <h2 id="algorithms">Algorithms<a class="headerlink" href="#algorithms" title="Permanent link">&para;</a></h2>
 <p>For symmetric encryption <strong>AES</strong> with a key that's at least <strong>128 bits</strong> (ideally <strong>256 bits</strong>) and a secure <a href="#cipher-modes">mode</a> should be used as the preferred algorithm.</p>
 <p>For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as <strong>Curve25519</strong> as a preferred algorithm. If ECC is not available and  <strong>RSA</strong> must be used, then ensure that the key is at least <strong>2048 bits</strong>.</p>
+<h3 id="post-quantum-consideration">Post-Quantum Consideration<a class="headerlink" href="#post-quantum-consideration" title="Permanent link">&para;</a></h3>
+<p>RSA and ECC-based public-key cryptography (including Curve25519) are not post-quantum secure. A future cryptographically relevant quantum computer could break them, which matters for data that must remain confidential over long periods.</p>
+<p>Where post-quantum key establishment is required, use standardized mechanisms such as <strong>ML-KEM (NIST FIPS 203)</strong>, typically in a hybrid construction alongside a classical algorithm during migration.</p>
+<p>For broader migration guidance, see the proposed <a href="https://github.com/OWASP/CheatSheetSeries/issues/2403">Post-Quantum Cryptography Cheat Sheet</a>.</p>
 <p>Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:</p>
 <ul>
 <li>Key size.</li>
