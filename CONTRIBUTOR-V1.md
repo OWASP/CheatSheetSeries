@@ -318,6 +318,8 @@ Sorting applied on the name is an alphabetical one.
 - [Joshua Beck](https://josh-beck.github.io)
 - Matthew Wright
 
+## [Securing Cascading Style Sheets Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)
+
 - [Santhosh Tuppad](https://twitter.com/santhoshst)
 
 ## [Session Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Session_Management_Cheat_Sheet.md)
