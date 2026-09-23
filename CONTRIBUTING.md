@@ -112,17 +112,17 @@ Follow these steps:
 
 2. Ensure that the markdown file you have created/modified do not have any dead links. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check). If you cannot use this plugin then, verify that all the links you have changed or added are valid before pushing.
     1. Install [NodeJS](https://nodejs.org/en/download/) to install NPM.
-    2. Install the validation plugin via the command `npm install -g markdown-link-check`
+    2. Install the repository's locked dependencies with `npm ci --ignore-scripts`.
     3. Use this command (from the repository root folder) on your markdown file to verify the presence of any dead links:
 
 ```bash
-markdown-link-check -c .markdownlinkcheck.json [MD_FILE]
+npx --no-install markdown-link-check -c markdown-link-check-config.json [MD_FILE]
 ```
 
 The should produce output similar to the below. Any identified dead links are shown using a red cross instead of a green tick before the link.
 
 ```bash
-$ markdown-link-check -c .markdownlinkcheck.json cheatsheets/Transaction_Authorization_Cheat_Sheet.md
+$ npx --no-install markdown-link-check -c markdown-link-check-config.json cheatsheets/Transaction_Authorization_Cheat_Sheet.md
 FILE: cheatsheets/Transaction_Authorization_Cheat_Sheet.md
 [✓] https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
 [✓] https://en.wikipedia.org/wiki/Chip_Authentication_Program
