@@ -169,7 +169,7 @@ navigate("/dashboard");
 
 ### Do Not Expose Secrets Through Environment Variables
 
-React applications built with modern bundlers such as Vite use a prefix convention to distinguish client-side from server-side environment variables. Variables prefixed with `VITE_` are bundled into the client-side JavaScript output and become publicly readable by anyone who inspects the application bundle ([Vite docs](https://vite.dev/guide/env-and-mode)). Next.js uses the `NEXT_PUBLIC_` prefix for the same purpose ([Next.js docs](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables)).e.
+React applications built with modern bundlers such as Vite use a prefix convention to distinguish client-side from server-side environment variables. Variables prefixed with `VITE_` are bundled into the client-side JavaScript output and become publicly readable by anyone who inspects the application bundle ([Vite docs](https://vite.dev/guide/env-and-mode)). Next.js uses the `NEXT_PUBLIC_` prefix for the same purpose ([Next.js docs](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables)).
 
 ```bash
 # ❌ Unsafe: bundled into client JavaScript, publicly readable
