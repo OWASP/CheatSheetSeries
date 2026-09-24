@@ -80,12 +80,13 @@ Reviewers read absence as evidence: no denied call means nothing was denied. Tha
 - [Sigstore's Rekor](https://docs.sigstore.dev/logging/overview/) is one deployed instance of such a log. Check the witness policy of the specific log you rely on before crediting an inclusion proof, since a log can be append-only and still publish checkpoints nobody outside its operator co-signs.
 - Find out what forces an event into that log when it occurs, and whether that mechanism is under the observed component's control.
 - Discount a sequence number the producer maintains, since it counts what the producer chose to count.
-- Gap detection needs a sequence advanced from outside the producer's control, such as an independent log's tree size.
+- Gap detection needs an expectation the producer cannot redefine: a per-execution sequence the observer advances, or a list of expected events drawn from your own boundary records, reconciled against the record you are handed.
+- Do not use a log's tree size as that sequence. [RFC 9162 Section 4.9](https://datatracker.ietf.org/doc/html/rfc9162#section-4.9) defines `tree_size` as "the number of entries currently in the log's Merkle Tree", so unrelated entries raise it while an event from this run is missing. Witnessed tree heads show that the log's history is append-only, not that this run contributed every entry it should have.
 - Generate an event you expect to appear, such as a denied call or a blocked write.
 - Check that it reaches the record you are handed.
 - Where you cannot run the component, ask for a sandbox tenant, and failing that cross-check against records from your own side of the boundary.
 
-**Outcome:** Coverage is independently re-checkable when something outside the producer saw the sequence: an independent log whose tree heads are witnessed outside its operator, your own boundary records, or an event you injected and found. A window backed only by the producer's own numbering is a supplier assertion. An undated selection, or a window you had to infer, gives no information about this execution.
+**Outcome:** Coverage of a stated execution or window is independently re-checkable when you reconcile the record against an expectation the producer cannot redefine, such as your own boundary records or a sequence you advanced per execution, and the claim extends only to what that observer was positioned to see. An event you injected and found shows that this event reached the record, not that every expected event did: treat it as a spot-check, not a completeness claim. Witnessed log checkpoints alone do not establish coverage of an execution. A window backed only by the producer's own numbering is a supplier assertion. An undated selection, or a window you had to infer, gives no information about this execution.
 
 ### 5. What happened if recording or delivery failed?
 
