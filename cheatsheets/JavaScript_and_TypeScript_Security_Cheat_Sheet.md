@@ -26,12 +26,12 @@ Never build code from strings. `eval` and `new Function` execute arbitrary code 
 
 ### Evil Regex (ReDoS)
 
-Nested quantifiers such as `(a+)+` or `^(a|aa)*$` can make matching take exponential time on crafted input, blocking the single-threaded event loop ([CWE-1333](https://cwe.mitre.org/data/definitions/1333.html)). Whether a pattern is actually exploitable depends on the surrounding expression and the failing input, not just the quantified group.
+Nested quantifiers such as `(a+)+`, and repeated ambiguous alternatives such as `^(a|aa)*$`, can make matching take exponential time on crafted input, consuming CPU and potentially blocking the executing thread or event loop ([CWE-1333](https://cwe.mitre.org/data/definitions/1333.html)). Whether a pattern is actually exploitable depends on the surrounding expression and the failing input, not just the quantified group.
 
 - Prefer well-tested validators over hand-written patterns for emails, URLs, and similar inputs.
 - Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters.
 - Cap untrusted input length before matching, and reject rather than sanitize when input does not match.
-- For the attack mechanics and detection tooling, see the [OWASP ReDoS guidance](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS); on the client, length caps are the primary control.
+- For the attack mechanics and detection tooling, see the [OWASP ReDoS guidance](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS); use linear-time patterns as the primary control and input-length caps as defense in depth.
 
 ### Strict Mode
 
@@ -39,7 +39,7 @@ Ship ES modules (strict by default) or declare `'use strict'`. Strict mode turns
 
 ## Object and Property Safety (Including Prototype Pollution)
 
-Prototype pollution ([CWE-1321](https://cwe.mitre.org/data/definitions/1321.html)) happens when attacker-controlled keys such as `__proto__`, `constructor`, or `prototype` reach a recursive merge or path setter that writes to a shared prototype, affecting every object on the page. The full protection guidance lives in the dedicated [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md); the rules below are the JavaScript-specific essentials.
+Prototype pollution ([CWE-1321](https://cwe.mitre.org/data/definitions/1321.html)) occurs when attacker-controlled keys such as `__proto__`, `constructor`, or `prototype` reach a recursive merge or path setter and modify an object's prototype. This can alter the behavior of objects that inherit from that prototype. The full protection guidance lives in the dedicated [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md); the rules below are the JavaScript-specific essentials.
 
 - Use a `Map` instead of a plain object when keys come from untrusted input.
 - Create key-value dictionaries with `Object.create(null)` so there is no prototype to pollute or inherit from.
