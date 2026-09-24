@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**123** cheat sheets available.
+**122** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -233,8 +233,6 @@
 [Secure Coding with AI Cheat Sheet](cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.md)
 
 [Secure Product Design Cheat Sheet](cheatsheets/Secure_Product_Design_Cheat_Sheet.md)
-
-[Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)
 
 [Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
 

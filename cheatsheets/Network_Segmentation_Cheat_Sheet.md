@@ -128,7 +128,7 @@ As you can see, there is only one incoming access to each network, access is ope
 ## Network security policy
 
 The organization must define a "paper" policy that describes firewall rules and basic allowed network access.
-This policy is at least useful:
+This policy is at least useful for:
 
 - network administrators;
 - security representatives;
@@ -153,6 +153,7 @@ The network security policy may define, for example, the basic permissions allow
 It is important that in the event of a compromise of any information system, its logs are not subsequently modified by an attacker. To do this, you can do the following: copy the logs to a separate server, for example, using the syslog protocol, which does not allow an attacker to modify the logs, syslog only allows you to add new events to the logs.
 The network security policy for this activity looks like this:
 ![Logging](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_logs.drawio.png)
+
 In this example, we are also talking about application logs that may contain security events, as well as potentially important events that may indicate an attack.
 
 #### Permissions for monitoring systems
