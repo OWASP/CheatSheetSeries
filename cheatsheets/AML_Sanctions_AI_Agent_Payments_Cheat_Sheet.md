@@ -164,18 +164,16 @@ Institutions must decide whether to run their own screening engine or use a host
 
 ## Section 8: Receipt Canonicalization (RFC 8785 / JCS)
 
-A compliance receipt is only verifiable across systems if every party serializes it to the **exact same bytes** before signing and verifying. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different byte streams for the *same* logical receipt, and a signature over one will fail against the other.
+This subsection proposes one cross-system receipt pattern; it does not define a standard receipt format. [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785) is an Informational RFC for canonical JSON. It does not specify the `action_ref` fields or the correlation scheme proposed here, and it does not specify a signature algorithm.
 
-Use the **JSON Canonicalization Scheme (JCS), [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785)**, to produce a deterministic byte representation before hashing and signing. The signer canonicalizes, hashes (for example with SHA-256), then signs; every verifier canonicalizes the received receipt identically and checks the signature. This makes receipts verifiable by **any** counterparty, regulator, or downstream agent, not just the issuing system.
-
-This subsection proposes an implementation of that requirement rather than describing an existing standard. RFC 8785 (JCS) and RFC 8032 (Ed25519) are published IETF specifications, and the canonicalization and signature behaviors described below follow from them directly. The `action_ref` content address, the receipt field set, and the correlation pattern built on them are proposed patterns. No RFC, NIST publication, or published audit framework specifies them, and no conformance suite currently tests them. Treat them as one worked implementation of the underlying requirement rather than as a standard to conform to.
+When systems independently serialize the same JSON object for hashing or signature verification, they need an agreed byte representation. JCS provides one such representation. Canonicalization is not necessary for every signed-token format: a [JWS](https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2) verifier checks the encoded signing input, rather than independently reserializing its payload. Verification also needs a trusted verification key and an agreed signature profile; canonicalization alone supplies neither.
 
 ### Do
 
-- Canonicalize every receipt with RFC 8785 (JCS) before signing, and again before verifying.
-- Sign over the hash of the canonical bytes, not raw or pretty-printed JSON.
+- For this JCS-based pattern, canonicalize the agreed receipt payload before signing and before verification.
+- Use the hashing and signing procedure required by the chosen signature profile and API; do not add a separate prehash unless that profile requires it.
 - Record the canonicalization, hash, and signature algorithm in the receipt (for example `canon: jcs`, `alg: ecdsa-p256-sha256`) so any verifier can reproduce it.
-- Derive a stable **content address** (`action_ref`) for each action: `action_ref = HEX(SHA-256(JCS({agent_id, action_type, scope, timestamp_ms})))`. This 64-character hex string uniquely and recomputably identifies the action across systems, enabling cross-system receipt correlation without replaying the full event log. [OWASP Agentic Skills Top 10 AST09](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast09.md) names `action_ref` as a "content-derived join key, independently recomputable" in the outcome receipt. It does not specify a construction. The SHA-256-over-JCS formula above is one way to satisfy that property and is a proposed pattern, not a standardized one.
+- Derive a stable **content address** (`action_ref`) for each action: `action_ref = HEX(SHA-256(JCS({agent_id, action_type, scope, timestamp_ms})))`. This 64-character hex digest is a collision-resistant content address for the selected fields. Separate invocations with identical fields produce the same address; where those must be distinguished, include an explicit invocation identifier in the agreed preimage. This address does not by itself establish that an action occurred. [OWASP Agentic Skills Top 10 AST09](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast09.md) names `action_ref` as a "content-derived join key, independently recomputable" in the outcome receipt. It does not specify a construction. The SHA-256-over-JCS formula above is one way to satisfy that property and is a proposed pattern, not a standardized one.
 
 ### Don't
 
@@ -217,7 +215,7 @@ A receipt stating "screened, no match" is meaningless without which version of t
       "list": "OFAC-SDN",
       "version": "2026-06-04",
       "freshness_max_age_hours": 24,
-      "screening_timestamp_ms": 1749081600000
+      "screening_timestamp_ms": 1780531200000
     }
   ],
   "result": "no_match",
@@ -242,7 +240,7 @@ The controls in this cheat sheet map to common AML and sanctions obligations. Th
 | Sanctions-list freshness in receipt (Section 10) | Obligation to screen against current lists; sanctions-evasion controls |
 | Fail-closed enforcement (Section 5) | Blocking obligations for sanctioned parties |
 | Trust-tiered limits (Section 6) | Risk-based approach (FATF Recommendation 1); monitoring thresholds |
-| Signed receipt with `action_ref` content address (Sections 4, 8-10) | EU AI Act Article 12, which requires that high-risk systems "shall technically allow for the automatic recording of events (logs) over the lifetime of the system". Article 12 requires the record to exist; it does not require it to be signed, tamper-evident, or produced by a party other than the system being logged. Most of the Act applies from 2 August 2026, and Article 6(1) from 2 August 2027. |
+| Signed receipt with `action_ref` content address (Sections 4, 8-10) | [EU AI Act Article 12](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-12) requires automatic event-logging capabilities for high-risk systems. It does not prescribe this receipt format, cryptographic signing or an independent verifier. As checked on 25 September 2026, the [Commission's applicability FAQ](https://ai-act-service-desk.ec.europa.eu/en/ai-act/faq/when-does-enforcement-start) gives 2 December 2027 for Annex III high-risk rules and 2 August 2028 for high-risk systems embedded in regulated products. Check the applicable scope and transition provisions before relying on these dates. |
 
 ### Do
 
