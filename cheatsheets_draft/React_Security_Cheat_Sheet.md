@@ -30,12 +30,12 @@ Unsanitized content can also enable DOM Clobbering. DOMPurify's default configur
 
 Any attribute that renders a URL is a potential injection sink. React 19 blocks `javascript:` URLs in `href`, `src`, `action`, `formAction`, `data`, and `xlinkHref`, replacing them with functions that throw ([react/react#29808](https://github.com/react/react/pull/29808)); React 16.9 through 18 only warn in development. This is not a URL sanitizer: it does not cover `data:` URLs, `srcSet`, `ping`, `poster`, `<iframe srcdoc>`, or `style` `url()`, so validate the scheme yourself.
 
-Validate untrusted URLs against an allow-list of expected schemes, defaulting to `https:` and `http:` and adding schemes such as `mailto:` or `tel:` only where the application requires them. Never allow `javascript:` or `data:` in navigable attributes. Scheme validation addresses script execution, not transport security; drop `http:` from the list where the application links only to its own HTTPS origins.
+For navigation targets such as `href`, validate untrusted URLs against an allow-list of expected schemes, defaulting to `https:` and `http:` and adding schemes such as `mailto:` or `tel:` only where the application requires them. Never allow `javascript:` or `data:` in navigable attributes. Scheme validation addresses script execution, not transport security; drop `http:` from the list where the application links only to its own HTTPS origins. Scheme validation is not enough for props that load or submit to a resource, such as `script src`, `iframe src`, `object data`, and `form action`: an arbitrary `https:` URL can still load attacker-controlled code or content, or send form data to an attacker, so those props need an allow-list of expected origins. `srcdoc` takes HTML and needs the sanitization described above, and `style` `url()` values need CSS-context validation.
 
 ```jsx
 const ALLOWED_SCHEMES = ["https:", "http:"]; // add "mailto:" or "tel:" only if required
 
-// Returns a normalized absolute URL, or null if the scheme is not allowed.
+// Returns a normalized absolute URL for navigation targets (href), or null if the scheme is not allowed.
 // During SSR, pass an explicit base instead of document.baseURI.
 function safeHref(untrustedUrl, base = document.baseURI) {
   try {
@@ -118,23 +118,13 @@ For guidance on avoiding dynamic code execution patterns such as `eval()` and `n
 
 ## Sensitive Data Exposure
 
-Avoid storing sensitive values in React component state longer than necessary. Component state is not private at runtime: React attaches its internal fiber and props objects to DOM nodes as expando properties (`__reactFiber$<key>` and `__reactProps$<key>`, set by [`precacheFiberNode` in `ReactDOMComponentTree.js`](https://github.com/react/react/blob/v19.2.0/packages/react-dom-bindings/src/client/ReactDOMComponentTree.js)), so any script running in the same page, including third-party analytics and session-replay scripts the application deliberately loads, can traverse from a DOM node to the component tree and read props and state, including values that are never rendered into the DOM. This is an implementation detail rather than a guarantee: React's main branch has begun gating these properties behind a feature flag, so the exact mechanism may change, but React provides no isolation of component state from other code running in the page. Separately, measurement research has [documented session-replay scripts collecting rendered page content and form input](https://freedom-to-tinker.com/2017/11/15/no-boundaries-exfiltration-of-personal-data-by-session-replay-scripts/) before submission, which is the DOM-level exposure path rather than fiber access.
+Avoid storing sensitive values in React component state longer than necessary. Component state is not private at runtime: React attaches its internal fiber and props objects to DOM nodes as expando properties (`__reactFiber$<key>` and `__reactProps$<key>`, set by [`precacheFiberNode` in `ReactDOMComponentTree.js`](https://github.com/react/react/blob/v19.2.0/packages/react-dom-bindings/src/client/ReactDOMComponentTree.js)), so any script running in the same page, including third-party analytics and session-replay scripts the application deliberately loads, can traverse from a DOM node to the component tree and read props and state, including values that are never rendered into the DOM. TThis is an implementation detail rather than a guarantee: React has introduced a feature flag (`enableInternalInstanceMap`) that moves these properties into internal maps, currently disabled in stable releases, so the exact mechanism may change; React provides no isolation of component state from other code running in the page. Separately, measurement research has [documented session-replay scripts collecting rendered page content and form input](https://freedom-to-tinker.com/2017/11/15/no-boundaries-exfiltration-of-personal-data-by-session-replay-scripts/) before submission, which is the DOM-level exposure path rather than fiber access.
 
 The guidance in this sheet addresses exposure to scripts the application itself includes. Compromise of a same-origin script, and browser extensions with content-script access, can read the DOM directly and sit outside the threat model that the countermeasures here address; protecting against those requires controls beyond the application layer.
 
 ### Store Authentication Tokens in httpOnly Cookies
 
-Do not store authentication tokens in `localStorage` or `sessionStorage`; both are readable by any JavaScript running in the origin, so a single XSS vulnerability discloses every token. The [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) covers token storage, cookie attributes, and the Backend for Frontend (BFF) pattern in full; this section covers only what is specific to React applications.
-
-A React client cannot set `httpOnly` cookies itself. Only a server can, so an SPA needs a server-side layer, such as a Next.js API route or Edge Function acting as a BFF, to exchange tokens with the authentication server and set the cookie on the client's behalf. The React application then never handles the raw token.
-
-```http
-Set-Cookie: __Host-authToken=...; HttpOnly; Secure; SameSite=Lax; Path=/
-```
-
-`SameSite=Lax` rather than `Strict` here because a `Strict` cookie is not sent on the top-level navigation back from an identity provider, which breaks the BFF login flow. `SameSite` is a defense-in-depth layer: combine it with a CSRF token or double-submit pattern rather than relying on it alone, per the [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
-
-`httpOnly` protects only the confidentiality of the cookie. An XSS payload running in the page can still make authenticated requests from the victim's browser, riding the session without ever reading the token, so `httpOnly` limits exfiltration and offline reuse but does not remove the need to fix XSS.
+Do not store authentication tokens in `localStorage` or `sessionStorage`; both are readable by JavaScript running in the same browser context. A React client cannot set an `httpOnly` cookie, so when the browser must authenticate through an `httpOnly` session cookie, use a server-side layer, often a Backend for Frontend (BFF), to set it. `httpOnly` keeps the token from being read, but an XSS payload can still make authenticated requests from the victim's browser, so it does not remove the need to fix XSS. Follow the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) for token storage, the BFF pattern, and cookie attributes including `SameSite`, and the [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) for CSRF controls.
 
 ### Minimize Sensitive Data in Component State and Props
 
@@ -142,7 +132,7 @@ Passing entire data objects through the component tree exposes sensitive fields 
 
 ```jsx
 // ❌ Unsafe: the entire user object reaches a component that needs two fields
-function ProfileHeader({ user }) {
+function UnsafeProfileHeader({ user }) {
   return <Avatar user={user} />;
 }
 
@@ -276,25 +266,11 @@ The HTML sanitization guidance in the XSS Prevention section applies equally to 
 
 ### JSON State Serialization
 
-Embedding state into `<script>` tags with `JSON.stringify` during SSR hydration allows attacker-controlled strings such as `</script>` to break out of the script context and inject markup. Escape HTML-significant characters before embedding state, using a library such as [serialize-javascript](https://github.com/yahoo/serialize-javascript); modern frameworks such as Next.js escape their serialized payloads automatically, so this applies mainly to hand-rolled SSR setups. See the [OWASP Cross-Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html) for output encoding in script contexts.
+Embedding state into `<script>` tags with `JSON.stringify` during SSR hydration allows attacker-controlled strings such as `</script>` to break out of the script context and inject markup. Escape HTML-significant characters before embedding state, using a library such as [serialize-javascript](https://github.com/yahoo/serialize-javascript), whenever you write the serialization yourself rather than relying on a framework's. See the [OWASP Cross-Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html) for output encoding in script contexts.
 
-### Authorize Inside Server Actions
+### Authorize Inside Server Functions
 
-A Server Action is a publicly reachable endpoint, so authorization belongs inside the action itself rather than in the page that renders the form. Arguments are fully client-controlled and must be validated as untrusted input before use; [react.dev](https://react.dev/reference/rsc/use-server) states this requirement for every Server Function. Framework-level controls, including the `Origin` and host comparison, `serverActions.allowedOrigins`, return-value minimization, and rate limiting, are covered in the [OWASP Next.js Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nextjs_Security_Cheat_Sheet.html).
-
-### Do Not Rely on the Routing Layer as the Sole Authorization Boundary
-
-A redirect performed before a request reaches your component is an optimistic check, not an authorization boundary: routing configuration can omit a path, and framework defects have allowed the layer to be bypassed entirely. Authorize again inside the Server Component or route handler, immediately before data is fetched. Framework-specific guidance, including Next.js Proxy and the deprecated `middleware.ts`, is covered in the [OWASP Next.js Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nextjs_Security_Cheat_Sheet.html).
-
-```jsx
-// Authorize inside the component, before fetching
-async function AdminPage() {
-  const session = await getSession();
-  if (!session?.user?.isAdmin) redirect("/login");
-  const data = await db.getAdminData();
-  return <AdminDashboard data={data} />;
-}
-```
+A Server Function is client-callable, so enforce authentication and authorization inside the function and validate every argument as untrusted input; [react.dev](https://react.dev/reference/rsc/use-server) states this requirement. Framework-specific Server Action and routing-layer controls are covered in the [OWASP Next.js Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nextjs_Security_Cheat_Sheet.html).
 
 ## Content Security Policy
 
