@@ -48,6 +48,8 @@ An RP ID determines where a credential can be used. Use the narrowest stable dom
 
 The server must use the same expected RP ID during registration and authentication. Maintain an explicit allowlist of permitted origins, including scheme, host, and port where applicable. Do not construct an expected origin from an untrusted request header.
 
+Native apps do not present an HTTPS origin. The origin an Android app reports is a string such as `android:apk-key-hash:<hash>`, derived from the app signing certificate, and both platforms decide whether an app may use your RP ID from an association file that you host: [`/.well-known/assetlinks.json`](https://developer.android.com/identity/credential-manager/prerequisites) on Android and the `webcredentials` entries in [`/.well-known/apple-app-site-association`](https://developer.apple.com/documentation/xcode/supporting-associated-domains) on Apple platforms (see the [RP ID and app origins overview](https://web.dev/articles/webauthn-rp-id)). The server must [match each app origin against its allowlist](https://developer.android.com/identity/passkeys/create-passkeys) as an explicit entry, never a pattern. Treat both association files as part of the RP attack surface with the same change control as the origin allowlist: an over-broad file, or a server that accepts an app origin it never listed, lets an unrelated app obtain assertions for your RP ID.
+
 [WebAuthn is restricted to secure contexts](https://www.w3.org/TR/webauthn-3/#sctn-api). Serve registration, authentication, and credential-management pages over HTTPS and protect them against script injection. Avoid cross-origin WebAuthn in embedded frames unless it is an intentional, reviewed design using the [required Permissions Policy and origin validation](https://www.w3.org/TR/webauthn-3/#sctn-iframe-guidance).
 
 ### Use a Maintained Library
@@ -150,6 +152,8 @@ When a nonzero counter does not increase as expected, record the event and evalu
 
 Return generic authentication errors that do not distinguish an unknown account, unknown credential, failed signature, or policy rejection. Keep externally visible response timing as consistent as practical. Rate-limit attempts by account and relevant network or device signals without creating a trivial account-lockout denial of service.
 
+A failed passkey ceremony must not silently fall back to a weaker method. Adversary-in-the-middle phishing does not defeat a correctly verified passkey ceremony; it steers the user to whatever fallback is still enabled, and [NIST SP 800-63B-4 Section 3.2.5](https://pages.nist.gov/800-63-4/sp800-63b.html) states that authenticators involving manual entry of an authenticator output, such as OTP and out-of-band codes, are not phishing-resistant. If a fallback exists, make it a deliberate, logged, policy-documented path rather than the default error handling, and follow the [MFA Downgrade Attacks](Multifactor_Authentication_Cheat_Sheet.md#mfa-downgrade-attacks) guidance.
+
 Log enough structured information to investigate failures, but never log challenges, full credential responses, session identifiers, or unnecessary user-identifying data. The [Logging Cheat Sheet](Logging_Cheat_Sheet.md) provides general logging guidance.
 
 ## Protect the Credential Lifecycle and Recovery
@@ -203,6 +207,7 @@ Use this checklist together with the W3C [registration](https://www.w3.org/TR/we
 - Generate cryptographically random, single-use, expiring challenges of at least 16 bytes.
 - Bind each challenge to its ceremony, account or session context, RP ID, origin, and policy.
 - Maintain an exact origin allowlist and a documented RP ID.
+- List native app origins explicitly and change-control the `assetlinks.json` and `apple-app-site-association` files together with the allowlist.
 - Verify type, challenge, origin, RP ID hash, UP, required UV, credential ownership, and signature.
 - Store public keys and credential metadata safely and enforce credential ID uniqueness.
 - Treat counters as risk signals rather than universal clone detection.
@@ -216,6 +221,7 @@ Use this checklist together with the W3C [registration](https://www.w3.org/TR/we
 - Notify users of credential lifecycle changes and retain useful audit events.
 - Make recovery commensurate with the security of passkey authentication.
 - Use generic error messages and protect account-first flows from enumeration.
+- Never let a failed passkey ceremony silently fall back to a non-phishing-resistant method.
 
 ### Privacy and Operations
 
