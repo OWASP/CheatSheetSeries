@@ -899,6 +899,28 @@
           "observedStatuses": [502, 502, 502]
         }
       ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "ac393f85d2eff599b344ec29c95b47ab7186c650",
+        "contentBaseCommit": "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+        "workflowRunId": 34235010164,
+        "workflowJobId": 102090344721,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/34235010164/job/102090344721"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/Drone_Security_Cheat_Sheet.md",
+          "url": "https://ieeexplore.ieee.org/abstract/document/9994719",
+          "observedStatuses": [418, 418, 418]
+        },
+        {
+          "file": "cheatsheets/Pinning_Cheat_Sheet.md",
+          "url": "https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md",
+          "observedStatuses": [429, 429, 429]
+        }
+      ]
     }
   ]
 }

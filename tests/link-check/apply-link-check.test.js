@@ -31,6 +31,15 @@ const supplementalProvenance = {
   workflowUrl:
     "https://github.com/OWASP/CheatSheetSeries/actions/runs/34228838406/job/102069549060",
 };
+const finalProvenance = {
+  attemptCount: 3,
+  checkedHead: "ac393f85d2eff599b344ec29c95b47ab7186c650",
+  contentBaseCommit: "e5420b90672011aa84d3e5de3c3e38f704a5033d",
+  workflowRunId: 34235010164,
+  workflowJobId: 102090344721,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/34235010164/job/102090344721",
+};
 
 function baseline(failures = []) {
   return {
@@ -164,27 +173,42 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 2);
+  assert.equal(value.batches.length, 3);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
+  assert.deepEqual(value.batches[2].generatedFrom, finalProvenance);
   assert.equal(value.batches[0].failures.length, 168);
   assert.equal(value.batches[1].failures.length, 7);
+  assert.deepEqual(value.batches[2].failures, [
+    {
+      file: "cheatsheets/Drone_Security_Cheat_Sheet.md",
+      url: "https://ieeexplore.ieee.org/abstract/document/9994719",
+      observedStatuses: [418, 418, 418],
+    },
+    {
+      file: "cheatsheets/Pinning_Cheat_Sheet.md",
+      url: "https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md",
+      observedStatuses: [429, 429, 429],
+    },
+  ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 175);
+  assert.equal(failures.length, 177);
   assert.equal(new Set(failures.map(({ file }) => file)).size, 64);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    175,
+    177,
   );
   assert.ok(
-    value.batches[1].failures.every(
-      ({ observedStatuses }) =>
-        observedStatuses.length === 3 && observedStatuses.every(Number.isInteger),
+    value.batches.slice(1).every(({ failures: batchFailures }) =>
+      batchFailures.every(
+        ({ observedStatuses }) =>
+          observedStatuses.length === 3 &&
+          observedStatuses.every(Number.isInteger),
+      ),
     ),
   );
   for (const inconsistentUrl of [
     "https://github.com/jdereg/json-io/blob/master/user-guide.md#non-typed-usage",
-    "https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md",
     "https://azure.microsoft.com/nl-nl/services/key-vault/",
   ]) {
     assert.equal(failures.some(({ url }) => url === inconsistentUrl), false);
@@ -216,6 +240,32 @@ test("a broken local link exits nonzero with only unexpected diagnostics", (t) =
   assert.equal(result.known, "");
   assert.match(result.unexpected, /FILE: cheatsheets\/broken\.md/);
   assert.match(result.unexpected, /\[✖\] missing\.md → Status: 400/);
+});
+
+test("ANSI-colored checker output retains exact file and URL provenance", (t) => {
+  const checker = createChecker(
+    t,
+    [
+      "const file = process.argv.at(-1);",
+      "console.log(`\\u001B[36mFILE: ${file}\\u001B[39m`);",
+      'console.log("  1 link checked.");',
+      'console.error("  \\u001B[31mERROR: 1 dead link found!\\u001B[39m");',
+      'console.log("  [\\u001B[31m✖\\u001B[39m] https://color.invalid/failure → Status: 404");',
+      "process.exitCode = 1;",
+      "",
+    ].join("\n"),
+  );
+  const result = runLinkCheck(t, {
+    checker,
+    files: { "colored.md": "# Colored\n" },
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.raw, /\u001B\[36mFILE:/);
+  assert.match(result.raw, /\[\u001B\[31m✖\u001B\[39m\]/);
+  assert.match(result.unexpected, /FILE: cheatsheets\/colored\.md/);
+  assert.match(result.unexpected, /https:\/\/color\.invalid\/failure/);
+  assert.doesNotMatch(result.raw, /lacks the expected FILE header/);
 });
 
 test("an unbaselined non-network failure is not retried", (t) => {

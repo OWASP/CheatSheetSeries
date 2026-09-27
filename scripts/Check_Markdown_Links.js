@@ -1,6 +1,7 @@
 const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
+const { stripVTControlCharacters } = require("node:util");
 
 const repoRoot = path.resolve(__dirname, "..");
 // One initial observation plus at most two immediate confirmations.
@@ -345,15 +346,19 @@ function runCheckerAttempt(markdownFile, file, attempt) {
     [paths.checker, "-c", paths.config, markdownFile],
     { encoding: "utf8" },
   );
-  const output = `${result.stdout || ""}${result.stderr || ""}`;
-  fs.appendFileSync(paths.raw, output.endsWith("\n") ? output : `${output}\n`);
+  const rawOutput = `${result.stdout || ""}${result.stderr || ""}`;
+  fs.appendFileSync(
+    paths.raw,
+    rawOutput.endsWith("\n") ? rawOutput : `${rawOutput}\n`,
+  );
+  const canonicalOutput = stripVTControlCharacters(rawOutput);
 
   let message;
   if (result.error || result.signal || !Number.isInteger(result.status)) {
     message = `${file}: checker could not complete (${result.error?.message || result.signal || "unknown process result"})`;
   } else if (result.status === 0) {
     try {
-      validateCanonicalSuccess(output, markdownFile);
+      validateCanonicalSuccess(canonicalOutput, markdownFile);
       return { failures: [] };
     } catch (error) {
       message = `${file}: ${error.message}`;
@@ -362,7 +367,9 @@ function runCheckerAttempt(markdownFile, file, attempt) {
     message = `${file}: checker exited with unexpected status ${result.status}`;
   } else {
     try {
-      return { failures: parseCanonicalFailures(output, markdownFile) };
+      return {
+        failures: parseCanonicalFailures(canonicalOutput, markdownFile),
+      };
     } catch (error) {
       message = `${file}: ${error.message} (exit ${result.status})`;
     }
