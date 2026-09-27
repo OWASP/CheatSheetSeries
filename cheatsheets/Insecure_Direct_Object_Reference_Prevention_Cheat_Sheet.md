@@ -82,6 +82,66 @@ Verify the user's permission every time an access attempt is made. Implement thi
 
 As an additional defense-in-depth measure, replace enumerable numeric identifiers with more complex, random identifiers. You can achieve this by adding a column with random strings in the database table and using those strings in the URLs instead of numeric primary keys. Another option is to use UUIDs or other long random values as primary keys. Avoid encrypting identifiers as it can be challenging to do so securely.
 
+## Java and Spring Boot example
+
+Consider a Spring Boot endpoint that returns a document by its identifier:
+
+```
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    return documentRepository.findById(id).orElseThrow();
+}
+```
+
+The id path variable is controlled by the requester and flows directly into findById(). Nothing verifies that the returned document belongs to the currently authenticated user, so any user who can guess or obtain a valid identifier can read another user's document.
+
+### Detecting the pattern with static analysis
+
+Static analysis tools can flag this vulnerability pattern automatically. A common technique, sometimes called dominance-based guard binding, works in three steps:
+
+1. Track data flows from user-controlled sources, such as path variables, request parameters, and request bodies, into object lookup sinks such as findById(), getReferenceById(), or repository query methods.
+2. Check whether each flow to a lookup sink is dominated by an authorization guard: a statement or call that verifies the current user owns or may access the object, for example a comparison against the authenticated user's identifier or a call to an authorization service.
+3. If no such guard dominates the lookup, report the endpoint as a potential IDOR (CWE-639).
+
+This approach is heuristic. It can miss IDORs when ownership checks are hidden in framework machinery or custom abstractions, and it can produce false positives when authorization is enforced indirectly, for example in an aspect, a servlet filter, or a shared base controller. Treat its findings as pointers for code review rather than proof of a vulnerability.
+
+### Fixing the code
+
+The preferred fix scopes the lookup to the current user's data, so that unauthorized access fails closed instead of relying on a check after the fact. This mirrors the scoped-query approach shown for Ruby on Rails above:
+
+```
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    return documentRepository.findByIdAndOwnerId(id, currentUser().getId())
+        .orElseThrow();
+}
+```
+
+Alternatively, verify ownership explicitly after fetching the object:
+
+```
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    Document document = documentRepository.findById(id).orElseThrow();
+    if (!document.getOwnerId().equals(currentUser().getId())) {
+        throw new AccessDeniedException("Not allowed");
+    }
+    return document;
+}
+```
+
+Spring Security also supports declarative authorization with @PreAuthorize, which keeps the check close to the endpoint:
+
+```
+@PreAuthorize("@documentAuthorizationService.isOwner(#id, authentication.name)")
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    return documentRepository.findById(id).orElseThrow();
+}
+```
+
+With any of these fixes in place, the guard statement or scoped query dominates the object lookup, and the dominance-based static analysis technique described above no longer reports the endpoint.
+
 ## Related Articles
 
 - [Insecure Direct Object Reference (IDOR)](https://owasp.org/www-community/attacks/insecure_direct_object_reference)
