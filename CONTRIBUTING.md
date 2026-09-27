@@ -136,7 +136,7 @@ FILE: cheatsheets/Transaction_Authorization_Cheat_Sheet.md
 The Cheat Sheet Series is a documentation project, and so the content must be accurate, informative and concise.
 
 The use of AI in the Cheat Sheet project can be useful for summarising content, providing suggestions for improvements and code examples.
-There are also down-sides to using AI when it is used to generate content and pull requests for the Cheat Sheets.
+There are also downsides to using AI when it is used to generate content and pull requests for the Cheat Sheets.
 
 Depending on the prompts used, generative AI can produce content that is generalised and verbose; therefore review all output carefully before considering it for issues, pull requests, comments and discussions.
 If it is genuinely helpful to use generative AI then it **must** be declared in any pull request, failure to do so can result in the contribution being closed or deleted.

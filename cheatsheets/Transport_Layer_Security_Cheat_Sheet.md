@@ -20,19 +20,22 @@ The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in
 
 ### Only Support Strong Protocols
 
-General purpose web applications should default to **TLS 1.3** (support TLS 1.2 if necessary) with all other protocols disabled.
+Web applications must default to **TLS 1.3** and may support TLS 1.2 for compatibility. **TLS 1.0 and TLS 1.1 are formally deprecated by [RFC 8996](https://datatracker.ietf.org/doc/html/rfc8996) (March 2021) and must be disabled.** They are also forbidden by [PCI DSS](https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf), disallowed by NIST SP 800-52 Rev. 2, and removed from all mainstream browsers. SSLv2 and SSLv3 must always be disabled.
 
- In specific and uncommon situations where a web server is required to accommodate legacy clients that depend on outdated and unsecured browsers (like Internet Explorer 10), activating TLS 1.0 may be the only option. However, this approach should be exercised with caution and is generally not advised due to the security implications. Additionally, ["TLS_FALLBACK_SCSV" extension](https://tools.ietf.org/html/rfc7507) should be enabled in order to prevent downgrade attacks against newer clients.
-
-Note that PCI DSS [forbids the use of legacy protocols such as TLS 1.0](https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf).
+If interoperability with end-of-life clients is a hard business requirement, isolate them on a dedicated endpoint with no access to sensitive data — do not weaken the primary endpoint. The ["TLS_FALLBACK_SCSV" extension](https://tools.ietf.org/html/rfc7507) should be enabled to prevent protocol downgrade attacks.
 
 ### Only Support Strong Ciphers
 
-There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security. Where possible, only GCM ciphers should be enabled. However, if it is necessary to support legacy clients, then other ciphers may be required. At a minimum, the following types of ciphers should always be disabled:
+There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security.
 
-- Null ciphers
-- Anonymous ciphers
-- EXPORT ciphers
+For TLS 1.3, use the standard AEAD cipher suites (AES‑GCM or ChaCha20‑Poly1305).
+
+If TLS 1.2 is still required, prefer AEAD‑based suites there as well and avoid CBC‑mode ciphers. At a minimum, the following types of [ciphersuites](https://ciphersuite.info/) should always be disabled:
+
+- Null ciphers;
+- Anonymous ciphers (`TLS_*_anon_*`);
+- EXPORT ciphers (`TLS_*_EXPORT_*`);
+- RSA transport (`TLS_RSA_*`) and ephemeral/static Diffie-Hellman key agreement (`TLS_DH_*`, `TLS_ECDH_*`) which do not provide forward secrecy.
 
 The Mozilla Foundation provides an [easy-to-use secure configuration generator](https://ssl-config.mozilla.org/) for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.
 
@@ -40,10 +43,13 @@ The Mozilla Foundation provides an [easy-to-use secure configuration generator](
 
 The practice of earlier than TLS 1.3 protocol versions of Diffie-Hellman parameter generation for use by the ephemeral Diffie-Hellman key exchange (signified by the "DHE" or "EDH" strings in the cipher suite name) had practical issues. For example, the client had no say in the selection of server parameters, meaning it could only unconditionally accept or drop, and the random parameter generation often resulted to denial of service attacks (CVE-2022-40735, CVE-2002-20001).
 
-TLS 1.3 restricts Diffie-Hellman group parameters to known groups via the `supported_groups` extension. The available
-Diffie-Hellman groups are `ffdhe2048`, `ffdhe3072`, `ffdhe4096`, `ffdhe6144`, `ffdhe8192` as specified in [RFC7919](https://www.rfc-editor.org/rfc/rfc7919).
+The `supported_groups` extension is used to negotiate which Diffie-Hellman group are supported:
 
-By default openssl 3.0 enables all the above groups. To modify them ensure that the right Diffie-Hellman group parameters are present in `openssl.cnf`. For example
+- the available Finite Field Diffie-Hellman groups are `ffdhe2048`, `ffdhe3072`, `ffdhe4096`, `ffdhe6144`, `ffdhe8192` as specified in [RFC7919](https://www.rfc-editor.org/rfc/rfc7919);
+- Elliptic Curve Diffie-Hellman groups include `x25519`, `prime256v1`, `x448`, `secp384r1`;
+- for post-quantum cryptography, `X25519MLKEM768` it currently used (though it is not a group, proper).
+
+For OpenSSL, the list of enabled groups can be configured ins in `openssl.cnf`. For example
 
 ```text
 openssl_conf = openssl_init
@@ -52,19 +58,19 @@ ssl_conf = ssl_module
 [ssl_module]
 system_default = tls_system_default
 [tls_system_default]
-Groups = x25519:prime256v1:x448:ffdhe2048:ffdhe3072
+Groups = X25519MLKEM768:x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 ```
 
-An apache configuration would look like
+An Apache configuration would look like
 
 ```text
-SSLOpenSSLConfCmd Groups x25519:secp256r1:ffdhe3072
+SSLOpenSSLConfCmd Curves X25519MLKEM768:X25519:prime256v1:secp384r1
 ```
 
 The same group on NGINX would look like the following
 
 ```text
-ssl_ecdh_curve x25519:secp256r1:ffdhe3072;
+ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp384r1;
 ```
 
 For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman parameters.
@@ -107,7 +113,7 @@ Additionally, there are a number of offline tools that can be used:
 
 ### Use Strong Keys and Protect Them
 
-The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found [here](http://www.keylength.com/en/compare/) and in [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf).
+The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits when using RSA keys. Additional information on key lifetimes and comparable key strengths can be found [here](http://www.keylength.com/en/compare/) and in [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf).
 
 The private key should also be protected from unauthorized access using filesystem permissions and other technical and administrative controls.
 
@@ -192,13 +198,15 @@ All cookies should be marked with the "[Secure](https://developer.mozilla.org/en
 
 Although TLS provides protection of data while it is in transit, it does not provide any protection for data once it has reached the requesting system. As such, this information may be stored in the cache of the user's browser, or by any intercepting proxies which are configured to perform TLS decryption.
 
-Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy servers not to cache the information, in order to prevent it being stored or returned to other users. This can be achieved by setting the following HTTP headers in the response:
+Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy server not to cache the information, in order to prevent it being stored or returned to other users. For modern HTTP/1.1+ clients and intermediaries, a single header is sufficient:
 
 ```text
-Cache-Control: no-cache, no-store, must-revalidate
-Pragma: no-cache
-Expires: 0
+Cache-Control: no-store
 ```
+
+`no-store` is the strongest cache directive: it forbids both shared and private caches from storing any part of the response. The legacy combination `Cache-Control: no-cache, no-store, must-revalidate` plus `Pragma: no-cache` and `Expires: 0` is only required if you must support pre-HTTP/1.1 caches (effectively obsolete in 2024+) and adds no protection beyond `no-store` on a modern stack. Note that `Cache-Control` governs the HTTP cache; it does not control whether the browser stores cookies in its cookie jar — that is controlled by the cookie attributes (`Max-Age`, `Expires`, `Session`).
+
+If you also need to clear data already cached on the client at sign-out, additionally send [`Clear-Site-Data`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Clear-Site-Data) (e.g. `Clear-Site-Data: "cache", "cookies", "storage"`).
 
 ### Use HTTP Strict Transport Security
 

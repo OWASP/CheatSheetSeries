@@ -162,7 +162,7 @@ document.getElementById("bb").onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028
 
 //The following example is tricky
 // first testIt will be assigned as an onmousehover event handler, The second testIt will fire while parsing.
-// becasue second testIt is a separate js statement
+// because second testIt is a separate js statement
 // this happen because of ; separator
 //"testIt;testIt" is JavaScript encoded.
 document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
@@ -351,7 +351,7 @@ If your code looked like the following, you would need to only double JavaScript
 ```javascript
 setTimeout("customFunction('<%=doubleJavaScriptEncodedData%>', y)");
 function customFunction (firstName, lastName)
-     alert("Hello" + firstName + " " + lastNam);
+     alert("Hello" + firstName + " " + lastName);
 }
 ```
 
@@ -467,7 +467,10 @@ Examples of some JavaScript sandbox / sanitizers:
 
 ### GUIDELINE \#10 - Don't eval() JSON to convert it to native JavaScript objects
 
-Don't `eval()` JSON to convert it to native JavaScript objects. Instead use `JSON.toJSON()` and `JSON.parse()` (Chris Schmidt).
+Don't `eval()` JSON to convert it to native JavaScript objects. Use the built-in `JSON.parse()` to deserialize JSON into JavaScript values, and `JSON.stringify()` to serialize JavaScript values into JSON. `JSON.parse()` rejects anything that is not valid JSON, so it cannot execute attacker-supplied code the way `eval()` can.
+
+> [!WARNING]
+> `JSON.stringify()` is **not** an output-encoding function. Its output is valid JSON but is not safe to embed directly in an HTML, HTML-attribute, or inline `<script>` context — characters like `<`, `>`, `&`, `"`, `'`, ` `, and ` ` can break out of the surrounding context and enable XSS. When embedding the output of `JSON.stringify()` in a page, either (a) deliver it as a separate JSON response and parse it client-side with `JSON.parse()`, or (b) HTML-encode (or JavaScript-string-encode, depending on the sink) the serialized string before injecting it. See [OWASP XSS Prevention Rules #3 and #3.1](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 ## Common Problems Associated with Mitigating DOM Based XSS
 
