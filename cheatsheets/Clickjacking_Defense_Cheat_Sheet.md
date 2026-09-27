@@ -10,6 +10,8 @@ There are three main mechanisms that can be used to defend against these attacks
 - Preventing session cookies from being included when the page is loaded in a frame using the [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) cookie attribute.
 - Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a "frame-buster").
 
+All three mechanisms stop a page from being framed. They do not stop [DoubleClickjacking](#defending-against-doubleclickjacking), which uses separate windows instead of frames and needs a defense of its own.
+
 Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.
 
 ## Defending with Content Security Policy (CSP) frame-ancestors directive
@@ -109,6 +111,28 @@ If the Clickjacking attack does not require the user to be authenticated, this a
 Additionally, while `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), there are still some users (approximately 6% as of November 2020) with browsers that do not support it.
 
 The use of this attribute should be considered as part of a defense-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
+
+## Defending against DoubleClickjacking
+
+[DoubleClickjacking](https://evil.blog/2024/12/doubleclickjacking-what.html) is a variant that does not use frames. The attacker's page opens a window and asks the user to double-click. Between the `mousedown` of the first click and the second click, the attacker closes or swaps that window so the second click lands on a sensitive button in a window the attacker opened to your site, such as an OAuth consent screen or a payment confirmation. Because the target is a top-level window and not a frame, `X-Frame-Options`, `frame-ancestors`, and `SameSite` cookies do not prevent it.
+
+The defense is client-side and belongs on every page that performs a sensitive action with a single click:
+
+- Render sensitive buttons disabled and enable them only after the user has shown real interaction with the page, such as a mouse movement or a keyboard event like pressing Tab. A click that arrives before any such event is the attack.
+- Apply it to consent screens, payment and transfer confirmations, account and security-setting changes, and browser extension permission prompts, which are the flows the attack targets.
+- Treat the header defenses above as necessary but not sufficient for these pages.
+
+An illustrative version of the control:
+
+```javascript
+const confirmButton = document.getElementById("confirm");
+confirmButton.disabled = true;
+const enable = () => { confirmButton.disabled = false; };
+document.addEventListener("mousemove", enable, { once: true });
+document.addEventListener("keydown", enable, { once: true });
+```
+
+Yibelo also proposes a browser-level control, an HTTP header along the lines of `Double-Click-Protection`, that would restrict rapid window switching during a double-click sequence. It is a proposal, not a shipped feature, so do not rely on it.
 
 ## Best-for-now Legacy Browser Frame Breaking Script
 
