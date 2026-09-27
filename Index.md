@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**121** cheat sheets available.
+**122** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -283,6 +283,8 @@
 [WebSocket Security Cheat Sheet](cheatsheets/WebSocket_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg)
 
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
+
+[Webhook Security Cheat Sheet](cheatsheets/Webhook_Security_Cheat_Sheet.md)
 
 ## X
 
