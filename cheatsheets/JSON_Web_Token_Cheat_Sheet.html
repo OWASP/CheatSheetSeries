@@ -2235,6 +2235,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#token-confidentiality-and-jwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token Confidentiality and JWE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Token Confidentiality and JWE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signed-jwts-are-not-confidential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signed JWTs are not confidential
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-jwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using JWE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4437,6 +4476,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#token-confidentiality-and-jwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token Confidentiality and JWE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Token Confidentiality and JWE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signed-jwts-are-not-confidential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signed JWTs are not confidential
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-jwe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using JWE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4480,7 +4558,7 @@
 <li>In <a href="https://spiffe.io/">SPIFFE</a>, a <a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">JWT-SVID</a> can be used to authenticate a workload.</li>
 </ul>
 <p>In its most common form (signed JWT), this information is protected by the generating application (<strong>issuer</strong>) using a signature to ensure it has not been tampered with. This signature prevents attackers, such as a malicious client or user, from forging a token or modifying the claims in an existing token, for example changing the user role from a simple user to an admin or altering the client's login. The JWT can be seen as a protected identity card or certificate about a user, an application, etc. An application (<strong>presenter</strong>) presents the token to a consuming application (<strong>audience</strong>) which can verify the token's authenticity and validity and take decisions or actions based on these claims.</p>
-<p>JWT can also provide confidentiality of the claims (encrypted JWT). Encryption is currently not treated in this cheat sheet but many aspects of this cheat sheet are applicable to encrypted JWTs.</p>
+<p>JWT can also provide confidentiality of the claims (encrypted JWT). Encryption itself is only introduced briefly in <a href="#token-confidentiality-and-jwe">Token Confidentiality and JWE</a>, but many aspects of this cheat sheet also apply to encrypted JWTs.</p>
 <h2 id="token-structure">Token Structure<a class="headerlink" href="#token-structure" title="Permanent link">&para;</a></h2>
 <p>Signed JWTs have the following structure:</p>
 <div class="highlight"><pre><span></span><code>{base64url(json(header))}.{base64url(json(claims))}.{base64url(signature)}
@@ -5013,6 +5091,27 @@
 <li>Token reuse can be mitigated by using short expiration time in the JWT.</li>
 <li>The risk of token exfiltration can be mitigated by using sender constrained JWT (such a <a href="https://datatracker.ietf.org/doc/html/rfc9449">DPoP</a> or <a href="https://www.rfc-editor.org/info/rfc8705/#section-3">TLS-bound JWT</a>).</li>
 </ul>
+<h2 id="token-confidentiality-and-jwe">Token Confidentiality and JWE<a class="headerlink" href="#token-confidentiality-and-jwe" title="Permanent link">&para;</a></h2>
+<h3 id="signed-jwts-are-not-confidential">Signed JWTs are not confidential<a class="headerlink" href="#signed-jwts-are-not-confidential" title="Permanent link">&para;</a></h3>
+<p>A signed JWT (<a href="https://datatracker.ietf.org/doc/html/rfc7515">JSON Web Signature</a>, JWS) provides integrity and authenticity, but not confidentiality. The payload is only base64url encoded, not encrypted, so anyone who obtains the token can read every claim. With a MAC (<code>HS*</code>), a valid signature also only proves that the token was produced by some holder of the shared secret, see <a href="#public-key-signatures-vs-mac">Public-key Signatures vs. MAC</a>.</p>
+<p>TLS prevents the token from being read in transit, but the claims remain exposed elsewhere: in application logs, in browser storage, in referrer headers, and to any intermediary that terminates TLS.</p>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7519#section-12">Omitting privacy-sensitive information from a JWT is the simplest way of minimizing privacy issues</a>. Prefer keeping sensitive data server-side behind an opaque reference token. Use JWE only when the claims must travel with the token to a party that cannot resolve them with the issuer.</p>
+<h3 id="using-jwe">Using JWE<a class="headerlink" href="#using-jwe" title="Permanent link">&para;</a></h3>
+<p>When claims must be kept confidential, use <a href="https://datatracker.ietf.org/doc/html/rfc7516">JSON Web Encryption (JWE)</a>. JWE uses two algorithms:</p>
+<ul>
+<li><strong><code>alg</code>:</strong> the key management algorithm, which <a href="https://datatracker.ietf.org/doc/html/rfc7518#section-4.1">encrypts or agrees upon</a> the Content Encryption Key (CEK) for the intended recipient (for example <code>RSA-OAEP-256</code> or <code>ECDH-ES+A256KW</code>).</li>
+<li><strong><code>enc</code>:</strong> the content encryption algorithm, which encrypts the payload using authenticated encryption (for example <code>A256GCM</code>).</li>
+</ul>
+<p>JWE provides confidentiality and ciphertext integrity, <strong>not</strong> issuer authentication. With a public-key <code>alg</code>, anyone holding the recipient's public key can produce a token that decrypts successfully, so never make authorization decisions on claims from an unsigned JWE.</p>
+<p>When both authenticity and confidentiality are needed, use a <strong>nested JWT</strong>: sign the claims first (JWS), then encrypt the result (JWE). This <a href="https://datatracker.ietf.org/doc/html/rfc7519#section-11.2">prevents attacks in which the signature is stripped, leaving just an encrypted message, as well as providing privacy for the signer</a>. In the outer JWE, the <code>cty</code> header <a href="https://datatracker.ietf.org/doc/html/rfc7519#section-5.2">MUST be set to <code>JWT</code></a> to signal the nesting.</p>
+<p>When consuming a nested JWT, decrypt the outer JWE <strong>and</strong> verify the inner JWS signature, rejecting the token if either step fails. <a href="https://datatracker.ietf.org/doc/html/rfc8725#section-3.3">Both the outer and the inner operations MUST be validated</a>: successful decryption on its own proves nothing about who issued the claims.</p>
+<p>Two further requirements apply to JWE:</p>
+<ul>
+<li>Accept only an allowlisted <code>alg</code>/<code>enc</code> pair and bind each key to a single algorithm. Never let the token header select the algorithm, because this <a href="https://datatracker.ietf.org/doc/html/rfc7516#section-11.4">enables a downgrade attack that can recover the CEK</a>.</li>
+<li>Do not compress the claims before encryption (the <code>zip</code> header), because <a href="https://datatracker.ietf.org/doc/html/rfc8725#section-3.6">compressed data often reveals information about the plaintext</a>.</li>
+</ul>
+<p><strong>Note:</strong></p>
+<p>Full JWE implementation guidance is out of scope for this cheat sheet and will be addressed in a dedicated JWE cheat sheet.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <p>Main JWT and JOSE specifications:</p>
 <ul>
