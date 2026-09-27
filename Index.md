@@ -126,7 +126,7 @@
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
 
-[Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
+[Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Html](assets/Index_Html.svg) ![Ruby](assets/Index_Ruby.svg)
 
 ## J
 
