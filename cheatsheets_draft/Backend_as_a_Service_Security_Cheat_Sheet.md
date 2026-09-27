@@ -23,11 +23,19 @@ Do not classify a credential by its name. Classify it by who can possess it and 
 | Database, storage, or resource policy | Treat as the authorization boundary for direct client operations. Evaluate identity, resource, action, and relevant tenant or ownership state. | [Firebase Security Rules](https://firebase.google.com/docs/rules) |
 | Server, service-role, administrative, or superuser credential | Treat as privileged because it may bypass ordinary resource policies. | [Appwrite server integrations](https://appwrite.io/docs/advanced/security/permissions) and [PocketBase superusers](https://pocketbase.io/docs/api-rules-and-filters/) |
 
-Draw the actual user-context and privileged request paths, including SDKs, API endpoints, realtime connections, functions, automation, and administration tools. Mark where authentication, authorization, and policy bypass occur, following the [OWASP threat modeling process](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html).
+Draw the actual user-context and privileged request paths, including SDKs, API endpoints, realtime connections, functions, automation, and administration tools, following the [OWASP threat modeling process](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html). Keep this small inventory with the architecture:
+
+| Request path | Credential | Enforcement point | Bypass | Negative test | Audit evidence |
+| --- | --- | --- | --- | --- | --- |
+| `<client> → <surface>` | `<public or user>` | `<policy or server>` | `<none or privileged route>` | `<denied actor and action>` | `<decision or configuration event>` ([OWASP logging](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)) |
+
+Use provider analyzers and audit logs as additional evidence, not as proof that the inventory is complete. For example, Supabase documents both its [Security Advisor checks](https://supabase.com/docs/guides/database/database-advisors) and [platform audit log coverage and limitations](https://supabase.com/docs/guides/security/platform-audit-logs).
 
 ## Apply Deny-by-Default to Every Surface
 
 Maintain an inventory of every client-reachable resource and its policy engine. A database policy does not prove that storage, realtime, functions, authentication administration, or management APIs are protected. Firebase, for example, requires rules for each product in use and notes that rule behavior differs by product in its [Security Rules documentation](https://firebase.google.com/docs/rules). Supabase separately documents controls for [Storage](https://supabase.com/docs/guides/storage/security/access-control), [Realtime](https://supabase.com/docs/guides/realtime/authorization), and [Edge Functions](https://supabase.com/docs/guides/functions/auth).
+
+Do not rely on provider defaults. Review bootstrap or test modes and exposed schemas before release: [Firebase Test mode can allow anyone access](https://firebase.google.com/docs/rules/basics), while [Supabase warns that exposed tables without row-level security may be reachable by roles with grants](https://supabase.com/docs/guides/database/postgres/row-level-security).
 
 For every resource, record:
 
@@ -37,6 +45,12 @@ For every resource, record:
 - Every policy bypass, policy owner, and automated test, as called for by [OWASP authorization testing guidance](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html).
 
 [Grant only the operations the application needs](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html). Check both the existing resource and proposed new state so a client cannot assign ownership, move a record to another tenant, or change a role, as described by [OWASP's tenant-aware write guidance](https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html). Treat query behavior as platform-specific: some rule engines reject a query whose possible result is broader than the policy instead of filtering its results, as explained in [Firebase's secure query guidance](https://firebase.google.com/docs/firestore/security/rules-query).
+
+Authorize realtime join, publish, receive, and presence capabilities explicitly, including the topic or tenant context. Do not infer this coverage from database read rules; [Supabase documents separate policies for sending and receiving Broadcast and Presence messages](https://supabase.com/docs/guides/realtime/authorization).
+
+Validate write shape as well as authorization. Where supported, use rules to constrain allowed fields and compare existing with proposed state, as shown in [Firebase's data-validation guidance](https://firebase.google.com/docs/rules/data-validation), and enforce independent data invariants according to the [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html).
+
+For a function that accepts untrusted input or a user-influenced outbound destination, apply the relevant [Serverless FaaS](https://cheatsheetseries.owasp.org/cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.html), [Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html), [Secrets Management](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html), and case-specific [SSRF prevention](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html) guidance.
 
 ## Authorize Before Using Privileged Access
 
@@ -65,6 +79,8 @@ Build an authorization matrix for each action and resource class, as recommended
 | Client changing ownership or tenant fields | Create and update fail. | [OWASP Multi-Tenant Security](https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html) |
 | Privileged server route | Missing user authorization fails before the policy bypass is used. | [OWASP Authorization](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) |
 
+Use one repeatable test shape: seed two users and tenants, run the same allowed and forbidden operations for anonymous, user, cross-tenant, and privileged paths, then assert both the result and unchanged protected state. Execute it with production-equivalent policies in an isolated local or emulator environment, such as the [Firebase Local Emulator Suite](https://firebase.google.com/docs/emulator-suite/connect_firestore).
+
 Run tests against the provider emulator or an isolated environment using real query and mutation shapes, following [Firebase's rule testing guidance](https://firebase.google.com/docs/rules). Compare deployed resources and policy versions with reviewed source, consistent with [OWASP secure deployment guidance](https://owaspsamm.org/model/implementation/secure-deployment/), so console changes and partial deployments cannot drift silently.
 
 Use separate projects, data, policies, and credentials for development, preview or test, and production. Do not put production credentials or user data in lower environments. This isolation is also recommended in [Firebase's environment guidance](https://firebase.google.com/docs/projects/dev-workflows/overview-environments).
@@ -76,3 +92,4 @@ Add per-user and per-tenant limits, quotas, spend alerts, and anomaly detection 
 - [Database Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html)
 - [REST Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html)
 - [Serverless FaaS Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.html)
+- [Vulnerable Dependency Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html)
