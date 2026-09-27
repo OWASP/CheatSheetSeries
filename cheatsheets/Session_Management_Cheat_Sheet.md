@@ -86,7 +86,7 @@ The storage capabilities or repository used by the session management mechanism 
 
 ### Server-Side Session Token Storage
 
-A 128-bit CSPRNG session token cannot be brute-forced from a database leak, so storing it verbatim in the session store is the sensible default. Most of the protection comes from operational hygiene rather than from any storage transformation:
+Unlike a password, a 128-bit CSPRNG session token cannot be guessed offline, so hashing it at rest adds none of the protection that hashing adds for passwords. Storing it verbatim is an acceptable default when access to the session store is tightly controlled. The residual risk is a read of the store that yields directly usable tokens, so most of the protection comes from operational hygiene, with one-way storage (below) as the option when the store is exposed to other parties:
 
 - Don't write the token to application logs, error pages, or distributed tracing payloads.
 - Restrict direct database access. Encrypt backups and replicas at rest.
