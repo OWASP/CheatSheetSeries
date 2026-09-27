@@ -14,7 +14,7 @@ There are three ingredients to an IDOR:
 
 For instance, when a user accesses their profile, the application might generate a URL like this:
 
-```
+```text
 https://example.org/users/123
 ```
 
@@ -22,7 +22,7 @@ The 123 in the URL is a direct reference to the user's record in the database, o
 
 In some cases, the identifier may not be in the URL, but rather in the POST body, as shown in the following example:
 
-```
+```html
 <form action="/update_profile" method="post">
   <!-- Other fields for updating name, email, etc. -->
   <input type="hidden" name="user_id" value="12345">
@@ -34,13 +34,13 @@ In this example, the application allows users to update their profiles by submit
 
 IDORs however are not limited to user profiles and sequential IDs. For instance:
 
-```
+```http
 GET /documents/annual-report.pdf
 ```
 
 In this example, the filename acts as the object reference. If an attacker modifies the filename to another valid document, such as:
 
-```
+```http
 GET /documents/financial-statement.pdf
 ```
 
@@ -71,10 +71,11 @@ Avoid exposing identifiers in URLs and POST bodies if possible. Instead, determi
 
 When looking up objects based on primary keys, use datasets that users have access to. For example, in Ruby on Rails:
 
-```
-// vulnerable, searches all projects
+```ruby
+# vulnerable, searches all projects
 @project = Project.find(params[:id])
-// secure, searches projects related to the current user
+
+# secure, searches projects related to the current user
 @project = @current_user.projects.find(params[:id])
 ```
 
@@ -86,7 +87,7 @@ As an additional defense-in-depth measure, replace enumerable numeric identifier
 
 Consider a Spring Boot endpoint that returns a document by its identifier:
 
-```
+```java
 @GetMapping("/documents/{id}")
 public Document getDocument(@PathVariable Long id) {
     return documentRepository.findById(id).orElseThrow();
@@ -95,21 +96,11 @@ public Document getDocument(@PathVariable Long id) {
 
 The `{id}` path variable is controlled by the requester and flows directly into `findById()`. Nothing verifies that the returned document belongs to the currently authenticated user, so any user who can guess or obtain a valid identifier can read another user's document.
 
-### Detecting the pattern with static analysis
-
-Static analysis tools can flag this vulnerability pattern automatically. A common technique, sometimes called dominance-based guard binding, works in three steps:
-
-1. Track data flows from user-controlled sources, such as path variables, request parameters, and request bodies, into object lookup sinks such as findById(), getReferenceById(), or repository query methods.
-2. Check whether each flow to a lookup sink is dominated by an authorization guard: a statement or call that verifies the current user owns or may access the object, for example a comparison against the authenticated user's identifier or a call to an authorization service.
-3. If no such guard dominates the lookup, report the endpoint as a potential IDOR ([CWE-639](https://cwe.mitre.org/data/definitions/639.html)).
-
-This approach is heuristic. It can miss IDORs when ownership checks are hidden in framework machinery or custom abstractions, and it can produce false positives when authorization is enforced indirectly, for example in an aspect, a servlet filter, or a shared base controller. Treat its findings as pointers for code review rather than proof of a vulnerability.
-
 ### Fixing the code
 
 The preferred fix scopes the lookup to the current user's data, so that unauthorized access fails closed instead of relying on a check after the fact. This mirrors the scoped-query approach shown for Ruby on Rails above:
 
-```
+```java
 @GetMapping("/documents/{id}")
 public Document getDocument(@PathVariable Long id) {
     return documentRepository.findByIdAndOwnerId(id, currentUser().getId())
@@ -119,7 +110,7 @@ public Document getDocument(@PathVariable Long id) {
 
 Alternatively, verify ownership explicitly after fetching the object:
 
-```
+```java
 @GetMapping("/documents/{id}")
 public Document getDocument(@PathVariable Long id) {
     Document document = documentRepository.findById(id).orElseThrow();
@@ -130,9 +121,11 @@ public Document getDocument(@PathVariable Long id) {
 }
 ```
 
+Note that this second approach distinguishes between a missing object and an object owned by another user, which can leak the existence of a record with the given identifier. This is usually not a problem, but it can matter for endpoints where the identifier itself is sensitive, for example `GET /user/john@example.com`, where the response could reveal whether a given user exists. When that is a concern, prefer the scoped-query form above, which returns the same result whether the object does not exist or simply is not accessible to the current user.
+
 Spring Security also supports declarative authorization with [@PreAuthorize](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html), which keeps the check close to the endpoint:
 
-```
+```java
 @PreAuthorize("@documentAuthorizationService.isOwner(#id, authentication.name)")
 @GetMapping("/documents/{id}")
 public Document getDocument(@PathVariable Long id) {
@@ -140,9 +133,7 @@ public Document getDocument(@PathVariable Long id) {
 }
 ```
 
-With any of these fixes in place, the guard statement or scoped query dominates the object lookup, and the dominance-based static analysis technique described above no longer reports the endpoint.
-
 ## Related Articles
 
-- [Insecure Direct Object Reference (IDOR)](https://owasp.org/www-community/attacks/insecure_direct_object_reference)
-- [Testing for Insecure Direct Object References](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
+* [Insecure Direct Object Reference (IDOR)](https://owasp.org/www-community/attacks/insecure_direct_object_reference)
+* [Testing for Insecure Direct Object References](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
