@@ -254,7 +254,7 @@ To provide a better experience, we can do the following:
 2. The handler waits for clean up operations like database connections, ongoing HTTP requests and others.
 3. The handler then terminates the Node.js process.
 
-Specifically with Fastify, we can have our handler call on [fastify.close()](https://www.fastify.io/docs/latest/Server/) which returns a promise that we will await, and Fastify will also take care to respond to every new connection with the HTTP status code 503 to signal that the application is unavailable.
+Specifically with Fastify, we can have our handler call on [fastify.close()](https://fastify.dev/docs/latest/Reference/Server/#close) which returns a promise that we will await, and Fastify will also take care to respond to every new connection with the HTTP status code 503 to signal that the application is unavailable.
 
 Let’s add our event handler:
 
