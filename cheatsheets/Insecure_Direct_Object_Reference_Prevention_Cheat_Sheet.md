@@ -93,7 +93,7 @@ public Document getDocument(@PathVariable Long id) {
 }
 ```
 
-The id path variable is controlled by the requester and flows directly into findById(). Nothing verifies that the returned document belongs to the currently authenticated user, so any user who can guess or obtain a valid identifier can read another user's document.
+The `{id}` path variable is controlled by the requester and flows directly into `findById()`. Nothing verifies that the returned document belongs to the currently authenticated user, so any user who can guess or obtain a valid identifier can read another user's document.
 
 ### Detecting the pattern with static analysis
 
@@ -101,7 +101,7 @@ Static analysis tools can flag this vulnerability pattern automatically. A commo
 
 1. Track data flows from user-controlled sources, such as path variables, request parameters, and request bodies, into object lookup sinks such as findById(), getReferenceById(), or repository query methods.
 2. Check whether each flow to a lookup sink is dominated by an authorization guard: a statement or call that verifies the current user owns or may access the object, for example a comparison against the authenticated user's identifier or a call to an authorization service.
-3. If no such guard dominates the lookup, report the endpoint as a potential IDOR (CWE-639).
+3. If no such guard dominates the lookup, report the endpoint as a potential IDOR ([CWE-639](https://cwe.mitre.org/data/definitions/639.html)).
 
 This approach is heuristic. It can miss IDORs when ownership checks are hidden in framework machinery or custom abstractions, and it can produce false positives when authorization is enforced indirectly, for example in an aspect, a servlet filter, or a shared base controller. Treat its findings as pointers for code review rather than proof of a vulnerability.
 
@@ -130,7 +130,7 @@ public Document getDocument(@PathVariable Long id) {
 }
 ```
 
-Spring Security also supports declarative authorization with @PreAuthorize, which keeps the check close to the endpoint:
+Spring Security also supports declarative authorization with [@PreAuthorize](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html), which keeps the check close to the endpoint:
 
 ```
 @PreAuthorize("@documentAuthorizationService.isOwner(#id, authentication.name)")
