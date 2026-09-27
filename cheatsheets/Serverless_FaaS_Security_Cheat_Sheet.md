@@ -14,7 +14,7 @@ This cheat sheet provides best practices to secure serverless applications and m
 - Cold start data leakage (persistent state, side-channel timing).
 - Function chaining abuse (compromised function invoking others).
 - Shared environment risks (multi-tenant leakage, `/tmp` reuse).
-- Hardcoded secrets in code or env vars.
+- Hardcoded secrets in code or platform config.
 - Excessive network access.
 
 ## Best Practices
@@ -130,8 +130,7 @@ def lambda_handler(event, context):
 
 ### 6. Secrets Management
 
-- Avoid storing secrets in environment variables.
-- Fetch secrets from vaults using local caching extensions where possible, not env vars.
+- Fetch secrets at runtime from a vault or caching extension — not from platform-level function configuration (e.g. Lambda Environment Variables).
 - Use ephemeral credentials (STS, workload identity federation).
 - Rotate secrets automatically.
 
@@ -221,7 +220,7 @@ shasum -a 256 layer.zip
 
 - Enforce least privilege per function.
 - Validate all event inputs.
-- Fetch secrets from vaults, not env vars.
+- Fetch secrets from vaults, not platform config.
 - Restrict network egress.
 - Monitor invocations and logs.
 
