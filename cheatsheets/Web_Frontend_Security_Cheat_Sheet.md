@@ -1,6 +1,8 @@
-# Asynchronous Web Communication Security Cheat Sheet
+# Web Frontend Security Cheat Sheet
 
 ## Introduction
+
+This cheat sheet was previously named the AJAX Security Cheat Sheet.
 
 This document will provide a starting point for AJAX security and will hopefully be updated and expanded reasonably often to provide more detailed information about specific frameworks and technologies.
 
