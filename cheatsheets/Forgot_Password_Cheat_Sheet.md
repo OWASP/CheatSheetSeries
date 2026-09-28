@@ -45,6 +45,18 @@ Once the user has proved their identity by providing the token (sent via an emai
 - Once they have set their new password, the user should then login through the usual mechanism. Don't automatically log the user in, as this introduces additional complexity to the authentication and session handling code, and increases the likelihood of introducing vulnerabilities.
 - Ask the user if they want to invalidate all of their existing sessions, or invalidate the sessions automatically.
 
+### Account Recovery After Suspected Compromise
+
+A standard password reset may not be sufficient when an account is suspected to have been compromised. An attacker with access to the account may have changed the email address, phone number, MFA methods, or other recovery information.
+
+When recovering a potentially compromised account:
+
+- Do not rely solely on recovery information that was recently added or changed.
+- Consider when recovery information was added or changed. Recently added email addresses, phone numbers, or devices may have been added by an attacker.
+- Require additional verification when the available recovery information is insufficient to establish the user's identity.
+- After the user's identity has been verified, review changes made during the suspected compromise and remove recovery methods that should no longer be associated with the account.
+- Invalidate other active sessions and authentication artifacts where appropriate.
+- Notify the user through previously established contact methods when sensitive account or recovery information has been changed.
 ## Methods
 
 In order to allow a user to request a password reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
