@@ -64,8 +64,6 @@ Render the normalized `url.href` rather than the original string so that the val
 
 React does not sanitize HTML on any path. Writing to `.innerHTML`, `.outerHTML`, or `.insertAdjacentHTML()` through a ref is exactly as safe or unsafe as `dangerouslySetInnerHTML` with the same input; the control is sanitization, not the choice of API. When raw HTML is not actually needed, render the value as JSX text or assign `textContent`, which never parses markup. When HTML is required, sanitize first, then render it through React.
 
-Avoid imperative DOM writes to React-managed nodes for a second, React-specific reason: React does not know about the change, so the real DOM diverges from what React believes it rendered, and the content is overwritten whenever a re-render touches that element's children or the element remounts. Rendering through `dangerouslySetInnerHTML` keeps the content inside React's model.
-
 ```jsx
 import DOMPurify from "dompurify";
 
@@ -83,7 +81,7 @@ function HtmlContent({ untrustedHtml }) {
 
 ### Avoid Prop Injection via Spread Syntax
 
-Spreading an untrusted object into a JSX element passes every key in that object to the element as a prop. If the object came from user input, a URL query string, or an API response, an attacker controls which props are set: `dangerouslySetInnerHTML`, `href`, event handlers, or anything else the element accepts. The risk lands where the bag reaches a DOM element, whether directly or forwarded through a wrapper component, so never spread untrusted objects into elements and never pass them onward unfiltered.
+Spreading an untrusted object into a JSX element passes every key in that object to the element as a prop. If the object came from user input, a URL query string, or an API response, an attacker controls which props are set. If one of those props reaches a DOM element, whether directly or through a wrapper component that forwards its props, it can lead to XSS: a `dangerouslySetInnerHTML` key injects HTML, and URL props such as `href` or `formAction` can point anywhere (see Validate URLs Before Rendering). Never spread untrusted objects into elements, and never pass them onward unfiltered.
 
 When a component's props are known, destructure them explicitly. This is the simplest defense and needs no helper: only the named props reach the element, and everything else is dropped.
 
@@ -99,7 +97,7 @@ function Field({ placeholder, disabled, value, onChange }) {
 }
 ```
 
-Use an allow-list only for genuinely dynamic prop bags, where the set of props is not known at authoring time. Define the allow-list per component rather than sharing one across components, since each element accepts different props. Allow-lists fail closed: an unexpected key is dropped. Block-lists fail open: an unexpected key passes through. Avoid `type` in allow-lists for inputs unless the permitted values are also constrained, because `type="image"` inputs accept `src` and `formAction`.
+Use an allow-list only for genuinely dynamic props, where the set of props is not known at authoring time. Define the allow-list per component rather than sharing one across components, since each element accepts different props. Allow-lists fail closed: an unexpected key is dropped. Block-lists fail open: an unexpected key passes through. Avoid `type` in allow-lists for inputs unless the permitted values are also constrained, because `type="image"` inputs accept `src` and `formAction`.
 
 ```jsx
 const FIELD_ALLOWED_PROPS = ["placeholder", "disabled", "value", "onChange"];
@@ -118,9 +116,7 @@ For guidance on avoiding dynamic code execution patterns such as `eval()` and `n
 
 ## Sensitive Data Exposure
 
-Avoid storing sensitive values in React component state longer than necessary. Component state is not private at runtime: React attaches its internal fiber and props objects to DOM nodes as expando properties (`__reactFiber$<key>` and `__reactProps$<key>`, set by [`precacheFiberNode` in `ReactDOMComponentTree.js`](https://github.com/react/react/blob/v19.2.0/packages/react-dom-bindings/src/client/ReactDOMComponentTree.js)), so any script running in the same page, including third-party analytics and session-replay scripts the application deliberately loads, can traverse from a DOM node to the component tree and read props and state, including values that are never rendered into the DOM. TThis is an implementation detail rather than a guarantee: React has introduced a feature flag (`enableInternalInstanceMap`) that moves these properties into internal maps, currently disabled in stable releases, so the exact mechanism may change; React provides no isolation of component state from other code running in the page. Separately, measurement research has [documented session-replay scripts collecting rendered page content and form input](https://freedom-to-tinker.com/2017/11/15/no-boundaries-exfiltration-of-personal-data-by-session-replay-scripts/) before submission, which is the DOM-level exposure path rather than fiber access.
-
-The guidance in this sheet addresses exposure to scripts the application itself includes. Compromise of a same-origin script, and browser extensions with content-script access, can read the DOM directly and sit outside the threat model that the countermeasures here address; protecting against those requires controls beyond the application layer.
+Component state is not private at runtime: React attaches its internal fiber and props objects to DOM nodes as expando properties (`__reactFiber$<key>` and `__reactProps$<key>`, set by [`precacheFiberNode` in `ReactDOMComponentTree.js`](https://github.com/react/react/blob/v19.2.0/packages/react-dom-bindings/src/client/ReactDOMComponentTree.js)), so any script running in the same page can traverse from a DOM node to the component tree and read props and state, including values that are never rendered into the DOM. The concern here is not malicious code, against which no in-page control helps, but legitimate third-party scripts the application loads on purpose, such as analytics and session replay, which can collect more than the application intended. This is an implementation detail rather than a guarantee: React has introduced a feature flag (`enableInternalInstanceMap`) that moves these properties into internal maps, currently disabled in stable releases, so the exact mechanism may change; React provides no isolation of component state from other code running in the page. Separately, measurement research has [documented session-replay scripts collecting rendered page content and form input](https://freedom-to-tinker.com/2017/11/15/no-boundaries-exfiltration-of-personal-data-by-session-replay-scripts/) before submission, which is the DOM-level exposure path rather than fiber access.
 
 ### Store Authentication Tokens in httpOnly Cookies
 
@@ -272,9 +268,9 @@ Embedding state into `<script>` tags with `JSON.stringify` during SSR hydration 
 
 A Server Function is client-callable, so enforce authentication and authorization inside the function and validate every argument as untrusted input; [react.dev](https://react.dev/reference/rsc/use-server) states this requirement. Framework-specific Server Action and routing-layer controls are covered in the [OWASP Next.js Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nextjs_Security_Cheat_Sheet.html).
 
-## Content Security Policy
+### Other Considerations
 
-A Content Security Policy limits the damage of several threats described in this sheet: it constrains which scripts may execute, which origins a page may connect to, and whether inline script is permitted at all. It does not prevent an allowed script from reading the DOM, so it complements the controls above rather than replacing them. A restrictive policy also interacts with React tooling: `worker-src` governs Web Worker creation, and bundlers that rely on inline script or `eval` in development need policies that differ between development and production builds. See the [OWASP Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
+Use a Content Security Policy to limit the damage of several threats described in this sheet. See the [OWASP Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
 
 ## Related Cheat Sheets
 
