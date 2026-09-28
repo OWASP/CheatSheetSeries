@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**122** cheat sheets available.
+**123** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -11,8 +11,6 @@
 [AI-Powered Advertising Systems Security Cheat Sheet](cheatsheets/AI-Powered_Advertising_Systems_Security_Cheat_Sheet.md)
 
 [AI Agent Security Cheat Sheet](cheatsheets/AI_Agent_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
-
-[AJAX Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
 
 [AML Sanctions AI Agent Payments Cheat Sheet](cheatsheets/AML_Sanctions_AI_Agent_Payments_Cheat_Sheet.md)
 
@@ -198,6 +196,8 @@
 
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
+[Passkey Security Cheat Sheet](cheatsheets/Passkey_Security_Cheat_Sheet.md)
+
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
@@ -283,6 +283,8 @@
 ## W
 
 [WebSocket Security Cheat Sheet](cheatsheets/WebSocket_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg)
+
+[Web Frontend Security Cheat Sheet](cheatsheets/Web_Frontend_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
 
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
 
