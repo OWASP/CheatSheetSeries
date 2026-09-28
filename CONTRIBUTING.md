@@ -131,6 +131,10 @@ FILE: cheatsheets/Transaction_Authorization_Cheat_Sheet.md
 
 ```
 
+Run `npm run link-check` to check all published cheat sheets with the maintained exceptions in `link-check-known-failures.json`. Checker errors and unexpected broken links fail the command. Reports are written to `.link-check/raw.log`, `.link-check/known.md`, and `.link-check/unexpected.md`; CI also saves them in the `link-check-diagnostics` artifact. Known, recovered, and transient failures remain visible in the reports.
+
+Maintainers should add an exception only after reviewing the exact file and URL and recording matching workflow evidence. Do not add broad domain or status-code exclusions or automatically copy failures into the baseline. Remove exceptions when their links are removed or repaired.
+
 ### Use of AI
 
 The Cheat Sheet Series is a documentation project, and so the content must be accurate, informative and concise.

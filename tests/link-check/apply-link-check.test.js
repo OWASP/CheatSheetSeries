@@ -40,6 +40,15 @@ const finalProvenance = {
   workflowUrl:
     "https://github.com/OWASP/CheatSheetSeries/actions/runs/34235010164/job/102090344721",
 };
+const reviewedProvenance = {
+  attemptCount: 3,
+  checkedHead: "100ec630ce8ca4c2909463995f05986ca34a3ed5",
+  contentBaseCommit: "327812ee76aac6a87e32fbdce5b5d1cce39b5741",
+  workflowRunId: 36353962728,
+  workflowJobId: 108717860244,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/36353962728/job/108717860244",
+};
 
 function baseline(failures = []) {
   return {
@@ -173,12 +182,14 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 3);
+  assert.equal(value.batches.length, 4);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
   assert.deepEqual(value.batches[2].generatedFrom, finalProvenance);
-  assert.equal(value.batches[0].failures.length, 168);
+  assert.deepEqual(value.batches[3].generatedFrom, reviewedProvenance);
+  assert.equal(value.batches[0].failures.length, 157);
   assert.equal(value.batches[1].failures.length, 7);
+  assert.equal(value.batches[3].failures.length, 107);
   assert.deepEqual(value.batches[2].failures, [
     {
       file: "cheatsheets/Drone_Security_Cheat_Sheet.md",
@@ -192,11 +203,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 177);
-  assert.equal(new Set(failures.map(({ file }) => file)).size, 64);
+  assert.equal(failures.length, 273);
+  assert.equal(new Set(failures.map(({ file }) => file)).size, 77);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    177,
+    273,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>
