@@ -51,12 +51,14 @@ A standard password reset may not be sufficient when an account is suspected to 
 
 When recovering a potentially compromised account:
 
-- Do not rely solely on recovery information that was recently added or changed.
-- Consider when recovery information was added or changed. Recently added email addresses, phone numbers, or devices may have been added by an attacker.
-- Require additional verification when the available recovery information is insufficient to establish the user's identity.
-- After the user's identity has been verified, review changes made during the suspected compromise and remove recovery methods that should no longer be associated with the account.
-- Invalidate other active sessions and authentication artifacts where appropriate.
-- Notify the user through previously established contact methods when sensitive account or recovery information has been changed.
+- Do not rely solely on recovery information that was recently added or changed. Consider when recovery information was added or changed, since an attacker with access to the account may have modified it.
+- Require additional verification when the available recovery information is insufficient to establish the user's identity. Depending on the account and assurance level, recovery can use multiple recovery methods or repeated identity proofing, as described in the [NIST account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#account-recovery).
+- After the user's identity has been verified, review recovery methods and authenticators associated with the account and remove those that are no longer valid. NIST requires providers to support invalidation of authenticators when loss, theft, or compromise is suspected; see [NIST authenticator requirements](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/#physical-authenticators).
+- Invalidate other active sessions where appropriate. See the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md) for guidance on reauthentication and session handling after account recovery.
+- Notify the user when account recovery occurs or when authenticators are changed. Notifications should use established notification addresses and provide instructions for reporting unauthorized activity; see the [NIST account notification guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#account-notifications).
+
+See the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) and [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) for additional guidance on authentication and MFA recovery.
+
 ## Methods
 
 In order to allow a user to request a password reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
