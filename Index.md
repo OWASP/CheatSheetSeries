@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**121** cheat sheets available.
+**122** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -193,6 +193,8 @@
 ## P
 
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
+
+[Passkey Security Cheat Sheet](cheatsheets/Passkey_Security_Cheat_Sheet.md)
 
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 
