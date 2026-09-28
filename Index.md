@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**122** cheat sheets available.
+**123** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -21,6 +21,8 @@
 [Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
+[Authentication Patterns Cheat Sheet](cheatsheets/Authentication_Patterns_Cheat_Sheet.md)
 
 [Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
 
