@@ -1,7 +1,3 @@
----
-redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
----
-
 
 <!doctype html>
 <html lang="en" class="no-js">
@@ -14,13 +10,13 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Passkey_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="REST_Security_Cheat_Sheet.html">
+        <link rel="prev" href="PHP_Configuration_Cheat_Sheet.html">
       
       
-        <link rel="next" href="SAML_Security_Cheat_Sheet.html">
+        <link rel="next" href="Password_Storage_Cheat_Sheet.html">
       
       
         
@@ -31,7 +27,7 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
     
     
       
-        <title>Ruby on Rails - OWASP Cheat Sheet Series</title>
+        <title>Passkey Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -82,7 +78,7 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
     <div data-md-component="skip">
       
         
-        <a href="#ruby-on-rails-cheat-sheet" class="md-skip">
+        <a href="#passkey-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +113,7 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ruby on Rails
+              Passkey Security
             
           </span>
         </div>
@@ -2631,10 +2627,37 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Passkey_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Passkey Security
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Passkey_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2650,6 +2673,331 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understand-the-security-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understand the Security Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understand the Security Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#components-and-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Components and Terms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-properties-and-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Properties and Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choose-the-rp-id-carefully" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose the RP ID Carefully
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-a-maintained-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use a Maintained Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-passkey-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Passkey Registration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Passkey Registration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#establish-an-authorized-account-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Establish an Authorized Account Context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-and-bind-registration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate and Bind Registration Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-registration-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the Registration Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimize-attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimize Attestation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-passkey-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Passkey Authentication
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Passkey Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-and-bind-authentication-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate and Bind Authentication Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-authentication-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the Authentication Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handle-signature-counters-conservatively" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handle Signature Counters Conservatively
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-safe-failure-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Safe Failure Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protect-the-credential-lifecycle-and-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protect the Credential Lifecycle and Recovery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protect the Credential Lifecycle and Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#credential-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credential Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-recovery-and-bootstrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Account Recovery and Bootstrap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synced-and-device-bound-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synced and Device-Bound Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-and-review-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment and Review Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment and Review Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-and-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server and Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Account Workflows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy and Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2855,37 +3203,10 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ruby on Rails
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -2901,269 +3222,6 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#items" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Items
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Items">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#command-injection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Command Injection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sql-injection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SQL Injection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cross-site-scripting-xss" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cross-site Scripting (XSS)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sessions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sessions
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Authentication">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#token-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token Authentication
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#insecure-direct-object-reference-or-forceful-browsing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Insecure Direct Object Reference or Forceful Browsing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#csrf-cross-site-request-forgery" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CSRF (Cross Site Request Forgery)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#redirects-and-forwards" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Redirects and Forwards
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dynamic-render-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dynamic Render Paths
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cross-origin-resource-sharing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cross Origin Resource Sharing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-related-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security-related headers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#business-logic-bugs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Business Logic Bugs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#attack-surface" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attack Surface
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sensitive-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sensitive Files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encryption" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Encryption
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#updating-rails-and-having-a-process-for-updating-dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updating Rails and Having a Process for Updating Dependencies
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tools
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-articles-and-references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related Articles and References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4222,22 +4280,22 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 </li>
       
         <li class="md-nav__item">
-  <a href="#items" class="md-nav__link">
+  <a href="#understand-the-security-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Items
+        Understand the Security Model
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Items">
+    <nav class="md-nav" aria-label="Understand the Security Model">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#command-injection" class="md-nav__link">
+  <a href="#components-and-terms" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Command Injection
+        Components and Terms
       
     </span>
   </a>
@@ -4245,10 +4303,10 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#sql-injection" class="md-nav__link">
+  <a href="#security-properties-and-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SQL Injection
+        Security Properties and Limits
       
     </span>
   </a>
@@ -4256,10 +4314,10 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#cross-site-scripting-xss" class="md-nav__link">
+  <a href="#choose-the-rp-id-carefully" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cross-site Scripting (XSS)
+        Choose the RP ID Carefully
       
     </span>
   </a>
@@ -4267,148 +4325,10 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#sessions" class="md-nav__link">
+  <a href="#use-a-maintained-library" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sessions
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Authentication">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#token-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token Authentication
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#insecure-direct-object-reference-or-forceful-browsing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Insecure Direct Object Reference or Forceful Browsing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#csrf-cross-site-request-forgery" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CSRF (Cross Site Request Forgery)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#redirects-and-forwards" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Redirects and Forwards
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dynamic-render-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dynamic Render Paths
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cross-origin-resource-sharing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cross Origin Resource Sharing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-related-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security-related headers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#business-logic-bugs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Business Logic Bugs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#attack-surface" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attack Surface
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sensitive-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sensitive Files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encryption" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Encryption
+        Use a Maintained Library
       
     </span>
   </a>
@@ -4421,32 +4341,232 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 </li>
       
         <li class="md-nav__item">
-  <a href="#updating-rails-and-having-a-process-for-updating-dependencies" class="md-nav__link">
+  <a href="#secure-passkey-registration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Updating Rails and Having a Process for Updating Dependencies
+        Secure Passkey Registration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Passkey Registration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#establish-an-authorized-account-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Establish an Authorized Account Context
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#generate-and-bind-registration-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tools
+        Generate and Bind Registration Options
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#related-articles-and-references" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-registration-response" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Related Articles and References
+        Verify the Registration Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimize-attestation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimize Attestation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-passkey-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Passkey Authentication
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Passkey Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-and-bind-authentication-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate and Bind Authentication Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-authentication-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the Authentication Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handle-signature-counters-conservatively" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handle Signature Counters Conservatively
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-safe-failure-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Safe Failure Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protect-the-credential-lifecycle-and-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protect the Credential Lifecycle and Recovery
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protect the Credential Lifecycle and Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#credential-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credential Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-recovery-and-bootstrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Account Recovery and Bootstrap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synced-and-device-bound-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synced and Device-Bound Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-and-review-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment and Review Checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment and Review Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-and-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server and Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Account Workflows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy and Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
       
     </span>
   </a>
@@ -4473,293 +4593,196 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
   
 
 
-<h1 id="ruby-on-rails-cheat-sheet">Ruby on Rails Cheat Sheet<a class="headerlink" href="#ruby-on-rails-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="passkey-security-cheat-sheet">Passkey Security Cheat Sheet<a class="headerlink" href="#passkey-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This <em>Cheatsheet</em> intends to provide quick basic Ruby on Rails security tips for developers. It complements, augments or emphasizes points brought up in the <a href="https://guides.rubyonrails.org/security.html">Rails security guide</a> from rails core.</p>
-<p>The Rails framework abstracts developers from quite a bit of tedious work and provides the means to accomplish complex tasks quickly and with ease. New developers, those unfamiliar with the inner-workings of Rails, likely need a basic set of guidelines to secure fundamental aspects of their application. The intended purpose of this doc is to be that guide.</p>
-<h2 id="items">Items<a class="headerlink" href="#items" title="Permanent link">&para;</a></h2>
-<h3 id="command-injection">Command Injection<a class="headerlink" href="#command-injection" title="Permanent link">&para;</a></h3>
-<p>Ruby offers a function called "eval" which will dynamically build new Ruby code based on Strings. It also has a number of ways to call system commands.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">eval</span><span class="p">(</span><span class="s2">"ruby code here"</span><span class="p">)</span>
-<span class="nb">system</span><span class="p">(</span><span class="s2">"os command here"</span><span class="p">)</span>
-<span class="sb">`ls -al /`</span><span class="w"> </span><span class="c1"># (backticks contain os command)</span>
-<span class="nb">exec</span><span class="p">(</span><span class="s2">"os command here"</span><span class="p">)</span>
-<span class="n">spawn</span><span class="p">(</span><span class="s2">"os command here"</span><span class="p">)</span>
-<span class="nb">open</span><span class="p">(</span><span class="s2">"| os command here"</span><span class="p">)</span>
-<span class="no">Process</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">"os command here"</span><span class="p">)</span>
-<span class="no">Process</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">"os command here"</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">binread</span><span class="p">(</span><span class="s2">"| os command here"</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">binwrite</span><span class="p">(</span><span class="s2">"| os command here"</span><span class="p">,</span><span class="w"> </span><span class="s2">"foo"</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="s2">"| os command here"</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">"os command here"</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">"| os command here"</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">readlines</span><span class="p">(</span><span class="s2">"| os command here"</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"| os command here"</span><span class="p">,</span><span class="w"> </span><span class="s2">"foo"</span><span class="p">)</span>
-</code></pre></div>
-<p>While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, an allow-list of possible values should be used and any input should be validated as thoroughly as possible.</p>
-<p>The guides from <a href="https://guides.rubyonrails.org/security.html#command-line-injection">Rails</a> and <a href="https://owasp.org/www-community/attacks/Command_Injection">OWASP</a> contain further information on command injection.</p>
-<h3 id="sql-injection">SQL Injection<a class="headerlink" href="#sql-injection" title="Permanent link">&para;</a></h3>
-<p>Ruby on Rails is often used with an ORM called ActiveRecord, though it is flexible and can be used with other data sources. Typically very simple Rails applications use methods on the Rails models to query data. Many use cases protect for SQL Injection out of the box. However, it is possible to write code that allows for SQL Injection.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span>
-<span class="vi">@projects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">"name like '"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"'"</span><span class="p">);</span>
-</code></pre></div>
-<p>The statement is injectable because the name parameter is not escaped.</p>
-<p>Here is the idiom for building this kind of statement:</p>
-<div class="highlight"><pre><span></span><code><span class="vi">@projects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">"name like ?"</span><span class="p">,</span><span class="w"> </span><span class="s2">"%</span><span class="si">#{</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">sanitize_sql_like</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span><span class="p">)</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
-</code></pre></div>
-<p>Use caution not to build SQL statements based on user controlled input. A list of more realistic and detailed examples is here: <a href="https://rails-sqli.org">rails-sqli.org</a>. OWASP has extensive information about <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>.</p>
-<h3 id="cross-site-scripting-xss">Cross-site Scripting (XSS)<a class="headerlink" href="#cross-site-scripting-xss" title="Permanent link">&para;</a></h3>
-<p>By default, protection against XSS comes as the default behavior. When string data is shown in views, it is escaped prior to being sent back to the browser. This goes a long way, but there are common cases where developers bypass this protection - for example to enable rich text editing. In the event that you want to pass variables to the front end with tags intact, it is tempting to do the following in your .erb file (ruby markup).</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Wrong! Do not do this!</span>
-<span class="o">&lt;</span><span class="sx">%= raw @product.name %&gt;</span>
-
-<span class="sx"># Wrong! Do not do this!</span>
-<span class="sx">&lt;%=</span><span class="o">=</span><span class="w"> </span><span class="vi">@product</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="sx">%&gt;</span>
-
-<span class="sx"># Wrong! Do not do this!</span>
-<span class="sx">&lt;%= @product.name.html_safe %&gt;</span>
-</code></pre></div>
-<p>Unfortunately, any field that uses <code>raw</code>, <code>html_safe</code> or similar like this will be a potential XSS target. Note that there are also widespread misunderstandings about <code>html_safe()</code>.</p>
-<p><a href="https://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html">This writeup</a> describes the underlying SafeBuffer mechanism in detail. Other tags that change the way strings are prepared for output can introduce similar issues.</p>
-<p>The method <code>html_safe</code> of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. <strong>This method itself is un-safe!</strong></p>
-<p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.</p>
-<p>If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the <code>#sanitize</code> method that lets you list allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.</p>
-<p>An often overlooked XSS attack vector for older versions of rails is the <code>href</code> value of a link:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;%=</span><span class="w"> </span><span class="n">link_to</span><span class="w"> </span><span class="s2">"Personal Website"</span><span class="p">,</span><span class="w"> </span><span class="vi">@user</span><span class="o">.</span><span class="n">website</span><span class="w"> </span><span class="o">%&gt;</span>
-</code></pre></div>
-<p>If <code>@user.website</code> contains a link that starts with <code>javascript:</code>, the content will execute when a user clicks the generated link:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"javascript:alert('Haxored')"</span><span class="p">&gt;</span>Personal Website<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Newer Rails versions escape such links in a better way.</p>
-<div class="highlight"><pre><span></span><code><span class="n">link_to</span><span class="w"> </span><span class="s2">"Personal Website"</span><span class="p">,</span><span class="w"> </span><span class="s1">'javascript:alert(1);'</span><span class="o">.</span><span class="n">html_safe</span><span class="p">()</span>
-<span class="c1"># Will generate:</span>
-<span class="c1"># "&lt;a href="javascript:alert(1);"&gt;Personal Website&lt;/a&gt;"</span>
-</code></pre></div>
-<p>Using <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a> is one more security measure to forbid execution for links starting with <code>javascript:</code> .</p>
-<p><a href="https://github.com/presidentbeef/brakeman">Brakeman scanner</a> helps in finding XSS problems in Rails apps.</p>
-<p>OWASP provides more general information about XSS in a top level page: <a href="https://owasp.org/www-community/attacks/xss/">Cross-site Scripting (XSS)</a>.</p>
-<h3 id="sessions">Sessions<a class="headerlink" href="#sessions" title="Permanent link">&para;</a></h3>
-<p>By default, Ruby on Rails uses a Cookie based session store. What that means is that unless you change something, the session will not expire on the server. That means that some default applications may be vulnerable to replay attacks. It also means that sensitive information should never be put in the session.</p>
-<p>The best practice is to use a database based session, which thankfully is very easy with Rails:</p>
-<div class="highlight"><pre><span></span><code><span class="no">Project</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span><span class="w"> </span><span class="ss">:active_record_store</span>
-</code></pre></div>
-<p>There is an <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>.</p>
-<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
-<p>As with all sensitive data, start securing your authentication with enabling TLS in your configuration:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># config/environments/production.rb</span>
-<span class="c1"># Force all access to the app over SSL, use Strict-Transport-Security,</span>
-<span class="c1"># and use secure cookies</span>
-<span class="n">config</span><span class="o">.</span><span class="n">force_ssl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">true</span>
-</code></pre></div>
-<p>Uncomment the line 3 as above in your configuration.</p>
-<p>Generally speaking, Rails does not provide authentication by itself. However, most developers using Rails leverage libraries such as Devise or AuthLogic to provide authentication.</p>
-<p>To enable authentication it is possible to use Devise gem.</p>
-<p>Install it using:</p>
-<div class="highlight"><pre><span></span><code>gem<span class="w"> </span><span class="s1">'devise'</span>
-</code></pre></div>
-<p>Then install it to the user model:</p>
-<div class="highlight"><pre><span></span><code>rails<span class="w"> </span>generate<span class="w"> </span>devise:install
-</code></pre></div>
-<p>Next, specify which resources (routes) require authenticated access in routes:</p>
-<div class="highlight"><pre><span></span><code><span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span><span class="w"> </span><span class="k">do</span>
-<span class="w">  </span><span class="n">authenticate</span><span class="w"> </span><span class="ss">:user</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="n">resources</span><span class="w"> </span><span class="ss">:something</span><span class="w"> </span><span class="k">do</span><span class="w">  </span><span class="c1"># these resource require authentication</span>
-<span class="w">      </span><span class="o">...</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
-
-<span class="w">  </span><span class="n">devise_for</span><span class="w"> </span><span class="ss">:users</span><span class="w"> </span><span class="c1"># sign-up/-in/out routes</span>
-
-<span class="w">  </span><span class="n">root</span><span class="w"> </span><span class="ss">to</span><span class="p">:</span><span class="w"> </span><span class="s1">'static#home'</span><span class="w"> </span><span class="c1"># no authentication required</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>To enforce password complexity, it is possible to use <a href="https://github.com/bitzesty/devise_zxcvbn">zxcvbn gem</a>. Configure your user model with it:</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ApplicationRecord</span>
-<span class="w">  </span><span class="n">devise</span><span class="w"> </span><span class="ss">:database_authenticatable</span><span class="p">,</span>
-<span class="w">    </span><span class="c1"># other devise features, then</span>
-<span class="w">    </span><span class="ss">:zxcvbnable</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>And configure the required password complexity:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># in config/initializers/devise.rb</span>
-<span class="no">Devise</span><span class="o">.</span><span class="n">setup</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">config</span><span class="o">|</span>
-<span class="w">  </span><span class="c1"># zxcvbn score for devise</span>
-<span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">min_password_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="c1"># complexity score here.</span>
-<span class="w">  </span><span class="o">...</span>
-</code></pre></div>
-<p>You can try out <a href="https://github.com/qutorial/revise">this PoC</a> to learn more about it.</p>
-<p>Next, <a href="https://github.com/omniauth/omniauth">omniauth gem</a> allows for multiple strategies for authentication. Using it one can configure secure authentication with Facebook, LDAP and many other providers. Read on <a href="https://github.com/omniauth/omniauth#integrating-omniauth-into-your-application">here</a>.</p>
-<h4 id="token-authentication">Token Authentication<a class="headerlink" href="#token-authentication" title="Permanent link">&para;</a></h4>
-<p>Devise usually uses Cookies for authentication.</p>
-<p>In the case token authentication is wished instead, it could be implemented with a gem <a href="https://github.com/lynndylanhurley/devise_token_auth">devise_token_auth</a>.</p>
-<p>It supports multiple front end technologies, for example angular2-token.</p>
-<p>This gem is configured similar to the devise gem itself. It also requires omniauth as a dependency.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># token-based authentication</span>
-gem<span class="w"> </span><span class="s1">'devise_token_auth'</span>
-gem<span class="w"> </span><span class="s1">'omniauth'</span>
-</code></pre></div>
-<p>Then a route is defined:</p>
-<div class="highlight"><pre><span></span><code><span class="n">mount_devise_token_auth_for</span><span class="w"> </span><span class="s1">'User'</span><span class="p">,</span><span class="w"> </span><span class="ss">at</span><span class="p">:</span><span class="w"> </span><span class="s1">'auth'</span>
-</code></pre></div>
-<p>And the User model is modified accordingly.</p>
-<p>These actions can be done with one command:</p>
-<div class="highlight"><pre><span></span><code>rails<span class="w"> </span>g<span class="w"> </span>devise_token_auth:install<span class="w"> </span><span class="o">[</span>USER_CLASS<span class="o">]</span><span class="w"> </span><span class="o">[</span>MOUNT_PATH<span class="o">]</span>
-</code></pre></div>
-<p>You may need to edit the generated migration to avoid unnecessary fields and/or field duplication depending on your use case.</p>
-<p>Note: when you use only token authentication, there is no more need in <a href="https://owasp.org/www-community/attacks/csrf">CSRF</a> protection in controllers. If you use both ways: cookies and tokens, the paths where cookies are used for authentication still must be protected from forgery!</p>
-<p>There is an <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a>.</p>
-<h3 id="insecure-direct-object-reference-or-forceful-browsing">Insecure Direct Object Reference or Forceful Browsing<a class="headerlink" href="#insecure-direct-object-reference-or-forceful-browsing" title="Permanent link">&para;</a></h3>
-<p>By default, Ruby on Rails apps use a RESTful URI structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built-in protection. It is possible to do this by hand at the controller level.</p>
-<p>It is also possible, and probably recommended, to consider resource-based access control libraries such as <a href="https://github.com/CanCanCommunity/cancancan">cancancan</a> (cancan replacement) or <a href="https://github.com/varvet/pundit">pundit</a> to do this. This ensures that all operations on a database object are authorized by the business logic of the application.</p>
-<p>More general information about this class of vulnerability is in <a href="https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/">OWASP Top 10:2025 A01 Broken Access Control</a> and the <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">Insecure Direct Object Reference Prevention Cheat Sheet</a>.</p>
-<h3 id="csrf-cross-site-request-forgery">CSRF (Cross Site Request Forgery)<a class="headerlink" href="#csrf-cross-site-request-forgery" title="Permanent link">&para;</a></h3>
-<p>Ruby on Rails has specific, built-in support for CSRF tokens. To enable it, or ensure that it is enabled, find the base <code>ApplicationController</code> and look for a directive such as the following:</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ApplicationController</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
-<span class="w">  </span><span class="n">protect_from_forgery</span>
-</code></pre></div>
-<p>Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for APIs or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide <a href="https://owasp.org/www-community/attacks/csrf">CSRF</a> protection for the show method.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ProjectController</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ApplicationController</span>
-<span class="w">  </span><span class="n">protect_from_forgery</span><span class="w"> </span><span class="ss">except</span><span class="p">:</span><span class="w"> </span><span class="ss">:show</span>
-</code></pre></div>
-<p>Also note that by default Rails does not provide CSRF protection for any HTTP <code>GET</code> request.</p>
-<p><strong>Note:</strong> if you use token authentication only, there is no need to protect from CSRF in controllers like this. If cookie-based authentication is used on some paths, then the protections is still required on them.</p>
-<p>There is a top level OWASP page for <a href="https://owasp.org/www-community/attacks/csrf">Cross-Site Request Forgery (CSRF)</a>.</p>
-<h3 id="redirects-and-forwards">Redirects and Forwards<a class="headerlink" href="#redirects-and-forwards" title="Permanent link">&para;</a></h3>
-<p>Web applications often require the ability to dynamically redirect users based on client-supplied data. To clarify, dynamic redirection usually entails the client including a URL in a parameter within a request to the application. Once received by the application, the user is redirected to the URL specified in the request.</p>
-<p>For example:</p>
-<p><code>http://www.example.com/redirect?url=http://www.example_commerce_site.com/checkout</code></p>
-<p>The above request would redirect the user to <code>http://www.example.com/checkout</code>. The security concern associated with this functionality is leveraging an organization's trusted brand to phish users and trick them into visiting a malicious site, in our example, <code>badhacker.com</code>.</p>
-<p>Example:</p>
-<p><code>http://www.example.com/redirect?url=http://badhacker.com</code></p>
-<p>The most basic, but restrictive protection is to use the <code>:only_path</code> option. Setting this to true will essentially strip out any host information. However, the <code>:only_path</code> option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allowlist, this is one approach that can work:</p>
-<div class="highlight"><pre><span></span><code><span class="k">begin</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">path</span>
-<span class="w">    </span><span class="n">redirect_to</span><span class="w"> </span><span class="n">path</span>
-<span class="w">  </span><span class="k">end</span>
-<span class="k">rescue</span><span class="w"> </span><span class="no">URI</span><span class="o">::</span><span class="no">InvalidURIError</span>
-<span class="w">  </span><span class="n">redirect_to</span><span class="w"> </span><span class="s1">'/'</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>If matching user input against a list of approved sites or TLDs against regular expression is a must, it makes sense to leverage a library such as <code>URI.parse()</code> to obtain the host and then take the host value and match it against regular expression patterns. Those regular expressions must, at a minimum, have anchors or there is a greater chance of an attacker bypassing the validation routine.</p>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">require</span><span class="w"> </span><span class="s1">'uri'</span>
-<span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">host</span>
-<span class="c1"># this can be vulnerable to javascript://trusted.com/%0Aalert(0)</span>
-<span class="c1"># so check .scheme and .port too</span>
-<span class="n">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">host</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
-<span class="w">  </span><span class="c1"># Validation routine where we use  \A and \z as anchors *not* ^ and $</span>
-<span class="w">  </span><span class="c1"># you could also check the host value against an allowlist</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>Also blind redirecting to user input parameter can lead to XSS.</p>
-<p>Example code:</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:to</span><span class="o">]</span>
-</code></pre></div>
-<p>Will give this URL:</p>
-<p><code>http://example.com/redirect?to[status]=200&amp;to[protocol]=javascript:alert(0)//</code></p>
-<p>The obvious fix for this type of vulnerability is to restrict to specific Top-Level Domains (TLDs), statically define specific sites, or map a key to it's value.</p>
-<p>Example code:</p>
-<div class="highlight"><pre><span></span><code><span class="no">ACCEPTABLE_URLS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="s1">'our_app_1'</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">"https://www.example_commerce_site.com/checkout"</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">'our_app_2'</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">"https://www.example_user_site.com/change_settings"</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Will give this URL:</p>
-<p><code>http://www.example.com/redirect?url=our_app_1</code></p>
-<p>Redirection handling code:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">redirect</span>
-<span class="w">  </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">ACCEPTABLE_URLS</span><span class="o">[</span><span class="s2">"</span><span class="si">#{</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span><span class="o">]</span>
-<span class="w">  </span><span class="n">redirect_to</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">url</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>There is a more general OWASP resource about <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">unvalidated redirects and forwards</a>.</p>
-<h3 id="dynamic-render-paths">Dynamic Render Paths<a class="headerlink" href="#dynamic-render-paths" title="Permanent link">&para;</a></h3>
-<p>In Rails, controller actions and views can dynamically determine which view or partial to render by calling the <code>render</code> method. If user input is used in or for the template name, an attacker could cause the application to render an arbitrary view, such as an administrative page.</p>
-<p>Care should be taken when using user input to determine which view to render. If possible, avoid any user input in the name or path to the view.</p>
-<h3 id="cross-origin-resource-sharing">Cross Origin Resource Sharing<a class="headerlink" href="#cross-origin-resource-sharing" title="Permanent link">&para;</a></h3>
-<p>Occasionally, a need arises to share resources with another domain. For example, a file-upload function that sends data via an AJAX request to another domain. In these cases, the same-origin rules followed by web browsers must be sent. Modern browsers, in compliance with HTML5 standards, will allow this to occur but in order to do this; a couple precautions must be taken.</p>
-<p>When using a nonstandard HTTP construct, such as an atypical Content-Type header, for example, the following applies:</p>
-<p>The receiving site should list only those domains allowed to make such requests as well as set the <code>Access-Control-Allow-Origin</code> header in both the response to the <code>OPTIONS</code> request and <code>POST</code> request. This is because the OPTIONS request is sent first, in order to determine if the remote or receiving site allows the requesting domain. Next, a second request, a <code>POST</code> request, is sent. Once again, the header must be set in order for the transaction to be shown as successful.</p>
-<p>When standard HTTP constructs are used:</p>
-<p><em>The request is sent and the browser, upon receiving a response, inspects the response headers in order to determine if the response can and should be processed.</em></p>
-<p>Allowlist in Rails:</p>
-<p><strong>Gemfile:</strong></p>
-<div class="highlight"><pre><span></span><code>gem<span class="w"> </span><span class="s1">'rack-cors'</span>,<span class="w"> </span>:require<span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s1">'rack/cors'</span>
-</code></pre></div>
-<p><strong>config/application.rb:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="nn">Sample</span>
-<span class="w">  </span><span class="k">class</span><span class="w"> </span><span class="nc">Application</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
-<span class="w">    </span><span class="n">config</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">use</span><span class="w"> </span><span class="no">Rack</span><span class="o">::</span><span class="no">Cors</span><span class="w"> </span><span class="k">do</span>
-<span class="w">      </span><span class="n">allow</span><span class="w"> </span><span class="k">do</span>
-<span class="w">        </span><span class="n">origins</span><span class="w"> </span><span class="s1">'someserver.example.com'</span>
-<span class="w">        </span><span class="n">resource</span><span class="w"> </span><span class="sr">%r{/users/\d+.json}</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">:headers</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="s1">'Origin'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Accept'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Content-Type'</span><span class="o">]</span><span class="p">,</span>
-<span class="w">        </span><span class="ss">:methods</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="ss">:post</span><span class="p">,</span><span class="w"> </span><span class="ss">:get</span><span class="o">]</span>
-<span class="w">      </span><span class="k">end</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<h3 id="security-related-headers">Security-related headers<a class="headerlink" href="#security-related-headers" title="Permanent link">&para;</a></h3>
-<p>To set a header value, simply access the response.headers object as a hash inside your controller (often in a before/after_filter).</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">[</span><span class="s1">'X-header-name'</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'value'</span>
-</code></pre></div>
-<p>Rails provides the <code>default_headers</code> functionality that will automatically apply the values supplied. This works for most headers in almost all cases.</p>
-<div class="highlight"><pre><span></span><code><span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Response</span><span class="o">.</span><span class="n">default_headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="s1">'X-Frame-Options'</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'SAMEORIGIN'</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">'X-Content-Type-Options'</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'nosniff'</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">'X-XSS-Protection'</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'0'</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><a href="https://owasp.org/www-project-secure-headers/#headers-link">Strict transport security</a> is a special case, it is set in an environment file (e.g. <code>production.rb</code>)</p>
-<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">force_ssl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">true</span>
-</code></pre></div>
-<p>For those not on the edge, there is a library (<a href="https://github.com/twitter/secureheaders">secure_headers</a>) for the same behavior with content security policy abstraction provided. It will automatically apply logic based on the user agent to produce a concise set of headers.</p>
-<h3 id="business-logic-bugs">Business Logic Bugs<a class="headerlink" href="#business-logic-bugs" title="Permanent link">&para;</a></h3>
-<p>Any application in any technology can contain business logic errors that result in security bugs. Business logic bugs are difficult to impossible to detect using automated tools. The best ways to prevent business logic security bugs are to do code review, pair program and write unit tests.</p>
-<h3 id="attack-surface">Attack Surface<a class="headerlink" href="#attack-surface" title="Permanent link">&para;</a></h3>
-<p>Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URLs should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface.</p>
-<p>An example might be as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># this is an example of what NOT to do</span>
-<span class="n">match</span><span class="w"> </span><span class="s1">':controller(/:action(/:id(.:format)))'</span>
-</code></pre></div>
-<p>In this case, this route allows any public method on any controller to be called as an action. As a developer, you want to make sure that users can only reach the controller methods intended and in the way intended.</p>
-<h3 id="sensitive-files">Sensitive Files<a class="headerlink" href="#sensitive-files" title="Permanent link">&para;</a></h3>
-<p>Many Ruby on Rails apps are open source and hosted on publicly available source code repositories. Whether that is the case or the code is committed to a corporate source control system, there are certain files that should be either excluded or carefully managed.</p>
-<div class="highlight"><pre><span></span><code>/config/database.yml                 -  May contain production credentials.
-/config/initializers/secret_token.rb -  Contains a secret used to hash session cookie.
-/db/seeds.rb                         -  May contain seed data including bootstrap admin user.
-/db/development.sqlite3              -  May contain real data.
-</code></pre></div>
-<h3 id="encryption">Encryption<a class="headerlink" href="#encryption" title="Permanent link">&para;</a></h3>
-<p>Rails uses OS encryption. Generally speaking, it is always a bad idea to write your own encryption.</p>
-<p>Devise by default uses bcrypt for password hashing, which is an appropriate solution.</p>
-<p>Typically, the following config causes the 10 stretches for production: <code>/config/initializers/devise.rb</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">stretches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span><span class="w"> </span><span class="p">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
-</code></pre></div>
-<h2 id="updating-rails-and-having-a-process-for-updating-dependencies">Updating Rails and Having a Process for Updating Dependencies<a class="headerlink" href="#updating-rails-and-having-a-process-for-updating-dependencies" title="Permanent link">&para;</a></h2>
-<p>In early 2013, a number of critical vulnerabilities were identified in the Rails Framework. Organizations that had fallen behind current versions had more trouble updating and harder decisions along the way, including patching the source code for the framework itself.</p>
-<p>An additional concern with Ruby applications in general is that most libraries (gems) are not signed by their authors. It is literally impossible to build a Rails based project with libraries that come from trusted sources. One good practice might be to audit the gems you are using.</p>
-<p>In general, it is important to have a process for updating dependencies. An example process might define three mechanisms for triggering an update of response:</p>
+<p>Passkeys are <a href="https://www.w3.org/TR/webauthn-3/#client-side-discoverable-public-key-credential-source">discoverable WebAuthn public key credentials</a> used for passwordless authentication without sending a shared secret to the application. Web applications exercise passkeys through WebAuthn. The authenticator keeps the private key and the relying party stores a public key. A passkey is scoped to a relying party identifier (RP ID), which provides phishing resistance when the ceremony and server-side verification are implemented correctly.</p>
+<p>This cheat sheet is for developers who build the WebAuthn relying-party side of passkey registration, authentication, credential management, and account recovery. Its scope includes passkeys used with <a href="https://www.w3.org/TR/webauthn-3/#sctn-authenticator-taxonomy">platform and roaming authenticators</a>, including security keys that support discoverable credentials, and both synced and device-bound passkeys. <a href="https://www.w3.org/TR/webauthn-3/#sctn-backwards-compatibility-with-fido-u2f">Legacy FIDO U2F/CTAP1 second-factor credentials</a> are outside this passkey scope. The main recommendations are:</p>
 <ul>
-<li>Every month/quarter dependencies in general are updated.</li>
-<li>Every week important security vulnerabilities are taken into account and potentially trigger an update.</li>
-<li>In EXCEPTIONAL conditions, emergency updates may need to be applied.</li>
+<li>Use a maintained WebAuthn server library and validate every required ceremony field on the server.</li>
+<li>Bind registration to the intended account and require recent authentication before changing passkeys.</li>
+<li>Treat user presence (UP) and user verification (UV) as different security properties.</li>
+<li>Design credential management and recovery with the same care as authentication.</li>
+<li>Support more than one authenticator so that the loss of one device does not force a weak recovery path.</li>
 </ul>
-<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
-<p>Use <a href="https://brakemanscanner.org/">brakeman</a>, an open source code analysis tool for Rails applications, to identify many potential issues. It will not necessarily produce comprehensive security findings, but it can find easily exposed issues. A great way to see potential issues in Rails is to review the brakeman documentation of warning types.</p>
-<p>A newer alternative is <a href="https://github.com/Bearer/bearer">bearer</a>, an open source code security and privacy analysis tool for both Ruby and JavaScript/TypeScript code, in order to identify a broad range of OWASP Top 10 potential issues. It provides many configuration options and can easily integrate into your CI/CD pipeline.</p>
-<p>There are emerging tools that can be used to track security issues in dependency sets, like automated scanning from <a href="https://github.blog/2017-11-16-introducing-security-alerts-on-github/">GitHub</a> and <a href="https://docs.gitlab.com/ee/user/application_security/dependency_scanning/">GitLab</a>.</p>
-<p>Another area of tooling is the security testing tool <a href="http://gauntlt.org">Gauntlt</a> which is built on cucumber and uses gherkin syntax to define attack files.</p>
-<p>Launched in May 2013 and very similar to brakeman scanner, the <a href="https://github.com/thesp0nge/dawnscanner">dawnscanner</a> rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 1.6.6 has more than 235 ruby specific CVE security checks.</p>
-<h2 id="related-articles-and-references">Related Articles and References<a class="headerlink" href="#related-articles-and-references" title="Permanent link">&para;</a></h2>
+<h2 id="understand-the-security-model">Understand the Security Model<a class="headerlink" href="#understand-the-security-model" title="Permanent link">&para;</a></h2>
+<h3 id="components-and-terms">Components and Terms<a class="headerlink" href="#components-and-terms" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://guides.rubyonrails.org/security.html">The Official Rails Security Guide</a></li>
-<li><a href="https://owasp.org/www-pdf-archive/Rails_Security_2.pdf">OWASP Ruby on Rails Security Guide</a></li>
-<li><a href="http://code.google.com/p/ruby-security/wiki/Guide">The Ruby Security Reviewers Guide</a></li>
-<li><a href="https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-security">The Ruby on Rails Security Mailing List</a></li>
-<li><a href="https://codeclimate.com/blog/rails-insecure-defaults/">Rails Insecure Defaults</a></li>
+<li>The <strong>relying party (RP)</strong> is the application that registers and authenticates users.</li>
+<li>The <strong>client</strong> is the browser or other software that calls the WebAuthn API.</li>
+<li>The <strong>authenticator</strong> creates credentials and signs authentication assertions. It can be built into a device or be a separate roaming authenticator.</li>
+<li>The <a href="https://www.w3.org/TR/webauthn-3/#sctn-intro"><strong>WebAuthn/FIDO2 protocol</strong></a> spans the RP, client, and authenticator. WebAuthn is the web-facing API used by RPs, while CTAP handles communication between clients and roaming authenticators.</li>
+<li>A <strong>passkey</strong> is a discoverable WebAuthn credential used for passwordless authentication. It may be held by a platform or roaming authenticator, and it may be device-bound or synced between devices by a credential provider.</li>
+<li>The <strong>credential ID</strong> identifies a credential to the RP. The corresponding private key remains under authenticator control.</li>
+<li>The <strong>user handle</strong> is an opaque RP-generated identifier for an account. It is not a username or email address.</li>
+<li><strong>User presence (UP)</strong> shows that a person interacted with the authenticator.</li>
+<li><strong>User verification (UV)</strong> shows that the authenticator locally verified the user, for example with a PIN or biometric.</li>
+</ul>
+<p>Do not treat UP and UV as equivalent. Require UV when the passkey is expected to satisfy a multi-factor or other high-assurance authentication policy. A passkey is not automatically multi-factor merely because an authenticator supports UV; the RP must <a href="https://www.w3.org/TR/webauthn-3/#user-verification">request UV and verify the returned UV flag</a>.</p>
+<h3 id="security-properties-and-limits">Security Properties and Limits<a class="headerlink" href="#security-properties-and-limits" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.w3.org/TR/webauthn-3/#sctn-rp-benefits">WebAuthn credentials are scoped to an RP</a>, and the signed response includes a hash of that RP ID. The client data also binds the response to the web origin and ceremony challenge. Correct verification therefore gives the RP phishing resistance, verifier-name binding, and replay resistance.</p>
+<p>These properties do not protect every part of the account lifecycle. Passkeys do not by themselves prevent:</p>
+<ul>
+<li>A compromised authenticated session from adding an attacker-controlled passkey.</li>
+<li>An insecure recovery process from bypassing passkey authentication.</li>
+<li>Server-side credential records from being associated with the wrong account.</li>
+<li>Application code, authorization, or session-management vulnerabilities.</li>
+<li>Compromise of a device, authenticator, or account used to synchronize passkeys.</li>
+</ul>
+<p>Apply the controls in the <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a>, <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>, and <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a> to the surrounding application.</p>
+<h3 id="choose-the-rp-id-carefully">Choose the RP ID Carefully<a class="headerlink" href="#choose-the-rp-id-carefully" title="Permanent link">&para;</a></h3>
+<p>An RP ID determines where a credential can be used. Use the narrowest stable domain that covers the intended application. Do not use a registrable parent domain merely to share credentials with unrelated subdomains. The WebAuthn specification discusses the <a href="https://www.w3.org/TR/webauthn-3/#sctn-validating-origin">security implications of the RP ID and origin relationship</a>; compromise of an origin within the RP ID scope may affect the security of that RP deployment.</p>
+<p>The server must use the same expected RP ID during registration and authentication. Maintain an explicit allowlist of permitted origins, including scheme, host, and port where applicable. Do not construct an expected origin from an untrusted request header.</p>
+<p>Native apps do not present an HTTPS origin. The origin an Android app reports is a string such as <code>android:apk-key-hash:&lt;hash&gt;</code>, derived from the app signing certificate, and both platforms decide whether an app may use your RP ID from an association file that you host: <a href="https://developer.android.com/identity/credential-manager/prerequisites"><code>/.well-known/assetlinks.json</code></a> on Android and the <code>webcredentials</code> entries in <a href="https://developer.apple.com/documentation/xcode/supporting-associated-domains"><code>/.well-known/apple-app-site-association</code></a> on Apple platforms (see the <a href="https://web.dev/articles/webauthn-rp-id">RP ID and app origins overview</a>). The server must <a href="https://developer.android.com/identity/passkeys/create-passkeys">match each app origin against its allowlist</a> as an explicit entry, never a pattern. Treat both association files as part of the RP attack surface with the same change control as the origin allowlist: an over-broad file, or a server that accepts an app origin it never listed, lets an unrelated app obtain assertions for your RP ID.</p>
+<p><a href="https://www.w3.org/TR/webauthn-3/#sctn-api">WebAuthn is restricted to secure contexts</a>. Serve registration, authentication, and credential-management pages over HTTPS and protect them against script injection. Avoid cross-origin WebAuthn in embedded frames unless it is an intentional, reviewed design using the <a href="https://www.w3.org/TR/webauthn-3/#sctn-iframe-guidance">required Permissions Policy and origin validation</a>.</p>
+<h3 id="use-a-maintained-library">Use a Maintained Library<a class="headerlink" href="#use-a-maintained-library" title="Permanent link">&para;</a></h3>
+<p>Do not implement CBOR parsing, COSE key handling, attestation validation, or assertion verification yourself. Use a maintained server-side WebAuthn library that implements the W3C relying-party verification steps. Keep it updated and include successful and failing registration and authentication ceremonies in automated tests.</p>
+<p>The library does not make account workflows safe automatically. The application remains responsible for issuing and consuming challenges, choosing the expected RP ID and origins, binding ceremonies to the correct session and account, enforcing UV policy, and managing credential lifecycle events.</p>
+<h2 id="secure-passkey-registration">Secure Passkey Registration<a class="headerlink" href="#secure-passkey-registration" title="Permanent link">&para;</a></h2>
+<h3 id="establish-an-authorized-account-context">Establish an Authorized Account Context<a class="headerlink" href="#establish-an-authorized-account-context" title="Permanent link">&para;</a></h3>
+<p>Registration attaches a new authenticator to an account and must be treated as a sensitive account change.</p>
+<ul>
+<li>For an existing account, require a recently authenticated session and reauthenticate the user before adding a passkey. Do not rely only on possession of a long-lived session cookie.</li>
+<li>For a new account, bind the ceremony to the verified account-creation transaction. Do not allow a client-supplied account identifier to select a different account.</li>
+<li>Protect the registration initiation and completion endpoints against cross-site request forgery as described in the <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery Prevention Cheat Sheet</a>.</li>
+<li>Apply rate limits and log failed and successful enrollment attempts.</li>
+</ul>
+<h3 id="generate-and-bind-registration-options">Generate and Bind Registration Options<a class="headerlink" href="#generate-and-bind-registration-options" title="Permanent link">&para;</a></h3>
+<p>Generate the registration challenge with a cryptographically secure random number generator. The WebAuthn security considerations require <a href="https://www.w3.org/TR/webauthn-3/#sctn-cryptographic-challenges">at least 16 random bytes</a>; expire it promptly and accept it only once. Store server-side state that binds the challenge to:</p>
+<ul>
+<li>The registration ceremony type.</li>
+<li>The authenticated session and intended account.</li>
+<li>The expected RP ID and origin policy.</li>
+<li>The intended user-verification and attestation policy.</li>
+<li>An expiration time.</li>
+</ul>
+<p>Do not accept a challenge issued for authentication as a registration challenge, or a challenge issued for one account in a ceremony for another account. Invalidate the challenge whether the ceremony succeeds or fails in a terminal way.</p>
+<p>Generate a stable, opaque user handle that contains no username, email address, or other personally identifying information, following the WebAuthn <a href="https://www.w3.org/TR/webauthn-3/#sctn-user-handle-privacy">user-handle privacy guidance</a>. A user handle must identify one account within the RP and must not be reassigned to another account.</p>
+<p>Include the account's existing credential IDs in <code>excludeCredentials</code> when possible. This improves the user experience by discouraging duplicate registration, but the server must still enforce credential uniqueness.</p>
+<h3 id="verify-the-registration-response">Verify the Registration Response<a class="headerlink" href="#verify-the-registration-response" title="Permanent link">&para;</a></h3>
+<p>Follow the WebAuthn <a href="https://www.w3.org/TR/webauthn-3/#sctn-registering-a-new-credential">registration verification procedure</a> through the selected library. At minimum, ensure that the server verifies:</p>
+<ul>
+<li>The client data type is <code>webauthn.create</code>.</li>
+<li>The returned challenge exactly matches the issued challenge.</li>
+<li>The origin is an exact member of the RP's allowlist.</li>
+<li>The RP ID hash matches the expected RP ID.</li>
+<li>The UP flag is set and the UV flag is set when UV was required.</li>
+<li>The public-key algorithm is one the RP offered and permits.</li>
+<li>The credential public key and credential ID are structurally valid.</li>
+<li>Any requested extensions are processed according to RP policy.</li>
+<li>Attestation is verified when the RP's policy requires it.</li>
+</ul>
+<p>Store the credential only after all checks succeed. Associate it with the account from the server-side ceremony state, never an account identifier returned by the client. Enforce credential ID uniqueness across the RP and make the account association change auditable.</p>
+<p>Store the credential ID, public key, user handle association, algorithm, relevant transports, creation time, a user-visible name, and the authenticator data needed by the library. Store backup eligibility and backup state when returned, but do not expose those values as proof that a particular provider or device is trustworthy.</p>
+<h3 id="minimize-attestation">Minimize Attestation<a class="headerlink" href="#minimize-attestation" title="Permanent link">&para;</a></h3>
+<p>Most public-facing applications should use no attestation and should not restrict users to a list of authenticator models. WebAuthn documents both <a href="https://www.w3.org/TR/webauthn-3/#sctn-attestation-limitations">attestation limitations</a> and <a href="https://www.w3.org/TR/webauthn-3/#sctn-attestation-privacy">attestation privacy considerations</a>; attestation does not prove that an authenticator will remain uncompromised.</p>
+<p>Use attestation only when a documented enterprise or regulatory requirement justifies enforcing authenticator provenance or properties. If attestation is required:</p>
+<ul>
+<li>Define acceptable formats, trust anchors, metadata, and failure behavior.</li>
+<li>Validate the complete attestation chain and relevant status information.</li>
+<li>Plan for metadata and trust-anchor updates.</li>
+<li>Provide a reviewed exception or recovery process that does not silently remove the policy.</li>
+</ul>
+<h2 id="secure-passkey-authentication">Secure Passkey Authentication<a class="headerlink" href="#secure-passkey-authentication" title="Permanent link">&para;</a></h2>
+<h3 id="generate-and-bind-authentication-options">Generate and Bind Authentication Options<a class="headerlink" href="#generate-and-bind-authentication-options" title="Permanent link">&para;</a></h3>
+<p>Generate a fresh, unpredictable challenge for every authentication ceremony. Bind it to the ceremony type, expected RP ID, origin policy, UV requirement, session or transaction context, and expiration time. Consume it once.</p>
+<p>For account-first authentication, send only the credential IDs registered to the selected account in <code>allowCredentials</code>. Use generic responses and consistent behavior so that the account selection step does not disclose whether an account exists.</p>
+<p>For username-less authentication, omit <code>allowCredentials</code> and use discoverable credentials. After verification, use the returned user handle and credential ID to locate the server-side credential record. Require both values to resolve to the same account; do not trust a display name or other client-provided identity claim.</p>
+<p>Conditional mediation can improve passkey discovery and coexist with password fields. Treat it as another way to start the same authentication ceremony, not as a different verification policy.</p>
+<h3 id="verify-the-authentication-response">Verify the Authentication Response<a class="headerlink" href="#verify-the-authentication-response" title="Permanent link">&para;</a></h3>
+<p>Follow the WebAuthn <a href="https://www.w3.org/TR/webauthn-3/#sctn-verifying-assertion">assertion verification procedure</a> through the selected library. At minimum, ensure that the server verifies:</p>
+<ul>
+<li>The client data type is <code>webauthn.get</code>.</li>
+<li>The challenge exactly matches an unexpired, unused authentication challenge.</li>
+<li>The origin is an exact member of the RP's allowlist.</li>
+<li>The RP ID hash matches the expected RP ID.</li>
+<li>The credential ID exists and belongs to the account selected by the verified ceremony context.</li>
+<li>The assertion signature is valid under the stored public key.</li>
+<li>The UP flag is set and the UV flag is set when required by policy.</li>
+<li>The returned user handle, when present, matches the credential's account.</li>
+<li>Extension outputs and cross-origin indicators comply with RP policy.</li>
+</ul>
+<p>Create an authenticated application session only after every required check succeeds. Rotate the session identifier at authentication and apply the controls in the <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>.</p>
+<h3 id="handle-signature-counters-conservatively">Handle Signature Counters Conservatively<a class="headerlink" href="#handle-signature-counters-conservatively" title="Permanent link">&para;</a></h3>
+<p>A non-increasing signature counter can signal that an authenticator may be cloned, malfunctioning, or affected by out-of-order assertion processing. The WebAuthn <a href="https://www.w3.org/TR/webauthn-3/#sctn-sign-counter">signature counter considerations</a> explain why it is not a universal clone-detection mechanism. Some authenticators do not implement a counter, and a synced credential may be used from multiple authenticator instances whose counter behavior is not strictly monotonic.</p>
+<p>When a nonzero counter does not increase as expected, record the event and evaluate it with other account-risk signals. Do not automatically lock out every user solely because of a counter anomaly. Follow the selected library's guidance and document the RP's response policy.</p>
+<h3 id="use-safe-failure-behavior">Use Safe Failure Behavior<a class="headerlink" href="#use-safe-failure-behavior" title="Permanent link">&para;</a></h3>
+<p>Return generic authentication errors that do not distinguish an unknown account, unknown credential, failed signature, or policy rejection. Keep externally visible response timing as consistent as practical. Rate-limit attempts by account and relevant network or device signals without creating a trivial account-lockout denial of service.</p>
+<p>A failed passkey ceremony must not silently fall back to a weaker method. Adversary-in-the-middle phishing does not defeat a correctly verified passkey ceremony; it steers the user to whatever fallback is still enabled, and <a href="https://pages.nist.gov/800-63-4/sp800-63b.html">NIST SP 800-63B-4 Section 3.2.5</a> states that authenticators involving manual entry of an authenticator output, such as OTP and out-of-band codes, are not phishing-resistant. If a fallback exists, make it a deliberate, logged, policy-documented path rather than the default error handling, and follow the <a href="Multifactor_Authentication_Cheat_Sheet.html#mfa-downgrade-attacks">MFA Downgrade Attacks</a> guidance.</p>
+<p>Log enough structured information to investigate failures, but never log challenges, full credential responses, session identifiers, or unnecessary user-identifying data. The <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a> provides general logging guidance.</p>
+<h2 id="protect-the-credential-lifecycle-and-recovery">Protect the Credential Lifecycle and Recovery<a class="headerlink" href="#protect-the-credential-lifecycle-and-recovery" title="Permanent link">&para;</a></h2>
+<h3 id="credential-management">Credential Management<a class="headerlink" href="#credential-management" title="Permanent link">&para;</a></h3>
+<p>Provide an authenticated credential-management page where users can view and manage their passkeys. Show a user-chosen name, creation date, and last-used date rather than exposing raw credential IDs.</p>
+<ul>
+<li>Require recent reauthentication before adding or removing a passkey, changing recovery methods, or disabling the last strong authenticator.</li>
+<li>Allow users to register more than one authenticator.</li>
+<li>Notify the user through an existing trusted channel when a passkey is added or removed.</li>
+<li>Record enrollment, use, renaming, and revocation as security events.</li>
+<li>Revoke a credential immediately on the server when the user removes it or reports compromise.</li>
+<li>Confirm that at least one usable authentication or recovery method remains before removing the final passkey.</li>
+</ul>
+<p>Do not silently reassign a credential record to a different account. Database migrations and administrative changes to credential-to-account mappings require integrity controls, authorization checks, and audit logs. Treat an unexpected duplicate credential ID as an error requiring investigation.</p>
+<p>Where supported, WebAuthn signal methods can help a credential provider reconcile its local state after an RP deletes credentials or updates user details. These signals improve consistency but do not replace server-side revocation.</p>
+<h3 id="account-recovery-and-bootstrap">Account Recovery and Bootstrap<a class="headerlink" href="#account-recovery-and-bootstrap" title="Permanent link">&para;</a></h3>
+<p>The effective security of a passkey account is limited by its weakest recovery route. Prefer recovery based on another already-registered passkey, a separately secured recovery code, or a high-assurance identity process appropriate to the application's risk.</p>
+<ul>
+<li>Encourage users to register multiple authenticators before one is lost.</li>
+<li>Protect recovery codes as authentication secrets, store them securely, make them single-use, and let users regenerate them.</li>
+<li>Apply rate limits, risk checks, notifications, and additional review to recovery attempts.</li>
+<li>Do not let email or SMS recovery silently bypass a stronger authentication policy for high-risk accounts.</li>
+<li>After recovery, rotate sessions, review or revoke existing credentials as appropriate, and notify the user.</li>
+<li>Apply a delay or additional verification before high-impact actions when recovery indicates elevated takeover risk.</li>
+</ul>
+<p>For more detail, see the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> and the recovery guidance in the <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a>.</p>
+<h3 id="synced-and-device-bound-credentials">Synced and Device-Bound Credentials<a class="headerlink" href="#synced-and-device-bound-credentials" title="Permanent link">&para;</a></h3>
+<p><a href="https://pages.nist.gov/800-63-4/sp800-63b/syncable/">Synced passkeys</a> improve availability by making a credential usable on more than one device. Their security also depends on the credential provider's account protection, device enrollment, synchronization, and recovery controls. Device-bound credentials can support policies that require the key to remain on a particular authenticator, but require an availability and replacement plan.</p>
+<p>Choose policy according to the application's threat model:</p>
+<ul>
+<li>Public-facing applications should generally support synced passkeys and provide users with secure options for additional authenticators and recovery.</li>
+<li>Enterprise or high-assurance applications may require managed, device-bound authenticators and attestation when the operational controls justify the reduced interoperability.</li>
+<li>Use backup eligibility and backup state as risk and policy inputs where appropriate. Do not treat them as user-verification results or as proof of a specific sync provider.</li>
+<li>Do not assume a synced passkey can meet every assurance level. For example, NIST does not allow syncable authenticators at Authentication Assurance Level 3 (AAL3).</li>
+</ul>
+<h2 id="deployment-and-review-checklist">Deployment and Review Checklist<a class="headerlink" href="#deployment-and-review-checklist" title="Permanent link">&para;</a></h2>
+<p>Use this checklist together with the W3C <a href="https://www.w3.org/TR/webauthn-3/#sctn-registering-a-new-credential">registration</a> and <a href="https://www.w3.org/TR/webauthn-3/#sctn-verifying-assertion">authentication</a> verification procedures.</p>
+<h3 id="server-and-protocol">Server and Protocol<a class="headerlink" href="#server-and-protocol" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use a maintained WebAuthn server library and keep it updated.</li>
+<li>Generate cryptographically random, single-use, expiring challenges of at least 16 bytes.</li>
+<li>Bind each challenge to its ceremony, account or session context, RP ID, origin, and policy.</li>
+<li>Maintain an exact origin allowlist and a documented RP ID.</li>
+<li>List native app origins explicitly and change-control the <code>assetlinks.json</code> and <code>apple-app-site-association</code> files together with the allowlist.</li>
+<li>Verify type, challenge, origin, RP ID hash, UP, required UV, credential ownership, and signature.</li>
+<li>Store public keys and credential metadata safely and enforce credential ID uniqueness.</li>
+<li>Treat counters as risk signals rather than universal clone detection.</li>
+<li>Test registration and authentication with supported browsers and authenticators.</li>
+</ul>
+<h3 id="account-workflows">Account Workflows<a class="headerlink" href="#account-workflows" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Require recent authentication for passkey enrollment, removal, and recovery changes.</li>
+<li>Bind new credentials to the server-selected account.</li>
+<li>Support multiple authenticators and immediate server-side revocation.</li>
+<li>Notify users of credential lifecycle changes and retain useful audit events.</li>
+<li>Make recovery commensurate with the security of passkey authentication.</li>
+<li>Use generic error messages and protect account-first flows from enumeration.</li>
+<li>Never let a failed passkey ceremony silently fall back to a non-phishing-resistant method.</li>
+</ul>
+<h3 id="privacy-and-operations">Privacy and Operations<a class="headerlink" href="#privacy-and-operations" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Keep user handles opaque and free of personally identifying information.</li>
+<li>Avoid attestation unless a documented requirement justifies it.</li>
+<li>Do not expose raw credential IDs in user interfaces, URLs, or logs.</li>
+<li>Minimize stored authenticator metadata and restrict access to it.</li>
+<li>Monitor registration, authentication, recovery, and administrative mapping changes.</li>
+<li>Document incident procedures for a compromised authenticator, sync account, RP origin, or WebAuthn library.</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.w3.org/TR/webauthn-2/">W3C Web Authentication Level 2</a></li>
+<li><a href="https://www.w3.org/TR/webauthn-3/">W3C Web Authentication Level 3</a></li>
+<li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html">NIST SP 800-63B-4</a></li>
+<li><a href="https://pages.nist.gov/800-63-4/sp800-63b/syncable/">NIST Supplemental Guidance for Syncable Authenticators</a></li>
+<li><a href="https://passkeys.dev/">Passkeys.dev Developer Resources</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API">MDN Web Authentication API</a></li>
 </ul>
 
 
