@@ -87,6 +87,10 @@ Include the account's existing credential IDs in `excludeCredentials` when possi
 
 ### Verify the Registration Response
 
+The following diagram shows which party performs each check and in what order.
+
+![Registration ceremony sequence diagram](../assets/Passkey_Security_Cheat_Sheet_Registration_Ceremony.png)
+
 Follow the WebAuthn [registration verification procedure](https://www.w3.org/TR/webauthn-3/#sctn-registering-a-new-credential) through the selected library. At minimum, ensure that the server verifies:
 
 - The client data type is `webauthn.create`.
@@ -127,6 +131,10 @@ For username-less authentication, omit `allowCredentials` and use discoverable c
 Conditional mediation can improve passkey discovery and coexist with password fields. Treat it as another way to start the same authentication ceremony, not as a different verification policy.
 
 ### Verify the Authentication Response
+
+The following diagram shows which party performs each check and in what order.
+
+![Authentication ceremony sequence diagram](../assets/Passkey_Security_Cheat_Sheet_Authentication_Ceremony.png)
 
 Follow the WebAuthn [assertion verification procedure](https://www.w3.org/TR/webauthn-3/#sctn-verifying-assertion) through the selected library. At minimum, ensure that the server verifies:
 
