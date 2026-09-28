@@ -1227,6 +1227,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#defending-against-doubleclickjacking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defending against DoubleClickjacking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#best-for-now-legacy-browser-frame-breaking-script" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4425,6 +4436,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#defending-against-doubleclickjacking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defending against DoubleClickjacking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#best-for-now-legacy-browser-frame-breaking-script" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4536,6 +4558,7 @@
 <li>Preventing session cookies from being included when the page is loaded in a frame using the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite</a> cookie attribute.</li>
 <li>Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a "frame-buster").</li>
 </ul>
+<p>These mechanisms address frame-based clickjacking. <a href="#defending-against-doubleclickjacking">DoubleClickjacking</a> uses separate windows and requires additional safeguards for sensitive actions.</p>
 <p>Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.</p>
 <h2 id="defending-with-content-security-policy-csp-frame-ancestors-directive">Defending with Content Security Policy (CSP) frame-ancestors directive<a class="headerlink" href="#defending-with-content-security-policy-csp-frame-ancestors-directive" title="Permanent link">&para;</a></h2>
 <p>The <code>frame-ancestors</code> directive can be used in a Content-Security-Policy HTTP response header to indicate whether or not a browser should be allowed to render a page in a <code>&lt;frame&gt;</code> or <code>&lt;iframe&gt;</code>. Sites can use this to avoid Clickjacking attacks by ensuring that their content is not embedded into other sites.</p>
@@ -4617,6 +4640,16 @@
 <p>If the Clickjacking attack does not require the user to be authenticated, this attribute will not provide any protection.</p>
 <p>Additionally, while <code>SameSite</code> attribute is supported by <a href="https://caniuse.com/#feat=same-site-cookie-attribute">most modern browsers</a>, there are still some users (approximately 6% as of November 2020) with browsers that do not support it.</p>
 <p>The use of this attribute should be considered as part of a defense-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.</p>
+<h2 id="defending-against-doubleclickjacking">Defending against DoubleClickjacking<a class="headerlink" href="#defending-against-doubleclickjacking" title="Permanent link">&para;</a></h2>
+<p><a href="https://evil.blog/2024/12/doubleclickjacking-what.html">DoubleClickjacking</a> tricks a user into activating a sensitive control in another window during a double-click. The target page is a top-level window, so framing restrictions such as <code>X-Frame-Options</code> and CSP <code>frame-ancestors</code> do not prevent this attack.</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"><code>SameSite</code> controls whether cookies accompany cross-site requests</a>. <code>Lax</code> permits cookies on top-level navigations using safe HTTP methods, while <code>Strict</code> withholds them on the initial cross-site request. Neither policy verifies that the user intended the resulting action.</p>
+<p>For pages your application controls, such as consent screens, payment confirmations, and account security settings:</p>
+<ul>
+<li>For high-risk actions, require the user to review the action's details and complete <a href="Transaction_Authorization_Cheat_Sheet.html">transaction authorization</a>. Enforce authorization on the server; an extra confirmation button alone is not a complete defense against UI redress.</li>
+<li>Treat disabling sensitive controls until prior interaction as a proposed supplementary mitigation, as described in <a href="https://evil.blog/2024/12/doubleclickjacking-what.html">Paulos Yibelo's disclosure</a>. Mouse movement or a key press alone does not establish that the user understands or approves the action.</li>
+<li>If you use this mitigation, render the controls disabled from the start and test that users can enable and activate them with mouse, keyboard, touch, and assistive technology. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event">Click events support all these input methods</a>; do not require every user to move a mouse or press a key.</li>
+<li>Keep the framing defenses above for frame-based attacks. Client-side interaction checks supplement these defenses and do not replace transaction authorization.</li>
+</ul>
 <h2 id="best-for-now-legacy-browser-frame-breaking-script">Best-for-now Legacy Browser Frame Breaking Script<a class="headerlink" href="#best-for-now-legacy-browser-frame-breaking-script" title="Permanent link">&para;</a></h2>
 <p>One way to defend against clickjacking is to include a "frame-breaker" script in each page that should not be framed. The following methodology will prevent a webpage from being framed even in legacy browsers, that do not support the X-Frame-Options-Header.</p>
 <p>In the document HEAD element, add the following:</p>
