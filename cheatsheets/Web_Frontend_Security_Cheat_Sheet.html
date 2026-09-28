@@ -1,3 +1,7 @@
+---
+redirect_from: "/cheatsheets/AJAX_Security_Cheat_Sheet.html"
+---
+
 
 <!doctype html>
 <html lang="en" class="no-js">
@@ -10,13 +14,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Web_Frontend_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="AI_Agent_Security_Cheat_Sheet.html">
+        <link rel="prev" href="WebSocket_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="AML_Sanctions_AI_Agent_Payments_Cheat_Sheet.html">
+        <link rel="next" href="Web_Service_Security_Cheat_Sheet.html">
       
       
         
@@ -27,7 +31,7 @@
     
     
       
-        <title>AJAX Security - OWASP Cheat Sheet Series</title>
+        <title>Web Frontend Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ajax-security-cheat-sheet" class="md-skip">
+        <a href="#web-frontend-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AJAX Security
+              Web Frontend Security
             
           </span>
         </div>
@@ -518,464 +522,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AJAX Security
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AJAX Security
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Introduction">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#client-side-javascript" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Client-Side (JavaScript)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Client-Side (JavaScript)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#use-innerhtml-with-extreme-caution" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use innerHTML with extreme caution
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Use innerHTML with extreme caution">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#what-is-innerhtml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is innerHTML?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-does-innerhtml-require-extreme-caution" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why does innerHTML require extreme caution?
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Why does innerHTML require extreme caution?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vulnerable-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Vulnerable Example
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-is-innerhtml-acceptable" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When is innerHTML acceptable?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#alternatives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Alternatives
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-of-textcontent-or-innertext-for-dom-updates-for-text-only-content" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use of textContent or innerText for DOM updates (for text-only content)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Use of textContent or innerText for DOM updates (for text-only content)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#what-is-textcontent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is textContent?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-is-innertext" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is innerText?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-to-use-textcontent-vs-innertext" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to Use textContent vs. innerText
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#note" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Note
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dont-use-eval-new-function-or-other-code-evaluation-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Don't use eval(), new Function() or other code evaluation tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#encode-data-before-use-in-an-output-context" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Encode Data Before Use in an Output Context
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dont-rely-on-client-logic-for-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Don't rely on client logic for security
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dont-rely-on-client-business-logic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Don't rely on client business logic
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#avoid-writing-serialization-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Avoid writing serialization code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#avoid-building-xml-or-json-dynamically" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Avoid building XML or JSON dynamically
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#never-transmit-secrets-to-the-client" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Never transmit secrets to the client
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dont-perform-encryption-in-client-side-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Don't perform encryption in client-side code
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dont-perform-security-impacting-logic-on-client-side" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Don't perform security impacting logic on client-side
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#server-side" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Server-Side
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Server-Side">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#use-csrf-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use CSRF Protection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#protect-against-json-hijacking-for-older-browsers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Protect against JSON hijacking for older browsers
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Protect against JSON hijacking for older browsers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#review-angularjs-json-hijacking-defense-mechanism" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Review AngularJS JSON hijacking defense mechanism
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#always-return-json-with-an-object-on-the-outside" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Always return JSON with an object on the outside
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#avoid-writing-serialization-code-server-side" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Avoid writing serialization code server-side
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#services-can-be-called-directly-by-users" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Services can be called directly by users
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#avoid-building-xml-or-json-by-hand-use-the-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Avoid building XML or JSON by hand, use the framework
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-json-and-xml-schema-for-web-services" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use JSON and XML schema for web services
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4093,6 +3639,464 @@
                 
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Frontend Security
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Web_Frontend_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Frontend Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#client-side-javascript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client-Side (JavaScript)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client-Side (JavaScript)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-innerhtml-with-extreme-caution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use innerHTML with extreme caution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use innerHTML with extreme caution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-innerhtml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is innerHTML?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-does-innerhtml-require-extreme-caution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why does innerHTML require extreme caution?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why does innerHTML require extreme caution?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vulnerable-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vulnerable Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-is-innerhtml-acceptable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When is innerHTML acceptable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternatives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-of-textcontent-or-innertext-for-dom-updates-for-text-only-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use of textContent or innerText for DOM updates (for text-only content)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use of textContent or innerText for DOM updates (for text-only content)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-textcontent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is textContent?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-innertext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is innerText?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-textcontent-vs-innertext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use textContent vs. innerText
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Note
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-use-eval-new-function-or-other-code-evaluation-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't use eval(), new Function() or other code evaluation tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encode-data-before-use-in-an-output-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encode Data Before Use in an Output Context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-rely-on-client-logic-for-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't rely on client logic for security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-rely-on-client-business-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't rely on client business logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-writing-serialization-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoid writing serialization code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-building-xml-or-json-dynamically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoid building XML or JSON dynamically
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#never-transmit-secrets-to-the-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Never transmit secrets to the client
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-perform-encryption-in-client-side-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't perform encryption in client-side code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-perform-security-impacting-logic-on-client-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't perform security impacting logic on client-side
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server-Side
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server-Side">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-csrf-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use CSRF Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protect-against-json-hijacking-for-older-browsers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protect against JSON hijacking for older browsers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protect against JSON hijacking for older browsers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#review-angularjs-json-hijacking-defense-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Review AngularJS JSON hijacking defense mechanism
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#always-return-json-with-an-object-on-the-outside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Always return JSON with an object on the outside
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-writing-serialization-code-server-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoid writing serialization code server-side
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services-can-be-called-directly-by-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services can be called directly by users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-building-xml-or-json-by-hand-use-the-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoid building XML or JSON by hand, use the framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-json-and-xml-schema-for-web-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use JSON and XML schema for web services
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
@@ -4721,8 +4725,9 @@
   
 
 
-<h1 id="ajax-security-cheat-sheet">AJAX Security Cheat Sheet<a class="headerlink" href="#ajax-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="web-frontend-security-cheat-sheet">Web Frontend Security Cheat Sheet<a class="headerlink" href="#web-frontend-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This cheat sheet was previously named the AJAX Security Cheat Sheet.</p>
 <p>This document will provide a starting point for AJAX security and will hopefully be updated and expanded reasonably often to provide more detailed information about specific frameworks and technologies.</p>
 <p><strong>Before applying any specific control, developers must adopt a fundamental security mindset:</strong>
 All data should be considered untrusted unless explicitly validated and safely handled.
