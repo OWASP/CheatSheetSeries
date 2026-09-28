@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Webhook_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Dependency_Graph_SBOM_Cheat_Sheet.html">
+        <link rel="prev" href="Web_Service_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Django_REST_Framework_Cheat_Sheet.html">
+        <link rel="next" href="XML_External_Entity_Prevention_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Deserialization - OWASP Cheat Sheet Series</title>
+        <title>Webhook Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deserialization-cheat-sheet" class="md-skip">
+        <a href="#webhook-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Deserialization
+              Webhook Security
             
           </span>
         </div>
@@ -1339,37 +1339,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Deserialization
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -1385,359 +1358,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-deserialization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What is Deserialization
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#guidance-on-deserializing-objects-safely" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Guidance on Deserializing Objects Safely
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Guidance on Deserializing Objects Safely">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#php" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PHP
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PHP">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#clear-box-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clear-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Python">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#opaque-box-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opaque-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#clear-box-review_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clear-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#java" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Java
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Java">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#clear-box-review_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clear-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#opaque-box-review_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opaque-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prevent-data-leakage-and-trusted-field-clobbering" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prevent Data Leakage and Trusted Field Clobbering
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prevent-deserialization-of-domain-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prevent Deserialization of Domain Objects
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#harden-your-own-javaioobjectinputstream" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Harden Your Own java.io.ObjectInputStream
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#harden-all-javaioobjectinputstream-usage-with-an-agent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Harden All java.io.ObjectInputStream Usage with an Agent
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#other-deserialization-libraries-and-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Deserialization Libraries and Formats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#net-csharp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        .Net CSharp
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=".Net CSharp">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#clear-box-review_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clear-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#opaque-box-review_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opaque-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general-precautions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        General Precautions
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#known-net-rce-gadgets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Known .NET RCE Gadgets
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#language-agnostic-methods-for-deserializing-safely" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Language-Agnostic Methods for Deserializing Safely
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Language-Agnostic Methods for Deserializing Safely">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-alternative-data-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Alternative Data Formats
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#only-deserialize-signed-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Only Deserialize Signed Data
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mitigation-toolslibraries" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mitigation Tools/Libraries
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#detection-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Detection Tools
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4127,10 +3747,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Webhook_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Webhook Security
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Webhook_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -4146,6 +3793,292 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threat-model-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threat Model Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticating-deliveries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authenticating Deliveries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Authenticating Deliveries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transport-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transport Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signature Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secret-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secret Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secret Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secret-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secret Rotation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-authentication-defense-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Authentication (Defense in Depth)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replay-duplicates-and-abuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay, Duplicates, and Abuse
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Replay, Duplicates, and Abuse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#replay-attack-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Attack Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-and-duplicate-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Idempotency and Duplicate Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssrf-prevention-publisher-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSRF Prevention (Publisher Side)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoint Hardening
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoint Hardening">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-method-restriction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Method Restriction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-site-request-forgery-csrf-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Site Request Forgery (CSRF) Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail-securely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fail Securely
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging and Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4364,10 +4297,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-is-deserialization" class="md-nav__link">
+  <a href="#threat-model-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What is Deserialization
+        Threat Model Summary
       
     </span>
   </a>
@@ -4375,34 +4308,56 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#guidance-on-deserializing-objects-safely" class="md-nav__link">
+  <a href="#authenticating-deliveries" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Guidance on Deserializing Objects Safely
+        Authenticating Deliveries
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Guidance on Deserializing Objects Safely">
+    <nav class="md-nav" aria-label="Authenticating Deliveries">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#php" class="md-nav__link">
+  <a href="#transport-security" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PHP
+        Transport Security
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="PHP">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signature Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secret-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secret Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secret Management">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clear-box-review" class="md-nav__link">
+  <a href="#secret-rotation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clear-box Review
+        Secret Rotation
       
     </span>
   </a>
@@ -4415,232 +4370,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
+  <a href="#additional-authentication-defense-in-depth" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Python
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Python">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#opaque-box-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opaque-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#clear-box-review_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clear-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#java" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Java
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Java">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#clear-box-review_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clear-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#opaque-box-review_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opaque-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prevent-data-leakage-and-trusted-field-clobbering" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prevent Data Leakage and Trusted Field Clobbering
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prevent-deserialization-of-domain-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prevent Deserialization of Domain Objects
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#harden-your-own-javaioobjectinputstream" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Harden Your Own java.io.ObjectInputStream
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#harden-all-javaioobjectinputstream-usage-with-an-agent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Harden All java.io.ObjectInputStream Usage with an Agent
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#other-deserialization-libraries-and-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Deserialization Libraries and Formats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#net-csharp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        .Net CSharp
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label=".Net CSharp">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#clear-box-review_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clear-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#opaque-box-review_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opaque-box Review
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general-precautions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        General Precautions
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#known-net-rce-gadgets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Known .NET RCE Gadgets
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#language-agnostic-methods-for-deserializing-safely" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Language-Agnostic Methods for Deserializing Safely
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Language-Agnostic Methods for Deserializing Safely">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-alternative-data-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Alternative Data Formats
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#only-deserialize-signed-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Only Deserialize Signed Data
+        Additional Authentication (Defense in Depth)
       
     </span>
   </a>
@@ -4653,10 +4386,143 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mitigation-toolslibraries" class="md-nav__link">
+  <a href="#replay-duplicates-and-abuse" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mitigation Tools/Libraries
+        Replay, Duplicates, and Abuse
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Replay, Duplicates, and Abuse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#replay-attack-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Attack Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-and-duplicate-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Idempotency and Duplicate Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssrf-prevention-publisher-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSRF Prevention (Publisher Side)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoint Hardening
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoint Hardening">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-method-restriction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Method Restriction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-site-request-forgery-csrf-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Site Request Forgery (CSRF) Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fail-securely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fail Securely
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging and Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference Checklist
       
     </span>
   </a>
@@ -4664,10 +4530,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#detection-tools" class="md-nav__link">
+  <a href="#security-testing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Detection Tools
+        Security Testing
       
     </span>
   </a>
@@ -4705,313 +4571,286 @@
   
 
 
-<h1 id="deserialization-cheat-sheet">Deserialization Cheat Sheet<a class="headerlink" href="#deserialization-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="webhook-security-cheat-sheet">Webhook Security Cheat Sheet<a class="headerlink" href="#webhook-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This article is focused on providing clear, actionable guidance for safely deserializing untrusted data in your applications.</p>
-<h2 id="what-is-deserialization">What is Deserialization<a class="headerlink" href="#what-is-deserialization" title="Permanent link">&para;</a></h2>
-<p><strong>Serialization</strong> is the process of turning some object into a data format that can be restored later. People often serialize objects in order to save them for storage, or to send as part of communications.</p>
-<p><strong>Deserialization</strong> is the reverse of that process, taking data structured in some format, and rebuilding it into an object. Today, the most popular data format for serializing data is JSON. Before that, it was XML.</p>
-<p>However, many programming languages have native ways to serialize objects. These native formats usually offer more features than JSON or XML, including customization of the serialization process.</p>
-<p>Unfortunately, the features of these native deserialization mechanisms can sometimes be repurposed for malicious effect when operating on untrusted data. Attacks against deserializers have been found to allow denial-of-service, access control, or remote code execution (RCE) attacks.</p>
-<h2 id="guidance-on-deserializing-objects-safely">Guidance on Deserializing Objects Safely<a class="headerlink" href="#guidance-on-deserializing-objects-safely" title="Permanent link">&para;</a></h2>
-<p>The following language-specific guidance attempts to enumerate safe methodologies for deserializing data that can't be trusted.</p>
-<h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
-<h4 id="clear-box-review">Clear-box Review<a class="headerlink" href="#clear-box-review" title="Permanent link">&para;</a></h4>
-<p>Check the use of <a href="https://www.php.net/manual/en/function.unserialize.php"><code>unserialize()</code></a> function and review how the external parameters are accepted. Use a safe, standard data interchange format such as JSON (via <code>json_decode()</code> and <code>json_encode()</code>) if you need to pass serialized data to the user.</p>
-<h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
-<h4 id="opaque-box-review">Opaque-box Review<a class="headerlink" href="#opaque-box-review" title="Permanent link">&para;</a></h4>
-<p>If the traffic data contains the symbol dot <code>.</code> at the end, it's very likely that the data was sent in serialization. It will be only true if the data is not being encoded using Base64 or Hexadecimal schemas. If the data is being encoded, then it's best to check if the serialization is likely happening or not by looking at the starting characters of the parameter value. For example if data is Base64 encoded, then it will most likely start with <code>gASV</code>.</p>
-<h4 id="clear-box-review_1">Clear-box Review<a class="headerlink" href="#clear-box-review_1" title="Permanent link">&para;</a></h4>
-<p>The following API in Python will be vulnerable to serialization attack. Search code for the pattern below.</p>
-<ol>
-<li>The uses of <code>pickle/c_pickle/_pickle</code> with <code>load/loads</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
-<span class="n">data</span> <span class="o">=</span> <span class="s2">""" cos.system(S'dir')tR. """</span>
-<span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-<ol start="2">
-<li>Uses of <code>PyYAML</code> with <code>load</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
-<span class="n">document</span> <span class="o">=</span> <span class="s2">"!!python/object/apply:os.system ['ipconfig']"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">document</span><span class="p">))</span>
-</code></pre></div>
-<ol start="3">
-<li>Uses of <code>jsonpickle</code> with <code>encode</code> or <code>store</code> methods.</li>
-</ol>
-<h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
-<p>The following techniques are all good for preventing attacks against deserialization against <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">Java's Serializable format</a>.</p>
-<p>Implementation advice:</p>
+<p>Webhooks are HTTP callbacks: a <strong>publisher</strong> pushes event notifications to a URL that a <strong>subscriber</strong> registered, so both parties run HTTP servers (<a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#what-are-webhooks">Standard Webhooks specification</a>). A webhook endpoint is therefore a public, unauthenticated <code>POST</code> handler unless you add the authentication yourself, and a publisher that delivers to user-supplied URLs is an outbound request engine that attackers will try to aim at your internal network.</p>
+<p>This cheat sheet covers both sides. It shows how to prove that a delivery is genuine, stop replays and duplicate processing, keep signing secrets safe, and prevent the publisher from being used as a proxy.</p>
+<h2 id="threat-model-summary">Threat Model Summary<a class="headerlink" href="#threat-model-summary" title="Permanent link">&para;</a></h2>
+<p>Forged deliveries are the headline threat: without verification, an attacker can post fake events that trigger order fulfillment, account access, or record changes, as <a href="https://docs.stripe.com/webhooks#verify-events">Stripe's webhook documentation</a> warns. Signature verification is the first control to implement; the others close the gaps it leaves.</p>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Primary control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Forged events</td>
+<td>Hash-based message authentication code using SHA-256 (HMAC-SHA256), verified on every delivery</td>
+</tr>
+<tr>
+<td>Replay of a captured delivery</td>
+<td>Authenticated timestamp with a tolerance window plus authenticated event-ID deduplication, where the publisher's protocol supports them</td>
+</tr>
+<tr>
+<td>Signing secret leakage</td>
+<td>Secrets manager, one secret per webhook, log redaction, immediate revocation and replacement</td>
+</tr>
+<tr>
+<td>Server-side request forgery (SSRF) through a subscriber-supplied callback URL</td>
+<td><code>https://</code>-only scheme allowlist plus a deny-list of every non-public address range, enforced on the resolved IP at connect time</td>
+</tr>
+<tr>
+<td>Denial of service</td>
+<td>Rate limiting, payload size limit, asynchronous processing</td>
+</tr>
+<tr>
+<td>Duplicate processing</td>
+<td>Idempotent handlers keyed on the event ID</td>
+</tr>
+<tr>
+<td>Eavesdropping or tampering in transit</td>
+<td>Transport Layer Security (TLS) 1.2 or higher with a certificate from a trusted certificate authority (CA)</td>
+</tr>
+<tr>
+<td>Malicious payload content</td>
+<td>Schema validation, then parameterized queries and output encoding downstream</td>
+</tr>
+</tbody>
+</table>
+<h2 id="authenticating-deliveries">Authenticating Deliveries<a class="headerlink" href="#authenticating-deliveries" title="Permanent link">&para;</a></h2>
+<h3 id="transport-security">Transport Security<a class="headerlink" href="#transport-security" title="Permanent link">&para;</a></h3>
 <ul>
-<li>In your code, override the <code>ObjectInputStream#resolveClass()</code> method to prevent arbitrary classes from being deserialized. This safe behavior can be wrapped in a library like <a href="https://github.com/ikkisoft/SerialKiller">SerialKiller</a>.</li>
-<li>Use a safe replacement for the generic <code>readObject()</code> method as seen here. Note that this addresses "<a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">billion laughs</a>" type attacks by checking input length and number of objects deserialized.</li>
+<li>Require HTTPS on every webhook endpoint and reject plain HTTP. A signature proves authenticity but does not encrypt the payload, so anyone on the network path can read an unencrypted delivery (<a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#enforcing-https">Standard Webhooks: Enforcing HTTPS</a>).</li>
+<li>Enforce TLS 1.2 or higher with a certificate from a trusted CA. Large publishers already refuse anything weaker: <a href="https://docs.stripe.com/webhooks#receive-events-with-an-https-server">Stripe</a> validates the subscriber's certificate and only negotiates TLS 1.2 and 1.3.</li>
+<li>As a publisher, verify the subscriber's certificate on every delivery. GitHub, which lets users turn this check off, <a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#use-https-and-ssl-verification">recommends leaving SSL verification enabled</a>.</li>
+<li>Protocol version and cipher suite configuration is covered in the <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>.</li>
 </ul>
-<h4 id="clear-box-review_2">Clear-box Review<a class="headerlink" href="#clear-box-review_2" title="Permanent link">&para;</a></h4>
-<p>Be aware of the following Java API uses for potential serialization vulnerability.</p>
-<p>1. <code>XMLdecoder</code> with external user defined parameters</p>
-<p>2. <code>XStream</code> with <code>fromXML</code> method (xstream version &lt;= v1.4.6 is vulnerable to the serialization issue)</p>
-<p>3. <code>ObjectInputStream</code> with <code>readObject</code></p>
-<p>4. Uses of <code>readObject</code>, <code>readObjectNoData</code>, <code>readResolve</code> or <code>readExternal</code></p>
-<p>5. <code>ObjectInputStream.readUnshared</code></p>
-<p>6. <code>Serializable</code></p>
-<h4 id="opaque-box-review_1">Opaque-box Review<a class="headerlink" href="#opaque-box-review_1" title="Permanent link">&para;</a></h4>
-<p>If the captured traffic data includes the following patterns, it may suggest that the data was sent in Java serialization streams:</p>
+<h3 id="signature-verification">Signature Verification<a class="headerlink" href="#signature-verification" title="Permanent link">&para;</a></h3>
+<p>Signing lets the subscriber confirm that a delivery came from the legitimate publisher and that the body was not modified in transit.</p>
+<p>Publisher:</p>
 <ul>
-<li><code>AC ED 00 05</code> in Hex</li>
-<li><code>rO0</code> in Base64</li>
-<li><code>Content-type</code> header of an HTTP response set to <code>application/x-java-serialized-object</code></li>
+<li>Generate a cryptographically random signing secret for each registered webhook. 32 bytes is a sound default; the <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#signature-scheme">Standard Webhooks signature scheme</a> specifies 24 to 64 bytes.</li>
+<li>For a new protocol, use a documented signature scheme that authenticates the event ID, delivery timestamp, and raw request body together, such as <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#signature-scheme">Standard Webhooks</a>. Existing providers use different formats: <a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries#validating-webhook-deliveries">GitHub</a> signs the raw body only; <a href="https://docs.stripe.com/webhooks#verify-signature">Stripe</a> signs the timestamp and body, including the event ID in that body.</li>
+<li>During planned secret rotation, sign with every active secret and send one signature per secret (see Secret Rotation below).</li>
 </ul>
-<h4 id="prevent-data-leakage-and-trusted-field-clobbering">Prevent Data Leakage and Trusted Field Clobbering<a class="headerlink" href="#prevent-data-leakage-and-trusted-field-clobbering" title="Permanent link">&para;</a></h4>
-<p>If there are data members of an object that should never be controlled by end users during deserialization or exposed to users during serialization, they should be declared as <a href="https://docs.oracle.com/javase/7/docs/platform/serialization/spec/serial-arch.html#7231">the <code>transient</code> keyword</a> (section <em>Protecting Sensitive Information</em>).</p>
-<p>For a class that defined as Serializable, the sensitive information variable should be declared as <code>private transient</code>.</p>
-<p>For example, the class <code>myAccount</code>, the variables 'profit' and 'margin' were declared as transient to prevent them from being serialized.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">myAccount</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">profit</span><span class="p">;</span><span class="w"> </span><span class="c1">// declared transient</span>
-
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">margin</span><span class="p">;</span><span class="w"> </span><span class="c1">// declared transient</span>
-<span class="w">    </span><span class="p">....</span>
-</code></pre></div>
-<h4 id="prevent-deserialization-of-domain-objects">Prevent Deserialization of Domain Objects<a class="headerlink" href="#prevent-deserialization-of-domain-objects" title="Permanent link">&para;</a></h4>
-<p>Some of your application objects may be forced to implement <code>Serializable</code> due to their hierarchy. To guarantee that your application objects can't be deserialized, a <code>readObject()</code> method should be declared (with a <code>final</code> modifier) which always throws an exception:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">readObject</span><span class="p">(</span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="p">(</span><span class="s">"Cannot be deserialized"</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="harden-your-own-javaioobjectinputstream">Harden Your Own java.io.ObjectInputStream<a class="headerlink" href="#harden-your-own-javaioobjectinputstream" title="Permanent link">&para;</a></h4>
-<p>The <code>java.io.ObjectInputStream</code> class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:</p>
+<p>Subscriber:</p>
 <ul>
-<li>you can change the code that does the deserialization;</li>
-<li>you know what classes you expect to deserialize.</li>
+<li>Use the publisher's maintained verification library when available and follow its exact signing format. Supply the raw request body before your framework parses it. Re-serializing JSON, reordering fields, changing whitespace or line endings, or converting the character encoding all invalidate the signature (<a href="https://docs.stripe.com/webhooks#verify-signature">Stripe</a>).</li>
+<li>Recompute the HMAC and compare it with a constant-time function such as <code>hmac.compare_digest</code>, <code>crypto.timingSafeEqual</code>, or <code>MessageDigest.isEqual</code>. Never use <code>==</code>: it leaks timing information and can turn the endpoint into a signing oracle (<a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries#validating-webhook-deliveries">GitHub</a>, <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#verifying-signatures">Standard Webhooks</a>).</li>
+<li>When the header carries several signatures, accept the delivery if any one of them matches. Publishers send one signature per active secret during rotation, and this rule is what makes rotation safe in either order (<a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#webhook-headers-sending-metadata-to-consumers">Standard Webhooks: Webhook headers</a>).</li>
+<li>Accept only the signature scheme you expect (Stripe's <code>v1</code>, for example) and ignore any other scheme in the header, to prevent downgrade attacks (<a href="https://docs.stripe.com/webhooks#verify-signature">Stripe</a>).</li>
+<li>Return <code>401</code> when the signature is missing or does not match, and do not say why.</li>
 </ul>
-<p>The general idea is to override <a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)"><code>ObjectInputStream.html#resolveClass()</code></a> in order to restrict which classes are allowed to be deserialized.</p>
-<p>Because this call happens before a <code>readObject()</code> is called, you can be sure that no deserialization activity will occur unless the type is one that you allow.</p>
-<p>A simple example is shown here, where the <code>LookAheadObjectInputStream</code> class is guaranteed to <strong>not</strong> deserialize any other type besides the <code>Bicycle</code> class:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">LookAheadObjectInputStream</span><span class="p">(</span><span class="n">InputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">inputStream</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="cm">/**</span>
-<span class="cm">    * Only deserialize instances of our expected Bicycle class</span>
-<span class="cm">    */</span>
-<span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="nf">resolveClass</span><span class="p">(</span><span class="n">ObjectStreamClass</span><span class="w"> </span><span class="n">desc</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">desc</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">Bicycle</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidClassException</span><span class="p">(</span><span class="s">"Unauthorized deserialization attempt"</span><span class="p">,</span><span class="w"> </span><span class="n">desc</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">resolveClass</span><span class="p">(</span><span class="n">desc</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>More complete implementations of this approach have been proposed by various community members:</p>
+<h3 id="secret-management">Secret Management<a class="headerlink" href="#secret-management" title="Permanent link">&para;</a></h3>
+<p>A leaked signing secret lets an attacker forge deliveries until it is revoked. Treat webhook secrets like database credentials.</p>
 <ul>
-<li><a href="https://github.com/ikkisoft/SerialKiller">NibbleSec</a> - a library that allows creating lists of classes that are allowed to be deserialized</li>
-<li><a href="https://www.ibm.com/developerworks/library/se-lookahead/">IBM</a> - the seminal protection, written years before the most devastating exploitation scenarios were envisioned.</li>
-<li><a href="https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/serialization/ValidatingObjectInputStream.html">Apache Commons IO classes</a></li>
+<li>Store signing secrets in a secrets manager and never hard-code them in source, configuration files, or container images (<a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries#securely-storing-the-secret-token">GitHub: Securely storing the secret token</a>). See the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a>.</li>
+<li>Use a distinct secret per registered webhook so one leak exposes one integration; Stripe, for example, <a href="https://docs.stripe.com/webhooks#endpoint-secrets">generates a unique secret for each endpoint</a>.</li>
+<li>Redact secrets and signature header values from logs and error responses.</li>
 </ul>
-<h4 id="harden-all-javaioobjectinputstream-usage-with-an-agent">Harden All java.io.ObjectInputStream Usage with an Agent<a class="headerlink" href="#harden-all-javaioobjectinputstream-usage-with-an-agent" title="Permanent link">&para;</a></h4>
-<p>As mentioned above, the <code>java.io.ObjectInputStream</code> class is used to deserialize objects. It's possible to harden its behavior by subclassing it. However, if you don't own the code or can't wait for a patch, using an agent to weave in hardening to <code>java.io.ObjectInputStream</code> is the best solution.</p>
-<p>Globally changing <code>ObjectInputStream</code> is only safe for block-listing known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the denylist to be safe from all the known attack vectors, today.</p>
-<p>It's inevitable that more "gadget" classes will be discovered that can be abused. However, there is an incredible amount of vulnerable software exposed today, in need of a fix. In some cases, "fixing" the vulnerability may involve re-architecting messaging systems and breaking backwards compatibility as developers move towards not accepting serialized objects.</p>
-<p>To enable these agents, simply add a new JVM parameter:</p>
-<div class="highlight"><pre><span></span><code>-javaagent:name-of-agent.jar
-</code></pre></div>
-<p>Agents taking this approach have been released by various community members:</p>
+<h4 id="secret-rotation">Secret Rotation<a class="headerlink" href="#secret-rotation" title="Permanent link">&para;</a></h4>
+<p>On suspected compromise, revoke the old secret immediately and replace it, following the Secrets Management Cheat Sheet's <a href="Secrets_Management_Cheat_Sheet.html#92-remediation">incident response guidance</a>. Accepting a compromised secret during an overlap still permits forged deliveries.</p>
+<p>For planned rotation, an overlap window in which both secrets are valid avoids failed deliveries. Stripe supports immediate expiration or an overlap of <a href="https://docs.stripe.com/webhooks#roll-endpoint-secrets">up to 24 hours</a>, signing with every active secret during that time. To rotate:</p>
 <ul>
-<li><a href="https://github.com/Contrast-Security-OSS/contrast-rO0">rO0 by Contrast Security</a></li>
+<li>Generate the new secret.</li>
+<li>Configure the publisher to sign with both secrets and send both signatures.</li>
+<li>Load the new secret on the subscriber. Because the subscriber already accepts any matching signature, the two sides can switch in either order inside the window.</li>
+<li>Once deliveries verify with the new secret, revoke the old one.</li>
+<li>Return <code>401</code> for deliveries signed only with a revoked secret.</li>
 </ul>
-<p>A similar, but less scalable approach would be to manually patch and bootstrap your JVM's ObjectInputStream. Guidance on this approach is available <a href="https://github.com/wsargent/paranoid-java-serialization">here</a>.</p>
-<h4 id="other-deserialization-libraries-and-formats">Other Deserialization Libraries and Formats<a class="headerlink" href="#other-deserialization-libraries-and-formats" title="Permanent link">&para;</a></h4>
-<p>While the advice above is focused on <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">Java's Serializable format</a>, there are a number of other libraries
-that use other formats for deserialization. Many of these libraries may have similar security
-issues if not configured correctly. This section lists some of these libraries and
-recommended configuration options to avoid security issues when deserializing untrusted data:</p>
-<p><strong>Can be used safely with default configuration:</strong></p>
-<p>The following libraries can be used safely with default configuration:</p>
+<h3 id="additional-authentication-defense-in-depth">Additional Authentication (Defense in Depth)<a class="headerlink" href="#additional-authentication-defense-in-depth" title="Permanent link">&para;</a></h3>
+<p>HMAC signing authenticates the payload, not the connection. Layer one of these on top when a leaked signing secret must not be enough to reach the endpoint:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mutual TLS (mTLS)</td>
+<td>High-assurance machine-to-machine pipelines; see <a href="Transport_Layer_Security_Cheat_Sheet.html#client-certificates-and-mutual-tls">Client Certificates and Mutual TLS</a></td>
+</tr>
+<tr>
+<td>Static bearer token or API key</td>
+<td>Simple integrations; store it in the secrets manager and rotate it like a signing secret</td>
+</tr>
+<tr>
+<td>OAuth 2.0 client credentials</td>
+<td>When both parties support OAuth, use the <a href="https://www.rfc-editor.org/rfc/rfc6749.html#section-4.4">client credentials grant</a> to obtain an access token. Validate it using the authorization server's supported mechanism and require permission to deliver to this webhook. For JSON Web Token (JWT) access tokens using the <a href="https://www.rfc-editor.org/rfc/rfc9068.html#section-4">RFC 9068 profile</a>, apply its complete validation rules, including token type; see the <a href="OAuth2_Cheat_Sheet.html">OAuth2 Cheat Sheet</a></td>
+</tr>
+<tr>
+<td>IP allowlisting</td>
+<td>Extra layer only. Publishers such as <a href="https://docs.stripe.com/webhooks#verify-events">Stripe</a> and <a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#allow-githubs-ip-addresses">GitHub</a> publish their delivery addresses, but ranges change and a shared egress IP is not proof of identity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="replay-duplicates-and-abuse">Replay, Duplicates, and Abuse<a class="headerlink" href="#replay-duplicates-and-abuse" title="Permanent link">&para;</a></h2>
+<h3 id="replay-attack-protection">Replay Attack Protection<a class="headerlink" href="#replay-attack-protection" title="Permanent link">&para;</a></h3>
+<p>A captured delivery carries a valid signature, so signature verification alone does not stop repeated processing. For protocols with authenticated delivery timestamps and event IDs, such as <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#signature-scheme">Standard Webhooks</a>:</p>
 <ul>
-<li><strong><a href="https://github.com/alibaba/fastjson2">fastjson2</a></strong> (JSON) - can be used safely as long as
-the <a href="https://github.com/alibaba/fastjson2/wiki/fastjson2_autotype_cn"><strong>autotype</strong></a> option is not turned on</li>
-<li><strong><a href="https://github.com/FasterXML/jackson-databind">jackson-databind</a></strong> (JSON) - can be used safely as long
-as polymorphism is not used (<a href="https://cowtowncoder.medium.com/on-jackson-cves-dont-panic-here-is-what-you-need-to-know-54cd0d6e8062">see blog post</a>)</li>
-<li><strong><a href="https://github.com/EsotericSoftware/kryo">Kryo v5.0.0+</a></strong> (custom format) - can be used safely
-as long as class registration is not turned <strong>off</strong> (<a href="https://github.com/EsotericSoftware/kryo#optional-registration">see documentation</a>
-and <a href="https://github.com/EsotericSoftware/kryo/issues/929">this issue</a>)</li>
-<li><strong><a href="https://github.com/EsotericSoftware/yamlbeans">YamlBeans v1.16+</a></strong> (YAML) - can be used safely
-as long as the <strong>UnsafeYamlConfig</strong> class isn't used (see <a href="https://github.com/EsotericSoftware/yamlbeans/commit/b1122588e7610ae4e0d516c50d08c94ee87946e6">this commit</a>)<ul>
-<li><em>NOTE: because these versions are not available in Maven Central,
-<a href="https://github.com/Contrast-Security-OSS/yamlbeans">a fork exists</a> that can be used instead.</em></li>
+<li>Publisher: include a Unix timestamp in the signed material, send it next to the signature, and generate a fresh timestamp and signature for every retry (<a href="https://docs.stripe.com/webhooks#replay-attacks">Stripe: Preventing replay attacks</a>).</li>
+<li>Subscriber: reject deliveries whose authenticated timestamp differs from your clock by more than a small tolerance. Five minutes is the default in Stripe's libraries; keep your clock synchronized with Network Time Protocol (NTP) so the window is meaningful.</li>
+<li>Subscriber: after signature and freshness validation, cache authenticated event IDs to prevent repeated processing inside the window (<a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#verifying-signatures">Standard Webhooks: Verifying signatures</a>). Keep each ID for at least twice the tolerance, 10 minutes for a 5-minute window: a delivery whose timestamp is 5 minutes ahead of your clock is accepted now and stays acceptable for another 10 minutes. This short replay cache does not replace the persisted processing record described below.</li>
 </ul>
-</li>
-<li><strong><a href="https://x-stream.github.io/">XStream v1.4.17+</a></strong> (JSON and XML) - can be used safely
-as long as the allowlist and other security controls are not relaxed (<a href="https://x-stream.github.io/security.html">see documentation</a>)</li>
-</ul>
-<p><strong>Requires configuration before can be used safely:</strong></p>
-<p>The following libraries require configuration options to be set before they can be used safely:</p>
+<p><a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries#validating-webhook-deliveries">GitHub's body-only signature</a> does not authenticate a delivery timestamp or the <code>X-GitHub-Delivery</code> header. That header helps identify ordinary redeliveries but does not provide the authenticated replay guarantee above. Follow the provider's documented protocol and make downstream effects idempotent.</p>
+<h3 id="idempotency-and-duplicate-events">Idempotency and Duplicate Events<a class="headerlink" href="#idempotency-and-duplicate-events" title="Permanent link">&para;</a></h3>
+<p>Publishers retry on failure, Stripe for <a href="https://docs.stripe.com/webhooks#automatic-retries">up to three days with exponential backoff</a>, so every endpoint receives some events more than once. Processing a payment or sending a notification twice causes real harm.</p>
 <ul>
-<li><strong><a href="https://github.com/alibaba/fastjson">fastjson v1.2.68+</a></strong> (JSON) - cannot be used safely unless
-the <a href="https://github.com/alibaba/fastjson/wiki/fastjson_safemode_en"><strong>safemode</strong></a> option is turned on, which disables
-deserialization of any class (<a href="https://github.com/alibaba/fastjson/wiki/enable_autotype">see documentation</a>).
-Previous versions are not safe.</li>
-<li><strong><a href="https://github.com/jdereg/json-io">json-io</a></strong> (JSON) - cannot be used safely since the use of <strong>@type</strong> property in
-JSON allows deserialization of any class. Can only be used safely in following situations:<ul>
-<li>In <a href="https://github.com/jdereg/json-io/blob/master/user-guide.md#non-typed-usage">non-typed mode</a> using the <strong>JsonReader.USE_MAPS</strong> setting which turns off generic object deserialization</li>
-<li><a href="https://github.com/jdereg/json-io/blob/master/user-guide.md#customization-technique-4-custom-serializer">With a custom deserializer</a> controlling which classes get deserialized</li>
+<li>After verifying the delivery, persist processed event IDs and skip repeats (<a href="https://docs.stripe.com/webhooks#handle-duplicate-events">Stripe: Handle duplicate events</a>). Retain this record across the publisher's retry period. GitHub's <a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#use-the-x-github-delivery-header"><code>X-GitHub-Delivery</code></a> identifies ordinary redeliveries but is not a signed event ID.</li>
+<li>Return <code>200</code> for an authenticated duplicate that has already been durably queued or processed; do not repeat its side effects.</li>
+<li>Make downstream side effects (database writes, emails, payments) idempotent by default.</li>
+<li>Do not assume in-order delivery. Fetch the object's current state from the publisher's API when an event may be stale. Use a sequence or version field only when the publisher documents its ordering guarantees; timestamps alone may not establish order (<a href="https://docs.stripe.com/webhooks#event-ordering">Stripe: Event ordering</a>).</li>
 </ul>
-</li>
-<li><strong><a href="https://github.com/EsotericSoftware/kryo">Kryo &lt; v5.0.0</a></strong> (custom format) - cannot be used safely unless class registration is turned <strong>on</strong>,
-which disables deserialization of any class (<a href="https://github.com/EsotericSoftware/kryo#optional-registration">see documentation</a>
-and <a href="https://github.com/EsotericSoftware/kryo/issues/929">this issue</a>)<ul>
-<li><em>NOTE: other wrappers exist around Kryo such as <a href="https://github.com/twitter/chill">Chill</a>, which may also have class registration
-not required by default regardless of the underlying version of Kryo being used</em></li>
-</ul>
-</li>
-<li><strong><a href="https://bitbucket.org/snakeyaml/snakeyaml/src">SnakeYAML</a></strong> (YAML) - cannot be used safely unless
-the <strong>org.yaml.snakeyaml.constructor.SafeConstructor</strong> class is used, which disables
-deserialization of any class (<a href="https://bitbucket.org/snakeyaml/snakeyaml/wiki/CVE-2022-1471">see docs</a>)</li>
-</ul>
-<p><strong>Cannot be used safely:</strong></p>
-<p>The following libraries are either no longer maintained or cannot be used safely with untrusted input:</p>
+<h3 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
+<p>Without limits, a misconfigured publisher or an attacker can flood the endpoint. Both sides need protection.</p>
 <ul>
-<li><strong><a href="https://github.com/castor-data-binding/castor">Castor</a></strong> (XML) - appears to be abandoned with no commits since 2016</li>
-<li><strong><a href="https://github.com/alibaba/fastjson">fastjson &lt; v1.2.68</a></strong> (JSON) - these versions allows deserialization of any class
-(<a href="https://github.com/alibaba/fastjson/wiki/enable_autotype">see documentation</a>)</li>
-<li><strong><a href="https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html">XMLDecoder in the JDK</a></strong> (XML) - <em>"close to impossible to securely deserialize Java objects in this format from untrusted inputs"</em>
-("Red Hat Defensive Coding Guide", <a href="https://redhat-crypto.gitlab.io/defensive-coding-guide/#sect-Defensive_Coding-Tasks-Serialization-XML">end of section 2.6.5</a>)</li>
-<li><strong><a href="https://x-stream.github.io/">XStream &lt; v1.4.17</a></strong> (JSON and XML) - these versions allows deserialization of any class (see <a href="https://x-stream.github.io/security.html#explicit">documentation</a>)</li>
-<li><strong><a href="https://github.com/EsotericSoftware/yamlbeans">YamlBeans &lt; v1.16</a></strong> (YAML) - these versions allows deserialization of any class
-(see <a href="https://github.com/Contrast-Security-OSS/yamlbeans/blob/main/SECURITY.md">this document</a>)</li>
+<li>Publisher: apply per-subscriber delivery limits, exponential backoff with jitter, and a maximum retry count, and disable endpoints that keep failing for days (<a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#deliverability-and-reliability">Standard Webhooks: Deliverability and reliability</a>).</li>
+<li>Subscriber: rate limit at the API gateway or application layer and answer excess traffic with <code>429 Too Many Requests</code> and a <code>Retry-After</code> header (<a href="https://www.rfc-editor.org/rfc/rfc6585.html#section-4">RFC 6585 section 4</a>).</li>
+<li>Subscriber: acknowledge fast and process through an asynchronous queue. GitHub expects a <code>2xx</code> <a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#respond-within-10-seconds">within 10 seconds</a>, and Stripe recommends <a href="https://docs.stripe.com/webhooks#handle-events-asynchronously">an asynchronous queue</a> to absorb delivery spikes.</li>
+<li>Subscribe only to the event types you handle; listening for everything multiplies load and hands you data you never needed to hold (<a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#subscribe-to-the-minimum-number-of-events">GitHub: Subscribe to the minimum number of events</a>).</li>
 </ul>
-<h3 id="net-csharp">.Net CSharp<a class="headerlink" href="#net-csharp" title="Permanent link">&para;</a></h3>
-<h4 id="clear-box-review_3">Clear-box Review<a class="headerlink" href="#clear-box-review_3" title="Permanent link">&para;</a></h4>
-<p>Search the source code for the following terms:</p>
-<ol>
-<li><code>TypeNameHandling</code></li>
-<li><code>JavaScriptTypeResolver</code></li>
-</ol>
-<p>Look for any serializers where the type is set by a user controlled variable.</p>
-<h4 id="opaque-box-review_2">Opaque-box Review<a class="headerlink" href="#opaque-box-review_2" title="Permanent link">&para;</a></h4>
-<p>Search for the following base64 encoded content that starts with:</p>
-<div class="highlight"><pre><span></span><code>AAEAAAD/////
-</code></pre></div>
-<p>Search for content with the following text:</p>
-<ol>
-<li><code>TypeObject</code></li>
-<li><code>$type:</code></li>
-</ol>
-<h4 id="general-precautions">General Precautions<a class="headerlink" href="#general-precautions" title="Permanent link">&para;</a></h4>
-<p>Microsoft has stated that the <code>BinaryFormatter</code> type is dangerous and cannot be secured. As such, it should not be used. Full details are in the <a href="https://docs.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide">BinaryFormatter security guide</a>.</p>
-<p>Don't allow the datastream to define the type of object that the stream will be deserialized to. You can prevent this by for example using the <code>DataContractSerializer</code> or <code>XmlSerializer</code> if at all possible.</p>
-<p>Where <code>JSON.Net</code> is being used make sure the <code>TypeNameHandling</code> is only set to <code>None</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">TypeNameHandling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TypeNameHandling</span><span class="p">.</span><span class="n">None</span>
-</code></pre></div>
-<p>If <code>JavaScriptSerializer</code> is to be used then do not use it with a <code>JavaScriptTypeResolver</code>.</p>
-<p>If you must deserialize data streams that define their own type, then restrict the types that are allowed to be deserialized. One should be aware that this is still risky as many native .Net types potentially dangerous in themselves. e.g.</p>
-<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">FileInfo</span>
-</code></pre></div>
-<p><code>FileInfo</code> objects that reference files actually on the server can when deserialized, change the properties of those files e.g. to read-only, creating a potential denial of service attack.</p>
-<p>Even if you have limited the types that can be deserialized remember that some types have properties that are risky. <code>System.ComponentModel.DataAnnotations.ValidationException</code>, for example has a property <code>Value</code> of type <code>Object</code>. if this type is the type allowed for deserialization then an attacker can set the <code>Value</code> property to any object type they choose.</p>
-<p>Attackers should be prevented from steering the type that will be instantiated. If this is possible then even <code>DataContractSerializer</code> or <code>XmlSerializer</code> can be subverted e.g.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Action below is dangerous if the attacker can change the data in the database</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">typename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetTransactionTypeFromDatabase</span><span class="p">();</span>
-
-<span class="kt">var</span><span class="w"> </span><span class="n">serializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataContractJsonSerializer</span><span class="p">(</span><span class="n">Type</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="n">typename</span><span class="p">));</span>
-
-<span class="kt">var</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serializer</span><span class="p">.</span><span class="n">ReadObject</span><span class="p">(</span><span class="n">ms</span><span class="p">);</span>
-</code></pre></div>
-<p>Execution can occur within certain .Net types during deserialization. Creating a control such as the one shown below is ineffective.</p>
-<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">suspectObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">myBinaryFormatter</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">(</span><span class="n">untrustedData</span><span class="p">);</span>
-
-<span class="c1">//Check below is too late! Execution may have already occurred.</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">suspectObject</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">SomeDangerousObjectType</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="c1">//generate warnings and dispose of suspectObject</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>For <code>JSON.Net</code> it is possible to create a safer form of allow-list control using a custom <code>SerializationBinder</code>.</p>
-<p>Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. <strong>A deserializer can only instantiate types that it knows about</strong>.</p>
-<p>Try to keep any code that might create potential gadgets separate from any code that has internet connectivity. As an example <code>System.Windows.Data.ObjectDataProvider</code> used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.</p>
-<h4 id="known-net-rce-gadgets">Known .NET RCE Gadgets<a class="headerlink" href="#known-net-rce-gadgets" title="Permanent link">&para;</a></h4>
+<h3 id="ssrf-prevention-publisher-side">SSRF Prevention (Publisher Side)<a class="headerlink" href="#ssrf-prevention-publisher-side" title="Permanent link">&para;</a></h3>
+<p>When subscribers register their own callback URLs, an attacker registers an internal address or the cloud metadata endpoint and uses your delivery workers as a proxy into your network. Webhook senders are <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#server-side-request-forgery-ssrf">especially exposed</a> because accepting arbitrary URLs is the feature.</p>
 <ul>
-<li><code>System.Configuration.Install.AssemblyInstaller</code></li>
-<li><code>System.Activities.Presentation.WorkflowDesigner</code></li>
-<li><code>System.Windows.ResourceDictionary</code></li>
-<li><code>System.Windows.Data.ObjectDataProvider</code></li>
-<li><code>System.Windows.Forms.BindingSource</code></li>
-<li><code>Microsoft.Exchange.Management.SystemManager.WinForms.ExchangeSettingsProvider</code></li>
-<li><code>System.Data.DataViewManager, System.Xml.XmlDocument/XmlDataDocument</code></li>
-<li><code>System.Management.Automation.PSObject</code></li>
+<li>Allowlist the scheme: accept <code>https://</code> only.</li>
+<li>Block every non-public destination: resolve the hostname and reject any address that is not globally reachable, at minimum the deny-list in the <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#deny-list-last-resort">Server-Side Request Forgery Prevention Cheat Sheet</a> including the IPv6 equivalents, plus internal hostnames such as <code>metadata.google.internal</code>. The IANA <a href="https://www.iana.org/assignments/iana-ipv4-special-registry">IPv4</a> and <a href="https://www.iana.org/assignments/iana-ipv6-special-registry">IPv6</a> special-purpose address registries include both globally reachable and non-globally-reachable ranges; consult each entry's Globally Reachable field.</li>
+<li>Validate the address you actually connect to. Re-resolving the name just before the request does not close the DNS rebinding gap, because the HTTP client resolves it again when it connects and can receive a different answer. Either resolve once, validate the IP, and connect to that exact IP while sending the original hostname in the <code>Host</code> header and Server Name Indication (SNI), or validate inside the client's connect hook using the same lookup for validation and connection. The <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name">DNS pinning guidance in the SSRF cheat sheet</a> covers this case.</li>
+<li>Disable redirects, or apply the same checks to every redirect target. Stripe simply <a href="https://docs.stripe.com/webhooks#fix-http-status-codes">treats redirect responses as failed deliveries</a>.</li>
+<li>Isolate delivery workers or their egress proxy in a network segment that cannot reach internal services, as recommended by <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#server-side-request-forgery-ssrf">Standard Webhooks</a>. An egress proxy such as <a href="https://github.com/stripe/smokescreen">Smokescreen</a> can enforce destination checks.</li>
 </ul>
-<h2 id="language-agnostic-methods-for-deserializing-safely">Language-Agnostic Methods for Deserializing Safely<a class="headerlink" href="#language-agnostic-methods-for-deserializing-safely" title="Permanent link">&para;</a></h2>
-<h3 id="using-alternative-data-formats">Using Alternative Data Formats<a class="headerlink" href="#using-alternative-data-formats" title="Permanent link">&para;</a></h3>
-<p>A great reduction of risk is achieved by avoiding native (de)serialization formats. By switching to a pure data format like JSON or XML, you lessen the chance of custom deserialization logic being repurposed towards malicious ends.</p>
-<p>Many applications rely on a <a href="https://en.wikipedia.org/wiki/Data_transfer_object">data-transfer object pattern</a> that involves creating a separate domain of objects for the explicit purpose data transfer. Of course, it's still possible that the application will make security mistakes after a pure data object is parsed.</p>
-<h3 id="only-deserialize-signed-data">Only Deserialize Signed Data<a class="headerlink" href="#only-deserialize-signed-data" title="Permanent link">&para;</a></h3>
-<p>If the application knows before deserialization which messages will need to be processed, they could sign them as part of the serialization process. The application could then to choose not to deserialize any message which didn't have an authenticated signature.</p>
-<h2 id="mitigation-toolslibraries">Mitigation Tools/Libraries<a class="headerlink" href="#mitigation-toolslibraries" title="Permanent link">&para;</a></h2>
+<h2 id="endpoint-hardening">Endpoint Hardening<a class="headerlink" href="#endpoint-hardening" title="Permanent link">&para;</a></h2>
+<h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://github.com/ikkisoft/SerialKiller">Java secure deserialization library</a></li>
-<li><a href="https://github.com/cschneider4711/SWAT">SWAT - tool for creating allowlists</a></li>
-<li><a href="https://github.com/kantega/notsoserial">NotSoSerial</a></li>
+<li>A valid signature proves who sent the payload, not that its contents are safe. Enforce a maximum body size, reject unexpected <code>Content-Type</code> values, and validate against a strict schema before processing, following the REST Security Cheat Sheet's <a href="REST_Security_Cheat_Sheet.html#input-validation">Input validation</a> and <a href="REST_Security_Cheat_Sheet.html#validate-content-types">Validate content types</a> sections. Publishers should keep payloads small; the Standard Webhooks specification recommends <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#payload-size">under 20 KB</a>.</li>
+<li>Downstream, use parameterized queries for SQL (<a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a>) and context-appropriate output encoding wherever payload fields are rendered as HTML (<a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>).</li>
 </ul>
-<h2 id="detection-tools">Detection Tools<a class="headerlink" href="#detection-tools" title="Permanent link">&para;</a></h2>
+<h3 id="http-method-restriction">HTTP Method Restriction<a class="headerlink" href="#http-method-restriction" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet">Java deserialization cheat sheet aimed at pen testers</a></li>
-<li><a href="https://github.com/frohoff/ysoserial">A proof-of-concept tool for generating payloads that exploit unsafe Java object deserialization.</a></li>
-<li><a href="https://github.com/brianwrf/hackUtils">Java De-serialization toolkits</a></li>
-<li><a href="https://github.com/frohoff/ysoserial">Java de-serialization tool</a></li>
-<li><a href="https://github.com/pwntester/ysoserial.net">.Net payload generator</a></li>
-<li><a href="https://github.com/federicodotta/Java-Deserialization-Scanner/releases">Burp Suite extension</a></li>
-<li><a href="https://github.com/ikkisoft/SerialKiller">Java secure deserialization library</a></li>
-<li><a href="https://github.com/mbechler/serianalyzer">Serianalyzer is a static bytecode analyzer for deserialization</a></li>
-<li><a href="https://github.com/mbechler/marshalsec">Payload generator</a></li>
-<li><a href="https://github.com/modzero/modjoda">Android Java Deserialization Vulnerability Tester</a></li>
-<li>Burp Suite Extension<ul>
-<li><a href="https://github.com/NetSPI/JavaSerialKiller">JavaSerialKiller</a></li>
-<li><a href="https://github.com/federicodotta/Java-Deserialization-Scanner">Java Deserialization Scanner</a></li>
-<li><a href="https://github.com/summitt/burp-ysoserial">Burp-ysoserial</a></li>
-<li><a href="https://github.com/DirectDefense/SuperSerial">SuperSerial</a></li>
-<li><a href="https://github.com/DirectDefense/SuperSerial-Active">SuperSerial-Active</a></li>
+<li>Accept <code>POST</code> only and answer every other method with <code>405 Method Not Allowed</code>, as described in <a href="REST_Security_Cheat_Sheet.html#restrict-http-methods">Restrict HTTP methods</a> in the REST Security Cheat Sheet.</li>
 </ul>
-</li>
+<h3 id="cross-site-request-forgery-csrf-considerations">Cross-Site Request Forgery (CSRF) Considerations<a class="headerlink" href="#cross-site-request-forgery-csrf-considerations" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Exempt the webhook route, and only that route, from framework CSRF token checks: the publisher is a server that cannot obtain a token, so the check only blocks legitimate deliveries (<a href="https://docs.stripe.com/webhooks#csrf-protection">Stripe: Exempt webhook route from CSRF protection</a>).</li>
+<li>Put signature verification in place before granting the exemption; it is the replacement control. See the <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery Prevention Cheat Sheet</a>.</li>
+</ul>
+<h3 id="fail-securely">Fail Securely<a class="headerlink" href="#fail-securely" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Return <code>200</code> only after the event is durably queued or processed, <code>400</code> for malformed payloads, and <code>401</code> for signature failures, with a generic body and no stack traces or internal detail, as in the REST Security Cheat Sheet's <a href="REST_Security_Cheat_Sheet.html#error-handling">Error handling</a> section.</li>
+<li>Route events that repeatedly fail processing to a dead-letter queue and alert on it instead of dropping them.</li>
+</ul>
+<h3 id="logging-and-monitoring">Logging and Monitoring<a class="headerlink" href="#logging-and-monitoring" title="Permanent link">&para;</a></h3>
+<p>Logs are how you detect probing and diagnose integration failures, but full payloads and secrets must stay out of them.</p>
+<ul>
+<li>Log the timestamp, source IP, HTTP method, response status, event ID, event type, and processing latency.</li>
+<li>Do not log full request bodies (they often contain personal data), signing secrets, or <code>Authorization</code> and signature header values; see <a href="Logging_Cheat_Sheet.html#data-to-exclude">Data to exclude</a> in the Logging Cheat Sheet.</li>
+<li>Alert on spikes in signature failures (someone is probing the endpoint), sustained <code>4xx</code> or <code>5xx</code> responses (processing failure or misconfiguration), and deliveries from unexpected source addresses.</li>
+</ul>
+<h2 id="quick-reference-checklist">Quick Reference Checklist<a class="headerlink" href="#quick-reference-checklist" title="Permanent link">&para;</a></h2>
+<p>Stripe's and GitHub's best-practice pages (<a href="https://docs.stripe.com/webhooks#best-practices">Stripe</a>, <a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks">GitHub</a>) cover the subscriber side of their own platforms; use this table to check both sides of any integration.</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Publisher</th>
+<th>Subscriber</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TLS 1.2 or higher with a trusted CA certificate</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>HMAC-SHA256 signature on every delivery</td>
+<td>Sign</td>
+<td>Verify with a constant-time comparison</td>
+</tr>
+<tr>
+<td>One secret per webhook, stored in a secrets manager</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Planned rotation with an overlap window</td>
+<td>Sign with every active secret</td>
+<td>Accept any matching signature</td>
+</tr>
+<tr>
+<td>Compromised secret</td>
+<td>Revoke and replace immediately</td>
+<td>Stop accepting the revoked secret</td>
+</tr>
+<tr>
+<td>Authenticated timestamp and event ID</td>
+<td>Include when designing the protocol</td>
+<td>Enforce freshness and deduplication where supported by the provider</td>
+</tr>
+<tr>
+<td>Replay cache retention</td>
+<td>n/a</td>
+<td>At least twice the timestamp tolerance; keep a separate processing record across retries</td>
+</tr>
+<tr>
+<td>Idempotent, order-independent processing</td>
+<td>n/a</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SSRF checks on callback URLs at connect time</td>
+<td>Yes</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Rate limiting</td>
+<td>Throttle, back off, cap retries</td>
+<td><code>429</code> plus an asynchronous queue</td>
+</tr>
+<tr>
+<td>Payload size limit and schema validation</td>
+<td>Keep payloads small</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>POST</code> only, <code>405</code> for other methods</td>
+<td>n/a</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Generic errors: <code>400</code> malformed, <code>401</code> bad signature</td>
+<td>n/a</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Structured logs without secrets or full bodies</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="security-testing">Security Testing<a class="headerlink" href="#security-testing" title="Permanent link">&para;</a></h2>
+<p>Run these tests before going to production and after any change to webhook handling code:</p>
+<ul>
+<li>Missing or invalid signature: the endpoint returns <code>401</code>, not <code>200</code>.</li>
+<li>Replay protection: for protocols with authenticated timestamps and event IDs, verify that stale deliveries fail freshness checks and an already accepted event cannot trigger side effects twice. A valid duplicate already durably queued or processed receives <code>200</code>.</li>
+<li>Duplicate event ID: deliver the same event twice and confirm it is processed once. GitHub's redelivery feature reuses the original <a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks#use-the-x-github-delivery-header"><code>X-GitHub-Delivery</code></a> value, which makes it a convenient duplicate test.</li>
+<li>Oversized payload: exceed your size limit and expect <code>400</code> or <code>413</code>.</li>
+<li>SSRF (publisher side): register an <code>http://</code> URL, <code>https://169.254.169.254/</code>, <code>https://127.0.0.1/</code>, an internal hostname, and a public hostname that resolves to a private address; every one must be rejected at registration or blocked at delivery time. <a href="https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/19-Testing_for_Server-Side_Request_Forgery/">WSTG-INPV-19</a> describes the test cases and the filter bypasses to try, such as alternative IP encodings.</li>
+<li>Secret rotation: both secrets are accepted during planned overlap; a revoked or compromised secret is no longer accepted.</li>
+<li>Use the publisher's own test tooling where it exists, such as <a href="https://docs.stripe.com/webhooks#trigger-test-events"><code>stripe trigger</code></a>, to exercise the handler with genuine signed deliveries.</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet">Java-Deserialization-Cheat-Sheet</a></li>
-<li><a href="https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data">Deserialization of untrusted data</a></li>
-<li><a href="../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf">Java Deserialization Attacks - German OWASP Day 2016</a></li>
-<li><a href="http://www.slideshare.net/frohoff1/appseccali-2015-marshalling-pickles">AppSecCali 2015 - Marshalling Pickles</a></li>
-<li><a href="http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#websphere">FoxGlove Security - Vulnerability Announcement</a></li>
-<li><a href="https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet">Java deserialization cheat sheet aimed at pen testers</a></li>
-<li><a href="https://github.com/frohoff/ysoserial">A proof-of-concept tool for generating payloads that exploit unsafe Java object deserialization.</a></li>
-<li><a href="https://github.com/brianwrf/hackUtils">Java De-serialization toolkits</a></li>
-<li><a href="https://github.com/frohoff/ysoserial">Java de-serialization tool</a></li>
-<li><a href="https://github.com/federicodotta/Java-Deserialization-Scanner/releases">Burp Suite extension</a></li>
-<li><a href="https://github.com/ikkisoft/SerialKiller">Java secure deserialization library</a></li>
-<li><a href="https://github.com/mbechler/serianalyzer">Serianalyzer is a static bytecode analyzer for deserialization</a></li>
-<li><a href="https://github.com/mbechler/marshalsec">Payload generator</a></li>
-<li><a href="https://github.com/modzero/modjoda">Android Java Deserialization Vulnerability Tester</a></li>
-<li>Burp Suite Extension<ul>
-<li><a href="https://github.com/NetSPI/JavaSerialKiller">JavaSerialKiller</a></li>
-<li><a href="https://github.com/federicodotta/Java-Deserialization-Scanner">Java Deserialization Scanner</a></li>
-<li><a href="https://github.com/summitt/burp-ysoserial">Burp-ysoserial</a></li>
-<li><a href="https://github.com/DirectDefense/SuperSerial">SuperSerial</a></li>
-<li><a href="https://github.com/DirectDefense/SuperSerial-Active">SuperSerial-Active</a></li>
-</ul>
-</li>
-<li>.Net<ul>
-<li><a href="https://www.youtube.com/watch?v=qDoBlLwREYk">Alvaro Muñoz: .NET Serialization: Detecting and defending vulnerable endpoints</a></li>
-<li><a href="https://www.youtube.com/watch?v=Xfbu-pQ1tIc">James Forshaw - Black Hat USA 2012 - Are You My Type? Breaking .net Sandboxes Through Serialization</a></li>
-<li><a href="https://www.youtube.com/watch?v=oxlD8VWWHE8">Jonathan Birch BlueHat v17 - Dangerous Contents - Securing .Net Deserialization</a></li>
-<li><a href="https://www.youtube.com/watch?v=NqHsaVhlxAQ">Alvaro Muñoz &amp; Oleksandr Mirosh - Friday the 13th: Attacking JSON - AppSecUSA 2017</a></li>
-</ul>
-</li>
-<li>Python<ul>
-<li><a href="https://macrosec.tech/index.php/2021/06/29/exploiting-insecuredeserialization-bugs-found-in-the-wild-python-pickles.">Exploiting Insecure Deserialization bugs found in the Wild (Python Pickles)</a></li>
-</ul>
-</li>
+<li><a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md">Standard Webhooks specification</a></li>
+<li><a href="https://docs.stripe.com/webhooks">Stripe: Receive Stripe events in your webhook endpoint</a></li>
+<li><a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries">GitHub: Validating webhook deliveries</a></li>
+<li><a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks">GitHub: Best practices for using webhooks</a></li>
+<li><a href="https://www.iana.org/assignments/iana-ipv4-special-registry">IANA IPv4 Special-Purpose Address Registry</a> and <a href="https://www.iana.org/assignments/iana-ipv6-special-registry">IPv6 Special-Purpose Address Registry</a></li>
+<li>Related OWASP cheat sheets: <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security</a>, <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management</a>, <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">Server-Side Request Forgery Prevention</a>, <a href="REST_Security_Cheat_Sheet.html">REST Security</a>, <a href="Input_Validation_Cheat_Sheet.html">Input Validation</a>, <a href="Injection_Prevention_Cheat_Sheet.html">Injection Prevention</a>, <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization</a>, <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention</a>, <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery Prevention</a>, <a href="Logging_Cheat_Sheet.html">Logging</a>, <a href="OAuth2_Cheat_Sheet.html">OAuth2</a>, <a href="Denial_of_Service_Cheat_Sheet.html">Denial of Service</a>, <a href="Threat_Modeling_Cheat_Sheet.html">Threat Modeling</a></li>
 </ul>
 
 
