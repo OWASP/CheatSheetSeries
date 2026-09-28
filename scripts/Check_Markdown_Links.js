@@ -250,6 +250,9 @@ function parseCanonicalFailures(output, markdownFile) {
     throw new Error("nonzero checker result lacks a canonical ERROR count");
   }
   const expectedCount = Number(errorLines[0].match(/ERROR:\s+(\d+)\s+/)[1]);
+  if (!Number.isSafeInteger(expectedCount) || expectedCount <= 0) {
+    throw new Error("nonzero checker result has an invalid dead-link count");
+  }
   const failures = [];
   for (const line of lines) {
     const match = line.match(
@@ -355,10 +358,15 @@ function runCheckerAttempt(markdownFile, file, attempt) {
     rawOutput.endsWith("\n") ? rawOutput : `${rawOutput}\n`,
   );
   const canonicalOutput = stripVTControlCharacters(rawOutput);
+  const checkerErrors = canonicalOutput
+    .split(/\r?\n/)
+    .filter((line) => /^\s*\[⚠\]/.test(line));
 
   let message;
   if (result.error || result.signal || !Number.isInteger(result.status)) {
     message = `${file}: checker could not complete (${result.error?.message || result.signal || "unknown process result"})`;
+  } else if (checkerErrors.length > 0) {
+    message = `${file}: checker could not assess link(s): ${checkerErrors.map((line) => line.trim()).join("; ")}`;
   } else if (result.status === 0) {
     try {
       validateCanonicalSuccess(canonicalOutput, markdownFile);
@@ -480,6 +488,9 @@ function main() {
   let markdownFiles;
   try {
     markdownFiles = enumerateMarkdownFiles(paths.target);
+    if (markdownFiles.length === 0) {
+      throw new Error("no Markdown files found; no links were checked");
+    }
   } catch (error) {
     internal.push(`Cannot enumerate Markdown files under ${paths.target}: ${error.message}`);
     fs.appendFileSync(paths.raw, `[!] ${internal[0]}\n`);

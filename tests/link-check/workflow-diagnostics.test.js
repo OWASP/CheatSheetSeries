@@ -83,7 +83,7 @@ test("an internal failure without recovered diagnostics produces a generic summa
     unexpected: "",
   });
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.summary, /failed before actionable diagnostics could be recovered/);
+  assert.match(result.summary, /did not complete with actionable link diagnostics/);
   assert.match(result.summary, /link-check-diagnostics/);
   assert.match(result.output, /^should_comment=false$/m);
 });
@@ -212,6 +212,10 @@ test("default diagnostics survive checker-then-lint without entering Git", (t) =
 test("the package test command uses explicit Windows-cmd-portable file paths", () => {
   const packageJson = JSON.parse(
     fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"),
+  );
+  assert.equal(
+    packageJson.scripts["link-check"],
+    "node scripts/Check_Markdown_Links.js",
   );
   assert.equal(
     packageJson.scripts["test:link-check"],

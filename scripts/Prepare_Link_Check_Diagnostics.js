@@ -52,8 +52,8 @@ function main() {
       : [
           "# Markdown link check failed",
           "",
-          "The checker failed before actionable diagnostics could be recovered.",
-          "Inspect the **Run link check** step output and the **link-check-diagnostics** artifact for raw checker output.",
+          "The link check did not complete with actionable link diagnostics.",
+          "Inspect the failed workflow step. If checking started, its raw output may be available in the **link-check-diagnostics** artifact.",
           "",
         ].join("\n");
   } else {
@@ -71,7 +71,7 @@ function main() {
     ].join("\n");
   }
 
-  summary += "\nRaw output and known, recovered, transient, and unexpected link reports are saved in the **link-check-diagnostics** artifact.\n";
+  summary += "\nWhen available, raw output and known, recovered, transient, and unexpected link reports are saved in the **link-check-diagnostics** artifact.\n";
   fs.appendFileSync(summaryPath, summary);
   const shouldComment =
     failed &&

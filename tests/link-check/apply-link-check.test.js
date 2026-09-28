@@ -12,7 +12,11 @@ const realChecker = path.join(
   "markdown-link-check",
   "markdown-link-check",
 );
-const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
+// npm supplies its JavaScript entry point, which also works on Windows.
+// Direct node --test invocations exercise the driver without requiring npm.
+const linkCheckArgs = process.env.npm_execpath
+  ? [process.env.npm_execpath, "run", "link-check", "--silent"]
+  : [path.join(repoRoot, "scripts", "Check_Markdown_Links.js")];
 const provenance = {
   attemptCount: 1,
   checkedHead: "daae48ab4c94803f0250ff9beb5e4f815091e259",
@@ -48,6 +52,22 @@ const reviewedProvenance = {
   workflowJobId: 108717860244,
   workflowUrl:
     "https://github.com/OWASP/CheatSheetSeries/actions/runs/36353962728/job/108717860244",
+};
+const currentPushProvenance = {
+  attemptCount: 3,
+  checkedHead: "fb62bdea203001e10598c33eb157a26d987a372f",
+  contentBaseCommit: "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+  workflowRunId: 36494363113,
+  workflowJobId: 109170327939,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/36494363113/job/109170327939",
+};
+const currentPrProvenance = {
+  ...currentPushProvenance,
+  workflowRunId: 36494366260,
+  workflowJobId: 109170338388,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/36494366260/job/109170338388",
 };
 
 function baseline(failures = []) {
@@ -150,7 +170,7 @@ function runLinkCheck(
     fs.writeFileSync(baselinePath, `${baselineContents}\n`);
   }
 
-  const result = spawnSync(npmCommand, ["run", "link-check", "--silent"], {
+  const result = spawnSync(process.execPath, linkCheckArgs, {
     cwd: repoRoot,
     encoding: "utf8",
     env: {
@@ -182,14 +202,18 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 4);
+  assert.equal(value.batches.length, 6);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
   assert.deepEqual(value.batches[2].generatedFrom, finalProvenance);
   assert.deepEqual(value.batches[3].generatedFrom, reviewedProvenance);
+  assert.deepEqual(value.batches[4].generatedFrom, currentPushProvenance);
+  assert.deepEqual(value.batches[5].generatedFrom, currentPrProvenance);
   assert.equal(value.batches[0].failures.length, 157);
   assert.equal(value.batches[1].failures.length, 7);
   assert.equal(value.batches[3].failures.length, 107);
+  assert.equal(value.batches[4].failures.length, 33);
+  assert.equal(value.batches[5].failures.length, 14);
   assert.deepEqual(value.batches[2].failures, [
     {
       file: "cheatsheets/Drone_Security_Cheat_Sheet.md",
@@ -203,11 +227,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 273);
-  assert.equal(new Set(failures.map(({ file }) => file)).size, 77);
+  assert.equal(failures.length, 320);
+  assert.equal(new Set(failures.map(({ file }) => file)).size, 83);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    273,
+    320,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>
@@ -251,6 +275,50 @@ test("a broken local link exits nonzero with only unexpected diagnostics", (t) =
   assert.equal(result.known, "");
   assert.match(result.unexpected, /FILE: cheatsheets\/broken\.md/);
   assert.match(result.unexpected, /\[✖\] missing\.md → Status: 400/);
+});
+
+test("an unsupported link cannot pass as a checker warning", (t) => {
+  const result = runLinkCheck(t, {
+    files: { "unsupported.md": "# Unsupported\n\n[Unsupported](ftp://example.invalid/file)\n" },
+  });
+
+  assert.equal(result.status, 1);
+  assert.match(result.raw, /\[⚠\]/);
+  assert.match(result.stderr, /unsupported\.md: checker could not assess link/);
+  assert.doesNotMatch(result.stdout, /No unexpected link failures/);
+  assert.equal(result.unexpected, "");
+});
+
+test("a checker warning stays fatal alongside an exact known failure", (t) => {
+  const checker = createChecker(t, [
+    "const file = process.argv.at(-1);",
+    "console.log(`FILE: ${file}`);",
+    'console.log("  [\\u001B[33m⚠\\u001B[39m] ftp://example.invalid/file");',
+    'console.log("  2 links checked.");',
+    'console.error("  ERROR: 1 dead link found!");',
+    'console.log("  [✖] missing.md → Status: 400");',
+    "process.exitCode = 1;",
+  ].join("\n"));
+  const result = runLinkCheck(t, {
+    checker,
+    baselineContents: JSON.stringify(baseline([{
+      file: "cheatsheets/valid.md", url: "missing.md", observedStatus: 400,
+    }])),
+  });
+
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /checker could not assess link/);
+  assert.doesNotMatch(result.known, /\[known\]|\[recovered\]/);
+  assert.equal(result.unexpected, "");
+});
+
+test("an empty target cannot pass without checking any files", (t) => {
+  const result = runLinkCheck(t, { files: {} });
+
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /no Markdown files found; no links were checked/);
+  assert.doesNotMatch(result.raw, /^===== FILE:/m);
+  assert.doesNotMatch(result.stdout, /No unexpected link failures/);
 });
 
 test("ANSI-colored checker output retains exact file and URL provenance", (t) => {
@@ -787,6 +855,21 @@ test("a silent zero-exit checker is fatal", (t) => {
 
   assert.notEqual(result.status, 0);
   assert.match(result.raw, /successful checker result lacks the expected FILE header/);
+  assert.equal(result.unexpected, "");
+});
+
+test("a nonzero checker result with no dead links remains fatal", (t) => {
+  const checker = createChecker(t, [
+    "console.log(`FILE: ${process.argv.at(-1)}`);",
+    'console.log("  0 links checked.");',
+    'console.error("  ERROR: 0 dead links found!");',
+    "process.exitCode = 1;",
+  ].join("\n"));
+  const result = runLinkCheck(t, { checker });
+
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /nonzero checker result has an invalid dead-link count/);
+  assert.doesNotMatch(result.stdout, /No unexpected link failures/);
   assert.equal(result.unexpected, "");
 });
 

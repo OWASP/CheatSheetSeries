@@ -1841,6 +1841,453 @@
           ]
         }
       ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "fb62bdea203001e10598c33eb157a26d987a372f",
+        "contentBaseCommit": "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+        "workflowRunId": 36494363113,
+        "workflowJobId": 109170327939,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/36494363113/job/109170327939"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/Clickjacking_Defense_Cheat_Sheet.md",
+          "url": "https://evil.blog/2024/12/doubleclickjacking-what.html",
+          "observedStatuses": [
+            429,
+            429,
+            429
+          ]
+        },
+        {
+          "file": "cheatsheets/Mass_Assignment_Cheat_Sheet.md",
+          "url": "http://lifelongprogrammer.blogspot.com/2015/09/using-jackson-view-to-protect-mass-assignment.html",
+          "observedStatuses": [
+            429,
+            429,
+            429
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-2/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#client-side-discoverable-public-key-credential-source",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-api",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-attestation-limitations",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-attestation-privacy",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-authenticator-taxonomy",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-backwards-compatibility-with-fido-u2f",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-cryptographic-challenges",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-iframe-guidance",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-intro",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-registering-a-new-credential",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-rp-benefits",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-sign-counter",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-user-handle-privacy",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-validating-origin",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#sctn-verifying-assertion",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Passkey_Security_Cheat_Sheet.md",
+          "url": "https://www.w3.org/TR/webauthn-3/#user-verification",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Query_Parameterization_Cheat_Sheet.md",
+          "url": "https://owasp.org/Top10/2025/A05_2025-Injection/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Query_Parameterization_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/SQL_Injection",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/REST_Assessment_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/Fuzzing",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/REST_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/REST_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-secure-headers/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Ruby_on_Rails_Cheat_Sheet.md",
+          "url": "https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Ruby_on_Rails_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/Command_Injection",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Ruby_on_Rails_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/SQL_Injection",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Ruby_on_Rails_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/csrf",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Ruby_on_Rails_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Ruby_on_Rails_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-secure-headers/#headers-link",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md",
+          "url": "https://googleprojectzero.blogspot.com/2020/01/policy-and-disclosure-2020-edition.html",
+          "observedStatuses": [
+            429,
+            429,
+            429
+          ]
+        },
+        {
+          "file": "cheatsheets/Web_Frontend_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-java-encoder/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        }
+      ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "fb62bdea203001e10598c33eb157a26d987a372f",
+        "contentBaseCommit": "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+        "workflowRunId": 36494366260,
+        "workflowJobId": 109170338388,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/36494366260/job/109170338388"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md",
+          "url": "http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html",
+          "observedStatuses": [
+            429,
+            429,
+            429
+          ]
+        },
+        {
+          "file": "cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-java-encoder/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-web-security-testing-guide/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Laravel_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Laravel_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-secure-headers/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/MCP_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-mcp-top-10/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/MCP_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Mobile_Application_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-mobile-top-10/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Multi_Tenant_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-cloud-tenant-isolation/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/NPM_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-dependency-track/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Nodejs_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-secure-headers/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-web-security-testing-guide/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md",
+          "url": "https://www.hoyahaxa.com/2022/11/on-coldfusion-xxe-and-other-xml-attacks.html",
+          "observedStatuses": [
+            429,
+            429,
+            429
+          ]
+        }
+      ]
     }
   ]
 }
