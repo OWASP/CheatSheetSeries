@@ -2288,6 +2288,120 @@
           ]
         }
       ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "c8ac16354c4231e64a0416f33538e47cf8648a49",
+        "contentBaseCommit": "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+        "workflowRunId": 36496455840,
+        "workflowJobId": 109177047372,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/36496455840/job/109177047372"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md",
+          "url": "https://security.googleblog.com/2015/05/new-research-some-tough-questions-for.html",
+          "observedStatuses": [
+            429,
+            429,
+            429
+          ]
+        },
+        {
+          "file": "cheatsheets/Drone_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-internet-of-things/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Error_Handling_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/HTML5_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/HTML5_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-secure-headers/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/HTTP_Headers_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-secure-headers/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Input_Validation_Cheat_Sheet.md",
+          "url": "https://owasp.org/Top10/A03_2021-Injection/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Java_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "observedStatuses": [
+            403,
+            403,
+            403
+          ]
+        },
+        {
+          "file": "cheatsheets/Transport_Layer_Security_Cheat_Sheet.md",
+          "url": "https://tim.dierks.org/2014/05/security-standards-and-name-changes-in.html",
+          "observedStatuses": [
+            429,
+            429,
+            429
+          ]
+        }
+      ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "c8ac16354c4231e64a0416f33538e47cf8648a49",
+        "contentBaseCommit": "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+        "workflowRunId": 36496459649,
+        "workflowJobId": 109177059538,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/36496459649/job/109177059538"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md",
+          "url": "https://randywestergren.com/widespread-xss-vulnerabilities-ad-network-code-affecting-top-tier-publishers-retailers/",
+          "observedStatuses": [
+            202,
+            202,
+            202
+          ]
+        }
+      ]
     }
   ]
 }

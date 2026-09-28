@@ -69,6 +69,22 @@ const currentPrProvenance = {
   workflowUrl:
     "https://github.com/OWASP/CheatSheetSeries/actions/runs/36494366260/job/109170338388",
 };
+const followupPushProvenance = {
+  attemptCount: 3,
+  checkedHead: "c8ac16354c4231e64a0416f33538e47cf8648a49",
+  contentBaseCommit: "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+  workflowRunId: 36496455840,
+  workflowJobId: 109177047372,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/36496455840/job/109177047372",
+};
+const followupPrProvenance = {
+  ...followupPushProvenance,
+  workflowRunId: 36496459649,
+  workflowJobId: 109177059538,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/36496459649/job/109177059538",
+};
 
 function baseline(failures = []) {
   return {
@@ -202,18 +218,22 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 6);
+  assert.equal(value.batches.length, 8);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
   assert.deepEqual(value.batches[2].generatedFrom, finalProvenance);
   assert.deepEqual(value.batches[3].generatedFrom, reviewedProvenance);
   assert.deepEqual(value.batches[4].generatedFrom, currentPushProvenance);
   assert.deepEqual(value.batches[5].generatedFrom, currentPrProvenance);
+  assert.deepEqual(value.batches[6].generatedFrom, followupPushProvenance);
+  assert.deepEqual(value.batches[7].generatedFrom, followupPrProvenance);
   assert.equal(value.batches[0].failures.length, 157);
   assert.equal(value.batches[1].failures.length, 7);
   assert.equal(value.batches[3].failures.length, 107);
   assert.equal(value.batches[4].failures.length, 33);
   assert.equal(value.batches[5].failures.length, 14);
+  assert.equal(value.batches[6].failures.length, 9);
+  assert.equal(value.batches[7].failures.length, 1);
   assert.deepEqual(value.batches[2].failures, [
     {
       file: "cheatsheets/Drone_Security_Cheat_Sheet.md",
@@ -227,11 +247,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 320);
-  assert.equal(new Set(failures.map(({ file }) => file)).size, 83);
+  assert.equal(failures.length, 330);
+  assert.equal(new Set(failures.map(({ file }) => file)).size, 85);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    320,
+    330,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>
