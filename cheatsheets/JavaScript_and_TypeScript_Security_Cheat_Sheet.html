@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/JavaScript_and_TypeScript_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Injection_Prevention_in_Java_Cheat_Sheet.html">
+        <link rel="prev" href="JSON_Web_Token_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+        <link rel="next" href="Java_Security_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Input Validation - OWASP Cheat Sheet Series</title>
+        <title>JavaScript and TypeScript Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#input-validation-cheat-sheet" class="md-skip">
+        <a href="#javascript-and-typescript-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Input Validation
+              JavaScript and TypeScript Security
             
           </span>
         </div>
@@ -1843,37 +1843,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Input Validation
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -1889,303 +1862,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#goals-of-input-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Goals of Input Validation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#input-validation-strategies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Input Validation Strategies
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implementing-input-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementing Input Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Implementing Input Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allowlist-vs-denylist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Allowlist vs Denylist
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validating-free-form-unicode-text" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validating Free-form Unicode Text
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#regular-expressions-regex" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Regular Expressions (Regex)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#allowlist-regular-expression-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Allowlist Regular Expression Examples
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#client-side-vs-server-side-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Client-side vs Server-side Validation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#validating-rich-user-content" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validating Rich User Content
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#preventing-xss-and-content-security-policy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Preventing XSS and Content Security Policy
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#file-upload-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        File Upload Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="File Upload Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upload-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Upload Verification
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upload-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Upload Storage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#public-serving-of-uploaded-content" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Public Serving of Uploaded Content
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#beware-of-specific-file-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Beware of Specific File Types
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#image-upload-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Image Upload Verification
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#email-address-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Email Address Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Email Address Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#syntactic-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Syntactic Validation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#semantic-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Semantic Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Semantic Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#disposable-email-addresses" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Disposable Email Addresses
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sub-addressing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sub-Addressing
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2279,10 +1955,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="JavaScript_and_TypeScript_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JavaScript and TypeScript Security
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="JavaScript_and_TypeScript_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2298,6 +2001,164 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-cheat-sheets-top-level-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Cheat Sheets (Top-Level Links)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dangerous-language-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dangerous Language Surface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dangerous Language Surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eval-function-and-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        eval, Function, and with
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evil-regex-redos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evil Regex (ReDoS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strict-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strict Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-and-property-safety-including-prototype-pollution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object and Property Safety (Including Prototype Pollution)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dom-sinks-and-output-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DOM Sinks and Output Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async-error-handling-messaging-and-origin-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async Error Handling, Messaging, and Origin Checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typescript-specific-caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypeScript-Specific Caveats
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linting-and-dependency-tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linting and Dependency Tooling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4336,10 +4197,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#goals-of-input-validation" class="md-nav__link">
+  <a href="#related-cheat-sheets-top-level-links" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Goals of Input Validation
+        Related Cheat Sheets (Top-Level Links)
       
     </span>
   </a>
@@ -4347,33 +4208,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#input-validation-strategies" class="md-nav__link">
+  <a href="#dangerous-language-surface" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Input Validation Strategies
+        Dangerous Language Surface
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implementing-input-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementing Input Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Implementing Input Validation">
+    <nav class="md-nav" aria-label="Dangerous Language Surface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#allowlist-vs-denylist" class="md-nav__link">
+  <a href="#eval-function-and-with" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Allowlist vs Denylist
+        eval, Function, and with
       
     </span>
   </a>
@@ -4381,10 +4231,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#validating-free-form-unicode-text" class="md-nav__link">
+  <a href="#evil-regex-redos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Validating Free-form Unicode Text
+        Evil Regex (ReDoS)
       
     </span>
   </a>
@@ -4392,10 +4242,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#regular-expressions-regex" class="md-nav__link">
+  <a href="#strict-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Regular Expressions (Regex)
+        Strict Mode
       
     </span>
   </a>
@@ -4408,10 +4258,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#allowlist-regular-expression-examples" class="md-nav__link">
+  <a href="#object-and-property-safety-including-prototype-pollution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Allowlist Regular Expression Examples
+        Object and Property Safety (Including Prototype Pollution)
       
     </span>
   </a>
@@ -4419,10 +4269,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#client-side-vs-server-side-validation" class="md-nav__link">
+  <a href="#dom-sinks-and-output-context" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Client-side vs Server-side Validation
+        DOM Sinks and Output Context
       
     </span>
   </a>
@@ -4430,10 +4280,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#validating-rich-user-content" class="md-nav__link">
+  <a href="#async-error-handling-messaging-and-origin-checks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Validating Rich User Content
+        Async Error Handling, Messaging, and Origin Checks
       
     </span>
   </a>
@@ -4441,10 +4291,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#preventing-xss-and-content-security-policy" class="md-nav__link">
+  <a href="#typescript-specific-caveats" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Preventing XSS and Content Security Policy
+        TypeScript-Specific Caveats
       
     </span>
   </a>
@@ -4452,141 +4302,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#file-upload-validation" class="md-nav__link">
+  <a href="#linting-and-dependency-tooling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Upload Validation
+        Linting and Dependency Tooling
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="File Upload Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upload-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Upload Verification
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upload-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Upload Storage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#public-serving-of-uploaded-content" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Public Serving of Uploaded Content
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#beware-of-specific-file-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Beware of Specific File Types
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#image-upload-verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Image Upload Verification
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#email-address-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Email Address Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Email Address Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#syntactic-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Syntactic Validation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#semantic-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Semantic Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Semantic Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#disposable-email-addresses" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Disposable Email Addresses
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sub-addressing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sub-Addressing
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4621,196 +4343,85 @@
   
 
 
-<h1 id="input-validation-cheat-sheet">Input Validation Cheat Sheet<a class="headerlink" href="#input-validation-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="javascript-and-typescript-security-cheat-sheet">JavaScript and TypeScript Security Cheat Sheet<a class="headerlink" href="#javascript-and-typescript-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This article is focused on providing clear, simple, actionable guidance for providing Input Validation security functionality in your applications.</p>
-<h2 id="goals-of-input-validation">Goals of Input Validation<a class="headerlink" href="#goals-of-input-validation" title="Permanent link">&para;</a></h2>
-<p>Input validation is performed to ensure only properly formed data is entering the workflow in an information system, preventing malformed data from persisting in the database and triggering malfunction of various downstream components. Input validation should happen as early as possible in the data flow, preferably as soon as the data is received from the external party.</p>
-<p>Data from all potentially untrusted sources should be subject to input validation, including not only Internet-facing web clients but also backend feeds over extranets, from <a href="https://badcyber.com/several-polish-banks-hacked-information-stolen-by-unknown-attackers/">suppliers, partners, vendors or regulators</a>, each of which may be compromised on their own and start sending malformed data.</p>
-<p>Input Validation should not be used as the <em>primary</em> method of preventing <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS</a>, <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection</a> and other attacks which are covered in respective <a href="https://cheatsheetseries.owasp.org/">cheat sheets</a> but can significantly contribute to reducing their impact if implemented properly.</p>
-<h2 id="input-validation-strategies">Input Validation Strategies<a class="headerlink" href="#input-validation-strategies" title="Permanent link">&para;</a></h2>
-<p>Input validation should be applied at both syntactic and semantic levels:</p>
+<p>This cheat sheet lists secure development practices for JavaScript and TypeScript that apply everywhere the language runs: browsers, hybrid apps, server-side Node.js, and any other runtime that implements the language (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">MDN JavaScript</a>). It covers language-level pitfalls (dynamic code execution, prototype pollution, regular expressions), client-side sinks, and TypeScript-specific false confidence. Rules that are equally valid on the client and the server are stated once here; backend and runtime hardening stays in the <a href="Nodejs_Security_Cheat_Sheet.html">Node.js Security Cheat Sheet</a>, which this sheet links to instead of duplicating.</p>
+<h2 id="related-cheat-sheets-top-level-links">Related Cheat Sheets (Top-Level Links)<a class="headerlink" href="#related-cheat-sheets-top-level-links" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Syntactic</strong> validation should enforce correct syntax of structured fields (e.g. SSN, date, currency symbol).</li>
-<li><strong>Semantic</strong> validation should enforce correctness of their <em>values</em> in the specific business context (e.g. start date is before end date, price is within expected range).</li>
+<li><a href="Nodejs_Security_Cheat_Sheet.html">Node.js Security Cheat Sheet</a> - backend and runtime guidance.</li>
+<li><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a> - output encoding rules per context.</li>
+<li><a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a> - client-side XSS sinks and sources.</li>
+<li><a href="Third_Party_Javascript_Management_Cheat_Sheet.html">Third Party JavaScript Management Cheat Sheet</a> - managing external scripts.</li>
+<li><a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a> - TLS configuration.</li>
+<li><a href="https://cheatsheetseries.owasp.org/">OWASP Cheat Sheet Series index</a> - start here for the full catalog.</li>
 </ul>
-<p>It is always recommended to prevent attacks as early as possible in the processing of the user's (attacker's) request. Input validation can be used to detect unauthorized input before it is processed by the application.</p>
-<h2 id="implementing-input-validation">Implementing Input Validation<a class="headerlink" href="#implementing-input-validation" title="Permanent link">&para;</a></h2>
-<p>Input validation can be implemented using any programming technique that allows effective enforcement of syntactic and semantic correctness, for example:</p>
+<h2 id="dangerous-language-surface">Dangerous Language Surface<a class="headerlink" href="#dangerous-language-surface" title="Permanent link">&para;</a></h2>
+<h3 id="eval-function-and-with"><code>eval</code>, <code>Function</code>, and <code>with</code><a class="headerlink" href="#eval-function-and-with" title="Permanent link">&para;</a></h3>
+<p>Never build code from strings. <code>eval</code> and <code>new Function</code> execute arbitrary code with the current runtime's privileges, so any attacker-influenced input reaching them is code injection (<a href="https://cwe.mitre.org/data/definitions/94.html">CWE-94</a>). In browsers, <code>setTimeout</code> and <code>setInterval</code> with a string argument compile it the same way through implied <code>eval</code>.</p>
 <ul>
-<li>Use data type validators available natively in web application frameworks (such as <a href="https://docs.djangoproject.com/en/1.11/ref/validators/">Django Validators</a>, <a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/package-summary.html#doc.Usage.validator">Apache Commons Validators</a> etc).</li>
-<li>Validation against <a href="http://json-schema.org/">JSON Schema</a> and <a href="https://www.w3schools.com/xml/schema_intro.asp">XML Schema (XSD)</a> for input in these formats.</li>
-<li>Type conversion (e.g. <code>Integer.parseInt()</code> in Java, <code>int()</code> in Python) with strict exception handling</li>
-<li>Minimum and maximum value range check for numerical parameters and dates, minimum and maximum length check for strings.</li>
-<li>Array of allowed values for small sets of string parameters (e.g. days of week).</li>
-<li>Regular expressions for any other structured data covering the whole input string <code>(^...$)</code> and <strong>not</strong> using "any character" wildcard (such as <code>.</code> or <code>\S</code>)</li>
-<li>Denylisting known dangerous patterns can be used as an additional layer of defense, but it should supplement - not replace - allowlisting, to help catch some commonly observed attacks or patterns without relying on it as the main validation method.</li>
+<li>Parse data with <code>JSON.parse</code>, never <code>eval</code>.</li>
+<li>Replace dynamic dispatch with static maps of functions instead of constructing calls from names.</li>
+<li>Do not use the <code>with</code> statement. It makes scope unpredictable, is forbidden in strict mode, and blocks engine optimizations.</li>
+<li>Enforce this statically with the <code>no-eval</code>, <code>no-implied-eval</code>, and <code>no-new-func</code> lint rules.</li>
+<li>In browsers, block string compilation with an enforced Content Security Policy whose <code>script-src</code> directive, or <code>default-src</code> fallback, omits both <code>'unsafe-eval'</code> and <code>'trusted-types-eval'</code>. A report-only policy does not block execution (<a href="https://w3c.github.io/webappsec-csp/#can-compile-strings">CSP <code>EnsureCSPDoesNotBlockStringCompilation</code></a>).</li>
+<li>CSP is a browser-side control and does not apply to server-side runtimes, so the lint rules remain the primary enforcement everywhere.</li>
 </ul>
-<h3 id="allowlist-vs-denylist">Allowlist vs Denylist<a class="headerlink" href="#allowlist-vs-denylist" title="Permanent link">&para;</a></h3>
-<p>It is a common mistake to use denylist validation in order to try to detect possibly dangerous characters and patterns like the apostrophe <code>'</code> character, the string <code>1=1</code>, or the <code>&lt;script&gt;</code> tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.</p>
-<p>Plus, such filters frequently prevent authorized input, like <code>O'Brian</code>, where the <code>'</code> character is fully legitimate. For more information on XSS filter evasion please see <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">this wiki page</a>.</p>
-<p>While denylisting can be useful as an additional layer of defense to catch some common malicious patterns, it should not be relied upon as the primary method. Allowlisting remains the more robust and secure approach for preventing potentially harmful input.</p>
-<p>Allowlist validation is appropriate for all input fields provided by the user. Allowlist validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.</p>
-<p>If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.</p>
-<p>If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place. Any failure to validate a value against this discrete list of options on the server side is a high security event and should be logged as a high severity event as it indicates that an attacker is tampering with the client-side code.</p>
-<h3 id="validating-free-form-unicode-text">Validating Free-form Unicode Text<a class="headerlink" href="#validating-free-form-unicode-text" title="Permanent link">&para;</a></h3>
-<p>Free-form text, especially with Unicode characters, is perceived as difficult to validate due to a relatively large space of characters that need to be allowed.</p>
-<p>It's also free-form text input that highlights the importance of proper context-aware output encoding and quite clearly demonstrates that input validation is <strong>not</strong> the primary safeguards against Cross-Site Scripting. If your users want to type apostrophe <code>'</code> or less-than sign <code>&lt;</code> in their comment field, they might have perfectly legitimate reason for that and the application's job is to properly handle it throughout the whole life cycle of the data.</p>
-<p>The primary means of input validation for free-form text input should be:</p>
+<h3 id="evil-regex-redos">Evil Regex (ReDoS)<a class="headerlink" href="#evil-regex-redos" title="Permanent link">&para;</a></h3>
+<p>Nested quantifiers such as <code>(a+)+</code>, and repeated ambiguous alternatives such as <code>^(a|aa)*$</code>, can make matching take exponential time on crafted input, consuming CPU and potentially blocking the executing thread or event loop (<a href="https://cwe.mitre.org/data/definitions/1333.html">CWE-1333</a>). Whether a pattern is actually exploitable depends on the surrounding expression and the failing input, not just the quantified group.</p>
 <ul>
-<li><strong>Normalization:</strong> Ensure canonical encoding is used across all the text and no invalid characters are present.</li>
-<li><strong>Character category allowlisting:</strong> Unicode allows listing categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyrillic, CJK ideographs etc).</li>
-<li><strong>Individual character allowlisting:</strong> If you allow letters and ideographs in names and also want to allow apostrophe <code>'</code> for Irish names, but don't want to allow the whole punctuation category.</li>
+<li>Prefer well-tested validators over hand-written patterns for emails, URLs, and similar inputs.</li>
+<li>Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters.</li>
+<li>Cap untrusted input length before matching, and reject rather than sanitize when input does not match.</li>
+<li>For the attack mechanics and detection tooling, see the <a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">OWASP ReDoS guidance</a>; use linear-time patterns as the primary control and input-length caps as defense in depth.</li>
 </ul>
-<p>References:</p>
+<h3 id="strict-mode">Strict Mode<a class="headerlink" href="#strict-mode" title="Permanent link">&para;</a></h3>
+<p>Ship ES modules (strict by default) or declare <code>'use strict'</code>. Strict mode turns silent mistakes into errors: assignment to undeclared variables throws, <code>this</code> stays <code>undefined</code> in plain functions instead of becoming the global object, and <code>with</code> is rejected. It does not fix injection, XSS, or prototype pollution; treat it as hygiene, not a security boundary.</p>
+<h2 id="object-and-property-safety-including-prototype-pollution">Object and Property Safety (Including Prototype Pollution)<a class="headerlink" href="#object-and-property-safety-including-prototype-pollution" title="Permanent link">&para;</a></h2>
+<p>Prototype pollution (<a href="https://cwe.mitre.org/data/definitions/1321.html">CWE-1321</a>) occurs when attacker-controlled keys such as <code>__proto__</code>, <code>constructor</code>, or <code>prototype</code> reach a recursive merge or path setter and modify an object's prototype. This can alter the behavior of objects that inherit from that prototype. These are the JavaScript-specific essentials only; the full protection guidance lives in the dedicated <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html">Prototype Pollution Prevention Cheat Sheet</a>.</p>
 <ul>
-<li><a href="https://web.archive.org/web/20170717174432/https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html/">Input validation of free-form Unicode text in Python</a></li>
-<li><a href="https://unicode.org/reports/tr31/">UAX 31: Unicode Identifier and Pattern Syntax</a></li>
-<li><a href="https://www.unicode.org/reports/tr15/">UAX 15: Unicode Normalization Forms</a></li>
-<li><a href="https://unicode.org/reports/tr24/">UAX 24: Unicode Script Property</a></li>
+<li>Never pass untrusted input to a recursive merge or <code>set-by-path</code> helper, and reject the key segments <code>__proto__</code>, <code>constructor</code>, and <code>prototype</code> before writing.</li>
+<li>Use a <code>Map</code> with <code>set</code>, <code>get</code>, and <code>has</code> for untrusted dictionary keys, keeping entries separate from object properties (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution#use_map_and_set_instead">MDN prototype pollution defenses</a>). If an object is required, create it with <code>Object.create(null)</code> so it has no prototype.</li>
+<li>Validate parsed or copied untrusted data against a schema before use, and drop <code>__proto__</code> keys first: <code>Object.assign</code> applies them through the prototype setter and mutates the target's prototype, while spread creates a silent own property.</li>
 </ul>
-<h3 id="regular-expressions-regex">Regular Expressions (Regex)<a class="headerlink" href="#regular-expressions-regex" title="Permanent link">&para;</a></h3>
-<p>Developing regular expressions can be complicated, and is well beyond the scope of this cheat sheet.</p>
-<p>There are lots of resources on the internet about how to write regular expressions, including this <a href="https://www.regular-expressions.info/">site</a> and the <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository">OWASP Validation Regex Repository</a>.</p>
-<p>When designing regular expressions, be aware of <a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">RegEx Denial of Service (ReDoS) attacks</a>. These attacks cause a program using a poorly designed Regular Expression to operate very slowly and utilize CPU resources for a very long time.</p>
-<p>In summary, input validation should:</p>
+<h2 id="dom-sinks-and-output-context">DOM Sinks and Output Context<a class="headerlink" href="#dom-sinks-and-output-context" title="Permanent link">&para;</a></h2>
+<p>Injecting attacker-controlled strings into HTML, script, or URL contexts is cross-site scripting (<a href="https://cwe.mitre.org/data/definitions/79.html">CWE-79</a>). Follow the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a> for per-context encoding and the <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a> for client-side sources and sinks.</p>
 <ul>
-<li>Be applied to all input data, at minimum.</li>
-<li>Define the allowed set of characters to be accepted.</li>
-<li>Define a minimum and maximum length for the data (e.g. <code>{1,25}</code>).</li>
+<li>Build DOM with <code>textContent</code> and <code>createElement</code> instead of <code>innerHTML</code> or <code>insertAdjacentHTML</code>.</li>
+<li>When HTML must be rendered, sanitize with a maintained allowlist sanitizer and enforce <a href="https://w3c.github.io/trusted-types/dist/spec/">Trusted Types</a> with no permissive default policy.</li>
+<li>Framework auto-escaping has explicit bypasses that must never receive untrusted input: React <code>dangerouslySetInnerHTML</code>, Vue <code>v-html</code>, and Angular <code>bypassSecurityTrustHtml</code> and its siblings.</li>
 </ul>
-<h2 id="allowlist-regular-expression-examples">Allowlist Regular Expression Examples<a class="headerlink" href="#allowlist-regular-expression-examples" title="Permanent link">&para;</a></h2>
-<p>Validating a U.S. Zip Code (5 digits plus optional -4)</p>
-<div class="highlight"><pre><span></span><code>^\d{5}(-\d{4})?$
-</code></pre></div>
-<p>Validating U.S. State Selection From a Drop-Down Menu</p>
-<div class="highlight"><pre><span></span><code>^(AA|AE|AP|AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FM|FL|GA|GU|
-HI|ID|IL|IN|IA|KS|KY|LA|ME|MH|MD|MA|MI|MN|MS|MO|MT|NE|
-NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PW|PA|PR|RI|SC|SD|TN|
-TX|UT|VT|VI|VA|WA|WV|WI|WY)$
-</code></pre></div>
-<p><strong>Java Regex Usage Example:</strong></p>
-<p>Example validating the parameter "zip" using a regular expression.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Pattern</span><span class="w"> </span><span class="n">zipPattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">"^\d{5}(-\d{4})?$"</span><span class="p">);</span>
-
-<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doPost</span><span class="p">(</span><span class="w"> </span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">zipCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="w"> </span><span class="s">"zip"</span><span class="w"> </span><span class="p">);</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">zipPattern</span><span class="p">.</span><span class="na">matcher</span><span class="p">(</span><span class="w"> </span><span class="n">zipCode</span><span class="w"> </span><span class="p">).</span><span class="na">matches</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">YourValidationException</span><span class="p">(</span><span class="w"> </span><span class="s">"Improper zipcode format."</span><span class="w"> </span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="c1">// do what you want here, after its been validated ..</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">YourValidationException</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="n">response</span><span class="p">.</span><span class="na">sendError</span><span class="p">(</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Some Allowlist validators have also been predefined in various open source packages that you can leverage. For example:</p>
+<h2 id="async-error-handling-messaging-and-origin-checks">Async Error Handling, Messaging, and Origin Checks<a class="headerlink" href="#async-error-handling-messaging-and-origin-checks" title="Permanent link">&para;</a></h2>
+<p>Not every promise failure is a defect. An <em>expected</em> failure is part of a function's contract, such as a lookup that returns <code>null</code> for a missing key or a parse that throws on malformed input; handle it where the caller decides what to do, with a <code>try</code>/<code>catch</code> around <code>await</code> or a <code>.catch</code> on the terminal link of the chain, and return a typed result or a documented error. An <em>unhandled</em> rejection is a promise that rejects with no handler attached, so the failure propagates past the call site and is usually a bug: browsers report it in the console and fire an <code>unhandledrejection</code> event, while Node.js behavior depends on its unhandled-rejection mode and may terminate the process (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises#promise_rejection_events">MDN promise rejection events</a>). Keep promise chains flat with a terminal error handler so genuinely unexpected rejections stay visible, and do not silence them with an empty <code>catch</code>. Server-side specifics live in the <a href="Nodejs_Security_Cheat_Sheet.html">Node.js Security Cheat Sheet</a> and are not repeated here.</p>
+<p>For <code>postMessage</code>, the receiver must verify <code>event.origin</code> against an explicit allowlist, check <code>event.source</code> when a conversation partner is expected, and validate <code>event.data</code> against the expected schema before acting on it. The sender must pass an exact <code>targetOrigin</code>, never <code>"*"</code> for sensitive data (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN postMessage</a>). Prefer narrow <code>MessageChannel</code> ports over broadcast messaging where the design allows it.</p>
+<h2 id="typescript-specific-caveats">TypeScript-Specific Caveats<a class="headerlink" href="#typescript-specific-caveats" title="Permanent link">&para;</a></h2>
+<p>Types are erased at runtime, so TypeScript alone enforces nothing against a malicious or malformed caller.</p>
 <ul>
-<li><a href="http://commons.apache.org/proper/commons-validator/">Apache Commons Validator</a></li>
+<li>Treat <code>any</code> as a hole in every check. <code>unknown</code> is the safe default for values of unknown type, because it forces you to narrow before use, whereas <code>any</code> disables type checking for that value (<a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown">TypeScript Handbook: <code>unknown</code></a>).</li>
+<li>Type assertions (<code>as</code>) and non-null assertions (<code>!</code>) silence the compiler without changing runtime values; do not use them on untrusted data.</li>
+<li>Enable <code>strict</code> in <code>tsconfig.json</code> (plus <code>noUncheckedIndexedAccess</code> where affordable) to catch accidental unsafety in your own code. It is a code-quality control, not a trust boundary.</li>
+<li>Validate at every trust boundary (network responses, <code>postMessage</code> payloads, storage reads) with a runtime schema validator. The validated type should flow from the schema, not from a parallel hand-written interface.</li>
 </ul>
-<h2 id="client-side-vs-server-side-validation">Client-side vs Server-side Validation<a class="headerlink" href="#client-side-vs-server-side-validation" title="Permanent link">&para;</a></h2>
-<p>Input validation <strong>must</strong> be implemented on the server-side before any data is processed by an application’s functions, as any JavaScript-based input validation performed on the client-side can be circumvented by an attacker who disables JavaScript or uses a web proxy. Implementing both client-side JavaScript-based validation for UX and server-side validation for security is the recommended approach, leveraging each for their respective strengths.</p>
-<h2 id="validating-rich-user-content">Validating Rich User Content<a class="headerlink" href="#validating-rich-user-content" title="Permanent link">&para;</a></h2>
-<p>It is very difficult to validate rich content submitted by a user. For more information, please see the XSS cheat sheet on <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Sanitizing HTML Markup with a Library Designed for the Job</a>.</p>
-<h2 id="preventing-xss-and-content-security-policy">Preventing XSS and Content Security Policy<a class="headerlink" href="#preventing-xss-and-content-security-policy" title="Permanent link">&para;</a></h2>
-<p>All user data controlled must be encoded when returned in the HTML page to prevent the execution of malicious data (e.g. XSS). For example <code>&lt;script&gt;</code> would be returned as <code>&amp;lt;script&amp;gt;</code></p>
-<p>The type of encoding is specific to the context of the page where the user controlled data is inserted. For example, HTML entity encoding is appropriate for data placed into the HTML body. However, user data placed into a script would need JavaScript specific output encoding.</p>
-<p>Detailed information on XSS prevention here: <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP XSS Prevention Cheat Sheet</a></p>
-<h2 id="file-upload-validation">File Upload Validation<a class="headerlink" href="#file-upload-validation" title="Permanent link">&para;</a></h2>
-<p>Many websites allow users to upload files, such as a profile picture or more. This section helps provide that feature securely.</p>
-<p>Check the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheat Sheet</a>.</p>
-<h3 id="upload-verification">Upload Verification<a class="headerlink" href="#upload-verification" title="Permanent link">&para;</a></h3>
+<h2 id="linting-and-dependency-tooling">Linting and Dependency Tooling<a class="headerlink" href="#linting-and-dependency-tooling" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Use input validation to ensure the uploaded filename uses an expected extension type.</li>
-<li>Ensure the uploaded file is not larger than a defined maximum file size.</li>
-<li>If the website supports ZIP file upload, do a validation check before unzipping the file. The check includes the target path, level of compression, estimated unzip size.</li>
+<li>Lint with <a href="https://typescript-eslint.io/"><code>typescript-eslint</code></a> recommended sets plus <code>no-eval</code>, <code>no-implied-eval</code>, and <code>no-new-func</code>. Keep dependencies updated so new rules apply.</li>
+<li>Pin versions with a lockfile, review dependency changes, and monitor advisories. Frontend dependency-review specifics overlap with the <a href="Nodejs_Security_Cheat_Sheet.html">Node.js Security Cheat Sheet</a>.</li>
+<li>For third-party scripts loaded from a CDN, pin a Subresource Integrity hash with <code>crossorigin</code> handling per the <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">Third Party JavaScript Management Cheat Sheet</a>.</li>
 </ul>
-<h3 id="upload-storage">Upload Storage<a class="headerlink" href="#upload-storage" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Use a new filename to store the file on the OS. Do not use any user controlled text for this filename or for the temporary filename.</li>
-<li>When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is <em>test.JPG</em>, rename it to <em>JAI1287uaisdjhf.JPG</em> with a random filename. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evade the filter, such as <code>test.jpg;.asp or /../../../../../test.jpg</code>.</li>
-<li>Uploaded files should be analyzed for malicious content (anti-malware, static analysis, etc).</li>
-<li>The client should not be able to specify the file path; it should be defined by the server.</li>
-</ul>
-<h3 id="public-serving-of-uploaded-content">Public Serving of Uploaded Content<a class="headerlink" href="#public-serving-of-uploaded-content" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Ensure uploaded images are served with the correct content-type (e.g. <code>image/jpeg</code>, <code>image/png</code>)</li>
-</ul>
-<h3 id="beware-of-specific-file-types">Beware of Specific File Types<a class="headerlink" href="#beware-of-specific-file-types" title="Permanent link">&para;</a></h3>
-<p>The upload feature should be using an allowlist approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:</p>
-<ul>
-<li><strong>crossdomain.xml</strong> / <strong>clientaccesspolicy.xml:</strong> allows cross-domain data loading in Flash, Java and Silverlight. If permitted on sites with authentication this can permit cross-domain data theft and CSRF attacks. Note this can get pretty complicated depending on the specific plugin version in question, so it's best to just prohibit files named "crossdomain.xml" or "clientaccesspolicy.xml".</li>
-<li><strong>.htaccess</strong> and <strong>.htpasswd:</strong> Provides server configuration options on a per-directory basis, and should not be permitted. See <a href="http://en.wikipedia.org/wiki/Htaccess">HTACCESS documentation</a>.</li>
-<li>Web executable script files are suggested not to be allowed such as <code>aspx, asp, css, swf, xhtml, rhtml, shtml, jsp, js, pl, php, cgi</code>.</li>
-</ul>
-<h3 id="image-upload-verification">Image Upload Verification<a class="headerlink" href="#image-upload-verification" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Use image rewriting libraries to verify the image is valid and to strip away extraneous content.</li>
-<li>Set the extension of the stored image to be a valid image extension based on the detected content type of the image from image processing (e.g. do not just trust the header from the upload).</li>
-<li>Ensure the detected content type of the image is within a list of defined image types (jpg, PNG, etc)</li>
-</ul>
-<h2 id="email-address-validation">Email Address Validation<a class="headerlink" href="#email-address-validation" title="Permanent link">&para;</a></h2>
-<h3 id="syntactic-validation">Syntactic Validation<a class="headerlink" href="#syntactic-validation" title="Permanent link">&para;</a></h3>
-<p>The format of email addresses is defined by <a href="https://tools.ietf.org/html/rfc5321#section-4.1.2">RFC 5321</a>, and is far more complicated than most people realise. As an example, the following are all considered to be valid email addresses:</p>
-<ul>
-<li><code>"&gt;&lt;script&gt;alert(1);&lt;/script&gt;"@example.org</code></li>
-<li><code>user+subaddress@example.org</code></li>
-<li><code>user@[IPv6:2001:db8::1]</code></li>
-<li><code>" "@example.org</code></li>
-</ul>
-<p>Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of <a href="https://datatracker.ietf.org/doc/html/draft-seantek-mail-regexen-03#rfc.section.3">publicly available documents on regex</a>.</p>
-<p>The biggest caveat on this is that although the RFC defines a very flexible format for email addresses, most real world implementations (such as mail servers) use a far more restricted address format, meaning that they will reject addresses that are <em>technically</em> valid.  Although they may be technically correct, these addresses are of little use if your application will not be able to actually send emails to them.</p>
-<p>As such, the best way to validate email addresses is to perform some basic initial validation, and then pass the address to the mail server and catch the exception if it rejects it. This means that the application can be confident that its mail server can send emails to any addresses it accepts. The initial validation could be as simple as:</p>
-<ul>
-<li>The email address contains two parts, separated with an <code>@</code> symbol.</li>
-<li>The email address does not contain dangerous characters (such as backticks, single or double quotes, or null bytes).<ul>
-<li>Exactly which characters are dangerous will depend on how the address is going to be used (echoed in page, inserted into database, etc).</li>
-</ul>
-</li>
-<li>The domain part contains only letters, numbers, hyphens (<code>-</code>) and periods (<code>.</code>).</li>
-<li>The email address is a reasonable length:<ul>
-<li>The local part (before the <code>@</code>) should be no more than 63 characters.</li>
-<li>The total length should be no more than 254 characters.</li>
-</ul>
-</li>
-</ul>
-<h3 id="semantic-validation">Semantic Validation<a class="headerlink" href="#semantic-validation" title="Permanent link">&para;</a></h3>
-<p>Semantic validation is about determining whether the email address is correct and legitimate. The most common way to do this is to send an email to the user, and require that they click a link in the email, or enter a code that has been sent to them. This provides a basic level of assurance that:</p>
-<ul>
-<li>The email address is correct.</li>
-<li>The application can successfully send emails to it.</li>
-<li>The user has access to the mailbox.</li>
-</ul>
-<p>The links that are sent to users to prove ownership should contain a token that is:</p>
-<ul>
-<li>At least 32 characters long.</li>
-<li>Generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation">secure source of randomness</a>.</li>
-<li>Single use.</li>
-<li>Time limited (e.g, expiring after eight hours).</li>
-</ul>
-<p>After validating the ownership of the email address, the user should then be required to authenticate on the application through the usual mechanism.</p>
-<h4 id="disposable-email-addresses">Disposable Email Addresses<a class="headerlink" href="#disposable-email-addresses" title="Permanent link">&para;</a></h4>
-<p>In some cases, users may not want to give their real email address when registering on the application, and will instead provide a disposable email address. These are publicly available addresses that do not require the user to authenticate, and are typically used to reduce the amount of spam received by users' primary email addresses.</p>
-<p>Blocking disposable email addresses is almost impossible, as there are a large number of websites offering these services, with new domains being created every day. There are a number of publicly available lists and commercial lists of known disposable domains, but these will always be incomplete.</p>
-<p>If these lists are used to block the use of disposable email addresses then the user should be presented with a message explaining why they are blocked (although they are likely to simply search for another disposable provider rather than giving their legitimate address).</p>
-<p>If it is essential that disposable email addresses are blocked, then registrations should only be allowed from specifically-allowed email providers. However, if this includes public providers such as Google or Yahoo, users can simply register their own disposable address with them.</p>
-<h4 id="sub-addressing">Sub-Addressing<a class="headerlink" href="#sub-addressing" title="Permanent link">&para;</a></h4>
-<p>Sub-addressing allows a user to specify a <em>tag</em> in the local part of the email address (before the <code>@</code> sign), which will be ignored by the mail server. For example, if that <code>example.org</code> domain supports sub-addressing, then the following email addresses are equivalent:</p>
-<ul>
-<li><code>user@example.org</code></li>
-<li><code>user+site1@example.org</code></li>
-<li><code>user+site2@example.org</code></li>
-</ul>
-<p>Many mail providers (such as Microsoft Exchange) do not support sub-addressing. The most notable provider who does is Gmail, although there are many others that also do.</p>
-<p>Some users will use a different <em>tag</em> for each website they register on, so that if they start receiving spam to one of the sub-addresses they can identify which website leaked or sold their email address.</p>
-<p>Because it could allow users to register multiple accounts with a single email address, some sites may wish to block sub-addressing by stripping out everything between the <code>+</code> and <code>@</code> signs. This is not generally recommended, as it suggests that the website owner is either unaware of sub-addressing or wishes to prevent users from identifying them when they leak or sell email addresses. Additionally, it can be trivially bypassed by using <a href="#disposable-email-addresses">disposable email addresses</a>, or simply registering multiple email accounts with a trusted provider.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://top10proactive.owasp.org/the-top-10/c3-validate-input-and-handle-exceptions">OWASP Top 10 Proactive Controls 2024: C3: Validate all Input &amp; Handle Exceptions</a></li>
-<li><a href="https://cwe.mitre.org/data/definitions/20.html">CWE-20 Improper Input Validation</a></li>
-<li><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP Top 10 2021: A03:2021-Injection</a></li>
-<li><a href="https://learn.snyk.io/lesson/improper-input-validation/">Snyk: Improper Input Validation</a></li>
+<li>Issue <a href="https://github.com/OWASP/CheatSheetSeries/issues/2337">#2337</a> - proposal and discussion.</li>
+<li><a href="Nodejs_Security_Cheat_Sheet.html">Node.js Security Cheat Sheet</a>.</li>
+<li><a href="Third_Party_Javascript_Management_Cheat_Sheet.html">Third Party JavaScript Management Cheat Sheet</a>.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval">MDN: eval</a> - why direct and indirect <code>eval</code> differ and why both are discouraged.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">MDN: Strict mode</a> - what strict mode changes.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN: window.postMessage</a> - origin and source validation.</li>
+<li><a href="https://w3c.github.io/trusted-types/dist/spec/">W3C Trusted Types</a> - sink allowlisting for DOM injection.</li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown">TypeScript Handbook: <code>unknown</code></a> - <code>any</code> versus <code>unknown</code>, and why <code>unknown</code> must be narrowed.</li>
+<li><a href="https://w3c.github.io/webappsec-csp/#can-compile-strings">CSP: <code>EnsureCSPDoesNotBlockStringCompilation</code></a> - what a policy must contain to actually block string-to-code compilation.</li>
+<li><a href="https://cwe.mitre.org/data/definitions/79.html">CWE-79: Cross-site Scripting</a>.</li>
+<li><a href="https://cwe.mitre.org/data/definitions/94.html">CWE-94: Code Injection</a>.</li>
+<li><a href="https://cwe.mitre.org/data/definitions/1321.html">CWE-1321: Prototype Pollution</a>.</li>
+<li><a href="https://cwe.mitre.org/data/definitions/1333.html">CWE-1333: ReDoS</a>.</li>
 </ul>
 
 
