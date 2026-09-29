@@ -85,7 +85,7 @@ As an additional defense-in-depth measure, replace enumerable numeric identifier
 
 ## Java and Spring Boot example
 
-Consider a Spring Boot endpoint that returns a document by its identifier:
+These illustrative examples assume authenticated requests and a policy that only owners can read documents. `currentUser()` represents an application helper that obtains the user from the trusted authentication context. Consider a Spring Boot endpoint that returns a document by its identifier:
 
 ```java
 @GetMapping("/documents/{id}")
@@ -98,7 +98,7 @@ The `{id}` path variable is controlled by the requester and flows directly into 
 
 ### Fixing the code
 
-The preferred fix scopes the lookup to the current user's data, so that unauthorized access fails closed instead of relying on a check after the fact. This mirrors the scoped-query approach shown for Ruby on Rails above:
+Prefer a lookup limited to documents owned by the current user. This mirrors the scoped-query approach shown for Ruby on Rails above:
 
 ```java
 @GetMapping("/documents/{id}")
@@ -121,9 +121,9 @@ public Document getDocument(@PathVariable Long id) {
 }
 ```
 
-Note that this second approach distinguishes between a missing object and an object owned by another user, which can leak the existence of a record with the given identifier. This is usually not a problem, but it can matter for endpoints where the identifier itself is sensitive, for example `GET /user/john@example.com`, where the response could reveal whether a given user exists. When that is a concern, prefer the scoped-query form above, which returns the same result whether the object does not exist or simply is not accessible to the current user.
+The post-fetch check can distinguish a missing object from one the caller cannot access. If the resource's existence is sensitive, use the scoped lookup and map both cases to the same public response, such as a [404 (Not Found) response](https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.4). For example, `GET /user/john@example.com` should not reveal whether an account exists to a caller who is not allowed to know.
 
-Spring Security also supports declarative authorization with [@PreAuthorize](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html), which keeps the check close to the endpoint:
+To use Spring Security's [@PreAuthorize](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html) alternative, first enable method security with `@EnableMethodSecurity` on a Spring `@Configuration` class; Spring Boot's security starter does not enable it by default. The following example applies to a Spring-managed component and assumes an application-provided `documentAuthorizationService` that checks ownership:
 
 ```java
 @PreAuthorize("@documentAuthorizationService.isOwner(#id, authentication.name)")
