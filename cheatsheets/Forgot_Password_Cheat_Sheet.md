@@ -53,8 +53,10 @@ When recovering a potentially compromised account:
 
 - Treat recently changed recovery information with additional caution. An attacker who has gained access to an account may attempt to replace existing recovery information with information they control. For example, [Google may continue to use previous recovery information for seven days](https://support.google.com/accounts/answer/183723) after recovery information is changed.
 - Consider retaining previously established recovery information for a limited period after a change, or require additional verification before newly changed recovery information can be used for account recovery.
-- Require additional verification when the available recovery information is insufficient to establish the user's identity, as described in the [NIST account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#account-recovery).
-- After recovery, invalidate authenticators that may have been compromised and notify the user of recovery-related changes, as described in the [NIST authenticator and account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/).
+- Require additional verification when the available recovery information is insufficient to establish the user's identity, as described in the [NIST account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#recovery).
+- Promptly suspend or invalidate authenticators identified as compromised, as described in the [NIST guidance for compromised authenticators](https://pages.nist.gov/800-63-4/sp800-63b/events/#loss-theft-damage-and-compromise).
+- After successful recovery from suspected compromise, invalidate existing sessions to terminate any sessions that may still be controlled by an attacker. See the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
+- Notify the user of the account recovery as described in the [NIST account recovery notification guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#account-recovery-notification).
 
 See the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) and [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) for additional guidance on authentication and MFA recovery.
 
