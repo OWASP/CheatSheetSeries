@@ -56,7 +56,7 @@ When recovering a potentially compromised account:
 - Require additional verification when the available recovery information is insufficient to establish the user's identity, as described in the [NIST account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#recovery).
 - Promptly suspend or invalidate authenticators identified as compromised, as described in the [NIST guidance for compromised authenticators](https://pages.nist.gov/800-63-4/sp800-63b/events/#loss-theft-damage-and-compromise).
 - After successful recovery from suspected compromise, invalidate existing sessions to terminate any sessions that may still be controlled by an attacker. See the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
-- Notify the user of the account recovery as described in the [NIST account recovery notification guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#account-recovery-notification).
+- Notify the user of the account recovery as described in the [NIST account recovery notification guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#notification).
 
 See the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) and [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) for additional guidance on authentication and MFA recovery.
 
