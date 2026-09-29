@@ -23,7 +23,7 @@ Never build code from strings. `eval` and `new Function` execute arbitrary code 
 - Replace dynamic dispatch with static maps of functions instead of constructing calls from names.
 - Do not use the `with` statement. It makes scope unpredictable, is forbidden in strict mode, and blocks engine optimizations.
 - Enforce this statically with the `no-eval`, `no-implied-eval`, and `no-new-func` lint rules.
-- In browsers, add defense in depth with a Content Security Policy whose `script-src` directive, or `default-src` when no `script-src` is present, omits `'unsafe-eval'`. This only holds for a policy that is actually enforced: it must be delivered as a header or `<meta>` element rather than only described in documentation, and the keyword must be deliberately absent. A policy that merely blocks other script sources, or one that leaves `'unsafe-eval'` in place as part of an otherwise arbitrary policy, still lets the browser compile strings ([CSP `EnsureCSPDoesNotBlockStringCompilation`](https://w3c.github.io/webappsec-csp/#can-compile-strings)).
+- In browsers, block string compilation with an enforced Content Security Policy whose `script-src` directive, or `default-src` fallback, omits both `'unsafe-eval'` and `'trusted-types-eval'`. A report-only policy does not block execution ([CSP `EnsureCSPDoesNotBlockStringCompilation`](https://w3c.github.io/webappsec-csp/#can-compile-strings)).
 - CSP is a browser-side control and does not apply to server-side runtimes, so the lint rules remain the primary enforcement everywhere.
 
 ### Evil Regex (ReDoS)
@@ -41,10 +41,10 @@ Ship ES modules (strict by default) or declare `'use strict'`. Strict mode turns
 
 ## Object and Property Safety (Including Prototype Pollution)
 
-Prototype pollution ([CWE-1321](https://cwe.mitre.org/data/definitions/1321.html)) occurs when attacker-controlled keys such as `__proto__`, `constructor`, or `prototype` reach a recursive merge or path setter and modify an object's prototype. This can alter the behavior of objects that inherit from that prototype. These are the JavaScript-specific essentials only; the full protection guidance, including framework-specific patterns, lives in the dedicated [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md).
+Prototype pollution ([CWE-1321](https://cwe.mitre.org/data/definitions/1321.html)) occurs when attacker-controlled keys such as `__proto__`, `constructor`, or `prototype` reach a recursive merge or path setter and modify an object's prototype. This can alter the behavior of objects that inherit from that prototype. These are the JavaScript-specific essentials only; the full protection guidance lives in the dedicated [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md).
 
 - Never pass untrusted input to a recursive merge or `set-by-path` helper, and reject the key segments `__proto__`, `constructor`, and `prototype` before writing.
-- Use a `Map`, or an `Object.create(null)` dictionary, when keys come from untrusted input, so there is no prototype to pollute or inherit from.
+- Use a `Map` with `set`, `get`, and `has` for untrusted dictionary keys, keeping entries separate from object properties ([MDN prototype pollution defenses](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution#use_map_and_set_instead)). If an object is required, create it with `Object.create(null)` so it has no prototype.
 - Validate parsed or copied untrusted data against a schema before use, and drop `__proto__` keys first: `Object.assign` applies them through the prototype setter and mutates the target's prototype, while spread creates a silent own property.
 
 ## DOM Sinks and Output Context
