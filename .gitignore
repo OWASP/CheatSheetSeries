@@ -2,6 +2,7 @@
 .vscode
 # Audit result files
 *.out
+.link-check/
 # Website generation stuff
 TOC.md
 node_modules/
