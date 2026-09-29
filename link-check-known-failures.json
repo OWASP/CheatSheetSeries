@@ -2402,6 +2402,68 @@
           ]
         }
       ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "42570a09befae5e2c5ed5b6be8d2901b488028fe",
+        "contentBaseCommit": "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+        "workflowRunId": 36498326700,
+        "workflowJobId": 109247737627,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/36498326700/job/109247737627"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/AML_Sanctions_AI_Agent_Payments_Cheat_Sheet.md",
+          "url": "https://www.occ.treas.gov/topics/supervision-and-examination/bsa/index-bsa.html",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-java-encoder/",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Django_REST_Framework_Cheat_Sheet.md",
+          "url": "https://openaccess.uoc.edu/handle/10609/147246",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/DotNet_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-project-secure-headers/",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Drone_Security_Cheat_Sheet.md",
+          "url": "https://www.etsi.org/technologies/consumer-iot-security",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/SAML_Security_Cheat_Sheet.md",
+          "url": "http://www.etsi.org/technologies-clusters/technologies/security/certification-authorities-and-other-certification-service-providers",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/Transaction_Authorization_Cheat_Sheet.md",
+          "url": "http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf",
+          "observedStatuses": [0, 0, 0]
+        },
+        {
+          "file": "cheatsheets/Transaction_Authorization_Cheat_Sheet.md",
+          "url": "http://www.cs.ru.nl/~rverdult/Designed_to_Fail_A_USB-Connected_Reader_for_Online_Banking-NORDSEC_2012.pdf",
+          "observedStatuses": [0, 0, 0]
+        }
+      ]
     }
   ]
 }

@@ -85,6 +85,15 @@ const followupPrProvenance = {
   workflowUrl:
     "https://github.com/OWASP/CheatSheetSeries/actions/runs/36496459649/job/109177059538",
 };
+const rerunPrProvenance = {
+  attemptCount: 3,
+  checkedHead: "42570a09befae5e2c5ed5b6be8d2901b488028fe",
+  contentBaseCommit: "57581d18010feba51d8eda5e2dfb6dabb7b7316c",
+  workflowRunId: 36498326700,
+  workflowJobId: 109247737627,
+  workflowUrl:
+    "https://github.com/OWASP/CheatSheetSeries/actions/runs/36498326700/job/109247737627",
+};
 
 function baseline(failures = []) {
   return {
@@ -218,7 +227,7 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 8);
+  assert.equal(value.batches.length, 9);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
   assert.deepEqual(value.batches[2].generatedFrom, finalProvenance);
@@ -227,6 +236,7 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
   assert.deepEqual(value.batches[5].generatedFrom, currentPrProvenance);
   assert.deepEqual(value.batches[6].generatedFrom, followupPushProvenance);
   assert.deepEqual(value.batches[7].generatedFrom, followupPrProvenance);
+  assert.deepEqual(value.batches[8].generatedFrom, rerunPrProvenance);
   assert.equal(value.batches[0].failures.length, 157);
   assert.equal(value.batches[1].failures.length, 7);
   assert.equal(value.batches[3].failures.length, 107);
@@ -234,6 +244,7 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
   assert.equal(value.batches[5].failures.length, 14);
   assert.equal(value.batches[6].failures.length, 9);
   assert.equal(value.batches[7].failures.length, 1);
+  assert.equal(value.batches[8].failures.length, 10);
   assert.deepEqual(value.batches[2].failures, [
     {
       file: "cheatsheets/Drone_Security_Cheat_Sheet.md",
@@ -247,11 +258,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 330);
-  assert.equal(new Set(failures.map(({ file }) => file)).size, 85);
+  assert.equal(failures.length, 340);
+  assert.equal(new Set(failures.map(({ file }) => file)).size, 86);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    330,
+    340,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>
