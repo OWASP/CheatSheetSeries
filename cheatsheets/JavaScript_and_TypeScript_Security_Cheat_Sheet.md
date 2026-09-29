@@ -60,7 +60,7 @@ Injecting attacker-controlled strings into HTML, script, or URL contexts is cros
 
 Unhandled promise rejections hide failures and may terminate some runtimes: browsers generally surface them in the console, while Node.js behavior depends on its unhandled-rejection mode ([MDN promise rejection events](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises#promise_rejection_events)). Keep promise chains flat with a terminal error handler, and treat every rejection as a bug to fix rather than noise to suppress. Server-side specifics live in the [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md) and are not repeated here.
 
-For `postMessage`, the receiver must verify `event.origin` against an explicit allowlist and check `event.source` when a conversation partner is expected. The sender must pass an exact `targetOrigin`, never `"*"` for sensitive data ([MDN postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)). Prefer narrow `MessageChannel` ports over broadcast messaging where the design allows it.
+For `postMessage`, the receiver must verify `event.origin` against an explicit allowlist, check `event.source` when a conversation partner is expected, and validate `event.data` against the expected schema before acting on it. The sender must pass an exact `targetOrigin`, never `"*"` for sensitive data ([MDN postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)). Prefer narrow `MessageChannel` ports over broadcast messaging where the design allows it.
 
 ## TypeScript-Specific Caveats
 
