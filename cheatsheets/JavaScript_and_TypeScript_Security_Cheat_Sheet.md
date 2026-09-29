@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet lists secure development practices for JavaScript and TypeScript that apply everywhere the language runs: browsers, hybrid apps, and any non-Node.js runtime ([MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)). It covers language-level pitfalls (dynamic code execution, prototype pollution, regular expressions), client-side sinks, and TypeScript-specific false confidence. Backend and runtime hardening stays in the [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md), which this sheet links to instead of duplicating.
+This cheat sheet lists secure development practices for JavaScript and TypeScript that apply everywhere the language runs: browsers, hybrid apps, server-side Node.js, and any other runtime that implements the language ([MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)). It covers language-level pitfalls (dynamic code execution, prototype pollution, regular expressions), client-side sinks, and TypeScript-specific false confidence. Rules that are equally valid on the client and the server are stated once here; backend and runtime hardening stays in the [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md), which this sheet links to instead of duplicating.
 
 ## Related Cheat Sheets (Top-Level Links)
 
@@ -22,7 +22,9 @@ Never build code from strings. `eval` and `new Function` execute arbitrary code 
 - Parse data with `JSON.parse`, never `eval`.
 - Replace dynamic dispatch with static maps of functions instead of constructing calls from names.
 - Do not use the `with` statement. It makes scope unpredictable, is forbidden in strict mode, and blocks engine optimizations.
-- Enforce this with a Content Security Policy without `unsafe-eval`, and with the `no-eval`, `no-implied-eval`, and `no-new-func` lint rules.
+- Enforce this statically with the `no-eval`, `no-implied-eval`, and `no-new-func` lint rules.
+- In browsers, add defense in depth with a Content Security Policy whose `script-src` directive, or `default-src` when no `script-src` is present, omits `'unsafe-eval'`. This only holds for a policy that is actually enforced: it must be delivered as a header or `<meta>` element rather than only described in documentation, and the keyword must be deliberately absent. A policy that merely blocks other script sources, or one that leaves `'unsafe-eval'` in place as part of an otherwise arbitrary policy, still lets the browser compile strings ([CSP `EnsureCSPDoesNotBlockStringCompilation`](https://w3c.github.io/webappsec-csp/#can-compile-strings)).
+- CSP is a browser-side control and does not apply to server-side runtimes, so the lint rules remain the primary enforcement everywhere.
 
 ### Evil Regex (ReDoS)
 
@@ -39,14 +41,11 @@ Ship ES modules (strict by default) or declare `'use strict'`. Strict mode turns
 
 ## Object and Property Safety (Including Prototype Pollution)
 
-Prototype pollution ([CWE-1321](https://cwe.mitre.org/data/definitions/1321.html)) occurs when attacker-controlled keys such as `__proto__`, `constructor`, or `prototype` reach a recursive merge or path setter and modify an object's prototype. This can alter the behavior of objects that inherit from that prototype. The full protection guidance lives in the dedicated [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md); the rules below are the JavaScript-specific essentials.
+Prototype pollution ([CWE-1321](https://cwe.mitre.org/data/definitions/1321.html)) occurs when attacker-controlled keys such as `__proto__`, `constructor`, or `prototype` reach a recursive merge or path setter and modify an object's prototype. This can alter the behavior of objects that inherit from that prototype. These are the JavaScript-specific essentials only; the full protection guidance, including framework-specific patterns, lives in the dedicated [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md).
 
-- Use a `Map` instead of a plain object when keys come from untrusted input.
-- Create key-value dictionaries with `Object.create(null)` so there is no prototype to pollute or inherit from.
-- In any recursive merge or `set-by-path` helper, reject the key segments `__proto__`, `constructor`, and `prototype` before writing.
-- When parsing JSON, pass a `reviver` that drops those keys, and validate the result against a schema before use.
-- When copying untrusted data, drop `__proto__` keys first: `Object.assign` applies them through the prototype setter (mutating the target's prototype), while spread defines them as silent own properties. Either way, validate the copy against a schema before use.
-- Consider freezing `Object.prototype` as defense in depth, early in startup. It can break libraries that extend built-in prototypes, so verify it against your dependency set first.
+- Never pass untrusted input to a recursive merge or `set-by-path` helper, and reject the key segments `__proto__`, `constructor`, and `prototype` before writing.
+- Use a `Map`, or an `Object.create(null)` dictionary, when keys come from untrusted input, so there is no prototype to pollute or inherit from.
+- Validate parsed or copied untrusted data against a schema before use, and drop `__proto__` keys first: `Object.assign` applies them through the prototype setter and mutates the target's prototype, while spread creates a silent own property.
 
 ## DOM Sinks and Output Context
 
@@ -58,7 +57,7 @@ Injecting attacker-controlled strings into HTML, script, or URL contexts is cros
 
 ## Async Error Handling, Messaging, and Origin Checks
 
-Unhandled promise rejections hide failures and may terminate some runtimes: browsers generally surface them in the console, while Node.js behavior depends on its unhandled-rejection mode ([MDN promise rejection events](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises#promise_rejection_events)). Keep promise chains flat with a terminal error handler, and treat every rejection as a bug to fix rather than noise to suppress. Server-side specifics live in the [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md) and are not repeated here.
+Not every promise failure is a defect. An *expected* failure is part of a function's contract, such as a lookup that returns `null` for a missing key or a parse that throws on malformed input; handle it where the caller decides what to do, with a `try`/`catch` around `await` or a `.catch` on the terminal link of the chain, and return a typed result or a documented error. An *unhandled* rejection is a promise that rejects with no handler attached, so the failure propagates past the call site and is usually a bug: browsers report it in the console and fire an `unhandledrejection` event, while Node.js behavior depends on its unhandled-rejection mode and may terminate the process ([MDN promise rejection events](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises#promise_rejection_events)). Keep promise chains flat with a terminal error handler so genuinely unexpected rejections stay visible, and do not silence them with an empty `catch`. Server-side specifics live in the [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md) and are not repeated here.
 
 For `postMessage`, the receiver must verify `event.origin` against an explicit allowlist, check `event.source` when a conversation partner is expected, and validate `event.data` against the expected schema before acting on it. The sender must pass an exact `targetOrigin`, never `"*"` for sensitive data ([MDN postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)). Prefer narrow `MessageChannel` ports over broadcast messaging where the design allows it.
 
@@ -66,7 +65,7 @@ For `postMessage`, the receiver must verify `event.origin` against an explicit a
 
 Types are erased at runtime, so TypeScript alone enforces nothing against a malicious or malformed caller.
 
-- Treat `any` as a hole in every check. Default to `unknown` and narrow it before use ([TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)).
+- Treat `any` as a hole in every check. `unknown` is the safe default for values of unknown type, because it forces you to narrow before use, whereas `any` disables type checking for that value ([TypeScript Handbook: `unknown`](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown)).
 - Type assertions (`as`) and non-null assertions (`!`) silence the compiler without changing runtime values; do not use them on untrusted data.
 - Enable `strict` in `tsconfig.json` (plus `noUncheckedIndexedAccess` where affordable) to catch accidental unsafety in your own code. It is a code-quality control, not a trust boundary.
 - Validate at every trust boundary (network responses, `postMessage` payloads, storage reads) with a runtime schema validator. The validated type should flow from the schema, not from a parallel hand-written interface.
@@ -86,7 +85,8 @@ Types are erased at runtime, so TypeScript alone enforces nothing against a mali
 - [MDN: Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) - what strict mode changes.
 - [MDN: window.postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) - origin and source validation.
 - [W3C Trusted Types](https://w3c.github.io/trusted-types/dist/spec/) - sink allowlisting for DOM injection.
-- [TypeScript Handbook: Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html) - `any` versus `unknown`.
+- [TypeScript Handbook: `unknown`](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown) - `any` versus `unknown`, and why `unknown` must be narrowed.
+- [CSP: `EnsureCSPDoesNotBlockStringCompilation`](https://w3c.github.io/webappsec-csp/#can-compile-strings) - what a policy must contain to actually block string-to-code compilation.
 - [CWE-79: Cross-site Scripting](https://cwe.mitre.org/data/definitions/79.html).
 - [CWE-94: Code Injection](https://cwe.mitre.org/data/definitions/94.html).
 - [CWE-1321: Prototype Pollution](https://cwe.mitre.org/data/definitions/1321.html).
