@@ -4749,7 +4749,7 @@
 <ul>
 <li>Use specific GraphQL <a href="https://graphql.org/learn/schema/#type-language">data types</a> such as <a href="https://graphql.org/learn/schema/#scalar-types">scalars</a> or <a href="https://graphql.org/learn/schema/#enumeration-types">enums</a>. Write custom GraphQL <a href="https://graphql.org/learn/validation/">validators</a> for more complex validations. <a href="https://itnext.io/custom-scalars-in-graphql-9c26f43133f3">Custom scalars</a> may also come in handy.</li>
 <li>Define <a href="https://graphql.org/learn/schema/#input-types">schemas for mutations input</a>.</li>
-<li><a href="Input_Validation_Cheat_Sheet.html#allow-list-vs-block-list">List allowed characters</a> - don't use a denylist<ul>
+<li><a href="Input_Validation_Cheat_Sheet.html#allowlist-vs-denylist">List allowed characters</a> - don't use a denylist<ul>
 <li>The stricter the list of allowed characters the better. A lot of times a good starting point is only allowing alphanumeric, non-unicode characters because it will disallow many attacks.</li>
 </ul>
 </li>
@@ -4863,11 +4863,11 @@
 <h4 id="system-resource-management">System Resource Management<a class="headerlink" href="#system-resource-management" title="Permanent link">&para;</a></h4>
 <p>Not properly limiting the amount of resources your API can use (<em>e.g.</em> CPU or memory), may compromise your API responsiveness and availability, leaving it vulnerable to DoS attacks. Some limiting can be done at the operating system level.</p>
 <p>On Linux, a combination of <a href="https://en.wikipedia.org/wiki/Cgroups">Control Groups(cgroups)</a>, <a href="https://linuxhint.com/linux_ulimit_command/">User Limits (ulimits)</a>, and <a href="https://linuxcontainers.org/lxc/security/">Linux Containers (LXC)</a> can be used.</p>
-<p>However, containerization platforms tend to make this task much easier. See the resource limiting section in the <a href="Docker_Security_Cheat_Sheet.html#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts">Docker Security Cheat Sheet</a> for how to prevent DoS when using containers.</p>
+<p>However, containerization platforms tend to make this task much easier. See the resource limiting section in the <a href="Docker_Security_Cheat_Sheet.html#rule-7---limit-resources-memory-cpu-file-descriptors-processes-restarts">Docker Security Cheat Sheet</a> for how to prevent DoS when using containers.</p>
 <h3 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h3>
 <p>To ensure that a GraphQL API has proper access control, do the following:</p>
 <ul>
-<li>Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with <a href="Access_Control_Cheat_Sheet.html#role-based-access-control-rbac">RBAC</a> or other access control mechanisms.<ul>
+<li>Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with <a href="Authorization_Cheat_Sheet.html#rbac">RBAC</a> or other access control mechanisms.<ul>
 <li>This will prevent <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">IDOR</a> issues, including both <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md">BOLA</a> and <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md">BFLA</a>.</li>
 </ul>
 </li>
