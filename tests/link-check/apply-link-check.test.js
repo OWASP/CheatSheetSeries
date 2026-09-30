@@ -174,6 +174,38 @@ const sharedFailureBatches = [
         observedStatuses: [403, 403, 403]
       }
     ]
+  },
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "a9b9d284010284843b9415ec253776d4faf1a34d",
+      contentBaseCommit: "a9b9d284010284843b9415ec253776d4faf1a34d",
+      workflowRunId: 36758158538,
+      workflowJobId: 110033594899,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36758158538/job/110033594899"
+    },
+    failures: [
+      {
+        file: "cheatsheets/NPM_Security_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/Component_Analysis",
+        observedStatuses: [403, 403, 403]
+      },
+      {
+        file: "cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/attacks/Command_Injection",
+        observedStatuses: [403, 403, 403]
+      },
+      {
+        file: "cheatsheets/Pinning_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/Injection_Theory",
+        observedStatuses: [403, 403, 403]
+      },
+      {
+        file: "cheatsheets/Pinning_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning",
+        observedStatuses: [403, 403, 403]
+      }
+    ]
   }
 ];
 
@@ -309,7 +341,7 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 13);
+  assert.equal(value.batches.length, 14);
   assert.deepEqual(value.batches.slice(9), sharedFailureBatches);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
@@ -341,11 +373,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 346);
+  assert.equal(failures.length, 350);
   assert.equal(new Set(failures.map(({ file }) => file)).size, 88);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    346,
+    350,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>

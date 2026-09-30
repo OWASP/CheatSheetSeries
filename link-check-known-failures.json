@@ -2542,6 +2542,38 @@
           "observedStatuses": [403, 403, 403]
         }
       ]
+    },
+    {
+      "generatedFrom": {
+        "attemptCount": 3,
+        "checkedHead": "a9b9d284010284843b9415ec253776d4faf1a34d",
+        "contentBaseCommit": "a9b9d284010284843b9415ec253776d4faf1a34d",
+        "workflowRunId": 36758158538,
+        "workflowJobId": 110033594899,
+        "workflowUrl": "https://github.com/OWASP/CheatSheetSeries/actions/runs/36758158538/job/110033594899"
+      },
+      "failures": [
+        {
+          "file": "cheatsheets/NPM_Security_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/Component_Analysis",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/attacks/Command_Injection",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Pinning_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/Injection_Theory",
+          "observedStatuses": [403, 403, 403]
+        },
+        {
+          "file": "cheatsheets/Pinning_Cheat_Sheet.md",
+          "url": "https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning",
+          "observedStatuses": [403, 403, 403]
+        }
+      ]
     }
   ]
 }
