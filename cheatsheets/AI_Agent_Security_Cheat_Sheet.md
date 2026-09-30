@@ -209,6 +209,8 @@ def needs_human_approval(tool_name: str) -> bool:
     return ACTION_RISK.get(tool_name, RiskLevel.HIGH) is not RiskLevel.LOW
 ```
 
+Only the two mapped low-risk tools skip human review in this example. Medium, high, critical, and unmapped tools require it. This classification does not grant permission to run a tool; the execution component must still check the actor's authorization and any required approval for the exact action.
+
 #### High-Impact Action Integrity Controls
 
 For destructive, financial, administrative, or externally visible actions, add controls beyond a simple approval prompt:
