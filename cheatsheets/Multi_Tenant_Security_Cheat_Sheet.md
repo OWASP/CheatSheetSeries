@@ -692,6 +692,7 @@ A shared backup can contain data from several tenants. For a single-tenant recov
 - Authorize the operator for the target tenant and record the source backup, target, reason, and outcome.
 - Check tenant ownership before copying records or objects into the live tenant scope. Do not give a tenant operator access to a shared backup.
 - Reapply current access and retention rules; a backup can contain old memberships or data that should no longer be accessible.
+- Test a backup with two tenants: recover one tenant, verify the other tenant's records and objects are absent, and reject a restore request by an unauthorized actor.
 
 <details>
 <summary>Illustrative Tenant Lifecycle Management</summary>
@@ -1030,6 +1031,7 @@ class CrossTenantAccessMonitor:
 - Enforce tenant ownership at a boundary traversed by every tenant-owned access path.
 - Use separate encryption keys when the risk or compliance model requires cryptographic isolation.
 - Apply and verify the documented retention and deletion policy during offboarding.
+- Authorize and test tenant-scoped restores, especially when the source backup contains other tenants.
 - Monitor and alert on denied or unexpected cross-tenant access attempts.
 - For shared-table PostgreSQL RLS that uses a tenant setting, prefer transaction-local context and re-establish it for each transaction.
 - For shared-table PostgreSQL RLS, inventory classified tenant-owned tables and test cross-tenant denial for each one.
@@ -1047,6 +1049,7 @@ class CrossTenantAccessMonitor:
 - Treat a tenant identifier in a queued message as authorization proof without authenticating the producer path and authorizing the consumer operation.
 - Allow one tenant unbounded consumption of a shared queue, worker pool, connection pool, or other resource that can degrade other tenants.
 - Retain tenant data beyond the documented retention policy without a contractual or legal basis and appropriate access restrictions.
+- Restore a shared snapshot over live data to recover only one tenant.
 - Log sensitive tenant data in plain text.
 - Serve ordinary tenant-scoped PostgreSQL RLS request paths with a superuser or `BYPASSRLS` role.
 - Use a session-scoped database tenant setting across pooled requests without reliable reset-on-checkout or equivalent isolation and connection-reuse tests; prefer transaction-local settings.
