@@ -144,35 +144,39 @@ Minimum policy items:
 
 ## Practical CI/CD snippets & patterns
 
-**GitHub Actions (example)** — generate CycloneDX and upload as artifact, then sign with cosign.
+**GitHub Actions (container example)** — this assumes a Dockerfile at the repository root. Build a local image, generate its CycloneDX SBOM, and fail on high or critical findings before publication. The [Anchore SBOM action](https://github.com/anchore/sbom-action/blob/main/README.md) generates the file; the [Anchore scan action](https://github.com/anchore/scan-action/blob/main/README.md) supplies the severity gate.
 
 ```yaml
-name: Build and SBOM
-on: [push]
+name: Build, scan, and publish SBOM
+on:
+  push:
+    branches: [main]
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Build
-        run: ./gradlew assemble
-      - name: Generate SBOM
-        run: |
-          syft packages dir:./build/libs -o cyclonedx-json > sbom.json
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build local image
+        run: docker build -t "local/sbom-example:${GITHUB_SHA}" .
+      - name: Generate CycloneDX SBOM from the built image
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
         with:
-          name: sbom
-          path: sbom.json
-      - name: Sign Artifact & SBOM
-        run: |
-          cosign sign --key ${{ secrets.COSIGN_KEY }} my-registry/my-app:${{ github.sha }}
-          cosign sign-blob --key ${{ secrets.COSIGN_KEY }} --output-signature sbom.json.sig sbom.json
-      - name: Push image
-        run: ./push-image.sh
+          image: local/sbom-example:${{ github.sha }}
+          format: cyclonedx-json
+          output-file: sbom.cdx.json
+          upload-artifact: false
+      - name: Scan before publishing the image
+        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7
+        with:
+          sbom: sbom.cdx.json
+          fail-build: true
+          severity-cutoff: high
 ```
-
-**Fail-fast vs Warn**: In CI, fail the pipeline if SBOM generation fails, but avoid failing builds on non-actionable low-severity findings — instead surface results to triage dashboards.
 
 ## Example workflows (short)
 
