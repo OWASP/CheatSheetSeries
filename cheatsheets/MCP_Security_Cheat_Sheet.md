@@ -17,7 +17,7 @@ User ↔ MCP Host (AI App) ↔ MCP Client ↔ MCP Server(s) ↔ Tools / Data / A
 - **MCP Host**: The AI application (e.g., Claude Desktop, Cursor, IDE plugins).
 - **MCP Client**: Connects to one or more MCP servers, passes tool definitions to the LLM.
 - **MCP Server**: Lightweight program exposing tools, resources, and prompts via the protocol.
-- **Transports**: `stdio` (local) or HTTP/SSE (remote).
+- **Transports**: `stdio` (local) or Streamable HTTP (remote). The older HTTP+SSE transport is deprecated. See the [MCP transport overview](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports).
 
 The LLM sees all tool descriptions from all connected servers in its context — this is critical to understanding cross-server attacks.
 
@@ -80,13 +80,14 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - Bind session IDs to user-specific context (e.g., `<user_id>:<session_id>`) to prevent session hijacking.
 - Validate on each request that the session or token belongs to the current requester; reject the call if it does not (prevents confused deputy).
 - Use secure, non-deterministic session IDs (cryptographic random, not sequential).
-- Always use TLS for remote (HTTP/SSE) transports.
+- Use TLS for remote Streamable HTTP connections. See the [transport specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
 - Verify server identity via certificate pinning or cryptographic server verification for remote servers.
 - Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS and limit impact of abuse; combine with sandboxing to contain local escape impact.
 - Use OS-native secure credential storage (macOS Keychain, Windows Credential Manager, Linux Secret Service) for OAuth access and refresh tokens.
 - Never store OAuth tokens in plaintext in MCP config files or application settings.
-- Bind MCP HTTP/SSE servers to specific interfaces (e.g., 127.0.0.1), never 0.0.0.0 unless explicitly required.
-- Validate the Host header on every incoming request; reject requests with unexpected hostnames.
+- Bind local Streamable HTTP servers to localhost unless network access is explicitly needed. See the [transport security rules](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
+- Validate the `Origin` header on incoming Streamable HTTP requests. Reject a present but invalid Origin with HTTP 403. Do not reject non-browser clients solely because they send no Origin header. See the [transport security rules](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
+- Validate the Host header on incoming requests; reject unexpected hostnames.
 
 ### 7. Message-Level Integrity and Replay Protection
 
