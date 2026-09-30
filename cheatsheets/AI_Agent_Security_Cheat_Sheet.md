@@ -183,20 +183,18 @@ class SecureAgentMemory:
 - Provide clear audit trails of agent decisions and actions.
 - Allow users to interrupt and rollback agent operations.
 
-#### Action Classification and Approval Flow
+#### Action Classification Example
 
 ```python
-import uuid
 from enum import Enum
-from dataclasses import dataclass
 
 class RiskLevel(Enum):
-    LOW = "low"           # Read operations, safe queries
-    MEDIUM = "medium"     # Write operations, API calls
-    HIGH = "high"         # Financial, deletion, external comms
-    CRITICAL = "critical" # Irreversible, security-sensitive
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
 
-ACTION_RISK_MAPPING = {
+ACTION_RISK = {
     "search_documents": RiskLevel.LOW,
     "read_file": RiskLevel.LOW,
     "write_file": RiskLevel.MEDIUM,
@@ -206,54 +204,9 @@ ACTION_RISK_MAPPING = {
     "transfer_funds": RiskLevel.CRITICAL,
 }
 
-@dataclass
-class PendingAction:
-    action_id: str
-    tool_name: str
-    parameters: dict
-    risk_level: RiskLevel
-    explanation: str
-    
-class HumanInTheLoopController:
-    def __init__(self, auto_approve_threshold: RiskLevel = RiskLevel.LOW):
-        self.auto_approve_threshold = auto_approve_threshold
-        self.pending_actions = {}
-    
-    async def request_action(self, tool_name: str, params: dict, 
-                            explanation: str) -> dict:
-        risk_level = ACTION_RISK_MAPPING.get(tool_name, RiskLevel.HIGH)
-        
-        # Auto-approve low-risk actions
-        if risk_level.value <= self.auto_approve_threshold.value:
-            return {"approved": True, "auto": True}
-        
-        # Queue for human review
-        action = PendingAction(
-            action_id=str(uuid.uuid4()),
-            tool_name=tool_name,
-            parameters=self._sanitize_params_for_display(params),
-            risk_level=risk_level,
-            explanation=explanation
-        )
-        
-        self.pending_actions[action.action_id] = action
-        
-        return {
-            "approved": False,
-            "pending": True,
-            "action_id": action.action_id,
-            "requires": "human_approval",
-            "risk_level": risk_level.value,
-            "preview": self._generate_action_preview(action)
-        }
-    
-    def _generate_action_preview(self, action: PendingAction) -> str:
-        return f"""
-        Action: {action.tool_name}
-        Risk Level: {action.risk_level.value.upper()}
-        Explanation: {action.explanation}
-        Parameters: {json.dumps(action.parameters, indent=2)}
-        """
+def needs_human_approval(tool_name: str) -> bool:
+    # Unknown tools fail closed. Only explicitly low-risk tools skip review.
+    return ACTION_RISK.get(tool_name, RiskLevel.HIGH) is not RiskLevel.LOW
 ```
 
 #### High-Impact Action Integrity Controls
