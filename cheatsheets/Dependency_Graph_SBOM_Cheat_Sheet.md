@@ -90,7 +90,7 @@ cyclonedx-bom -o bom.xml --input-pkg target/my-app.jar
 
 **Practical flow:**
 
-build → generate SBOM → compute digests → sign/attest → publish.
+build → generate image SBOM → scan → publish image → sign and attest by digest → publish SBOM.
 
 ## Ingesting & managing SBOMs at scale
 
@@ -210,15 +210,32 @@ jobs:
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
           create-storage-record: false
+      - name: Publish SBOM to Dependency-Track
+        env:
+          DT_URL: ${{ vars.DT_URL }}
+          DT_PROJECT_UUID: ${{ vars.DT_PROJECT_UUID }}
+          DT_API_KEY: ${{ secrets.DT_API_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$DT_URL" && test -n "$DT_PROJECT_UUID" && test -n "$DT_API_KEY"
+          curl --fail-with-body --show-error --silent \
+            -H "X-Api-Key: ${DT_API_KEY}" \
+            -F "project=${DT_PROJECT_UUID}" \
+            -F "bom=@sbom.cdx.json" \
+            "${DT_URL%/}/api/v1/bom"
 ```
 
 The image is signed by digest with keyless Cosign, and the CycloneDX document is attached as a signed SBOM attestation. The separate GitHub attestation records actual build provenance; an SBOM attestation alone is not build provenance. See [Sigstore container signing](https://docs.sigstore.dev/cosign/signing/signing_with_containers/), [Cosign attestation types](https://github.com/sigstore/cosign/blob/main/doc/cosign_attest.md), and [GitHub artifact attestations](https://github.com/actions/attest/blob/main/README.md). Confirm that your repository can publish to GHCR and that [artifact attestations are available](https://docs.github.com/en/actions/concepts/security/artifact-attestations) for its GitHub plan.
+
+Set `DT_URL` and `DT_PROJECT_UUID` as GitHub variables and `DT_API_KEY` as a secret. The upload uses Dependency-Track's multipart BOM endpoint; it does not verify the Cosign attestation for consumers. See [Dependency-Track CI/CD guidance](https://docs.dependencytrack.org/usage/cicd/). A consumer should verify the image signature, signing identity, and required attestations before trusting the release.
+
+**Validation:** Run this workflow in a disposable repository with a Dockerfile and test registry/Dependency-Track project. Confirm that a high-severity finding stops the job before the push step, then verify the published image and attestation by digest. Static lint alone does not establish that the release flow works.
 
 ## Example workflows (short)
 
 **Supplier intake**: Vendor provides signed SBOM -> ingest into DT -> auto-enrich -> if critical CVE found, create ticket and notify procurement + security.
 
-**Internal release**: CI builds artifact + sbom -> sign & push -> SBOM ingested to DT -> scheduled scan enrich -> policy engine flags high-sev/forbidden licenses -> create PR to remediate.
+**Internal release**: CI builds image + SBOM -> scan before push -> sign and attest by digest -> ingest SBOM into Dependency-Track -> triage findings.
 
 ## References
 
