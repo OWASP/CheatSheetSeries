@@ -2173,6 +2173,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cross-jwt-and-token-type-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-JWT and token type confusion
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4526,6 +4537,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cross-jwt-and-token-type-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-JWT and token type confusion
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5145,6 +5167,38 @@
 <li><a href="https://datatracker.ietf.org/doc/html/rfc8725#name-use-and-validate-audience">RFC 8725, Use and Validate Audience</a>;</li>
 <li><a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.1">RFC 7519, "iss" (Issuer) Claim</a>;</li>
 <li><a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3">RFC 7519, "aud" (Audience) Claim</a>.</li>
+</ul>
+<h3 id="cross-jwt-and-token-type-confusion">Cross-JWT and token type confusion<a class="headerlink" href="#cross-jwt-and-token-type-confusion" title="Permanent link">&para;</a></h3>
+<p>Cross-JWT (or token type) confusion occurs when validation rules fail to distinguish token kinds, allowing a token issued for one purpose (such as an ID or password-reset token) to be accepted as another (such as an access token). Overlapping claims or shared signing keys are common enabling conditions (see <a href="https://datatracker.ietf.org/doc/html/rfc8725#name-cross-jwt-confusion">RFC 8725 §2.8</a>).</p>
+<p>Mitigations:</p>
+<ul>
+<li><strong>Use explicit typing (<code>typ</code>):</strong> Set the <code>typ</code> header parameter to a specific media type distinguishing the token's purpose, such as <code>"at+jwt"</code> for OAuth 2.0 access tokens (<a href="https://datatracker.ietf.org/doc/html/rfc9068">RFC 9068</a>), <code>"logout+jwt"</code> for logout tokens (<a href="https://openid.net/specs/openid-connect-backchannel-1_0.html#LogoutToken">OpenID Connect Back-Channel Logout 1.0 §2.4</a>), or custom types (e.g., <code>example-reset+jwt</code>) for internal tokens.</li>
+<li><strong>Validate <code>typ</code> at the verifier:</strong> For token profiles that require or reliably provide explicit typing, reject tokens with missing or unexpected <code>typ</code> values at that endpoint. Note that <code>typ</code> is case-insensitive and the <code>application/</code> prefix may be omitted (<a href="https://datatracker.ietf.org/doc/html/rfc7515#section-4.1.9">RFC 7515 §4.1.9</a>).</li>
+<li><strong>Use mutually exclusive validation rules:</strong> Where explicit typing cannot be enforced interoperably (e.g., standard OIDC ID tokens omitting <code>typ</code>), distinguish token kinds using separate signing keys, required claims, or strict <strong><code>iss</code> and <code>aud</code> isolation</strong> (<a href="https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali">RFC 8725 §3.12</a>).</li>
+</ul>
+<p>Example of validation enforcing explicit token type:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">jwt</span>
+
+<span class="c1"># Verify signature and standard claims first</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode_complete</span><span class="p">(</span>
+    <span class="n">token</span><span class="p">,</span>
+    <span class="n">public_key</span><span class="p">,</span>
+    <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">"ES256"</span><span class="p">],</span>
+    <span class="n">audience</span><span class="o">=</span><span class="s2">"https://api.example.com"</span><span class="p">,</span>
+    <span class="n">issuer</span><span class="o">=</span><span class="s2">"https://auth.example.com"</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">"require"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"exp"</span><span class="p">,</span> <span class="s2">"iss"</span><span class="p">,</span> <span class="s2">"aud"</span><span class="p">]},</span>
+<span class="p">)</span>
+
+<span class="c1"># Enforce explicit token type from the verified header</span>
+<span class="n">typ</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">decoded</span><span class="p">[</span><span class="s2">"header"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"typ"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">typ</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"at+jwt"</span><span class="p">,</span> <span class="s2">"application/at+jwt"</span><span class="p">]:</span>
+    <span class="k">raise</span> <span class="n">jwt</span><span class="o">.</span><span class="n">InvalidTokenError</span><span class="p">(</span><span class="s2">"Invalid token type: expected at+jwt"</span><span class="p">)</span>
+</code></pre></div>
+<p>References:</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc8725#name-use-explicit-typing">RFC 8725 §3.11, Use Explicit Typing</a>;</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali">RFC 8725 §3.12, Use Mutually Exclusive Validation Rules for Different Kinds of JWTs</a>;</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc9068">RFC 9068, JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens</a>.</li>
 </ul>
 <h2 id="jwt-revocation">JWT revocation<a class="headerlink" href="#jwt-revocation" title="Permanent link">&para;</a></h2>
 <h3 id="token-status-list">Token Status List<a class="headerlink" href="#token-status-list" title="Permanent link">&para;</a></h3>
