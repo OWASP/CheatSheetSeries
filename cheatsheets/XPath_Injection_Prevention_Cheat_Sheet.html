@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cookie_Theft_Mitigation_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Content_Security_Policy_Cheat_Sheet.html">
+        <link rel="prev" href="XML_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+        <link rel="next" href="XSS_Filter_Evasion_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Cookie Theft Mitigation - OWASP Cheat Sheet Series</title>
+        <title>XPath Injection Prevention - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cookie-theft-mitigation-cheat-sheet" class="md-skip">
+        <a href="#xpath-injection-prevention-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Cookie Theft Mitigation
+              XPath Injection Prevention
             
           </span>
         </div>
@@ -1059,37 +1059,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Cookie Theft Mitigation
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Cookie_Theft_Mitigation_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Cookie_Theft_Mitigation_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -1105,109 +1078,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cookie-theft-mitigation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cookie Theft Mitigation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cookie Theft Mitigation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#false-negativespositives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        False negatives/positives
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cookie-theft-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cookie Theft Detection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Session Validation
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#device-bound-session-credentials" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Device Bound Session Credentials
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4017,10 +3887,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="XPath_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XPath Injection Prevention
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="XPath_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -4036,6 +3933,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bind-values-to-fixed-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bind Values to Fixed Expressions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keep-query-structure-under-application-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keep Query Structure Under Application Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limit-exposure-and-review-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limit Exposure and Review Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4198,60 +4159,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cookie-theft-mitigation" class="md-nav__link">
+  <a href="#bind-values-to-fixed-expressions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cookie Theft Mitigation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cookie Theft Mitigation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#false-negativespositives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        False negatives/positives
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cookie-theft-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cookie Theft Detection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Session Validation
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#device-bound-session-credentials" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Device Bound Session Credentials
+        Bind Values to Fixed Expressions
       
     </span>
   </a>
@@ -4259,10 +4170,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
+  <a href="#keep-query-structure-under-application-control" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References
+        Keep Query Structure Under Application Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limit-exposure-and-review-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limit Exposure and Review Usage
       
     </span>
   </a>
@@ -4289,104 +4211,33 @@
   
 
 
-<h1 id="cookie-theft-mitigation-cheat-sheet">Cookie Theft Mitigation Cheat Sheet<a class="headerlink" href="#cookie-theft-mitigation-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="xpath-injection-prevention-cheat-sheet">XPath Injection Prevention Cheat Sheet<a class="headerlink" href="#xpath-injection-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>With the spread of 2FA and Passkey, the login process has become more robust, and even if an attacker steals only the password, it has become difficult to do a spoofing attack.</p>
-<p>However, if attacker can steal a valid session cookie instead, it is possible to hijack the user session for the duration of the session lifetime period. In other words, stealing a session cookie has the same impact as stealing authentication credentials until it expires. No matter how robust your authentication process is, it will not be a sufficient countermeasure for Cookie Theft.</p>
-<p>Generally, cookie theft is carried out directly against users through malware or phishing attacks. Therefore, the only thing a service can do is to <em>detect as quickly as possible when a stolen cookie is used</em>.</p>
-<h2 id="cookie-theft-mitigation">Cookie Theft Mitigation<a class="headerlink" href="#cookie-theft-mitigation" title="Permanent link">&para;</a></h2>
-<p>Session Cookies are given to users when they log in. If these are stolen by an attacker and used to hijack the session from the attacker's device, certain environment information used in the connection for session will change.</p>
-<p>For example, if stolen cookies are used by an attacker from another country, you can detect this by detecting a significant change in the IP address.</p>
-<p>In this way, there are multiple vectors that can be used to detect that the user environments has changed.</p>
-<ul>
-<li>Access from different region (IP Address)</li>
-<li>Access from different device (User-Agent)</li>
-<li>Access from different language setting (Accept-Language)</li>
-<li>Access at different time of day (Date)</li>
-</ul>
-<p>If you save this information when establishing a session and compare it in each request, you can detect if the user environment has changed.</p>
-<p>Of course, it is difficult to make a judgment based on simple comparison alone. For example, if the user changes the Wi-Fi network they are connected to, their IP address will change. If the user updates their browser, User-Agent will change. So it is necessary not only to compare the values, but also to check whether the meaning of the values has not changed significantly.</p>
-<h3 id="false-negativespositives">False negatives/positives<a class="headerlink" href="#false-negativespositives" title="Permanent link">&para;</a></h3>
-<p>Suppose that a session cookie that has been granted access in a certain country is used from another country. This could be an attack, or it could simply be that the user has traveled.</p>
-<p>In other words, it is not possible to say with certainty that it is an attack just because the IP-Geo has changed. This means that there are <strong>False Positives</strong> (it seems to be an attack, but it is not) in this detection method.</p>
-<p>At the same time, even if the IP-Geo does not change, there is also the possibility that the attacker is attacking from within the same country. This means that this detection method has <strong>False Negatives</strong> (it seems not to be an attack, but it is).</p>
-<h3 id="cookie-theft-detection">Cookie Theft Detection<a class="headerlink" href="#cookie-theft-detection" title="Permanent link">&para;</a></h3>
-<p>By storing session information on the server side when a session is established, it is possible to detect session hijacking when that information is significantly changed.</p>
-<p>The following are the core information that should be saved.</p>
-<ul>
-<li>IP Address</li>
-<li>User-Agent</li>
-<li>Accept-Language</li>
-<li>Date</li>
-</ul>
-<p>In addition, the following headers, which can be change depending on the Device and OS, are also effective as monitoring targets.</p>
-<ul>
-<li>Accept</li>
-<li>Accept-Encoding</li>
-</ul>
-<p>Also, recent browsers sends request headers called <code>Sec-Fetch-*</code> that provides information about the browsing contexts, so these values can also be used as a reference. It's not sent by every browser, and it's not always sent even if browser supported, so it should not be relied upon.</p>
-<ul>
-<li>sec-ch-prefers-color-scheme</li>
-<li>sec-ch-ua</li>
-<li>sec-ch-ua-arch</li>
-<li>sec-ch-ua-bitness</li>
-<li>sec-ch-ua-form-factors</li>
-<li>sec-ch-ua-full-version</li>
-<li>sec-ch-ua-full-version-list</li>
-<li>sec-ch-ua-mobile</li>
-<li>sec-ch-ua-model</li>
-<li>sec-ch-ua-platform</li>
-<li>sec-ch-ua-platform-version</li>
-<li>sec-ch-ua-wow64</li>
-</ul>
-<p>When a session is established on the server, this information is collected and saved in association with the session like below.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SessionStorage</span><span class="p">.</span><span class="nx">create</span><span class="p">()</span>
-<span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">ip</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">clientIP</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">user_agent</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">date</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">date</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">accept_language</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">acceptLanguage</span><span class="p">,</span>
-<span class="w">  </span><span class="c1">// ...</span>
-<span class="p">})</span>
+<p>XPath selects data from XML documents. <a href="https://cwe.mitre.org/data/definitions/643.html">XPath injection</a> occurs when external input becomes part of an expression's syntax, allowing it to change the query's meaning. Prevent it by keeping expressions under application control and passing external values through variable binding.</p>
+<h2 id="bind-values-to-fixed-expressions">Bind Values to Fixed Expressions<a class="headerlink" href="#bind-values-to-fixed-expressions" title="Permanent link">&para;</a></h2>
+<p>Use an XPath API that supports variables. Write the expression in application code and supply external values separately. Do not concatenate or interpolate input into the expression, even if you compile it afterward: <a href="https://cwe.mitre.org/data/definitions/643.html">compilation alone does not separate data from query syntax</a>.</p>
+<p>For example, Python's <a href="https://lxml.de/xpathxslt.html#the-xpath-method">lxml <code>xpath()</code> method accepts variables as keyword arguments</a>. This illustrative lookup assumes <code>xml_document</code> is an already parsed lxml document and <code>requested_id</code> is an external string:</p>
+<div class="highlight"><pre><span></span><code><span class="n">books</span> <span class="o">=</span> <span class="n">xml_document</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span>
+    <span class="s2">"/catalog/book[@id=$book_id]"</span><span class="p">,</span>
+    <span class="n">book_id</span><span class="o">=</span><span class="n">requested_id</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
-<p>If a large change is detected when comparing this information each time a request is received, it is possible that the session has been hijacked.</p>
-<h3 id="session-validation">Session Validation<a class="headerlink" href="#session-validation" title="Permanent link">&para;</a></h3>
-<p>If there is a possibility that a session has been hijacked, the most reliable verification method is to re-authenticate. If you temporarily invalidate the user's session, ask them to authenticate again, and then give them a new session cookie, the attacker will no longer be able to do anything with the stolen cookie.</p>
-<p>However, as mentioned earlier, monitoring sessions has the potential for false positives, so if you have to re-authenticate too often, it will be a poor experience for the user.</p>
-<p>An alternative would be to use a CAPTCHA or similar to make a decision. This is particularly useful when a stolen session cookie is being used by a bot or other malicious program.</p>
-<p>As a compromise, if there is a suspicion of session hijacking, it could be good practice to display a CAPTCHA for normal browsing, and to use re-authentication to provide reliable protection before accessing confidential information or performing actions with side effects.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">cookieTheftDetectionMiddleware</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">currentIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">clientIP</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">expectedIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">ip</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">checkGeoIPRange</span><span class="p">(</span><span class="nx">currentIP</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="c1">// Validation</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">currentUA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">userAgent</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">expectedUA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">ua</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">checkUserAgent</span><span class="p">(</span><span class="nx">currentUA</span><span class="p">,</span><span class="w"> </span><span class="nx">expectedUA</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Validation</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="c1">// ...</span>
-<span class="p">}</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">"/users/delete"</span><span class="p">,</span><span class="w"> </span><span class="nx">cookieTheftDetectionMiddleware</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="c1">// ...</span>
-<span class="p">})</span>
-</code></pre></div>
-<p>Usually, such functions are provided as middleware, or they are provided by WAF (Web Application Firewall) installed in front of the web server.</p>
-<p>If this comparison has a significant impact on performance, it may be possible to tune it so that the priority is set for each path and only the endpoints that view or modify important information are checked intensively.</p>
-<h2 id="device-bound-session-credentials">Device Bound Session Credentials<a class="headerlink" href="#device-bound-session-credentials" title="Permanent link">&para;</a></h2>
-<p>The fundamental problem that leads to Cookie Theft attack is that the session cookies are accepted without checking who sent them. Servers only check whether the values are valid. Such values are generally referred to as "Bearer Token".</p>
-<p>To solve this problem, it is effective to make the Session Cookie itself as "Sender Constrained Token". The Device Bound Session Credentials API was proposed for this purpose.</p>
-<p><a href="https://github.com/WICG/dbsc/blob/main/README.md">Device Bound Session Credentials explainer</a></p>
-<p>This API combines the Public Key Encryption with the owner verification of Session Cookies. By verifying the owner using the private key generated internally by the browser, even if an attacker succeeded to steal the session cookie, they will not be able to impersonate the user unless they also steal the private key that the browser keeping secret internally.</p>
-<p>This specification is still in the drafting stages, but it's considered that it will be possible to solve the Cookie Theft Attack in the future.</p>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>The expression stays fixed; <code>requested_id</code> supplies only the value of <code>$book_id</code>. The application must separately authorize access to the selected books.</p>
+<p>For Java, use the resolver pattern in the <a href="Java_Security_Cheat_Sheet.html#xml-xpath-injection">Java Security Cheat Sheet</a>. Check the documentation for your particular API: accepting an XPath string or compiling an expression does not by itself mean the API provides variable binding.</p>
+<p>If the API cannot bind values, prefer one that can. Where practical, use a fixed expression to retrieve an authorized set of records and compare values in application code. Do not substitute ad hoc quote replacement for variable binding.</p>
+<h2 id="keep-query-structure-under-application-control">Keep Query Structure Under Application Control<a class="headerlink" href="#keep-query-structure-under-application-control" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.w3.org/TR/xpath-31/#id-variables">XPath variables represent values</a>; they do not substitute expression fragments. When a user chooses a query mode, map that choice to a complete, fixed expression defined by the application. Reject unknown choices and bind any external data values separately.</p>
+<p>For example, a catalog application can map the choices <code>books</code> and <code>magazines</code> to the fixed paths <code>/catalog/book</code> and <code>/catalog/magazine</code>. Do not insert the selected choice directly into a path or accept user-supplied predicates, operators, or function calls.</p>
+<p>Validate values against the application's expected types, lengths, and business rules, following the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>. Validation complements binding; it does not make dynamically constructed XPath safe by itself.</p>
+<h2 id="limit-exposure-and-review-usage">Limit Exposure and Review Usage<a class="headerlink" href="#limit-exposure-and-review-usage" title="Permanent link">&para;</a></h2>
+<p>Keep these controls separate from the binding mechanism:</p>
 <ul>
-<li><a href="https://slack.engineering/catching-compromised-cookies/">Catching Compromised Cookies - Engineering at Slack</a></li>
-<li><a href="https://github.com/WICG/dbsc/blob/main/README.md">Device Bound Session Credentials explainer</a></li>
+<li><strong>Authorization:</strong> Check the caller's permission to access each requested resource. A fixed query, narrow path, or bound identifier does not establish permission. Follow the <a href="Authorization_Cheat_Sheet.html#validate-the-permissions-on-every-request">Authorization Cheat Sheet</a> and the <a href="https://owasp.org/www-community/Access_Control#principle-of-least-privilege">principle of least privilege</a> to limit the data an operation can access and return.</li>
+<li><strong>Error handling:</strong> Keep XPath expressions, XML contents, and stack traces out of client-facing error messages. Follow the <a href="Error_Handling_Cheat_Sheet.html">Error Handling Cheat Sheet</a>. Generic errors reduce disclosure; they do not prevent injection.</li>
+<li><strong>XML parsing:</strong> Configure the parser according to the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XML External Entity Prevention Cheat Sheet</a>. Parser hardening addresses XML parser risks, not unsafe XPath construction; binding values does not harden the parser.</li>
 </ul>
+<p>During code review, locate calls that evaluate or compile XPath. Trace each expression back to application-controlled text and verify that external values reach it only through variable binding. For fixed query mappings, verify that unknown choices are rejected. Include correctness checks for ordinary valid values, absent records, and access to resources outside the caller's permissions.</p>
+<p>For security assessment guidance, see the <a href="https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/09-XPath_Injection/">Web Security Testing Guide's XPath injection chapter</a>.</p>
 
 
 
