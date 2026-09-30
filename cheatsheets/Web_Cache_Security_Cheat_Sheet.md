@@ -125,7 +125,7 @@ Use these checks alongside the [HTTP caching requirements in RFC 9111](https://w
 **Do:**
 
 - Set an explicit `Cache-Control` policy on every security-relevant response.
-- Verify that every response-changing input is keyed, normalized, or rejected.
+- Verify that every response-changing input is included in the cache key or rejected.
 - Keep cache and origin routing rules consistent.
 - Authorize the current request before returning cached application data.
 - Test with multiple identities and tenants through the production caching path.
