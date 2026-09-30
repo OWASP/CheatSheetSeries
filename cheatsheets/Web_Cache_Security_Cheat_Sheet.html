@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/NoSQL_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Web_Cache_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Nextjs_Security_Cheat_Sheet.html">
+        <link rel="prev" href="WebSocket_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="NodeJS_Docker_Cheat_Sheet.html">
+        <link rel="next" href="Web_Frontend_Security_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>NoSQL Security - OWASP Cheat Sheet Series</title>
+        <title>Web Cache Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#nosql-security-cheat-sheet" class="md-skip">
+        <a href="#web-cache-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NoSQL Security
+              Web Cache Security
             
           </span>
         </div>
@@ -2515,37 +2515,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    NoSQL Security
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="NoSQL_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="NoSQL_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -2561,225 +2534,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#threats-common-failure-modes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Threats &amp; Common Failure Modes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#secure-by-design-principles" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Secure-by-Design Principles
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practical-defenses-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Practical Defenses &amp; Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Practical Defenses &amp; Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prevent-nosql-injection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prevent NoSQL Injection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-secure-driver-odm-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use Secure Driver / ODM Patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Use Secure Driver / ODM Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-pymongo-safe-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example — PyMongo safe usage
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication &amp; Authorization
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#network-transport-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Network &amp; Transport Security
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-hardening" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration Hardening
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#secrets-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Secrets Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logging-monitoring-auditing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logging, Monitoring &amp; Auditing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#backups-snapshots" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Backups &amp; Snapshots
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-nosql-security-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick NoSQL Security Checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dos-and-donts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Do’s and Don’ts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples-of-dangerous-patterns-brief" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Examples of Dangerous Patterns (brief)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3965,10 +3719,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Web_Cache_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Cache Security
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Web_Cache_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -3984,6 +3765,164 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Risks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-classify-responses-before-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Classify Responses Before Caching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-design-a-complete-cache-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Design a Complete Cache Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-prevent-web-cache-poisoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Prevent Web Cache Poisoning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prevent-web-cache-deception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prevent Web Cache Deception
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-coordinate-origin-and-intermediary-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Coordinate Origin and Intermediary Policies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-protect-application-level-caches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Protect Application-Level Caches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-test-the-complete-cache-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Test the Complete Cache Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-and-donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do's and Don'ts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4286,10 +4225,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#threats-common-failure-modes" class="md-nav__link">
+  <a href="#key-risks" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Threats &amp; Common Failure Modes
+        Key Risks
       
     </span>
   </a>
@@ -4297,33 +4236,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#secure-by-design-principles" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Secure-by-Design Principles
+        Best Practices
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practical-defenses-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Practical Defenses &amp; Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Practical Defenses &amp; Examples">
+    <nav class="md-nav" aria-label="Best Practices">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#prevent-nosql-injection" class="md-nav__link">
+  <a href="#1-classify-responses-before-caching" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prevent NoSQL Injection
+        1. Classify Responses Before Caching
       
     </span>
   </a>
@@ -4331,22 +4259,65 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-secure-driver-odm-patterns" class="md-nav__link">
+  <a href="#2-design-a-complete-cache-key" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Use Secure Driver / ODM Patterns
+        2. Design a Complete Cache Key
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Use Secure Driver / ODM Patterns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#example-pymongo-safe-usage" class="md-nav__link">
+  <a href="#3-prevent-web-cache-poisoning" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example — PyMongo safe usage
+        3. Prevent Web Cache Poisoning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prevent-web-cache-deception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prevent Web Cache Deception
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-coordinate-origin-and-intermediary-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Coordinate Origin and Intermediary Policies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-protect-application-level-caches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Protect Application-Level Caches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-test-the-complete-cache-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Test the Complete Cache Path
       
     </span>
   </a>
@@ -4355,88 +4326,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication &amp; Authorization
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#network-transport-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Network &amp; Transport Security
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-hardening" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration Hardening
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#secrets-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Secrets Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logging-monitoring-auditing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logging, Monitoring &amp; Auditing
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#backups-snapshots" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Backups &amp; Snapshots
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-nosql-security-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick NoSQL Security Checklist
-      
-    </span>
-  </a>
   
 </li>
       
@@ -4444,18 +4333,7 @@
   <a href="#dos-and-donts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Do’s and Don’ts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples-of-dangerous-patterns-brief" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Examples of Dangerous Patterns (brief)
+        Do's and Don'ts
       
     </span>
   </a>
@@ -4493,151 +4371,131 @@
   
 
 
-<h1 id="nosql-security-cheat-sheet">NoSQL Security Cheat Sheet<a class="headerlink" href="#nosql-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="web-cache-security-cheat-sheet">Web Cache Security Cheat Sheet<a class="headerlink" href="#web-cache-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>NoSQL databases (MongoDB, CouchDB, Cassandra etc.) power many modern applications with flexible schemas and horizontal scale. But their different query models and deployment patterns create <strong>more security risks</strong> compared with relational databases.
-This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p>
-<h2 id="threats-common-failure-modes">Threats &amp; Common Failure Modes<a class="headerlink" href="#threats-common-failure-modes" title="Permanent link">&para;</a></h2>
+<p>HTTP caches improve performance by reusing stored responses in browsers, reverse proxies, content delivery networks (CDNs), and application data stores. A cache becomes a security boundary when it serves a response to a request other than the one that originally produced it. The <a href="https://www.rfc-editor.org/rfc/rfc9111.html">HTTP caching specification</a> defines the behavior of private and shared caches, while the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching">MDN HTTP caching guide</a> provides practical examples of common directives.</p>
+<p>This cheat sheet focuses on preventing sensitive data exposure, web cache poisoning, web cache deception, and cross-tenant data leakage. It applies to developers and operators configuring origin applications, reverse proxies, CDNs, and application-level caches.</p>
+<h2 id="key-risks">Key Risks<a class="headerlink" href="#key-risks" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://www.rfc-editor.org/rfc/rfc9111.html#name-security-considerations">security considerations in RFC 9111</a> describe caches as attractive attack targets because one stored response can affect many users. <a href="https://owasp.org/www-community/attacks/Cache_Poisoning">OWASP's cache poisoning overview</a> also explains how a harmful cached response can be distributed to other visitors.</p>
 <ul>
-<li><strong>NoSQL Injection</strong> — Unsafe construction of query objects or query strings from untrusted input.</li>
-<li><strong>Exposed Management Interfaces</strong> — Admin GUIs, database ports or REST endpoints exposed to the internet.</li>
-<li><strong>Weak/No Authentication &amp; Authorization</strong> — Default open access or excessive privileges for clients.</li>
-<li><strong>Insecure Network Exposure</strong> — No TLS, open ports, insufficient network segmentation.</li>
-<li><strong>Insecure Defaults</strong> — Default admin accounts, default passwords, unsecured configs.</li>
-<li><strong>Poor Access Control Models</strong> — Coarse roles allowing lateral abuse.</li>
-<li><strong>Insecure Serialization / Deserialization</strong> — Remote code execution via unsafe object deserialization.</li>
-<li><strong>Misconfigured CORS / Public APIs</strong> — APIs accidentally allow cross-origin requests or wide access.</li>
-<li><strong>Credential &amp; Secret Leaks</strong> — Hardcoded DB credentials in code, images, CI logs.</li>
-<li><strong>Unsafe Backup Exposure</strong> — Backups left unencrypted or publicly accessible.</li>
-<li><strong>Supply-chain / Dependency Risks</strong> — Vulnerable drivers, ORMs/ODMs, or plugins.</li>
+<li><strong>Sensitive response exposure</strong>: A shared cache stores a personalized or authenticated response and returns it to another user.</li>
+<li><strong>Web cache poisoning</strong>: An attacker-controlled request input changes a response but is excluded from the cache key. The harmful response is then served to other users.</li>
+<li><strong>Web cache deception</strong>: A dynamic or personalized URL is made to look like a static asset, causing an intermediary to cache sensitive content.</li>
+<li><strong>Cache key confusion</strong>: The cache and origin disagree about URL normalization, query parameters, headers, or request routing, causing unrelated requests to share an entry.</li>
+<li><strong>Cross-tenant leakage</strong>: An application cache omits the tenant or authorization context from its key.</li>
+<li><strong>Stale security state</strong>: Cached content remains accessible after permissions, account state, or the underlying resource changes.</li>
 </ul>
-<h2 id="secure-by-design-principles">Secure-by-Design Principles<a class="headerlink" href="#secure-by-design-principles" title="Permanent link">&para;</a></h2>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<p>Treat cacheability and cache-key design as part of the application's authorization model. <a href="https://www.rfc-editor.org/rfc/rfc9111.html">RFC 9111</a> specifies how response directives, request inputs, and validation control whether a stored response can be reused.</p>
+<h3 id="1-classify-responses-before-caching">1. Classify Responses Before Caching<a class="headerlink" href="#1-classify-responses-before-caching" title="Permanent link">&para;</a></h3>
+<p>Define an explicit policy for every route. Default to preventing shared caching for authenticated, personalized, tenant-specific, or otherwise sensitive responses.</p>
 <ul>
-<li><strong>Treat all input as untrusted</strong> — validate, sanitize, and normalize.</li>
-<li><strong>Use least privilege</strong> — narrow roles for users, services, and operators.</li>
-<li><strong>Defense in depth</strong> — combine network controls, auth, input validation, and monitoring.</li>
-<li><strong>Secure defaults</strong> — change default ports/accounts, enable auth and TLS by default.</li>
-<li><strong>Automate secrets &amp; rotation</strong> — vaults and short-lived credentials.</li>
-<li><strong>Monitor &amp; audit</strong> — log access and detect anomalies.</li>
+<li>Use <code>Cache-Control: no-store</code> when a response must not be stored by any compliant cache.</li>
+<li>Use <code>Cache-Control: private</code> when a response may be stored by a user's private cache but not by a shared cache.</li>
+<li>Remember that <code>no-cache</code> permits storage but requires successful validation before reuse. It does not mean "do not store."</li>
+<li>Do not assume that cookies make a response private. A <code>Set-Cookie</code> header alone does not prevent caching.</li>
+<li>Do not mark a response influenced by <code>Authorization</code> or session cookies as <code>public</code>, or give it an <code>s-maxage</code>, unless sharing the response has been deliberately designed and reviewed.</li>
+<li>Purge previously stored entries when changing a route to <code>no-store</code>; the directive does not delete old entries.</li>
 </ul>
-<h2 id="practical-defenses-examples">Practical Defenses &amp; Examples<a class="headerlink" href="#practical-defenses-examples" title="Permanent link">&para;</a></h2>
-<h3 id="prevent-nosql-injection">Prevent NoSQL Injection<a class="headerlink" href="#prevent-nosql-injection" title="Permanent link">&para;</a></h3>
-<p><strong>Unsafe (string-based filter building — Node.js / MongoDB):</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">// DANGEROUS: building query from untrusted input</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{ name: '"</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"' }"</span><span class="p">;</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">eval</span><span class="p">(</span><span class="s2">"("</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">")"</span><span class="p">);</span><span class="w"> </span><span class="c1">// NEVER do this</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">'users'</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="nx">filter</span><span class="p">)</span>
+<p>For a response containing sensitive data:</p>
+<div class="highlight"><pre><span></span><code><span class="err">Cache-Control: no-store</span>
 </code></pre></div>
-<p><strong>Safe (use driver query objects / parameterization):</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">// SAFE: let driver handle query structure</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="p">};</span>
-<span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">'users'</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="nx">filter</span><span class="p">)</span>
+<p>For non-sensitive content that may be stored only in a private cache and must be revalidated:</p>
+<div class="highlight"><pre><span></span><code><span class="err">Cache-Control: private, no-cache</span>
 </code></pre></div>
-<p><strong>Safe (whitelisting for operators):</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Reject operator injection by disallowing $ in keys or operator values</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">includes</span><span class="p">(</span><span class="s1">'"$'</span><span class="p">))</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">"Invalid input"</span><span class="p">);</span>
+<h3 id="2-design-a-complete-cache-key">2. Design a Complete Cache Key<a class="headerlink" href="#2-design-a-complete-cache-key" title="Permanent link">&para;</a></h3>
+<p>Every request input that can change a cacheable response must either be represented in the cache key or be rejected for that route.</p>
+<ul>
+<li>Include the request method, scheme, host, normalized path, and all relevant query parameters.</li>
+<li>Use <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary"><code>Vary</code></a> for representation-selecting headers such as <code>Accept-Encoding</code> or <code>Accept-Language</code>.</li>
+<li>Do not use <code>Vary: Cookie</code> as a general authorization boundary. Prefer disabling shared caching for personalized responses.</li>
+<li>Derive tenant and user identifiers from trusted, authenticated server-side context, not directly from an untrusted header or query parameter.</li>
+<li>Apply the same URL normalization and parameter handling at the CDN, reverse proxy, and origin.</li>
+<li>Reject ambiguous requests, including conflicting host information, duplicate parameters with inconsistent meanings, and malformed path encodings.</li>
+</ul>
+<p>For an application-level cache, use a structured, versioned key:</p>
+<div class="highlight"><pre><span></span><code>&lt;environment&gt;:&lt;resource-version&gt;:&lt;tenant-id&gt;:&lt;resource-type&gt;:&lt;resource-id&gt;
 </code></pre></div>
-<p>Notes:</p>
+<p>Do not put session tokens, API keys, or other secrets in cache keys because keys often appear in logs and administrative interfaces.</p>
+<h3 id="3-prevent-web-cache-poisoning">3. Prevent Web Cache Poisoning<a class="headerlink" href="#3-prevent-web-cache-poisoning" title="Permanent link">&para;</a></h3>
+<p><a href="https://developers.cloudflare.com/cache/cache-security/avoid-web-poisoning/">Cloudflare's cache poisoning guidance</a> describes the central design rule: untrusted request inputs that are not part of the cache key must not influence a cacheable response.</p>
 <ul>
-<li>Do <strong>not</strong> accept raw JSON fragments from the client to execute as queries.</li>
-<li>Disallow client-controlled query operators (like <code>$where</code>, <code>$regex</code>, or <code>$expr</code>) unless strictly required and validated.</li>
-<li>For text-based search parameters, use safe driver APIs (e.g., <code>$text</code> with controlled input).</li>
+<li>Cache only routes that are explicitly intended to be shared.</li>
+<li>Do not let unkeyed headers or a body on a <code>GET</code> request alter a cacheable response.</li>
+<li>Trust <code>Forwarded</code> and <code>X-Forwarded-*</code> headers only when they were added or replaced by a trusted proxy.</li>
+<li>Canonicalize the host and scheme before using them to generate links, redirects, or security-sensitive headers.</li>
+<li>Do not reflect unvalidated request metadata into cached HTML, JSON, redirects, or response headers.</li>
+<li>Separate static assets and dynamic application routes by hostname or an unambiguous path namespace where practical.</li>
+<li>If poisoning occurs, purge every affected cache layer and fix the key or origin behavior before re-enabling caching.</li>
 </ul>
-<h3 id="use-secure-driver-odm-patterns">Use Secure Driver / ODM Patterns<a class="headerlink" href="#use-secure-driver-odm-patterns" title="Permanent link">&para;</a></h3>
+<h3 id="4-prevent-web-cache-deception">4. Prevent Web Cache Deception<a class="headerlink" href="#4-prevent-web-cache-deception" title="Permanent link">&para;</a></h3>
+<p>Web cache deception occurs when an attacker causes a shared cache to store personalized content under a URL that appears cacheable. <a href="https://developers.cloudflare.com/cache/cache-security/cache-deception-armor/">Cache Deception Armor</a> documents one mitigation: verifying that the requested file extension agrees with the response <code>Content-Type</code>.</p>
 <ul>
-<li>Prefer high-level APIs (ODM/ORM) that build queries safely (e.g., Mongoose, Spring Data, Datastax driver patterns).</li>
-<li>Avoid <code>.eval()</code>-like functionality and raw query execution from untrusted data.</li>
-<li>Sanitize and validate any raw expressions before passing to the DB.</li>
+<li>Base cache eligibility on an allowlisted route and response policy, not only on a file extension.</li>
+<li>Make dynamic routes reject unexpected path segments and static-looking suffixes instead of silently routing them to the same handler.</li>
+<li>Ensure that a request such as <code>/account/profile/image.css</code> cannot resolve to the same personalized handler as <code>/account/profile</code>.</li>
+<li>Verify that the URL extension and response <code>Content-Type</code> agree before caching a static asset.</li>
+<li>Ignore or remove query parameters from a cache key only after proving that they cannot change routing, authorization, or response content.</li>
 </ul>
-<h4 id="example-pymongo-safe-usage">Example — PyMongo safe usage<a class="headerlink" href="#example-pymongo-safe-usage" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pymongo</span><span class="w"> </span><span class="kn">import</span> <span class="n">MongoClient</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">tls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">collection</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">mydb</span><span class="o">.</span><span class="n">users</span>
-<span class="n">user</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s2">"email"</span><span class="p">:</span> <span class="n">email_input</span><span class="p">})</span>
-</code></pre></div>
-<h3 id="authentication-authorization">Authentication &amp; Authorization<a class="headerlink" href="#authentication-authorization" title="Permanent link">&para;</a></h3>
+<h3 id="5-coordinate-origin-and-intermediary-policies">5. Coordinate Origin and Intermediary Policies<a class="headerlink" href="#5-coordinate-origin-and-intermediary-policies" title="Permanent link">&para;</a></h3>
+<p>A secure origin policy can be weakened by a CDN rule, reverse proxy override, or framework default. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching">MDN's caching guide</a> recommends explicitly controlling caching rather than relying on heuristic behavior.</p>
 <ul>
-<li><strong>Enable authentication</strong> (do not run databases unauthenticated).</li>
-<li>Use <strong>role-based access control (RBAC)</strong>, least privilege for service accounts.</li>
-<li>Use <strong>separate users</strong> for admin/backup/readonly/application.</li>
-<li>Use identity federation or short-lived credentials when supported (e.g., AWS IAM -&gt; DynamoDB).</li>
+<li>Define browser and shared-cache lifetimes independently with the appropriate directives.</li>
+<li>Review CDN rules that override origin <code>Cache-Control</code> headers or cache responses by status code, path pattern, or file extension.</li>
+<li>Give error pages, redirects, and authentication responses explicit cache policies.</li>
+<li>Use consistent URL normalization at every layer. When a CDN normalizes its cache key, send the normalized form to the origin as well.</li>
+<li>Maintain a tested purge mechanism for individual keys, tags, or narrowly scoped route groups.</li>
+<li>Fail closed when a sensitive route has a missing, malformed, or conflicting cache policy.</li>
 </ul>
-<p>For more information please check following cheat sheets:</p>
-<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a></p>
-<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a></p>
-<h3 id="network-transport-security">Network &amp; Transport Security<a class="headerlink" href="#network-transport-security" title="Permanent link">&para;</a></h3>
+<h3 id="6-protect-application-level-caches">6. Protect Application-Level Caches<a class="headerlink" href="#6-protect-application-level-caches" title="Permanent link">&para;</a></h3>
+<p>In-memory, database, and distributed caches can leak data even when HTTP caching is disabled. Authorization must still be enforced on every request before cached data is returned. See the <a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a> and <a href="Multi_Tenant_Security_Cheat_Sheet.html">Multi-Tenant Security Cheat Sheet</a> for related controls.</p>
 <ul>
-<li><strong>Bind services to internal interfaces</strong>, not <code>0.0.0.0</code>.</li>
-<li>Use <strong>network segmentation / private subnets</strong> and security groups.</li>
-<li><strong>Enforce TLS</strong> (in transit encryption) for driver connections and admin consoles.</li>
-<li>Turn off remote management or restrict it to admin networks/VPNs.</li>
+<li>Namespace keys by environment and application to prevent collisions.</li>
+<li>Include tenant identity and every authorization-relevant resource dimension in the key.</li>
+<li>Do not let a cache hit bypass object-level or tenant-level authorization.</li>
+<li>Avoid caching final authorization decisions unless the key includes the complete subject, object, action, policy version, and a tightly bounded lifetime.</li>
+<li>Version key formats so schema or permission-model changes cannot reuse incompatible entries.</li>
+<li>Restrict administrative access to cache contents, configuration, statistics, and purge operations.</li>
 </ul>
-<h3 id="configuration-hardening">Configuration Hardening<a class="headerlink" href="#configuration-hardening" title="Permanent link">&para;</a></h3>
+<h3 id="7-test-the-complete-cache-path">7. Test the Complete Cache Path<a class="headerlink" href="#7-test-the-complete-cache-path" title="Permanent link">&para;</a></h3>
+<p>Test through the same CDN and proxy path used in production. The <a href="https://developers.cloudflare.com/cache/how-to/cache-keys/">Cloudflare cache-key documentation</a> illustrates how scheme, host, path, query parameters, headers, and cookies can contribute to a cache key.</p>
 <ul>
-<li>Change default ports and disable sample/demo users.</li>
-<li>Turn off or restrict features that execute code on the server (e.g., MongoDB <code>db.eval</code>, server-side scripting).</li>
-<li>Require TLS for internal replication links where supported.</li>
+<li>Request the same URL as two different users and tenants; neither response may contain the other's data.</li>
+<li>Change one header, query parameter, cookie, or path component at a time and verify the expected cache behavior.</li>
+<li>Append static-looking suffixes and unexpected path segments to authenticated routes and verify that they are rejected and not cached.</li>
+<li>Test authorization changes, logout, content updates, and purge operations against already stored entries.</li>
+<li>Monitor for unexpected cache hits on authenticated routes, abrupt hit-ratio changes, unusual forwarded headers, and repeated purge activity.</li>
+<li>Log enough cache-status and routing metadata to investigate incidents, but never log secrets or full sensitive response bodies.</li>
 </ul>
-<h3 id="secrets-management">Secrets Management<a class="headerlink" href="#secrets-management" title="Permanent link">&para;</a></h3>
+<h2 id="dos-and-donts">Do's and Don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
+<p>Use these checks alongside the <a href="https://www.rfc-editor.org/rfc/rfc9111.html">HTTP caching requirements in RFC 9111</a> and the application's normal authorization review.</p>
+<p><strong>Do:</strong></p>
 <ul>
-<li>Do <strong>not</strong> hardcode DB credentials — use a secret manager (Vault, AWS Secrets Manager, Azure Key Vault).</li>
-<li>Avoid baking credentials into container images or environment variables in CI logs.</li>
-<li>Rotate credentials regularly and use ephemeral tokens when possible.</li>
+<li>Set an explicit <code>Cache-Control</code> policy on every security-relevant response.</li>
+<li>Verify that every response-changing input is included in the cache key or rejected.</li>
+<li>Keep cache and origin routing rules consistent.</li>
+<li>Authorize the current request before returning cached application data.</li>
+<li>Test with multiple identities and tenants through the production caching path.</li>
+<li>Plan and test targeted cache invalidation before an incident occurs.</li>
 </ul>
-<h3 id="logging-monitoring-auditing">Logging, Monitoring &amp; Auditing<a class="headerlink" href="#logging-monitoring-auditing" title="Permanent link">&para;</a></h3>
+<p><strong>Don't:</strong></p>
 <ul>
-<li>Enable audit logging (connection attempts, admin actions, failed auth).</li>
-<li>Send logs to a tamper-evident SIEM.</li>
-<li>Alert on anomalous patterns (spike in queries, slow queries, large data exports).</li>
-<li>Monitor for suspicious commands (e.g., admin actions, <code>$where</code>, map-reduce jobs).</li>
-</ul>
-<h3 id="backups-snapshots">Backups &amp; Snapshots<a class="headerlink" href="#backups-snapshots" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Encrypt backups at rest and during transfer.</li>
-<li>Restrict access to backup storage.</li>
-<li>Sanitize backups for PII as required by policy.</li>
-<li>Validate restore procedures regularly.</li>
-</ul>
-<h2 id="quick-nosql-security-checklist">Quick NoSQL Security Checklist<a class="headerlink" href="#quick-nosql-security-checklist" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Enable authentication &amp; RBAC</li>
-<li>Enforce TLS for client and node communication</li>
-<li>Bind DB to internal IPs / use private networks</li>
-<li>Use least privilege service accounts</li>
-<li>Disallow client-controlled query operators unless validated</li>
-<li>Avoid raw query execution / eval on server</li>
-<li>Store credentials in secret manager &amp; rotate them</li>
-<li>Harden configs (disable unsafe defaults)</li>
-<li>Encrypt and secure backups</li>
-<li>Monitor/audit DB access and admin actions</li>
-<li>Keep DB and drivers patched</li>
-</ul>
-<h2 id="dos-and-donts">Do’s and Don’ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
-<p><strong>Do</strong>:</p>
-<ul>
-<li>Use driver query objects rather than building query strings.</li>
-<li>Validate and whitelist user-supplied fields (columns/keys).</li>
-<li>Restrict management interfaces and require MFA for admin access.</li>
-<li>Automate security testing in CI/CD pipelines.</li>
-</ul>
-<p><strong>Don’t</strong>:</p>
-<ul>
-<li>Expose DB ports/admin consoles to the public Internet.</li>
-<li>Accept raw JSON queries from clients or eval untrusted strings.</li>
-<li>Use root/admin DB accounts for application connections.</li>
-<li>Rely only on network controls to protect badly written queries.</li>
-</ul>
-<h2 id="examples-of-dangerous-patterns-brief">Examples of Dangerous Patterns (brief)<a class="headerlink" href="#examples-of-dangerous-patterns-brief" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Allowing client to submit <code>{ "$where": "this.balance &gt; 0" }</code> → remote code execution or heavy CPU.</li>
-<li>Concatenating user input into query language strings or shell commands for DB tools.</li>
-<li>Leaving MongoDB unsecured (no auth) listening on public IP.</li>
+<li>Assume that authentication, cookies, TLS, or <code>Set-Cookie</code> automatically prevents caching.</li>
+<li>Cache every URL with a static-looking extension.</li>
+<li>Allow unkeyed request metadata to influence shared responses.</li>
+<li>Treat <code>Vary: Cookie</code> as a substitute for an authorization design.</li>
+<li>Include credentials or session identifiers in keys, logs, or purge URLs.</li>
+<li>Assume that purging a poisoned entry fixes the underlying vulnerability.</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://www.mongodb.com/docs/manual/security/">MongoDB Security Official Document</a></li>
-<li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security.html">Security best practices for Amazon DynamoDB</a></li>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection">WSTG - Testing for NoSQL Injection</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9111.html">RFC 9111: HTTP Caching</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching">MDN: HTTP Caching</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary">MDN: Vary Header</a></li>
+<li><a href="https://owasp.org/www-community/attacks/Cache_Poisoning">OWASP: Cache Poisoning</a></li>
+<li><a href="https://developers.cloudflare.com/cache/cache-security/avoid-web-poisoning/">Cloudflare: Avoid Web Cache Poisoning</a></li>
+<li><a href="https://developers.cloudflare.com/cache/cache-security/cache-deception-armor/">Cloudflare: Cache Deception Armor</a></li>
+<li><a href="https://developers.cloudflare.com/cache/how-to/cache-keys/">Cloudflare: Cache Keys</a></li>
 </ul>
 
 
