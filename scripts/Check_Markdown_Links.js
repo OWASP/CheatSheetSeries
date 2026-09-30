@@ -340,6 +340,10 @@ function writeOutputs({ known, recovered, transient, unexpected }) {
 
   fs.writeFileSync(paths.known, knownText);
   fs.writeFileSync(paths.unexpected, unexpectedText);
+  // Keep actionable diagnostics in the failed step's log as well as its artifact.
+  if (unexpectedText) {
+    process.stderr.write(unexpectedText);
+  }
 }
 
 function runCheckerAttempt(markdownFile, file, attempt) {
