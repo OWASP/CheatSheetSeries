@@ -87,7 +87,7 @@ Include the account's existing credential IDs in `excludeCredentials` when possi
 
 ### Verify the Registration Response
 
-The following diagram shows which party performs each check and in what order.
+The following diagram summarizes the key checks and which party performs them.
 
 ![Registration ceremony sequence diagram](../assets/Passkey_Security_Cheat_Sheet_Registration_Ceremony.png)
 
@@ -132,7 +132,7 @@ Conditional mediation can improve passkey discovery and coexist with password fi
 
 ### Verify the Authentication Response
 
-The following diagram shows which party performs each check and in what order.
+The following diagram summarizes the key checks and which party performs them.
 
 ![Authentication ceremony sequence diagram](../assets/Passkey_Security_Cheat_Sheet_Authentication_Ceremony.png)
 
