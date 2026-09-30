@@ -88,16 +88,11 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - Validate the `Origin` header on incoming Streamable HTTP requests. Reject a present but invalid Origin with HTTP 403. Do not reject non-browser clients solely because they send no Origin header. See the [transport security rules](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
 - Validate the Host header on incoming requests; reject unexpected hostnames.
 
-### 7. Message-Level Integrity and Replay Protection
+### 7. Optional Message-Level Integrity
 
-Transport-layer security (TLS) protects data in transit but does not guarantee message integrity at the application layer. A compromised proxy, middleware, or host-level agent can modify JSON-RPC payloads after TLS termination. Message-level signing ensures that tool calls and responses have not been tampered with between client and server.
+TLS protects messages in transit, but a component that changes data after TLS termination is a separate threat. The [core MCP transport specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports) does not require every JSON-RPC message to be signed. The [MCPS Internet-Draft](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/) proposes a separate signing and replay-protection layer; it is an individual work in progress, not an adopted MCP standard.
 
-- Sign each MCP message (JSON-RPC request body) with an asymmetric key (e.g., ECDSA P-256) bound to the sender's identity. The signature should cover the full serialized payload, not just selected fields.
-- Include a unique nonce and timestamp in every signed message. Reject messages with duplicate nonces or timestamps outside an acceptable window (e.g., 5 minutes) to prevent replay attacks.
-- Pin tool definitions at discovery time using cryptographic hashes (e.g., SHA-256 over the canonical JSON of the tool name, description, and input schema). Before each tool execution, re-hash the current definition and compare against the pinned value. A mismatch indicates post-deployment mutation (rug pull).
-- Require mutual signing where both client and server sign their messages. Clients should verify server response signatures before processing results. Accept server public keys only from authenticated channels, not from unverified first-contact responses.
-- Bind signatures to agent or user identity. Each signed message should include the signer's identity reference (e.g., a certificate fingerprint or public key hash) so the receiver can attribute and audit the request cryptographically.
-- Fail closed when verification fails. If a signature is missing, invalid, or the nonce has been seen before, reject the message entirely. Never silently fall back to unsigned processing when signing is enabled.
+If the threat model calls for integrity after TLS termination, choose a reviewed mechanism supported by both endpoints. Define how keys are trusted, what is signed, how replay is rejected, and what happens when verification fails. Do not present optional signing as a requirement for ordinary MCP deployments.
 
 ### 8. Multi-Server Isolation & Cross-Origin Protection
 
@@ -152,7 +147,7 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - Use `mcp-scan` or equivalent tooling to detect poisoned tools.
 - Log and monitor all tool invocations centrally.
 - Verify MCP server sources and scan dependencies.
-- Sign MCP messages at the application layer — do not rely solely on transport-layer (TLS) security.
+- Validate the Origin of Streamable HTTP requests and the audience of OAuth access tokens.
 - Pin tool definitions with cryptographic hashes and verify before each execution.
 
 **Don't**:
@@ -165,7 +160,7 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - Assume a tool approved yesterday is the same tool today (rug pulls).
 - Ignore cross-server interactions — shadowing attacks are real.
 - Store secrets in source code, plaintext config files, or logs.
-- Silently fall back to unsigned message processing when signing is configured.
+- Treat optional message signing as a core MCP requirement.
 - Accept server public keys from unverified first-contact responses (TOFU without pinning).
 
 ## References
@@ -174,4 +169,4 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [mcp-scan — Security Scanner for MCP Servers](https://github.com/invariantlabs-ai/mcp-scan)
 - [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/)
-- [IETF Internet-Draft: Secure MCP — Message Signing and Tool Integrity](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/)
+- [Individual Internet-Draft (work in progress): MCPS message signing](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/)
