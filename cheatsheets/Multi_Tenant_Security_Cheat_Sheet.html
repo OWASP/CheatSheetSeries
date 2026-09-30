@@ -2613,6 +2613,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="7. Tenant Onboarding &amp; Offboarding Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tenant-backup-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tenant Backup Restore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4495,6 +4512,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="7. Tenant Onboarding &amp; Offboarding Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tenant-backup-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tenant Backup Restore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -5239,6 +5273,14 @@ SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org
 <li>Maintain audit trail of provisioning/deprovisioning.</li>
 <li>Provide tenant data export when contract, regulation, or product policy requires it.</li>
 </ul>
+<h4 id="tenant-backup-restore">Tenant Backup Restore<a class="headerlink" href="#tenant-backup-restore" title="Permanent link">&para;</a></h4>
+<p>A shared backup can contain data from several tenants. For a single-tenant recovery from a shared database, restore into a separate resource and selectively recover the target tenant's data, as described in <a href="https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/storage-data">Azure's multitenant storage guidance</a>.</p>
+<ul>
+<li>Authorize the operator for the target tenant and record the source backup, target, reason, and outcome.</li>
+<li>Check tenant ownership before copying records or objects into the live tenant scope. Do not give a tenant operator access to a shared backup.</li>
+<li>Reapply current access and retention rules; a backup can contain old memberships or data that should no longer be accessible.</li>
+<li>Test a backup with two tenants: recover one tenant, verify the other tenant's records and objects are absent, and reject a restore request by an unauthorized actor.</li>
+</ul>
 <details>
 <summary>Illustrative Tenant Lifecycle Management</summary>
 
@@ -5572,6 +5614,7 @@ SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org
 <li>Enforce tenant ownership at a boundary traversed by every tenant-owned access path.</li>
 <li>Use separate encryption keys when the risk or compliance model requires cryptographic isolation.</li>
 <li>Apply and verify the documented retention and deletion policy during offboarding.</li>
+<li>Authorize and test tenant-scoped restores, especially when the source backup contains other tenants.</li>
 <li>Monitor and alert on denied or unexpected cross-tenant access attempts.</li>
 <li>For shared-table PostgreSQL RLS that uses a tenant setting, prefer transaction-local context and re-establish it for each transaction.</li>
 <li>For shared-table PostgreSQL RLS, inventory classified tenant-owned tables and test cross-tenant denial for each one.</li>
@@ -5589,6 +5632,7 @@ SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org
 <li>Treat a tenant identifier in a queued message as authorization proof without authenticating the producer path and authorizing the consumer operation.</li>
 <li>Allow one tenant unbounded consumption of a shared queue, worker pool, connection pool, or other resource that can degrade other tenants.</li>
 <li>Retain tenant data beyond the documented retention policy without a contractual or legal basis and appropriate access restrictions.</li>
+<li>Restore a shared snapshot over live data to recover only one tenant.</li>
 <li>Log sensitive tenant data in plain text.</li>
 <li>Serve ordinary tenant-scoped PostgreSQL RLS request paths with a superuser or <code>BYPASSRLS</code> role.</li>
 <li>Use a session-scoped database tenant setting across pooled requests without reliable reset-on-checkout or equivalent isolation and connection-reuse tests; prefer transaction-local settings.</li>

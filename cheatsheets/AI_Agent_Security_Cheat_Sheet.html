@@ -708,10 +708,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#action-classification-and-approval-flow" class="md-nav__link">
+  <a href="#action-classification-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Action Classification and Approval Flow
+        Action Classification Example
       
     </span>
   </a>
@@ -4612,10 +4612,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#action-classification-and-approval-flow" class="md-nav__link">
+  <a href="#action-classification-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Action Classification and Approval Flow
+        Action Classification Example
       
     </span>
   </a>
@@ -5012,18 +5012,16 @@
 <li>Provide clear audit trails of agent decisions and actions.</li>
 <li>Allow users to interrupt and rollback agent operations.</li>
 </ul>
-<h4 id="action-classification-and-approval-flow">Action Classification and Approval Flow<a class="headerlink" href="#action-classification-and-approval-flow" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<h4 id="action-classification-example">Action Classification Example<a class="headerlink" href="#action-classification-example" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">RiskLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">LOW</span> <span class="o">=</span> <span class="s2">"low"</span>           <span class="c1"># Read operations, safe queries</span>
-    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="s2">"medium"</span>     <span class="c1"># Write operations, API calls</span>
-    <span class="n">HIGH</span> <span class="o">=</span> <span class="s2">"high"</span>         <span class="c1"># Financial, deletion, external comms</span>
-    <span class="n">CRITICAL</span> <span class="o">=</span> <span class="s2">"critical"</span> <span class="c1"># Irreversible, security-sensitive</span>
+    <span class="n">LOW</span> <span class="o">=</span> <span class="s2">"low"</span>
+    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="s2">"medium"</span>
+    <span class="n">HIGH</span> <span class="o">=</span> <span class="s2">"high"</span>
+    <span class="n">CRITICAL</span> <span class="o">=</span> <span class="s2">"critical"</span>
 
-<span class="n">ACTION_RISK_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">ACTION_RISK</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"search_documents"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
     <span class="s2">"read_file"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
     <span class="s2">"write_file"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">,</span>
@@ -5033,55 +5031,11 @@
     <span class="s2">"transfer_funds"</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="nd">@dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">PendingAction</span><span class="p">:</span>
-    <span class="n">action_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
-    <span class="n">risk_level</span><span class="p">:</span> <span class="n">RiskLevel</span>
-    <span class="n">explanation</span><span class="p">:</span> <span class="nb">str</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">HumanInTheLoopController</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auto_approve_threshold</span><span class="p">:</span> <span class="n">RiskLevel</span> <span class="o">=</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">auto_approve_threshold</span> <span class="o">=</span> <span class="n">auto_approve_threshold</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pending_actions</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">request_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> 
-                            <span class="n">explanation</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="n">risk_level</span> <span class="o">=</span> <span class="n">ACTION_RISK_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">)</span>
-
-        <span class="c1"># Auto-approve low-risk actions</span>
-        <span class="k">if</span> <span class="n">risk_level</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_approve_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">"approved"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"auto"</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
-
-        <span class="c1"># Queue for human review</span>
-        <span class="n">action</span> <span class="o">=</span> <span class="n">PendingAction</span><span class="p">(</span>
-            <span class="n">action_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span>
-            <span class="n">tool_name</span><span class="o">=</span><span class="n">tool_name</span><span class="p">,</span>
-            <span class="n">parameters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_params_for_display</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
-            <span class="n">risk_level</span><span class="o">=</span><span class="n">risk_level</span><span class="p">,</span>
-            <span class="n">explanation</span><span class="o">=</span><span class="n">explanation</span>
-        <span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">pending_actions</span><span class="p">[</span><span class="n">action</span><span class="o">.</span><span class="n">action_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
-
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">"approved"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="s2">"pending"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">"action_id"</span><span class="p">:</span> <span class="n">action</span><span class="o">.</span><span class="n">action_id</span><span class="p">,</span>
-            <span class="s2">"requires"</span><span class="p">:</span> <span class="s2">"human_approval"</span><span class="p">,</span>
-            <span class="s2">"risk_level"</span><span class="p">:</span> <span class="n">risk_level</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-            <span class="s2">"preview"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_action_preview</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-        <span class="p">}</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_action_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">PendingAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"""</span>
-<span class="s2">        Action: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">tool_name</span><span class="si">}</span>
-<span class="s2">        Risk Level: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">risk_level</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span>
-<span class="s2">        Explanation: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">explanation</span><span class="si">}</span>
-<span class="s2">        Parameters: </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span>
-<span class="s2">        """</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">needs_human_approval</span><span class="p">(</span><span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="c1"># Unknown tools fail closed. Only explicitly low-risk tools skip review.</span>
+    <span class="k">return</span> <span class="n">ACTION_RISK</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span>
 </code></pre></div>
+<p>Only the two mapped low-risk tools skip human review in this example. Medium, high, critical, and unmapped tools require it. This classification does not grant permission to run a tool; the execution component must still check the actor's authorization and any required approval for the exact action.</p>
 <h4 id="high-impact-action-integrity-controls">High-Impact Action Integrity Controls<a class="headerlink" href="#high-impact-action-integrity-controls" title="Permanent link">&para;</a></h4>
 <p>For destructive, financial, administrative, or externally visible actions, add controls beyond a simple approval prompt:</p>
 <ul>
