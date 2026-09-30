@@ -67,18 +67,18 @@ Lastly, when [fuzzing](https://owasp.org/www-community/Fuzzing), don't forget to
 Modern REST APIs commonly publish a machine-readable description in [OpenAPI](https://spec.openapis.org/oas/v3.1.0) (formerly Swagger). Unlike the WADL option noted above, this format is widely adopted, and for an assessment it is the fastest route to the attack surface.
 
 - Probe the common description locations first - `/openapi.json`, `/swagger.json` and `/docs` - before relying only on traffic captured through a [proxy](https://www.zaproxy.org/). The description lists paths, methods, parameters, schemas and security requirements in one place.
-- Reconcile the description with observed behavior. Call endpoints the description does not mention and send fields the schema does not define; an API that accepts them enforces less than its contract claims (see mass assignment below).
+- Reconcile the description with observed behavior. Call endpoints the description does not mention and send fields the schema does not define; an undocumented field the API accepts is a discrepancy to investigate, not proof of a contract violation, because additional properties may be valid depending on the intended schema and its documentation. Compare what you observed with the intended schema and the authorization policy before treating the field as a violation (see mass assignment below).
 - Fuzz from the schema: start with a valid request that satisfies the declared types, required fields and `enum` values, then mutate one constraint at a time, following the same [fuzzing](https://owasp.org/www-community/Fuzzing) approach used above.
-- Use the declared [`securitySchemes`](https://spec.openapis.org/oas/v3.1.0#security-scheme-object) as the test matrix for each operation: no credentials, a valid token, and a token that lacks the declared requirement (see the next section).
+- Build the per-operation security test matrix from the effective OpenAPI [`security`](https://spec.openapis.org/oas/v3.1.0#security-requirement-object) requirements, which are the root-level requirements unless the operation declares its own `security`, in which case that declaration replaces them instead of combining with them: no credentials, a valid token, and a token that lacks the declared requirement (see the next section). [`securitySchemes`](https://spec.openapis.org/oas/v3.1.0#security-scheme-object) only define the reusable security mechanisms those requirements refer to.
 
 ## JWT and OAuth2 Assessment
 
 A REST API is only as strong as the token checks in front of it, so test the token handling itself before testing the endpoints behind it.
 
 - Tamper with the token: change a claim in the payload, re-sign it with a key you control, or remove the signature, and confirm the API rejects it. Also try `alg: none` and algorithm confusion. The corresponding server-side rules are in the [JSON Web Token Cheat Sheet](JSON_Web_Token_Cheat_Sheet.md) and the [REST Security Cheat Sheet](REST_Security_Cheat_Sheet.md#jwt), with the threat background in [RFC 8725](https://datatracker.ietf.org/doc/html/rfc8725).
-- Send a token that is expired (`exp`), not yet valid (`nbf`), or issued for another issuer (`iss`) or audience (`aud`). These [standard claims](https://datatracker.ietf.org/doc/html/rfc7519#section-4) must be checked against the API's own configuration rather than trusted as presented.
+- Send a token that is expired (`exp`), not yet valid (`nbf`), or issued for another issuer (`iss`) or audience (`aud`). These [standard claims](https://datatracker.ietf.org/doc/html/rfc7519#section-4) must be checked against the configuration of the API rather than trusted as presented.
 - Send malformed tokens - truncated or extra parts, invalid Base64 or JSON - and confirm the API returns an authentication failure instead of a server error or a partially parsed token.
-- Check scope and role enforcement: call each operation with a token that lacks the required [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749) scope, and with a valid token belonging to a lower-privileged role. Both should receive a [`401 Unauthorized`](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2) or [`403 Forbidden`](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4) instead of the result, on read and write operations alike.
+- Check scope and role enforcement: call each operation with a valid token whose [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749) scope does not grant it, and with a valid token belonging to a lower-privileged role that lacks permission for it. Both should be denied the result, on read and write operations alike, with the status code that the documented response policy of the API prescribes for such a denial: for example [`401 Unauthorized`](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2) or [`403 Forbidden`](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4) as described for bearer requests in [RFC 6750 Section 3.1](https://www.rfc-editor.org/rfc/rfc6750#section-3.1), or `404 Not Found` when the API [conceals the existence of the resource](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4).
 
 ## Broken Object Level Authorization (BOLA)
 
@@ -86,16 +86,16 @@ A REST API is only as strong as the token checks in front of it, so test the tok
 
 - Run the swap test: create the same kind of object with two accounts or tenants, then replay each request under the other session's identifiers. Cover reads and writes (`GET`, `PUT`, `PATCH`, `DELETE`); an ownership check on `GET` next to an unchecked `PUT` on the same resource is a common result.
 - Prefer identifiers the other session can already observe - list responses, error messages, notification links - over guessing, and include nested routes such as `/users/{id}/orders/{id}`, where authorization is often only enforced for the outer resource.
-- Test vertical escalation too: use a low-privilege token against owner-only or administrator-only operations of the same API.
+- Test vertical escalation too: use a low-privilege token against owner-only or administrator-only operations of the same API; whether a role may call such an operation at all is [Broken Function Level Authorization](https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/), a separate check from BOLA's per-object access.
 - Repeat for every object type the API exposes; the object is wherever an identifier in the request ends up, not only in the obvious profile or order endpoints.
 
-Prevention guidance is in the [Insecure Direct Object Reference Prevention Cheat Sheet](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) and the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md); test methodology is in the [WSTG IDOR test](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References).
+Prevention guidance is in the [Insecure Direct Object Reference Prevention Cheat Sheet](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) and the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md); test methodology is in the [WSTG IDOR test](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/05-Authorization/04-Insecure_Direct_Object_References/).
 
 ## Mass Assignment in JSON APIs
 
 Frameworks that bind a JSON request body directly to an internal object make [mass assignment](Mass_Assignment_Cheat_Sheet.md) testable with a single request: anything the client sends may be written, including fields the API never advertised.
 
-- Take a normal create or update request and add fields outside the contract - a role, a verification flag, an internal identifier - then read the object back to see whether they were stored. Repeat for nested objects and arrays and for each update verb, since partial-update endpoints are the usual offender.
+- Take a normal create or update request and add fields outside the contract - a role, a verification flag, an internal identifier - then read the object back to see whether they were stored. Repeat for nested objects and arrays and for each update verb, including partial-update endpoints.
 - Confirm effect, not just reflection: a field echoed in the response means little until a following request shows that it persisted and changed behavior.
 - Treat every field the server accepts but the schema does not define as a candidate for this test (see the OpenAPI section above).
 
@@ -105,8 +105,8 @@ See [CWE-915](https://cwe.mitre.org/data/definitions/915.html) for the weakness 
 
 Missing or weak limits let an attacker guess credentials, harvest data or consume capacity at will; this is [API4:2023 Unrestricted Resource Consumption](https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/).
 
-- Drive the authentication, token and account recovery endpoints in bursts and check that throttling engages; without it, password guessing and [credential stuffing](Credential_Stuffing_Prevention_Cheat_Sheet.md) remain cheap. Compare with the [login throttling](Authentication_Cheat_Sheet.md#login-throttling) expectations for web applications.
-- Exercise the expensive operations - search, export, bulk writes - and note how few requests are needed before a limit applies.
+- Drive the authentication, token and account recovery endpoints and check that throttling engages; without it, password guessing and [credential stuffing](Credential_Stuffing_Prevention_Cheat_Sheet.md) remain cheap. Compare with the [login throttling](Authentication_Cheat_Sheet.md#login-throttling) expectations for web applications.
+- Exercise the expensive operations - search, export, bulk writes - and note whether a limit applies to them at all. Throttling by request frequency does not by itself bound the amount of work performed within a single request, so check what one request can cost as well.
 - Identify what the limit is keyed on: a per-IP limit is worked around by changing address, so per-account or per-API-key limits must still hold, and an authenticated session must not disable them.
 - Record the observed limit, the point at which it triggers and the response returned, so each finding states the missing control precisely.
 
