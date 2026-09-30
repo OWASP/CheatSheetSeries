@@ -75,11 +75,10 @@ The LLM sees all tool descriptions from all connected servers in its context —
 
 ### 6. Authentication, Authorization & Transport Security
 
-- Enforce authentication on all remote MCP server endpoints.
-- Use OAuth 2.0 with PKCE for remote server authorization flows.
-- Bind session IDs to user-specific context (e.g., `<user_id>:<session_id>`) to prevent session hijacking.
-- Validate on each request that the session or token belongs to the current requester; reject the call if it does not (prevents confused deputy).
-- Use secure, non-deterministic session IDs (cryptographic random, not sequential).
+- Require authentication when remote endpoints expose non-public tools or data. Authorization is optional in the protocol; see the [MCP authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
+- When using OAuth over HTTP, follow the MCP OAuth 2.1 profile. Clients must identify the intended MCP server with the `resource` parameter. See [resource indicators](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
+- Validate that each access token was issued for this MCP server as its intended audience. Reject invalid tokens and never pass an MCP access token to an upstream API. See [token handling](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
+- Validate authorization on every protected request. The [current Streamable HTTP transport](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) has no protocol-level sessions. If supporting older session-based revisions, use random session IDs, bind them to the authenticated user, and never treat an ID as authentication; see the [legacy session guidance](https://modelcontextprotocol.io/docs/2025-11-25/tutorials/security/security_best_practices).
 - Use TLS for remote Streamable HTTP connections. See the [transport specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
 - Verify server identity via certificate pinning or cryptographic server verification for remote servers.
 - Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS and limit impact of abuse; combine with sandboxing to contain local escape impact.
@@ -165,7 +164,7 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - Install MCP servers from unverified public registries without review.
 - Assume a tool approved yesterday is the same tool today (rug pulls).
 - Ignore cross-server interactions — shadowing attacks are real.
-- Store secrets in MCP server code, configs, or environment variables.
+- Store secrets in source code, plaintext config files, or logs.
 - Silently fall back to unsigned message processing when signing is configured.
 - Accept server public keys from unverified first-contact responses (TOFU without pinning).
 
