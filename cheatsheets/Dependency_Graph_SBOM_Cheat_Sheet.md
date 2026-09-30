@@ -176,7 +176,43 @@ jobs:
           sbom: sbom.cdx.json
           fail-build: true
           severity-cutoff: high
+      - name: Install cosign
+        uses: sigstore/cosign-installer@ba7bc0a3fef59531c69a25acd34668d6d3fe6f22 # v4.1.0
+      - name: Sign in to GitHub Container Registry
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+      - name: Push the scanned image and capture its digest
+        id: push
+        shell: bash
+        run: |
+          set -euo pipefail
+          image="ghcr.io/${GITHUB_REPOSITORY,,}"
+          docker tag "local/sbom-example:${GITHUB_SHA}" "${image}:${GITHUB_SHA}"
+          docker push "${image}:${GITHUB_SHA}"
+          ref="$(docker image inspect "${image}:${GITHUB_SHA}" --format '{{range .RepoDigests}}{{println .}}{{end}}' | grep -F "${image}@sha256:" | head -n 1)"
+          test -n "$ref"
+          echo "image_ref=$ref" >> "$GITHUB_OUTPUT"
+          echo "image_name=$image" >> "$GITHUB_OUTPUT"
+          echo "digest=${ref#*@}" >> "$GITHUB_OUTPUT"
+      - name: Sign image and attest its SBOM
+        env:
+          IMAGE_REF: ${{ steps.push.outputs.image_ref }}
+        run: |
+          cosign sign --yes "$IMAGE_REF"
+          cosign attest --yes --type cyclonedx --predicate sbom.cdx.json "$IMAGE_REF"
+          cosign verify --certificate-identity="${GITHUB_SERVER_URL}/${GITHUB_WORKFLOW_REF}" --certificate-oidc-issuer=https://token.actions.githubusercontent.com "$IMAGE_REF" > /dev/null
+          cosign verify-attestation --type cyclonedx --certificate-identity="${GITHUB_SERVER_URL}/${GITHUB_WORKFLOW_REF}" --certificate-oidc-issuer=https://token.actions.githubusercontent.com "$IMAGE_REF" > /dev/null
+      - name: Attest build provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-name: ${{ steps.push.outputs.image_name }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+          create-storage-record: false
 ```
+
+The image is signed by digest with keyless Cosign, and the CycloneDX document is attached as a signed SBOM attestation. The separate GitHub attestation records actual build provenance; an SBOM attestation alone is not build provenance. See [Sigstore container signing](https://docs.sigstore.dev/cosign/signing/signing_with_containers/), [Cosign attestation types](https://github.com/sigstore/cosign/blob/main/doc/cosign_attest.md), and [GitHub artifact attestations](https://github.com/actions/attest/blob/main/README.md). Confirm that your repository can publish to GHCR and that [artifact attestations are available](https://docs.github.com/en/actions/concepts/security/artifact-attestations) for its GitHub plan.
 
 ## Example workflows (short)
 
