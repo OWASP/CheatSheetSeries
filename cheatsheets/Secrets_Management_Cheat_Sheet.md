@@ -732,7 +732,7 @@ Managing secrets in a multi-cloud environment presents unique challenges due to 
 - [HashiCorp Vault](https://www.vaultproject.io/)
 - [CyberArk Conjur](https://www.conjur.org/)
 - [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
-- [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/)
+- [Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/basic-concepts)
 - [Google Cloud Secret Manager](https://cloud.google.com/secret-manager)
 
 ## 11 Related Cheat Sheets & further reading

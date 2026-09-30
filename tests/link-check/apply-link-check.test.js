@@ -206,6 +206,23 @@ const sharedFailureBatches = [
         observedStatuses: [403, 403, 403]
       }
     ]
+  },
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "2ac768df90f5e770a331a83cc670a06bdea91bdb",
+      contentBaseCommit: "2ac768df90f5e770a331a83cc670a06bdea91bdb",
+      workflowRunId: 36762726124,
+      workflowJobId: 110049099112,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36762726124/job/110049099112"
+    },
+    failures: [
+      {
+        file: "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+        url: "https://www.gnu.org/software/automake/manual/html_node/VPATH-Builds.html",
+        observedStatuses: [403, 0, 0]
+      }
+    ]
   }
 ];
 
@@ -341,7 +358,7 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 14);
+  assert.equal(value.batches.length, 15);
   assert.deepEqual(value.batches.slice(9), sharedFailureBatches);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
@@ -373,11 +390,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 350);
+  assert.equal(failures.length, 351);
   assert.equal(new Set(failures.map(({ file }) => file)).size, 88);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    350,
+    351,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>
