@@ -685,6 +685,14 @@ class TenantFileStorage:
 - Maintain audit trail of provisioning/deprovisioning.
 - Provide tenant data export when contract, regulation, or product policy requires it.
 
+#### Tenant Backup Restore
+
+A shared backup can contain data from several tenants. For a single-tenant recovery from a shared database, restore into a separate resource and selectively recover the target tenant's data, as described in [Azure's multitenant storage guidance](https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/storage-data).
+
+- Authorize the operator for the target tenant and record the source backup, target, reason, and outcome.
+- Check tenant ownership before copying records or objects into the live tenant scope. Do not give a tenant operator access to a shared backup.
+- Reapply current access and retention rules; a backup can contain old memberships or data that should no longer be accessible.
+
 <details>
 <summary>Illustrative Tenant Lifecycle Management</summary>
 
