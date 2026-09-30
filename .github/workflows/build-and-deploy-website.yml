@@ -46,6 +46,12 @@ jobs:
   deploy:
     name: Deploy offline website
     needs: build
+    # Hold the lock through checkout and push so deployments share a fresh base.
+    concurrency:
+      group: offline-website-gh-pages
+      cancel-in-progress: false
+      # A slower old build must not replace a newer pending deployment.
+      queue: max
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -55,11 +61,9 @@ jobs:
     - name: Setup Action
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        fetch-depth: 0 # fetch all branches
+        ref: gh-pages
     - name: Install dependencies
       run: sudo apt-get install -y unzip zip
-    - name: Switch to offline website (gh-pages) branch
-      run: git checkout gh-pages
     - name: Remove previous version website files
       run: |
         shopt -s extglob
@@ -80,13 +84,22 @@ jobs:
       run: |
         unzip bundle.zip
         mv site/* .
-        upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md
+        upd=$(date +"%Y-%m-%d at %T"); echo "Website last update: $upd." > README.md
         rm -rf site
     - name: Commit changes to gh-pages
       run: |
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
         git add --all .
-        git commit -a -m "Deploy the generated website via GitHub Actions"
+        git commit -a -m "Deploy website from $GITHUB_SHA"
     - name: Publish the build to gh-pages
-      run: git push origin HEAD:gh-pages
+      shell: bash
+      run: |
+        set -euo pipefail
+        # Builds can finish out of order, and old runs can be retried.
+        latest_master_sha=$(git ls-remote --exit-code origin refs/heads/master | cut -f1)
+        if [ "$GITHUB_SHA" != "$latest_master_sha" ]; then
+          echo "::notice::Skipping superseded build $GITHUB_SHA; master is $latest_master_sha."
+          exit 0
+        fi
+        git push origin HEAD:gh-pages

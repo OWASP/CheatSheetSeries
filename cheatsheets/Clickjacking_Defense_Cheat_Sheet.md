@@ -10,6 +10,8 @@ There are three main mechanisms that can be used to defend against these attacks
 - Preventing session cookies from being included when the page is loaded in a frame using the [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) cookie attribute.
 - Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a "frame-buster").
 
+These mechanisms address frame-based clickjacking. [DoubleClickjacking](#defending-against-doubleclickjacking) uses separate windows and requires additional safeguards for sensitive actions.
+
 Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.
 
 ## Defending with Content Security Policy (CSP) frame-ancestors directive
@@ -109,6 +111,19 @@ If the Clickjacking attack does not require the user to be authenticated, this a
 Additionally, while `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), there are still some users (approximately 6% as of November 2020) with browsers that do not support it.
 
 The use of this attribute should be considered as part of a defense-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
+
+## Defending against DoubleClickjacking
+
+[DoubleClickjacking](https://evil.blog/2024/12/doubleclickjacking-what.html) tricks a user into activating a sensitive control in another window during a double-click. The target page is a top-level window, so framing restrictions such as `X-Frame-Options` and CSP `frame-ancestors` do not prevent this attack.
+
+[`SameSite` controls whether cookies accompany cross-site requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie). `Lax` permits cookies on top-level navigations using safe HTTP methods, while `Strict` withholds them on the initial cross-site request. Neither policy verifies that the user intended the resulting action.
+
+For pages your application controls, such as consent screens, payment confirmations, and account security settings:
+
+- For high-risk actions, require the user to review the action's details and complete [transaction authorization](Transaction_Authorization_Cheat_Sheet.md). Enforce authorization on the server; an extra confirmation button alone is not a complete defense against UI redress.
+- Treat disabling sensitive controls until prior interaction as a proposed supplementary mitigation, as described in [Paulos Yibelo's disclosure](https://evil.blog/2024/12/doubleclickjacking-what.html). Mouse movement or a key press alone does not establish that the user understands or approves the action.
+- If you use this mitigation, render the controls disabled from the start and test that users can enable and activate them with mouse, keyboard, touch, and assistive technology. [Click events support all these input methods](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event); do not require every user to move a mouse or press a key.
+- Keep the framing defenses above for frame-based attacks. Client-side interaction checks supplement these defenses and do not replace transaction authorization.
 
 ## Best-for-now Legacy Browser Frame Breaking Script
 

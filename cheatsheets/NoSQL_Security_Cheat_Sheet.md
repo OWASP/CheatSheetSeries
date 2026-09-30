@@ -163,4 +163,4 @@ For more information please check following cheat sheets:
 
 - [MongoDB Security Official Document](https://www.mongodb.com/docs/manual/security/)
 - [Security best practices for Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security.html)
-- [WSTG - Testing for NoSQL Injection](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection)
+- [WSTG - Testing for NoSQL Injection](https://github.com/OWASP/wstg/blob/master/document/4-Web_Application_Security_Testing/07-Injection/05.6-NoSQL_Injection.md)
