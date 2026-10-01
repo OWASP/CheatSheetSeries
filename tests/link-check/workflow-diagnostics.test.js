@@ -107,12 +107,13 @@ test("summaries are bounded while results.json keeps every row", (t) => {
   assert.match(summary, /…and 150 more in `results\.json`/);
 });
 
-test("the workflow runs once per change, unprivileged, and cancels superseded PR runs", () => {
+test("the workflow covers every PR, runs unprivileged, and cancels superseded PR runs", () => {
   const workflow = loadWorkflow("md-link-check.yml");
   assert.deepEqual(Object.keys(workflow.on).sort(), ["pull_request", "push", "schedule", "workflow_dispatch"]);
-  assert.deepEqual(workflow.on.pull_request, { branches: ["master"] });
+  assert.deepEqual(workflow.on.pull_request, {
+    types: ["opened", "synchronize", "reopened", "edited", "ready_for_review"],
+  }, "every target branch and changed path is eligible, including retargeted PRs");
   assert.deepEqual(workflow.on.push, { branches: ["master"] }, "branch pushes do not duplicate their PR run");
-  assert.equal(workflow.on.pull_request.paths, undefined, "the required check always runs");
   assert.equal(workflow.on.workflow_dispatch.inputs.fresh.type, "boolean");
   assert.match(workflow.concurrency.group, /github\.event\.pull_request\.number/);
   assert.match(workflow.concurrency.group, /github\.run_id/, "audits do not share a group");
@@ -122,6 +123,13 @@ test("the workflow runs once per change, unprivileged, and cancels superseded PR
   assert.doesNotMatch(text, /pull_request_target|secrets\.|GITHUB_TOKEN|github\.token|pull-requests:/);
   assert.deepEqual(workflow.permissions, {});
   const job = workflow.jobs["link-check"];
+  assert.equal(job.if, undefined, "drafts, forks, and bot authors must not skip the job");
+  const checkIndex = job.steps.findIndex((s) => s.id === "link_check");
+  assert.ok(checkIndex >= 0, "the link checker step is present");
+  for (const step of job.steps.slice(0, checkIndex + 1)) {
+    if (step.name === "Restore cached successes") continue;
+    assert.equal(step.if, undefined, `${step.name} must run for every PR`);
+  }
   assert.deepEqual(job.permissions, { contents: "read" });
   assert.ok(job["timeout-minutes"] > job.steps.find((s) => s.id === "link_check")["timeout-minutes"], "diagnostics outlive the check step");
   const checkout = job.steps.find((s) => String(s.uses).startsWith("actions/checkout@"));
