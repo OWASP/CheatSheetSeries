@@ -3,3 +3,7 @@
 # frontmatter and prose, which would trip MD041 etc.).
 .claude/
 .link-check/
+# Python dependencies and generated website content are not source documents.
+venv/
+generated/
+site/

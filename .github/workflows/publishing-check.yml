@@ -21,9 +21,7 @@ jobs:
 
       - name: Install system dependencies for lxml
         run: sudo apt-get update && sudo apt-get install -y libxml2-dev libxslt1-dev
-      - name: Install Python dependencies
-        run: make install-python-requirements
       - name: Build website
-        run: (cd scripts && bash Generate_Site_mkDocs.sh)
+        run: make generate-site
       - name: List generated files
         run: ls -lah generated/site/
