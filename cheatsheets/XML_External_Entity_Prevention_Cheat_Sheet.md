@@ -113,7 +113,7 @@ Support for external XML entities is disabled by default as of Lucee 5.4.2.10 an
 
 The examples below use the built-in Java API for XML Processing (JAXP) implementations on Java 9 or later. `newDefaultInstance()` (`newDefaultFactory()` for StAX) selects the built-in implementation instead of a provider selected through the [JAXP lookup mechanism](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/module-summary.html#LookupMechanism). For other providers, see [implementation differences](#other-providers-and-required-dtds).
 
-These are illustrative configuration fragments. The application opens and closes the input streams, supplies trusted schemas and style sheets, and handles exceptions. **Stop processing if any required security setting fails; do not catch the exception and continue parsing.** Pass streams rather than untrusted filenames or URLs: external-entity controls do not authorize the initial resource the application opens.
+These are illustrative configuration fragments. The application opens and closes the input streams, supplies trusted schemas and style sheets, and handles exceptions. **Stop processing if any required security setting fails; do not catch the exception and continue parsing.** Pass streams rather than untrusted filenames or URLs: external-entity controls do not restrict access to the initial resource passed directly to a parsing or processing API.
 
 ### Secure configuration by API
 
@@ -277,7 +277,7 @@ Do not use `XMLDecoder` with untrusted input. Blocking external entities does no
 
 ### Secure JAXP factory sources
 
-[Apache Commons Secure XML](https://commons.apache.org/proper/commons-secure-xml/) provides preconfigured factories. Check its [threat model](https://github.com/apache/commons-secure-xml/blob/main/src/site/markdown/threat_model.md) for supported runtimes and limits, including application-opened resources, separately supplied parsers and custom resolvers.
+[Apache Commons Secure XML](https://commons.apache.org/proper/commons-secure-xml/) provides preconfigured factories. Check its [threat model](https://github.com/apache/commons-secure-xml/blob/main/src/site/markdown/threat_model.md) for supported runtimes and limits. Its protections do not cover URIs passed directly to parsing APIs, parsers created outside the library, or untrusted resources your resolver chooses to supply. Do not loosen its reserved security settings.
 
 ## .NET
 
