@@ -17,7 +17,7 @@ User ↔ MCP Host (AI App) ↔ MCP Client ↔ MCP Server(s) ↔ Tools / Data / A
 - **MCP Host**: The AI application (e.g., Claude Desktop, Cursor, IDE plugins).
 - **MCP Client**: Connects to one or more MCP servers, passes tool definitions to the LLM.
 - **MCP Server**: Lightweight program exposing tools, resources, and prompts via the protocol.
-- **Transports**: `stdio` (local) or Streamable HTTP (remote). The older HTTP+SSE transport is deprecated. See the [MCP transport overview](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports).
+- **Transports**: `stdio` (local) or Streamable HTTP (remote). The older HTTP+SSE transport is deprecated. See the [Streamable HTTP specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
 
 The LLM sees all tool descriptions from all connected servers in its context — this is critical to understanding cross-server attacks.
 
@@ -79,7 +79,7 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - When using OAuth over HTTP, follow the MCP OAuth 2.1 profile. Clients must identify the intended MCP server with the `resource` parameter. See [resource indicators](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
 - Validate that each access token was issued for this MCP server as its intended audience. Reject invalid tokens and never pass an MCP access token to an upstream API. See [token handling](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
 - Validate authorization on every protected request. The [current Streamable HTTP transport](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) has no protocol-level sessions. If supporting older session-based revisions, use random session IDs, bind them to the authenticated user, and never treat an ID as authentication; see the [legacy session guidance](https://modelcontextprotocol.io/docs/2025-11-25/tutorials/security/security_best_practices).
-- Use TLS for remote Streamable HTTP connections. See the [transport specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
+- Use TLS for remote Streamable HTTP connections.
 - Verify server identity via certificate pinning or cryptographic server verification for remote servers.
 - Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS and limit impact of abuse; combine with sandboxing to contain local escape impact.
 - Use OS-native secure credential storage (macOS Keychain, Windows Credential Manager, Linux Secret Service) for OAuth access and refresh tokens.
