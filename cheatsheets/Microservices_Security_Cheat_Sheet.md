@@ -81,37 +81,9 @@ Netflix presented ([link](https://www.youtube.com/watch?v=R6tUNpRpdnY), [link](h
 
 ## External Entity Identity Propagation
 
-To make fine-grained authorization decisions at the microservice level, a microservice has to understand the caller’s context (e.g., user ID, user roles/groups). In order to allow the internal service layer to enforce authorization, the edge layer has to propagate an authenticated external entity identity (e.g., end user context) along with a request to downstream microservices. One of the simplest ways to propagate external entity identity is to reuse the access token received by the edge and pass it to internal microservices. However, it should be mentioned that this approach is highly insecure due to possible external access token leakage and may increase an attack surface because the communication relies on a proprietary token-based system implementation. If an internal service is unintentionally exposed to the external network, then it can be directly accessed using the leaked access token. This attack is not possible if the internal service only accepts a token format known only to internal services. This pattern is also not external access token agnostic, i.e., internal services have to understand external access tokens and support a wide range of authentication techniques to extract identity from different types of external tokens (e.g., JWT, cookie, OpenID Connect token).
+To make fine-grained authorization decisions at the microservice level, a microservice has to understand the caller’s context (e.g., user ID, user roles/groups), so the edge layer has to propagate an authenticated external entity identity along with each request to downstream microservices. Forwarding the externally issued access token to internal services is insecure: if that token leaks, every internal service that accepts it can be reached directly, and internal services stay coupled to external token formats. Instead, decouple external access tokens from a single internal representation — a data structure signed by a trusted issuer at the edge, propagated downstream and never exposed outside the system — which is the pattern adopted by the community ([Netflix’s edge “Passport”](https://www.infoq.com/presentations/netflix-user-identity/) is a real-world example).
 
-### Identity propagation: existing patterns
-
-#### Sending the external entity identity as clear or self-signed data structures
-
-In this approach, the microservice extracts the external entity identity from the incoming request (e.g., by parsing the incoming access token), creates a data structure (e.g., JSON or self-signed JWT) with that context, and passes it on to an internal microservice.
-In this scenario, the recipient microservice has to trust the calling microservice. If the calling microservice wants to violate access control rules, it can do so by setting any user/client ID or user roles it wants in the HTTP header. This approach is suitable only in highly trusted environments where every microservice is developed by a trusted development team that applies secure software development practices.
-
-#### Using a data structure signed by a trusted issuer
-
-In this pattern, after the external request is authenticated by the authentication service at the edge layer, a data structure representing the external entity identity (e.g., containing user ID, user roles/groups, or permissions) is generated, signed, or encrypted by the trusted issuer and propagated to internal microservices.
-![Signed ID propagation](../assets/Signed_ID_propogation.png)
-
-[Netflix presented](https://www.infoq.com/presentations/netflix-user-identity/) a real-world case of using that pattern: a structure called “Passport” that contains the user ID and its attributes and which is HMAC protected at the edge level for each incoming request. This structure is propagated to internal microservices and never exposed outside.
-
-1. The Edge Authentication Service (EAS) obtains a secret key from the Key Management System.
-2. EAS receives an access token (e.g., in a cookie, JWT, OAuth2 token) from the incoming request.
-3. EAS decrypts the access token, resolves the external entity identity, and sends it to the internal services in the signed “Passport” structure.
-4. Internal services can extract user identity to enforce authorization (e.g., to implement identity-based authorization) using wrappers.
-5. If necessary, internal service can propagate the “Passport” structure to downstream services in the call chain.
-
-![Netflix ID propagation approach](../assets/Netflix_ID_prop.png)
-It should be mentioned that the pattern is external access token agnostic and allows for decoupling of external entities from their internal representations.
-
-### Recommendation on how to implement identity propagation
-
-1. In order to implement an external access token agnostic and extendable system, decouple the access tokens issued for an external entity from its internal representation. Use a single data structure to represent and propagate the external entity identity among microservices. The edge-level service has to verify the incoming external access token, issue an internal entity representation structure, and propagate it to downstream services.
-2. Using an internal entity representation structure signed (symmetric or asymmetric encryption) by a trusted issuer is a recommended pattern adopted by the community.
-3. The internal entity representation structure should be extensible to enable adding more claims that may lead to low latency.
-4. The internal entity representation structure must not be exposed outside (e.g., to a browser or external device)
+The candidate patterns, their trade-offs, and a concrete recommendation are covered in the [Identity Propagation Patterns Cheat Sheet](../cheatsheets/Identity_Propagation_Patterns_Cheat_Sheet.md).
 
 ## Service-to-service authentication
 

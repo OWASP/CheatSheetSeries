@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**127** cheat sheets available.
+**128** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -117,6 +117,8 @@
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
 
 ## I
+
+[Identity Propagation Patterns Cheat Sheet](cheatsheets/Identity_Propagation_Patterns_Cheat_Sheet.md)
 
 [Infrastructure as Code Security Cheat Sheet](cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md)
 
