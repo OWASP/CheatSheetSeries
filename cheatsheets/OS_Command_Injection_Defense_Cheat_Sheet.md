@@ -62,8 +62,6 @@ If there are available libraries or APIs for the language you use, this is the p
 
 ### Defense option 2: Escape values added to OS commands specific to each OS
 
-**TODO: To enhance.**
-
 For examples, see [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) in PHP.
 
 The `escapeshellarg()` surrounds the user input in single quotes, so if the malformed user input is something like `& echo "hello"`, the final output will be like `calc '& echo "hello"'` which will be parsed as a single argument to the command `calc`.

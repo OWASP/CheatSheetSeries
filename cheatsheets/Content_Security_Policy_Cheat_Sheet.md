@@ -189,7 +189,7 @@ The `strict-dynamic` directive can be used as part of a Strict CSP in combinatio
 
 If a script block which has either the correct hash or nonce is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements as well without having to explicitly add nonces or hashes for each one.
 
-Note that whilst `strict-dynamic` is a CSP level 3 feature, CSP level 3 is very widely supported in common, modern browsers.
+Note that while `strict-dynamic` is a CSP level 3 feature, CSP level 3 is very widely supported in common, modern browsers.
 
 For more details, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
 
@@ -209,7 +209,7 @@ Most fetch directives have a certain [fallback list specified in w3](https://www
 - `img-src` specifies the URLs that images can be loaded from.
 - `manifest-src` specifies the URLs that application manifests may be loaded from.
 - `media-src` specifies the URLs from which video, audio and text track resources can be loaded from.
-- `prefetch-src` specifies the URLs from which resources can be prefetched from.
+- `prefetch-src` was an experimental directive for prefetch/prerender resource URLs. It was __removed from the CSP Level 3 specification__ and is ignored by modern browsers — do not rely on it for defense. Constrain scripts, styles, and default fetches with the standard fetch directives instead.
 - `object-src` specifies the URLs from which plugins can be loaded from.
 - `script-src` specifies the locations from which a script can be executed from. It is a fallback directive for other script-like directives.
     - `script-src-elem` controls the location from which execution of script requests and blocks can occur.

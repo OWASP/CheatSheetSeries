@@ -17,7 +17,7 @@ User ↔ MCP Host (AI App) ↔ MCP Client ↔ MCP Server(s) ↔ Tools / Data / A
 - **MCP Host**: The AI application (e.g., Claude Desktop, Cursor, IDE plugins).
 - **MCP Client**: Connects to one or more MCP servers, passes tool definitions to the LLM.
 - **MCP Server**: Lightweight program exposing tools, resources, and prompts via the protocol.
-- **Transports**: `stdio` (local) or HTTP/SSE (remote).
+- **Transports**: `stdio` (local) or Streamable HTTP (remote). The older HTTP+SSE transport is deprecated. See the [Streamable HTTP specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
 
 The LLM sees all tool descriptions from all connected servers in its context — this is critical to understanding cross-server attacks.
 
@@ -75,29 +75,24 @@ The LLM sees all tool descriptions from all connected servers in its context —
 
 ### 6. Authentication, Authorization & Transport Security
 
-- Enforce authentication on all remote MCP server endpoints.
-- Use OAuth 2.0 with PKCE for remote server authorization flows.
-- Bind session IDs to user-specific context (e.g., `<user_id>:<session_id>`) to prevent session hijacking.
-- Validate on each request that the session or token belongs to the current requester; reject the call if it does not (prevents confused deputy).
-- Use secure, non-deterministic session IDs (cryptographic random, not sequential).
-- Always use TLS for remote (HTTP/SSE) transports.
+- Require authentication when remote endpoints expose non-public tools or data. Authorization is optional in the protocol; see the [MCP authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
+- When using OAuth over HTTP, follow the MCP OAuth 2.1 profile. Clients must identify the intended MCP server with the `resource` parameter. See [resource indicators](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
+- Validate that each access token was issued for this MCP server as its intended audience. Reject invalid tokens and never pass an MCP access token to an upstream API. See [token handling](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization).
+- Validate authorization on every protected request. The [current Streamable HTTP transport](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) has no protocol-level sessions. If supporting older session-based revisions, use random session IDs, bind them to the authenticated user, and never treat an ID as authentication; see the [legacy session guidance](https://modelcontextprotocol.io/docs/2025-11-25/tutorials/security/security_best_practices).
+- Use TLS for remote Streamable HTTP connections.
 - Verify server identity via certificate pinning or cryptographic server verification for remote servers.
 - Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS and limit impact of abuse; combine with sandboxing to contain local escape impact.
 - Use OS-native secure credential storage (macOS Keychain, Windows Credential Manager, Linux Secret Service) for OAuth access and refresh tokens.
 - Never store OAuth tokens in plaintext in MCP config files or application settings.
-- Bind MCP HTTP/SSE servers to specific interfaces (e.g., 127.0.0.1), never 0.0.0.0 unless explicitly required.
-- Validate the Host header on every incoming request; reject requests with unexpected hostnames.
+- Bind local Streamable HTTP servers to localhost unless network access is explicitly needed. See the [transport security rules](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
+- Validate the `Origin` header on incoming Streamable HTTP requests. Reject a present but invalid Origin with HTTP 403. Do not reject non-browser clients solely because they send no Origin header. See the [transport security rules](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http).
+- Validate the Host header on incoming requests; reject unexpected hostnames.
 
-### 7. Message-Level Integrity and Replay Protection
+### 7. Optional Message-Level Integrity
 
-Transport-layer security (TLS) protects data in transit but does not guarantee message integrity at the application layer. A compromised proxy, middleware, or host-level agent can modify JSON-RPC payloads after TLS termination. Message-level signing ensures that tool calls and responses have not been tampered with between client and server.
+TLS protects messages in transit, but a component that changes data after TLS termination is a separate threat. The [core MCP transport specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports) does not require every JSON-RPC message to be signed. The [MCPS Internet-Draft](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/) proposes a separate signing and replay-protection layer; it is an individual work in progress, not an adopted MCP standard.
 
-- Sign each MCP message (JSON-RPC request body) with an asymmetric key (e.g., ECDSA P-256) bound to the sender's identity. The signature should cover the full serialized payload, not just selected fields.
-- Include a unique nonce and timestamp in every signed message. Reject messages with duplicate nonces or timestamps outside an acceptable window (e.g., 5 minutes) to prevent replay attacks.
-- Pin tool definitions at discovery time using cryptographic hashes (e.g., SHA-256 over the canonical JSON of the tool name, description, and input schema). Before each tool execution, re-hash the current definition and compare against the pinned value. A mismatch indicates post-deployment mutation (rug pull).
-- Require mutual signing where both client and server sign their messages. Clients should verify server response signatures before processing results. Accept server public keys only from authenticated channels, not from unverified first-contact responses.
-- Bind signatures to agent or user identity. Each signed message should include the signer's identity reference (e.g., a certificate fingerprint or public key hash) so the receiver can attribute and audit the request cryptographically.
-- Fail closed when verification fails. If a signature is missing, invalid, or the nonce has been seen before, reject the message entirely. Never silently fall back to unsigned processing when signing is enabled.
+If the threat model calls for integrity after TLS termination, choose a reviewed mechanism supported by both endpoints. Define how keys are trusted, what is signed, how replay is rejected, and what happens when verification fails. Do not present optional signing as a requirement for ordinary MCP deployments.
 
 ### 8. Multi-Server Isolation & Cross-Origin Protection
 
@@ -152,7 +147,7 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - Use `mcp-scan` or equivalent tooling to detect poisoned tools.
 - Log and monitor all tool invocations centrally.
 - Verify MCP server sources and scan dependencies.
-- Sign MCP messages at the application layer — do not rely solely on transport-layer (TLS) security.
+- Validate the Origin of Streamable HTTP requests and the audience of OAuth access tokens.
 - Pin tool definitions with cryptographic hashes and verify before each execution.
 
 **Don't**:
@@ -164,8 +159,8 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - Install MCP servers from unverified public registries without review.
 - Assume a tool approved yesterday is the same tool today (rug pulls).
 - Ignore cross-server interactions — shadowing attacks are real.
-- Store secrets in MCP server code, configs, or environment variables.
-- Silently fall back to unsigned message processing when signing is configured.
+- Store secrets in source code, plaintext config files, or logs.
+- Treat optional message signing as a core MCP requirement.
 - Accept server public keys from unverified first-contact responses (TOFU without pinning).
 
 ## References
@@ -174,4 +169,4 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [mcp-scan — Security Scanner for MCP Servers](https://github.com/invariantlabs-ai/mcp-scan)
 - [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/)
-- [IETF Internet-Draft: Secure MCP — Message Signing and Tool Integrity](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/)
+- [Individual Internet-Draft (work in progress): MCPS message signing](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/)

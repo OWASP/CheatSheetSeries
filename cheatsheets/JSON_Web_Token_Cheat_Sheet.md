@@ -16,7 +16,7 @@ JWTs are used in a wide range of applications such as:
 
 In its most common form (signed JWT), this information is protected by the generating application (**issuer**) using a signature to ensure it has not been tampered with. This signature prevents attackers, such as a malicious client or user, from forging a token or modifying the claims in an existing token, for example changing the user role from a simple user to an admin or altering the client's login. The JWT can be seen as a protected identity card or certificate about a user, an application, etc. An application (**presenter**) presents the token to a consuming application (**audience**) which can verify the token's authenticity and validity and take decisions or actions based on these claims.
 
-JWT can also provide confidentiality of the claims (encrypted JWT). Encryption is currently not treated in this cheat sheet but many aspects of this cheat sheet are applicable to encrypted JWTs.
+JWT can also provide confidentiality of the claims (encrypted JWT). Encryption itself is only introduced briefly in [Token Confidentiality and JWE](#token-confidentiality-and-jwe), but many aspects of this cheat sheet also apply to encrypted JWTs.
 
 ## Token Structure
 
@@ -182,633 +182,340 @@ bad_secret = secrets.token_bytes(128//8)
 meh_secret_for_hs512 = secrets.token_bytes(256//8)
 ```
 
-## Issues
+### Header fields
 
-### None Hashing Algorithm
+The following table lists some important JWT (JOSE) header parameters for security purpose.
 
-#### Symptom
+| Parameter       | Semantic                               | Security impact
+|-----------------|----------------------------------------|----------------
+| `alg`           | Signature algorithm                    | Signature algorithm used, risk of key type confusion
+| `typ`           | Media type                             | Protection against token type confusion
+| `jku`           | Verification key (URL to the JWK)      | Risk of untrusted key usage, risk or SSRF
+| `x5u`           | Verification key (URL to certificate)  | Risk of untrusted key usage, risk or SSRF
+| `jwk`           | Verification key (JWK)                 | Risk of untrusted key usage
+| `kid`           | Verification key (key ID)              | Risk of untrusted key usage
+| `x5c`           | Verification key (certificate chain)   | Risk of untrusted key usage
+| `x5t`           | Verification key (certificate hash)    | Risk of untrusted key usage
+| `x5t#S256`      | Verification key (certificate hash)    | Risk of untrusted key usage
 
-This attack, described [here](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/), occurs when an attacker alters the token and changes the hashing algorithm to indicate, through the *none* keyword, that the integrity of the token has already been verified. As explained in the link above *some libraries treated tokens signed with the none algorithm as a valid token with a verified signature*, so an attacker can alter the token claims and the modified token will still be trusted by the application.
+See the [header parameters subregistry](https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters) for a list of standard JWT (JOSE) header parameters.
 
-#### How to Prevent
+### Claims
 
-First, use a JWT library that is not exposed to this vulnerability.
+The following table lists some important JWT claims for security purpose.
 
-Last, during token validation, explicitly request that the expected algorithm was used.
+| Parameter       | Semantic                               | Security impact
+|-----------------|----------------------------------------|----------------
+| `exp`           | Expiration                             | Token validity
+| `nbf`           | Not valid before                       | Token validity
+| `status`        | Reference to token status list         | Token revocation, risk of SSRF
+| `iss`           | Issuer                                 | Scoping of claims (eg. `iss`), risk of untrusted issuer, risk of SSRF
+| `aud`           | Audience                               | Protection against audience confusion
+| `sub`, `sub_id` | Subject identifier                     | Subject/user identification, risk of cross-issuer user impersonation
+| `jti`           | Token identifier                       | Audit (logs)
+| `iat`           | Issuance timestamp                     | Audit (logs)
+| `azp`           | Authorized Party (OIDC)                | Audit (logs), authorization
+| `client_id`     | Client (OAuth 2)                       | Audit (logs), authorization
+| `auth_time`     | Authentication timestamp (OIDC)        | Enforcing authentication freshness
+| `acr`           | Authentication class                   | Enforcing authentication strength (eg. MFA)
+| `amr`           | Authentication method reference        | Enforcing authentication strength (eg. MFA)
+| `cnf`           | Token holder (public) key              | Sender constrained token
+| `may_act`       | Authorized Actor (impersonation/delegation) | Risk of cross-issuer user impersonation
+| `act`           | Actor (delegation, “on behalf of”)     | Audit (logs), risk of invalid actor imputation
+| `scope`         | Token restriction (OAuth 2)            | Authorization
+| `roles`         | User roles                             | Authorization, risk of spoofed cross-issuer authorization
+| `groups`        | User groups                            | Authorization, risk of spoofed cross-issuer authorization
+| `entitlements`  | User entitlements                      | Authorization, risk of spoofed cross-issuer authorization
+| `authorization_details` | Fine grained authorizations    | Authorization, risk of spoofed cross-issuer authorization
 
-#### Implementation Example
+See the [JSON Web Token Claims subregistry](https://www.iana.org/assignments/jwt/jwt.xhtml) for a list of standard JWT claims.
 
-``` java
-// HMAC key - Block serialization and storage as String in JVM memory
-private transient byte[] keyHMAC = ...;
+Many implementation have built-in support for validating core JWT claims such as `nbf`, `exp`, `iss` and `aud`.
 
-...
+## Threats on JWTs
 
-//Create a verification context for the token requesting
-//explicitly the use of the HMAC-256 hashing algorithm
-JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC)).build();
+See [RFC 8725](https://datatracker.ietf.org/doc/html/rfc8725#name-threats-and-vulnerabilities) for a discussion on threats and vulnerabilities related to JWT.
 
-//Verify the token, if the verification fail then a exception is thrown
-DecodedJWT decodedToken = verifier.verify(token);
+### Unsecured JWTs
+
+Some JWT libraries, [used to accept unsecured JWTs by default](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/) (`"alg":"none"`). In this case, an attacker would be able to forge their own JWTs: depending on the application, they might be able to impersonate arbitrary users, obtains arbitrary authorizations, etc.
+
+This issue should now be fixed in JWT libraries.
+
+Mitigation:
+
+- Make sure that `"alg":"none"` is not accepted by your JWT parser. It should be disabled by default by recent implementations.
+
+### Key type confusion
+
+Some JWT implementations would accept to use a public key intended for public-key digital signature as if it was a secret key used for MAC verification. In this context, an attacker could forge a MAC-based JWT by using the public key of the real issuer as if it was a secret key.
+
+This threat is also called “key confusion” or “algorithm confusion”.
+
+Example of legitimate token issuance:
+
+```python
+token = jwt.encode(claims, private_key_bytes, algorithm="ES256")
 ```
 
-### Token Sidejacking
+Example of attacker forging a token based on key type confusion:
 
-#### Symptom
-
-This attack occurs when a token has been intercepted/stolen by an attacker and they use it to gain access to the system using targeted user identity.
-
-#### How to Prevent
-
-One way to prevent this is by adding a "user context" to the token. The user context should consist of the following:
-
-- A random string generated during the authentication phase. This string is sent to the client as a hardened cookie (with the following flags: [HttpOnly + Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies), [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies), [Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie), and [cookie prefixes](https://googlechrome.github.io/samples/cookie-prefixes/)). Avoid setting the *expires* header so the cookie is cleared when the browser is closed. Set *Max-Age* to a value equal to or less than the JWT's expiry time — never more.
-- A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent any XSS issues allowing the attacker to read the random string value and setting the expected cookie.
-
-Avoid using IP addresses as part of the context. IP addresses can change during a single session due to legitimate reasons — for example, when a user accesses the application on a mobile device and switches network providers. Additionally, IP tracking can raise concerns related to [GDPR compliance](https://gdpr.eu/) in the EU.
-
-During token validation, if the received token does not contain the correct context (e.g., if it is being replayed by an attacker), it must be rejected.
-
-#### Implementation example
-
-Code to create the token after successful authentication.
-
-``` java
-// HMAC key - Block serialization and storage as String in JVM memory
-private transient byte[] keyHMAC = ...;
-// Random data generator
-private SecureRandom secureRandom = new SecureRandom();
-
-...
-
-//Generate a random string that will constitute the fingerprint for this user
-byte[] randomFgp = new byte[50];
-secureRandom.nextBytes(randomFgp);
-String userFingerprint = DatatypeConverter.printHexBinary(randomFgp);
-
-//Add the fingerprint in a hardened cookie - Add cookie manually because
-//SameSite attribute is not supported by javax.servlet.http.Cookie class
-String fingerprintCookie = "__Secure-Fgp=" + userFingerprint
-                           + "; SameSite=Strict; HttpOnly; Secure";
-response.addHeader("Set-Cookie", fingerprintCookie);
-
-//Compute a SHA256 hash of the fingerprint in order to store the
-//fingerprint hash (instead of the raw value) in the token
-//to prevent an XSS to be able to read the fingerprint and
-//set the expected cookie itself
-MessageDigest digest = MessageDigest.getInstance("SHA-256");
-byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
-String userFingerprintHash = DatatypeConverter.printHexBinary(userFingerprintDigest);
-
-//Create the token with a validity of 15 minutes and client context (fingerprint) information
-Calendar c = Calendar.getInstance();
-Date now = c.getTime();
-c.add(Calendar.MINUTE, 15);
-Date expirationDate = c.getTime();
-Map<String, Object> headerClaims = new HashMap<>();
-headerClaims.put("typ", "JWT");
-String token = JWT.create().withSubject(login)
-   .withExpiresAt(expirationDate)
-   .withIssuer(this.issuerID)
-   .withIssuedAt(now)
-   .withNotBefore(now)
-   .withClaim("userFingerprint", userFingerprintHash)
-   .withHeader(headerClaims)
-   .sign(Algorithm.HMAC256(this.keyHMAC));
+```python
+token = jwt.encode(claims, public_key_bytes, algorithm="HS256")
 ```
 
-Code to validate the token.
+Example of validation potentially vulnerable to key type confusion:
 
-``` java
-// HMAC key - Block serialization and storage as String in JVM memory
-private transient byte[] keyHMAC = ...;
+```python
+# If the token is using a MAC, the library might interpret the public key bytes as a MAC secret:
+decoded = jwt.decode(token, public_key_bytes, algorithms=jwt.algorithms.get_default_algorithms())
+```
 
-...
+Note: this issue is [mitigated](https://github.com/jpadilla/pyjwt/commit/9c528670c455b8d948aff95ed50e22940d1ad3fc) in recent versions of the PyJWT library by detecting whether a MAC key appears to be a public key (in PEM of SSH format).
 
-//Retrieve the user fingerprint from the dedicated cookie
-String userFingerprint = null;
-if (request.getCookies() != null && request.getCookies().length > 0) {
- List<Cookie> cookies = Arrays.stream(request.getCookies()).collect(Collectors.toList());
- Optional<Cookie> cookie = cookies.stream().filter(c -> "__Secure-Fgp"
-                                            .equals(c.getName())).findFirst();
- if (cookie.isPresent()) {
-   userFingerprint = cookie.get().getValue();
- }
+Mitigations (at validation):
+
+- use a library which is not vulnerable to the issue (eg. strong-typing of the type of key);
+- chose the key depending on the requested signature algorithm or validate that the key used for validation is consistent with the signature algorithm;
+- if possible, hardcode the accepted algorithms and do not mix public-key digital signatures algorithms and MAC algorithms.
+
+Example of validation not vulnerable because MAC algorithms are not accepted:
+
+```python
+decoded = jwt.decode(token, public_key_bytes, algorithms=["ES256"])
+```
+
+Example of validation not vulnerable because the key is strictly typed:
+
+```python
+from joserfc import jwt, jwk
+
+# {"kty":"EC",
+#  "crv":"P-256",
+#  "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+#  "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"}
+public_key = jwk.import_key(jwk)
+decoded = jwt.decode(encoded, public_key)
+```
+
+References:
+
+- [Algorithm confusion attacks](https://portswigger.net/web-security/jwt/algorithm-confusion);
+- [CVE-2022-29217](https://nvd.nist.gov/vuln/detail/cve-2022-29217), Key confusion through non-blocklisted public key formats (PyJWT);
+- [CVE-2023-48223](https://nvd.nist.gov/vuln/detail/CVE-2023-48223), JWT Algorithm Confusion in fast-jwt.
+
+### Trusting key material named in the token header
+
+A JWS header can carry the verification key itself or a pointer to it: `jwk` (an embedded key), `jku` (a URL to a JWK Set), `x5u` (a URL to an X.509 certificate) and `x5c` (an embedded certificate chain), alongside the key selection hints `kid`, `x5t` and `x5t#S256`. An application that resolves or selects its verification key from these header parameters, without tying the result back to something it already trusts, can be steered into trusting a key the attacker controls, because the header is unauthenticated attacker input.
+
+An attacker can forge their own token, include their own public key in `jwk`, or point `jku` or `x5u` at a JWK Set or certificate they host, and sign the token with the matching private key. A verifier that trusts the key it has just read from the token accepts the forgery. An attacker can also try to smuggle a symmetric key through the same parameters, in the hope that the implementation will use it for MAC verification.
+
+These parameters have legitimate uses, so the distinction is anchoring rather than avoidance. `x5c` and `x5u` are usable where the certificate chain validates up to an anchor already trusted for that issuer, and `kid`, `x5t` and `x5t#S256` are the normal way to choose which key from an already configured JWKS should verify a given token. What must not happen is treating any of them as the source of trust rather than as a pointer within it.
+
+Mitigations:
+
+- Do not take the verification key from the token unless that key can be tied, through a chain of trust, to a root trust anchor associated with the issuer.
+- Prefer trust material established out of band, such as a pinned key or the `jwks_uri` published in the issuer's metadata.
+- Validate or sanitize `kid` before using it in a lookup, since it also reaches databases and directories as an injection vector.
+- Where keys are fetched by URL, see the [Server Side Request Forgery Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
+
+References:
+
+- [RFC 8725, Do Not Trust Received Claims](https://datatracker.ietf.org/doc/html/rfc8725#name-do-not-trust-received-claim);
+- [CVE-2018-0114](https://nvd.nist.gov/vuln/detail/CVE-2018-0114), a key embedded in the JWS header trusted for verification.
+
+### Issuer and audience confusion
+
+A JWT typically carries the `iss` (issuer) claim to say who created it and the `aud` (audience) claim to say which party is expected to consume and validate it. Neither claim is mandatory, and some designs omit one deliberately: a token an application issues and consumes itself, under a key used for nothing else, or an SD-JWT whose audience is established by the accompanying key binding JWT rather than by an `aud` claim. Where a key does speak for more than one issuer or more than one recipient, however, a verifier that checks only the signature and the expiration accepts any token that key has signed, whatever `iss` and `aud` it carries. An attacker holding such a token, whether legitimately issued to them or obtained from a service they control, may then be able to replay it against a different recipient. RFC 8725 calls this a substitution attack.
+
+Two variants are worth separating, because different checks defeat them.
+
+**Audience confusion.** An attacker presents a token issued for one service to a second service that trusts the same issuer. If the second service does not require its own identifier in `aud`, the token is accepted. For example, a token minted for a low-privilege service is replayed against an internal API, and the attacker gains access that was never granted. On a different axis, a third-party application that legitimately receives tokens for its own use can replay one against another application, first-party or third-party, reaching data or operations it was never granted.
+
+**Issuer confusion.** An attacker presents a token from a different issuer that the verifier also trusts, such as a partner tenant or a self-service account at a public identity provider. Comparing the `iss` string alone does not stop this if the verifier resolves its verification key independently of `iss`. A verifier that looks up the key by `kid` across the union of several trusted issuers' JWK Sets will accept a token whose `iss` names one issuer and whose `kid` names a key belonging to another: the signature verifies against the key that `kid` selected, and the `iss` and `aud` comparisons pass because the attacker set both to what the verifier expects. No key needs to be stolen, and the deployment need not be multi-tenant.
+
+Mitigations:
+
+- Validate `iss` against what the deployment trusts, as a case-sensitive comparison of the whole string including scheme and path. Where a single issuer is expected this is an equality check. Where issuers are provisioned dynamically, through a discovery protocol for example, it becomes membership of an explicit allowlist of issuer identifiers, rather than acceptance of whatever `iss` the token presents.
+- Select the verification key from the set bound to the validated `iss`, for example that issuer's `jwks_uri`; never verify against a union of keys from several issuers. In multi-tenant deployments this means resolving the key set from an allowlist keyed by issuer rather than searching every tenant's keys.
+- Validate that the recipient's own identifier is present in `aud`, whether `aud` is a single string or an array of strings.
+- Where the deployment relies on these claims, reject tokens in which `iss` or `aud` is missing. RFC 7519 makes both optional, so this is a deployment decision rather than a specification requirement: a verifier with no `iss` has nothing to bind the key to, and one with no `aud` cannot tell whether the token was meant for it, but a profile that establishes either by other means does not need the claim itself.
+
+The related case, where the key material itself is taken from the token rather than merely selected by it, is covered in [Trusting key material named in the token header](#trusting-key-material-named-in-the-token-header). Where verification uses a MAC, see also the secret reuse points under [MAC](#mac).
+
+Example of strict validation in Python with PyJWT, resolving the key from the expected issuer's JWK Set rather than accepting one supplied independently:
+
+```python
+import jwt
+
+ISSUER = "https://auth.example.com/"
+AUDIENCE = "https://api.example.com/v1/payments"
+
+# Keys come from this issuer's JWK Set only (its published jwks_uri),
+# so a `kid` naming a key of some other trusted issuer cannot verify
+# this token.
+jwks_client = jwt.PyJWKClient("https://auth.example.com/.well-known/jwks.json")
+signing_key = jwks_client.get_signing_key_from_jwt(token)
+
+decoded_payload = jwt.decode(
+    token,
+    signing_key,
+    algorithms=["ES256"],
+    issuer=ISSUER,
+    audience=AUDIENCE,
+    options={"require": ["exp", "iss", "aud"]},
+)
+```
+
+Note: in PyJWT the `issuer` and `audience` arguments perform the validation. The `verify_iss` and `verify_aud` options are enabled by default and gate checks that do nothing on their own, so a token is only checked against an expected issuer and audience when those arguments are passed.
+
+References:
+
+- [RFC 8725, Substitution Attacks](https://datatracker.ietf.org/doc/html/rfc8725#name-substitution-attacks);
+- [RFC 8725, Validate Issuer and Subject](https://datatracker.ietf.org/doc/html/rfc8725#name-validate-issuer-and-subject);
+- [RFC 8725, Use and Validate Audience](https://datatracker.ietf.org/doc/html/rfc8725#name-use-and-validate-audience);
+- [RFC 7519, "iss" (Issuer) Claim](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.1);
+- [RFC 7519, "aud" (Audience) Claim](https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3).
+
+### Cross-JWT and token type confusion
+
+Cross-JWT (or token type) confusion occurs when validation rules fail to distinguish token kinds, allowing a token issued for one purpose (such as an ID or password-reset token) to be accepted as another (such as an access token). Overlapping claims or shared signing keys are common enabling conditions (see [RFC 8725 §2.8](https://datatracker.ietf.org/doc/html/rfc8725#name-cross-jwt-confusion)).
+
+Mitigations:
+
+- **Use explicit typing (`typ`):** Set the `typ` header parameter to a specific media type distinguishing the token's purpose, such as `"at+jwt"` for OAuth 2.0 access tokens ([RFC 9068](https://datatracker.ietf.org/doc/html/rfc9068)), `"logout+jwt"` for logout tokens ([OpenID Connect Back-Channel Logout 1.0 §2.4](https://openid.net/specs/openid-connect-backchannel-1_0.html#LogoutToken)), or custom types (e.g., `example-reset+jwt`) for internal tokens.
+- **Validate `typ` at the verifier:** For token profiles that require or reliably provide explicit typing, reject tokens with missing or unexpected `typ` values at that endpoint. Note that `typ` is case-insensitive and the `application/` prefix may be omitted ([RFC 7515 §4.1.9](https://datatracker.ietf.org/doc/html/rfc7515#section-4.1.9)).
+- **Use mutually exclusive validation rules:** Where explicit typing cannot be enforced interoperably (e.g., standard OIDC ID tokens omitting `typ`), distinguish token kinds using separate signing keys, required claims, or strict **`iss` and `aud` isolation** ([RFC 8725 §3.12](https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali)).
+
+Example of validation enforcing explicit token type:
+
+```python
+import jwt
+
+# Verify signature and standard claims first
+decoded = jwt.decode_complete(
+    token,
+    public_key,
+    algorithms=["ES256"],
+    audience="https://api.example.com",
+    issuer="https://auth.example.com",
+    options={"require": ["exp", "iss", "aud"]},
+)
+
+# Enforce explicit token type from the verified header
+typ = str(decoded["header"].get("typ", "")).lower()
+if typ not in ["at+jwt", "application/at+jwt"]:
+    raise jwt.InvalidTokenError("Invalid token type: expected at+jwt")
+```
+
+References:
+
+- [RFC 8725 §3.11, Use Explicit Typing](https://datatracker.ietf.org/doc/html/rfc8725#name-use-explicit-typing);
+- [RFC 8725 §3.12, Use Mutually Exclusive Validation Rules for Different Kinds of JWTs](https://datatracker.ietf.org/doc/html/rfc8725#name-use-mutually-exclusive-vali);
+- [RFC 9068, JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068).
+
+## JWT revocation
+
+### Token Status List
+
+If revocation of the JWTs by the issuer is needed, the [Token Status Lists](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list) (TSL) can be used:
+
+- the JWT contains the URI of a TSL;
+- the TSL aggregates the revocation status of several tokens in compressed form;
+- the consumer of the token can fetch the TSL to obtain the revocation status of the JWT.
+
+The issuer includes a `status` claim in the JWT. This claims contains the URI of the associated TSL and the index of the status of the JWT within this list:
+
+```json
+{
+    "iss": "https://issuer.example/",
+    "sub": "NsxuACbpJ9N7Ix96aWrYxHX-EZ4",
+    "iat": 1783635268,
+    "nbf": 1783635268,
+    "exp": 1783653268,
+    "status": {
+        "status_list": {
+            "idx": 6,
+            "uri": "https://issuer.example/tsl/JAffke55FR5gtJQ_rtktWkSaTlI"
+        }
+    }
 }
-
-//Compute a SHA256 hash of the received fingerprint in cookie in order to compare
-//it to the fingerprint hash stored in the token
-MessageDigest digest = MessageDigest.getInstance("SHA-256");
-byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
-String userFingerprintHash = DatatypeConverter.printHexBinary(userFingerprintDigest);
-
-//Create a verification context for the token
-JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC))
-                              .withIssuer(issuerID)
-                              .withClaim("userFingerprint", userFingerprintHash)
-                              .build();
-
-//Verify the token, if the verification fail then an exception is thrown
-DecodedJWT decodedToken = verifier.verify(token);
 ```
 
-### No Built-In Token Revocation by the User
+## Replay protection
 
-#### Symptom
+### JWT denylist
 
-This problem is inherent to JWT because a token only becomes invalid when it expires. The user has no built-in feature to explicitly revoke the validity of a token. This means that if it is stolen, a user cannot revoke the token itself thereby blocking the attacker.
+In some cases, the consumer of the token might want to maintain a JWT denylist. This might be for example used a simple form of JWT replay protection or as a workaround for the “stateless session” invalidation problem.
 
-#### How to Prevent
+A JWT deny list can typically be implemented based on the  `jti` and `iss` claims:
 
-Since JWTs are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining denylist on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure as a session ID used in the traditional session system, and unless both the cookie and the JWT are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.
+```python
+def revoke_token(claims):
+    jti = claims.get("jti")
+    iss = claims.get("iss")
+    exp = claims.get("exp")
+    deny_list.insert((jti, iss), exp)
 
-Another way to protect against this is to implement a token denylist that will be used to mimic the "logout" feature that exists with traditional session management system.
+def is_token_revoked(claims) -> bool:
+    jti = claims.get("jti")
+    iss = claims.get("iss")
+    return deny_list.contains((jti, iss))
+```
 
-When the user wants to "logout" then it call a dedicated service that will add the token's identifying claims (`jti` and `iss`) to the denylist resulting in an immediate invalidation of the token for further usage in the application.
+Depending on the application and the type of JWT, other claims might be more suitable.
+
+**Warning:** Using the raw JWT or a secure hash of the JWT (`SHA-256(token)`) as the denylist key is *not safe* and might expose the application to **denylist bypass through [JWT malleability](https://www.gabriel.urdhr.fr/2026/06/27/ecdsa-jwt-malleability/)**. An attacker in possession of a revoked JWT might be able to modify an alternative representation of the JWT that still passes signature verification:
+
+- because of non-strict JWT parsing of the JWT implementation;
+- for ECDSA JWTs, because of the malleability of ECDSA signatures.
+
+```python
+# Not secure. Might be vulnerable to JWT malleability:
+def unsafe_revoke_token(claims):
+    exp = claims.get("exp")
+    token_hash = hashlib.sha256(token.encode("utf-8")).digest()
+    deny_list.insert(token_hash, exp)
+```
+
+Before implementing such a JWT denylist, you should consider whether there is a better solution for your problem:
+
+- Token Status List is a scalable solution for revocation of the JWT by the issuer.
+- Freshness and replay protection can often by implementing by using a `nonce` bound to the session in the JWT claims. This approach is [used in OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes).
+- Token reuse can be mitigated by using short expiration time in the JWT.
+- The risk of token exfiltration can be mitigated by using sender constrained JWT (such a [DPoP](https://datatracker.ietf.org/doc/html/rfc9449) or [TLS-bound JWT](https://www.rfc-editor.org/info/rfc8705/#section-3)).
+
+## Token Confidentiality and JWE
+
+### Signed JWTs are not confidential
+
+A signed JWT ([JSON Web Signature](https://datatracker.ietf.org/doc/html/rfc7515), JWS) provides integrity and authenticity, but not confidentiality. The payload is only base64url encoded, not encrypted, so anyone who obtains the token can read every claim. With a MAC (`HS*`), a valid signature also only proves that the token was produced by some holder of the shared secret, see [Public-key Signatures vs. MAC](#public-key-signatures-vs-mac).
+
+TLS prevents the token from being read in transit, but the claims remain exposed elsewhere: in application logs, in browser storage, in referrer headers, and to any intermediary that terminates TLS.
+
+[Omitting privacy-sensitive information from a JWT is the simplest way of minimizing privacy issues](https://datatracker.ietf.org/doc/html/rfc7519#section-12). Prefer keeping sensitive data server-side behind an opaque reference token. Use JWE only when the claims must travel with the token to a party that cannot resolve them with the issuer.
+
+### Using JWE
+
+When claims must be kept confidential, use [JSON Web Encryption (JWE)](https://datatracker.ietf.org/doc/html/rfc7516). JWE uses two algorithms:
+
+- **`alg`:** the key management algorithm, which [encrypts or agrees upon](https://datatracker.ietf.org/doc/html/rfc7518#section-4.1) the Content Encryption Key (CEK) for the intended recipient (for example `RSA-OAEP-256` or `ECDH-ES+A256KW`).
+- **`enc`:** the content encryption algorithm, which encrypts the payload using authenticated encryption (for example `A256GCM`).
+
+JWE provides confidentiality and ciphertext integrity, **not** issuer authentication. With a public-key `alg`, anyone holding the recipient's public key can produce a token that decrypts successfully, so never make authorization decisions on claims from an unsigned JWE.
+
+When both authenticity and confidentiality are needed, use a **nested JWT**: sign the claims first (JWS), then encrypt the result (JWE). This [prevents attacks in which the signature is stripped, leaving just an encrypted message, as well as providing privacy for the signer](https://datatracker.ietf.org/doc/html/rfc7519#section-11.2). In the outer JWE, the `cty` header [MUST be set to `JWT`](https://datatracker.ietf.org/doc/html/rfc7519#section-5.2) to signal the nesting.
+
+When consuming a nested JWT, decrypt the outer JWE **and** verify the inner JWS signature, rejecting the token if either step fails. [Both the outer and the inner operations MUST be validated](https://datatracker.ietf.org/doc/html/rfc8725#section-3.3): successful decryption on its own proves nothing about who issued the claims.
+
+Two further requirements apply to JWE:
+
+- Accept only an allowlisted `alg`/`enc` pair and bind each key to a single algorithm. Never let the token header select the algorithm, because this [enables a downgrade attack that can recover the CEK](https://datatracker.ietf.org/doc/html/rfc7516#section-11.4).
+- Do not compress the claims before encryption (the `zip` header), because [compressed data often reveals information about the plaintext](https://datatracker.ietf.org/doc/html/rfc8725#section-3.6).
 
 **Note:**
 
-Do not use the raw JWT or a hash of it as the denylist key.
-
-A denylist keyed on a digest of the raw token (e.g. `SHA-256(token)`) is unsafe, because a JWT does not have a single canonical byte representation. The same logically valid token can be transformed into a *different* byte sequence that still passes signature verification — which means it hashes differently and silently bypasses the denylist. This can happen for two independent reasons:
-
-- **ECDSA signature malleability.** For JWTs signed with an ECDSA algorithm (e.g. `ES256`), a valid signature `(r, s)` has a second, equally valid form `(r, (-s) mod n)`, where `n` is the order of the curve's generator point. Both signatures verify successfully against the same public key for the same header and payload, but produce different token bytes — and therefore a different digest. An attacker in possession of a revoked token can compute this alternate signature and obtain a token that still authenticates.
-- **Non-strict JWT parsing.** Many JWT libraries tolerate multiple, non-canonical encodings of the same logical token — for example, base64url values with extraneous padding, alternate-but-decodable character substitutions, or trailing bytes with differing unused bits that decode to identical content. These variants are byte-for-byte different from the original token and therefore also bypass a hash-based denylist, regardless of signing algorithm (HMAC, RSA, or ECDSA).
-
-Because of this, the denylist must be keyed on a value that is **stable across these malleable encodings**, not on the token's raw bytes. The recommended approach is to use the `jti` (JWT ID) claim, which is a unique identifier assigned by the issuer at creation time and embedded inside the signed payload — making it immune to the malleability classes above, since any tampering with it invalidates the signature. Combining `jti` with the `iss` (issuer) claim ensures a globally unique denylist key — `jti` uniqueness is only guaranteed within a single issuer, so a (`jti`, `iss`) pair is required to prevent collisions between tokens from different issuers. Note that this denylist is audience-maintained (operated by the relying party), not by the issuer itself.
-
-#### Implementation Example
-
-##### Block List Storage
-
-The following example demonstrates a denylist keyed on `jti` and `iss` rather than the raw token, per the recommendation above.
-
-A database table with the following structure will be used as the central denylist storage.
-
-``` sql
-create table if not exists revoked_token(
-  jwt_id varchar(255) not null,
-  iss varchar(255) not null,
-  expires_at timestamp not null,
-  revocation_date timestamp default now(),
-  primary key (jwt_id, iss)
-);
-```
-
-##### Token Revocation Management
-
-Code in charge of adding a token to the denylist and checking if a token is revoked.
-
-``` java
-/**
- * Handle the revocation of the token (logout).
- * Revocation is keyed on the token's "jti" and "iss" claims rather than
- * a hash of the raw token, since JWTs do not have a single canonical
- * byte representation (see warning above) and a raw-token or
- * digest-based denylist can be bypassed via ECDSA signature
- * malleability or lenient JWT parsing. Both claims are embedded in the
- * signed payload, so neither can be altered without invalidating the
- * signature. The (jti, iss) pair is used because jti uniqueness is
- * only guaranteed per issuer — a malicious or rogue issuer could mint
- * a JWT with the same jti as a legitimate one, causing a collision.
- * Note: this denylist is audience-maintained (operated by the relying
- * party), not by the issuer itself.
- * Use a DB in order to allow multiple instances to check for revoked
- * tokens and allow cleanup at centralized DB level.
- */
-public class TokenRevoker {
-
-    /** DB Connection */
-    @Resource("jdbc/storeDS")
-    private DataSource storeDS;
-
-    /**
-     * Verify if a given token (identified by its "jti" + "iss" claims)
-     * is present in the revocation table.
-     *
-     * @param decodedToken Verified, decoded token (signature already validated)
-     * @return Presence flag
-     * @throws Exception If any issue occurs during communication with DB
-     */
-    public boolean isTokenRevoked(DecodedJWT decodedToken) throws Exception {
-        String jwtId = decodedToken.getId();       // value of the "jti" claim
-        String issuer = decodedToken.getIssuer();  // value of the "iss" claim
-
-        if (jwtId == null || jwtId.trim().isEmpty() || issuer == null || issuer.trim().isEmpty()) {
-            // A token without "jti" or "iss" cannot be safely tracked
-            // in this denylist; such a token should be rejected upstream.
-            throw new IllegalArgumentException("Token has no \"jti\" or \"iss\" claim");
-        }
-
-        boolean tokenIsPresent;
-        try (Connection con = this.storeDS.getConnection()) {
-            String query = "select jwt_id from revoked_token where jwt_id = ? and iss = ?";
-            try (PreparedStatement pStatement = con.prepareStatement(query)) {
-                pStatement.setString(1, jwtId);
-                pStatement.setString(2, issuer);
-                try (ResultSet rSet = pStatement.executeQuery()) {
-                    tokenIsPresent = rSet.next();
-                }
-            }
-        }
-        return tokenIsPresent;
-    }
-
-    /**
-     * Add a token's "jti" + "iss" claims to the revocation table, along
-     * with the token's expiration so the entry can be purged once it is
-     * no longer needed (i.e. once the token itself would have expired
-     * naturally).
-     *
-     * @param decodedToken Verified, decoded token (signature already validated)
-     * @throws Exception If any issue occurs during communication with DB
-     */
-    public void revokeToken(DecodedJWT decodedToken) throws Exception {
-        String jwtId = decodedToken.getId();
-        String issuer = decodedToken.getIssuer();
-        Date expiresAt = decodedToken.getExpiresAt(); // value of the "exp" claim
-
-        if (jwtId == null || jwtId.trim().isEmpty() || issuer == null || issuer.trim().isEmpty()) {
-            throw new IllegalArgumentException("Token has no \"jti\" or \"iss\" claim");
-        }
-        if (expiresAt == null) {
-            throw new IllegalArgumentException("Token has no \"exp\" claim; cannot schedule purge");
-        }
-
-        if (!this.isTokenRevoked(decodedToken)) {
-            try (Connection con = this.storeDS.getConnection()) {
-                String query = "insert into revoked_token(jwt_id, iss, expires_at) values(?, ?, ?)";
-                int insertedRecordCount;
-                try (PreparedStatement pStatement = con.prepareStatement(query)) {
-                    pStatement.setString(1, jwtId);
-                    pStatement.setString(2, issuer);
-                    pStatement.setTimestamp(3, new java.sql.Timestamp(expiresAt.getTime()));
-                    insertedRecordCount = pStatement.executeUpdate();
-                }
-                if (insertedRecordCount != 1) {
-                    throw new IllegalStateException("Number of inserted record is invalid," +
-                    " 1 expected but is " + insertedRecordCount);
-                }
-            }
-        }
-    }
-
-    /**
-     * Purge expired entries from the denylist. Intended to be run on a
-     * schedule (e.g. a daily cron job or scheduled task) so the table
-     * does not grow unbounded -- once a token's own "exp" has passed,
-     * it would already be rejected by signature/expiry validation, so
-     * keeping its denylist entry is no longer necessary.
-     *
-     * @throws Exception If any issue occurs during communication with DB
-     */
-    public void purgeExpiredEntries() throws Exception {
-        try (Connection con = this.storeDS.getConnection()) {
-            String query = "delete from revoked_token where expires_at < ?";
-            try (PreparedStatement pStatement = con.prepareStatement(query)) {
-                pStatement.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
-                pStatement.executeUpdate();
-            }
-        }
-    }
-}
-```
-
-#### Issuer-Side Revocation: Token Status List
-
-The denylist approach described above is typically operated by the relying party (resource server) — it works well when the audience maintains its own revocation state close to where tokens are validated. However, in some deployments the issuer needs to centrally broadcast revocation state to multiple relying parties without requiring each one to maintain its own denylist.
-
-For this use case, the IETF [Token Status List (TSL)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list) draft defines a scalable, issuer-maintained revocation mechanism. TSL is used in SD-JWT Verifiable Credentials and other high-scale
-deployments where a single issuer serves many relying parties. Consult the TSL draft for implementation guidance when issuer-side revocation is required.
-
-### Token Information Disclosure
-
-#### Symptom
-
-This attack occurs when an attacker has access to a token (or a set of tokens) and extracts information stored in it (the contents of JWTs are base64 encoded, but is not encrypted by default) in order to obtain information about the system. Information can be for example the security roles, login format...
-
-#### How to Prevent
-
-A way to protect against this attack is to cipher the token using, for example, a symmetric algorithm.
-
-It's also important to protect the ciphered data against attack like [Padding Oracle](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle.html) or any other attack using cryptanalysis.
-
-In order to achieve all these goals, the *AES-[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)* algorithm is used which provides *Authenticated Encryption with Associated Data*.
-
-More details from [here](https://github.com/google/tink/blob/master/docs/PRIMITIVES.md#deterministic-authenticated-encryption-with-associated-data):
-
-```text
-AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric
-authenticated encryption.
-
-Implementations of this primitive are secure against adaptive chosen ciphertext attacks.
-
-When encrypting a plaintext one can optionally provide associated data that should be authenticated
-but not encrypted.
-
-That is, the encryption with associated data ensures authenticity (ie. who the sender is) and
-integrity (ie. data has not been tampered with) of that data, but not its secrecy.
-
-See RFC5116: https://tools.ietf.org/html/rfc5116
-```
-
-**Note:**
-
-Here ciphering is added mainly to hide internal information but it's very important to remember that the first protection against tampering of the JWT is the signature. So, the token signature and its verification must be always in place.
-
-#### Implementation Example
-
-##### Token Ciphering
-
-Code in charge of managing the ciphering. [Google Tink](https://github.com/google/tink) dedicated crypto library is used to handle ciphering operations in order to use built-in best practices provided by this library.
-
-``` java
-/**
- * Handle ciphering and deciphering of the token using AES-GCM.
- *
- * @see "https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md"
- */
-public class TokenCipher {
-
-    /**
-     * Constructor - Register AEAD configuration
-     *
-     * @throws Exception If any issue occur during AEAD configuration registration
-     */
-    public TokenCipher() throws Exception {
-        AeadConfig.register();
-    }
-
-    /**
-     * Cipher a JWT
-     *
-     * @param jwt          Token to cipher
-     * @param keysetHandle Pointer to the keyset handle
-     * @return The ciphered version of the token encoded in HEX
-     * @throws Exception If any issue occur during token ciphering operation
-     */
-    public String cipherToken(String jwt, KeysetHandle keysetHandle) throws Exception {
-        //Verify parameters
-        if (jwt == null || jwt.isEmpty() || keysetHandle == null) {
-            throw new IllegalArgumentException("Both parameters must be specified!");
-        }
-
-        //Get the primitive
-        Aead aead = AeadFactory.getPrimitive(keysetHandle);
-
-        //Cipher the token
-        byte[] cipheredToken = aead.encrypt(jwt.getBytes(), null);
-
-        return DatatypeConverter.printHexBinary(cipheredToken);
-    }
-
-    /**
-     * Decipher a JWT
-     *
-     * @param jwtInHex     Token to decipher encoded in HEX
-     * @param keysetHandle Pointer to the keyset handle
-     * @return The token in clear text
-     * @throws Exception If any issue occur during token deciphering operation
-     */
-    public String decipherToken(String jwtInHex, KeysetHandle keysetHandle) throws Exception {
-        //Verify parameters
-        if (jwtInHex == null || jwtInHex.isEmpty() || keysetHandle == null) {
-            throw new IllegalArgumentException("Both parameters must be specified !");
-        }
-
-        //Decode the ciphered token
-        byte[] cipheredToken = DatatypeConverter.parseHexBinary(jwtInHex);
-
-        //Get the primitive
-        Aead aead = AeadFactory.getPrimitive(keysetHandle);
-
-        //Decipher the token
-        byte[] decipheredToken = aead.decrypt(cipheredToken, null);
-
-        return new String(decipheredToken);
-    }
-}
-```
-
-##### Creation / Validation of the Token
-
-Use the token ciphering handler during the creation and the validation of the token.
-
-Load keys (ciphering key was generated and stored using [Google Tink](https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md#generating-new-keysets)) and setup cipher.
-
-``` java
-//Load keys from configuration text/json files in order to avoid to storing keys as a String in JVM memory
-private transient byte[] keyHMAC = Files.readAllBytes(Paths.get("src", "main", "conf", "key-hmac.txt"));
-private transient KeysetHandle keyCiphering = CleartextKeysetHandle.read(JsonKeysetReader.withFile(
-Paths.get("src", "main", "conf", "key-ciphering.json").toFile()));
-
-...
-
-//Init token ciphering handler
-TokenCipher tokenCipher = new TokenCipher();
-```
-
-Token creation.
-
-``` java
-//Generate the JWT token using the JWT API...
-//Cipher the token (String JSON representation)
-String cipheredToken = tokenCipher.cipherToken(token, this.keyCiphering);
-//Send the ciphered token encoded in HEX to the client in HTTP response...
-```
-
-Token validation.
-
-``` java
-//Retrieve the ciphered token encoded in HEX from the HTTP request...
-//Decipher the token
-String token = tokenCipher.decipherToken(cipheredToken, this.keyCiphering);
-//Verify the token using the JWT API...
-//Verify access...
-```
-
-### Token Storage on Client Side
-
-#### Symptom
-
-This occurs when an application stores the token in a manner exhibiting the following behavior:
-
-- Automatically sent by the browser (*Cookie* storage).
-- Retrieved even if the browser is restarted (Use of browser *localStorage* container).
-- Retrieved in case of [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) issue (Cookie accessible to JavaScript code or Token stored in browser local/session storage).
-
-#### How to Prevent
-
-1. Store the token using the browser *sessionStorage* container, or use JavaScript *closures* with *private* variables
-1. Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
-1. Add [fingerprint](JSON_Web_Token_Cheat_Sheet.md#token-sidejacking) information to the token.
-
-By storing the token in browser *sessionStorage* container it exposes the token to being stolen through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to harden the execution context.
-
-But, we know that *sessionStorage* is not always practical due to its per-tab scope, and the storage method for tokens should balance *security* and *usability*.
-
-*LocalStorage* is a better method than *sessionStorage* for usability because it allows the session to persist between browser restarts and across tabs, but you must use strict security controls:
-
-- Tokens stored in *localStorage* should have *short expiration times* (e.g., *15-30 minutes idle timeout, 8-hour absolute timeout*).
-- Implement mechanisms such as *token rotation* and *refresh tokens* to minimize risk.
-
-If *session persistence across tabs* and *sessionStorage* are required, consider using *BroadcastChannel API* or *Single Sign-On (SSO)* to re-authenticate users automatically when they open new tabs.
-
-An alternative to storing token in browser *sessionStorage* or in *localStorage* is to use JavaScript private variable or Closures. In this, access to all web requests are routed through a JavaScript module that encapsulates the token in a private variable which can not be accessed other than from within the module.
-
-*Note:*
-
-- The remaining case is when an attacker uses the user's browsing context as a proxy to use the target application through the legitimate user but the Content Security Policy can prevent communication with non expected domains.
-- It's also possible to implement the authentication service in a way that the token is issued within a hardened cookie, but in this case, protection against a [Cross-Site Request Forgery](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) attack must be implemented.
-
-#### Implementation Example
-
-JavaScript code to store the token after authentication.
-
-``` javascript
-/* Handle request for JWT token and local storage*/
-function authenticate() {
-    const login = $("#login").val();
-    const postData = "login=" + encodeURIComponent(login) + "&password=test";
-
-    $.post("/services/authenticate", postData, function (data) {
-        if (data.status == "Authentication successful!") {
-            ...
-            sessionStorage.setItem("token", data.token);
-        }
-        else {
-            ...
-            sessionStorage.removeItem("token");
-        }
-    })
-    .fail(function (jqXHR, textStatus, error) {
-        ...
-        sessionStorage.removeItem("token");
-    });
-}
-```
-
-JavaScript code to add the token as a *Bearer* HTTP Authentication header when calling a service, for example a service to validate token here.
-
-``` javascript
-/* Handle request for JWT token validation */
-function validateToken() {
-    var token = sessionStorage.getItem("token");
-
-    if (token == undefined || token == "") {
-        $("#infoZone").removeClass();
-        $("#infoZone").addClass("alert alert-warning");
-        $("#infoZone").text("Obtain a JWT token first :)");
-        return;
-    }
-
-    $.ajax({
-        url: "/services/validate",
-        type: "POST",
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", "bearer " + token);
-        },
-        success: function (data) {
-            ...
-        },
-        error: function (jqXHR, textStatus, error) {
-            ...
-        },
-    });
-}
-```
-
-JavaScript code to implement closures with private variables:
-
-``` javascript
-function myFetchModule() {
-    // Protect the original 'fetch' from getting overwritten via XSS
-    const fetch = window.fetch;
-
-    const authOrigins = ["https://yourorigin", "http://localhost"];
-    let token = '';
-
-    this.setToken = (value) => {
-        token = value
-    }
-
-    this.fetch = (resource, options) => {
-        let req = new Request(resource, options);
-        destOrigin = new URL(req.url).origin;
-        if (token && authOrigins.includes(destOrigin)) {
-            req.headers.set('Authorization', token);
-        }
-        return fetch(req)
-    }
-}
-
-...
-
-// usage:
-const myFetch = new myFetchModule()
-
-function login() {
-  fetch("/api/login")
-      .then((res) => {
-          if (res.status == 200) {
-              return res.json()
-          } else {
-              throw Error(res.statusText)
-          }
-      })
-      .then(data => {
-          myFetch.setToken(data.token)
-          console.log("Token received and stored.")
-      })
-      .catch(console.error)
-}
-
-...
-
-// after login, subsequent api calls:
-function makeRequest() {
-    myFetch.fetch("/api/hello", {headers: {"MyHeader": "foobar"}})
-        .then((res) => {
-            if (res.status == 200) {
-                return res.text()
-            } else {
-                throw Error(res.statusText)
-            }
-        }).then(responseText => console.log("helloResponse", responseText))
-        .catch(console.error)
-}
-```
-
-### Weak Token Secret
-
-#### Symptom
-
-When the token is protected using an HMAC based algorithm, the security of the token is entirely dependent on the strength of the secret used with the HMAC. If an attacker can obtain a valid JWT, they can then carry out an offline attack and attempt to crack the secret using tools such as [John the Ripper](https://github.com/magnumripper/JohnTheRipper) or [Hashcat](https://github.com/hashcat/hashcat).
-
-If they are successful, they would then be able to modify the token and re-sign it with the key they had obtained. This could let them escalate their privileges, compromise other users' accounts, or perform other actions depending on the contents of the JWT.
-
-There are a number of [guides](https://www.notsosecure.com/crafting-way-json-web-tokens/) that document this process in greater detail.
-
-#### How to Prevent
-
-The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-
-Alternatively, consider the use of tokens that are signed using a digital signature (public-key cryptography) rather than using an HMAC and secret key.
-
-## Relation to other formats
-
-JWT is a profile of the more general JOSE format ([RFC 7515](https://tools.ietf.org/html/rfc7515), [RFC 7516](https://tools.ietf.org/html/rfc7516)). While this cheat sheet is focused on JWTs, a large part of what is discussed here is more generally applicable to JOSE messages in general.
-
-Conversely, [CWT](https://datatracker.ietf.org/doc/html/rfc8392), and more generally [COSE](https://datatracker.ietf.org/doc/rfc9052/), have a very similar design and many of the things discussed might be applicable to CWT and COSE as well.
-
-Depending on the application, some alternatives to JWT and JOSE might be:
-
-- opaque tokens;
-- [CBOR Object Token](https://datatracker.ietf.org/doc/html/rfc8392) (CWT) and [CBOR Object Signing and Encryption](https://datatracker.ietf.org/doc/html/rfc8152) (COSE);
-- [PASETO](https://paseto.io/);
-- [Eclipse Biscuit](https://www.biscuitsec.org/);
-- [Fernet](https://github.com/fernet/spec/blob/master/Spec.md);
-- [Security Assertion Markup Language (SAML)](https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html) and [XML signature](https://www.w3.org/TR/xmldsig-core2/).
+Full JWE implementation guidance is out of scope for this cheat sheet and will be addressed in a dedicated JWE cheat sheet.
 
 ## References
 

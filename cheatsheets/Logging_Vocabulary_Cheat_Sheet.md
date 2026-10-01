@@ -10,7 +10,7 @@ In addition to the millions of dollars lost due to breaches the report finds tha
 
 ![IBM Cost of Data Breach Report 2025](../assets/cost-of-breach-2025.png)
 
-> IBM Cost of a Data Breach Study 2025, Fig.4, pg.12, [https://www.ibm.com/reports/data-breach]
+> [IBM Cost of a Data Breach Report 2025](https://www.ibm.com/forms/mkt-asset-31c90), Fig.4, pg.12
 
 This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.
 

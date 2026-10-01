@@ -10,6 +10,8 @@ There are three main mechanisms that can be used to defend against these attacks
 - Preventing session cookies from being included when the page is loaded in a frame using the [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) cookie attribute.
 - Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a "frame-buster").
 
+These mechanisms address frame-based clickjacking. [DoubleClickjacking](#defending-against-doubleclickjacking) uses separate windows and requires additional safeguards for sensitive actions.
+
 Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.
 
 ## Defending with Content Security Policy (CSP) frame-ancestors directive
@@ -86,12 +88,12 @@ Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For e
 - **Per-page policy specification**: The policy needs to be specified for every page, which can complicate deployment. Providing the ability to enforce it for the entire site, at login time for instance, could simplify adoption.
 - **Problems with multi-domain sites**: The current implementation does not allow the website administrator to provide a list of domains that are allowed to frame the page. While listing allowed domains can be dangerous, in some cases a website administrator might have no choice but to use more than one hostname.
 - **ALLOW-FROM browser support**: The ALLOW-FROM option is obsolete and no longer works in modern browsers. BE CAREFUL ABOUT DEPENDING ON ALLOW-FROM. If you apply it and the browser does not support it, then you will have NO clickjacking defense in place.
-- **Multiple options not supported**: There is no way to allow the current site and a third-party site to frame the same response. Browsers only honour one X-Frame-Options header and only one value on that header.
+- **Multiple options not supported**: There is no way to allow the current site and a third-party site to frame the same response. Browsers only honor one X-Frame-Options header and only one value on that header.
 - **Nested Frames don't work with SAMEORIGIN and ALLOW-FROM**: In the following situation, the `http://framed.invalid/child` frame does not load because ALLOW-FROM applies to the top-level browsing context, not that of the immediate parent. The solution is to use ALLOW-FROM in both the parent and child frames (but this prevents the child frame loading if the `//framed.invalid/parent` page is loaded as the top level document).
 
 ![NestedFrames](../assets/Clickjacking_Defense_Cheat_Sheet_NestedFrames.png)
 
-- **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it has been obsoleted in favour of the frame-ancestors directive from the CSP Level 2 specification.
+- **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it has been obsoleted in favor of the frame-ancestors directive from the CSP Level 2 specification.
 - **Proxies** Web proxies are notorious for adding and stripping headers. If a web proxy strips the X-Frame-Options header then the site loses its framing protection.
 
 ## Defending with SameSite Cookies
@@ -108,7 +110,20 @@ If the Clickjacking attack does not require the user to be authenticated, this a
 
 Additionally, while `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), there are still some users (approximately 6% as of November 2020) with browsers that do not support it.
 
-The use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
+The use of this attribute should be considered as part of a defense-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
+
+## Defending against DoubleClickjacking
+
+[DoubleClickjacking](https://evil.blog/2024/12/doubleclickjacking-what.html) tricks a user into activating a sensitive control in another window during a double-click. The target page is a top-level window, so framing restrictions such as `X-Frame-Options` and CSP `frame-ancestors` do not prevent this attack.
+
+[`SameSite` controls whether cookies accompany cross-site requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie). `Lax` permits cookies on top-level navigations using safe HTTP methods, while `Strict` withholds them on the initial cross-site request. Neither policy verifies that the user intended the resulting action.
+
+For pages your application controls, such as consent screens, payment confirmations, and account security settings:
+
+- For high-risk actions, require the user to review the action's details and complete [transaction authorization](Transaction_Authorization_Cheat_Sheet.md). Enforce authorization on the server; an extra confirmation button alone is not a complete defense against UI redress.
+- Treat disabling sensitive controls until prior interaction as a proposed supplementary mitigation, as described in [Paulos Yibelo's disclosure](https://evil.blog/2024/12/doubleclickjacking-what.html). Mouse movement or a key press alone does not establish that the user understands or approves the action.
+- If you use this mitigation, render the controls disabled from the start and test that users can enable and activate them with mouse, keyboard, touch, and assistive technology. [Click events support all these input methods](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event); do not require every user to move a mouse or press a key.
+- Keep the framing defenses above for frame-based attacks. Client-side interaction checks supplement these defenses and do not replace transaction authorization.
 
 ## Best-for-now Legacy Browser Frame Breaking Script
 

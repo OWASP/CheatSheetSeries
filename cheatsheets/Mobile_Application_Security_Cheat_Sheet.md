@@ -139,7 +139,7 @@ examples of data that should not be logged.
 
 ### 5. Personally Identifiable Information (PII)
 
-- Minimise any PII to necessity.
+- Minimize any PII to necessity.
 - Attempt to replace PII with less critical information if possible.
 - Reduce PII, e.g. less frequent location updates.
 - Implement automatic expiration and deletion of PII to minimize retention.

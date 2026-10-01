@@ -25,7 +25,7 @@ Encryption can be performed on a number of levels in the application stack, such
 
 Which layer(s) are most appropriate will depend on the threat model. For example, hardware level encryption is effective at protecting against the physical theft of the server, but will provide no protection if an attacker is able to compromise the server remotely.
 
-### Minimise the Storage of Sensitive Information
+### Minimize the Storage of Sensitive Information
 
 The best way to protect sensitive information is to not store it in the first place. Although this applies to all kinds of information, it is most often applicable to credit card details, as they are highly desirable for attackers, and PCI DSS has such stringent requirements for how they must be stored. Wherever possible, the storage of sensitive information should be avoided.
 
@@ -34,6 +34,14 @@ The best way to protect sensitive information is to not store it in the first pl
 For symmetric encryption **AES** with a key that's at least **128 bits** (ideally **256 bits**) and a secure [mode](#cipher-modes) should be used as the preferred algorithm.
 
 For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **Curve25519** as a preferred algorithm. If ECC is not available and  **RSA** must be used, then ensure that the key is at least **2048 bits**.
+
+### Post-Quantum Consideration
+
+RSA and ECC-based public-key cryptography (including Curve25519) are not post-quantum secure. A future cryptographically relevant quantum computer could break them, which matters for data that must remain confidential over long periods.
+
+Where post-quantum key establishment is required, use standardized mechanisms such as **ML-KEM (NIST FIPS 203)**, typically in a hybrid construction alongside a classical algorithm during migration.
+
+For broader migration guidance, see the proposed [Post-Quantum Cryptography Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/issues/2403).
 
 Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:
 
@@ -45,7 +53,7 @@ Many other symmetric and asymmetric algorithms are available which have their ow
 - Quality of the libraries available.
 - Portability of the algorithm (i.e, how widely supported is it).
 
-In some cases there may be regulatory requirements that limit the algorithms that can be used, such as [FIPS 140-2](https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf) or [PCI DSS](https://www.pcisecuritystandards.org/pci_security/glossary#Strong%20Cryptography).
+In some cases there may be regulatory requirements that limit the algorithms that can be used, such as [FIPS 140-3](https://csrc.nist.gov/pubs/fips/140-3/final) or [PCI DSS](https://www.pcisecuritystandards.org/pci_security/glossary#Strong%20Cryptography).
 
 ### Custom Algorithms
 
@@ -53,7 +61,7 @@ Don't do this.
 
 ### Cipher Modes
 
-There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.
+There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialization vectors (IVs) and other attributes, but these should be handled automatically by the library.
 
 Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are **[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)** and **[CCM](https://en.wikipedia.org/wiki/CCM_mode)**, which should be used as a first preference.
 
@@ -73,7 +81,7 @@ Random numbers (or strings) are needed for various security critical functionali
 
 It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness.
 
-Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomising UI elements). However, they **must not** be used for anything security critical, as it is often possible for attackers to guess or predict the output.
+Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomizing UI elements). However, they **must not** be used for anything security critical, as it is often possible for attackers to guess or predict the output.
 
 Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness (more strictly, a greater amount of entropy), making them safe to use for security-sensitive functionality. However, they are slower and more CPU intensive, can end up blocking in some circumstances when large amounts of random data are requested. As such, if large amounts of non-security related randomness are needed, they may not be appropriate.
 
@@ -83,7 +91,7 @@ The table below shows the recommended algorithms for each language, as well as i
 |-------------|------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | C           | `random()`, `rand()`                                                                                                               | [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html) |
 | Java        | `Math.random()`, `StrictMath.random()`, `java.util.Random`, `java.util.SplittableRandom`, `java.util.concurrent.ThreadLocalRandom` | [java.security.SecureRandom](https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html), [java.util.UUID.randomUUID()](https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#randomUUID--) |
-| PHP         | `array_rand()`, `lcg_value()`, `mt_rand()`, `rand()`, `uniqid()`                                                                   | [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [Random\Engine\Secure](https://www.php.net/manual/en/class.random-engine-secure.php) in PHP 8, [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7, [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 |
+| PHP         | `array_rand()`, `lcg_value()`, `mt_rand()`, `rand()`, `uniqid()`                                                                   | [Random\Engine\Secure](https://www.php.net/manual/en/class.random-engine-secure.php) in PHP 8.2, [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7, [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 |
 | .NET/C#     | `Random()`                                                                                                                         | [RandomNumberGenerator](https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator?view=net-6.0) |
 | Objective-C | `arc4random()`/`arc4random_uniform()` (Uses RC4 Cipher), subclasses of`GKRandomSource`, rand(), random()                           | [SecRandomCopyBytes](https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc) |
 | Python      | `random()`                                                                                                                         | [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets) |
@@ -98,9 +106,9 @@ Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick wa
 
 Specifically, version 1 UUIDs are comprised of a high precision timestamp and the MAC address of the system that generated them, so are **not random** (although they may be hard to guess, given the timestamp is to the nearest 100ns). Type 4 UUIDs are randomly generated, although whether this is done using a CSPRNG will depend on the implementation. Unless this is known to be secure in the specific language or framework, the randomness of UUIDs should not be relied upon.
 
-### Defence in Depth
+### Defense in Depth
 
-Applications should be designed to still be secure even if cryptographic controls fail. Any information that is stored in an encrypted form should also be protected by additional layers of security. Application should also not rely on the security of encrypted URL parameters, and should enforce strong access control to prevent unauthorised access to information.
+Applications should be designed to still be secure even if cryptographic controls fail. Any information that is stored in an encrypted form should also be protected by additional layers of security. Application should also not rely on the security of encrypted URL parameters, and should enforce strong access control to prevent unauthorized access to information.
 
 ## Key Management
 
@@ -124,9 +132,9 @@ Where multiple keys are used (such as data separate data-encrypting and key-encr
 Encryption keys should be changed (or rotated) based on a number of different criteria:
 
 - If the previous key is known (or suspected) to have been compromised.
-    - This could also be caused by a someone who had access to the key leaving the organisation.
+    - This could also be caused by a someone who had access to the key leaving the organization.
 - After a specified period of time has elapsed (known as the cryptoperiod).
-    - There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) for further guidance.
+    - There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57 Part 1 Rev. 5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) for further guidance.
 - After the key has been used to encrypt a specific amount of data.
     - This would typically be `2^35` bytes (~34GB) for 64-bit keys and `2^68` bytes (~295 exabytes) for 128-bit block size.
 - If there is a significant change to the security provided by the algorithm (such as a new attack being announced).

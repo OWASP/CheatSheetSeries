@@ -14,7 +14,7 @@ There are three ingredients to an IDOR:
 
 For instance, when a user accesses their profile, the application might generate a URL like this:
 
-```
+```text
 https://example.org/users/123
 ```
 
@@ -22,7 +22,7 @@ The 123 in the URL is a direct reference to the user's record in the database, o
 
 In some cases, the identifier may not be in the URL, but rather in the POST body, as shown in the following example:
 
-```
+```html
 <form action="/update_profile" method="post">
   <!-- Other fields for updating name, email, etc. -->
   <input type="hidden" name="user_id" value="12345">
@@ -34,13 +34,13 @@ In this example, the application allows users to update their profiles by submit
 
 IDORs however are not limited to user profiles and sequential IDs. For instance:
 
-```
+```http
 GET /documents/annual-report.pdf
 ```
 
 In this example, the filename acts as the object reference. If an attacker modifies the filename to another valid document, such as:
 
-```
+```http
 GET /documents/financial-statement.pdf
 ```
 
@@ -71,16 +71,67 @@ Avoid exposing identifiers in URLs and POST bodies if possible. Instead, determi
 
 When looking up objects based on primary keys, use datasets that users have access to. For example, in Ruby on Rails:
 
-```
-// vulnerable, searches all projects
+```ruby
+# vulnerable, searches all projects
 @project = Project.find(params[:id])
-// secure, searches projects related to the current user
+
+# secure, searches projects related to the current user
 @project = @current_user.projects.find(params[:id])
 ```
 
 Verify the user's permission every time an access attempt is made. Implement this structurally using the recommended approach for your web framework.
 
 As an additional defense-in-depth measure, replace enumerable numeric identifiers with more complex, random identifiers. You can achieve this by adding a column with random strings in the database table and using those strings in the URLs instead of numeric primary keys. Another option is to use UUIDs or other long random values as primary keys. Avoid encrypting identifiers as it can be challenging to do so securely.
+
+## Java and Spring Boot example
+
+These illustrative examples assume authenticated requests and a policy that only owners can read documents. `currentUser()` represents an application helper that obtains the user from the trusted authentication context. Consider a Spring Boot endpoint that returns a document by its identifier:
+
+```java
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    return documentRepository.findById(id).orElseThrow();
+}
+```
+
+The `{id}` path variable is controlled by the requester and flows directly into `findById()`. Nothing verifies that the returned document belongs to the currently authenticated user, so any user who can guess or obtain a valid identifier can read another user's document.
+
+### Fixing the code
+
+Prefer a lookup limited to documents owned by the current user. This mirrors the scoped-query approach shown for Ruby on Rails above:
+
+```java
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    return documentRepository.findByIdAndOwnerId(id, currentUser().getId())
+        .orElseThrow();
+}
+```
+
+Alternatively, verify ownership explicitly after fetching the object:
+
+```java
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    Document document = documentRepository.findById(id).orElseThrow();
+    if (!document.getOwnerId().equals(currentUser().getId())) {
+        throw new AccessDeniedException("Not allowed");
+    }
+    return document;
+}
+```
+
+The post-fetch check can distinguish a missing object from one the caller cannot access. If the resource's existence is sensitive, use the scoped lookup and map both cases to the same public response, such as a [404 (Not Found) response](https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.4). For example, `GET /user/john@example.com` should not reveal whether an account exists to a caller who is not allowed to know.
+
+To use Spring Security's [@PreAuthorize](https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html) alternative, first enable method security with `@EnableMethodSecurity` on a Spring `@Configuration` class; Spring Boot's security starter does not enable it by default. The following example applies to a Spring-managed component and assumes an application-provided `documentAuthorizationService` that checks ownership:
+
+```java
+@PreAuthorize("@documentAuthorizationService.isOwner(#id, authentication.name)")
+@GetMapping("/documents/{id}")
+public Document getDocument(@PathVariable Long id) {
+    return documentRepository.findById(id).orElseThrow();
+}
+```
 
 ## Related Articles
 

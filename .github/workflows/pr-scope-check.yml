@@ -17,7 +17,7 @@ jobs:
       MAX_NET_ADDITIONS: 1500
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
 
@@ -29,6 +29,11 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Diff from the merge base, not from the tip of master: a branch that
+          # is behind master would otherwise be charged for every cheat sheet
+          # master changed since the branch was cut.
+          BASE_SHA=$(git merge-base "$BASE_SHA" "$HEAD_SHA")
+          echo "Merge base: $BASE_SHA"
           touched=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" \
             | grep -E '^cheatsheets(_draft)?/.+\.md$' \
             | sort -u || true)
