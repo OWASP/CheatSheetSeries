@@ -1,603 +1,333 @@
-const { spawnSync } = require("node:child_process");
+// Checks links in the published Markdown sources.
+//
+//   node scripts/Check_Markdown_Links.js                 full audit
+//   node scripts/Check_Markdown_Links.js --base <ref>    PR mode: only external
+//        links added since the merge base, and only newly broken local links block
+//   --local-only                                         skip external links
+//   --fresh                                              ignore cached successes
+//
+// Exit status: 0 passed, 1 blocking broken links, 2 incomplete or internal error.
 const fs = require("node:fs");
 const path = require("node:path");
-const { stripVTControlCharacters } = require("node:util");
+const { performance } = require("node:perf_hooks");
 
-const repoRoot = path.resolve(__dirname, "..");
-// One initial observation plus at most two immediate confirmations.
-const NETWORK_ATTEMPT_LIMIT = 3;
+const corpus = require("./link_check/corpus");
+const external = require("./link_check/external");
+const policy = require("./link_check/policy");
+const report = require("./link_check/report");
 
-function resolvedPath(environmentName, defaultPath) {
-  return path.resolve(process.env[environmentName] || defaultPath);
-}
+const USAGE =
+  "usage: Check_Markdown_Links.js [--base <git-ref>] [--local-only] [--fresh]";
 
-const paths = {
-  baseline: resolvedPath(
-    "MARKDOWN_LINK_CHECK_BASELINE",
-    path.join(repoRoot, "link-check-known-failures.json"),
-  ),
-  checker: resolvedPath(
-    "MARKDOWN_LINK_CHECK_BIN",
-    path.join(
-      repoRoot,
-      "node_modules",
-      "markdown-link-check",
-      "markdown-link-check",
-    ),
-  ),
-  config: resolvedPath(
-    "MARKDOWN_LINK_CHECK_CONFIG",
-    path.join(repoRoot, "markdown-link-check-config.json"),
-  ),
-  known: resolvedPath(
-    "MARKDOWN_LINK_CHECK_KNOWN",
-    path.join(repoRoot, ".link-check", "known.md"),
-  ),
-  raw: resolvedPath(
-    "MARKDOWN_LINK_CHECK_LOG",
-    path.join(repoRoot, ".link-check", "raw.log"),
-  ),
-  target: resolvedPath(
-    "MARKDOWN_LINK_CHECK_TARGET",
-    path.join(repoRoot, "cheatsheets"),
-  ),
-  unexpected: resolvedPath(
-    "MARKDOWN_LINK_CHECK_UNEXPECTED",
-    path.join(repoRoot, ".link-check", "unexpected.md"),
-  ),
-};
-
-function tupleKey(file, url) {
-  return `${file}\0${url}`;
-}
-
-function isNetworkUrl(url) {
-  return /^https?:\/\//i.test(url);
-}
-
-function exactKeys(value, expected) {
-  const actual = Object.keys(value).sort();
-  return (
-    actual.length === expected.length &&
-    expected.every((key, index) => key === actual[index])
-  );
-}
-
-function validateBaseline(value) {
-  if (
-    !value ||
-    typeof value !== "object" ||
-    Array.isArray(value) ||
-    !exactKeys(value, ["batches", "schemaVersion"])
-  ) {
-    throw new Error("baseline must contain only schemaVersion and batches");
-  }
-  if (value.schemaVersion !== 2) {
-    throw new Error("baseline schemaVersion must be 2");
-  }
-  if (!Array.isArray(value.batches) || value.batches.length === 0) {
-    throw new Error("baseline batches must be a nonempty array");
-  }
-
-  const byKey = new Map();
-  for (const [batchIndex, batch] of value.batches.entries()) {
-    if (
-      !batch ||
-      typeof batch !== "object" ||
-      Array.isArray(batch) ||
-      !exactKeys(batch, ["failures", "generatedFrom"])
-    ) {
-      throw new Error(`baseline batch ${batchIndex} has an invalid shape`);
-    }
-
-    const provenance = batch.generatedFrom;
-    if (
-      !provenance ||
-      typeof provenance !== "object" ||
-      Array.isArray(provenance) ||
-      !exactKeys(provenance, [
-        "attemptCount",
-        "checkedHead",
-        "contentBaseCommit",
-        "workflowJobId",
-        "workflowRunId",
-        "workflowUrl",
-      ]) ||
-      !Number.isSafeInteger(provenance.attemptCount) ||
-      provenance.attemptCount <= 0 ||
-      !/^[0-9a-f]{40}$/.test(provenance.checkedHead) ||
-      !/^[0-9a-f]{40}$/.test(provenance.contentBaseCommit) ||
-      !Number.isSafeInteger(provenance.workflowRunId) ||
-      provenance.workflowRunId <= 0 ||
-      !Number.isSafeInteger(provenance.workflowJobId) ||
-      provenance.workflowJobId <= 0 ||
-      provenance.workflowUrl !==
-        `https://github.com/OWASP/CheatSheetSeries/actions/runs/${provenance.workflowRunId}/job/${provenance.workflowJobId}`
-    ) {
-      throw new Error(`baseline batch ${batchIndex} provenance is malformed`);
-    }
-    if (!Array.isArray(batch.failures)) {
-      throw new Error(`baseline batch ${batchIndex} failures must be an array`);
-    }
-
-    let previousKey = null;
-    for (const [failureIndex, failure] of batch.failures.entries()) {
-      const expectedKeys =
-        provenance.attemptCount === 1
-          ? ["file", "observedStatus", "url"]
-          : ["file", "observedStatuses", "url"];
-      if (
-        !failure ||
-        typeof failure !== "object" ||
-        Array.isArray(failure) ||
-        !exactKeys(failure, expectedKeys)
-      ) {
-        throw new Error(
-          `baseline batch ${batchIndex} failure ${failureIndex} has an invalid shape`,
-        );
-      }
-      const observedStatuses =
-        provenance.attemptCount === 1
-          ? [failure.observedStatus]
-          : failure.observedStatuses;
-      if (
-        typeof failure.file !== "string" ||
-        !failure.file.startsWith("cheatsheets/") ||
-        !failure.file.endsWith(".md") ||
-        path.posix.normalize(failure.file) !== failure.file ||
-        failure.file.includes("\\") ||
-        typeof failure.url !== "string" ||
-        failure.url.length === 0 ||
-        /[\r\n]/.test(failure.url) ||
-        !Array.isArray(observedStatuses) ||
-        observedStatuses.length !== provenance.attemptCount ||
-        observedStatuses.some(
-          (status) =>
-            !Number.isInteger(status) || status < 0 || status > 599,
-        )
-      ) {
-        throw new Error(`baseline batch ${batchIndex} failure ${failureIndex} is malformed`);
-      }
-
-      const key = tupleKey(failure.file, failure.url);
-      if (byKey.has(key)) {
-        throw new Error(
-          `baseline contains a duplicate tuple: ${failure.file} ${failure.url}`,
-        );
-      }
-      if (previousKey !== null && key < previousKey) {
-        throw new Error(
-          `baseline batch ${batchIndex} failures must be sorted by file and URL`,
-        );
-      }
-      previousKey = key;
-      byKey.set(key, {
-        file: failure.file,
-        url: failure.url,
-        observedStatus: observedStatuses.at(-1),
-      });
-    }
-  }
-
-  return { byKey };
-}
-
-function readJson(file, description) {
-  let contents;
-  try {
-    contents = fs.readFileSync(file, "utf8");
-  } catch (error) {
-    throw new Error(`${description} is unavailable: ${file} (${error.message})`);
-  }
-  try {
-    const parsed = JSON.parse(contents);
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-      throw new Error("root value must be an object");
-    }
-    return parsed;
-  } catch (error) {
-    throw new Error(`${description} is malformed: ${file} (${error.message})`);
-  }
-}
-
-function enumerateMarkdownFiles(directory) {
-  const files = [];
-  const visit = (current) => {
-    const entries = fs
-      .readdirSync(current, { withFileTypes: true })
-      .sort((left, right) => left.name.localeCompare(right.name));
-    for (const entry of entries) {
-      const entryPath = path.join(current, entry.name);
-      if (entry.isDirectory()) {
-        visit(entryPath);
-      } else if (entry.isFile() && entry.name.endsWith(".md")) {
-        files.push(entryPath);
-      }
-    }
+function settings() {
+  const root = path.resolve(process.env.LINK_CHECK_ROOT || path.join(__dirname, ".."));
+  const fromRoot = (name, fallback) => path.resolve(root, process.env[name] || fallback);
+  return {
+    root,
+    config: fromRoot("LINK_CHECK_CONFIG", "link-check-config.json"),
+    exceptions: fromRoot("LINK_CHECK_EXCEPTIONS", "link-check-exceptions.json"),
+    legacy: fromRoot("LINK_CHECK_LEGACY_EVIDENCE", "link-check-known-failures.json"),
+    outputDir: fromRoot("LINK_CHECK_OUTPUT_DIR", ".link-check"),
+    cacheFile: fromRoot("LINK_CHECK_CACHE_FILE", ".link-check-cache/http-success.json"),
+    python: process.env.LINK_CHECK_PYTHON || (process.platform === "win32" ? "python" : "python3"),
+    // UTC date used for exception expiry; overridable for deterministic tests.
+    today: process.env.LINK_CHECK_TODAY ?? new Date().toISOString().slice(0, 10),
   };
-  visit(directory);
-  return files;
 }
 
-function logicalFileName(markdownFile) {
-  const relative = path.relative(paths.target, markdownFile);
-  if (
-    relative.length === 0 ||
-    relative.startsWith("..") ||
-    path.isAbsolute(relative)
-  ) {
-    throw new Error(`enumerated file escaped the target directory: ${markdownFile}`);
-  }
-  return path.posix.join("cheatsheets", relative.split(path.sep).join("/"));
-}
-
-function parseCanonicalFailures(output, markdownFile) {
-  const lines = output.split(/\r?\n/);
-  const fileHeaders = lines
-    .filter((line) => line.startsWith("FILE: "))
-    .map((line) => path.resolve(line.slice("FILE: ".length).trim()));
-  if (
-    fileHeaders.length !== 1 ||
-    fileHeaders[0] !== path.resolve(markdownFile)
-  ) {
-    throw new Error("nonzero checker result lacks the expected FILE header");
-  }
-
-  const errorLines = lines.filter((line) =>
-    /^\s*ERROR:\s+\d+\s+dead links? found!\s*$/.test(line),
-  );
-  if (errorLines.length !== 1) {
-    throw new Error("nonzero checker result lacks a canonical ERROR count");
-  }
-  const expectedCount = Number(errorLines[0].match(/ERROR:\s+(\d+)\s+/)[1]);
-  if (!Number.isSafeInteger(expectedCount) || expectedCount <= 0) {
-    throw new Error("nonzero checker result has an invalid dead-link count");
-  }
-  const failures = [];
-  for (const line of lines) {
-    const match = line.match(
-      /^\s*\[✖\]\s+(.+?)\s+→\s+Status:\s+(\d+)\s*$/,
-    );
-    if (match) {
-      failures.push({ url: match[1], status: Number(match[2]) });
+function parseArgs(argv) {
+  const options = { base: null, localOnly: false, fresh: false };
+  for (let index = 0; index < argv.length; index += 1) {
+    const argument = argv[index];
+    if (argument === "--base") {
+      options.base = argv[++index];
+      if (options.base === undefined) throw new Error("--base needs a git ref");
+    } else if (argument.startsWith("--base=")) {
+      options.base = argument.slice("--base=".length);
+    } else if (argument === "--local-only") {
+      options.localOnly = true;
+    } else if (argument === "--fresh") {
+      options.fresh = true;
+    } else if (argument === "--help" || argument === "-h") {
+      options.help = true;
+    } else {
+      throw new Error(`unknown argument ${argument}`);
     }
   }
-  if (failures.length !== expectedCount) {
-    throw new Error(
-      `canonical ERROR count is ${expectedCount}, but ${failures.length} detailed failures were present`,
-    );
-  }
-  return failures;
+  return options;
 }
 
-function validateCanonicalSuccess(output, markdownFile) {
-  const lines = output.split(/\r?\n/);
-  const fileHeaders = lines
-    .filter((line) => line.startsWith("FILE: "))
-    .map((line) => path.resolve(line.slice("FILE: ".length).trim()));
-  if (
-    fileHeaders.length !== 1 ||
-    fileHeaders[0] !== path.resolve(markdownFile)
-  ) {
-    throw new Error("successful checker result lacks the expected FILE header");
-  }
-  const checkedLines = lines.filter((line) =>
-    /^\s*\d+\s+links? checked\.\s*$/.test(line),
-  );
-  if (checkedLines.length !== 1) {
-    throw new Error("successful checker result lacks a canonical checked-link count");
-  }
-  if (/^\s*ERROR:/m.test(output) || /\[✖\].*Status:/m.test(output)) {
-    throw new Error("checker reported canonical failures with exit status 0");
+const pairKey = (file, url) => `${file}\0${url}`;
+
+// Marks occurrences beyond the base count of the same file+URL as new.
+function markNew(occurrences, baseCounts, filter = () => true) {
+  const seen = new Map();
+  for (const occurrence of occurrences) {
+    if (!filter(occurrence)) continue;
+    const key = pairKey(occurrence.file, occurrence.url);
+    const index = seen.get(key) || 0;
+    seen.set(key, index + 1);
+    occurrence.new = index >= (baseCounts.get(key) || 0);
   }
 }
 
-function markdownRows(title, rows, marker) {
-  if (rows.length === 0) {
-    return "";
-  }
-  const grouped = new Map();
-  for (const row of rows) {
-    if (!grouped.has(row.file)) {
-      grouped.set(row.file, []);
+function countPairs(occurrences, filter) {
+  const counts = new Map();
+  for (const occurrence of occurrences) {
+    if (filter(occurrence)) {
+      const key = pairKey(occurrence.file, occurrence.url);
+      counts.set(key, (counts.get(key) || 0) + 1);
     }
-    grouped.get(row.file).push(row);
   }
+  return counts;
+}
 
-  const lines = [`## ${title}`, ""];
-  for (const [file, fileRows] of grouped) {
-    lines.push(`    FILE: ${file}`);
-    for (const row of fileRows) {
-      const provenance =
-        row.observedStatus === undefined
-          ? ""
-          : `; baseline observed ${row.observedStatus}`;
-      const attempts = row.attempts ? `; attempts: ${row.attempts}` : "";
-      lines.push(
-        `      [${marker}] ${row.url} → Status: ${row.status}${provenance}${attempts}`,
+function pageDetail(page) {
+  const statuses = page.observations
+    .map((o) => o.status ?? o.category)
+    .join(", ");
+  const error = page.observations.map((o) => o.error).filter(Boolean).at(-1);
+  return [
+    statuses && `observations: ${statuses}`,
+    error,
+    ...page.notes,
+  ]
+    .filter(Boolean)
+    .join("; ");
+}
+
+async function run(results, options, paths) {
+  const config = policy.loadConfig(paths.config);
+  const exceptions = policy.loadExceptions(paths.exceptions, paths.today);
+  const legacy = policy.loadLegacyEvidence(paths.legacy);
+  const deadlineAt = Date.parse(results.startedAt) + config.budgetSeconds * 1000;
+
+  const head = corpus.workingTreeSnapshot(paths.root);
+  if (![...head.pages.keys()].some((page) => page.startsWith("cheatsheets/"))) {
+    throw new Error(`no Markdown files found under ${path.join(paths.root, "cheatsheets")}`);
+  }
+  const snapshots = [head];
+  if (options.base) {
+    results.base = corpus.resolveBase(paths.root, options.base);
+    snapshots.push(corpus.gitSnapshot(paths.root, results.base.mergeBase));
+  }
+  const extractStarted = performance.now();
+  results.renderer = corpus.extractSnapshots(snapshots, paths.python);
+  results.metrics.extractMs = Math.round(performance.now() - extractStarted);
+
+  const occurrences = corpus.occurrencesOf(head);
+  const isExternal = (o) => o.scope === "external";
+  const isLocal = (o) => o.scope !== "external";
+  const notHealthy = (o) => isLocal(o) && o.outcome !== "healthy";
+  if (options.base) {
+    const baseOccurrences = corpus.occurrencesOf(snapshots[1]);
+    markNew(occurrences, countPairs(baseOccurrences, isExternal), isExternal);
+    // A local link is new when the head has more failing occurrences of the
+    // same file+URL than the base, which also catches deleted targets.
+    markNew(occurrences, countPairs(baseOccurrences, notHealthy), notHealthy);
+  }
+  results.counts.files = head.pages.size;
+  results.counts.occurrences = {
+    total: occurrences.length,
+    local: occurrences.filter((o) => o.scope === "local").length,
+    external: occurrences.filter(isExternal).length,
+    other: occurrences.filter((o) => o.scope === "other").length,
+  };
+
+  const findings = occurrences.filter(notHealthy).map((o) => ({ ...o }));
+  const assessedPairs = new Set(occurrences.filter(isLocal).map((o) => pairKey(o.file, o.url)));
+  const selected = options.localOnly
+    ? []
+    : occurrences.filter(
+        (o) =>
+          isExternal(o) &&
+          o.file.startsWith("cheatsheets/") &&
+          (!options.base || o.new),
       );
-    }
-    lines.push("");
+
+  const pages = new Map();
+  for (const occurrence of selected) {
+    const key = external.pageKey(occurrence.absoluteUrl);
+    if (!pages.has(key)) pages.set(key, { key, fragments: new Set(), occurrences: [] });
+    const page = pages.get(key);
+    const hash = new URL(occurrence.absoluteUrl).hash;
+    occurrence.fragment = hash ? hash.slice(1) : "";
+    page.fragments.add(occurrence.fragment);
+    page.occurrences.push(occurrence);
   }
-  return `${lines.join("\n")}\n`;
-}
+  results.counts.external = {
+    selectedOccurrences: selected.length,
+    distinctPages: pages.size,
+    assessedPages: 0,
+    cacheHits: 0,
+    requests: 0,
+    observations: 0,
+  };
 
-function writeOutputs({ known, recovered, transient, unexpected }) {
-  const knownText = [
-    markdownRows("Known Markdown link failures", known, "known"),
-    markdownRows("Recovered or stale baseline entries", recovered, "recovered"),
-    markdownRows(
-      "Transient unbaselined network failures",
-      transient,
-      "transient",
-    ),
-  ].join("");
-  const unexpectedText = markdownRows(
-    "Unexpected Markdown link failures",
-    unexpected,
-    "✖",
-  );
+  if (pages.size > 0) {
+    const fingerprint = external.cacheFingerprint(config.http);
+    const ttlMs = config.cacheTtlHours * 60 * 60 * 1000;
+    const cache = external.loadCache(paths.cacheFile, fingerprint, ttlMs);
+    results.cache = { file: path.relative(paths.root, paths.cacheFile), fresh: options.fresh, note: cache.note };
+    const externalStarted = performance.now();
+    let lastProgress = 0;
+    const checked = await external.checkPages([...pages.values()], {
+      http: config.http,
+      deadlineAt,
+      cacheEntries: cache.entries,
+      fresh: options.fresh,
+      onProgress(done, total) {
+        if (Date.now() - lastProgress > 30000 || done === total) {
+          lastProgress = Date.now();
+          console.log(`  [progress] ${done}/${total} external page(s) assessed`);
+        }
+      },
+    });
+    results.metrics.externalMs = Math.round(performance.now() - externalStarted);
+    Object.assign(results.metrics, {
+      peakActiveRequests: checked.stats.peakActive,
+      peakRequestsPerHost: checked.stats.peakPerHost,
+      perHost: checked.stats.perHost,
+    });
 
-  fs.writeFileSync(paths.known, knownText);
-  fs.writeFileSync(paths.unexpected, unexpectedText);
-  // Keep actionable diagnostics in the failed step's log as well as its artifact.
-  if (unexpectedText) {
-    process.stderr.write(unexpectedText);
-  }
-}
-
-function runCheckerAttempt(markdownFile, file, attempt) {
-  fs.appendFileSync(
-    paths.raw,
-    `\n===== FILE: ${file}; attempt ${attempt}/${NETWORK_ATTEMPT_LIMIT} =====\n`,
-  );
-  const result = spawnSync(
-    process.execPath,
-    [paths.checker, "-c", paths.config, markdownFile],
-    { encoding: "utf8" },
-  );
-  const rawOutput = `${result.stdout || ""}${result.stderr || ""}`;
-  fs.appendFileSync(
-    paths.raw,
-    rawOutput.endsWith("\n") ? rawOutput : `${rawOutput}\n`,
-  );
-  const canonicalOutput = stripVTControlCharacters(rawOutput);
-  const checkerErrors = canonicalOutput
-    .split(/\r?\n/)
-    .filter((line) => /^\s*\[⚠\]/.test(line));
-
-  let message;
-  if (result.error || result.signal || !Number.isInteger(result.status)) {
-    message = `${file}: checker could not complete (${result.error?.message || result.signal || "unknown process result"})`;
-  } else if (checkerErrors.length > 0) {
-    message = `${file}: checker could not assess link(s): ${checkerErrors.map((line) => line.trim()).join("; ")}`;
-  } else if (result.status === 0) {
-    try {
-      validateCanonicalSuccess(canonicalOutput, markdownFile);
-      return { failures: [] };
-    } catch (error) {
-      message = `${file}: ${error.message}`;
-    }
-  } else if (result.status !== 1) {
-    message = `${file}: checker exited with unexpected status ${result.status}`;
-  } else {
-    try {
-      return {
-        failures: parseCanonicalFailures(canonicalOutput, markdownFile),
-      };
-    } catch (error) {
-      message = `${file}: ${error.message} (exit ${result.status})`;
-    }
-  }
-
-  fs.appendFileSync(paths.raw, `[!] ${message}\n`);
-  console.error(`[!] ${message}`);
-  return { internal: message };
-}
-
-function attemptHistory(canonicalAttempts, file, baseline) {
-  const histories = new Map();
-  for (const [attemptIndex, failures] of canonicalAttempts.entries()) {
-    const current = new Map();
-    for (const failure of failures) {
-      const key = tupleKey(file, failure.url);
-      if (!baseline.byKey.has(key)) {
-        current.set(key, failure);
-      }
-    }
-    for (const history of histories.values()) {
-      const failure = current.get(history.key);
-      history.values.push(failure ? failure.status : "recovered");
-    }
-    for (const [key, failure] of current) {
-      if (!histories.has(key)) {
-        histories.set(key, {
-          file,
-          key,
-          url: failure.url,
-          values: [
-            ...Array(attemptIndex).fill("not failing"),
-            failure.status,
-          ],
-        });
-      }
-    }
-  }
-  return histories;
-}
-
-function formatAttemptHistory(values) {
-  return values.map((value, index) => `${index + 1}=${value}`).join(", ");
-}
-
-function main() {
-  const distinctOutputs = new Set([paths.raw, paths.known, paths.unexpected]);
-  if (distinctOutputs.size !== 3) {
-    console.error("[!] Raw, known-debt, and unexpected output paths must be distinct.");
-    return 1;
-  }
-  const protectedInputs = new Set([paths.baseline, paths.checker, paths.config]);
-  if ([...distinctOutputs].some((output) => protectedInputs.has(output))) {
-    console.error("[!] Diagnostic output paths must not overwrite checker inputs.");
-    return 1;
-  }
-  try {
-    for (const output of distinctOutputs) {
-      fs.mkdirSync(path.dirname(output), { recursive: true });
-      fs.writeFileSync(output, "");
-    }
-  } catch (error) {
-    console.error(`[!] Cannot initialize link-check diagnostics: ${error.message}`);
-    return 1;
-  }
-
-  const internal = [];
-  const known = [];
-  const unexpected = [];
-  let baseline;
-
-  try {
-    fs.accessSync(paths.checker, fs.constants.R_OK);
-  } catch (error) {
-    internal.push(`Link checker executable is unavailable: ${paths.checker}`);
-  }
-  try {
-    readJson(paths.config, "Link checker configuration");
-  } catch (error) {
-    internal.push(error.message);
-  }
-  try {
-    baseline = validateBaseline(readJson(paths.baseline, "Known-failure baseline"));
-  } catch (error) {
-    internal.push(error.message);
-  }
-  try {
-    if (!fs.statSync(paths.target).isDirectory()) {
-      throw new Error("not a directory");
-    }
-  } catch (error) {
-    internal.push(`Link-check target directory is unavailable: ${paths.target}`);
-  }
-
-  if (internal.length > 0) {
-    fs.appendFileSync(
-      paths.raw,
-      `${internal.map((message) => `[!] ${message}`).join("\n")}\n`,
-    );
-    writeOutputs({ known, recovered: [], transient: [], unexpected });
-    console.error(`[!] Link validator could not start: ${internal.join("; ")}`);
-    return 1;
-  }
-
-  let markdownFiles;
-  try {
-    markdownFiles = enumerateMarkdownFiles(paths.target);
-    if (markdownFiles.length === 0) {
-      throw new Error("no Markdown files found; no links were checked");
-    }
-  } catch (error) {
-    internal.push(`Cannot enumerate Markdown files under ${paths.target}: ${error.message}`);
-    fs.appendFileSync(paths.raw, `[!] ${internal[0]}\n`);
-    writeOutputs({ known, recovered: [], transient: [], unexpected });
-    console.error(`[!] ${internal[0]}`);
-    return 1;
-  }
-
-  const assessedFailuresByFile = new Map();
-  const transient = [];
-  for (const markdownFile of markdownFiles) {
-    const file = logicalFileName(markdownFile);
-    const canonicalAttempts = [];
-    let assessment = null;
-    for (let attempt = 1; attempt <= NETWORK_ATTEMPT_LIMIT; attempt += 1) {
-      const result = runCheckerAttempt(markdownFile, file, attempt);
-      if (result.internal) {
-        internal.push(result.internal);
-        assessment = null;
-        break;
-      }
-      canonicalAttempts.push(result.failures);
-      assessment = result.failures;
-      const unbaselinedNetworkFailures = result.failures.filter(
-        (failure) =>
-          isNetworkUrl(failure.url) &&
-          !baseline.byKey.has(tupleKey(file, failure.url)),
-      );
-      if (
-        unbaselinedNetworkFailures.length === 0 ||
-        attempt === NETWORK_ATTEMPT_LIMIT
-      ) {
-        break;
-      }
-    }
-    if (assessment === null) {
-      continue;
-    }
-
-    const finalFailures = new Map();
-    for (const failure of assessment) {
-      const key = tupleKey(file, failure.url);
-      finalFailures.set(key, failure);
-      const baselineFailure = baseline.byKey.get(key);
-      if (baselineFailure) {
-        known.push({
-          file,
-          url: failure.url,
-          status: failure.status,
-          observedStatus: baselineFailure.observedStatus,
-        });
-      }
-    }
-    assessedFailuresByFile.set(file, finalFailures);
-
-    const histories = attemptHistory(canonicalAttempts, file, baseline);
-    for (const history of histories.values()) {
-      const finalFailure = finalFailures.get(history.key);
-      const row = {
-        file,
-        url: history.url,
-        status: finalFailure
-          ? finalFailure.status
-          : history.values.findLast((value) => Number.isInteger(value)),
-        attempts: formatAttemptHistory(history.values),
-      };
-      const persistentNetworkFailure =
-        isNetworkUrl(history.url) &&
-        history.values.length === NETWORK_ATTEMPT_LIMIT &&
-        history.values.every(Number.isInteger);
-      if (isNetworkUrl(history.url) && !persistentNetworkFailure) {
-        transient.push({ ...row, status: "not persistent" });
-      } else {
-        unexpected.push(row);
-      }
-    }
-  }
-
-  const recovered = [];
-  for (const [key, failure] of baseline.byKey) {
-    const assessedFailures = assessedFailuresByFile.get(failure.file);
-    if (assessedFailures && !assessedFailures.has(key)) {
-      recovered.push({
-        file: failure.file,
-        url: failure.url,
-        status: "not failing",
-        observedStatus: failure.observedStatus,
+    for (const [key, page] of pages) {
+      const outcome = checked.results.get(key);
+      const counts = results.counts.external;
+      if (outcome.outcome !== "unassessed") counts.assessedPages += 1;
+      if (outcome.cache === "hit") counts.cacheHits += 1;
+      counts.observations += outcome.cache === "hit" ? 0 : outcome.observations.length;
+      results.pages.push({
+        ...outcome,
+        occurrences: page.occurrences.map(({ file, line, ordinal, url, new: isNew }) => ({
+          file, line, ordinal, url, ...(options.base ? { new: isNew } : {}),
+        })),
       });
+      for (const occurrence of page.occurrences) {
+        const assessed =
+          outcome.outcome === "healthy"
+            ? outcome.fragments[occurrence.fragment]
+            : { outcome: outcome.outcome, category: outcome.category, detail: pageDetail(outcome) };
+        if (assessed.outcome !== "unassessed") {
+          assessedPairs.add(pairKey(occurrence.file, occurrence.url));
+        }
+        if (assessed.outcome !== "healthy") {
+          const { fragment, absoluteUrl, ...rest } = occurrence;
+          findings.push({ ...rest, ...assessed, page: key, finalUrl: outcome.finalUrl });
+        }
+      }
+    }
+
+    // Includes requests made for the pages' shared home-page comparisons.
+    results.counts.external.requests = checked.stats.requests;
+
+    // Keep unexpired successes, drop pages that failed now, add fresh successes.
+    const entries = new Map(cache.entries);
+    for (const [key, outcome] of checked.results) {
+      if (outcome.outcome !== "healthy") entries.delete(key);
+    }
+    for (const [key, entry] of checked.freshSuccesses) entries.set(key, entry);
+    try {
+      external.saveCache(paths.cacheFile, fingerprint, entries);
+    } catch (error) {
+      results.cache.note += `; cache not saved (${error.message})`;
     }
   }
 
-  writeOutputs({ known, recovered, transient, unexpected });
-  if (unexpected.length > 0 || internal.length > 0) {
-    console.error(
-      `[!] Link validator found ${unexpected.length} unexpected link failure(s) and ${internal.length} internal failure(s).`,
-    );
-    return 1;
+  for (const finding of findings) {
+    const evidence = legacy.get(pairKey(finding.file, finding.url));
+    if (evidence) finding.legacyEvidence = evidence;
   }
-
-  console.log(
-    `[+] No unexpected link failures; ${known.length} known failure(s) remain, ${recovered.length} baseline row(s) are recovered or stale, and ${transient.length} network failure(s) were not persistent across every observation.`,
+  results.exceptions = policy.applyExceptions({
+    exceptions,
+    findings,
+    assessedPairs,
+    presentPairs: new Set(occurrences.map((o) => pairKey(o.file, o.url))),
+    today: paths.today,
+  });
+  for (const finding of findings) {
+    finding.blocking =
+      finding.outcome === "broken" && !finding.exception && (!options.base || finding.new === true);
+    delete finding.target;
+  }
+  results.findings = findings.sort(
+    (a, b) =>
+      Number(b.blocking) - Number(a.blocking) ||
+      a.file.localeCompare(b.file) ||
+      a.ordinal - b.ordinal,
   );
-  return 0;
 }
 
-process.exitCode = main();
+function writeResults(paths, results) {
+  fs.mkdirSync(paths.outputDir, { recursive: true });
+  const file = path.join(paths.outputDir, "results.json");
+  fs.writeFileSync(`${file}.tmp`, `${JSON.stringify(results, null, 2)}\n`);
+  fs.renameSync(`${file}.tmp`, file);
+  fs.writeFileSync(path.join(paths.outputDir, "report.md"), report.renderMarkdown(results));
+}
+
+async function main(argv) {
+  let options;
+  try {
+    options = parseArgs(argv);
+  } catch (error) {
+    console.error(`${error.message}\n${USAGE}`);
+    return 2;
+  }
+  if (options.help) {
+    console.log(USAGE);
+    return 0;
+  }
+  const paths = settings();
+  const started = performance.now();
+  const results = {
+    schemaVersion: report.RESULTS_SCHEMA,
+    status: "incomplete",
+    mode: options.localOnly ? "local-only" : "full",
+    startedAt: new Date().toISOString(),
+    options: { base: options.base, localOnly: options.localOnly, fresh: options.fresh },
+    base: null,
+    counts: {},
+    metrics: {},
+    errors: [],
+    findings: [],
+    pages: [],
+    exceptions: [],
+  };
+  try {
+    fs.rmSync(path.join(paths.outputDir, "report.md"), { force: true });
+    // A crash or timeout leaves this marker instead of an older passing report.
+    writeResults(paths, { ...results, errors: ["the checker started but did not finish"] });
+  } catch (error) {
+    console.error(`  [internal] cannot write ${paths.outputDir}: ${error.message}`);
+    return 2;
+  }
+
+  try {
+    await run(results, options, paths);
+  } catch (error) {
+    results.errors.push(error.message);
+  }
+  const unassessed = results.findings.filter((f) => f.outcome === "unassessed").length;
+  results.status =
+    results.errors.length > 0 || unassessed > 0
+      ? "incomplete"
+      : results.findings.some((f) => f.blocking)
+        ? "failed"
+        : "passed";
+  results.finishedAt = new Date().toISOString();
+  results.durationMs = Math.round(performance.now() - started);
+  writeResults(paths, results);
+  const lines = report.consoleLines(results);
+  (results.status === "passed" ? console.log : console.error)(lines.join("\n"));
+  return { passed: 0, failed: 1, incomplete: 2 }[results.status];
+}
+
+main(process.argv.slice(2)).then(
+  (code) => {
+    process.exitCode = code;
+  },
+  (error) => {
+    console.error(`  [internal] ${error.stack || error}`);
+    process.exitCode = 2;
+  },
+);
