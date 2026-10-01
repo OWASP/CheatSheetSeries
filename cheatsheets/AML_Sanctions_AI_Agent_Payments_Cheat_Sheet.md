@@ -164,20 +164,19 @@ Institutions must decide whether to run their own screening engine or use a host
 
 ## Section 8: Receipt Canonicalization (RFC 8785 / JCS)
 
-This subsection proposes one cross-system receipt pattern; it does not define a standard receipt format. [RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785) is an Informational RFC for canonical JSON. It does not specify the `action_ref` fields or the correlation scheme proposed here, and it does not specify a signature algorithm.
+When systems independently serialize the same JSON object for hashing or signature verification, they need an agreed byte representation. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different bytes for the same logical object.
 
-When systems independently serialize the same JSON object for hashing or signature verification, they need an agreed byte representation. JCS provides one such representation. Canonicalization is not necessary for every signed-token format: a [JWS](https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2) verifier checks the encoded signing input, rather than independently reserializing its payload. Verification also needs a trusted verification key and an agreed signature profile; canonicalization alone supplies neither.
+[RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785) provides one deterministic JSON representation for that use case. It is not required for every signed-token format: a [JWS](https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2) verifier checks the encoded signing input rather than reserializing the payload. Cross-system verification also needs an agreed signature profile and a trusted verification key. Canonicalization alone supplies neither.
 
 ### Do
 
-- For this JCS-based pattern, canonicalize the agreed receipt payload before signing and before verification.
+- If the receipt profile calls for independently serializing JSON, canonicalize the agreed payload before signing and before verification.
 - Use the hashing and signing procedure required by the chosen signature profile and API; do not add a separate prehash unless that profile requires it.
-- Record the canonicalization, hash, and signature algorithm in the receipt (for example `canon: jcs`, `alg: ecdsa-p256-sha256`) so any verifier can reproduce it.
-- Derive a stable **content address** (`action_ref`) for each action: `action_ref = HEX(SHA-256(JCS({agent_id, action_type, scope, timestamp_ms})))`. This 64-character hex digest is a collision-resistant content address for the selected fields. Separate invocations with identical fields produce the same address; where those must be distinguished, include an explicit invocation identifier in the agreed preimage. This address does not by itself establish that an action occurred. [OWASP Agentic Skills Top 10 AST09](https://github.com/OWASP/www-project-agentic-skills-top-10/blob/main/ast09.md) names `action_ref` as a "content-derived join key, independently recomputable" in the outcome receipt. It does not specify a construction. The SHA-256-over-JCS formula above is one way to satisfy that property and is a proposed pattern, not a standardized one.
+- Record the canonicalization and signature profile used so a verifier can reproduce the signing input.
 
 ### Don't
 
-- Don't sign framework-default or pretty-printed JSON, because key order or whitespace differences break cross-system verification.
+- For a profile that requires reconstructing signed JSON, don't rely on framework-default or pretty-printed serialization; key order and whitespace can differ across systems.
 - Don't assume two services emit identical JSON for the same object; they usually will not.
 
 ## Section 9: Cross-Agent Payment Accountability
@@ -204,24 +203,9 @@ A receipt stating "screened, no match" is meaningless without which version of t
 ### Do
 
 - Include the sanctions-list source(s), version or publication date, and screening timestamp **inside the signed receipt**.
+- Bind each screening result and list version to the specific transaction or payment intent in the signed data, so a later verifier can distinguish it from another transaction.
 - Define a maximum acceptable list age, record it in the receipt, and fail-closed if it is exceeded.
 - Make list freshness auditable after the fact from the receipt alone.
-- Bind the freshness record to the specific agent action using the `action_ref` content address (Section 8), so an auditor can link the screening result to the transaction without relying on log position:
-
-```json
-{
-  "screening_sources": [
-    {
-      "list": "OFAC-SDN",
-      "version": "2026-06-04",
-      "freshness_max_age_hours": 24,
-      "screening_timestamp_ms": 1780531200000
-    }
-  ],
-  "result": "no_match",
-  "action_ref": "a3f7c2..."
-}
-```
 
 ### Don't
 
@@ -240,7 +224,6 @@ The controls in this cheat sheet map to common AML and sanctions obligations. Th
 | Sanctions-list freshness in receipt (Section 10) | Obligation to screen against current lists; sanctions-evasion controls |
 | Fail-closed enforcement (Section 5) | Blocking obligations for sanctioned parties |
 | Trust-tiered limits (Section 6) | Risk-based approach (FATF Recommendation 1); monitoring thresholds |
-| Signed receipt with `action_ref` content address (Sections 4, 8-10) | [EU AI Act Article 12](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-12) requires automatic event-logging capabilities for high-risk systems. It does not prescribe this receipt format, cryptographic signing or an independent verifier. As checked on 25 September 2026, the [Commission's applicability FAQ](https://ai-act-service-desk.ec.europa.eu/en/ai-act/faq/when-does-enforcement-start) gives 2 December 2027 for Annex III high-risk rules and 2 August 2028 for high-risk systems embedded in regulated products. Check the applicable scope and transition provisions before relying on these dates. |
 
 ### Do
 
