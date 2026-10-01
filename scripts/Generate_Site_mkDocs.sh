@@ -103,6 +103,7 @@ echo "Step 6/7: Handling redirect for files that have changed"
 #JJSON_WEB_Token_for_Java_Cheat_Sheet.md -> JSON_WEB_Token_Cheat_Sheet.md
 #Ruby_on_Rails_Cheatsheet.md -> Ruby_on_Rails_Cheat_Sheet.md
 #Nodejs_security_cheat_sheet.html -> Nodejs_security_Cheat_Sheet.html
+#AJAX_Security_Cheat_Sheet.md -> Web_Frontend_Security_Cheat_Sheet.md
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # MacOS
@@ -146,6 +147,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         redirect_from: \"/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html\"\\
         ---\\
         " "$WORK/$GENERATED_SITE/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html"
+    sed -i '' "1i\\
+        ---\\
+        redirect_from: \"/cheatsheets/AJAX_Security_Cheat_Sheet.html\"\\
+        ---\\
+        " "$WORK/$GENERATED_SITE/cheatsheets/Web_Frontend_Security_Cheat_Sheet.html"
 else
     sed -i "1i---\nredirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
     sed -i "1i---\nredirect_from: \"/cheatsheets/Drone_security_sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Drone_Security_Cheat_Sheet.html
@@ -154,6 +160,7 @@ else
     sed -i "1i---\nredirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
     sed -i "1i---\nredirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Nodejs_Security_Cheat_Sheet.html
     sed -i "1i---\nredirect_from: \"/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/AJAX_Security_Cheat_Sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Web_Frontend_Security_Cheat_Sheet.html
 fi
 
 echo "Step 7/7 Cleanup."

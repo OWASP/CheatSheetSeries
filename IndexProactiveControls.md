@@ -18,7 +18,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet (A3 Cross Site Scripting)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a3-cross-site-scripting)
+[DotNet Security Cheat Sheet (Cross-Site Scripting)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a072017-cross-site-scripting-xss)
 
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
@@ -32,7 +32,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DotNet Security Cheat Sheet (Data Access)](cheatsheets/DotNet_Security_Cheat_Sheet.md#data-access)
 
-[DotNet Security Cheat Sheet (A1 SQL Injection)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a1-sql-injection)
+[DotNet Security Cheat Sheet (SQL Injection)](cheatsheets/DotNet_Security_Cheat_Sheet.md#sql-injection)
 
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
 
@@ -42,7 +42,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 ## [C4. Encode and Escape Data](https://top10proactive.owasp.org/archive/2018/c4-encode-escape-data/)
 
-[AJAX Security Cheat Sheet (Client Side)](cheatsheets/AJAX_Security_Cheat_Sheet.md#client-side-javascript)
+[Web Frontend Security Cheat Sheet (Client Side)](cheatsheets/Web_Frontend_Security_Cheat_Sheet.md#client-side-javascript)
 
 [Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
@@ -62,9 +62,9 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DotNet Security Cheat Sheet (HTTP Validation and Encoding)](cheatsheets/DotNet_Security_Cheat_Sheet.md#http-validation-and-encoding)
 
-[DotNet Security Cheat Sheet (A8 Cross site request forgery)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a8-cross-site-request-forgery)
+[DotNet Security Cheat Sheet (Cross-Site Request Forgery)](cheatsheets/DotNet_Security_Cheat_Sheet.md#cross-site-request-forgery)
 
-[DotNet Security Cheat Sheet (A10 Unvalidated redirects and forwards)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a10-unvalidated-redirects-and-forwards)
+[DotNet Security Cheat Sheet (Unvalidated Redirects and Forwards)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a102013-unvalidated-redirects-and-forwards)
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
 
@@ -82,8 +82,6 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Ruby on Rails Cheat Sheet (Command Injection)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#command-injection)
 
-[Ruby on Rails Cheat Sheet (Mass Assignment and Strong Parameters)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#mass-assignment-and-strong-parameters)
-
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
 
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
@@ -98,7 +96,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DotNet Security Cheat Sheet (Forms authentication)](cheatsheets/DotNet_Security_Cheat_Sheet.md#forms-authentication)
 
-[DotNet Security Cheat Sheet (A2 Weak Account management)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a2-weak-account-management)
+[DotNet Security Cheat Sheet (Weak Account Management)](cheatsheets/DotNet_Security_Cheat_Sheet.md#weak-account-management)
 
 [Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
 
@@ -130,9 +128,9 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Cross-Site_Request_Forgery_Prevention_Cheat_Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet (A4 Insecure Direct object references)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a4-insecure-direct-object-references)
+[DotNet Security Cheat Sheet (Insecure Direct Object References)](cheatsheets/DotNet_Security_Cheat_Sheet.md#insecure-direct-object-references)
 
-[DotNet Security Cheat Sheet (A7 Missing function level access control)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a7-missing-function-level-access-control)
+[DotNet Security Cheat Sheet (Missing Function-Level Access Control)](cheatsheets/DotNet_Security_Cheat_Sheet.md#missing-function-level-access-control)
 
 [REST Security Cheat Sheet (Access Control)](cheatsheets/REST_Security_Cheat_Sheet.md#access-control)
 
@@ -152,7 +150,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DotNet Security Cheat Sheet (Encryption)](cheatsheets/DotNet_Security_Cheat_Sheet.md#encryption)
 
-[DotNet Security Cheat Sheet (A6 Sensitive data exposure)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a6-sensitive-data-exposure)
+[DotNet Security Cheat Sheet (Cryptographic Failures)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a02-cryptographic-failures)
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
 
