@@ -1,12 +1,13 @@
 name: Markdown Link Check
 
-# Pull requests check external links they add and block on newly broken local
-# links. Pushes to master check local links only. The weekly and manual runs
-# are fresh full audits whose failures are maintenance work.
+# Pull requests to every branch check external links they add and block on
+# newly broken local links, regardless of changed paths, author, or draft status.
+# Pushes to master check local links only. The weekly and manual runs are fresh
+# full audits whose failures are maintenance work.
 on:
   pull_request:
-    branches:
-    - master
+    # Retargeting changes the comparison base; leaving draft also reruns checks.
+    types: [opened, synchronize, reopened, edited, ready_for_review]
   push:
     branches:
     - master
