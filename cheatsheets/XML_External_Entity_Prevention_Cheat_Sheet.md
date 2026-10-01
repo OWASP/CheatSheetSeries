@@ -163,6 +163,162 @@ Java is exposed to XXE for two structural reasons, and both have to be dealt wit
 - **The parser is chosen at deployment time.** JAXP factories are pluggable, so the implementation a `newInstance()` call returns depends on the classpath rather than on your code.
 - **Almost no security setting is mandatory.** The features that disable external entity resolution are optional, so a parser is free not to recognize them and throw an exception, which users often swallow. The resolver hooks are the exception: every implementation has to honor those.
 
+### Secure configuration by API
+
+Find the API you use below. These illustrative examples assume your application supplies the input streams and handles exceptions without continuing after a configuration failure. The later sections explain implementation differences and cases that require external resources.
+
+The DOM and SAX examples use this [entity resolver](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html#setEntityResolver(org.xml.sax.EntityResolver)) to reject external references. **Throw instead of returning `null`**, which delegates resolution to the parser. StAX requires its own resolver type, shown below.
+
+``` java
+EntityResolver denyAll = (publicId, systemId) -> {
+    throw new SAXException("External references are not allowed: " + systemId);
+};
+```
+
+| If you use | The risk | What to do |
+| --- | --- | --- |
+| [`DocumentBuilderFactory`](#documentbuilderfactory-dom) | Builds a DOM from untrusted XML, resolving external entities and external DTDs | Disallow the DOCTYPE |
+| [`SAXParserFactory` and `XMLReader`](#saxparserfactory-and-xmlreader) | The same exposure, for event-based parsing | Features on the factory, resolver on the reader |
+| [`XMLInputFactory`](#xmlinputfactory-stax) | Can resolve external parsed entities; processes DTDs by default | Turn both properties off |
+| [`TransformerFactory`](#transformerfactory-xslt) | Parses XML and style sheets; can load imports, includes and `document()` resources | Configure external access before compiling the style sheet |
+| [`SchemaFactory` and `Validator`](#schemafactory-and-validator) | Can load external resources during schema compilation and validation | Configure both compilation and validation |
+| [`XPath`](#xpath) | The `InputSource` overloads build a parser you never get to configure | Parse first, then evaluate against the `Document` |
+| [`Unmarshaller` (JAXB)](#jaxb-unmarshaller) | Uses provider-selected parsing when passed raw XML | Pass a hardened `XMLStreamReader` |
+
+#### DocumentBuilderFactory (DOM)
+
+- **Risk:** Resolves external entities and external DTDs while building a DOM from untrusted input, which discloses local files and turns the parser into a request proxy.
+- **Configure:** Disallow the DOCTYPE to prevent declarations of external entities. Pass the feature with [`setFeature`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,boolean)) and keep the resolver on the builder.
+- **Use:** `builder.parse(inputStream)`.
+
+``` java
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+// The factory does not carry the resolver; the builder does.
+DocumentBuilder builder = dbf.newDocumentBuilder();
+builder.setEntityResolver(denyAll);
+
+Document doc = builder.parse(untrustedStream);
+```
+
+If the parser rejects `disallow-doctype-decl`, let the exception propagate. Swallowing it leaves an unconfigured factory, which is the case the setting existed to prevent. Where the Javadoc says a setting is set with `setAttribute` rather than `setFeature`, use [`setAttribute`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html#setAttribute(java.lang.String,java.lang.Object)) — `ACCESS_EXTERNAL_DTD` and `ACCESS_EXTERNAL_SCHEMA` are the string-valued ones.
+
+#### SAXParserFactory and XMLReader
+
+- **Risk:** The same external entity and DTD exposure as DOM, plus one trap: `SAXParser.parse(source, handler)` installs the handler as the reader's `EntityResolver` and discards yours.
+- **Configure:** Set Boolean features on the factory and the resolver on its `XMLReader`. Use [`SAXParserFactory.setFeature`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/SAXParserFactory.html#setFeature(java.lang.String,boolean)) for features; properties such as external-access restrictions belong on the parser or reader.
+- **Use:** `reader.parse(inputSource)`.
+
+``` java
+SAXParserFactory spf = SAXParserFactory.newInstance();
+spf.setNamespaceAware(true);
+spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+
+// Obtain the reader through SAXParserFactory, not the deprecated XMLReaderFactory.
+XMLReader reader = spf.newSAXParser().getXMLReader();
+reader.setEntityResolver(denyAll);
+reader.setContentHandler(handler);  // your application's SAX content handler
+
+reader.parse(new InputSource(untrustedStream));
+```
+
+Because of the trap above, do not use the two-argument `SAXParser.parse(source, handler)` overload once a resolver is installed; call `reader.parse(...)` on the configured reader instead.
+
+#### XMLInputFactory (StAX)
+
+- **Risk:** DTD processing defaults to enabled; the external-entity default is [unspecified](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLInputFactory.html).
+- **Configure:** Set both properties below. Let configuration failures abort processing. The factory supplies its resolver to the readers it creates, so install it before creating a reader.
+- **Use:** `createXMLStreamReader(inputStream)`.
+
+``` java
+XMLInputFactory xif = XMLInputFactory.newInstance();
+xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+XMLResolver denyAllStax = (publicId, systemId, baseURI, namespace) -> {
+    throw new XMLStreamException("External references are not allowed: " + systemId);
+};
+xif.setXMLResolver(denyAllStax);
+
+XMLStreamReader xsr = xif.createXMLStreamReader(untrustedStream);
+```
+
+#### TransformerFactory (XSLT)
+
+- **Risk:** XML parsing can resolve external entities; style sheet compilation and transformation can also load imports, includes and `document()` resources.
+- **Configure:** For **Java 9+ using the built-in JAXP implementation**, deny external access before creating the transformer. The [factory's external-access properties](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/TransformerFactory.html#setAttribute(java.lang.String,java.lang.Object)) cover DTDs in both the style sheet and input, style sheet imports/includes, and `document()` calls. This example assumes a trusted application-owned style sheet that needs no external resources.
+- **Use:** `transformer.transform(source, result)`.
+
+``` java
+TransformerFactory factory = TransformerFactory.newDefaultInstance();
+factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+
+Transformer transformer =
+        factory.newTransformer(new StreamSource(trustedStylesheetStream));
+transformer.transform(new StreamSource(untrustedStream), result);
+```
+
+Internal entities remain subject to the implementation's processing limits. This configuration is not a sandbox for untrusted style sheets. For another implementation, supply style sheet and XML input through a hardened, namespace-aware `XMLReader` using a [`SAXSource`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/sax/SAXSource.html). Also install a [`URIResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/URIResolver.html) that throws for every external reference; parser settings alone do not restrict imports or `document()`.
+
+Set the resolver on the [factory before `newTransformer`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/TransformerFactory.html#setURIResolver(javax.xml.transform.URIResolver)) to control imports/includes; the transformer uses it by default for runtime `document()` calls. If external resources are required, use a strict catalog or an allowlisting resolver instead. See [resource policies](#trax-and-validation-take-a-sax-parser) below.
+
+#### SchemaFactory and Validator
+
+- **Risk:** Schema compilation can load imports/includes; validation can also load external resources. A hardened input parser does not configure the schema compiler's resource policy.
+- **Configure:** For **Java 9+ using the built-in JAXP implementation**, set [external-access restrictions](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setProperty(java.lang.String,java.lang.Object)) before compiling the schema and validating input. This example assumes a trusted application-owned schema that needs no external resources.
+- **Use:** `validator.validate(source)`.
+
+``` java
+SchemaFactory sf = SchemaFactory.newDefaultInstance();
+sf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+sf.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+sf.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+Schema schema = sf.newSchema(new StreamSource(trustedSchemaStream));
+
+Validator validator = schema.newValidator();
+validator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+validator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+validator.validate(new StreamSource(untrustedStream));
+```
+
+For another implementation, supply schema and XML input through a `SAXSource` with a hardened, namespace-aware `XMLReader`, and install a rejecting `LSResourceResolver`. If external dependencies are required, use a strict catalog or an allowlisting resolver instead. Install the resolver on the [`SchemaFactory` before `newSchema`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver)) and separately on **every** `Validator` or `ValidatorHandler`. Validators do not inherit the factory's resolver. A resolver returning `null` delegates to default resolution, subject to any supported external-access restrictions you configured; throw to reject a reference.
+
+#### XPath
+
+- **Risk:** The [`InputSource` overloads of `XPath.evaluate`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/xpath/XPath.html#evaluate(java.lang.String,org.xml.sax.InputSource)) build the document internally, without using your configured parser.
+- **Configure:** Parse the untrusted input with a hardened `DocumentBuilder`, then evaluate against the resulting `Document`.
+- **Use:** Evaluate against the parsed document and select the required result type.
+
+``` java
+Document doc = builder.parse(untrustedStream);  // hardened builder, as above
+
+XPath xpath = XPathFactory.newInstance().newXPath();
+NodeList nodes = (NodeList) xpath.evaluate("//user/name", doc, XPathConstants.NODESET);
+```
+
+#### JAXB Unmarshaller
+
+- **Risk:** When passed raw XML, JAXB uses its provider's parser configuration.
+- **Configure:** Create the `XMLStreamReader` with a hardened `XMLInputFactory` and hand it to [`Unmarshaller.unmarshal`](https://jakarta.ee/specifications/xml-binding/4.0/apidocs/jakarta.xml.bind/jakarta/xml/bind/Unmarshaller.html#unmarshal(javax.xml.stream.XMLStreamReader)).
+- **Use:** `unmarshaller.unmarshal(xsr)`.
+
+``` java
+XMLInputFactory xif = XMLInputFactory.newInstance();
+xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+
+XMLStreamReader xsr = xif.createXMLStreamReader(untrustedStream);
+Object result = jaxbContext.createUnmarshaller().unmarshal(xsr);
+```
+
+For other APIs, see the [Oracle DOM Parser](#oracle-dom-parser), [libraries that wrap a JAXP parser](#parsers-that-wrap-a-jaxp-parser), and [java.beans.XMLDecoder](#javabeansxmldecoder). [Secure JAXP factory sources](#secure-jaxp-factory-sources) describes an optional library and its limitations.
+
+The following sections cover parser selection, implementation-specific settings, and resource policies.
+
 ### Pick the implementation
 
 `newInstance()` does not return a known parser. The [JAXP lookup mechanism](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/module-summary.html#LookupMechanism) resolves the implementation from system properties and the classpath. That choice is made outside your code, and every recipe below is implementation-specific: if you do not know which parser you have, you do not know which settings it honors.
@@ -177,33 +333,7 @@ The JAXP API offers two ways to stop a parser from fetching external content: re
 
 Resolvers give fine-grained control over how external DTD subsets and entities are resolved. On DOM and SAX they are set through ordinary methods: [`DocumentBuilder.setEntityResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html#setEntityResolver(org.xml.sax.EntityResolver)) and [`XMLReader.setEntityResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/org/xml/sax/XMLReader.html#setEntityResolver(org.xml.sax.EntityResolver)). On StAX, `javax.xml.stream.resolver` is one of the properties [`XMLInputFactory` marks as required](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLInputFactory.html).
 
-SEI CERT's [recommended solution](https://cmu-sei.github.io/secure-coding-standards/sei-cert-oracle-coding-standard-for-java/rules/input-validation-and-data-sanitization-ids/ids17-j) is a resolver that checks the identifier against an allowlist and returns an empty `InputSource` for everything else, relying on the parser to then fail with a `MalformedURLException`. Refusing outright is firmer and reports the refusal as what it is. Where nothing external is ever legitimate:
-
-``` java
-// Throw, do not return null: null tells the parser to resolve the reference itself.
-EntityResolver denyAll = (publicId, systemId) -> {
-    throw new SAXException("External references are not allowed: " + systemId);
-};
-
-// Neither factory carries the resolver, so set it on every object they create.
-DocumentBuilder builder = ...;
-builder.setEntityResolver(denyAll);
-
-XMLReader reader = ...;
-reader.setEntityResolver(denyAll);
-```
-
-For StAX, use an [`XMLResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLResolver.html):
-
-``` java
-XMLResolver denyAll = (publicId, systemId, baseURI, namespace) -> {
-    throw new XMLStreamException("External references are not allowed: " + systemId);
-};
-
-// Unlike DOM and SAX, the StAX factory passes its resolver to every reader it creates.
-XMLInputFactory xmlInputFactory = ...;
-xmlInputFactory.setProperty(XMLInputFactory.RESOLVER, denyAll);
-```
+SEI CERT [recommends allowlisting](https://cmu-sei.github.io/secure-coding-standards/sei-cert-oracle-coding-standard-for-java/rules/input-validation-and-data-sanitization-ids/ids17-j) when external resources are required. Where none are needed, use the rejecting resolver in the [DOM](#documentbuilderfactory-dom) and [SAX](#saxparserfactory-and-xmlreader) examples, installed on every builder or reader. The [StAX example](#xmlinputfactory-stax) installs an [`XMLResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLResolver.html) on the factory before creating its reader.
 
 If you prefer to return empty content instead of throwing, StAX carries a trap. An `XMLResolver` must return one of the types its Javadoc enumerates. Anything else is undefined and [may be treated as `null`](https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.xml/share/classes/com/sun/xml/internal/stream/StaxEntityResolverWrapper.java#L71-L84), which tells the processor to resolve the entity itself. An empty string, the obvious way to return nothing, therefore fetches the external resource after all. Return `InputStream.nullInputStream()` instead.
 
@@ -279,7 +409,7 @@ Settings that make the parser insecure (keep them to their `false` default):
 
 The same lineages apply, except that Android's SAX reader is [based on `expat`](https://android.googlesource.com/platform/libcore/+/refs/heads/main/luni/src/main/java/org/apache/harmony/xml/ExpatReader.java) rather than kXML. The same features apply too, with two differences:
 
-- `SAXParserFactory` exposes only a feature API, so anything expressed as a property has to be set on the `XMLReader` obtained from `SAXParser.getXMLReader()`.
+- `SAXParserFactory` has no `setProperty` method. Apply properties to the `SAXParser` or its `XMLReader` instead.
 - Get the reader through `SAXParserFactory` rather than the `XMLReaderFactory.createXMLReader()` shown in older guidance, which has been deprecated since Java 9.
 
 More importantly, **`SAXParser.parse(source, DefaultHandler)` installs that handler as the reader's `EntityResolver`**, silently replacing any resolver you configured with one that returns `null`. Use the configured `XMLReader.parse(...)` directly, or override the handler's `resolveEntity` to reject external references; do not use this `SAXParser` overload after installing a resolver. That happens in [`SAXParser` itself](https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.xml/share/classes/javax/xml/parsers/SAXParser.java#L389-L392) rather than in an implementation, so no parser escapes it.
@@ -296,13 +426,7 @@ The StAX specification **does** support security-related properties, but they de
 | [`SUPPORT_DTD`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLInputFactory.html#SUPPORT_DTD)                                         | `false`    | [Skips the DTD](https://github.com/openjdk/jdk/blob/jdk-25-ga/src/java.xml/share/classes/com/sun/org/apache/xerces/internal/impl/XMLDTDScannerImpl.java#L379) rather than rejecting it: no internal subset, no external subset fetch |
 | [`IS_SUPPORTING_EXTERNAL_ENTITIES`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/stream/XMLInputFactory.html#IS_SUPPORTING_EXTERNAL_ENTITIES) | `false`    | Does not resolve external parsed entities                                                                                                                                                                                            |
 
-Set both StAX properties. `setProperty` throws on an unknown name, so this already fails closed:
-
-``` java
-XMLInputFactory xif = XMLInputFactory.newInstance();
-xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-```
+Set both properties as in the [StAX example](#xmlinputfactory-stax). `setProperty` throws on an unknown name; do not catch that exception and continue parsing.
 
 StAX has no equivalent of `FEATURE_SECURE_PROCESSING`, so entity-expansion bounds are whatever the implementation applies on its own.
 
@@ -325,56 +449,40 @@ These libraries do not parse XML themselves, and both let you supply the parser.
 
 **dom4j overrides the resolver on the reader you supply.** Every `read()` [installs the `SAXReader`'s own `EntityResolver` on your `XMLReader`](https://github.com/dom4j/dom4j/blob/8db3742e13860c6767971867458073e8dd0fa1d1/src/main/java/org/dom4j/io/SAXReader.java#L464-L476). When you have not set one, a default allow-all resolver is used. Pass your ignore-all/deny-all resolver to [`SAXReader.setEntityResolver`](https://javadoc.io/doc/org.dom4j/dom4j/latest/org/dom4j/io/SAXReader.html#setEntityResolver(org.xml.sax.EntityResolver)) as well.
 
-Other libraries follow the same pattern: give them a hardened parser, or parse the untrusted content yourself and hand them the resulting document.
+[Commons Digester also replaces the reader's resolver](https://github.com/apache/commons-digester/blob/0e6d183e1edba72b5d78208307c82f71bfdfb7ad/commons-digester3-core/src/main/java/org/apache/commons/digester3/Digester.java#L1869-L1876). Set your resolver with `Digester.setEntityResolver(...)` before parsing.
+
+For other libraries, supply a hardened parser and check whether the wrapper replaces its resolver, or parse the untrusted content yourself and pass the resulting document.
 
 ### Interfaces that need a parser
 
-`TransformerFactory`, `SchemaFactory`, `Validator`, `XPath`, `XPathExpression` and the JAXB `Unmarshaller` are not parsers. They *consume* one, and if you do not supply it, they build their own. Give them one you hardened; which kind depends on the interface.
+These APIs can parse input internally or accept input through a parser you supply. Configure external-resource access on TrAX and validation APIs, and harden any parser you supply separately. For XPath and JAXB, supply a parsed document or hardened reader as shown above.
 
 #### TrAX and validation take a SAX parser
 
-`TransformerFactory`, `SchemaFactory` and `Validator` accept a `Source`. Wrap the input in a `SAXSource` carrying an `XMLReader` you configured:
+For the built-in JDK implementations, start with the [transformation](#transformerfactory-xslt) or [validation](#schemafactory-and-validator) example. If you supply your own parser, wrap the input in a `SAXSource` carrying a hardened, namespace-aware `XMLReader`. Settings on the processing API do not replace hardening of that supplied reader.
 
-``` java
-// Create a hardened reader
-XMLReader reader = ...;
-
-// Transformer.transform() and Validator.validate() both accept a SAXSource
-transformer.transform(new SAXSource(reader, new InputSource(inputStream)), result);
-```
-
-On JAXP 1.5 implementations, `ACCESS_EXTERNAL_DTD` set on the factory is copied onto internally created readers, so the above workaround is not necessary.
-
-Two gaps leave a hardened factory producing an unhardened object:
+Also account for resolver inheritance and style sheet discovery:
 
 - A `SchemaFactory`'s resolver is not inherited, by contract (see [`setResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver))). After creating a `Schema`, install the resolver on each `Validator` or `ValidatorHandler` created from it.
 - `getAssociatedStylesheet` discards your reader on older implementations (see [XALANJ-2849](https://issues.apache.org/jira/browse/XALANJ-2849) and older JDK versions), scanning with a parser of its own. Pass it a `DOMSource` you parsed yourself, but treat the returned `Source` and its system identifier as untrusted: allowlist or resolve that identifier through an access policy before fetching or handing it to `newTransformer`.
 
-**These interfaces also fetch on their own behalf, and not every reference they follow is equally trusted.** Separate the two:
+XSLT transformations and XML Schema compilation and validation can load external resources independently of the XML parser. Disabling DTDs does not block style sheet or schema imports or XSLT `document()` calls. **Deny external access unless your application needs it.** A trusted style sheet can compute a [`document()` URI from untrusted XML](https://developer.mozilla.org/en-US/docs/Web/XML/XPath/Reference/Functions/document), so style sheet ownership alone does not make the URI trusted.
 
-- References carried **by the document you are processing** are attacker-controlled. Keep them denied. The `xml-stylesheet` processing instruction is acted on by `getAssociatedStylesheet`, which carries the trap described above; `xsi:schemaLocation` and `xsi:noNamespaceSchemaLocation` are acted on only once schema validation is enabled, which starts with [`setValidating(true)`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/parsers/DocumentBuilderFactory.html#setValidating(boolean)).
-- References carried **by your own style sheet or schema** — `xsl:import`, `xsl:include`, `xs:import`, `xs:include` and the XSLT `document()` function — are yours, and splitting one across files is ordinary practice. These are the ones to **restrict** rather than close.
+For required resources, apply the policy before compiling the style sheet or schema and during transformation or validation:
 
-Three ways to restrict the second group, most precise first:
-
-1. A [`CatalogResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/catalog/CatalogResolver.html) (Java 9 and later, or [XML Resolver](https://www.xmlresolver.org/) before it) maps each identifier you expect to a local file and, under the default [`RESOLVE=strict`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/catalog/CatalogFeatures.Feature.html#RESOLVE), throws on everything else.
-2. A [`URIResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/URIResolver.html) for TrAX or an [`LSResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/Validator.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver)) for validation, where the allowlist needs logic a catalog cannot express.
-3. [`ACCESS_EXTERNAL_STYLESHEET`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_STYLESHEET) and [`ACCESS_EXTERNAL_SCHEMA`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_SCHEMA), on the implementations that offer them: a protocol filter, so permitting a scheme permits every URI that uses it.
+- A [`CatalogResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/catalog/CatalogResolver.html) (Java 9+) can map approved identifiers to local resources. Keep [`RESOLVE=strict`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/catalog/CatalogFeatures.html), the default, to reject identifiers that are not mapped.
+- Use an allowlisting [`URIResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/transform/URIResolver.html) for XSLT or [`LSResourceResolver`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/Validator.html#setResourceResolver(org.w3c.dom.ls.LSResourceResolver)) for validation when a catalog cannot express the policy. Reject unresolved references rather than returning `null`.
+- [`ACCESS_EXTERNAL_STYLESHEET`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_STYLESHEET) and [`ACCESS_EXTERNAL_SCHEMA`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#ACCESS_EXTERNAL_SCHEMA) are protocol filters, not resource allowlists: permitting a scheme permits every URI using it, subject to any other controls.
 
 #### XPath takes a DOM
 
-[`XPath.evaluate`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/xpath/XPath.html#evaluate(java.lang.String,java.lang.Object)) leaves the context type implementation-dependent. Parse the document yourself with a hardened `DocumentBuilder` and evaluate against the resulting `Document`. Avoid the `InputSource` overloads: they build the document with a `DocumentBuilderFactory` you never get to configure.
+[`XPath.evaluate`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/xpath/XPath.html#evaluate(java.lang.String,java.lang.Object)) leaves the context type implementation-dependent. Parse the document yourself with a hardened `DocumentBuilder` and evaluate against the resulting `Document`, as in the [XPath example](#xpath). Avoid the `InputSource` overloads: they build the document internally without using your configured parser.
 
 #### JAXB takes a StAX reader
 
 Feed the [`Unmarshaller`](https://jakarta.ee/specifications/xml-binding/4.0/apidocs/jakarta.xml.bind/jakarta/xml/bind/Unmarshaller.html) an `XMLStreamReader` created by a hardened `XMLInputFactory`. JAXB left the JDK in Java 11 and now ships as `jakarta.xml.bind`.
 
-``` java
-// Create a hardened reader
-XMLStreamReader xsr = ...;
-
-Object result = jaxbContext.createUnmarshaller().unmarshal(xsr);
-```
+See the [JAXB example](#jaxb-unmarshaller) for the parser configuration and handoff.
 
 ### java.beans.XMLDecoder
 
@@ -382,9 +490,7 @@ Object result = jaxbContext.createUnmarshaller().unmarshal(xsr);
 
 ### Secure JAXP factory sources
 
-Secure XML factory configuration is complex and has other edge cases. This is why most projects contain utility classes to configure parsers to their needs.
-
-[Apache Commons Secure XML](https://commons.apache.org/proper/commons-secure-xml/) is a recent (2026) standalone library, whose only purpose is to provide secure JAXP factories and backport `newDefaultInstance()` methods to Java 8. It is based on **resolvers**, and wraps the objects a factory produces so those are secured too. Its [threat model](https://github.com/apache/commons-secure-xml/blob/main/src/site/markdown/threat_model.md) documents which guarantees hold and which settings the caller is not allowed to change.
+[Apache Commons Secure XML](https://commons.apache.org/proper/commons-secure-xml/) is an optional library for preconfigured JAXP factories. Check its [threat model](https://github.com/apache/commons-secure-xml/blob/main/src/site/markdown/threat_model.md) for supported runtimes and configuration requirements. Its protections do not cover arbitrary top-level URIs, parsers you create separately, or transform output destinations. Do not loosen its reserved security settings; resources supplied by a custom resolver remain your application's responsibility.
 
 ## .NET
 
