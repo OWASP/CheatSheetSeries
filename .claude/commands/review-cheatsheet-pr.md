@@ -73,6 +73,7 @@ Synthesize the five reports plus your pre-checks into one decision. Do not just 
 
 - **Not mergeable if:** any security BLOCKER, a claim that is wrong or outside the topic's threat model (even when cited), any broken/unsupported/fabricated link, substantial duplication, missing AI disclosure, or a scope violation.
 - A failing `citation-check` is **not** by itself a blocker: it is a floor maintainers can override for otherwise-sound content. Judge on overall soundness, and conversely don't pass well-cited content that is wrong.
+- **Keep cheat sheets conceptual:** request a shorter revision when a contribution becomes a code-heavy tutorial, complete application, or deployment pipeline the project would need to maintain. Ask for security decisions, control limitations, and authoritative upstream implementation links. Allow only essential, minimal, accurate syntax examples, including for language-specific and hardening topics. Examples must not imply production readiness or guaranteed safety; project review does not replace application-specific security review and testing. Passing CI or successful execution does not resolve this scope problem.
 - Map to a verdict:
   - **MERGE** — sound, sourced, in-scope, useful; at most trivial nits.
   - **REQUEST_CHANGES** — fixable issues; list exactly what the author must change.

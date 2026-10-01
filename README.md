@@ -50,7 +50,6 @@ This [link](https://cheatsheetseries.owasp.org/bundle.zip) allows you to downloa
 The OWASP Cheat Sheet Series website can be built and tested locally by issuing the following commands:
 
 ```sh
-make install-python-requirements
 make generate-site
 make serve  # Binds port 8000
 ```
