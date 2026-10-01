@@ -28,6 +28,7 @@ How much to cite (calibrated to what actually gets merged):
 - Internal cross-links to other cheat sheets are encouraged (see rule 4) but do **not** satisfy the CI citation gate, which only counts `https://` links.
 - Cite **authoritative** sources: RFCs, NIST, OWASP, official vendor/project documentation, MDN, reputable tool docs and canonical source repositories (e.g. GitHub), or peer-reviewed research. Prefer the most authoritative source available and avoid SEO/marketing content farms — but a solid project doc, MDN page, or canonical repo is a valid citation (these are in fact the most-cited sources across the series).
 - The citation gate is a **floor, not a ceiling**: maintainers merge on overall soundness and may accept content that trips the gate, or reject well-cited content that is wrong.
+- Keep citations to a minimum. Preferably 2-3 per cheatsheet. If a cheatsheet requires many citations, the cheatsheet is possibly getting bulky and may need to be split up into several smaller cheatsheets, or be reduced in size.
 
 ### 2. Claims must be correct and within the security threat model
 
@@ -65,6 +66,10 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 
 - Any PR whose content was generated or materially assisted by AI **must** disclose it in the PR description (the template's AI Tool Usage section): tool name (Claude, Copilot, Cursor, Codex, …), version if known, and the prompt used. This applies to **all** AI tools, not just one. Failure to disclose can get the contribution deleted.
 
+### 8. Cheatsheet Size
+
+- Cheatsheets are meant to be **concise cheats** on a topic, not complete or comprehensive resources.
+- If a cheatsheet is getting too large, the cheatsheet is possibly getting bulky and may need to split it up into several smaller cheatsheets, or be reduced in size.
 ---
 
 ## Format & style (partly enforced by CI)
