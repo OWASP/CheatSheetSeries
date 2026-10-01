@@ -548,11 +548,6 @@
     },
     {
       "file": "cheatsheets/Password_Storage_Cheat_Sheet.md",
-      "url": "Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation",
-      "observedStatus": 400
-    },
-    {
-      "file": "cheatsheets/Password_Storage_Cheat_Sheet.md",
       "url": "https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length",
       "observedStatus": 403
     },

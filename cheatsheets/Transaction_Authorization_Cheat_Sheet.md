@@ -98,7 +98,7 @@ And when developers collect significant transaction data on the client side and 
 
 ### 2.4 Application should prevent authorization credentials brute-forcing
 
-**Developers must make sure that their application can't allow attackers to brute-force a transaction at the point where transaction authorization credentials are submitted to the server for verification. After a set number of failed authorization attempts, the entire transaction authorization process should be restarted.** Also, there are other methods to prevent brute-forcing and stop other automation-related techniques, see [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks).
+**Developers must make sure that their application can't allow attackers to brute-force a transaction at the point where transaction authorization credentials are submitted to the server for verification. After a set number of failed authorization attempts, the entire transaction authorization process should be restarted.** Also, there are other methods to prevent brute-forcing and stop other automation-related techniques, see [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#protect-against-automated-attacks).
 
 ### 2.5 Application should control which transaction state transitions are allowed
 
