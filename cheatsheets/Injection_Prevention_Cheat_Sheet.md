@@ -170,7 +170,7 @@ LDAP distinguished names and LDAP search filters require different escaping rule
 
 #### XPath Injection
 
-TODO
+See the [XPath Injection Prevention Cheat Sheet](XPath_Injection_Prevention_Cheat_Sheet.md) for defenses and a parameterized query example.
 
 ### Scripting languages
 

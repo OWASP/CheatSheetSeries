@@ -2,6 +2,8 @@
 .vscode
 # Audit result files
 *.out
+.link-check/
+.link-check-cache/
 # Website generation stuff
 TOC.md
 node_modules/

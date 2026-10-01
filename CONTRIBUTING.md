@@ -110,26 +110,32 @@ Follow these steps:
 
 ![PluginWarningUI](assets/README_PluginWarningUI.png)
 
-2. Ensure that the markdown file you have created/modified do not have any dead links. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check). If you cannot use this plugin then, verify that all the links you have changed or added are valid before pushing.
-    1. Install [NodeJS](https://nodejs.org/en/download/) to install NPM.
-    2. Install the validation plugin via the command `npm install -g markdown-link-check`
-    3. Use this command (from the repository root folder) on your markdown file to verify the presence of any dead links:
+2. Ensure that the links you have added or changed work, and that each source supports the claim it is cited for. The link checker can only show the first.
+    1. Install [NodeJS](https://nodejs.org/en/download/) and Python 3.
+    2. Install the locked dependencies with `npm ci --ignore-scripts` and the site's Markdown renderer with `python3 -m pip install -r scripts/link_check/requirements.txt`. If the renderer is in a virtual environment, activate it or set `LINK_CHECK_PYTHON` to its interpreter.
+    3. From the repository root, check the links your branch adds:
 
 ```bash
-markdown-link-check -c .markdownlinkcheck.json [MD_FILE]
+npm run link-check -- --base origin/master
 ```
 
-The should produce output similar to the below. Any identified dead links are shown using a red cross instead of a green tick before the link.
+The checker has three modes:
 
-```bash
-$ markdown-link-check -c .markdownlinkcheck.json cheatsheets/Transaction_Authorization_Cheat_Sheet.md
-FILE: cheatsheets/Transaction_Authorization_Cheat_Sheet.md
-[✓] https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
-[✓] https://en.wikipedia.org/wiki/Chip_Authentication_Program
-[✓] http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf
-...
+- `--base <git-ref>` (used for pull requests): checks external links that were added since the merge base with `<git-ref>`, including a second citation of a URL that is already cited elsewhere. Local links and anchors are checked across the whole site, and the check fails only for local links that the change broke, including links in other files to a heading you renamed or a file you removed.
+- No options (weekly and manual CI audits): checks every link in the published cheat sheets. Existing broken links make it fail; they are maintenance work, not a problem with your pull request.
+- `--local-only`: checks only local links and anchors. Add `--fresh` to any mode to ignore cached successes.
 
-```
+Local anchors are checked against the heading IDs the site actually generates (Python-Markdown), which differ from GitHub's: `## Rule #2 - Set a user` becomes `#rule-2-set-a-user`, not `#rule-2---set-a-user`.
+
+Each link gets one of these results:
+
+- **Broken** (blocks the check): a missing local file or anchor, a malformed link, or an external page that answered 404 or 410 to two separate GET requests.
+- **Unverified** (does not block): the checker could not prove the link healthy or broken, for example 401/403 access restrictions, 429 rate limits, server errors, timeouts, an anchor that is not in the page's static HTML, or a site that answers every route with its home page and a 404 status. New unverified links are listed under **Manual verification requested**; open each one in a browser.
+- **Incomplete** (blocks the check): a checker error, invalid configuration, or links left unchecked when the time budget ran out. Nothing should be treated as checked.
+
+Results are written to `.link-check/results.json` (every link occurrence, page, request, and observation) and `.link-check/report.md`. CI shows the report in the job summary and saves both files in the `link-check-diagnostics` artifact. Successful external checks are cached for up to 24 hours in `.link-check-cache/`; failures are never cached. In CI, only default-branch audits save success caches. Same-repository PRs may restore those trusted caches read-only; fork PRs neither restore nor save them.
+
+Maintainers can suppress a reviewed, still-failing link in `link-check-exceptions.json`. Each entry names the exact `file` and `url`, the expected result `category` (as shown in the report), a `reason`, `reviewedOn` and `expiresOn` dates at most 366 days apart, and an https `reference` to the review, such as an issue or pull request comment. An exception stops applying when it expires or when the link starts failing in a different way, and it never covers a newly added occurrence. The report lists expired, changed, recovered, and removed exceptions so they can be renewed or deleted. Do not add domain-wide exclusions or copy failures into the file without reviewing them. `link-check-known-failures.json` holds the observations recorded by the previous checker; it is kept as historical evidence only and does not suppress anything.
 
 ### Use of AI
 
