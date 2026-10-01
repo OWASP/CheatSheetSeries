@@ -133,10 +133,9 @@ Do not re-derive what CI already reported. `markdownlint`, `textlint` (which
 covers `cheatsheets/` only) and the link check have run; build on their results
 rather than repeating them.
 
-Verify security correctness first. Then take the link question the checkers
-cannot answer: whether a source actually supports the claim it is attached to,
-and whether it is the canonical source for it. Fetch a link yourself only where
-CI did not look, meaning anything under `cheatsheets_draft/`, anything outside
-`cheatsheets/`, and any domain on the link checker's ignore list. Then
-duplication against existing sheets, then language. Report language issues as
-nits unless they change the meaning of the advice.
+Verify security correctness first. Fetch and read every new or changed source
+to confirm claim support and authority, including sources whose links CI reports
+as healthy or cached. HTTP success establishes reachability only. Manually verify
+reachability for links listed as unverified. Then check duplication against
+existing sheets and language. Report language issues as nits unless they change
+the meaning of the advice.
