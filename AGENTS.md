@@ -70,6 +70,7 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 
 - Cheatsheets are meant to be **concise cheats** on a topic, not complete or comprehensive resources.
 - If a cheatsheet is getting too large, the cheatsheet is possibly getting bulky and may need to split it up into several smaller cheatsheets, or be reduced in size.
+
 ---
 
 ## Format & style (partly enforced by CI)
