@@ -1,85 +1,59 @@
+// Writes the GitHub Actions job summary from .link-check/results.json.
 const fs = require("node:fs");
 const path = require("node:path");
+const { RESULTS_SCHEMA, clean, renderMarkdown } = require("./link_check/report");
 
 const repoRoot = path.resolve(__dirname, "..");
+// Step summaries are limited to 1 MiB; the artifact keeps the full report.
+const MAX_SUMMARY_ROWS = 100;
 
-function resolvedPath(environmentName, defaultPath) {
-  return path.resolve(process.env[environmentName] || defaultPath);
-}
-
-function readIfPresent(file) {
+function readResults(file) {
   try {
-    return fs.readFileSync(file, "utf8");
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      return "";
+    const results = JSON.parse(fs.readFileSync(file, "utf8"));
+    if (results?.schemaVersion !== RESULTS_SCHEMA) {
+      return { problem: `unsupported results schema ${clean(results?.schemaVersion)}` };
     }
-    throw error;
+    return { results };
+  } catch (error) {
+    return { problem: error.code === "ENOENT" ? "no results file was written" : `unreadable results (${clean(error.message)})` };
   }
-}
-
-function countRows(contents, marker) {
-  const pattern = new RegExp(`^\\s+\\[${marker}\\]`);
-  return contents
-    .split(/\r?\n/)
-    .filter((line) => pattern.test(line)).length;
 }
 
 function main() {
   const summaryPath = process.env.GITHUB_STEP_SUMMARY;
-  const outputPath = process.env.GITHUB_OUTPUT;
-  if (!summaryPath || !outputPath) {
-    throw new Error("GITHUB_STEP_SUMMARY and GITHUB_OUTPUT are required");
+  if (!summaryPath) {
+    throw new Error("GITHUB_STEP_SUMMARY is required");
   }
-
-  const knownPath = resolvedPath(
-    "MARKDOWN_LINK_CHECK_KNOWN",
-    path.join(repoRoot, ".link-check", "known.md"),
+  const outputDir = path.resolve(
+    repoRoot,
+    process.env.LINK_CHECK_OUTPUT_DIR || ".link-check",
   );
-  const unexpectedPath = resolvedPath(
-    "MARKDOWN_LINK_CHECK_UNEXPECTED",
-    path.join(repoRoot, ".link-check", "unexpected.md"),
-  );
-  const known = readIfPresent(knownPath);
-  const unexpected = readIfPresent(unexpectedPath);
-  const outcome = process.env.LINK_CHECK_OUTCOME;
-  const failed = outcome !== "success";
+  const outcome = process.env.LINK_CHECK_OUTCOME || "unknown";
+  const { results, problem } = readResults(path.join(outputDir, "results.json"));
 
   let summary;
-  if (failed) {
-    summary = unexpected.trim()
-      ? `# Markdown link check failed\n\n${unexpected}`
-      : [
-          "# Markdown link check failed",
-          "",
-          "The link check did not complete with actionable link diagnostics.",
-          "Inspect the failed workflow step. If checking started, its raw output may be available in the **link-check-diagnostics** artifact.",
-          "",
-        ].join("\n");
-  } else {
-    if (unexpected.trim()) {
-      throw new Error("unexpected diagnostics exist despite a successful link check");
-    }
-    const knownCount = countRows(known, "known");
-    const recoveredCount = countRows(known, "recovered");
-    const transientCount = countRows(known, "transient");
+  if (!results) {
     summary = [
-      "# Markdown link check passed",
+      "# Markdown link check INCOMPLETE",
       "",
-      `No unexpected failures were found. ${knownCount} exact known-failure tuple(s) remain; ${recoveredCount} baseline row(s) are recovered or stale; ${transientCount} unbaselined network failure(s) were not persistent across every observation.`,
+      `The link check step finished with outcome \`${clean(outcome)}\`, but ${problem}. No links should be treated as checked.`,
+      "Inspect the failed step log (for example, a setup or dependency installation failure).",
       "",
     ].join("\n");
+  } else {
+    summary = renderMarkdown(results, { maxRows: MAX_SUMMARY_ROWS });
+    const expected = results.status === "passed" ? "success" : "failure";
+    if (outcome !== expected) {
+      summary = [
+        `> **Note:** the link check step outcome was \`${clean(outcome)}\` while the results file says \`${clean(results.status)}\`. The step may have been cancelled or timed out; treat the check as incomplete.`,
+        "",
+        summary,
+      ].join("\n");
+    }
   }
-
-  summary += "\nWhen available, raw output and known, recovered, transient, and unexpected link reports are saved in the **link-check-diagnostics** artifact.\n";
+  summary +=
+    "\nThe **link-check-diagnostics** artifact contains `results.json` (every occurrence, page, request, and observation) and `report.md`.\n";
   fs.appendFileSync(summaryPath, summary);
-  const shouldComment =
-    failed &&
-    unexpected.trim().length > 0 &&
-    process.env.LINK_CHECK_EVENT_NAME === "pull_request" &&
-    process.env.LINK_CHECK_HEAD_REPOSITORY ===
-      process.env.LINK_CHECK_REPOSITORY;
-  fs.appendFileSync(outputPath, `should_comment=${shouldComment}\n`);
 }
 
 main();

@@ -58,7 +58,7 @@ already settled.
 |---|---|---|
 | `markdownlint` | the whole repository except `node_modules`, `cheatsheets_excluded` and `.claude/` | `MD013`, `MD040`, `MD059` and `MD060` are disabled, so long lines and untagged code fences are not defects here |
 | `textlint` (`lint-terminology`) | `cheatsheets/` only | `cheatsheets_draft/` gets no terminology or US English check at all |
-| `markdown-link-check` | `cheatsheets/` only, and the whole directory rather than the diff | every other path, including `cheatsheets_draft/` and `README.md`; plus ignored domains, among them `csrc.nist.gov`, `developer.android.com`, `vincent.bernat.im` and `www.exploit-db.com` |
+| `link-check` | external links added to `cheatsheets/` since the merge base, and local links and anchors across the published site | every other path, including `cheatsheets_draft/` and `README.md`; existing external links (left to the weekly audit); and any link reported as **unverified** (401/403, 429, timeouts, unchecked anchors), which is listed for manual verification but does not fail the check |
 | `pr-scope-check` | 3 changed cheat sheet files, and 1500 net added lines counted across the **entire** diff | whether a wide diff is one coherent change |
 | `citation-check` | a newly added `## H2` in `cheatsheets/` contains an inline `[text](https://...)` link | whether that link resolves, and whether it supports the claim |
 | `index-drift-check` | `Index.md` matches the output of `scripts/Update_CheatSheets_Index.py` | nothing that matters here |
@@ -72,10 +72,11 @@ repository:
 - **Green is not correct.** `citation-check` says an H2 contains a link, not
   that the link supports the sentence beside it. The link check says a URL
   answered, not that the page is the right one.
-- **The link check is repo-wide and partial.** Red does not mean this pull
-  request broke anything, and green does not mean its links were checked. A link
-  in `cheatsheets_draft/`, in `README.md`, or to an ignored domain such as
-  `csrc.nist.gov` has been verified by nobody until you verify it.
+- **The link check is scoped and partial.** It blocks only on links this pull
+  request added or broke, and green does not mean every link was verified. A
+  link in `cheatsheets_draft/` or `README.md`, or one listed under **Manual
+  verification requested** in the job summary, has been verified by nobody
+  until you verify it.
 
 Spend the review on the judgment no check can make: whether a source supports
 its claim, whether the advice is correct, whether an example would actually run,
@@ -174,9 +175,11 @@ security review and testing.
 
 ### 3. Links and sources
 
-The link check has already reported whether URLs under `cheatsheets/` answered.
-Do not re-fetch a link to establish that it resolves. Judge what the checker
-cannot:
+Fetch and read every new or changed source to confirm claim support and authority,
+including sources whose links CI reports as healthy or cached. HTTP success
+establishes reachability only. Use CI's status results rather than repeating
+requests solely to test reachability; manually verify reachability for links
+listed as unverified. Judge what the checker cannot:
 
 - **Does the page support the specific claim it is attached to?** This is the
   main question, and the one most often answered wrongly.
@@ -196,10 +199,6 @@ cannot:
   sheet yet, however permissive its licence and however strong its feature
   list. Adoption and track record are the test, and a contributor proposing
   their own project is the usual way this arrives.
-
-Fetch links yourself only where CI did not: anything under `cheatsheets_draft/`
-or outside `cheatsheets/`, and any ignored domain, `csrc.nist.gov` above all,
-since NIST is among the sources `AGENTS.md` most recommends.
 
 **Only claim to have checked a link you actually fetched.** If you cannot
 retrieve a page, say so and mark the citation as needing maintainer
