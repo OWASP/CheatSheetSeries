@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**121** cheat sheets available.
+**127** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -8,9 +8,9 @@
 
 ## A
 
-[AI Agent Security Cheat Sheet](cheatsheets/AI_Agent_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
+[AI-Powered Advertising Systems Security Cheat Sheet](cheatsheets/AI-Powered_Advertising_Systems_Security_Cheat_Sheet.md)
 
-[AJAX Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
+[AI Agent Security Cheat Sheet](cheatsheets/AI_Agent_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
 [AML Sanctions AI Agent Payments Cheat Sheet](cheatsheets/AML_Sanctions_AI_Agent_Payments_Cheat_Sheet.md)
 
@@ -21,6 +21,8 @@
 [Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
+[Authentication Patterns Cheat Sheet](cheatsheets/Authentication_Patterns_Cheat_Sheet.md)
 
 [Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
 
@@ -124,13 +126,15 @@
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
 
-[Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
+[Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Html](assets/Index_Html.svg) ![Ruby](assets/Index_Ruby.svg)
 
 ## J
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
 
 [JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Python](assets/Index_Python.svg) ![Json](assets/Index_Json.svg)
+
+[JavaScript and TypeScript Security Cheat Sheet](cheatsheets/JavaScript_and_TypeScript_Security_Cheat_Sheet.md)
 
 [Java Security Cheat Sheet](cheatsheets/Java_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
 
@@ -194,6 +198,8 @@
 
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
+[Passkey Security Cheat Sheet](cheatsheets/Passkey_Security_Cheat_Sheet.md)
+
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
@@ -231,8 +237,6 @@
 [Secure Coding with AI Cheat Sheet](cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.md)
 
 [Secure Product Design Cheat Sheet](cheatsheets/Secure_Product_Design_Cheat_Sheet.md)
-
-[Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)
 
 [Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
 
@@ -282,13 +286,21 @@
 
 [WebSocket Security Cheat Sheet](cheatsheets/WebSocket_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg)
 
+[Web Cache Security Cheat Sheet](cheatsheets/Web_Cache_Security_Cheat_Sheet.md)
+
+[Web Frontend Security Cheat Sheet](cheatsheets/Web_Frontend_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
+
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
+
+[Webhook Security Cheat Sheet](cheatsheets/Webhook_Security_Cheat_Sheet.md)
 
 ## X
 
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Cpp](assets/Index_Cpp.svg) ![Php](assets/Index_Php.svg)
 
 [XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg) ![Bash](assets/Index_Bash.svg)
+
+[XPath Injection Prevention Cheat Sheet](cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
 [XSS Filter Evasion Cheat Sheet](cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Php](assets/Index_Php.svg)
 

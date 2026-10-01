@@ -1,0 +1,6 @@
+# Subset of ../../requirements.txt used by extract_links.py to render Markdown
+# the same way as the published site. Versions must match requirements.txt.
+Markdown==3.11
+pymdown-extensions==12.1
+Pygments==2.21.0
+PyYAML==6.0.3
