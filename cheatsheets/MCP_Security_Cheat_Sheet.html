@@ -2409,10 +2409,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#7-message-level-integrity-and-replay-protection" class="md-nav__link">
+  <a href="#7-optional-message-level-integrity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Message-Level Integrity and Replay Protection
+        7. Optional Message-Level Integrity
       
     </span>
   </a>
@@ -4419,10 +4419,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#7-message-level-integrity-and-replay-protection" class="md-nav__link">
+  <a href="#7-optional-message-level-integrity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Message-Level Integrity and Replay Protection
+        7. Optional Message-Level Integrity
       
     </span>
   </a>
@@ -4543,7 +4543,7 @@
 <li><strong>MCP Host</strong>: The AI application (e.g., Claude Desktop, Cursor, IDE plugins).</li>
 <li><strong>MCP Client</strong>: Connects to one or more MCP servers, passes tool definitions to the LLM.</li>
 <li><strong>MCP Server</strong>: Lightweight program exposing tools, resources, and prompts via the protocol.</li>
-<li><strong>Transports</strong>: <code>stdio</code> (local) or HTTP/SSE (remote).</li>
+<li><strong>Transports</strong>: <code>stdio</code> (local) or Streamable HTTP (remote). The older HTTP+SSE transport is deprecated. See the <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http">Streamable HTTP specification</a>.</li>
 </ul>
 <p>The LLM sees all tool descriptions from all connected servers in its context — this is critical to understanding cross-server attacks.</p>
 <h2 id="key-risks">Key Risks<a class="headerlink" href="#key-risks" title="Permanent link">&para;</a></h2>
@@ -4599,29 +4599,22 @@
 </ul>
 <h3 id="6-authentication-authorization-transport-security">6. Authentication, Authorization &amp; Transport Security<a class="headerlink" href="#6-authentication-authorization-transport-security" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Enforce authentication on all remote MCP server endpoints.</li>
-<li>Use OAuth 2.0 with PKCE for remote server authorization flows.</li>
-<li>Bind session IDs to user-specific context (e.g., <code>&lt;user_id&gt;:&lt;session_id&gt;</code>) to prevent session hijacking.</li>
-<li>Validate on each request that the session or token belongs to the current requester; reject the call if it does not (prevents confused deputy).</li>
-<li>Use secure, non-deterministic session IDs (cryptographic random, not sequential).</li>
-<li>Always use TLS for remote (HTTP/SSE) transports.</li>
+<li>Require authentication when remote endpoints expose non-public tools or data. Authorization is optional in the protocol; see the <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization">MCP authorization specification</a>.</li>
+<li>When using OAuth over HTTP, follow the MCP OAuth 2.1 profile. Clients must identify the intended MCP server with the <code>resource</code> parameter. See <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization">resource indicators</a>.</li>
+<li>Validate that each access token was issued for this MCP server as its intended audience. Reject invalid tokens and never pass an MCP access token to an upstream API. See <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization">token handling</a>.</li>
+<li>Validate authorization on every protected request. The <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http">current Streamable HTTP transport</a> has no protocol-level sessions. If supporting older session-based revisions, use random session IDs, bind them to the authenticated user, and never treat an ID as authentication; see the <a href="https://modelcontextprotocol.io/docs/2025-11-25/tutorials/security/security_best_practices">legacy session guidance</a>.</li>
+<li>Use TLS for remote Streamable HTTP connections.</li>
 <li>Verify server identity via certificate pinning or cryptographic server verification for remote servers.</li>
 <li>Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS and limit impact of abuse; combine with sandboxing to contain local escape impact.</li>
 <li>Use OS-native secure credential storage (macOS Keychain, Windows Credential Manager, Linux Secret Service) for OAuth access and refresh tokens.</li>
 <li>Never store OAuth tokens in plaintext in MCP config files or application settings.</li>
-<li>Bind MCP HTTP/SSE servers to specific interfaces (e.g., 127.0.0.1), never 0.0.0.0 unless explicitly required.</li>
-<li>Validate the Host header on every incoming request; reject requests with unexpected hostnames.</li>
+<li>Bind local Streamable HTTP servers to localhost unless network access is explicitly needed. See the <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http">transport security rules</a>.</li>
+<li>Validate the <code>Origin</code> header on incoming Streamable HTTP requests. Reject a present but invalid Origin with HTTP 403. Do not reject non-browser clients solely because they send no Origin header. See the <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http">transport security rules</a>.</li>
+<li>Validate the Host header on incoming requests; reject unexpected hostnames.</li>
 </ul>
-<h3 id="7-message-level-integrity-and-replay-protection">7. Message-Level Integrity and Replay Protection<a class="headerlink" href="#7-message-level-integrity-and-replay-protection" title="Permanent link">&para;</a></h3>
-<p>Transport-layer security (TLS) protects data in transit but does not guarantee message integrity at the application layer. A compromised proxy, middleware, or host-level agent can modify JSON-RPC payloads after TLS termination. Message-level signing ensures that tool calls and responses have not been tampered with between client and server.</p>
-<ul>
-<li>Sign each MCP message (JSON-RPC request body) with an asymmetric key (e.g., ECDSA P-256) bound to the sender's identity. The signature should cover the full serialized payload, not just selected fields.</li>
-<li>Include a unique nonce and timestamp in every signed message. Reject messages with duplicate nonces or timestamps outside an acceptable window (e.g., 5 minutes) to prevent replay attacks.</li>
-<li>Pin tool definitions at discovery time using cryptographic hashes (e.g., SHA-256 over the canonical JSON of the tool name, description, and input schema). Before each tool execution, re-hash the current definition and compare against the pinned value. A mismatch indicates post-deployment mutation (rug pull).</li>
-<li>Require mutual signing where both client and server sign their messages. Clients should verify server response signatures before processing results. Accept server public keys only from authenticated channels, not from unverified first-contact responses.</li>
-<li>Bind signatures to agent or user identity. Each signed message should include the signer's identity reference (e.g., a certificate fingerprint or public key hash) so the receiver can attribute and audit the request cryptographically.</li>
-<li>Fail closed when verification fails. If a signature is missing, invalid, or the nonce has been seen before, reject the message entirely. Never silently fall back to unsigned processing when signing is enabled.</li>
-</ul>
+<h3 id="7-optional-message-level-integrity">7. Optional Message-Level Integrity<a class="headerlink" href="#7-optional-message-level-integrity" title="Permanent link">&para;</a></h3>
+<p>TLS protects messages in transit, but a component that changes data after TLS termination is a separate threat. The <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports">core MCP transport specification</a> does not require every JSON-RPC message to be signed. The <a href="https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/">MCPS Internet-Draft</a> proposes a separate signing and replay-protection layer; it is an individual work in progress, not an adopted MCP standard.</p>
+<p>If the threat model calls for integrity after TLS termination, choose a reviewed mechanism supported by both endpoints. Define how keys are trusted, what is signed, how replay is rejected, and what happens when verification fails. Do not present optional signing as a requirement for ordinary MCP deployments.</p>
 <h3 id="8-multi-server-isolation-cross-origin-protection">8. Multi-Server Isolation &amp; Cross-Origin Protection<a class="headerlink" href="#8-multi-server-isolation-cross-origin-protection" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Treat each MCP server as an untrusted, independent security domain.</li>
@@ -4674,7 +4667,7 @@
 <li>Use <code>mcp-scan</code> or equivalent tooling to detect poisoned tools.</li>
 <li>Log and monitor all tool invocations centrally.</li>
 <li>Verify MCP server sources and scan dependencies.</li>
-<li>Sign MCP messages at the application layer — do not rely solely on transport-layer (TLS) security.</li>
+<li>Validate the Origin of Streamable HTTP requests and the audience of OAuth access tokens.</li>
 <li>Pin tool definitions with cryptographic hashes and verify before each execution.</li>
 </ul>
 <p><strong>Don't</strong>:</p>
@@ -4686,8 +4679,8 @@
 <li>Install MCP servers from unverified public registries without review.</li>
 <li>Assume a tool approved yesterday is the same tool today (rug pulls).</li>
 <li>Ignore cross-server interactions — shadowing attacks are real.</li>
-<li>Store secrets in MCP server code, configs, or environment variables.</li>
-<li>Silently fall back to unsigned message processing when signing is configured.</li>
+<li>Store secrets in source code, plaintext config files, or logs.</li>
+<li>Treat optional message signing as a core MCP requirement.</li>
 <li>Accept server public keys from unverified first-contact responses (TOFU without pinning).</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
@@ -4696,7 +4689,7 @@
 <li><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">OWASP Top 10 for LLM Applications</a></li>
 <li><a href="https://github.com/invariantlabs-ai/mcp-scan">mcp-scan — Security Scanner for MCP Servers</a></li>
 <li><a href="https://owasp.org/www-project-mcp-top-10/">OWASP MCP Top 10</a></li>
-<li><a href="https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/">IETF Internet-Draft: Secure MCP — Message Signing and Tool Integrity</a></li>
+<li><a href="https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/">Individual Internet-Draft (work in progress): MCPS message signing</a></li>
 </ul>
 
 
