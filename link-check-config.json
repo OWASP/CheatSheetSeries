@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "budgetSeconds": 480,
+  "cacheTtlHours": 24,
+  "http": {
+    "concurrency": 8,
+    "perHostConcurrency": 2,
+    "requestTimeoutSeconds": 15,
+    "maxObservations": 3,
+    "retryBaseDelaySeconds": 2,
+    "maxRetryDelaySeconds": 60,
+    "maxRedirects": 5,
+    "maxBodyBytes": 5242880,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
+  }
+}

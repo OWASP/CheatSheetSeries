@@ -1,0 +1,141 @@
+---
+applyTo: "cheatsheets/**/*.md,cheatsheets_draft/**/*.md"
+description: Conventions for OWASP Cheat Sheet Series content files.
+---
+
+# Cheat sheet conventions
+
+These rules apply to every file under `cheatsheets/` and `cheatsheets_draft/`.
+They supplement `AGENTS.md`, `CONTRIBUTING.md` and `GUIDELINE.md`; where those
+disagree with anything here, those files win.
+
+## What a cheat sheet is
+
+A concise, high-value reference for builders on one application security topic.
+Not a tutorial, not a standard, not a survey of the literature. If a paragraph
+does not help a developer decide or do something, it does not belong.
+
+- One topic per file. Material that belongs to another topic goes in that
+  sheet, with a cross-reference.
+- Prefer imperative, concrete guidance ("Set `SameSite=Strict` on session
+  cookies") over hedged description ("It may be advisable to consider...").
+- State the threat a control addresses. A control with no stated threat invites
+  cargo-cult adoption.
+- Say when guidance does not apply. Preconditions and exceptions are part of
+  the advice, not a caveat to be trimmed.
+- Lead with security concepts, architectural patterns, and decisions. Avoid
+  code-heavy tutorials, complete applications, and deployment pipelines that
+  the project would need to maintain. Link to authoritative upstream
+  implementation documentation instead.
+
+## Structure and formatting
+
+- File naming: `Topic_Name_Cheat_Sheet.md` in `cheatsheets/`.
+- One `#` H1 matching the sheet title; sections use `##` and below, without
+  skipping levels.
+- Include code or configuration only when essential to explain a security
+  control, using the smallest accurate example. Prefer pseudocode or a single
+  common language over repeating an example in several languages. Label an
+  insecure pattern as such. Tag code fences with a language where practical —
+  `MD040` is disabled in this repository, so an untagged fence is not a defect.
+- State relevant assumptions and limitations. Examples must be clearly
+  illustrative, never presented as production-ready or guaranteed safe. Project
+  review does not replace application-specific security review and testing.
+  Illustrative status does not excuse incorrect or insecure guidance; checking
+  documentation is not the same as executing an example.
+- Markdown must pass `markdownlint` as configured in the repository, and
+  `textlint` where it runs. Note that `lint-terminology` covers `cheatsheets/`
+  only, so a file under `cheatsheets_draft/` gets no automated US English or
+  terminology check and needs a closer read.
+- Assets live in `assets/`, referenced as `![ALT](../assets/ASSET_NAME.png)`
+  for images (PNG) and `[ALT](../assets/ASSET_NAME.EXT)` for other files.
+  Prefixing the asset name with the cheat sheet's file name is the common
+  convention, not a hard rule.
+
+## Language
+
+- US English spelling and grammar.
+- Plain, short sentences. Expand an acronym on first use in each sheet, except
+  for ones no developer needs defined (HTTP, URL).
+- Second person or imperative.
+- No marketing language, and no vendor or product promotion. When naming a tool
+  is acceptable is covered under Links and citations.
+
+## Links and citations
+
+- Every external link must resolve and must actually support the specific claim
+  it is attached to. Prefer primary sources: standards bodies, RFCs, vendor
+  security documentation, peer-reviewed work, OWASP projects.
+- Do not cite a blog post that restates a standard when the standard itself is
+  linkable.
+- Never add a citation you have not verified. A plausible-looking URL that does
+  not exist, or that does not contain the claimed content, is worse than no
+  citation.
+- Avoid deep links into content that is versioned or rotates frequently unless
+  the version is pinned in the URL.
+- Naming a tool is acceptable where it is the concrete way to do the thing; a
+  list of commercial alternatives is not. Adding a tool or resource link needs
+  an issue opened first, and the tool must be common, popular open source.
+  Young or little-known projects are declined however permissive the licence
+  and however strong the feature list, and the same applies to a project you
+  maintain yourself.
+- Cross-references to other cheat sheets use a relative Markdown path
+  (`[Description](Other_Cheat_Sheet.md)`), which the site build rewrites. Links
+  to the published site are also present in the series; neither form is a
+  defect.
+- CI gate (`citation-check`): every **newly added `## H2`** in `cheatsheets/`
+  must contain at least one inline `[text](https://...)` citation. Internal
+  cross-references do not count toward it. This is a floor, not a per-sentence
+  requirement.
+
+## Change hygiene
+
+- Keep changes focused. CI limits a pull request to 3 changed cheat sheet
+  files, with no exemption, and to 1500 net added lines counted across the
+  whole diff, which linking a tracking issue waives.
+- Never hand-edit `Index.md`. It is generated by
+  `scripts/Update_CheatSheets_Index.py` from the file names in `cheatsheets/`,
+  and `index-drift-check` fails on any hand-written entry. If a pull request
+  picks one up, drop the hunk and rebase.
+- A typo, a dead link or a small correction needs no tracking issue. Updating a
+  sheet substantially, or adding a new one, needs an issue that has been
+  approved (`ACK_OBTAINED`) and assigned to you before the pull request is
+  opened. Quoting an issue number that is still `ACK_WAITING`, or that is
+  assigned to someone else, does not satisfy this.
+- Use the pull request template, and complete the AI Tool Usage disclosure.
+  Tick exactly one box, and where AI was used give the tool, its version and the
+  prompt. A blank or partial disclosure blocks the pull request regardless of
+  how small the change is.
+- Do not bundle unrelated editorial cleanup with a substantive content change.
+- Do not reformat or rewrap lines you are not otherwise changing; it buries the
+  real diff.
+- Removing or contradicting existing guidance requires a reason stated in the
+  pull request, not a silent edit.
+
+## Established conventions — do not report these as defects
+
+These are deliberate project decisions. Raising them wastes a volunteer's time:
+
+- **No table of contents.** It is generated for the published site.
+- **No `## References` section.** Inline citations and a References section are
+  both accepted; about half the series has no References section.
+- **Essential syntax examples.** Language-specific, injection,
+  parameterization, and hardening topics may need short, accurate examples to
+  explain a control. This is not a blanket exception for code-heavy content or
+  complete implementations.
+- **Cross-links between related sheets.** Coordinated families (XSS, injection,
+  authorization) cross-link by design.
+- **Sentences without a citation** that state well-established common practice.
+
+## When reviewing changes to these files
+
+Do not re-derive what CI already reported. `markdownlint`, `textlint` (which
+covers `cheatsheets/` only) and the link check have run; build on their results
+rather than repeating them.
+
+Verify security correctness first. Fetch and read every new or changed source
+to confirm claim support and authority, including sources whose links CI reports
+as healthy or cached. HTTP success establishes reachability only. Manually verify
+reachability for links listed as unverified. Then check duplication against
+existing sheets and language. Report language issues as nits unless they change
+the meaning of the advice.
