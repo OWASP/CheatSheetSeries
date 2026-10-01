@@ -237,7 +237,7 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
   assert.deepEqual(value.batches[6].generatedFrom, followupPushProvenance);
   assert.deepEqual(value.batches[7].generatedFrom, followupPrProvenance);
   assert.deepEqual(value.batches[8].generatedFrom, rerunPrProvenance);
-  assert.equal(value.batches[0].failures.length, 157);
+  assert.equal(value.batches[0].failures.length, 156);
   assert.equal(value.batches[1].failures.length, 7);
   assert.equal(value.batches[3].failures.length, 107);
   assert.equal(value.batches[4].failures.length, 33);
@@ -258,11 +258,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 340);
+  assert.equal(failures.length, 339);
   assert.equal(new Set(failures.map(({ file }) => file)).size, 86);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    340,
+    339,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>
