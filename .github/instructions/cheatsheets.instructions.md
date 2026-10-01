@@ -23,22 +23,26 @@ does not help a developer decide or do something, it does not belong.
   cargo-cult adoption.
 - Say when guidance does not apply. Preconditions and exceptions are part of
   the advice, not a caveat to be trimmed.
+- Lead with security concepts, architectural patterns, and decisions. Avoid
+  code-heavy tutorials, complete applications, and deployment pipelines that
+  the project would need to maintain. Link to authoritative upstream
+  implementation documentation instead.
 
 ## Structure and formatting
 
 - File naming: `Topic_Name_Cheat_Sheet.md` in `cheatsheets/`.
 - One `#` H1 matching the sheet title; sections use `##` and below, without
   skipping levels.
-- Code examples must be short and clearly illustrative rather than
-  production-ready; pseudocode or a single common language is preferred over
-  the same example in several languages. An insecure pattern must be labeled as
-  such. Tag code fences with a language where practical — `MD040` is disabled in
-  this repository, so an untagged fence is not a defect.
-- Short and illustrative is not licence for an example that cannot work. If you
-  present a pipeline, a workflow or a command sequence as something a reader can
-  adopt, it has to run as written: every tool installed, every step's inputs
-  present, and identity strings, flags and paths the real ones. Checking an
-  example against the documentation is not the same as running it.
+- Include code or configuration only when essential to explain a security
+  control, using the smallest accurate example. Prefer pseudocode or a single
+  common language over repeating an example in several languages. Label an
+  insecure pattern as such. Tag code fences with a language where practical —
+  `MD040` is disabled in this repository, so an untagged fence is not a defect.
+- State relevant assumptions and limitations. Examples must be clearly
+  illustrative, never presented as production-ready or guaranteed safe. Project
+  review does not replace application-specific security review and testing.
+  Illustrative status does not excuse incorrect or insecure guidance; checking
+  documentation is not the same as executing an example.
 - Markdown must pass `markdownlint` as configured in the repository, and
   `textlint` where it runs. Note that `lint-terminology` covers `cheatsheets/`
   only, so a file under `cheatsheets_draft/` gets no automated US English or
@@ -115,10 +119,10 @@ These are deliberate project decisions. Raising them wastes a volunteer's time:
 - **No table of contents.** It is generated for the published site.
 - **No `## References` section.** Inline citations and a References section are
   both accepted; about half the series has no References section.
-- **Code-dense sheets.** Language-specific, injection and payload,
-  parameterization, and hardening sheets are expected to be heavy on code. The
-  "architecture over code" guidance targets gratuitous boilerplate in
-  architectural topics, not these.
+- **Essential syntax examples.** Language-specific, injection,
+  parameterization, and hardening topics may need short, accurate examples to
+  explain a control. This is not a blanket exception for code-heavy content or
+  complete implementations.
 - **Cross-links between related sheets.** Coordinated families (XSS, injection,
   authorization) cross-link by design.
 - **Sentences without a citation** that state well-established common practice.

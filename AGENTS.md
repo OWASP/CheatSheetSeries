@@ -51,11 +51,13 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 - Coordinated multi-sheet families (e.g. the XSS, injection, and authorization sheets) are **intentional** and cross-link in a hub-and-spoke pattern — that is correct, not duplication. What's prohibited is reproducing another sheet's guidance instead of linking it.
 - Confirm the content belongs in the cheat sheet you are editing. If it is really a different topic, it belongs in a different (or new) cheat sheet.
 
-### 5. Architecture over code — for general topics
+### 5. Keep cheat sheets conceptual
 
-- For general topics, prefer architectural patterns, design principles, and security decisions over language-specific code. Code rots, and out-of-context snippets are often insecure.
-- **Carve-out:** language-specific, injection/payload, parameterization, and hardening sheets are _expected_ to be code-dense — that is correct for them (~40% of the corpus is code-heavy by design). This rule targets gratuitous boilerplate in architectural topics, not legitimately code-heavy sheets.
-- When code is illustrative, keep it short (not production-ready) and language-tag fences where practical.
+- Lead with security concepts, architectural patterns, design decisions, and control limitations. Explain what developers should do and why. Avoid code-heavy tutorials.
+- Do not add complete applications, deployment pipelines, or reusable implementations that the project would need to maintain. Link to authoritative upstream implementation documentation instead.
+- Include code or configuration only when essential to explain a specific security control, using the smallest accurate example. Language-specific, injection, parameterization, and hardening topics may need syntax examples; they are not blanket exceptions to this rule.
+- Keep examples clearly illustrative, state relevant assumptions and limitations, and language-tag fences where practical. Never present examples as production-ready or guaranteed safe, or imply that project review replaces application-specific security review and testing. Illustrative status does not excuse incorrect or insecure guidance.
+- When reviewing code-heavy contributions, request a shorter conceptual revision with upstream implementation links. Successful execution or passing CI does not justify making a cheat sheet responsible for maintaining a complete implementation.
 
 ### 6. No slop
 
