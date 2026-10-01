@@ -165,7 +165,7 @@ DO: Enforce passwords with a minimum complexity that will survive a dictionary a
 
 #### Encryption
 
-DO: Use a strong encryption algorithm such as AES-512 where personally identifiable data needs to be restored to it's original format.
+DO: Use a strong encryption algorithm such as [AES-256](https://csrc.nist.gov/pubs/fips/197/final) where personally identifiable data needs to be restored to its original format.
 
 DO: Protect encryption keys more than any other asset. Find more information about storing encryption keys at rest in the
   [Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md#storage).
@@ -801,7 +801,7 @@ DO NOT: Use the BinaryFormatter type which is dangerous and [not recommended]
 .NET offers several in-box serializers that can handle untrusted data safely:
 
 - XmlSerializer and DataContractSerializer to serialize object graphs into and from XML. Do not confuse DataContractSerializer with NetDataContractSerializer.
-- BinaryReader and BinaryWriter for XML and JSON.
+- BinaryReader and BinaryWriter for reading and writing primitive data types (such as Int32, Double, Boolean, and String) in binary format.
 - The System.Text.Json APIs to serialize object graphs into JSON.
 
 ### A09 Security Logging and Monitoring Failures

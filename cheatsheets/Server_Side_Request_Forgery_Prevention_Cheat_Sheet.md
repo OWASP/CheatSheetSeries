@@ -30,7 +30,7 @@ Depending on the application's functionality and requirements, there are two bas
 - Application can send request only to **identified and trusted applications**: Case when [allowlist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
 - Application can send requests to **ANY external IP address or domain name**: Case when [allowlist](https://en.wikipedia.org/wiki/Whitelisting) approach is unavailable.
 
-Because these two cases are very different, this cheat sheet will describe defences against them separately.
+Because these two cases are very different, this cheat sheet will describe defenses against them separately.
 
 ### Case 1 - Application can send request only to identified and trusted applications
 
@@ -54,7 +54,7 @@ The first level of protection that comes to mind is [Input validation](Input_Val
 
 Based on that point, the following question comes to mind: *How to perform this input validation?*
 
-As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [allowlist approach](Input_Validation_Cheat_Sheet.md#allow-list-vs-block-list) when input validation is used because, most of the time, the format of the information expected from the user is globally known.
+As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [allowlist approach](Input_Validation_Cheat_Sheet.md#allowlist-vs-denylist) when input validation is used because, most of the time, the format of the information expected from the user is globally known.
 
 The request sent to the internal application will be based on the following information:
 
@@ -245,6 +245,10 @@ Do not accept complete URLs from the user because URL are difficult to validate 
 
 If network related information is really needed then only accept a valid IP address or domain name.
 
+**Match the host against an allowlist, and build the request yourself.** The input here is an IP address or a domain name rather than a whole URL, so compare that value against an explicit [allowlist](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html#allowlist-vs-denylist) of permitted destinations, then build the request from the entry that matched, together with a scheme, port and path the application fixes itself. Where that host was extracted from a URL the user supplied, do not copy the other components of that URL across either: carrying its path or query through, rather than rebuilding them, hands the next component something it has to parse again.
+
+**Treat parser disagreement as a rejection.** Where a URL does cross a service boundary as a string and is parsed again at the other end, two implementations can read different hosts from the same bytes. `http://example.com\@evil.com` is such a string: a parser following the [WHATWG URL Standard](https://url.spec.whatwg.org/#url-parsing) treats the backslash under a special scheme as a path separator and reads the host as `example.com`, while the `userinfo` grammar in [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-3.2.1) admits no backslash at all, so the string is not a URI that RFC defines. An implementation that does not enforce the grammar still returns a host, because it takes everything before the final `@` to be userinfo: CPython's [`urllib.parse`](https://docs.python.org/3/library/urllib.parse.html#urllib.parse.urlsplit) derives the host with [`netloc.rpartition('@')`](https://github.com/python/cpython/blob/v3.11.15/Lib/urllib/parse.py#L208), so `urlsplit("http://example.com\@evil.com").hostname` returns `evil.com`. Reject a URL whose host is not read identically by every parser in play, rather than reconciling the readings.
+
 ##### Network layer
 
 The objective of the Network layer security is to prevent the *VulnerableApplication* from performing calls to arbitrary applications. Only allowed *routes* will be available for this application in order to limit its network access to only those that it should communicate with.
@@ -283,7 +287,7 @@ Taking into consideration the same assumption in the following [example](Server_
 
 ##### Application layer
 
-Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1-application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
+Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1---application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
 
 The first validation on the input data presented in the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer) on the 3 types of data will be the same for this case **BUT the second validation will differ**. Indeed, here we must use the block-list approach.
 
@@ -312,7 +316,7 @@ Similar to the following [section](Server_Side_Request_Forgery_Prevention_Cheat_
 
 In cloud environments SSRF is often used to access and steal credentials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).
 
-[IMDSv2](https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/) is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.
+[IMDSv2](https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/) is an additional defense-in-depth mechanism for AWS that mitigates some of the instances of SSRF.
 
 To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) for more details.
 

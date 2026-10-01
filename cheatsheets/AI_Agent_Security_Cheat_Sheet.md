@@ -183,19 +183,18 @@ class SecureAgentMemory:
 - Provide clear audit trails of agent decisions and actions.
 - Allow users to interrupt and rollback agent operations.
 
-#### Action Classification and Approval Flow
+#### Action Classification Example
 
 ```python
 from enum import Enum
-from dataclasses import dataclass
 
 class RiskLevel(Enum):
-    LOW = "low"           # Read operations, safe queries
-    MEDIUM = "medium"     # Write operations, API calls
-    HIGH = "high"         # Financial, deletion, external comms
-    CRITICAL = "critical" # Irreversible, security-sensitive
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
 
-ACTION_RISK_MAPPING = {
+ACTION_RISK = {
     "search_documents": RiskLevel.LOW,
     "read_file": RiskLevel.LOW,
     "write_file": RiskLevel.MEDIUM,
@@ -205,55 +204,12 @@ ACTION_RISK_MAPPING = {
     "transfer_funds": RiskLevel.CRITICAL,
 }
 
-@dataclass
-class PendingAction:
-    action_id: str
-    tool_name: str
-    parameters: dict
-    risk_level: RiskLevel
-    explanation: str
-    
-class HumanInTheLoopController:
-    def __init__(self, auto_approve_threshold: RiskLevel = RiskLevel.LOW):
-        self.auto_approve_threshold = auto_approve_threshold
-        self.pending_actions = {}
-    
-    async def request_action(self, tool_name: str, params: dict, 
-                            explanation: str) -> dict:
-        risk_level = ACTION_RISK_MAPPING.get(tool_name, RiskLevel.HIGH)
-        
-        # Auto-approve low-risk actions
-        if risk_level.value <= self.auto_approve_threshold.value:
-            return {"approved": True, "auto": True}
-        
-        # Queue for human review
-        action = PendingAction(
-            action_id=generate_uuid(),
-            tool_name=tool_name,
-            parameters=self._sanitize_params_for_display(params),
-            risk_level=risk_level,
-            explanation=explanation
-        )
-        
-        self.pending_actions[action.action_id] = action
-        
-        return {
-            "approved": False,
-            "pending": True,
-            "action_id": action.action_id,
-            "requires": "human_approval",
-            "risk_level": risk_level.value,
-            "preview": self._generate_action_preview(action)
-        }
-    
-    def _generate_action_preview(self, action: PendingAction) -> str:
-        return f"""
-        Action: {action.tool_name}
-        Risk Level: {action.risk_level.value.upper()}
-        Explanation: {action.explanation}
-        Parameters: {json.dumps(action.parameters, indent=2)}
-        """
+def needs_human_approval(tool_name: str) -> bool:
+    # Unknown tools fail closed. Only explicitly low-risk tools skip review.
+    return ACTION_RISK.get(tool_name, RiskLevel.HIGH) is not RiskLevel.LOW
 ```
+
+Only the two mapped low-risk tools skip human review in this example. Medium, high, critical, and unmapped tools require it. This classification does not grant permission to run a tool; the execution component must still check the actor's authorization and any required approval for the exact action.
 
 #### High-Impact Action Integrity Controls
 
@@ -277,6 +233,8 @@ For destructive, financial, administrative, or externally visible actions, add c
 #### Output Validation Pipeline
 
 ```python
+import json
+import re
 from pydantic import BaseModel, validator
 from typing import Optional, List
 
@@ -481,6 +439,11 @@ from typing import Optional
 import jwt
 from datetime import datetime, timedelta
 
+import uuid
+from pybreaker import CircuitBreaker  # pip install pybreaker
+# Usage: CircuitBreaker(fail_max=5, reset_timeout=60)
+# Generate UUIDs inline with: str(uuid.uuid4())
+
 class AgentTrustLevel(Enum):
     UNTRUSTED = 0
     INTERNAL = 1
@@ -504,8 +467,8 @@ class SecureAgentBus:
             "allowed_message_types": self._get_allowed_types(trust_level)
         }
         self.circuit_breakers[agent_id] = CircuitBreaker(
-            failure_threshold=5,
-            recovery_timeout=60
+            fail_max=5,
+            reset_timeout=60
         )
     
     async def send_message(self, sender_id: str, recipient_id: str,
@@ -516,8 +479,8 @@ class SecureAgentBus:
             raise SecurityViolation(f"Unknown sender agent: {sender_id}")
         
         # Check circuit breaker
-        if self.circuit_breakers[sender_id].is_open:
-            raise CircuitBreakerOpen(f"Agent {sender_id} is temporarily blocked")
+        if self.circuit_breakers[sender_id].current_state == "open":
+            raise RuntimeError(f"Agent {sender_id} is temporarily blocked")
         
         # Validate recipient authorization
         if recipient_id not in sender["allowed_recipients"]:

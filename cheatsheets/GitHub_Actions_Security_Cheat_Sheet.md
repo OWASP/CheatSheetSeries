@@ -49,6 +49,7 @@ Continuously improve by actively learning from other incidents through publicly 
 - Enable the setting `Require approval for all external contributors` in the repository settings. This ensures that workflows triggered by pull requests from forks (i.e., users who are not members of the repository or organization) do not run automatically and therefore prevents untrusted code execution.
 - Restrict default `GITHUB_TOKEN` permissions to `Read repository contents and packages permissions` in the repository settings. Explicitly grant additional permissions in the workflow file if required.
 - Enforce strong branch protection rules. Configure branch protection to require pull request reviews, status checks, signed commits and `CODEOWNERS` approval before merging into protected branches. Tools such as the [OpenSSF Scorecard](https://github.com/ossf/scorecard-action) can help audit these settings.
+- Require workflows to pass before merging via [repository rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-workflows-to-pass-before-merging) to enforce organizational or enterprise-level requirements — such as checking for required labels or validating commit messages — before code is merged.
 
 ## Restrict egress traffic from GitHub-hosted runners
 
@@ -67,6 +68,18 @@ If you use self-hosted runners for a public repository:
 - Use ephemeral runners (e.g., container-based runners) and destroy the runner environment after each job execution to prevent persistence.
 - Do not store sensitive data on runner machines, as any user who can invoke workflows has access to the runner environment.
 - Restrict runner network access and avoid giving self-hosted runners access to sensitive infrastructure.
+
+## Segregate runners using runner groups and labels
+
+Use [runner groups](https://docs.github.com/en/actions/concepts/runners/runner-groups) and [labels](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/apply-labels) to separate high-privilege runners from low-privilege runners. High-privilege runners may have access to sensitive resources, while low-privilege runners should not.
+
+This separation gives more granular control over [which repositories can access a runner group](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/manage-access#changing-which-repositories-can-access-a-runner-group) and which workflows can target specific runners, reducing the risk that a compromised or misconfigured workflow gains access to sensitive resources.
+
+For example, consider creating:
+
+- A runner group for container image build runners, limited to only the repositories that require those privileges.
+- A runner group for runners with access to restricted networks.
+- A separate runner group for low-privilege tasks such as linting and static analysis, used by repositories where secrets are absent or isolated in separate environments.
 
 ## Maintain curated shared workflows and actions
 

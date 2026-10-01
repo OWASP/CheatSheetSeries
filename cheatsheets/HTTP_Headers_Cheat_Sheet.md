@@ -196,15 +196,6 @@ Set it and disable all the features that your site does not need or allow them o
 
 - *NOTE*: This example is disabling geolocation, camera, and microphone for all domains.
 
-### FLoC (Federated Learning of Cohorts)
-
-FLoC is a method proposed by Google in 2021 to deliver interest-based advertisements to groups of users ("cohorts"). The [Electronic Frontier Foundation](https://www.eff.org/deeplinks/2021/03/googles-floc-terrible-idea), [Mozilla](https://blog.mozilla.org/en/privacy-security/privacy-analysis-of-floc/), and others believe FLoC does not do enough to protect users' privacy.
-
-#### Recommendation
-
-A site can declare that it does not want to be included in the user's list of sites for cohort calculation by sending this HTTP header.
-> Permissions-Policy: interest-cohort=()
-
 ### Server
 
 The `Server` header describes the software used by the origin server that handled the request — that is, the server that generated the response.

@@ -98,6 +98,7 @@ Ask which operations have the shape "check a condition, then act on it". Typical
 - Check that a user has fewer than N items, then add one.
 - Check that a slot is available, then book it.
 - Check that a referral code hasn't been applied to this account, then apply it.
+- Check whether a registration request is unique, then insert the new user record.
 
 Each of these is a race condition waiting to happen unless the check and the act are inside a single atomic operation.
 

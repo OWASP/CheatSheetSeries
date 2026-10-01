@@ -19,4 +19,4 @@ Instead, submit a private report including clear steps to reproduce and details 
 
 - <jim.manico@owasp.org>
 - <jakub.mackowski@owasp.org>
-- <shlomo.heigh@owasp.org>
+- <corona.gabriel@gmail.com>
