@@ -157,22 +157,20 @@ of being unusable, that requires infrastructure most readers will not have, or
 that gives no way to verify the control is in place. This dimension may be N/A
 for small corrections.
 
-**An example presented as runnable must actually run.** Illustrative snippets
-are allowed to be short and incomplete. But the moment a contribution shows a
-pipeline, a workflow or a command sequence as something a reader can adopt,
-trace it end to end before accepting it:
+**Keep cheat sheets conceptual.** Request changes when a contribution becomes
+a code-heavy tutorial, complete application, or deployment pipeline that the
+project would need to maintain. Ask for the security decisions, control
+limitations, and links to authoritative upstream implementation documentation.
+Successful execution or passing CI does not resolve this scope problem.
 
-- Every tool it invokes is installed, or is present on the runner it names.
-- Every step's inputs exist, including outputs that earlier steps were supposed
-  to produce.
-- Identity strings, flags and paths are the real ones rather than the plausible
-  ones. A verification command given the wrong value verifies nothing, and does
-  so silently.
-
-"Checked against the documentation" is not the same as "run". For supply chain,
-signing and attestation examples that difference is the whole contribution, and
-a headline example that cannot execute is grounds to close rather than a draft
-to iterate on.
+Code or configuration belongs only where essential to explain a security
+control, using the smallest accurate example. Language-specific, injection,
+parameterization, and hardening topics are not blanket exceptions. Verify the
+necessary syntax and assumptions; illustrative status does not excuse incorrect
+or insecure guidance. Distinguish documentation review from actual execution.
+Examples must not be presented as production-ready or guaranteed safe, and
+project review must not be described as a substitute for application-specific
+security review and testing.
 
 ### 3. Links and sources
 
