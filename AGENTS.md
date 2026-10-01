@@ -91,7 +91,7 @@ CI runs these on every PR; run them locally first so you don't ship obvious fail
 ```bash
 npm run lint-markdown      # markdownlint
 npm run lint-terminology   # textlint (US English / terminology)
-npm run link-check         # detects dead links
+npm run link-check -- --base origin/master   # links your branch adds or breaks
 ```
 
 CI also enforces: **PR scope** (`pr-scope-check`), **citation density** (`citation-check`: every new H2 must contain at least one inline `[text](https://...)` citation), and the link check above. These catch mechanical problems — they do **not** judge whether a source actually supports its claim, whether advice is correct and in-scope, or whether content is duplicated. That judgment is on you and the maintainers.
