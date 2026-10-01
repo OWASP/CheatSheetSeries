@@ -6,7 +6,7 @@ Error handling is a part of the overall security of an application. Except in mo
 
 Unhandled errors can assist an attacker in this initial phase, which is very important for the rest of the attack.
 
-The following [link](https://web.archive.org/web/20230929111320/https://cipher.com/blog/a-complete-guide-to-the-phases-of-penetration-testing/) provides a description of the different phases of an attack.
+The OWASP Web Security Testing Guide explains [how error messages can expose application details](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/08-Testing_for_Error_Handling/01-Testing_For_Improper_Error_Handling/).
 
 ## Context
 

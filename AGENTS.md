@@ -28,6 +28,7 @@ How much to cite (calibrated to what actually gets merged):
 - Internal cross-links to other cheat sheets are encouraged (see rule 4) but do **not** satisfy the CI citation gate, which only counts `https://` links.
 - Cite **authoritative** sources: RFCs, NIST, OWASP, official vendor/project documentation, MDN, reputable tool docs and canonical source repositories (e.g. GitHub), or peer-reviewed research. Prefer the most authoritative source available and avoid SEO/marketing content farms — but a solid project doc, MDN page, or canonical repo is a valid citation (these are in fact the most-cited sources across the series).
 - The citation gate is a **floor, not a ceiling**: maintainers merge on overall soundness and may accept content that trips the gate, or reject well-cited content that is wrong.
+- Keep citations to a minimum. Preferably 2-3 per cheatsheet. If a cheatsheet requires many citations, the cheatsheet is possibly getting bulky and may need to be split up into several smaller cheatsheets, or be reduced in size.
 
 ### 2. Claims must be correct and within the security threat model
 
@@ -50,11 +51,13 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 - Coordinated multi-sheet families (e.g. the XSS, injection, and authorization sheets) are **intentional** and cross-link in a hub-and-spoke pattern — that is correct, not duplication. What's prohibited is reproducing another sheet's guidance instead of linking it.
 - Confirm the content belongs in the cheat sheet you are editing. If it is really a different topic, it belongs in a different (or new) cheat sheet.
 
-### 5. Architecture over code — for general topics
+### 5. Keep cheat sheets conceptual
 
-- For general topics, prefer architectural patterns, design principles, and security decisions over language-specific code. Code rots, and out-of-context snippets are often insecure.
-- **Carve-out:** language-specific, injection/payload, parameterization, and hardening sheets are _expected_ to be code-dense — that is correct for them (~40% of the corpus is code-heavy by design). This rule targets gratuitous boilerplate in architectural topics, not legitimately code-heavy sheets.
-- When code is illustrative, keep it short (not production-ready) and language-tag fences where practical.
+- Lead with security concepts, architectural patterns, design decisions, and control limitations. Explain what developers should do and why. Avoid code-heavy tutorials.
+- Do not add complete applications, deployment pipelines, or reusable implementations that the project would need to maintain. Link to authoritative upstream implementation documentation instead.
+- Include code or configuration only when essential to explain a specific security control, using the smallest accurate example. Language-specific, injection, parameterization, and hardening topics may need syntax examples; they are not blanket exceptions to this rule.
+- Keep examples clearly illustrative, state relevant assumptions and limitations, and language-tag fences where practical. Never present examples as production-ready or guaranteed safe, or imply that project review replaces application-specific security review and testing. Illustrative status does not excuse incorrect or insecure guidance.
+- When reviewing code-heavy contributions, request a shorter conceptual revision with upstream implementation links. Successful execution or passing CI does not justify making a cheat sheet responsible for maintaining a complete implementation.
 
 ### 6. No slop
 
@@ -64,6 +67,11 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 ### 7. Declare AI usage
 
 - Any PR whose content was generated or materially assisted by AI **must** disclose it in the PR description (the template's AI Tool Usage section): tool name (Claude, Copilot, Cursor, Codex, …), version if known, and the prompt used. This applies to **all** AI tools, not just one. Failure to disclose can get the contribution deleted.
+
+### 8. Cheatsheet Size
+
+- Cheatsheets are meant to be **concise cheats** on a topic, not complete or comprehensive resources.
+- If a cheatsheet is getting too large, the cheatsheet is possibly getting bulky and may need to split it up into several smaller cheatsheets, or be reduced in size.
 
 ---
 

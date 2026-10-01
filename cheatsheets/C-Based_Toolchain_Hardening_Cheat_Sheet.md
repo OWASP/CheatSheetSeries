@@ -98,7 +98,7 @@ Auto configuration tools are popular on many Linux and Unix based systems, and t
 
 When using auto configuration tools, there are a few files of interest worth mentioning. The files are part of the Autotools chain and include `m4` and the various `*.in`, `*.ac` (Autoconf), and `*.am` (Automake) files. At times, you will have to open them, or the resulting makefiles, to tune the "stock" configuration.
 
-There are three downsides to the command-line configuration tools in the toolchain: (1) they often ignore user requests, (2) they cannot create configurations, and (3) security is often not a goal.
+There are three downsides to the command-line configuration tools in the toolchain: (1) they often ignore user requests, (2) switching build flags may reuse objects from an earlier configuration, and (3) security is often not a goal.
 
 To demonstrate the first issue, configure your project with the following: `configure` `CFLAGS="-Wall` `-fPIE"` `CXXFLAGS="-Wall` `-fPIE"` `LDFLAGS="-pie"`. You will probably find that Autotools ignored your request, which means the command below will not produce expected results. As a workaround, you will have to open an `m4` script, `makefile.in` or `makefile.am`, and fix the configuration.
 
@@ -108,7 +108,7 @@ $ configure CFLAGS="-Wall -Wextra -Wconversion -fPIE -Wno-unused-parameter
     LDFLAGS="-pie -z,noexecstack -z,noexecheap -z,relro -z,now"
 ```
 
-For the second point, you will probably be disappointed to learn [Automake does not support the concept of configurations](https://lists.gnu.org/archive/html/automake/2012-12/msg00019.html). It's not entirely Autoconf's or Automake's fault - _Make_ and its inability to detect changes is the underlying problem. Specifically, _Make_ only [checks modification times of prerequisites and targets](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html), and does not check things like `CFLAGS` and `CXXFLAGS`. The net effect is you will not receive expected results when you issue `make` `debug` and then `make` `test` or `make` `release`.
+For the second point, use [separate build directories for different configurations](https://www.gnu.org/software/automake/manual/html_node/VPATH-Builds.html). Make [checks modification times of prerequisites and targets](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html), so changing `CFLAGS` or `CXXFLAGS` alone does not ensure that existing objects are rebuilt. Separate debug, test, and release build directories help prevent reuse of objects compiled with different hardening flags.
 
 Finally, you will probably be disappointed to learn tools such as Autoconf and Automake miss many security related opportunities and ship insecure out of the box. There are a number of compiler switches and linker flags that improve the defensive posture of a program, but they are not 'on' by default. Tools like Autoconf - which are supposed to handle this situation - often provide settings to serve the lowest of all denominators.
 

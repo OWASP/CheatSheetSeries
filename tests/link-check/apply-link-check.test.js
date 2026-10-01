@@ -95,6 +95,137 @@ const rerunPrProvenance = {
     "https://github.com/OWASP/CheatSheetSeries/actions/runs/36498326700/job/109247737627",
 };
 
+// Reviewed CI evidence for the shared failures affecting otherwise unchanged sheets.
+const sharedFailureBatches = [
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "d6146c3844212b9514e3003375dd34b76373c8c7",
+      contentBaseCommit: "d6146c3844212b9514e3003375dd34b76373c8c7",
+      workflowRunId: 36740088549,
+      workflowJobId: 109971909099,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36740088549/job/109971909099"
+    },
+    failures: [
+      {
+        file: "cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md",
+        url: "https://www.w3.org/TR/xpath-31/#id-variables",
+        observedStatuses: [403, 403, 403]
+      }
+    ]
+  },
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "3b5b33b6b2df06afb81dfc645b8f156a71569739",
+      contentBaseCommit: "b2d78808122127ab402f62c076e19756a09cfca4",
+      workflowRunId: 36708732055,
+      workflowJobId: 109977286541,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36708732055/job/109977286541"
+    },
+    failures: [
+      {
+        file: "cheatsheets/Virtual_Patching_Cheat_Sheet.md",
+        url: "https://web.archive.org/web/20181011065823/http://www.jwall.org/web/audit/viewer.jsp",
+        observedStatuses: [429, 429, 429]
+      }
+    ]
+  },
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "6cce391c9e6578c6ef64d4ecff059c71d50d0ee4",
+      contentBaseCommit: "b2d78808122127ab402f62c076e19756a09cfca4",
+      workflowRunId: 36714167518,
+      workflowJobId: 109977303743,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36714167518/job/109977303743"
+    },
+    failures: [
+      {
+        file: "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+        url: "https://embeddedartistry.com/blog/2017/04/10/recursive-make-considered-harmful/",
+        observedStatuses: [0, 0, 0]
+      }
+    ]
+  },
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "19974462ddfd97991dc0074adc263864b0032b94",
+      contentBaseCommit: "b2d78808122127ab402f62c076e19756a09cfca4",
+      workflowRunId: 36731824972,
+      workflowJobId: 109943166585,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36731824972/job/109943166585"
+    },
+    failures: [
+      {
+        file: "cheatsheets/Input_Validation_Cheat_Sheet.md",
+        url: "https://web.archive.org/web/20170717174432/https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html/",
+        observedStatuses: [429, 429, 429]
+      },
+      {
+        file: "cheatsheets/Web_Cache_Security_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/attacks/Cache_Poisoning",
+        observedStatuses: [403, 403, 403]
+      },
+      {
+        file: "cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/Access_Control#principle-of-least-privilege",
+        observedStatuses: [403, 403, 403]
+      }
+    ]
+  },
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "a9b9d284010284843b9415ec253776d4faf1a34d",
+      contentBaseCommit: "a9b9d284010284843b9415ec253776d4faf1a34d",
+      workflowRunId: 36758158538,
+      workflowJobId: 110033594899,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36758158538/job/110033594899"
+    },
+    failures: [
+      {
+        file: "cheatsheets/NPM_Security_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/Component_Analysis",
+        observedStatuses: [403, 403, 403]
+      },
+      {
+        file: "cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/attacks/Command_Injection",
+        observedStatuses: [403, 403, 403]
+      },
+      {
+        file: "cheatsheets/Pinning_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/Injection_Theory",
+        observedStatuses: [403, 403, 403]
+      },
+      {
+        file: "cheatsheets/Pinning_Cheat_Sheet.md",
+        url: "https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning",
+        observedStatuses: [403, 403, 403]
+      }
+    ]
+  },
+  {
+    generatedFrom: {
+      attemptCount: 3,
+      checkedHead: "2ac768df90f5e770a331a83cc670a06bdea91bdb",
+      contentBaseCommit: "2ac768df90f5e770a331a83cc670a06bdea91bdb",
+      workflowRunId: 36762726124,
+      workflowJobId: 110049099112,
+      workflowUrl: "https://github.com/OWASP/CheatSheetSeries/actions/runs/36762726124/job/110049099112"
+    },
+    failures: [
+      {
+        file: "cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md",
+        url: "https://www.gnu.org/software/automake/manual/html_node/VPATH-Builds.html",
+        observedStatuses: [403, 0, 0]
+      }
+    ]
+  }
+];
+
 function baseline(failures = []) {
   return {
     schemaVersion: 2,
@@ -227,7 +358,8 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     fs.readFileSync(path.join(repoRoot, "link-check-known-failures.json"), "utf8"),
   );
   assert.equal(value.schemaVersion, 2);
-  assert.equal(value.batches.length, 9);
+  assert.equal(value.batches.length, 15);
+  assert.deepEqual(value.batches.slice(9), sharedFailureBatches);
   assert.deepEqual(value.batches[0].generatedFrom, provenance);
   assert.deepEqual(value.batches[1].generatedFrom, supplementalProvenance);
   assert.deepEqual(value.batches[2].generatedFrom, finalProvenance);
@@ -258,11 +390,11 @@ test("the committed baseline has exact reviewed provenance and tuples", () => {
     },
   ]);
   const failures = value.batches.flatMap((batch) => batch.failures);
-  assert.equal(failures.length, 339);
-  assert.equal(new Set(failures.map(({ file }) => file)).size, 86);
+  assert.equal(failures.length, 350);
+  assert.equal(new Set(failures.map(({ file }) => file)).size, 88);
   assert.equal(
     new Set(failures.map(({ file, url }) => `${file}\0${url}`)).size,
-    339,
+    350,
   );
   assert.ok(
     value.batches.slice(1).every(({ failures: batchFailures }) =>
@@ -306,6 +438,7 @@ test("a broken local link exits nonzero with only unexpected diagnostics", (t) =
   assert.equal(result.known, "");
   assert.match(result.unexpected, /FILE: cheatsheets\/broken\.md/);
   assert.match(result.unexpected, /\[✖\] missing\.md → Status: 400/);
+  assert.ok(result.stderr.includes(result.unexpected));
 });
 
 test("an unsupported link cannot pass as a checker warning", (t) => {
@@ -670,6 +803,7 @@ test("a persistent unbaselined network tuple remains fatal after bounded attempt
   assert.match(result.raw, /attempt 3\/3/);
   assert.match(result.unexpected, /persistent\.invalid\/failing/);
   assert.match(result.unexpected, /attempts: 1=503, 2=429, 3=502/);
+  assert.ok(result.stderr.includes(result.unexpected));
 });
 
 test("a missing baseline is fatal before checker invocation", (t) => {
@@ -962,4 +1096,6 @@ test("unexpected output excludes exact known rows in a mixed failure", (t) => {
   assert.match(result.known, /mixed\.invalid\/known/);
   assert.doesNotMatch(result.unexpected, /mixed\.invalid\/known/);
   assert.match(result.unexpected, /mixed\.invalid\/new/);
+  assert.ok(result.stderr.includes(result.unexpected));
+  assert.doesNotMatch(result.stderr, /mixed\.invalid\/known/);
 });
