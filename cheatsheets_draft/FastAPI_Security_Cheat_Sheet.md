@@ -69,7 +69,7 @@ When using JSON Web Tokens (JWTs), developers are responsible for token verifica
 
 ### Signing Key Management
 
-Never hardcode signing secrets or provide a default development key in production. Load them through [Pydantic Settings](https://fastapi.tiangolo.com/advanced/settings/) from deployment-managed environment variables. Keep local `.env` files containing secrets out of source control. Follow the [Secrets Management Cheat Sheet](../cheatsheets/Secrets_Management_Cheat_Sheet.md) for provisioning and rotation.
+Never hardcode signing secrets or provide a default development key in production. Supply keys from deployment-managed secret storage; prefer a mounted secret file or retrieval from a secret manager, and use environment variables only when safer injection methods are unavailable. Pydantic Settings can read deployment-supplied configuration. Keep local `.env` files containing secrets out of source control. Follow the [Secrets Management Cheat Sheet](../cheatsheets/Secrets_Management_Cheat_Sheet.md) for provisioning and rotation.
 
 ## Pydantic Validation and Input Hardening
 
