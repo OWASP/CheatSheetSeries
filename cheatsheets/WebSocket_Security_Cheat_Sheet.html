@@ -4676,17 +4676,7 @@
 </ol>
 <h4 id="origin-header-validation">Origin Header Validation<a class="headerlink" href="#origin-header-validation" title="Permanent link">&para;</a></h4>
 <p>Validate the <code>Origin</code> header on every handshake. Always use an explicit allowlist of trusted origins. Browsers include this header and malicious JavaScript cannot override it.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">wss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">verifyClient</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">info</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">allowedOrigins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">'https://app.example.com'</span><span class="p">];</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">allowedOrigins</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">origin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Rejected unauthorized origin: </span><span class="si">${</span><span class="nx">info</span><span class="p">.</span><span class="nx">origin</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
+<p>For Node.js <code>ws</code>, validate the <code>Origin</code> header in the HTTP server's <code>upgrade</code> event before calling <code>handleUpgrade</code>; the library discourages <code>verifyClient</code> (<a href="https://github.com/websockets/ws/blob/master/doc/ws.md#new-websocketserveroptions-callback"><code>ws</code> documentation</a>).</p>
 <p><strong>Important:</strong> Use an allowlist, not a denylist. Avoid wildcards or substring matching which are error-prone.</p>
 <h4 id="additional-cswsh-protections">Additional CSWSH Protections<a class="headerlink" href="#additional-cswsh-protections" title="Permanent link">&para;</a></h4>
 <p>For applications already using CSRF protection, include <strong>CSRF tokens</strong> in WebSocket handshakes.</p>
@@ -4798,7 +4788,7 @@
 <li>OWASP ZAP (includes WebSocket security testing features)</li>
 </ul>
 <h3 id="framework-specific-best-practices">Framework-Specific Best Practices<a class="headerlink" href="#framework-specific-best-practices" title="Permanent link">&para;</a></h3>
-<p><strong>Node.js:</strong> Use the <code>verifyClient</code> callback for origin and authentication checks, set <code>maxPayload</code> limits, and disable <code>perMessageDeflate</code> compression to prevent security issues.</p>
+<p><strong>Node.js:</strong> With <code>ws</code>, perform origin and authentication checks in the HTTP server's <code>upgrade</code> event; set <code>maxPayload</code> limits and disable <code>perMessageDeflate</code> compression unless needed.</p>
 <p><strong>Python:</strong> With Django Channels, implement authentication middleware and origin validation. Use async exception handling to prevent application crashes from malformed WebSocket messages.</p>
 <p><strong>Java Spring:</strong> Configure allowed origins explicitly and integrate Spring Security for authorization. Set message size limits in your WebSocket container configuration to prevent resource exhaustion.</p>
 <p><strong>Go:</strong> When using Gorilla WebSocket, implement validation in your <code>CheckOrigin</code> function - don't just return <code>true</code>. Set read limits, implement timeouts, and use context cancellation for graceful connection cleanup.</p>
