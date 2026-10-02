@@ -166,7 +166,7 @@ Institutions must decide whether to run their own screening engine or use a host
 
 When systems independently serialize the same JSON object for hashing or signature verification, they need an agreed byte representation. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different bytes for the same logical object.
 
-[RFC 8785 (JCS)](https://www.rfc-editor.org/rfc/rfc8785) provides one deterministic JSON representation for that use case. It is not required for every signed-token format: a [JWS](https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2) verifier checks the encoded signing input rather than reserializing the payload. Cross-system verification also needs an agreed signature profile and a trusted verification key. Canonicalization alone supplies neither.
+[JSON Canonicalization Scheme (JCS), RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) provides one deterministic JSON representation for that use case. It is not required for every signed-token format: a [JSON Web Signature (JWS)](https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2) verifier checks the encoded signing input rather than reserializing the payload. Cross-system verification also needs an agreed signature profile and a trusted verification key. Canonicalization alone supplies neither.
 
 ### Do
 
