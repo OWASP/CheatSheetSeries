@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**130** cheat sheets available.
+**131** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -207,6 +207,8 @@
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
+
+[Post Quantum Cryptography Cheat Sheet](cheatsheets/Post_Quantum_Cryptography_Cheat_Sheet.md)
 
 [Prototype Pollution Prevention Cheat Sheet](cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg)
 
