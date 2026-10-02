@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**131** cheat sheets available.
+**132** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -301,6 +301,8 @@
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
 
 [Webhook Security Cheat Sheet](cheatsheets/Webhook_Security_Cheat_Sheet.md)
+
+[Workload Identity Federation Cheat Sheet](cheatsheets/Workload_Identity_Federation_Cheat_Sheet.md)
 
 ## X
 
