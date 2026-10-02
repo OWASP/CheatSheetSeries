@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Post_Quantum_Cryptography_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+        <link rel="prev" href="Pinning_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Cryptographic_Storage_Cheat_Sheet.html">
+        <link rel="next" href="Prototype_Pollution_Prevention_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Cross Site Scripting Prevention - OWASP Cheat Sheet Series</title>
+        <title>Post Quantum Cryptography - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cross-site-scripting-prevention-cheat-sheet" class="md-skip">
+        <a href="#post-quantum-cryptography-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Cross Site Scripting Prevention
+              Post Quantum Cryptography
             
           </span>
         </div>
@@ -1143,37 +1143,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Cross Site Scripting Prevention
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -1189,359 +1162,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#framework-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework Security
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#xss-defense-philosophy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XSS Defense Philosophy
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#output-encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Encoding">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-html-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “HTML Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-html-attribute-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “HTML Attribute Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-javascript-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “JavaScript Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-css-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “CSS Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-url-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “URL Contexts”
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Encoding for “URL Contexts”">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-mistake" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Mistake
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dangerous Contexts
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#html-sanitization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        HTML Sanitization
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#safe-sinks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Safe Sinks
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#other-controls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Controls
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Other Controls">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#xss-prevention-rules-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XSS Prevention Rules Summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-rules-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding Rules Summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-anti-patterns-ineffective-approaches-to-avoid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Anti-patterns: Ineffective Approaches to Avoid
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Anti-patterns: Ineffective Approaches to Avoid">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sole-reliance-on-content-security-policy-csp-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sole Reliance on Content-Security-Policy (CSP) Headers
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Sole Reliance on Content-Security-Policy (CSP) Headers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#problem-1-assumption-browser-versions-support-csp-equally" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 1 - Assumption Browser Versions Support CSP Equally
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-2-issues-supporting-legacy-applications" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 2 - Issues Supporting Legacy Applications
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reliance-on-http-interceptors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reliance on HTTP Interceptors
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reliance on HTTP Interceptors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#problem-1-encoding-for-specific-context-not-satisfactory-for-all-uri-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 1 - Encoding for specific context not satisfactory for all URI paths
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-2-interceptor-approach-can-lead-to-broken-rendering-caused-by-improper-or-double-encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 2 - Interceptor approach can lead to broken rendering caused by improper or double encoding
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-3-interceptors-not-effective-against-dom-based-xss" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 3 - Interceptors not effective against DOM-based XSS
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-4-interceptors-not-effective-where-data-from-responses-originates-outside-your-application" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 4 - Interceptors not effective where data from responses originates outside your application
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-articles" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related Articles
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3203,10 +2823,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Post_Quantum_Cryptography_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Post Quantum Cryptography
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Post_Quantum_Cryptography_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -3222,6 +2869,103 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-1-inventory-cryptographic-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 1: Inventory cryptographic dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-2-prioritize-migration-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 2: Prioritize migration work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-3-adopt-supported-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 3: Adopt supported implementations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-4-test-the-full-application-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 4: Test the full application path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-5-roll-out-and-retire-temporary-exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 5: Roll out and retire temporary exceptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4588,10 +4332,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#framework-security" class="md-nav__link">
+  <a href="#stage-1-inventory-cryptographic-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Framework Security
+        Stage 1: Inventory cryptographic dependencies
       
     </span>
   </a>
@@ -4599,10 +4343,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#xss-defense-philosophy" class="md-nav__link">
+  <a href="#stage-2-prioritize-migration-work" class="md-nav__link">
     <span class="md-ellipsis">
       
-        XSS Defense Philosophy
+        Stage 2: Prioritize migration work
       
     </span>
   </a>
@@ -4610,110 +4354,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#output-encoding" class="md-nav__link">
+  <a href="#stage-3-adopt-supported-implementations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Output Encoding
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Encoding">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-html-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “HTML Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-html-attribute-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “HTML Attribute Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-javascript-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “JavaScript Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-css-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “CSS Contexts”
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-for-url-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding for “URL Contexts”
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Encoding for “URL Contexts”">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-mistake" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Common Mistake
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-contexts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dangerous Contexts
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#html-sanitization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        HTML Sanitization
+        Stage 3: Adopt supported implementations
       
     </span>
   </a>
@@ -4721,10 +4365,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#safe-sinks" class="md-nav__link">
+  <a href="#stage-4-test-the-full-application-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Safe Sinks
+        Stage 4: Test the full application path
       
     </span>
   </a>
@@ -4732,177 +4376,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-controls" class="md-nav__link">
+  <a href="#stage-5-roll-out-and-retire-temporary-exceptions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Other Controls
+        Stage 5: Roll out and retire temporary exceptions
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Other Controls">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#xss-prevention-rules-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XSS Prevention Rules Summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#output-encoding-rules-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Output Encoding Rules Summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#common-anti-patterns-ineffective-approaches-to-avoid" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Common Anti-patterns: Ineffective Approaches to Avoid
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Anti-patterns: Ineffective Approaches to Avoid">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sole-reliance-on-content-security-policy-csp-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sole Reliance on Content-Security-Policy (CSP) Headers
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Sole Reliance on Content-Security-Policy (CSP) Headers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#problem-1-assumption-browser-versions-support-csp-equally" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 1 - Assumption Browser Versions Support CSP Equally
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-2-issues-supporting-legacy-applications" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 2 - Issues Supporting Legacy Applications
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reliance-on-http-interceptors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reliance on HTTP Interceptors
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reliance on HTTP Interceptors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#problem-1-encoding-for-specific-context-not-satisfactory-for-all-uri-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 1 - Encoding for specific context not satisfactory for all URI paths
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-2-interceptor-approach-can-lead-to-broken-rendering-caused-by-improper-or-double-encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 2 - Interceptor approach can lead to broken rendering caused by improper or double encoding
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-3-interceptors-not-effective-against-dom-based-xss" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 3 - Interceptors not effective against DOM-based XSS
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#problem-4-interceptors-not-effective-where-data-from-responses-originates-outside-your-application" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Problem 4 - Interceptors not effective where data from responses originates outside your application
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-articles" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related Articles
+        References
       
     </span>
   </a>
@@ -4929,233 +4417,103 @@
   
 
 
-<h1 id="cross-site-scripting-prevention-cheat-sheet">Cross Site Scripting Prevention Cheat Sheet<a class="headerlink" href="#cross-site-scripting-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="post-quantum-cryptography-cheat-sheet">Post-Quantum Cryptography Cheat Sheet<a class="headerlink" href="#post-quantum-cryptography-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheat sheet helps developers prevent XSS vulnerabilities.</p>
-<p>Cross-Site Scripting (XSS) is a misnomer. Originally this term was derived from early versions of the attack that were primarily focused on stealing data cross-site. Since then, the term has widened to include injection of basically any content. XSS attacks are serious and can lead to account impersonation, observing user behavior, loading external content, stealing sensitive data, and more.</p>
-<p><strong>This cheatsheet contains techniques to prevent or limit the impact of XSS. Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS.</strong></p>
-<h2 id="framework-security">Framework Security<a class="headerlink" href="#framework-security" title="Permanent link">&para;</a></h2>
-<p>Fortunately, applications built with modern web frameworks have fewer XSS bugs, because these frameworks steer developers towards good security practices and help mitigate XSS by using templating, auto-escaping, and more. However, developers need to know that problems can occur if frameworks are used insecurely, such as:</p>
+<p>Post-quantum cryptography (PQC) uses algorithms designed to resist attacks from both classical and quantum computers. A sufficiently powerful quantum computer could break <a href="https://www.rfc-editor.org/rfc/rfc9794.html#section-1">RSA, Diffie-Hellman, and elliptic curve cryptography</a>, affecting public-key encryption, key exchange, and digital signatures. This cheat sheet turns <a href="https://www.ncsc.gov.uk/guidance/pqc-migration-timelines">PQC migration planning</a> into stages for application developers: inventory dependencies, prioritize work, adopt supported implementations, test, and roll out. Start the preparation stages even when a dependency cannot yet migrate.</p>
+<h2 id="stage-1-inventory-cryptographic-dependencies">Stage 1: Inventory cryptographic dependencies<a class="headerlink" href="#stage-1-inventory-cryptographic-dependencies" title="Permanent link">&para;</a></h2>
+<p>Create a <a href="https://pages.nist.gov/nccoe-migration-post-quantum-cryptography/FAQ/index.html#what-is-a-cryptographic-inventory">cryptographic inventory</a> with one entry per use of cryptography. Include dependencies managed by your platform or service provider, not just direct calls in application code.</p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Include</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purpose and lifetime</td>
+<td>Transport, stored data, key protection, or signatures; how long confidentiality or trust must last.</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td>Protocol, algorithms and parameters, library or service version, key and certificate identifiers. Store metadata, never secret key material.</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Clients, servers, proxies, signing and verification services, key management services, hardware security modules, and backups.</td>
+</tr>
+<tr>
+<td>Ownership</td>
+<td>Responsible team or supplier, supported upgrade path, and components that cannot be updated.</td>
+</tr>
+</tbody>
+</table>
+<p>Map each transport connection separately, including connections from a gateway to the application. Trace how stored data's encryption keys are protected and recovered. Inventory signature verifiers as well as signers.</p>
+<p><strong>Complete when:</strong> each dependency has an owner and an identified migration path or a recorded blocker.</p>
+<h2 id="stage-2-prioritize-migration-work">Stage 2: Prioritize migration work<a class="headerlink" href="#stage-2-prioritize-migration-work" title="Permanent link">&para;</a></h2>
+<p>Prioritize data that must stay confidential for years and systems that will be difficult to update later, following the <a href="https://www.ncsc.gov.uk/guidance/pqc-migration-timelines">NCSC migration planning guidance</a>. Assign an owner and target date to each migration item.</p>
 <ul>
-<li><em>escape hatches</em> that frameworks use to directly manipulate the DOM</li>
-<li>React’s <code>dangerouslySetInnerHTML</code> without sanitizing the HTML</li>
-<li>React cannot handle <code>javascript:</code> or <code>data:</code> URLs without specialized validation</li>
-<li>Angular’s <code>bypassSecurityTrustAs*</code> functions</li>
-<li>Lit's <code>unsafeHTML</code> function</li>
-<li>Polymer's <code>inner-h-t-m-l</code> attribute and <code>htmlLiteral</code> function</li>
-<li>Template injection</li>
-<li>Out of date framework plugins or components</li>
-<li>and more</li>
+<li><strong>Long-lived confidentiality:</strong> prioritize exposed connections and stored data whose keys depend on RSA or elliptic curve cryptography. Updating encryption later cannot protect copies an adversary has already collected.</li>
+<li><strong>Long-lived trust:</strong> plan early for software and firmware verification, trust anchors, and signed records that must remain trustworthy for years. Include the time needed to update every verifier.</li>
+<li><strong>Blocked dependencies:</strong> request a supported release and migration plan from the supplier. Record the remaining exposure, a review date, and whether replacement is necessary.</li>
 </ul>
-<p>When you use a modern web framework, you need to know how your framework prevents XSS and where it has gaps. There will be times where you need to do something outside the protection provided by your framework, which means that Output Encoding and HTML Sanitization can be critical. OWASP will be producing framework specific cheatsheets for React, Vue, and Angular.</p>
-<h2 id="xss-defense-philosophy">XSS Defense Philosophy<a class="headerlink" href="#xss-defense-philosophy" title="Permanent link">&para;</a></h2>
-<p>In order for an XSS attack to be successful, an attacker must be able to insert and execute malicious content in a webpage. Thus, all variables in a web application needs to be protected. Ensuring that <strong>all variables</strong> go through validation and are then escaped or sanitized is known as <strong>perfect injection resistance</strong>. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped or sanitized.</p>
-<p>However, no framework is perfect and security gaps still exist in popular frameworks like React and Angular. Output encoding and HTML sanitization help address those gaps.</p>
-<h2 id="output-encoding">Output Encoding<a class="headerlink" href="#output-encoding" title="Permanent link">&para;</a></h2>
-<p>When you need to safely display data exactly as a user types it in, output encoding is recommended. Variables should not be interpreted as code instead of text. This section covers each form of output encoding, where to use it, and when you should not use dynamic variables at all.</p>
-<p>First, when you wish to display data as the user typed it in, start with your framework’s default output encoding protection. Automatic encoding and escaping functions are built into most frameworks.</p>
-<p>If you’re not using a framework or need to cover gaps in the framework then you should use an output encoding library. Each variable used in the user interface should be passed through an output encoding function. A list of output encoding libraries is included in the appendix.</p>
-<p>There are many different output encoding methods because browsers parse HTML, JS, URLs, and CSS differently. Using the wrong encoding method may introduce weaknesses or harm the functionality of your application.</p>
-<h3 id="output-encoding-for-html-contexts">Output Encoding for “HTML Contexts”<a class="headerlink" href="#output-encoding-for-html-contexts" title="Permanent link">&para;</a></h3>
-<p>“HTML Context” refers to inserting a variable between two basic HTML tags like a <code>&lt;div&gt;</code> or <code>&lt;b&gt;</code>. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span> $varUnsafe <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>An attacker could modify data that is rendered as <code>$varUnsafe</code>. This could lead to an attack being added to a webpage. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="sb">`1`</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span> // Example Attack
-</code></pre></div>
-<p>In order to add a variable to a HTML context safely to a web template, use HTML entity encoding for that variable.</p>
-<p>Here are some examples of encoded values for specific characters:</p>
-<p>If you're using JavaScript for writing to HTML, look at the <code>.textContent</code> attribute. It is a <strong>Safe Sink</strong> and will automatically HTML Entity Encode.</p>
-<div class="highlight"><pre><span></span><code><span class="err">&amp;</span>    <span class="ni">&amp;amp;</span>
-<span class="err">&lt;</span>    <span class="ni">&amp;lt;</span>
-&gt;    <span class="ni">&amp;gt;</span>
-"    <span class="ni">&amp;quot;</span>
-'    <span class="ni">&amp;#x27;</span>
-</code></pre></div>
-<h3 id="output-encoding-for-html-attribute-contexts">Output Encoding for “HTML Attribute Contexts”<a class="headerlink" href="#output-encoding-for-html-attribute-contexts" title="Permanent link">&para;</a></h3>
-<p>Use HTML attribute encoding for data inserted into ordinary text attributes, such as <code>title</code> or <code>value</code>. Keep element and attribute names fixed. Attributes containing URLs, CSS, HTML, or JavaScript need controls for those additional contexts.</p>
-<p>The placeholder below represents data already encoded for a quoted HTML attribute:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">"ENCODED DATA"</span><span class="p">&gt;</span>
-</code></pre></div>
-<p><strong>Always surround attribute values with double (<code>"</code>) or single (<code>'</code>) quotation marks.</strong> Use your framework's or library's attribute encoder to protect the surrounding quotes and other HTML syntax. Spaces do not end a quoted value, so encoding every space or every non-alphanumeric character is unnecessary. The <a href="https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state">HTML parsing rules</a> distinguish quoted values from unquoted ones, where whitespace ends the value.</p>
-<p>HTML attribute encoding alone does not protect JavaScript in an event-handler attribute: the HTML parser decodes character references before the JavaScript is interpreted. Encoding more characters as HTML entities does not remove that second context. Prefer <code>addEventListener()</code> with trusted handler functions and pass user values as data. For unavoidable legacy templates, follow the library's <a href="https://github.com/OWASP/owasp-java-encoder/blob/main/docs/contexts.md#encode-for-the-parser-that-receives-the-value">documented JavaScript-in-HTML context</a> for data inside a quoted JavaScript string within a quoted HTML attribute; an encoder cannot make untrusted handler code safe.</p>
-<p>When updating an existing element from JavaScript, <code>element.setAttribute("title", value)</code> assigns the value directly; it does not HTML-encode it. Do not pre-encode a runtime value for this ordinary text attribute. Keep the attribute name fixed and safe: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute#security_considerations">event-handler attributes and <code>srcdoc</code> can interpret their values as code or HTML</a>.</p>
-<h3 id="output-encoding-for-javascript-contexts">Output Encoding for “JavaScript Contexts”<a class="headerlink" href="#output-encoding-for-javascript-contexts" title="Permanent link">&para;</a></h3>
-<p>When a server template inserts string data into an inline script, use an encoder documented for both the JavaScript string and the enclosing HTML script. The placeholder below represents data already encoded for that location; the template supplies the quotes:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ENCODED DATA"</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Do not insert untrusted code, identifiers, or expressions. Use a maintained encoder and follow its context contract instead of escaping quotes manually or applying a generic <code>\xHH</code> rule. The <a href="https://github.com/OWASP/owasp-java-encoder/blob/main/docs/contexts.md#encode-for-the-parser-that-receives-the-value">OWASP Java Encoder context guide</a> distinguishes script blocks, quoted event-handler strings, and standalone JavaScript. Support for ordinary template literals depends on the library and version; it does not imply support for tagged templates or <code>${...}</code> expression bodies.</p>
-<p>These encoders protect string placement, not subsequent use: passing the resulting value to <code>eval()</code> or another code-interpreting sink remains unsafe.</p>
-<p>For JSON, verify that the <code>Content-Type</code> header is <code>application/json</code> and not <code>text/html</code> to prevent XSS.</p>
-<h3 id="output-encoding-for-css-contexts">Output Encoding for “CSS Contexts”<a class="headerlink" href="#output-encoding-for-css-contexts" title="Permanent link">&para;</a></h3>
-<p>“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks. <strong>Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">$</span><span class="n">varUnsafe</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"$varUnsafe"</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">"property : $varUnsafe"</span><span class="p">&gt;</span>Oh no<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>If you're using JavaScript to change a CSS property, look into using
-<code>style.property = x</code>.
-This is a <strong>Safe Sink</strong> and will automatically CSS encode data in it.</p>
-<p>When inserting variables into CSS properties, ensure the data is properly encoded and sanitized to prevent injection attacks. Avoid placing variables directly into selectors or other CSS contexts.</p>
-<h3 id="output-encoding-for-url-contexts">Output Encoding for “URL Contexts”<a class="headerlink" href="#output-encoding-for-url-contexts" title="Permanent link">&para;</a></h3>
-<p>“URL Contexts” refer to variables placed into a URL. Most commonly, a developer will add a parameter or URL fragment to a URL base that is then displayed or used in some operation. Use URL Encoding for these scenarios.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"http://www.owasp.org?test=$varUnsafe"</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
-</code></pre></div>
-<p>Encode all characters with the <code>%HH</code> encoding format. Make sure any attributes are fully quoted, same as JS and CSS.</p>
-<h4 id="common-mistake">Common Mistake<a class="headerlink" href="#common-mistake" title="Permanent link">&para;</a></h4>
-<p>There will be situations where you use a URL in different contexts. The most common one would be adding it to an <code>href</code> or <code>src</code> attribute of an <code>&lt;a&gt;</code> tag. In these scenarios, you should do URL encoding, followed by HTML attribute encoding.</p>
-<div class="highlight"><pre><span></span><code>url = "https://site.com?data=" + urlencode(parameter)
-<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'attributeEncode(url)'</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>If you're using JavaScript to construct a URL Query Value, look into using <code>window.encodeURIComponent(x)</code>. This is a <strong>Safe Sink</strong> and will automatically URL encode data in it.</p>
-<h3 id="dangerous-contexts">Dangerous Contexts<a class="headerlink" href="#dangerous-contexts" title="Permanent link">&para;</a></h3>
-<p>Output encoding is not perfect. It will not always prevent XSS. These locations are known as <strong>dangerous contexts</strong>. Dangerous contexts include:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">Directly</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">script</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="cm">&lt;!-- Inside an HTML comment --&gt;</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="nt">Directly</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">CSS</span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ToDefineAnAttribute</span><span class="o">=</span><span class="s">test</span> <span class="p">/&gt;</span>
-<span class="p">&lt;</span><span class="nt">ToDefineATag</span> <span class="na">href</span><span class="o">=</span><span class="s">"/test"</span> <span class="p">/&gt;</span>
-</code></pre></div>
-<p>Other areas to be careful with include:</p>
+<p>Prefer AES-256 for additional quantum security margin, consistent with the <a href="Cryptographic_Storage_Cheat_Sheet.html#algorithms">Cryptographic Storage Cheat Sheet</a>. Use a secure encryption mode. AES-128 remains permitted: <a href="https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs">NIST's PQC FAQ</a> allows continued use of AES-128, AES-192, and AES-256. Check the public-key protection of encryption keys even when the data itself uses AES.</p>
+<p><strong>Complete when:</strong> the backlog separates confidentiality and signature work, with explicit decisions for dependencies that cannot yet migrate.</p>
+<h2 id="stage-3-adopt-supported-implementations">Stage 3: Adopt supported implementations<a class="headerlink" href="#stage-3-adopt-supported-implementations" title="Permanent link">&para;</a></h2>
+<p>Upgrade maintained libraries and platform services to implementations of standardized algorithms. Select parameters through the supported protocol and your security requirements. Algorithm support alone does not establish protocol interoperability.</p>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Developer action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Key establishment</td>
+<td>Use a supported integration of the Module-Lattice-Based Key-Encapsulation Mechanism, <a href="https://csrc.nist.gov/pubs/fips/203/final">ML-KEM (FIPS 203)</a>. It establishes a shared secret for symmetric cryptography; it does not directly encrypt application data or authenticate the peer.</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>Pilot a supported classical + PQC hybrid exchange, such as <a href="https://www.rfc-editor.org/rfc/rfc10024.html">X25519MLKEM768</a>, following the <a href="Transport_Layer_Security_Cheat_Sheet.html#set-the-appropriate-diffie-hellman-groups">Transport Layer Security (TLS) Cheat Sheet</a>. Keep certificate and hostname validation enabled.</td>
+</tr>
+<tr>
+<td>Signatures</td>
+<td>Plan a separate migration using a supported signature format and verifier, such as an integration of the Module-Lattice-Based Digital Signature Algorithm, <a href="https://csrc.nist.gov/pubs/fips/204/final">ML-DSA (FIPS 204)</a>. Coordinate signer and verifier upgrades; follow the <a href="JSON_Web_Token_Cheat_Sheet.html#public-key-signatures">JSON Web Token (JWT) guidance</a> for tokens.</td>
+</tr>
+<tr>
+<td>Stored data</td>
+<td>Use your provider's supported migration process for public-key protection of data keys, including existing wrapped keys. Follow the <a href="Key_Management_Cheat_Sheet.html#cryptoperiods-and-rotation">key rotation and existing-data guidance</a> and retain recovery access during migration.</td>
+</tr>
+</tbody>
+</table>
+<p>A hybrid construction combines classical and post-quantum algorithms. Use the protocol's implementation rather than constructing your own combination. <a href="https://www.rfc-editor.org/rfc/rfc9794.html#section-5">RFC 9794, Section 5</a> distinguishes hybrid confidentiality from authentication: a hybrid TLS key exchange does not make classical certificate signatures quantum-resistant.</p>
+<p>Where a supported dual-signature scheme requires both signatures, enforce both verifications. Accepting either one permits classical-only acceptance; <a href="https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs">NIST describes dual-signature verification</a> as requiring all component signatures to succeed. Do not append a custom signature field to an existing token or certificate format.</p>
+<p>For signed records needing long-term proof, validate them and preserve evidence through a supported <a href="https://www.rfc-editor.org/rfc/rfc4998.html#section-1.1">archive timestamp and renewal process</a> before the protecting algorithms become weak. Retaining an old verifier alone does not preserve that proof.</p>
+<p><strong>Complete when:</strong> a supported migration works in a test environment, and the team has documented which security properties it provides.</p>
+<h2 id="stage-4-test-the-full-application-path">Stage 4: Test the full application path<a class="headerlink" href="#stage-4-test-the-full-application-path" title="Permanent link">&para;</a></h2>
+<p>Test with the actual algorithms and parameter sets you will deploy. <a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.39-upd1.pdf">NIST's crypto agility guidance, Sections 3.2 and 6.2</a> calls out larger cryptographic objects and protecting algorithm negotiation.</p>
 <ul>
-<li>Callback functions</li>
-<li>Where URLs are handled in code such as this CSS { background-url : “javascript:alert(xss)”; }</li>
-<li>Untrusted JavaScript event-handler code (for example, an entire <code>onclick</code> value). Prefer trusted functions registered with <code>addEventListener()</code>; see the HTML Attribute Contexts section for legacy string interpolation.</li>
-<li>Unsafe JS functions like <code>eval()</code>, <code>setInterval()</code>, <code>setTimeout()</code></li>
+<li>Exercise real clients, proxies, gateways, and backend connections. Verify the negotiated key exchange for new connections. For <a href="https://datatracker.ietf.org/doc/html/rfc9846#section-4.3.9">resumed TLS sessions</a>, check the resumption mode and how the original connection and resumption secrets were protected.</li>
+<li>Measure handshake and verification costs under expected load. Check certificate, signature, message, and database field limits. Keep size limits explicit when increasing them.</li>
+<li>Test rejection of invalid signatures, untrusted certificates, and disallowed algorithms. If both signatures are required, either missing or invalid signature must cause rejection.</li>
+<li>Decide where classical fallback is temporarily allowed. For paths requiring PQC, verify that failures cannot silently trigger a classical-only retry.</li>
+<li>Test existing data, older signed artifacts, backup restoration, and key recovery before retiring old keys or formats.</li>
 </ul>
-<p>Don't place variables into dangerous contexts as even with output encoding, it will not prevent an XSS attack fully.</p>
-<h2 id="html-sanitization">HTML Sanitization<a class="headerlink" href="#html-sanitization" title="Permanent link">&para;</a></h2>
-<p>When users need to author HTML, developers may let users change the styling or structure of content inside a WYSIWYG editor. Output encoding in this case will prevent XSS, but it will break the intended functionality of the application. The styling will not be rendered. In these cases, HTML Sanitization should be used.</p>
-<p>HTML Sanitization will strip dangerous HTML from a variable and return a safe string of HTML. OWASP recommends <a href="https://github.com/cure53/DOMPurify">DOMPurify</a> for HTML Sanitization.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dirty</span><span class="p">);</span>
-</code></pre></div>
-<p>There are some further things to consider:</p>
+<p><strong>Complete when:</strong> compatibility, rejection behavior, recovery, and rollback tests pass for the intended deployment policy.</p>
+<h2 id="stage-5-roll-out-and-retire-temporary-exceptions">Stage 5: Roll out and retire temporary exceptions<a class="headerlink" href="#stage-5-roll-out-and-retire-temporary-exceptions" title="Permanent link">&para;</a></h2>
+<p>Deploy to a small group of services or clients, then expand using the tests and monitoring results. Keep an approved rollback plan and explicit criteria for ending classical-only support, as recommended by the <a href="https://www.ncsc.gov.uk/guidance/pqc-migration-timelines">NCSC migration guidance</a>.</p>
 <ul>
-<li>If you sanitize content and then modify it afterwards, you can easily void your security efforts.</li>
-<li>If you sanitize content and then send it to a library for use, check that it doesn’t mutate that string somehow. Otherwise, again, your security efforts are void.</li>
-<li>You must regularly patch DOMPurify or other HTML Sanitization libraries that you use. Browsers change functionality and bypasses are being discovered regularly.</li>
+<li>Record negotiated algorithms and verification outcomes without logging secrets. Alert on unexpected classical-only use and verification failures.</li>
+<li>Treat a rollback to classical-only protection as a security exception with an owner and expiry date. Where PQC is required, pause the affected operation instead of silently weakening the policy.</li>
+<li>Track library security updates and applicable standards. Remove temporary fallback only after required peers and recovery workflows have migrated. Preserve required access to older data and signed records under an explicit legacy policy. Once PQC verification is required, restrict classical-only exceptions to identified legacy artifacts; do not use them to accept new artifacts.</li>
 </ul>
-<h2 id="safe-sinks">Safe Sinks<a class="headerlink" href="#safe-sinks" title="Permanent link">&para;</a></h2>
-<p>Security professionals often talk in terms of sources and sinks. If you pollute a river, it'll flow downstream somewhere. It’s the same with computer security. XSS sinks are places where variables are placed into your webpage.</p>
-<p>Thankfully, many sinks where variables can be placed are safe. This is because these sinks treat the variable as text and will never execute it. Try to refactor your code to remove references to unsafe sinks like innerHTML, and instead use textContent or value.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">elem</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">insertAdjacentText</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">safeName</span><span class="p">,</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nx">formfield</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dangerVar</span><span class="p">);</span>
-</code></pre></div>
-<p><strong>Safe HTML Attributes include:</strong> <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
-<p>For attributes not reported above, ensure that if JavaScript code is provided as a value, it cannot be executed.</p>
-<h2 id="other-controls">Other Controls<a class="headerlink" href="#other-controls" title="Permanent link">&para;</a></h2>
-<p>Framework Security Protections, Output Encoding, and HTML Sanitization will provide the best protection for your application. OWASP recommends these in all circumstances.</p>
-<p>Consider adopting the following controls in addition to the above.</p>
+<p><strong>Complete when:</strong> required paths demonstrably use the intended protection, and remaining exceptions have owners and retirement dates. Keep the inventory current as dependencies change.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Cookie Attributes - These change how JavaScript and browsers can interact with cookies. Cookie attributes try to limit the impact of an XSS attack but don’t prevent the execution of malicious content or address the root cause of the vulnerability.</li>
-<li>Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so it should not be your primary defense mechanism. Use a CSP as an additional layer of defense and have a look at the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">cheatsheet here</a>.</li>
-<li>Trusted Types - On Chromium-based browsers, enable <a href="https://web.dev/articles/trusted-types">Trusted Types</a> by adding <code>Content-Security-Policy: require-trusted-types-for 'script'</code>. This causes DOM XSS sinks (<code>innerHTML</code>, <code>outerHTML</code>, <code>document.write</code>, <code>script.src</code>, etc.) to reject plain strings, forcing all assignments to go through a vetted policy. It is one of the few controls that eliminates entire classes of DOM XSS rather than mitigating them. Combine with a default policy that delegates to a sanitizer (e.g. DOMPurify) for legacy code paths.</li>
-<li>Web Application Firewalls - These look for known attack strings and block them. WAF’s are unreliable and new bypass techniques are being discovered regularly. WAFs also don’t address the root cause of an XSS vulnerability. In addition, WAFs also miss a class of XSS vulnerabilities that operate exclusively client-side. WAFs are not recommended for preventing XSS, especially DOM-Based XSS.</li>
-</ul>
-<h3 id="xss-prevention-rules-summary">XSS Prevention Rules Summary<a class="headerlink" href="#xss-prevention-rules-summary" title="Permanent link">&para;</a></h3>
-<p>These snippets of HTML demonstrate how to render untrusted data safely in a variety of different contexts.</p>
-<p>Data Type: String
-Context: HTML Body
-Code: <code>&lt;span&gt;UNTRUSTED DATA &lt;/span&gt;</code>
-Sample Defense: HTML Entity Encoding (rule #1)</p>
-<p>Data Type: String
-Context: Safe HTML Attributes
-Code: <code>&lt;input type="text" name="fname" value="UNTRUSTED DATA "&gt;</code>
-Sample Defense: Quote the value and use HTML attribute encoding. Keep attribute names fixed and use ordinary text attributes; apply additional controls for URL, CSS, HTML, or JavaScript values.</p>
-<p>Data Type: String
-Context: GET Parameter
-Code: <code>&lt;a href="/site/search?value=UNTRUSTED DATA "&gt;clickme&lt;/a&gt;</code>
-Sample Defense: URL Encoding (rule #5).</p>
-<p>Data Type: String
-Context: Untrusted URL in a SRC or HREF attribute
-Code: <code>&lt;a href="UNTRUSTED URL "&gt;clickme&lt;/a&gt; &lt;iframe src="UNTRUSTED URL " /&gt;</code>
-Sample Defense: Canonicalize input, URL Validation, Safe URL verification, Allow-list http and HTTPS URLs only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.</p>
-<p>Data Type: String
-Context: CSS Value
-Code: <code>HTML &lt;div style="width: UNTRUSTED DATA ;"&gt;Selection&lt;/div&gt;</code>
-Sample Defense: Strict structural validation (rule #4), CSS hex encoding, Good design of CSS features.</p>
-<p>Data Type: String
-Context: JavaScript Variable
-Code: <code>&lt;script&gt;var currentValue='UNTRUSTED DATA ';&lt;/script&gt; &lt;script&gt;someFunction('UNTRUSTED DATA ');&lt;/script&gt;</code>
-Sample Defense: Insert string data only inside a quoted string, using an encoder that also protects the enclosing HTML script context. Do not rely on quote escaping alone.</p>
-<p>Data Type: HTML
-Context: HTML Body
-Code: <code>&lt;div&gt;UNTRUSTED HTML&lt;/div&gt;</code>
-Sample Defense: HTML validation (JSoup, AntiSamy, HTML Sanitizer...).</p>
-<p>Data Type: String
-Context: DOM XSS
-Code: <code>&lt;script&gt;document.write("UNTRUSTED INPUT: " + document.location.hash );&lt;script/&gt;</code>
-Sample Defense: <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a> |</p>
-<h3 id="output-encoding-rules-summary">Output Encoding Rules Summary<a class="headerlink" href="#output-encoding-rules-summary" title="Permanent link">&para;</a></h3>
-<p>The purpose of output encoding (as it relates to Cross Site Scripting) is to convert untrusted input into a safe form where the input is displayed as <strong>data</strong> to the user without executing as <strong>code</strong> in the browser. The following charts provides a list of critical output encoding methods needed to stop Cross Site Scripting.</p>
-<p>Encoding Type: HTML Entity
-Encoding Mechanism: Convert <code>&amp;</code> to <code>&amp;amp;</code>, Convert <code>&lt;</code> to <code>&amp;lt;</code>, Convert <code>&gt;</code> to <code>&amp;gt;</code>, Convert <code>"</code> to <code>&amp;quot;</code>, Convert <code>'</code> to <code>&amp;#x27;</code></p>
-<p>Encoding Type: HTML Attribute Encoding
-Encoding Mechanism: Use a framework or library encoder for quoted HTML text attributes and surround the value with <code>"</code> or <code>'</code>. Encoding every space or non-alphanumeric character is unnecessary. This does not validate URLs or encode JavaScript, CSS, or HTML contained in an attribute.</p>
-<p>Encoding Type: URL Encoding
-Encoding Mechanism: Use standard percent encoding, as specified in the <a href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">W3C specification</a>, to encode parameter values. Be cautious and only encode parameter values, not the entire URL or path fragments of a URL.</p>
-<p>Encoding Type: JavaScript Encoding
-Encoding Mechanism: Use a library encoder for JavaScript string data in the actual surrounding context. It must protect the string delimiters and, when embedded in HTML, the enclosing script or attribute. Follow the library's supported contexts; hex or Unicode escapes alone are not a substitute for that contract.</p>
-<p>Encoding Type: CSS Hex Encoding
-Encoding Mechanism: CSS encoding supports both <code>\XX</code> and <code>\XXXXXX</code> formats. To ensure proper encoding, consider these options: (a) Add a space after the CSS encode (which will be ignored by the CSS parser), or (b) use the full six-character CSS encoding format by zero-padding the value. For example, <code>A</code> becomes <code>\41</code> (short format) or <code>\000041</code> (full format). Alphanumeric characters (letters A to Z, a to z, and digits 0 to 9) remain unencoded.</p>
-<h2 id="common-anti-patterns-ineffective-approaches-to-avoid">Common Anti-patterns: Ineffective Approaches to Avoid<a class="headerlink" href="#common-anti-patterns-ineffective-approaches-to-avoid" title="Permanent link">&para;</a></h2>
-<p>Defending against XSS is hard. For that reason, some have sought shortcuts to preventing XSS.</p>
-<p>We're going to examine two common <a href="https://en.wikipedia.org/wiki/Anti-pattern">anti-patterns</a> that frequently show up in ancient posts, but are still commonly cited as solutions in modern posts about XSS defense on programmer forums such as Stack Overflow and other developer hangouts.</p>
-<h3 id="sole-reliance-on-content-security-policy-csp-headers">Sole Reliance on Content-Security-Policy (CSP) Headers<a class="headerlink" href="#sole-reliance-on-content-security-policy-csp-headers" title="Permanent link">&para;</a></h3>
-<p>First, let us be clear, we are a strong proponent of CSP when it is used properly. In the context of XSS defense, CSP works best when it it is:</p>
-<ul>
-<li>Used as a defense-in-depth technique.</li>
-<li>Customized for each individual application rather than being deployed as a one-size-fits-all enterprise solution.</li>
-</ul>
-<p>What we are against is a blanket CSP policy for the entire enterprise. Problems with that approach are:</p>
-<h4 id="problem-1-assumption-browser-versions-support-csp-equally">Problem 1 - Assumption Browser Versions Support CSP Equally<a class="headerlink" href="#problem-1-assumption-browser-versions-support-csp-equally" title="Permanent link">&para;</a></h4>
-<p>There usually is an implicit assumption that all the customer browsers support all the CSP constructs that your blanket CSP policy is using. Furthermore, this assumption often is done without testing the explicitly the <code>User-Agent</code> request header to see if it indeed is a supported browser type and rejecting the use of the site if it is not. Why? Because most businesses don't want to turn away customers if they are using an outdated browser that doesn't support some CSP Level 2 or Level 3 construct that they are relying on for XSS prevention.  (Statistically, almost all browsers support CSP Level 1 directives, so unless you are worried about Grandpa pulling out his old Windows 98 laptop and using some ancient version of Internet Explorer to access your site, CSP Level 1 support can probably be assumed.)</p>
-<h4 id="problem-2-issues-supporting-legacy-applications">Problem 2 - Issues Supporting Legacy Applications<a class="headerlink" href="#problem-2-issues-supporting-legacy-applications" title="Permanent link">&para;</a></h4>
-<p>Mandatory universal enterprise-wide CSP response headers are inevitably going to break some web applications, especially legacy ones. This causes the business to push-back against AppSec guidelines and inevitably results in AppSec issuing waivers and/or security exceptions until the application code can be patched up. But these security exceptions allow cracks in your XSS armor, and even if the cracks are temporary they still can impact your business, at least on a reputational basis.</p>
-<h3 id="reliance-on-http-interceptors">Reliance on HTTP Interceptors<a class="headerlink" href="#reliance-on-http-interceptors" title="Permanent link">&para;</a></h3>
-<p>The other common anti-pattern that we have observed is the attempt to deal with validation and/or output encoding in some sort of interceptor such as a Spring Interceptor that generally implements <code>org.springframework.web.servlet.HandlerInterceptor</code> or as a JavaEE servlet filter that implements <code>javax.servlet.Filter</code>. While this can be successful for very specific applications (for instance, if you validate that all the input requests that are ever rendered are only alphanumeric data), it violates the major tenet of XSS defense where perform output encoding as close to where the data is rendered is possible. Generally, the HTTP request is examined for query and POST parameters but other things HTTP request headers that might be rendered such as cookie data, are not examined. The common approach that we've seen is someone will call either <code>ESAPI.validator().getValidSafeHTML()</code> or <code>ESAPI.encoder.canonicalize()</code> and depending on the results will redirect to an error page or call something like <code>ESAPI.encoder().encodeForHTML()</code>. Aside from the fact that this approach often misses tainted input such as request headers or "extra path information" in a URI, the approach completely ignores the fact that the output encoding is completely non-contextual. For example, how does a servlet filter know that an input query parameter is going to be rendered in an HTML context (i.e., between HTML tags) rather than in a JavaScript context such as within a <code>&lt;script&gt;</code> tag or used with a JavaScript event handler attribute? It doesn't. And because JavaScript and HTML encoding are not interchangeable, you leave yourself still open to XSS attacks.</p>
-<p>Unless your filter or interceptor has full knowledge of your application and specifically an awareness of how your application uses each parameter for a given request, it can't succeed for all the possible edge cases. And we would contend that it never will be able to using this approach because providing that additional required context is way too complex of a design and accidentally introducing some other vulnerability (possibly one whose impact is far worse than XSS) is almost inevitable if you attempt it.</p>
-<p>This naive approach usually has at least one of these four problems.</p>
-<h4 id="problem-1-encoding-for-specific-context-not-satisfactory-for-all-uri-paths">Problem 1 - Encoding for specific context not satisfactory for all URI paths<a class="headerlink" href="#problem-1-encoding-for-specific-context-not-satisfactory-for-all-uri-paths" title="Permanent link">&para;</a></h4>
-<p>One problem is the improper encoding that can still allow exploitable XSS in some URI paths of your application. An example might be a 'lastname' form parameter from a POST that normally is displayed between HTML tags so that HTML encoding is sufficient, but there may be an edge case or two where lastname is actually rendered as part of a JavaScript block where the HTML encoding is not sufficient and thus it is vulnerable to XSS attacks.</p>
-<h4 id="problem-2-interceptor-approach-can-lead-to-broken-rendering-caused-by-improper-or-double-encoding">Problem 2 - Interceptor approach can lead to broken rendering caused by improper or double encoding<a class="headerlink" href="#problem-2-interceptor-approach-can-lead-to-broken-rendering-caused-by-improper-or-double-encoding" title="Permanent link">&para;</a></h4>
-<p>A second problem with this approach can be the application can result in incorrect or double encoding. E.g., suppose in the previous example, a developer has done proper output encoding for the JavaScript rendering of lastname. But if it is already been HTML output encoded too, when it is rendered, a legitimate last name like "O'Hara" might come out rendered like "O\&#39;Hara".</p>
-<p>While this second case is not strictly a security problem, if it happens often enough, it can result in business push-back against the use of the filter and thus the business may decide on disabling the filter or a way to specify exceptions for certain pages or parameters being filtered, which in turn will weaken any XSS defense that it was providing.</p>
-<h4 id="problem-3-interceptors-not-effective-against-dom-based-xss">Problem 3 - Interceptors not effective against DOM-based XSS<a class="headerlink" href="#problem-3-interceptors-not-effective-against-dom-based-xss" title="Permanent link">&para;</a></h4>
-<p>The third problem with this is that it is not effective against DOM-based XSS. To do that, one would have to have an interceptor or filter scan all the JavaScript content going as part of an HTTP response, try to figure out the tainted output and see if it it is susceptible to DOM-based XSS. That simply is not practical.</p>
-<h4 id="problem-4-interceptors-not-effective-where-data-from-responses-originates-outside-your-application">Problem 4 - Interceptors not effective where data from responses originates outside your application<a class="headerlink" href="#problem-4-interceptors-not-effective-where-data-from-responses-originates-outside-your-application" title="Permanent link">&para;</a></h4>
-<p>The last problem with interceptors is that they generally are oblivious to data in your application's responses that originate from other internal sources such as an internal REST-based web service or even an internal database. The problem is that unless your application is strictly validating that data <em>at the point that it is retrieved</em> (which generally is the only point your application has enough context to do a strict data validation using an allow-list approach), that data should always be considered tainted. But if you are attempting to do output encoding or strict data validation all of tainted data on the HTTP response side of an interceptor (such as a Java servlet filter), at that point, your application's interceptor will have no idea of there is tainted data present from those REST web services or other databases that you used. The approach that generally is used on response-side interceptors attempting to provide XSS defense has been to only consider the matching "input parameters" as tainted and do output encoding or HTML sanitization on them and everything else is considered safe. But sometimes it's not? While it frequently is assumed that all internal web services and all internal databases can be "trusted" and used as it, this is a very bad assumption to make unless you have included that in some deep threat modeling for your application.</p>
-<p>For example, suppose you are working on an application to show a customer their detailed monthly bill. Let's assume that your application is either querying a foreign (as in not part of your specific application) internal database or REST web service that your application uses to obtain the user's full name, address, etc. But that data originates from another application which you are assuming is "trusted" but actually has an unreported persistent XSS vulnerability on the various customer address-related fields. Furthermore, let's assume that you company's customer support staff can examine a customer's detailed bill to assist them when customers have questions about their bills. So nefarious customer decides to plant an XSS bomb in the address field and then calls customer service for assistance with the bill. Should a scenario like that ever play out, an interceptor attempting to prevent XSS is going to miss that completely and the result is going to be something much worse than just popping an alert box to display "1" or "XSS" or "pwn'd".</p>
-<h3 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
-<p>One final note: If deploying interceptors / filters as an XSS defense was a useful approach against XSS attacks, don't you think that it would be incorporated into all commercial Web Application Firewalls (WAFs) and be an approach that OWASP recommends in this cheat sheet?</p>
-<h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
-<p><strong>XSS Attack Cheat Sheet:</strong></p>
-<p>The following article describes how attackers can exploit different kinds of XSS vulnerabilities (and this article was created to help you avoid them):</p>
-<ul>
-<li>OWASP: <a href="https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html">XSS Filter Evasion Cheat Sheet</a>.</li>
-</ul>
-<p><strong>Description of XSS Vulnerabilities:</strong></p>
-<ul>
-<li>OWASP article on <a href="https://owasp.org/www-community/attacks/xss/">XSS</a> Vulnerabilities.</li>
-</ul>
-<p><strong>Discussion about the Types of XSS Vulnerabilities:</strong></p>
-<ul>
-<li><a href="https://owasp.org/www-community/Types_of_Cross-Site_Scripting">Types of Cross-Site Scripting</a>.</li>
-</ul>
-<p><strong>How to Review Code for Cross-Site Scripting Vulnerabilities:</strong></p>
-<ul>
-<li><a href="https://owasp.org/www-project-code-review-guide/">OWASP Code Review Guide</a> article on <a href="https://wiki.owasp.org/index.php/Reviewing_Code_for_Cross-site_scripting">Reviewing Code for Cross-site scripting</a> Vulnerabilities.</li>
-</ul>
-<p><strong>How to Test for Cross-Site Scripting Vulnerabilities:</strong></p>
-<ul>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/">OWASP Testing Guide</a> article on testing for Cross-Site Scripting vulnerabilities.</li>
-<li><a href="https://wiki.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules">XSS Experimental Minimal Encoding Rules</a> Provides examples and guidelines for experimental minimal encoding strategies to prevent Cross-Site Scripting (XSS) attacks.</li>
+<li><a href="https://www.ncsc.gov.uk/guidance/pqc-migration-timelines">NCSC: Timelines for migration to post-quantum cryptography</a></li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.39-upd1.pdf">NIST CSWP 39-upd1: Considerations for Achieving Crypto Agility</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9794.html">RFC 9794: Terminology for Post-Quantum Traditional Hybrid Schemes</a></li>
 </ul>
 
 
