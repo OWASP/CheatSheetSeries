@@ -36,6 +36,20 @@ For typos, broken links, or small corrections to existing cheat sheets, a simple
 - :warning: If the assignees of an issue do not provide a Pull Request within one month then the issue will go back to the **HELP_WANTED** state and assignees will be removed.
 - Verify that the CI checks applied on your Pull Request pass. If you believe they're failing due to something that's not your fault (such as another untouched file), add a comment in the Pull Request.
 
+## Before Merging or Closing a Pull Request
+
+Check for workflow runs still awaiting approval, including runs on older commits and duplicate runs on the current commit:
+
+```bash
+npm run check-pr-approvals -- 2402 --repo OWASP/CheatSheetSeries
+```
+
+Replace `2402` with the pull request number. This read-only audit exits nonzero while approval holds remain; `--head SHA` also checks that the reviewed commit is still current. Run it after the final push and PR description edit, then verify the final commit's CI checks separately. Passing current checks does not clear older approval requests.
+
+[Unapproved fork workflow runs can expire as failures](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/approve-runs-from-forks). In [PR #2402](https://github.com/OWASP/CheatSheetSeries/actions/runs/36899774572), old holds expired at merge and sent misleading failure notifications despite the final checks passing. GitHub reports these holds as `completed` with conclusion `action_required`; its cancellation API rejects them until they are approved and queued.
+
+Inspect each held revision, including its workflows and executable files, before approving it. For an obsolete run that is safe to execute, approve it, wait for it to queue, cancel it, and verify that it has finished. A run that finishes successfully before cancellation needs no further action. Keep unreviewed code awaiting approval and report that the audit is blocked. Preserve the fork approval policy and historical failure records. Rerun the audit immediately before merging or closing.
+
 ## Style Guide
 
 ### Markdown
