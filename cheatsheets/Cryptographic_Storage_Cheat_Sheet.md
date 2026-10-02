@@ -39,9 +39,9 @@ For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure
 
 RSA and ECC-based public-key cryptography (including Curve25519) are not post-quantum secure. A future cryptographically relevant quantum computer could break them, which matters for data that must remain confidential over long periods.
 
-Where post-quantum key establishment is required, use standardized mechanisms such as **ML-KEM (NIST FIPS 203)**, typically in a hybrid construction alongside a classical algorithm during migration.
+Where post-quantum key establishment is required, use a supported protocol or library integration of a standardized mechanism such as **[ML-KEM (NIST FIPS 203)](https://csrc.nist.gov/pubs/fips/203/final)**, typically in a hybrid construction alongside a classical algorithm during migration. ML-KEM establishes a shared secret for symmetric encryption; it does not replace AES for encrypting stored data. Include the public-key protection of stored encryption keys in the migration plan.
 
-For broader migration guidance, see the proposed [Post-Quantum Cryptography Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/issues/2403).
+For migration guidance, see the [Post-Quantum Cryptography Cheat Sheet](Post_Quantum_Cryptography_Cheat_Sheet.md).
 
 Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:
 
@@ -197,3 +197,8 @@ The KEK should also be at least as strong as the DEK. The [envelope encryption](
 In simpler application architectures (such as shared hosting environments) where the KEK and DEK cannot be stored separately, there is limited value to this approach, as an attacker is likely to be able to obtain both of the keys at the same time. However, it can provide an additional barrier to unskilled attackers.
 
 A key derivation function (KDF) could be used to generate a KEK from user-supplied input (such a passphrase), which would then be used to encrypt a randomly generated DEK. This allows the KEK to be easily changed (when the user changes their passphrase), without needing to re-encrypt the data (as the DEK remains the same).
+
+## References
+
+- [NIST FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard](https://csrc.nist.gov/pubs/fips/203/final)
+- [NIST: Post-Quantum Cryptography FAQ](https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs)
