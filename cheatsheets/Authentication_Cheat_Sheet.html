@@ -1175,6 +1175,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#secure-federated-account-linking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Federated Account Linking
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5228,6 +5239,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#secure-federated-account-linking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Federated Account Linking
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5647,6 +5669,16 @@ ENDIF
 <blockquote>
 <p><strong>Avoid confusion:</strong> <strong>OpenID 2.0 ("OpenID")</strong> was a separate, legacy authentication protocol that has been <strong>superseded by OpenID Connect</strong> and is considered obsolete. New systems should not implement OpenID 2.0. References: <a href="https://openid.net/developers/libraries-for-obsolete-specifications/">OpenID Foundation — obsolete OpenID 2.0 libraries</a>, <a href="https://openid.net/specs/openid-connect-migration-1_0.html">OpenID 2.0 → OIDC migration</a></p>
 </blockquote>
+<h4 id="secure-federated-account-linking">Secure Federated Account Linking<a class="headerlink" href="#secure-federated-account-linking" title="Permanent link">&para;</a></h4>
+<p>When linking an OIDC identity to an existing application account:</p>
+<ul>
+<li>Identify the federated identity using the combination of <code>iss</code> (issuer) and <code>sub</code> (subject), not <code>sub</code> alone. See <a href="https://openid.net/specs/openid-connect-core-1_0.html#ClaimStability">OIDC claim stability and uniqueness</a>.</li>
+<li>Do not automatically link accounts solely because their <code>email</code>, <code>preferred_username</code>, or other profile attributes match. These claims are not guaranteed to be unique or stable, as explained in <a href="https://openid.net/specs/openid-connect-core-1_0.html#ClaimStability">OIDC Core Section 5.7</a>.</li>
+<li>Require an authenticated session with the existing application account before adding or removing linked identities, as described in <a href="https://pages.nist.gov/800-63-4/sp800-63c/Federation/">NIST SP 800-63C-4, Section 3.8.1</a>. Apply the guidance in <a href="#require-re-authentication-for-sensitive-features">Require Re-authentication for Sensitive Features</a> before changing account links.</li>
+<li>Authenticate the identity being added and <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation">validate the resulting ID Token</a> before saving the link. Bind the authentication response to the user's linking session using the protections described in the <a href="OAuth2_Cheat_Sheet.html">OAuth 2.0 Cheat Sheet</a>.</li>
+<li>After unlinking, disallow access to the application account through the removed identity. See <a href="https://pages.nist.gov/800-63-4/sp800-63c/Federation/">NIST SP 800-63C-4, Section 3.8.1</a>.</li>
+<li>Notify the user when an identity is added, or when an identity is removed without terminating the application account, as described in <a href="https://pages.nist.gov/800-63-4/sp800-63c/Federation/">NIST SP 800-63C-4, Section 3.8</a>.</li>
+</ul>
 <h3 id="saml">SAML<a class="headerlink" href="#saml" title="Permanent link">&para;</a></h3>
 <p>Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very feature-complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn't only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.</p>
 <p>While OpenId has taken most of the consumer market, SAML is often the choice for enterprise applications because there are few OpenId identity providers which are considered enterprise-class (meaning that the way they validate the user identity doesn't have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.</p>
