@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**127** cheat sheets available.
+**128** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -164,11 +164,11 @@
 
 [Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Java](assets/Index_Java.svg) ![Html](assets/Index_Html.svg) ![Php](assets/Index_Php.svg)
 
+[Micro Frontend Security Cheat Sheet](cheatsheets/Micro_Frontend_Security_Cheat_Sheet.md)
+
 [Microservices Security Cheat Sheet](cheatsheets/Microservices_Security_Cheat_Sheet.md)
 
 [Microservices based Security Arch Doc Cheat Sheet](cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md)
-
-[Micro Frontend security cheat sheet](cheatsheets/Micro_Frontend_Security_Cheat_Sheet.md)
 
 [Mobile Application Security Cheat Sheet](cheatsheets/Mobile_Application_Security_Cheat_Sheet.md)
 

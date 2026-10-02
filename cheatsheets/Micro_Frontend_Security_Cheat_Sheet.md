@@ -2,325 +2,72 @@
 
 ## Introduction
 
-Micro-frontend architecture extends the principles of microservices to the frontend layer. It allows autonomous development teams to build, test, and deploy decoupled feature modules independently while integrating them into a unified user-facing shell application.
+Micro-frontends combine independently deployed features in a host application, also called a shell. Separate repositories and deployment teams do not create browser security boundaries: the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy) separates origins, not individual features within a page.
 
-However, combining multiple independent web applications into a single browser runtime introduces complex multi-application trust boundaries. Traditional single-page application (SPA) security assumptions—such as a single trusted codebase, unified state containers, and centralized client routing—may no longer apply.
+This cheat sheet covers the security decisions involved in composing these applications:
 
-Micro-frontend security should therefore focus on clearly defining application boundaries, controlling communication between applications, isolating sensitive state, enforcing authorization independently, and securing dynamically loaded code.
+- Choose which features may share the host's browser privileges.
+- Limit communication and data sharing between applications.
+- Enforce authorization on the server for every request.
+- Control which remote code each host release loads.
 
-This cheat sheet covers:
+For general browser security controls, see the [Web Frontend Security Cheat Sheet](Web_Frontend_Security_Cheat_Sheet.md).
 
-- Multi-application runtime boundaries
-- Inter-application communication
-- Dynamic module integration
-- Cross-application state and storage
-- Host-to-remote authorization
-- Runtime isolation and sandboxing
-- Software supply-chain security
+## Choose and Enforce Runtime Boundaries
 
-The following topics are outside the primary scope and should be addressed using the corresponding OWASP Cheat Sheets:
+Document the origin, deployment owner, and required data access of each micro-frontend before choosing a composition mechanism.
 
-- General web application vulnerabilities
-- JavaScript and DOM-based XSS prevention
-- OAuth2 token issuance and server-side authentication flows
-- General session management
+| Composition | Security decision |
+| --- | --- |
+| Remote JavaScript loaded into the host, including Module Federation | Trust the remote with the host page's privileges. A different download origin does not sandbox the executing code. |
+| Web Components in the host page | Treat components as part of the same application. Shadow DOM (Document Object Model) and scoped styles do not isolate their scripts from the host. |
+| Cross-origin iframe | Use when the feature must be separated from the host's DOM and origin storage. Restrict its capabilities and explicitly control messages crossing the boundary. |
+| HTML fragments assembled on a server or at the edge | Review fragments and their scripts as host content. Assembly before delivery does not create a browser isolation boundary. |
 
-## Architectural Topologies and Threats
+### Isolate Features with Different Trust Levels
 
-Micro-frontends can be implemented using different runtime topologies. Each topology changes the application's trust boundaries and introduces different security considerations.
+Serve a less-trusted feature from a dedicated origin in an iframe. Apply an [iframe sandbox](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#sandbox), granting only capabilities the feature requires. Leave top-level navigation and popup permissions disabled unless necessary.
 
-### Webpack Module Federation
+Do not combine `allow-scripts` and `allow-same-origin` for content on the host's own origin; that combination can let the embedded application remove its sandbox. `allow-same-origin` preserves the frame's original origin; it does not make a cross-origin frame same-origin with the host.
 
-Webpack Module Federation allows remote JavaScript modules to be dynamically fetched and executed inside the host application's JavaScript runtime.
+Without `allow-same-origin`, a sandboxed document has an opaque origin, reported as `"null"` in messages. Do not trust `"null"` as a sender identity. If sensitive messaging requires an identifiable origin, use a dedicated cross-origin frame with a sandbox policy that preserves that origin.
 
-Because code from multiple repositories executes in the same JavaScript context, a compromised remote module can potentially:
+Origin separation limits direct access to the host's DOM and storage. It does not authorize backend requests or make data deliberately sent to the frame confidential from that frame.
 
-- Execute arbitrary JavaScript in the host context.
-- Access objects exposed by the host application.
-- Manipulate the host DOM.
-- Access client-side storage available to the origin.
-- Interact with application state and APIs accessible to JavaScript.
+### Control Remote Code and Deployments
 
-Treat dynamically loaded remote modules as trusted code only when their source, deployment pipeline, integrity, and authorization boundaries are appropriately controlled.
+For remotes executing in the host page, treat permission to publish a remote as permission to change the host's running application:
 
-### Web Components and Shadow DOM
+- Load only approved HTTPS remote URLs from host-controlled configuration. Do not let query parameters or other untrusted input choose executable code.
+- Select immutable, reviewed releases, including entry scripts and their dependent chunks. Keep a known-good release available for rollback.
+- Separate deployment credentials for the shell and each remote. This limits direct changes to other deployments, but does not contain a compromised remote already trusted to execute in the shell. See the [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md).
+- Use [Subresource Integrity](Third_Party_Javascript_Management_Cheat_Sheet.md#subresource-integrity) where the loader supports it. Verify coverage of dynamically loaded chunks; checking an entry script alone does not verify everything it later loads. Integrity checks detect changed bytes, not malicious behavior in an approved release.
+- Apply the host's [Content Security Policy (CSP)](Content_Security_Policy_Cheat_Sheet.md) to remote loading. A permitted script source is still trusted code; CSP does not isolate one allowed micro-frontend from another.
 
-Web Components can encapsulate custom elements and provide scoped DOM and styling through Shadow DOM.
+## Restrict Cross-Application Communication
 
-Shadow DOM should **not** be treated as a security boundary. It provides encapsulation rather than cryptographic or process-level isolation.
+Apply the general [web messaging guidance](HTML5_Security_Cheat_Sheet.md#web-messaging) to every host/frame pair: set an exact `targetOrigin`, match `event.origin` exactly, and validate message data. In addition, following the [postMessage security guidance](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#security_concerns):
 
-Do not assume that:
+- Define a small message contract for each pair. Accept only the message types and payload fields that the receiving feature needs.
+- Check `event.source` against the expected frame's `contentWindow` or the expected parent window, not only the origin. Several frames can share one origin.
+- Pass the minimum data needed for the operation. Avoid broadcasting credentials or sensitive state to every feature.
 
-```javascript
-attachShadow({ mode: 'closed' })
-```
+These checks identify the sending origin and window, not the current user's permissions. A message requesting a privileged operation must still lead to server-side authorization. They also do not protect against compromised code running inside the expected sender.
 
-prevents JavaScript executing in the host context from interacting with component internals.
+A shared in-page event bus has no browser-enforced identity boundary between its participants. Do not use event names or application identifiers as proof of authority.
 
-Use Shadow DOM for modularity and encapsulation, not for isolating untrusted code.
+## Enforce Backend Authorization and Limit Shared Data
 
-### Iframe-Based Composition
+### Authorize Every Request on the Server
 
-Iframes provide browser-enforced origin boundaries and can provide stronger isolation between independently deployed applications.
+Neither the shell nor a remote micro-frontend can enforce authorization in client-side code. Route guards, hidden controls, and client-side role checks only affect presentation and can be bypassed.
 
-When using iframes:
+Enforce permissions for the requested operation, resource, and tenant on every backend request, regardless of which frontend initiated it. Do not trust a role, tenant identifier, or permission flag supplied by the shell or a remote. Use a shared server-side policy where appropriate so independently developed features apply consistent checks. See the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md#validate-the-permissions-on-every-request).
 
-- Apply a restrictive `sandbox` policy.
-- Restrict communication through `postMessage`.
-- Validate message origins.
-- Avoid unnecessarily permissive CORS policies.
-- Prevent unauthorized frame navigation.
+### Keep Sensitive State Out of Shared Runtimes
 
-Example:
+Browser storage is [separated by origin](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy#cross-origin_data_storage_access). Storage key prefixes, separate state stores, and component boundaries do not provide security isolation between scripts in the same page. Treat data exposed in the page or origin storage as available to every remote executing there.
 
-```html
-<iframe
-    src="https://trusted-remote.example.com/widget"
-    sandbox="allow-scripts allow-same-origin">
-</iframe>
-```
+Keep session identifiers out of `localStorage` and `sessionStorage`. When using a backend-for-frontend, keep upstream access tokens on the server and use a session cookie configured according to the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md#cookies). An `HttpOnly` cookie prevents JavaScript from reading the cookie, but compromised code in the host can still make authenticated requests. Apply [cross-site request forgery protection](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) to cookie-authenticated operations.
 
-Only grant sandbox permissions that are required by the micro-frontend.
-
-### Server-Side and Edge Composition
-
-Server-side or edge-side composition stitches micro-frontend fragments together before the response reaches the browser.
-
-Security considerations include:
-
-- Fragment injection.
-- SSRF during server-side composition.
-- Inconsistent security headers between fragments.
-- Trust relationships between independently managed services.
-
-## Runtime Isolation and Secure Communication
-
-Micro-frontends frequently execute within shared browser environments. Explicit isolation and communication controls are therefore required.
-
-### Protecting the Global Runtime
-
-A vulnerable micro-frontend can potentially modify shared JavaScript objects and prototypes, such as:
-
-```javascript
-Object.prototype
-Array.prototype
-window
-```
-
-Avoid exposing mutable global objects between micro-frontends.
-
-Where state or utilities must be shared:
-
-- Prefer immutable data structures.
-- Minimize global state.
-- Define explicit APIs between applications.
-- Validate data crossing application boundaries.
-- Avoid allowing remote applications to modify host application internals.
-
-For prototype manipulation risks, see the Prototype Pollution Prevention Cheat Sheet.
-
-### Securing `window.postMessage`
-
-When micro-frontends communicate across origins using `window.postMessage`, always validate the sender's origin and the structure of the received message.
-
-Do not process arbitrary messages:
-
-```javascript
-window.addEventListener('message', (event) => {
-    const data = JSON.parse(event.data);
-    eval(data.action);
-});
-```
-
-Instead, validate the origin and message contents:
-
-```javascript
-window.addEventListener('message', (event) => {
-    if (event.origin !== 'https://trusted-micro-app.example.com') {
-        return;
-    }
-
-    const { action, payload } = event.data;
-
-    if (typeof action !== 'string' || !isValidAction(action)) {
-        return;
-    }
-
-    processTrustedPayload(action, payload);
-});
-```
-
-Use an explicit allowlist of trusted origins.
-
-### Restricting Outbound Messages
-
-Do not use a wildcard target origin when sending sensitive information:
-
-```javascript
-targetWindow.postMessage(
-    { type: 'USER_UPDATED', userId: '12345' },
-    '*'
-);
-```
-
-Specify the expected target origin:
-
-```javascript
-targetWindow.postMessage(
-    { type: 'USER_UPDATED', userId: '12345' },
-    'https://trusted-micro-app.example.com'
-);
-```
-
-### Pub/Sub Event Buses
-
-Treat data received through shared event buses as untrusted input.
-
-Avoid directly inserting event data into the DOM:
-
-```javascript
-element.innerHTML = event.data;
-```
-
-Apply appropriate validation and context-aware output encoding before using data in security-sensitive contexts.
-
-## State, Storage, Authentication and Authorization
-
-Sharing state between micro-frontends can create unintended access to credentials, tenant data, application state, and user information.
-
-### `localStorage` and `sessionStorage`
-
-`localStorage` is accessible to scripts running under the same origin. Therefore, a vulnerable micro-frontend may be able to access sensitive information stored there by another application.
-
-Avoid storing sensitive authentication credentials or raw access tokens in shared client-side storage when untrusted or independently managed modules are loaded.
-
-A Backend-for-Frontend (BFF) architecture can reduce this exposure by keeping authentication credentials on the server side and using appropriately configured cookies.
-
-For example, authentication cookies should generally use appropriate security attributes such as:
-
-```http
-HttpOnly
-Secure
-SameSite=Strict
-```
-
-The exact `SameSite` configuration should match the application's legitimate cross-site requirements.
-
-### Multi-Tenant State Isolation
-
-Applications supporting multiple tenants must prevent data from one tenant from becoming accessible to another.
-
-Shared stores such as Redux or Zustand should have clearly defined boundaries and must not unintentionally expose:
-
-- Tenant-specific information.
-- User information.
-- Authorization state.
-- Internal application state.
-- Sensitive cached API responses.
-
-### Defense-in-Depth Authorization
-
-Do not assume that authorization performed by the host shell automatically protects remote micro-frontends.
-
-For example, hiding a navigation element in the host application does not provide sufficient protection if the remote application can still invoke a privileged backend API.
-
-Every backend API must independently enforce authorization.
-
-A micro-frontend should therefore not rely solely on:
-
-```text
-Host UI permission
-        ↓
-Remote UI
-        ↓
-Backend
-```
-
-Instead, authorization should ultimately be enforced at the backend:
-
-```text
-Host UI ────────┐
-                ├──> Remote Application ───> Backend Authorization
-Remote UI ──────┘
-```
-
-Use the Authorization and Access Control Cheat Sheets for additional guidance.
-
-## Dynamic Loading and Software Supply Chain Security
-
-Dynamic remote loading significantly expands the software supply-chain attack surface.
-
-### Securing Remote Modules
-
-When loading remote modules:
-
-- Pin exact versions where possible.
-- Avoid uncontrolled floating versions.
-- Require HTTPS.
-- Verify the source of remote assets.
-- Protect the repositories and deployment infrastructure that publish remote modules.
-- Review dependencies used by independently deployed micro-frontends.
-
-Where supported by the loading mechanism, use Subresource Integrity (SRI) to help detect unexpected changes to remotely loaded resources.
-
-### Content Security Policy
-
-Use Content Security Policy (CSP) to restrict where executable resources can be loaded from.
-
-Example:
-
-```http
-Content-Security-Policy:
-    default-src 'self';
-    script-src 'self' https://trusted-host.example.com https://trusted-cdn.example.com;
-    object-src 'none';
-```
-
-Keep the list of permitted script sources as narrow as practical.
-
-For complete CSP guidance, see the Content Security Policy Cheat Sheet.
-
-### CI/CD Pipeline Isolation
-
-Treat each micro-frontend repository and CI/CD pipeline as an independent security perimeter.
-
-A compromise of one team's repository or pipeline should not automatically provide write or deployment permissions to:
-
-- The host shell.
-- Other micro-frontends.
-- Shared production infrastructure.
-
-Use separate credentials, permissions, deployment controls, and repository access wherever practical.
-
-## Security Checklist
-
-Use the following checklist when reviewing a micro-frontend architecture:
-
-| Verification Item                                                              | Status | Associated Control              |
-| :----------------------------------------------------------------------------- | :----: | :------------------------------ |
-| Are all cross-app `postMessage` listeners validating the exact `event.origin`? |   [ ]  | Inter-application communication |
-| Are outbound `postMessage` calls avoiding wildcard (`*`) target origins?       |   [ ]  | Inter-application communication |
-| Are remote modules loaded over HTTPS?                                          |   [ ]  | Remote module loading           |
-| Is the integrity of dynamically loaded resources verified where supported?     |   [ ]  | Supply-chain security           |
-| Is a restrictive Content Security Policy implemented?                          |   [ ]  | CSP                             |
-| Are sensitive tokens kept out of shared client-side storage?                   |   [ ]  | Storage security                |
-| Are tenant boundaries enforced in shared state?                                |   [ ]  | State isolation                 |
-| Do remote micro-frontends have independent backend authorization checks?       |   [ ]  | Authorization                   |
-| Are iframe sandbox permissions restricted to required capabilities?            |   [ ]  | Runtime isolation               |
-| Are CI/CD pipelines isolated between micro-frontend teams?                     |   [ ]  | Supply-chain security           |
-| Are shared global objects and mutable state minimized?                         |   [ ]  | Runtime isolation               |
-
-## References
-
-- [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
-- [DOM-based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)
-- [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md)
-- [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
-- [Access Control Cheat Sheet](Access_Control_Cheat_Sheet.md)
-- [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md)
-- [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md)
-- [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md)
-- [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md)
-- [Software Supply Chain Security Cheat Sheet](Software_Supply_Chain_Security_Cheat_Sheet.md)
-- [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md)
-- [GitHub Actions Security Cheat Sheet](GitHub_Actions_Security_Cheat_Sheet.md)
+Return only data the authenticated user is authorized to access. Clear shared state and cached responses on logout or tenant changes to avoid displaying stale data. This cleanup does not replace backend tenant checks or protect information already exposed to a compromised remote.
