@@ -265,6 +265,8 @@ None.
 
 [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
 
+[FastAPI Security Cheat Sheet](cheatsheets/FastAPI_Security_Cheat_Sheet.md)
+
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md)
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)

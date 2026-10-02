@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**129** cheat sheets available.
+**130** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -95,6 +95,8 @@
 [Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Xml](assets/Index_Xml.svg)
 
 ## F
+
+[FastAPI Security Cheat Sheet](cheatsheets/FastAPI_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
 [File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
 
