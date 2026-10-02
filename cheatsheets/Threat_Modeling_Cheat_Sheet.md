@@ -3,7 +3,7 @@
 ## Introduction
 
 Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher.
-The OWASP [Threat Modeling project](https://owasp.org/www-project-threat-modeling/) provides further information on various aspects of threat modeling.
+The OWASP [Threat Modeling project](https://owasp.org/projects/threat-modeling-project?tab=application-threat-modeling) provides further information on various aspects of threat modeling.
 
 ## Overview
 
@@ -38,13 +38,13 @@ Threat modeling requires a deep understanding of the system being evaluated. To 
 
 ## Addressing Each Question
 
-There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation. There are processes that are less aligned to this, including PASTA and OCTAVE, each of which has passionate advocates.
+There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation. There are processes that are less aligned to this, including the Process for Attack Simulation and Threat Analysis (PASTA) and Operationally Critical Threat, Asset, and Vulnerability Evaluation (OCTAVE), each of which has passionate advocates.
 
 ### System Modeling
 
 The step of system modeling seeks to answer the question "what are we building"? Without understanding a system, one cannot truly understand what threats are most applicable to it; thus, this step provides a critical foundation for subsequent activities. Although different techniques may be used in this first step of threat modeling, data flow diagrams (DFDs) are arguably the most common approach.
 
-DFDs allow one to visually model a system and its interactions with data and other entities; they are created using a [small number of simple symbols](https://github.com/adamshostack/DFD3). DFDs may be created within dedicated threat modeling tools such as [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon) or [Microsoft's Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool) or using general purpose diagraming solutions such as [draw.io](https://draw.io). If you prefer an -as-code approach, [OWASP's pytm](https://owasp.org/www-project-pytm/) can help there. Depending on the scale and complexity of the system being modeled, multiple DFDs may be required. For example, one could create a DFD representing a high-level overview of the entire system along with a number of more focused DFDs which detail sub-systems. Technical tools are not strictly necessary; whiteboarding may be sufficient in some instances, though it is preferable to have the DFDs in a form that can be easily stored, referenced, and updated as needed.
+DFDs visually model a system, its data flows, and interactions with external entities. Create them using a diagramming tool or a whiteboard, and save them in a form the team can update. For complex systems, use a high-level overview alongside more detailed diagrams of individual components.
 
 Regardless of how a DFD or comparable model is generated, it is important that the solution provides a clear view of trust boundaries, data flows, data stores, processes, and the external entities which may interact with the system. These often represent possible attack points and provide crucial input for the subsequent steps.
 
@@ -70,8 +70,6 @@ Cloud-native systems introduce unique considerations for threat modeling due to 
 - **Dynamic environments:** container orchestration, serverless functions, and ephemeral infrastructure.
 - **Compliance and data residency:** ensuring that workloads meet jurisdictional and privacy requirements.
 
-Cloud threat modeling frameworks such as AWS’s [Well-Architected Framework – Security Pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html) can serve as references.
-
 ### Threat Identification
 
 After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.
@@ -87,34 +85,36 @@ STRIDE is a mature and popular threat modeling technique and mnemonic originally
 | **D**enial of Service       | Availability      | An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
 | **E**levation of Privileges | Authorization     | An attacker tampers with a JWT to change their role.                                                        |
 
-STRIDE provides valuable structure for responding to the question of "what can go wrong". It is also a highly flexible approach and getting started need not be complex. Simple techniques such as brainstorming and whiteboarding or even [games](https://github.com/adamshostack/eop/) may be used initially. STRIDE is also incorporated into popular threat modeling tools such as [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon) and [Microsoft's Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool). Additionally, as a relatively high-level process, STRIDE pairs well with more tactical approaches such as kill chains or [MITRE's ATT&CK](https://attack.mitre.org/) (please refer to [this article](https://web.isc2ncrchapter.org/under-attck-how-mitres-methodology-to-find-threats-and-embed-counter-measures-might-work-in-your-organization/) for an overview of how STRIDE and ATT&CK can work together).
+Use STRIDE's six categories as prompts while reviewing the system model. Brainstorm threats with the team and record which components, data flows, or trust boundaries they affect.
 
 After possible threats have been identified, people will frequently rank them. In theory, ranking should be based on the mathematical product of an identified threat's likelihood and its impact. A threat that is likely to occur and result in serious damage would be prioritized much higher than one that is unlikely to occur and would only have a moderate impact. However, these both can be challenging to calculate, and they ignore the work to fix a problem. Some advocate for including that in a single prioritization.
 
-#### Choosing an Additional Technique
+#### Choosing a Threat Modeling Technique
 
-STRIDE is a useful starting point for analyzing a technical design, but it is not intended to cover every type of concern. Select an additional technique when the scope requires a different view. The [Software Engineering Institute comparison of threat modeling methods](https://www.sei.cmu.edu/documents/569/2018_019_001_524597.pdf) explains that methods focus on different concerns and may be combined.
+Start with STRIDE for a technical design, and select another technique when the scope requires a different view. The [Software Engineering Institute comparison of threat modeling methods](https://www.sei.cmu.edu/documents/569/2018_019_001_524597.pdf) explains that methods focus on different concerns and may be combined.
 
-| When the team needs to analyze | Consider | How it complements STRIDE |
-| ------------------------------ | -------- | ------------------------- |
+| When the team needs to analyze | Consider | How to use it |
+| ------------------------------ | -------- | ------------- |
+| Security threats in a technical design | STRIDE | Apply the six threat categories above to components, data flows, and trust boundaries. |
 | A high-value attacker goal or multi-step attack | Attack trees | Start with the attacker's goal and decompose the alternative or required paths to reach it. |
 | Abuse of a valid workflow or business rule | Misuse or abuse cases | Explore actions performed out of order, repeatedly, concurrently, or for an unintended outcome. |
-| Privacy properties and harms | LINDDUN (Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance) | Apply privacy-specific prompts that are not fully represented by STRIDE's security properties. |
+| Privacy properties and harms | [LINDDUN](https://linddun.org/threat-types/) (Linking, Identifying, Non-repudiation, Detecting, Data disclosure, Unawareness and Unintervenability, Non-compliance) | Apply privacy-specific prompts that are not fully represented by STRIDE's security properties. |
 | Application threats with business impact | PASTA | Connect business objectives and technical requirements to application threats. |
 | Organization-wide risk to critical assets | OCTAVE | Assess organizational risk and plan a security strategy for critical assets. |
+| Application and operational threats across many teams | VAST (Visual, Agile, and Simple Threat Modeling) | Maintain separate application and operational threat models within development workflows. |
 
 Do not add techniques only to make the model appear comprehensive. State why each technique fits the scope and record any concerns it does not address.
 
 ### Response and Mitigations
 
-Equipped with an understanding of both the system and applicable threats, it is now time to answer "what are we going to do about it"?. Each threat identified earlier must have a response. Threat responses are similar, but not identical, to risk responses. [Adam Shostack](https://shostack.org/resources/threat-modeling) lists the following responses:
+Equipped with an understanding of both the system and applicable threats, it is now time to answer "what are we going to do about it"?. Each threat identified earlier must have a response. Threat responses are similar, but not identical, to risk responses. Adam Shostack lists the following responses:
 
 - **Mitigate:** Take action to reduce the likelihood that the threat will materialize.
 - **Eliminate:** Simply remove the feature or component that is causing the threat.
 - **Transfer:** Shift responsibility to another entity such as the customer.
 - **Accept:** Do not mitigate, eliminate, or transfer the risk because none of the above options are acceptable given business requirements or constraints.
 
-If one decides to mitigate a threat, mitigation strategies must be formulated and documented as requirements. Depending on the complexity of the system, nature of threats identified, and the process used for identifying threats (STRIDE or another method), mitigation responses may be applied at either the category or individual threat level. In the former case, the mitigation would apply to all threats within that category. Mitigation strategies must be actionable not hypothetical; they must be something that can actually be built into to the system being developed. Although mitigation strategies must be tailored to the particular application, resources such as as [OWASP's ASVS](https://owasp.org/www-project-application-security-verification-standard/) and [MITRE's CWE list](https://cwe.mitre.org/index.html) can prove valuable when formulating these responses.
+Document each threat's response and turn agreed mitigations into actionable security requirements. Record how the team will implement each mitigation and why it accepts any remaining risk. Keep these decisions current as the system changes, as recommended by [NIST SP 800-218, practice PW.1.2](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf#page=20).
 
 ### Review and Validation
 
@@ -126,21 +126,6 @@ Finally, it is time to answer the question "did we do a good enough job"? The th
 - For identified threats for which mitigation is the desired response, have mitigation strategies been developed which reduce risk to an acceptable level?
 - Has the threat model been formally documented? Are artifacts from the threat model process stored in such a way that it can be accessed by those with "need to know"?
 - Can the agreed upon mitigations be tested? Can success or failure of the requirements and recommendations from the threat model be measured?
-
-### Worked Example: Password Reset
-
-This compact example shows how to connect a system model to threats, responses, and verification. It is not a complete password-reset design; use the [OWASP Forgot Password Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html) for implementation guidance.
-
-The modeled flow contains a browser, web application, identity service, token store, and email provider. Trust boundaries exist between the browser and application and between the organization and email provider. The important data flows are the reset request, reset link, token validation, and password change.
-
-| ID | Threat scenario | Response and limitation | Verification |
-| -- | --------------- | ----------------------- | ------------ |
-| TM-01 | An attacker distinguishes registered accounts using response content or timing. | Follow OWASP guidance to [return consistent messages and response times](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#forgot-password-request). This does not hide account information exposed by other features. | Compare responses and timing for registered and unregistered addresses. |
-| TM-02 | An attacker replays a reset token after it has been used. | Follow OWASP guidance that reset tokens must be [single-use and expire](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#introduction) and [linked to an individual user in the database](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#general-security-practices). This does not protect a valid token stolen from the user's mailbox. | Confirm that reuse and use after expiry fail. |
-| TM-03 | A client supplies another account identifier with a valid token. | Enforce OWASP's requirement that the token is [linked to the user in the database](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#general-security-practices) instead of trusting a mutable client identifier. This does not prevent use of a valid token stolen from that user's mailbox. | Submit another account identifier and confirm that no other account changes. |
-| TM-04 | An attacker sends repeated reset requests to flood one user's inbox. | Apply OWASP's [protections against excessive automated submissions](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#forgot-password-request) for that account, and [do not lock it](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#account-lockout) because of reset requests. Per-account limits do not protect total email-provider capacity when requests target many accounts. | Send repeated requests for one account; confirm the limit works and normal recovery remains available. |
-
-Each threat is specific to the modeled flow, has an actionable response, states what the response does not protect against, and identifies how the team can verify it.
 
 ## Threat Modeling and the Development Team
 
@@ -159,36 +144,3 @@ In many cases, the solution lies in inviting members of the security teams to th
 To change the current situation, organizations should invest in regular IT security training for their development teams. These training sessions should be conducted by experts and tailored to the specific needs of the team. Additionally, it is beneficial to implement processes and tools that simplify and automate threat modeling. These tools can help in identifying and assessing threats, making the process more accessible and less time-consuming.
 
 It is also important to promote a culture of security throughout the organization, where threat modeling is seen as an integral part of the Software Development Life Cycle (SDLC), rather than an additional burden. Regular review sessions and cross-team workshops can improve collaboration and communication, leading to a more effective and comprehensive approach to security. Through these actions, organizations can make threat modeling a less burdensome and more efficient process, bringing real benefits to the security of their systems.
-
-## References
-
-### Methods and Techniques
-
-An alphabetical list of techniques:
-
-- [LINDDUN](https://linddun.org/)
-- [PASTA](https://cdn2.hubspot.net/hubfs/4598121/Content%20PDFs/VerSprite-PASTA-Threat-Modeling-Process-for-Attack-Simulation-Threat-Analysis.pdf)
-- [STRIDE](<https://learn.microsoft.com/en-us/previous-versions/commerce-server/ee823878(v=cs.20)?redirectedfrom=MSDN>)
-- [OCTAVE](https://insights.sei.cmu.edu/library/introduction-to-the-octave-approach/)
-- [VAST](https://go.threatmodeler.com/vast-methodology-data-sheet)
-
-### Tools
-
-- [Cairis](https://github.com/cairis-platform/cairis)
-- [draw.io](https://draw.io) - see also [threat modeling libraries](https://github.com/michenriksen/drawio-threatmodeling) for the tool
-- [IriusRisk](https://www.iriusrisk.com/) - offers a free Community Edition
-- [Microsoft Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool)
-- [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon)
-- [OWASP's pytm](https://owasp.org/www-project-pytm/)
-- [TaaC-AI](https://github.com/yevh/TaaC-AI) - AI-driven Threat modeling-as-a-Code (TaaC)
-- Threat Composer - [Demo](https://awslabs.github.io/threat-composer), [Repository](https://github.com/awslabs/threat-composer/)
-
-### General Reference
-
-- [Awesome Threat Modeling](https://github.com/hysnsec/awesome-threat-modelling) - resource list
-- [Tactical Threat Modeling](https://safecode.org/wp-content/uploads/2017/05/SAFECode_TM_Whitepaper.pdf)
-- [Threat Modeling: A Summary of Available Methods](https://insights.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/)
-- Threat modeling for builders, free online training available on [AWS SkillBuilder](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13274/threat-modeling-for-builders-workshop), and [AWS Workshop Studio](https://catalog.workshops.aws/threatmodel/en-US)
-- [Threat Modeling Handbook](https://security.cms.gov/policy-guidance/threat-modeling-handbook)
-- [Threat Modeling Process](https://owasp.org/www-community/Threat_Modeling_Process)
-- [The Ultimate Beginner's Guide to Threat Modeling](https://shostack.org/resources/threat-modeling)
