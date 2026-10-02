@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/WebSocket_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/FastAPI_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+        <link rel="prev" href="Error_Handling_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Web_Cache_Security_Cheat_Sheet.html">
+        <link rel="next" href="File_Upload_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>WebSocket Security - OWASP Cheat Sheet Series</title>
+        <title>FastAPI Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#websocket-security-cheat-sheet" class="md-skip">
+        <a href="#fastapi-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              WebSocket Security
+              FastAPI Security
             
           </span>
         </div>
@@ -1563,10 +1563,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="FastAPI_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FastAPI Security
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="FastAPI_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1582,6 +1609,427 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependency-injection-and-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependency Injection and Access Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependency Injection and Access Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oauth2passwordbearer-does-not-validate-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth2PasswordBearer Does Not Validate Tokens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scoping-authorization-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scoping Authorization Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#router-level-deny-by-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Router-Level Deny-by-Default
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-authentication-and-jwt-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Secure Authentication and JWT Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Authentication and JWT Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cryptographic-library-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cryptographic Library Choice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-claims-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Claims Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookie-stored-refresh-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cookie-Stored Refresh Tokens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signing-key-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signing Key Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-validation-and-input-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pydantic Validation and Input Hardening
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pydantic Validation and Input Hardening">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reject-unrecognized-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reject Unrecognized Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-mass-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevent Mass Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-sensitive-data-exposure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevent Sensitive Data Exposure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strict-typing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strict Typing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#injection-countermeasure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Injection Countermeasure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-origin-resource-sharing-cors-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Origin Resource Sharing (CORS) Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin Resource Sharing (CORS) Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#restrictive-cors-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restrictive CORS Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openapi-and-swagger-ui-exposure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAPI and Swagger UI Exposure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenAPI and Swagger UI Exposure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardening-documentation-in-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardening Documentation in Production
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async-event-loop-and-background-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async Event Loop and Background Tasks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Async Event Loop and Background Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#event-loop-blocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Loop Blocking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exception-handling-and-information-leakage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exception Handling and Information Leakage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exception Handling and Information Leakage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validation-error-leakage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation Error Leakage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-upload-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Upload Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Upload Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-protections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upload Protections
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Limiting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mitigation Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asgi-server-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASGI Server Hardening
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ASGI Server Hardening">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -3775,37 +4223,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    WebSocket Security
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="WebSocket_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="WebSocket_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -3821,259 +4242,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#primary-defenses" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Primary Defenses
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Primary Defenses">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#transport-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Transport Security
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Transport Security">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#always-use-wss-websocket-secure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Always Use WSS (WebSocket Secure)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#websocket-protocol-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        WebSocket Protocol Configuration
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#infrastructure-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Infrastructure Configuration
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-and-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication and Authorization
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Authentication and Authorization">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#origin-header-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Origin Header Validation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#additional-cswsh-protections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Additional CSWSH Protections
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#session-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Session Management
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#message-level-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Message-Level Authorization
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#input-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Input Validation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-tunneling-risks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service Tunneling Risks
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#denial-of-service-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Denial-of-Service Protection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-monitoring-and-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security Monitoring and Logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#testing-websocket-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing WebSocket Security
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#framework-specific-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework-Specific Best Practices
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Framework-Specific Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#keep-dependencies-updated" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Keep Dependencies Updated
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4432,34 +4600,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#primary-defenses" class="md-nav__link">
+  <a href="#dependency-injection-and-access-control" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Primary Defenses
+        Dependency Injection and Access Control
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Primary Defenses">
+    <nav class="md-nav" aria-label="Dependency Injection and Access Control">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#transport-security" class="md-nav__link">
+  <a href="#oauth2passwordbearer-does-not-validate-tokens" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Transport Security
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Transport Security">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#always-use-wss-websocket-secure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Always Use WSS (WebSocket Secure)
+        OAuth2PasswordBearer Does Not Validate Tokens
       
     </span>
   </a>
@@ -4467,10 +4623,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#websocket-protocol-configuration" class="md-nav__link">
+  <a href="#scoping-authorization-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        WebSocket Protocol Configuration
+        Scoping Authorization Dependencies
       
     </span>
   </a>
@@ -4478,10 +4634,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#infrastructure-configuration" class="md-nav__link">
+  <a href="#router-level-deny-by-default" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Infrastructure Configuration
+        Router-Level Deny-by-Default
       
     </span>
   </a>
@@ -4492,24 +4648,24 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication-and-authorization" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#secure-authentication-and-jwt-implementation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Authentication and Authorization
+        Secure Authentication and JWT Implementation
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Authentication and Authorization">
+    <nav class="md-nav" aria-label="Secure Authentication and JWT Implementation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#origin-header-validation" class="md-nav__link">
+  <a href="#cryptographic-library-choice" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Origin Header Validation
+        Cryptographic Library Choice
       
     </span>
   </a>
@@ -4517,10 +4673,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#additional-cswsh-protections" class="md-nav__link">
+  <a href="#key-claims-verification" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Additional CSWSH Protections
+        Key Claims Verification
       
     </span>
   </a>
@@ -4528,10 +4684,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#session-management" class="md-nav__link">
+  <a href="#cookie-stored-refresh-tokens" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Session Management
+        Cookie-Stored Refresh Tokens
       
     </span>
   </a>
@@ -4539,10 +4695,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#message-level-authorization" class="md-nav__link">
+  <a href="#signing-key-management" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Message-Level Authorization
+        Signing Key Management
       
     </span>
   </a>
@@ -4553,79 +4709,68 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#input-validation" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-validation-and-input-hardening" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Input Validation
+        Pydantic Validation and Input Hardening
       
     </span>
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-tunneling-risks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service Tunneling Risks
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#denial-of-service-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Denial-of-Service Protection
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-monitoring-and-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security Monitoring and Logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#testing-websocket-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testing WebSocket Security
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#framework-specific-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework-Specific Best Practices
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Framework-Specific Best Practices">
+    <nav class="md-nav" aria-label="Pydantic Validation and Input Hardening">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#keep-dependencies-updated" class="md-nav__link">
+  <a href="#reject-unrecognized-fields" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Keep Dependencies Updated
+        Reject Unrecognized Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-mass-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevent Mass Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-sensitive-data-exposure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevent Sensitive Data Exposure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strict-typing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strict Typing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#injection-countermeasure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Injection Countermeasure
       
     </span>
   </a>
@@ -4634,6 +4779,197 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-origin-resource-sharing-cors-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Origin Resource Sharing (CORS) Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin Resource Sharing (CORS) Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#restrictive-cors-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restrictive CORS Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openapi-and-swagger-ui-exposure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAPI and Swagger UI Exposure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenAPI and Swagger UI Exposure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardening-documentation-in-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardening Documentation in Production
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async-event-loop-and-background-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async Event Loop and Background Tasks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Async Event Loop and Background Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#event-loop-blocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Loop Blocking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exception-handling-and-information-leakage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exception Handling and Information Leakage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exception Handling and Information Leakage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validation-error-leakage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation Error Leakage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-upload-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Upload Security
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Upload Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload-protections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upload Protections
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rate Limiting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Limiting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mitigation Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asgi-server-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASGI Server Hardening
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ASGI Server Hardening">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Configuration
+      
+    </span>
+  </a>
   
 </li>
         
@@ -4673,190 +5009,135 @@
   
 
 
-<h1 id="websocket-security-cheat-sheet">WebSocket Security Cheat Sheet<a class="headerlink" href="#websocket-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="fastapi-security-cheat-sheet">FastAPI Security Cheat Sheet<a class="headerlink" href="#fastapi-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>WebSockets enable real-time, bidirectional communication between clients and servers, powering applications like chat systems, live trading platforms, and collaborative tools. Unlike traditional HTTP requests, WebSocket connections remain open and allow continuous data exchange.</p>
-<p>However, WebSockets introduce security challenges that differ from standard web application security:</p>
+<p>FastAPI is a Python web framework using the Asynchronous Server Gateway Interface (ASGI). This cheat sheet covers authentication dependencies, input and output models, and deployment controls, building on the <a href="https://fastapi.tiangolo.com/tutorial/security/">FastAPI security documentation</a>.</p>
+<p>Code snippets illustrate individual controls, not complete applications. They assume an existing FastAPI application and application-specific user and persistence functions; adapt and test them for your application.</p>
+<h2 id="dependency-injection-and-access-control">Dependency Injection and Access Control<a class="headerlink" href="#dependency-injection-and-access-control" title="Permanent link">&para;</a></h2>
+<p>Use FastAPI's dependency injection system, through <code>Depends()</code>, to enforce authentication and authorization consistently. Missing or insufficient dependencies can leave sensitive operations accessible to unauthorized users. See the <a href="https://fastapi.tiangolo.com/tutorial/dependencies/">FastAPI dependencies tutorial</a>.</p>
+<h3 id="oauth2passwordbearer-does-not-validate-tokens">OAuth2PasswordBearer Does Not Validate Tokens<a class="headerlink" href="#oauth2passwordbearer-does-not-validate-tokens" title="Permanent link">&para;</a></h3>
+<p>The helper class <code>OAuth2PasswordBearer</code> checks the authorization scheme and extracts the bearer token from the <code>Authorization</code> header. It does <strong>not validate the token or verify its signature</strong>. An authentication dependency must verify the token and reject invalid credentials before returning a user. See the <a href="https://fastapi.tiangolo.com/reference/security/#fastapi.security.OAuth2PasswordBearer">OAuth2PasswordBearer reference</a>.</p>
+<h3 id="scoping-authorization-dependencies">Scoping Authorization Dependencies<a class="headerlink" href="#scoping-authorization-dependencies" title="Permanent link">&para;</a></h3>
+<p>Authentication alone does not authorize an operation. Endpoints requiring elevated privileges, such as admin tasks, must also check the user's permissions. In this example, <code>get_current_user</code> is an authentication dependency that rejects invalid credentials.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">Depends</span><span class="p">,</span> <span class="n">HTTPException</span><span class="p">,</span> <span class="n">status</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_admin_user</span><span class="p">(</span><span class="n">current_user</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_current_user</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_admin</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span>
+            <span class="n">status_code</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_403_FORBIDDEN</span><span class="p">,</span>
+            <span class="n">detail</span><span class="o">=</span><span class="s2">"Operation not permitted"</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">current_user</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/admin/settings"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_settings</span><span class="p">(</span><span class="n">admin</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_admin_user</span><span class="p">)):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"success"</span><span class="p">}</span>
+</code></pre></div>
+<h3 id="router-level-deny-by-default">Router-Level Deny-by-Default<a class="headerlink" href="#router-level-deny-by-default" title="Permanent link">&para;</a></h3>
+<p>Apply authentication dependencies to an entire <code>APIRouter</code> so new endpoints in that router inherit the check. This covers only that router's routes; sensitive operations still need permission checks.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span><span class="p">,</span> <span class="n">Depends</span>
+
+<span class="c1"># Enforce authentication for all routes registered under this router by default</span>
+<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">(</span>
+    <span class="n">prefix</span><span class="o">=</span><span class="s2">"/items"</span><span class="p">,</span>
+    <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="n">Depends</span><span class="p">(</span><span class="n">get_current_user</span><span class="p">)]</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="secure-authentication-and-jwt-implementation">Secure Authentication and JWT Implementation<a class="headerlink" href="#secure-authentication-and-jwt-implementation" title="Permanent link">&para;</a></h2>
+<p>When using JSON Web Tokens (JWTs), developers are responsible for token verification and key management. The <a href="https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/">FastAPI OAuth2 with JWT tutorial</a> demonstrates verification with PyJWT.</p>
+<h3 id="cryptographic-library-choice">Cryptographic Library Choice<a class="headerlink" href="#cryptographic-library-choice" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Cross-Site WebSocket Hijacking (CSWSH)</strong>: Attackers hijack authenticated connections from malicious websites</li>
-<li><strong>Authentication bypass</strong>: No built-in authentication makes access control easy to forget</li>
-<li><strong>Injection attacks</strong>: WebSocket messages can carry XSS, SQL injection, and other malicious payloads</li>
-<li><strong>Denial-of-service</strong>: Persistent connections enable new DoS attack vectors like connection exhaustion</li>
-<li><strong>Monitoring gaps</strong>: Traditional HTTP logs only capture the initial upgrade request, missing all message traffic</li>
+<li><strong>Use PyJWT:</strong> Delegate token verification to the library rather than writing custom parsing or cryptographic logic. Configure verification using the <a href="https://pyjwt.readthedocs.io/en/latest/api.html#jwt.decode">PyJWT decoding API</a>.</li>
 </ul>
-<p><strong>Real-world vulnerabilities:</strong></p>
+<h3 id="key-claims-verification">Key Claims Verification<a class="headerlink" href="#key-claims-verification" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Gitpod CSWSH (2023)</strong>: <a href="https://github.com/advisories/GHSA-f53g-frr2-jhpf">Insufficient origin validation</a> allowed full account takeover via hijacked WebSocket connections</li>
-<li><strong>Spring RCE vulnerability</strong>: <a href="https://spring.io/security/cve-2018-1270">CVE-2018-1270</a> let attackers execute code through crafted STOMP messages</li>
+<li><strong>Validate Required Claims:</strong> Verify the signature and require <code>exp</code> (expiration), <code>iss</code> (issuer), and <code>aud</code> (audience) for authentication tokens. In PyJWT, use <code>options={"require": ["exp", "iss", "aud"]}</code> and supply the expected <code>issuer</code> and <code>audience</code>. Requiring a claim only checks its presence; keep the corresponding verification enabled. Validate <code>nbf</code> (not before) when present, and require it if your token profile calls for it.</li>
+<li><strong>Explicit Algorithms:</strong> Configure the expected algorithm during decoding, for example <code>algorithms=["HS256"]</code> for tokens issued with that algorithm. Do not derive the accepted algorithms from the token's header.</li>
+<li><strong>Revocation and Replay:</strong> Expiration bounds a token's lifetime. Checking a revocation blocklist rejects revoked tokens, but a stolen, still-active bearer token remains reusable. See the <a href="JSON_Web_Token_Cheat_Sheet.html#replay-protection">JWT replay-protection guidance</a> for controls beyond expiration and revocation.</li>
 </ul>
-<h2 id="primary-defenses">Primary Defenses<a class="headerlink" href="#primary-defenses" title="Permanent link">&para;</a></h2>
-<h3 id="transport-security">Transport Security<a class="headerlink" href="#transport-security" title="Permanent link">&para;</a></h3>
-<h4 id="always-use-wss-websocket-secure">Always Use WSS (WebSocket Secure)<a class="headerlink" href="#always-use-wss-websocket-secure" title="Permanent link">&para;</a></h4>
-<p>Never use unencrypted <code>ws://</code> connections in production. Unencrypted <code>ws://</code> connections allow eavesdropping and tampering.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Secure - always use this</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">(</span><span class="s1">'wss://app.example.com/socket'</span><span class="p">);</span>
-
-<span class="c1">// Insecure - never use in production</span>
-<span class="c1">// const socket = new WebSocket('ws://app.example.com/socket');</span>
-</code></pre></div>
-<p>See the <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a> for more details.</p>
-<h4 id="websocket-protocol-configuration">WebSocket Protocol Configuration<a class="headerlink" href="#websocket-protocol-configuration" title="Permanent link">&para;</a></h4>
-<p><strong>Use modern protocol versions:</strong></p>
-<p>Only support <a href="https://datatracker.ietf.org/doc/html/rfc6455">RFC 6455</a> (the current WebSocket standard). Drop backward compatibility for outdated versions like <a href="https://datatracker.ietf.org/doc/html/draft-hixie-thewebsocketprotocol-76">Hixie-76</a> and <a href="https://datatracker.ietf.org/doc/html/draft-ietf-hybi-thewebsocketprotocol-00">hybi-00</a> which have known security vulnerabilities.</p>
-<p><strong>Compression security:</strong></p>
-<p>Disable <code>permessage-deflate</code> compression unless specifically needed. Compression can introduce security vulnerabilities similar to CRIME/BREACH attacks where compression combined with secret data can leak information.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Node.js - disable compression for security</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">wss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">perMessageDeflate</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="p">});</span>
-</code></pre></div>
-<h4 id="infrastructure-configuration">Infrastructure Configuration<a class="headerlink" href="#infrastructure-configuration" title="Permanent link">&para;</a></h4>
-<p><strong>Proxy and load balancer support:</strong></p>
-<p>Ensure reverse proxies, load balancers, and CDNs are configured to handle WebSocket upgrades:</p>
+<h3 id="cookie-stored-refresh-tokens">Cookie-Stored Refresh Tokens<a class="headerlink" href="#cookie-stored-refresh-tokens" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Configure proxy to support HTTP/1.1 upgrade mechanism  </li>
-<li>Pass <code>Upgrade</code> and <code>Connection: upgrade</code> headers correctly</li>
-<li>Set proper read timeouts for long-lived connections</li>
-<li>Ensure WebSocket traffic isn't blocked by security policies</li>
+<li><strong>Cookie Attributes:</strong> If you store refresh tokens in cookies, set <code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite=Lax</code> or <code>Strict</code> where compatible with your authentication flow. <code>HttpOnly</code> prevents JavaScript from reading the cookie; it does not prevent injected scripts from making authenticated requests.</li>
+<li><strong>CSRF Mitigations:</strong> Browsers attach cookies automatically, introducing Cross-Site Request Forgery (CSRF) risk. Protect refresh and other state-changing endpoints with the defenses in the <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF Prevention Cheat Sheet</a>, such as validated CSRF tokens. Treat <code>SameSite</code> as defense in depth.</li>
 </ul>
-<p><strong>WAF support:</strong></p>
-<p>Check that your WAF supports WebSocket traffic inspection beyond the initial handshake. If not, rely on server-side validation and application logging.</p>
-<h3 id="authentication-and-authorization">Authentication and Authorization<a class="headerlink" href="#authentication-and-authorization" title="Permanent link">&para;</a></h3>
-<p>WebSockets don't have built-in authentication. Browsers include cookies in WebSocket handshake requests, making WebSocket applications vulnerable to Cross-Site WebSocket Hijacking (CSWSH).</p>
-<p>CSWSH allows attackers to hijack authenticated WebSocket connections from malicious websites:</p>
-<ol>
-<li>User logs into your application (session cookie established)</li>
-<li>User later visits a malicious website</li>
-<li>Malicious site opens WebSocket to your application, browser sends cookies automatically</li>
-<li>Server accepts the connection → attacker gets live, authenticated WebSocket access</li>
-</ol>
-<h4 id="origin-header-validation">Origin Header Validation<a class="headerlink" href="#origin-header-validation" title="Permanent link">&para;</a></h4>
-<p>Validate the <code>Origin</code> header on every handshake. Always use an explicit allowlist of trusted origins. Browsers include this header and malicious JavaScript cannot override it.</p>
-<p>For Node.js <code>ws</code>, validate the <code>Origin</code> header in the HTTP server's <code>upgrade</code> event before calling <code>handleUpgrade</code>; the library discourages <code>verifyClient</code> (<a href="https://github.com/websockets/ws/blob/master/doc/ws.md#new-websocketserveroptions-callback"><code>ws</code> documentation</a>).</p>
-<p><strong>Important:</strong> Use an allowlist, not a denylist. Avoid wildcards or substring matching which are error-prone.</p>
-<h4 id="additional-cswsh-protections">Additional CSWSH Protections<a class="headerlink" href="#additional-cswsh-protections" title="Permanent link">&para;</a></h4>
-<p>For applications already using CSRF protection, include <strong>CSRF tokens</strong> in WebSocket handshakes.</p>
-<h4 id="session-management">Session Management<a class="headerlink" href="#session-management" title="Permanent link">&para;</a></h4>
-<p>WebSocket connections often outlive normal sessions, requiring special handling.</p>
-<p><strong>Use SameSite cookies</strong> (<code>SameSite=Lax</code> or <code>Strict</code>) to prevent cross-site cookie transmission and strengthen CSWSH defenses.</p>
-<p><strong>Handle session expiration</strong> by implementing server-side validation for long-running connections. Close WebSocket connections when sessions expire. Re-validate user sessions periodically (every 30 minutes is common) to ensure they remain valid.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Example: Close WebSocket on session expiry</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">validateSession</span><span class="p">(</span><span class="nx">ws</span><span class="p">,</span><span class="w"> </span><span class="nx">sessionId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isSessionValid</span><span class="p">(</span><span class="nx">sessionId</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">'Session expired'</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
-<span class="p">}</span>
+<h3 id="signing-key-management">Signing Key Management<a class="headerlink" href="#signing-key-management" title="Permanent link">&para;</a></h3>
+<p>Never hardcode signing secrets or provide a default development key in production. Supply keys from deployment-managed secret storage; prefer a mounted secret file or retrieval from a secret manager, and use environment variables only when safer injection methods are unavailable. Pydantic Settings can read deployment-supplied configuration. Keep local <code>.env</code> files containing secrets out of source control. Follow the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> for provisioning and rotation.</p>
+<h2 id="pydantic-validation-and-input-hardening">Pydantic Validation and Input Hardening<a class="headerlink" href="#pydantic-validation-and-input-hardening" title="Permanent link">&para;</a></h2>
+<p>Pydantic schemas validate data, but they do not replace authorization checks or prevent injection vulnerabilities. See the <a href="https://docs.pydantic.dev/latest/concepts/models/">Pydantic models documentation</a>.</p>
+<h3 id="reject-unrecognized-fields">Reject Unrecognized Fields<a class="headerlink" href="#reject-unrecognized-fields" title="Permanent link">&para;</a></h3>
+<p>By default, Pydantic ignores undeclared input fields. Use <code>extra="forbid"</code> when the API should reject requests containing such fields instead of ignoring them:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UserCreate</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s2">"forbid"</span><span class="p">)</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
-<p><strong>When users log out</strong>, close all their WebSocket connections immediately. Maintain a mapping of sessions to active connections so you can invalidate WebSocket access the moment logout occurs.</p>
-<p><strong>Token-based authentication:</strong></p>
-<p>For enhanced security, use token-based authentication instead of relying solely on cookies. Tokens can be passed in query strings (note: tokens will appear in access logs and should be redacted) or as part of WebSocket messages after connection establishment. Message-based token passing avoids log exposure but requires protocol design considerations.</p>
-<p><strong>Token refresh:</strong></p>
-<p>Rotate tokens in long-lived connections to prevent hijacked sessions from persisting.</p>
-<h4 id="message-level-authorization">Message-Level Authorization<a class="headerlink" href="#message-level-authorization" title="Permanent link">&para;</a></h4>
-<p>Don't assume WebSocket connection equals unlimited access. Check authorization for each action:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<h3 id="prevent-mass-assignment">Prevent Mass Assignment<a class="headerlink" href="#prevent-mass-assignment" title="Permanent link">&para;</a></h3>
+<p>Use separate, restricted input schemas (<code>UserCreate</code>, <code>UserUpdate</code>) that exclude server-controlled fields like <code>is_admin</code> or <code>id</code>. Persist only validated, allowed fields, not the raw request dictionary. <code>extra="forbid"</code> does not prevent clients from setting a sensitive field that you declared in the input schema. See the <a href="Mass_Assignment_Cheat_Sheet.html">Mass Assignment Cheat Sheet</a>.</p>
+<h3 id="prevent-sensitive-data-exposure">Prevent Sensitive Data Exposure<a class="headerlink" href="#prevent-sensitive-data-exposure" title="Permanent link">&para;</a></h3>
+<p>Explicitly specify <code>response_model</code> in path decorators to filter database objects and exclude sensitive fields (e.g., <code>password_hash</code>) from responses. See <a href="https://fastapi.tiangolo.com/tutorial/response-model/">FastAPI Response Model documentation</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">UserResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
 
-<span class="w">  </span><span class="c1">// Check authorization for each action</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'delete_user'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">user</span><span class="p">.</span><span class="nx">hasRole</span><span class="p">(</span><span class="s1">'admin'</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s1">'error'</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">'Access denied'</span><span class="p">}));</span>
-<span class="w">    </span><span class="k">return</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="nx">handleAuthorizedMessage</span><span class="p">(</span><span class="nx">ws</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">);</span>
-<span class="p">});</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/users"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">UserResponse</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_user</span><span class="p">(</span><span class="n">user</span><span class="p">:</span> <span class="n">UserCreate</span><span class="p">):</span>
+    <span class="c1"># Application function must hash the password before storing it.</span>
+    <span class="k">return</span> <span class="n">save_user_to_db</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
-<p>Treat all WebSocket messages as untrusted input. WebSocket messages can carry injection payloads such as SQLi, XSS, and command injection.</p>
-<p><strong>Validate message structure and content</strong> using JSON schemas and allow-lists. Set reasonable size limits (typically 64KB or less) and implement rate limiting to prevent message flooding.</p>
-<p><strong>For binary data</strong>, verify file types using magic numbers rather than trusting content-type headers. Scan uploads for malware when appropriate, and use safe deserialization for protocols like protobuf or MessagePack.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">isBinary</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isBinary</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Validate binary data</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">MAX_BINARY_SIZE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1009</span><span class="p">,</span><span class="w"> </span><span class="s1">'Message too large'</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="c1">// Check file type by magic numbers</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isValidFileType</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">'Invalid file type'</span><span class="p">);</span>
-<span class="w">      </span><span class="k">return</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="nx">processBinaryData</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-<p><strong>To prevent message replay attacks</strong> include timestamps or nonces in messages and reject duplicates to ensure old messages cannot be maliciously resent.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// Check timestamp or nonce to prevent replay</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isValidNonce</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">nonce</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">'Replay detected'</span><span class="p">);</span>
-<span class="w">    </span><span class="k">return</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-
-<span class="w">  </span><span class="nx">processMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre></div>
-<p><strong>Always use <code>JSON.parse()</code> instead of <code>eval()</code></strong> for JSON processing - <code>eval()</code> enables code execution from untrusted input.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Safe</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-
-<span class="c1">// Dangerous - enables code execution</span>
-<span class="c1">// const message = eval('(' + data + ')');</span>
-</code></pre></div>
-<p>See the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a> for more details.</p>
-<h3 id="service-tunneling-risks">Service Tunneling Risks<a class="headerlink" href="#service-tunneling-risks" title="Permanent link">&para;</a></h3>
-<p>While WebSockets can tunnel TCP services (VNC, FTP, SSH), this creates security risks. If your application has XSS vulnerabilities, attackers could access these services directly from victims' browsers. If tunneling is necessary, implement additional authentication and access controls beyond the WebSocket layer.</p>
-<h3 id="denial-of-service-protection">Denial-of-Service Protection<a class="headerlink" href="#denial-of-service-protection" title="Permanent link">&para;</a></h3>
-<p>Persistent WebSocket connections increase DoS risk.</p>
-<p><strong>Limit connections and resources</strong> by restricting total connections and implementing per-user limits (preferred) or per-IP limits where user identification isn't available. Set <strong>message size limits</strong> (typically 64KB or less) and implement <strong>rate limiting</strong> to prevent message flooding - 100 messages per minute is a common starting point.</p>
-<p><strong>Handle idle and dead connections</strong> by implementing idle timeouts to close inactive connections. Use <strong>heartbeat monitoring</strong> with ping/pong frames to detect and clean up dead connections.</p>
-<p><strong>Implement backpressure controls</strong> to prevent memory exhaustion from fast message producers. Many WebSocket implementations lack proper flow control, allowing attackers to overwhelm server memory by sending messages faster than they can be processed.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">wss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span>
-<span class="w">  </span><span class="nx">maxPayload</span><span class="o">:</span><span class="w"> </span><span class="mf">64</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1024</span>
-<span class="p">});</span>
-</code></pre></div>
-<h3 id="security-monitoring-and-logging">Security Monitoring and Logging<a class="headerlink" href="#security-monitoring-and-logging" title="Permanent link">&para;</a></h3>
-<p>Traditional HTTP access logs only capture the initial WebSocket upgrade request, not subsequent message traffic. You'll miss auth failures, injection attempts, rate-limit violations, and abuse.</p>
-<p><strong>Log WebSocket events</strong> including connection establishment and termination (with user identity, IP, and origin), authentication and authorization events during handshake and message processing, security violations like rate limiting triggers and message validation failures, and abnormal disconnections and protocol errors.</p>
-<p><strong>Avoid logging sensitive data</strong> - never log complete message contents, authentication tokens, session IDs, or personal information that could violate privacy regulations.</p>
-<p>See the <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a> for more details.</p>
-<h3 id="testing-websocket-security">Testing WebSocket Security<a class="headerlink" href="#testing-websocket-security" title="Permanent link">&para;</a></h3>
-<p><strong>Key security tests:</strong></p>
+<h3 id="strict-typing">Strict Typing<a class="headerlink" href="#strict-typing" title="Permanent link">&para;</a></h3>
+<p>Pydantic can convert input values to the declared types, such as <code>"123"</code> to <code>123</code> for an <code>int</code> field. Where security decisions require an exact input type, use strict types such as <code>StrictInt</code> and <code>StrictBool</code> to reject unintended conversions.</p>
+<h3 id="injection-countermeasure">Injection Countermeasure<a class="headerlink" href="#injection-countermeasure" title="Permanent link">&para;</a></h3>
+<p>Input validation does not prevent SQL injection. Use parameterized queries, including through Object-Relational Mapper (ORM) APIs that bind parameters. Never build raw SQL queries using string formatting with user input. See the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
+<h2 id="cross-origin-resource-sharing-cors-configuration">Cross-Origin Resource Sharing (CORS) Configuration<a class="headerlink" href="#cross-origin-resource-sharing-cors-configuration" title="Permanent link">&para;</a></h2>
+<p>Incorrect CORS settings can expose private API responses to untrusted websites in a user's browser. CORS does not replace endpoint authorization or restrict non-browser clients. See the <a href="https://fastapi.tiangolo.com/tutorial/cors/">FastAPI CORS documentation</a>.</p>
+<h3 id="restrictive-cors-settings">Restrictive CORS Settings<a class="headerlink" href="#restrictive-cors-settings" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Origin validation</strong>: Connect from unauthorized domains</li>
-<li><strong>Authentication bypass</strong>: Attempt connections without proper credentials</li>
-<li><strong>Message injection</strong>: Send XSS, SQL injection, and command injection payloads</li>
-<li><strong>DoS resistance</strong>: Test connection limits, message flooding, and oversized messages</li>
-<li><strong>Session management</strong>: Test session expiration and logout handling</li>
+<li><strong>Explicit Origins:</strong> When using <code>allow_credentials=True</code>, explicitly list trusted origins in <code>allow_origins</code>. Do not combine credentialed requests with <code>allow_origins=["*"]</code>.</li>
+<li><strong>Restrict Headers and Methods:</strong> Limit <code>allow_methods</code> and <code>allow_headers</code> to only the verbs and headers your client application uses.</li>
+<li>For complete CORS design patterns, refer to the <a href="HTML5_Security_Cheat_Sheet.html">OWASP HTML5 Security Cheat Sheet</a>.</li>
 </ul>
-<p><strong>Testing tools:</strong></p>
+<h2 id="openapi-and-swagger-ui-exposure">OpenAPI and Swagger UI Exposure<a class="headerlink" href="#openapi-and-swagger-ui-exposure" title="Permanent link">&para;</a></h2>
+<p>FastAPI exposes interactive documentation at <code>/docs</code> and <code>/redoc</code>, with the schema at <code>/openapi.json</code>. Decide whether this information should be public. The <a href="https://fastapi.tiangolo.com/how-to/conditional-openapi/#about-security-apis-and-docs">conditional OpenAPI guidance</a> explains why hiding documentation does not secure the API operations themselves.</p>
+<h3 id="hardening-documentation-in-production">Hardening Documentation in Production<a class="headerlink" href="#hardening-documentation-in-production" title="Permanent link">&para;</a></h3>
+<p>If the documentation is private, restrict access to both the documentation pages and schema, or disable them with <code>FastAPI(openapi_url=None)</code>. This prevents disclosure through those routes; authorization must still protect every API operation.</p>
+<h2 id="async-event-loop-and-background-tasks">Async Event Loop and Background Tasks<a class="headerlink" href="#async-event-loop-and-background-tasks" title="Permanent link">&para;</a></h2>
+<p>Blocking a worker's event loop prevents it from handling other requests, creating a Denial of Service (DoS) risk. See the <a href="https://fastapi.tiangolo.com/async/">FastAPI async tutorial</a>.</p>
+<h3 id="event-loop-blocking">Event Loop Blocking<a class="headerlink" href="#event-loop-blocking" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Browser developer tools for manual testing</li>
-<li><a href="https://github.com/websockets/wscat">wscat</a> for command-line WebSocket connections</li>
-<li>Custom scripts for automated vulnerability testing</li>
-<li>OWASP ZAP (includes WebSocket security testing features)</li>
+<li>Use asynchronous database and network clients inside <code>async def</code> routes. For synchronous libraries, use <code>def</code> routes or dependencies, which FastAPI runs in a thread pool. Ordinary helper functions called directly inside <code>async def</code> are not automatically moved to that pool.</li>
+<li>Move CPU-heavy or long-running work to a separate worker system, such as Celery. <code>BackgroundTasks</code> still runs in the application process; see the <a href="https://fastapi.tiangolo.com/tutorial/background-tasks/#caveat">background-task caveat</a>.</li>
 </ul>
-<h3 id="framework-specific-best-practices">Framework-Specific Best Practices<a class="headerlink" href="#framework-specific-best-practices" title="Permanent link">&para;</a></h3>
-<p><strong>Node.js:</strong> With <code>ws</code>, perform origin and authentication checks in the HTTP server's <code>upgrade</code> event; set <code>maxPayload</code> limits and disable <code>perMessageDeflate</code> compression unless needed.</p>
-<p><strong>Python:</strong> With Django Channels, implement authentication middleware and origin validation. Use async exception handling to prevent application crashes from malformed WebSocket messages.</p>
-<p><strong>Java Spring:</strong> Configure allowed origins explicitly and integrate Spring Security for authorization. Set message size limits in your WebSocket container configuration to prevent resource exhaustion.</p>
-<p><strong>Go:</strong> When using Gorilla WebSocket, implement validation in your <code>CheckOrigin</code> function - don't just return <code>true</code>. Set read limits, implement timeouts, and use context cancellation for graceful connection cleanup.</p>
-<h4 id="keep-dependencies-updated">Keep Dependencies Updated<a class="headerlink" href="#keep-dependencies-updated" title="Permanent link">&para;</a></h4>
-<p>Regularly update WebSocket libraries and monitor security advisories. Past versions of popular libraries (<code>ws</code>, Spring STOMP, Python <code>websockets</code>) have had critical security vulnerabilities including DoS and RCE issues.</p>
+<h2 id="exception-handling-and-information-leakage">Exception Handling and Information Leakage<a class="headerlink" href="#exception-handling-and-information-leakage" title="Permanent link">&para;</a></h2>
+<p>Control which error details reach clients and logs. FastAPI supports <a href="https://fastapi.tiangolo.com/tutorial/handling-errors/#override-request-validation-exceptions">custom exception handlers</a> for sanitizing validation responses.</p>
+<h3 id="validation-error-leakage">Validation Error Leakage<a class="headerlink" href="#validation-error-leakage" title="Permanent link">&para;</a></h3>
+<p>Request validation errors can include submitted values and custom error details. Avoid reflecting passwords or tokens into responses or recording them in logs. In a <code>RequestValidationError</code> handler, return only safe field locations and error descriptions, or a generic message where necessary. Do not return <code>str(exc)</code> or the entire request body; these can include sensitive input or internal context.</p>
+<h2 id="file-upload-security">File Upload Security<a class="headerlink" href="#file-upload-security" title="Permanent link">&para;</a></h2>
+<p>FastAPI parses multipart uploads into <code>UploadFile</code> objects, which spool larger files to temporary disk storage. See the <a href="https://fastapi.tiangolo.com/tutorial/request-files/#uploadfile">UploadFile documentation</a>.</p>
+<h3 id="upload-protections">Upload Protections<a class="headerlink" href="#upload-protections" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Limit Payloads Before Parsing:</strong> Set a request-body limit at the reverse proxy or gateway, for example Nginx's <a href="https://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size"><code>client_max_body_size</code></a>. Ensure clients cannot bypass that layer. FastAPI <a href="https://github.com/fastapi/fastapi/blob/28a206107302ee20ce6a9a876d05a258c1c8d328/fastapi/routing.py#L438-L502">parses the form before running dependencies</a>; checking <code>UploadFile.size</code> in a dependency or endpoint does not protect against the resources already consumed during parsing.</li>
+<li><strong>Treat Metadata as Untrusted:</strong> Do not use <code>UploadFile.filename</code> directly as a storage path or trust <code>content_type</code> as proof of file type. Apply the filename, content-validation, and storage controls in the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheat Sheet</a>.</li>
+</ul>
+<h2 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h2>
+<p>Apply request limits to reduce abuse of sensitive or expensive endpoints.</p>
+<h3 id="mitigation-options">Mitigation Options<a class="headerlink" href="#mitigation-options" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use a dedicated library like <a href="https://github.com/laurentS/slowapi">slowapi</a> to implement route-specific rate limiting in code.</li>
+<li>With multiple workers or replicas, use a shared counter store, such as Redis, so limits apply across instances instead of independently in each process.</li>
+<li>Implement rate limiting at the reverse proxy (Nginx, HAProxy) or API gateway layer.</li>
+</ul>
+<h2 id="asgi-server-hardening">ASGI Server Hardening<a class="headerlink" href="#asgi-server-hardening" title="Permanent link">&para;</a></h2>
+<p>Configure the ASGI server's proxy trust explicitly so clients cannot spoof the client address or request scheme using forwarding headers. See the <a href="https://uvicorn.dev/settings/#http">Uvicorn HTTP settings</a>.</p>
+<h3 id="deployment-configuration">Deployment Configuration<a class="headerlink" href="#deployment-configuration" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Limit Proxy Forwarding:</strong> Set <code>--forwarded-allow-ips</code> to the addresses of trusted reverse proxies and configure those proxies to overwrite untrusted forwarding headers. Avoid <code>--forwarded-allow-ips="*"</code>, which trusts every connecting client. Disable proxy-header handling with <code>--no-proxy-headers</code> if it is not needed.</li>
+<li><strong>Disable Server Header:</strong> Use <code>--no-server-header</code> to suppress Uvicorn's default <code>Server</code> header. This removes one identifying header; it does not prevent other forms of server fingerprinting.</li>
+</ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a></li>
-<li><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
-<li><a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a></li>
-<li><a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a></li>
-<li><a href="https://cwe.mitre.org/data/definitions/1385.html">CWE-1385: Missing Origin Validation in WebSockets</a></li>
+<li><a href="https://owasp.github.io/API-Security/editions/2023/en/0x00-header/">OWASP API Security Top 10 (2023)</a></li>
+<li><a href="REST_Security_Cheat_Sheet.html">OWASP REST Security Cheat Sheet</a></li>
 </ul>
 
 
