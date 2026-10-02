@@ -69,6 +69,8 @@ Fallback path when the runtime does **not** support independent agents: review t
 4. `cheatsheet-duplication-checker` — does this repeat existing content or belong in a different sheet?
 5. `cheatsheet-language-reviewer` — US English, grammar, clarity, structure conventions.
 
+For sources and structure, check that every cheat sheet ends with the exact heading `## References`, usually listing 2–3 key authoritative primary sources, such as standards bodies, government publications, or official technical specifications/documentation. Exclude blogs, marketing pages, and generic resource lists from that section. Additional authoritative inline citations are welcome, and the final list may repeat key sources cited inline. Keep links selective without treating 2–3 as a hard cap or removing necessary claim support.
+
 ## Step 4 — Consolidate
 
 Synthesize the five reports plus your pre-checks into one decision. Do not just concatenate — **deduplicate** (if multiple reviewers flag the same issue, e.g. a vague sentence flagged by both language and practicality, report it once with both angles), resolve overlaps, rank by severity, and weigh:

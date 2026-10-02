@@ -24,11 +24,11 @@ Anti-fabrication (always):
 How much to cite (calibrated to what actually gets merged):
 
 - **Every new `## H2` section must contain at least one inline citation** `[text](https://...)` — this is the CI floor (`citation-check`). Beyond that, any **novel, surprising, parameter-specific, or contestable** claim needs its own source. Well-established common practice does not need a citation on every sentence.
-- Sources may be **inline** _or_ collected in a `## References` section — both are accepted (about half the series has no References section).
+- **Every cheat sheet must end with a `## References` section**, using that exact heading. Usually list **2–3 key authoritative primary sources**, such as standards bodies, government publications, or official technical specifications/documentation. Do not use blogs, marketing pages, or generic resource lists in this section.
 - Internal cross-links to other cheat sheets are encouraged (see rule 4) but do **not** satisfy the CI citation gate, which only counts `https://` links.
 - Cite **authoritative** sources: RFCs, NIST, OWASP, official vendor/project documentation, MDN, reputable tool docs and canonical source repositories (e.g. GitHub), or peer-reviewed research. Prefer the most authoritative source available and avoid SEO/marketing content farms — but a solid project doc, MDN page, or canonical repo is a valid citation (these are in fact the most-cited sources across the series).
 - The citation gate is a **floor, not a ceiling**: maintainers merge on overall soundness and may accept content that trips the gate, or reject well-cited content that is wrong.
-- Keep citations to a minimum. Preferably 2-3 per cheatsheet. If a cheatsheet requires many citations, the cheatsheet is possibly getting bulky and may need to be split up into several smaller cheatsheets, or be reduced in size.
+- Additional authoritative inline citations are welcome where they support specific claims; the final References section may repeat key sources cited inline. Keep links selective. The 2–3 reference target is not a reason to remove necessary claim support; if citations become extensive, narrow or split the cheat sheet.
 
 ### 2. Claims must be correct and within the security threat model
 
@@ -79,7 +79,7 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 
 - US English. Spell-check. Keep language simple for non-native readers. Define non-obvious acronyms on first use (not "HTTP"/"URL").
 - Markdown only — avoid raw HTML (only `details`/`summary` allowed). Lists use `-`. Bold uses `**`. Quotes use `>`.
-- **Structure (typical shape, not a hard contract):** H1 = cheat sheet name → `## Introduction` (open this way — ~82% of sheets do) → main H2 sections → an optional `## References`. Typically 3–6 H2 sections, but more is fine for broad topics. Sourcing can be a `## References` section or inline — both accepted. Blank line after every heading (markdownlint-enforced). The TOC is auto-generated — do not add one.
+- **Structure (typical shape; References is required):** H1 = cheat sheet name → `## Introduction` → main H2 sections → final `## References`. Typically 3–6 H2 sections, but more is fine for broad topics. Use the exact final heading `References`, not "Other Links" or "Further Reading". Blank line after every heading (markdownlint-enforced). The TOC is auto-generated — do not add one.
 - Filenames: letters/numbers/hyphens/underscores only, ending `_Cheat_Sheet.md`. New sheets start from [`templates/New_CheatSheet.md`](templates/New_CheatSheet.md).
 - Assets go in `assets/`, images in PNG, referenced as `![alt](../assets/NAME.png)`.
 - Links are inline with a descriptive label: `[Description](https://example.org)`. Always HTTPS where possible.

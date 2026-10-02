@@ -25,4 +25,4 @@ The main sections will vary based on the content of the cheat sheet. Generally t
 
 ## References
 
-Any useful references to other useful resources that aren't linked inline elsewhere in the cheat sheet.
+Keep this section last and use the exact heading `References`. Usually list 2–3 key authoritative primary sources, such as standards bodies, government publications, or official technical specifications/documentation. Exclude blogs, marketing pages, and generic resource lists. You may repeat key sources cited inline; keep additional authoritative inline citations where needed to support specific claims.

@@ -31,3 +31,9 @@ Follow [NHTSA's lifecycle practices, section 4.2](https://www.nhtsa.gov/sites/nh
 - Test rejected commands, malformed inputs, replay handling, and interrupted updates on isolated benches or simulators. Verify both security enforcement and safe failure behavior before vehicle deployment.
 - Log authentication failures, privileged operations, and update results without secrets. Assign responsibility for reviewing events and responding to reports.
 - For components that cannot be patched, restrict reachable interfaces and plan replacement. Gateway filtering reduces exposure but does not repair vulnerable firmware.
+
+## References
+
+- [NHTSA: Cybersecurity Best Practices for the Safety of Modern Vehicles](https://www.nhtsa.gov/sites/nhtsa.gov/files/2022-09/cybersecurity-best-practices-safety-modern-vehicles-2022-tag.pdf)
+- [AUTOSAR R25-11: Specification of Secure Onboard Communication](https://www.autosar.org/fileadmin/standards/R25-11/CP/AUTOSAR_CP_SWS_SecureOnboardCommunication.pdf)
+- [Uptane Standard 2.1.0: Update Verification and Installation](https://uptane.org/docs/2.1.0/standard/uptane-standard#543-installing-images-on-primary-or-secondary-ecus)
