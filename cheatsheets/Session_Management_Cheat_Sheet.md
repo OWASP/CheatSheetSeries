@@ -84,6 +84,18 @@ However, be advised that these frameworks have also presented vulnerabilities an
 
 The storage capabilities or repository used by the session management mechanism to temporarily save the session IDs must be secure, protecting the session IDs against local or remote accidental disclosure or unauthorized access.
 
+### Server-Side Session Token Storage
+
+Storing random session tokens verbatim can be acceptable in a tightly controlled session store, but anyone who can read it can reuse unexpired tokens. High entropy protects against guessing; it does not protect exposed tokens. If read-only disclosure of the store is in your threat model, store a one-way verifier instead. [RFC 6819 recommends token hashes](https://www.rfc-editor.org/rfc/rfc6819.html#section-4.3.2) for the corresponding OAuth access-token database threat.
+
+One approach is an [identifier and secret verifier split](https://auth.pilcrowonpaper.com/sessions). The cookie carries both values; the server stores the public lookup identifier and the full SHA-256 hash of the verifier. On every request, look up the session by identifier, hash the supplied verifier, and compare it with the stored hash using a constant-time comparison. Never accept the identifier alone as proof of authentication. Use a consistent verifier representation when creating and validating the session. A fast hash is sufficient for these random verifiers; password hashing algorithms are unnecessary.
+
+Generate the token, or the secret verifier in the split design, using a CSPRNG with at least 128 bits of entropy; prefer 160 bits or more, following [OAuth's guidance for generated credentials](https://www.rfc-editor.org/rfc/rfc6749.html#section-10.10). Generate the verifier independently of the identifier; the public identifier does not count toward the verifier's entropy.
+
+One-way storage protects against read-only disclosure of session records and backups that contain only verifier hashes. It does not protect against stolen cookies, modification of session records, or compromise of the application. Do not persist the raw verifier alongside its hash.
+
+In either design, restrict access to the session store and encrypt backups and replicas at rest. Follow the [session logging protections](#logging-sessions-life-cycle-monitoring-creation-usage-and-destruction-of-session-ids) and [session renewal guidance](#renew-the-session-id-after-any-privilege-level-change).
+
 ### Used vs. Accepted Session ID Exchange Mechanisms
 
 A web application should make use of cookies for session ID exchange management. If a user submits a session ID through a different exchange mechanism, such as a URL parameter, the web application should avoid accepting it as part of a defensive strategy to stop session fixation.

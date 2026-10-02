@@ -129,18 +129,14 @@ These are illustrative configuration fragments. The application opens and closes
 
 #### DocumentBuilderFactory (DOM)
 
-For Document Object Model (DOM) parsing, [reject DOCTYPE declarations](https://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl) and leave XInclude disabled. Install the rejecting resolver on each builder.
+For Document Object Model (DOM) parsing, [reject DOCTYPE declarations](https://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl) and leave XInclude disabled.
 
 ``` java
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newDefaultInstance();
 dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
 dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-dbf.setXIncludeAware(false);
 
 DocumentBuilder builder = dbf.newDocumentBuilder();
-builder.setEntityResolver((publicId, systemId) -> {
-    throw new SAXException("External references are not allowed");
-});
 Document doc = builder.parse(untrustedStream);
 ```
 
@@ -148,24 +144,18 @@ Document doc = builder.parse(untrustedStream);
 
 #### SAXParserFactory and XMLReader
 
-For Simple API for XML (SAX) parsing, configure the factory and install the resolver on its reader. A resolver that returns `null` delegates to the parser; throw to reject the reference.
+For Simple API for XML (SAX) parsing, reject DOCTYPE declarations on the factory before creating the reader.
 
 ``` java
 SAXParserFactory spf = SAXParserFactory.newDefaultInstance();
 spf.setNamespaceAware(true);
 spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
 spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-spf.setXIncludeAware(false);
 
 XMLReader reader = spf.newSAXParser().getXMLReader();
-reader.setEntityResolver((publicId, systemId) -> {
-    throw new SAXException("External references are not allowed");
-});
 reader.setContentHandler(handler);  // application's SAX content handler
 reader.parse(new InputSource(untrustedStream));
 ```
-
-Call `reader.parse(...)` directly. [`SAXParser.parse(source, DefaultHandler)` replaces the reader's resolver](https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.xml/share/classes/javax/xml/parsers/SAXParser.java#L389-L392) with the supplied handler.
 
 #### XMLInputFactory (StAX)
 
@@ -202,7 +192,7 @@ This configuration limits internal entity expansion but is not a sandbox for unt
 
 #### SchemaFactory and Validator
 
-Schema compilation and validation can each load external resources. For a trusted application-owned schema that needs no external resources, [restrict access before compiling the schema](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setProperty(java.lang.String,java.lang.Object)) and on the validator:
+Schema compilation and validation can each load external resources. For a trusted application-owned schema that needs no external resources, [restrict access on the factory before compiling the schema](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/validation/SchemaFactory.html#setProperty(java.lang.String,java.lang.Object)); these restrictions also apply during validation:
 
 ``` java
 SchemaFactory sf = SchemaFactory.newDefaultInstance();
@@ -212,8 +202,6 @@ sf.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 Schema schema = sf.newSchema(new StreamSource(trustedSchemaStream));
 
 Validator validator = schema.newValidator();
-validator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-validator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 validator.validate(new StreamSource(untrustedStream));
 ```
 
@@ -241,13 +229,15 @@ Object result = jaxbContext.createUnmarshaller().unmarshal(xsr);
 
 `newInstance()` can select a third-party provider whose settings differ. Verify the provider's documented controls and fail if a required setting is unsupported. Boolean features use `setFeature`; external-access properties use `setAttribute` on a DOM factory and `setProperty` on a SAX parser or reader.
 
-If internal DTDs are required, retain the rejecting resolver and set these [Xerces/SAX features](https://xerces.apache.org/xerces2-j/features.html#external-general-entities) to `false` instead of rejecting DOCTYPE:
+If internal DTDs are required, install an `EntityResolver` on the DOM builder or SAX reader that throws `SAXException` for external references. Returning `null` delegates resolution to the parser. Set these [Xerces/SAX features](https://xerces.apache.org/xerces2-j/features.html#external-general-entities) to `false` instead of rejecting DOCTYPE:
 
 - `http://xml.org/sax/features/external-general-entities`
 - `http://xml.org/sax/features/external-parameter-entities`
 - `http://apache.org/xml/features/nonvalidating/load-external-dtd`
 
 Keep XInclude disabled. The last feature only controls non-validating parsing; DTD validation needs an explicit policy for any required external DTD. Set applicable `ACCESS_EXTERNAL_*` properties to `""` when supported. A resolver does not limit internal entity expansion: enable [`FEATURE_SECURE_PROCESSING`](https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) where supported and configure the provider's processing limits. Secure processing alone is not a portable replacement for external-access restrictions.
+
+When using a SAX resolver, call `reader.parse(...)` directly. [`SAXParser.parse(source, DefaultHandler)` replaces the reader's resolver](https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.xml/share/classes/javax/xml/parsers/SAXParser.java#L389-L392) with the supplied handler.
 
 ### External resources for transformations and validation
 

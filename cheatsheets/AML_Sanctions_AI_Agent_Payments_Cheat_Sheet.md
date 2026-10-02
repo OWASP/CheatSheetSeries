@@ -164,19 +164,19 @@ Institutions must decide whether to run their own screening engine or use a host
 
 ## Section 8: Receipt Canonicalization (RFC 8785 / JCS)
 
-A compliance receipt is only verifiable across systems if every party serializes it to the **exact same bytes** before signing and verifying. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different byte streams for the *same* logical receipt, and a signature over one will fail against the other.
+When systems independently serialize the same JSON object for hashing or signature verification, they need an agreed byte representation. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different bytes for the same logical object.
 
-Use the **JSON Canonicalization Scheme (JCS), [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785)**, to produce a deterministic byte representation before hashing and signing. The signer canonicalizes, hashes (for example with SHA-256), then signs; every verifier canonicalizes the received receipt identically and checks the signature. This makes receipts verifiable by **any** counterparty, regulator, or downstream agent, not just the issuing system.
+[JSON Canonicalization Scheme (JCS), RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) provides one deterministic JSON representation for that use case. It is not required for every signed-token format: a [JSON Web Signature (JWS)](https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2) verifier checks the encoded signing input rather than reserializing the payload. Cross-system verification also needs an agreed signature profile and a trusted verification key. Canonicalization alone supplies neither.
 
 ### Do
 
-- Canonicalize every receipt with RFC 8785 (JCS) before signing, and again before verifying.
-- Sign over the hash of the canonical bytes, not raw or pretty-printed JSON.
-- Record the canonicalization, hash, and signature algorithm in the receipt (for example `canon: jcs`, `alg: ecdsa-p256-sha256`) so any verifier can reproduce it.
+- If the receipt profile calls for independently serializing JSON, canonicalize the agreed payload before signing and before verification.
+- Use the hashing and signing procedure required by the chosen signature profile and API; do not add a separate prehash unless that profile requires it.
+- Record the canonicalization and signature profile used so a verifier can reproduce the signing input.
 
 ### Don't
 
-- Don't sign framework-default or pretty-printed JSON, because key order or whitespace differences break cross-system verification.
+- For a profile that requires reconstructing signed JSON, don't rely on framework-default or pretty-printed serialization; key order and whitespace can differ across systems.
 - Don't assume two services emit identical JSON for the same object; they usually will not.
 
 ## Section 9: Cross-Agent Payment Accountability
@@ -203,6 +203,7 @@ A receipt stating "screened, no match" is meaningless without which version of t
 ### Do
 
 - Include the sanctions-list source(s), version or publication date, and screening timestamp **inside the signed receipt**.
+- Bind each screening result and list version to the specific transaction or payment intent in the signed data, so a later verifier can distinguish it from another transaction.
 - Define a maximum acceptable list age, record it in the receipt, and fail-closed if it is exceeded.
 - Make list freshness auditable after the fact from the receipt alone.
 

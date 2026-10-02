@@ -74,7 +74,7 @@
 
 [Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
 
-[Dependency Graph SBOM Cheat Sheet](cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.md) ![Bash](assets/Index_Bash.svg)
+[Dependency Graph SBOM Cheat Sheet](cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.md)
 
 [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Python](assets/Index_Python.svg)
 
@@ -163,6 +163,8 @@
 [MCP Security Cheat Sheet](cheatsheets/MCP_Security_Cheat_Sheet.md)
 
 [Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Java](assets/Index_Java.svg) ![Html](assets/Index_Html.svg) ![Php](assets/Index_Php.svg)
+
+[Micro Frontend Security Cheat Sheet](cheatsheets/Micro_Frontend_Security_Cheat_Sheet.md)
 
 [Microservices Security Cheat Sheet](cheatsheets/Microservices_Security_Cheat_Sheet.md)
 

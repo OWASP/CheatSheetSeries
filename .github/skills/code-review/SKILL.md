@@ -82,6 +82,10 @@ Spend the review on the judgment no check can make: whether a source supports
 its claim, whether the advice is correct, whether an example would actually run,
 and whether the content belongs in this sheet at this length.
 
+## Workflow approvals before merge or close
+
+When authorized to merge or close, run `npm run check-pr-approvals -- <PR> --repo OWASP/CheatSheetSeries` after the last push or description edit. This audits approval holds on all revisions and duplicate runs, which can expire as failures despite passing current checks. Follow `CONTRIBUTING.md`'s maintainer procedure: review before approving, cancel obsolete runs once queued, verify terminal status, and check final-commit CI separately. Keep fork approval protections and failure history intact; do not auto-approve unreviewed code.
+
 ## Pre-checks CI does not perform
 
 Skip scope arithmetic. `pr-scope-check` reports it; read its result, and when it

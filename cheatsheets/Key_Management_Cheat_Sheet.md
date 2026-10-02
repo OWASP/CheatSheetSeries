@@ -132,6 +132,8 @@ There are several reasons for this:
 
 According to `NIST SP 800-133`, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.
 
+All cryptographic operations (such as key generation, encryption, decryption, and digital signing) should be performed inside the isolated cryptographic security module boundary so that plaintext key material is never exposed outside the module ([OWASP Application Security Verification Standard (ASVS) 5.0 §13.3.3](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x22-V13-Configuration.md#v133-secret-management)). For higher-assurance deployments (such as OWASP ASVS 5.0 Level 3), applications should use hardware-backed modules, such as a [Hardware Security Module](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) or Trusted Platform Module (TPM), to significantly reduce the risk of key extraction or compromise in software memory.
+
 ## Key Management Lifecycle Best Practices
 
 ### Generation
@@ -148,17 +150,36 @@ The generated keys shall be transported (when necessary) using secure channels a
 
 ### Storage
 
-1. Developers must understand where cryptographic keys are stored within the application. Understand what memory devices the keys are stored on.
-2. Keys must be protected on both volatile and persistent memory, ideally processed within secure cryptographic modules.
-3. Keys should never be stored in plaintext format.
-4. Ensure all keys are stored in a cryptographic vault, such as a [hardware security module](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) or isolated cryptographic service.
-5. If you are planning on storing keys in offline devices/databases, then encrypt the keys using Key Encryption Keys (KEKs) prior to the export of the key material. KEK length (and algorithm) should be equivalent to or greater in strength than the keys being protected.
-6. Ensure that keys have integrity protections applied while in storage (consider dual purpose algorithms that support encryption and Message Code Authentication (MAC)).
-7. Ensure that standard application level code never reads or uses cryptographic keys in any way and use key management libraries.
-8. Ensure that keys and cryptographic operation is done inside the sealed vault.
-9. All work should be done in the vault (such as key access, encryption, decryption, signing, etc).
+1. Cryptographic keys, secrets, and API keys should **never** be committed to source code repositories or embedded in build artifacts (such as binaries, container images, or configuration files). Secrets and keys should be stored in a dedicated secrets-management solution or key vault ([OWASP ASVS 5.0 §13.3.1](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x22-V13-Configuration.md#v133-secret-management)).
+2. Developers must understand where cryptographic keys are stored within the application. Understand what memory devices the keys are stored on.
+3. Keys must be protected on both volatile and persistent memory, ideally processed within secure cryptographic modules.
+4. Keys should never be stored in plaintext format.
+5. Ensure all keys are stored in a cryptographic vault, such as a [hardware security module](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) or isolated cryptographic service.
+6. If you are planning on storing keys in offline devices/databases, then encrypt the keys using Key Encryption Keys (KEKs) prior to the export of the key material. KEK length (and algorithm) should be equivalent to or greater in strength than the keys being protected.
+7. Ensure that keys have integrity protections applied while in storage (consider dual purpose algorithms that support encryption and Message Code Authentication (MAC)).
+8. Ensure that standard application level code never reads or uses raw cryptographic keys in any way and use key management libraries.
+9. Ensure that keys and cryptographic operations are done inside the sealed vault.
+10. All work should be done in the vault (such as key access, encryption, decryption, signing, etc).
 
 For a more complete guide to storing sensitive information such as keys, see the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md).
+
+### Cryptoperiods and Rotation
+
+A cryptoperiod is the time span during which a specific cryptographic key is authorized for use. Limiting cryptoperiods restricts the amount of data protected by a single key and reduces the window of exposure if a key is compromised ([NIST SP 800-57 Part 1 Rev. 5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) Section 5.3). For storage-level rotation fundamentals and criteria, see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md#key-lifetimes-and-rotation).
+
+Representative cryptoperiods vary depending on the algorithm, key strength, operational environment, threat model, and sensitivity of the protected data. Organizations should define cryptoperiods through risk assessment in accordance with NIST SP 800-57 Part 1 Rev. 5.
+
+- **Rotation Schedule**: Establish and document a key rotation schedule based on the system's threat model and risk assessment ([OWASP ASVS 5.0 §13.1.4](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x22-V13-Configuration.md#v131-configuration-documentation), [§13.3.4](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x22-V13-Configuration.md#v133-secret-management)).
+- **Representative Cryptoperiod Examples**:
+    - **Symmetric Data Encryption Keys**: Originator usage (encrypting new data) should be capped at up to 2 years for general low-volume applications, or on the order of a day or a week for high-volume or link-encryption systems ([NIST SP 800-57 Part 1 Rev. 5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) §5.3.6, item 6(b)). Recipient usage (decryption) should typically be limited to no more than 3 years beyond the originator usage period.
+    - **TLS/HTTPS Server Keys and Certificates**: Plan certificate renewal around the validity limits in the [CA/Browser Forum Baseline Requirements §6.3.2](https://cabforum.org/working-groups/server/baseline-requirements/documents/CA-Browser-Forum-TLS-BR-2.3.0.pdf). Set key-replacement schedules separately; renewing a certificate does not necessarily replace its key pair.
+    - **Asymmetric Key Pairs**: Operational cryptoperiods depend on key usage ([NIST SP 800-57 Part 1 Rev. 5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) Table 1 & §5.3.6):
+        - **Digital Signature Keys**: Private signing keys typically have an originator cryptoperiod of 1 to 3 years; public signature verification keys may be retained longer to verify archived signed data.
+        - **Key Establishment Keys**: Static key-agreement pairs typically have an originator cryptoperiod of up to 1 to 2 years; ephemeral pairs are used for a single key-agreement transaction.
+- **Usage-Based Rotation Limits**: Key rotation must account for usage volume in addition to calendar time. For example, when using Advanced Encryption Standard in Galois/Counter Mode (AES-GCM) with random 96-bit initialization vectors (IVs), limit each key to at most `2^32` (4,294,967,296) encryption operations across all devices sharing that key to limit IV-collision risk ([NIST SP 800-38D §8.3](https://csrc.nist.gov/pubs/sp/800/38/d/final)).
+- **Handling Existing Encrypted Data (Envelope Encryption)**: To retire a Key Encryption Key (KEK), re-wrap stored Data Encryption Keys (DEKs) under the replacement KEK before destroying the old one. Rewrapping leaves the DEKs unchanged and does not reset their cryptoperiods or usage limits. Replacing a DEK for existing ciphertext requires re-encrypting that data. Managed services may retain old wrapping-key versions automatically; check the provider's [rotation behavior](https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html). For key IDs and data-migration choices, see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md#key-lifetimes-and-rotation).
+- **Automated Rotation**: Prefer automated key rotation using Key Management Services (KMS) or automated certificate management protocols (such as Automated Certificate Management Environment (ACME)) to reduce operational error and ensure timely updates.
+- **Manual Rotation Logging**: When manual key rotation is required, rotation events should be logged with the timestamp, operator identity, and management authorization reference.
 
 ### Escrow and Backup
 
@@ -171,6 +192,8 @@ Never escrow keys used for performing digital signatures, but consider the need 
 ### Accountability and Audit
 
 Accountability involves the identification of those that have access to, or control of, cryptographic keys throughout their lifecycles. Accountability can be an effective tool to help prevent key compromises and to reduce the impact of compromises once they are detected.
+
+Enforce the principle of least privilege for all key and secret assets ([OWASP ASVS 5.0 §13.3.2](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x22-V13-Configuration.md#v133-secret-management)). Access to cryptographic keys, key management interfaces, and secret material should be restricted strictly to authorized roles, services, and workloads with a verified operational need.
 
 Although it is preferred that no humans are able to view keys, as a minimum, the key management system should account for all individuals who are able to view plaintext cryptographic keys.
 
@@ -240,6 +263,17 @@ The compromise-recovery plan should contain:
     3. Identification of all signatures that may be invalid, due to the compromise of a signing key.
     4. Distribution of new keying material, if required.
 
+### Zeroization and Destruction
+
+Destruction is the final state in the cryptographic key lifecycle. Key management policies should account for the lifecycle key states described in [NIST SP 800-57 Part 1 Rev. 5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) Section 7 (such as pre-activation, active, suspended, deactivated, compromised, and destroyed).
+
+Revoke compromised keys promptly and stop using them to protect new data. Retain only tightly controlled access needed for recovery or migration of previously protected data. Destroy all copies of secret and private keys, including backup, archived, escrowed, and memory copies, as soon as they are no longer needed for decryption or recovery and retention requirements are satisfied. Public verification keys may be retained to verify archived signatures ([NIST SP 800-57 Part 1 Rev. 5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) Sections 7.5 and 8.3.4–8.3.5).
+
+- **Cryptographic Erasure**: For encrypted key material at rest, consider cryptographic erasure only when all copies of the protecting keys can be destroyed and no recoverable plaintext copies of the target material remain ([NIST SP 800-88 Rev. 2](https://csrc.nist.gov/pubs/sp/800/88/r2/final) Section 3.2). Destroying a wrapping key does not erase plaintext copies of the keys it protected.
+- **Software Memory**: Overwriting key material is best-effort in managed runtimes, where copies can survive in garbage-collected memory, immutable strings, or swapped-out pages. Use platform secure-memory or zeroization APIs where available; see [Protecting Secrets in Memory](Secrets_Management_Cheat_Sheet.md#25-handling-secrets-in-memory).
+- **Hardware Security Modules (HSMs)**: Use vendor-supplied zeroize or destroy commands to zeroize key material stored in volatile memory and non-volatile HSM storage.
+- **Physical Media**: Physically destroy obsolete storage media or cryptographic tokens containing key material in accordance with organizational sanitization standards.
+
 ## Trust Stores
 
 1. Design controls to secure the trust store against injection of third-party root certificates. The access controls are managed and enforced on an entity and application basis.
@@ -252,6 +286,10 @@ The compromise-recovery plan should contain:
 
 Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by third-party organizations (e.g., `NIST`/`FIPS`).
 
-## Documentation
+## References
 
-- [Practical cryptography for developers](https://cryptobook.nakov.com/).
+- [NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management - Part 1: General](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final)
+- [NIST SP 800-38D: Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC](https://csrc.nist.gov/pubs/sp/800/38/d/final)
+- [NIST SP 800-88 Rev. 2: Guidelines for Media Sanitization](https://csrc.nist.gov/pubs/sp/800/88/r2/final)
+- [OWASP Application Security Verification Standard (ASVS) 5.0 Chapter V13: Configuration](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x22-V13-Configuration.md)
+- [Practical Cryptography for Developers](https://cryptobook.nakov.com/)

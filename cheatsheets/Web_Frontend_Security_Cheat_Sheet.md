@@ -6,6 +6,8 @@ This cheat sheet was previously named the AJAX Security Cheat Sheet.
 
 This document will provide a starting point for AJAX security and will hopefully be updated and expanded reasonably often to provide more detailed information about specific frameworks and technologies.
 
+For applications that compose independently deployed frontend features, see the [Micro-Frontend Security Cheat Sheet](Micro_Frontend_Security_Cheat_Sheet.md) for runtime isolation, cross-application messaging, and host-to-remote trust boundaries.
+
 **Before applying any specific control, developers must adopt a fundamental security mindset:**
 All data should be considered untrusted unless explicitly validated and safely handled.
 This applies to:

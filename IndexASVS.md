@@ -243,6 +243,8 @@ None.
 
 [HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
 
+[Micro Frontend Security Cheat Sheet](cheatsheets/Micro_Frontend_Security_Cheat_Sheet.md)
+
 ### V3.6 External Resource Integrity
 
 [Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)

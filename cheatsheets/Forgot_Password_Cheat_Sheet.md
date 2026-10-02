@@ -45,6 +45,21 @@ Once the user has proved their identity by providing the token (sent via an emai
 - Once they have set their new password, the user should then login through the usual mechanism. Don't automatically log the user in, as this introduces additional complexity to the authentication and session handling code, and increases the likelihood of introducing vulnerabilities.
 - Ask the user if they want to invalidate all of their existing sessions, or invalidate the sessions automatically.
 
+### Account Recovery After Suspected Compromise
+
+A password reset alone may not restore control of a compromised account. An attacker may still have an active session or may have changed recovery information or MFA methods.
+
+When recovering a potentially compromised account:
+
+- Do not rely solely on recently added or changed recovery information. Use independent, previously established recovery evidence, such as saved recovery codes, in a combination that meets the account's assurance requirements. See [NIST account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#recovery).
+- Do not automatically restore superseded recovery addresses or phone numbers; they may have been replaced because they were lost or compromised.
+- Promptly suspend or invalidate authenticators identified as compromised, following [NIST guidance for compromised authenticators](https://pages.nist.gov/800-63-4/sp800-63b/events/#loss-theft-damage-and-compromise).
+- Review recovery addresses, phone numbers, and MFA methods with the verified account owner, and remove unauthorized changes. [Google's compromised-account guidance](https://support.google.com/accounts/answer/6294825) identifies these settings for review and correction.
+- After successful recovery, invalidate existing sessions and outstanding password reset and recovery links or codes so they cannot restore an attacker's access. See [session invalidation guidance](Session_Management_Cheat_Sheet.md#session-expiration).
+- Notify the user through all applicable registered notification addresses, including established channels that remain safe to use. Include instructions and contact information for reporting unauthorized recovery, as described in [NIST account notification guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#notification).
+
+See [reauthentication after risk events](Authentication_Cheat_Sheet.md#re-authentication-after-risk-events) and [MFA recovery](Multifactor_Authentication_Cheat_Sheet.md#resetting-mfa) for related controls.
+
 ## Methods
 
 In order to allow a user to request a password reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
