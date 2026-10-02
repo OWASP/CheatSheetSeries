@@ -30,5 +30,10 @@
   "bugs": {
     "url": "https://github.com/OWASP/CheatSheetSeries/issues"
   },
-  "homepage": "https://github.com/OWASP/CheatSheetSeries#readme"
+  "homepage": "https://github.com/OWASP/CheatSheetSeries#readme",
+  "overrides": {
+    "markdownlint-cli": {
+      "js-yaml": "^5.4.2"
+    }
+  }
 }
