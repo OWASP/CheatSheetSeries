@@ -74,7 +74,7 @@
 
 [Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
 
-[Dependency Graph SBOM Cheat Sheet](cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.md) ![Bash](assets/Index_Bash.svg)
+[Dependency Graph SBOM Cheat Sheet](cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.md)
 
 [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Python](assets/Index_Python.svg)
 
