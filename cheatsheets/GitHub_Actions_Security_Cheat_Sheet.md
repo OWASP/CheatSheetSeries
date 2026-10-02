@@ -184,6 +184,7 @@ Although some input contexts may appear relatively safe, it is better to always 
 
 Try to eliminate all static credentials (e.g., personal access tokens, static cloud keys) used in workflows. Migrate to OIDC-based short-lived authentication tokens ("Trusted publishing").
 Currently, many major registries and cloud providers [support](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments) this feature.
+For cloud deployment trust restrictions and credential handling, see the [Workload Identity Federation Cheat Sheet](Workload_Identity_Federation_Cheat_Sheet.md).
 
 #### Secure handling of static credentials (if elimination is unavoidable)
 
