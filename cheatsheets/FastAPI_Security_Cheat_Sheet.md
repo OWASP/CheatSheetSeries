@@ -160,11 +160,12 @@ FastAPI parses multipart uploads into `UploadFile` objects, which spool larger f
 
 ## Rate Limiting
 
-FastAPI does not include built-in rate-limiting capabilities.
+Apply request limits to reduce abuse of sensitive or expensive endpoints.
 
 ### Mitigation Options
 
 - Use a dedicated library like [slowapi](https://github.com/laurentS/slowapi) to implement route-specific rate limiting in code.
+- With multiple workers or replicas, use a shared counter store, such as Redis, so limits apply across instances instead of independently in each process.
 - Implement rate limiting at the reverse proxy (Nginx, HAProxy) or API gateway layer.
 
 ## ASGI Server Hardening
@@ -178,5 +179,5 @@ Configure the ASGI server's proxy trust explicitly so clients cannot spoof the c
 
 ## References
 
-- [OWASP API Security Top 10](https://owasp.org/projects/api-security-project)
+- [OWASP API Security Top 10 (2023)](https://owasp.github.io/API-Security/editions/2023/en/0x00-header/)
 - [OWASP REST Security Cheat Sheet](../cheatsheets/REST_Security_Cheat_Sheet.md)

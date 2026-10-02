@@ -20,6 +20,8 @@ Another key feature of REST applications is the use of standard HTTP verbs and e
 
 Another key feature of REST applications is the use of [HATEOAS or Hypermedia As The Engine of Application State](https://en.wikipedia.org/wiki/HATEOAS). This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without prior knowledge.
 
+For FastAPI applications, also see the [FastAPI Security Cheat Sheet](FastAPI_Security_Cheat_Sheet.md) for dependency-based access control, request and response models, and deployment settings.
+
 ## HTTPS
 
 Secure REST services must only provide HTTPS endpoints. This protects authentication credentials in transit, for example passwords, API keys or JSON Web Tokens. It also allows clients to authenticate the service and guarantees integrity of the transmitted data.

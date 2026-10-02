@@ -20,6 +20,8 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DotNet Security Cheat Sheet (Cross-Site Scripting)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a072017-cross-site-scripting-xss)
 
+[FastAPI Security Cheat Sheet](cheatsheets/FastAPI_Security_Cheat_Sheet.md)
+
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
 [Ruby on Rails Cheat Sheet (Tools)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#tools)
