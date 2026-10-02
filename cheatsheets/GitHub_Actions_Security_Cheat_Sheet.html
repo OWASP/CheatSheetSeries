@@ -4330,6 +4330,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Workload_Identity_Federation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workload Identity Federation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -5082,7 +5110,8 @@ Although some input contexts may appear relatively safe, it is better to always 
 <h3 id="protect-secrets-used-in-workflows">Protect secrets used in workflows<a class="headerlink" href="#protect-secrets-used-in-workflows" title="Permanent link">&para;</a></h3>
 <h4 id="try-to-eliminate-all-static-credentials-from-your-workflows">Try to eliminate all static credentials from your workflows<a class="headerlink" href="#try-to-eliminate-all-static-credentials-from-your-workflows" title="Permanent link">&para;</a></h4>
 <p>Try to eliminate all static credentials (e.g., personal access tokens, static cloud keys) used in workflows. Migrate to OIDC-based short-lived authentication tokens ("Trusted publishing").
-Currently, many major registries and cloud providers <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments">support</a> this feature.</p>
+Currently, many major registries and cloud providers <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments">support</a> this feature.
+For cloud deployment trust restrictions and credential handling, see the <a href="Workload_Identity_Federation_Cheat_Sheet.html">Workload Identity Federation Cheat Sheet</a>.</p>
 <h4 id="secure-handling-of-static-credentials-if-elimination-is-unavoidable">Secure handling of static credentials (if elimination is unavoidable)<a class="headerlink" href="#secure-handling-of-static-credentials-if-elimination-is-unavoidable" title="Permanent link">&para;</a></h4>
 <p>If complete elimination cannot be achieved:</p>
 <ul>

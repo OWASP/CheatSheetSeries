@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/OAuth2_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Workload_Identity_Federation_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Nodejs_Security_Cheat_Sheet.html">
+        <link rel="prev" href="Webhook_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+        <link rel="next" href="XML_External_Entity_Prevention_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>OAuth2 - OWASP Cheat Sheet Series</title>
+        <title>Workload Identity Federation - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#oauth-20-protocol-cheatsheet" class="md-skip">
+        <a href="#workload-identity-federation-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              OAuth2
+              Workload Identity Federation
             
           </span>
         </div>
@@ -2655,37 +2655,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    OAuth2
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="OAuth2_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="OAuth2_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -2701,153 +2674,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#terminology" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Terminology
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#oauth-20-essential-basics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OAuth 2.0 Essential Basics
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pkce-proof-key-for-code-exchange-mechanism" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PKCE - Proof Key for Code Exchange Mechanism
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implicit-grant-deprecated-do-not-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implicit Grant (DEPRECATED — DO NOT USE)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token-replay-prevention" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token Replay Prevention
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Token Replay Prevention">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pop-mechanisms-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PoP Mechanisms Comparison
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-to-use-pop-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to Use PoP Tokens
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#access-token-privilege-restriction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Access Token Privilege Restriction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resource-owner-password-credentials-grant" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Resource Owner Password Credentials Grant
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#client-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Client Authentication
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#other-recommendations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Recommendations
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4089,10 +3915,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Workload_Identity_Federation_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workload Identity Federation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Workload_Identity_Federation_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -4108,6 +3961,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understand-the-trust-boundary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understand the Trust Boundary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restrict-which-jobs-are-trusted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restrict Which Jobs Are Trusted
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limit-credential-exposure-and-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limit Credential Exposure and Permissions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-and-monitor-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify and Monitor Access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4343,10 +4282,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#terminology" class="md-nav__link">
+  <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Terminology
+        Introduction
       
     </span>
   </a>
@@ -4354,10 +4293,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#oauth-20-essential-basics" class="md-nav__link">
+  <a href="#understand-the-trust-boundary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        OAuth 2.0 Essential Basics
+        Understand the Trust Boundary
       
     </span>
   </a>
@@ -4365,10 +4304,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pkce-proof-key-for-code-exchange-mechanism" class="md-nav__link">
+  <a href="#restrict-which-jobs-are-trusted" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PKCE - Proof Key for Code Exchange Mechanism
+        Restrict Which Jobs Are Trusted
       
     </span>
   </a>
@@ -4376,10 +4315,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#implicit-grant-deprecated-do-not-use" class="md-nav__link">
+  <a href="#limit-credential-exposure-and-permissions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Implicit Grant (DEPRECATED — DO NOT USE)
+        Limit Credential Exposure and Permissions
       
     </span>
   </a>
@@ -4387,49 +4326,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#token-replay-prevention" class="md-nav__link">
+  <a href="#verify-and-monitor-access" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Token Replay Prevention
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Token Replay Prevention">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pop-mechanisms-comparison" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PoP Mechanisms Comparison
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-to-use-pop-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to Use PoP Tokens
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#access-token-privilege-restriction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Access Token Privilege Restriction
+        Verify and Monitor Access
       
     </span>
   </a>
@@ -4437,32 +4337,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#resource-owner-password-credentials-grant" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Resource Owner Password Credentials Grant
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#client-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Client Authentication
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#other-recommendations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Recommendations
+        References
       
     </span>
   </a>
@@ -4489,106 +4367,40 @@
   
 
 
-<h1 id="oauth-20-protocol-cheatsheet">OAuth 2.0 Protocol Cheatsheet<a class="headerlink" href="#oauth-20-protocol-cheatsheet" title="Permanent link">&para;</a></h1>
-<p>This cheatsheet describes the best current security practices for OAuth 2.0 as derived from its RFC. OAuth became the standard for API protection and the basis for federated login using OpenID Connect. OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables clients to verify the identity of the end user based on the authentication performed by an authorization server, as well as to obtain basic profile information about the end user in an interoperable and REST-like manner.</p>
-<p><strong>Note:</strong> OAuth 2.0 supports different token types to address various security and implementation requirements. <strong>Bearer tokens</strong> (RFC 6750) provide simplicity and broad adoption. <strong>Proof of Possession (PoP) tokens</strong> offer advanced security through cryptographic binding between tokens and clients. The appropriate token type depends on your application's security requirements, threat model, and implementation constraints.</p>
-<h2 id="terminology">Terminology<a class="headerlink" href="#terminology" title="Permanent link">&para;</a></h2>
+<h1 id="workload-identity-federation-cheat-sheet">Workload Identity Federation Cheat Sheet<a class="headerlink" href="#workload-identity-federation-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>Use workload identity federation instead of stored, long-lived cloud credentials for continuous integration and continuous deployment (CI/CD), when both platforms support it. This cheat sheet covers OpenID Connect (OIDC) federation for deployment jobs. It removes the need to keep a reusable cloud key in the pipeline, as described in <a href="https://docs.github.com/en/actions/concepts/security/openid-connect">GitHub's OIDC overview</a>. Manage secrets that cannot be replaced through the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a>.</p>
+<p>Federation does not make a compromised job trustworthy. Code running in an authorized job can use its identity and credentials. Keep untrusted pull request code out of jobs that can obtain production access; apply the <a href="CI_CD_Security_Cheat_Sheet.html">CI/CD Security Cheat Sheet</a> and, where applicable, the <a href="GitHub_Actions_Security_Cheat_Sheet.html">GitHub Actions Security Cheat Sheet</a>. See GitHub's explanation of <a href="https://docs.github.com/en/actions/concepts/security/compromised-runners">compromised runner risks</a>.</p>
+<h2 id="understand-the-trust-boundary">Understand the Trust Boundary<a class="headerlink" href="#understand-the-trust-boundary" title="Permanent link">&para;</a></h2>
+<p>The CI/CD platform issues a signed OIDC token describing the job. The job presents it to the cloud provider, which validates it against a configured trust policy before issuing temporary credentials. These may be access tokens or temporary access keys, depending on the provider. Use the provider's supported federation integration; do not implement a token validator in the pipeline. See the <a href="https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines">Google Cloud deployment pipeline integration</a>.</p>
+<p>A valid signature establishes who issued the token, not whether the job should have production access. Configure both controls:</p>
 <ul>
-<li><strong>Client</strong>: Generally refers to an application making protected resource requests on behalf of the resource owner and with its authorization. The term "client" does not imply any particular implementation characteristics (e.g., whether the application executes on a server, a desktop, or other devices).</li>
-<li><strong>Authorization Server (AS)</strong>: Refers to the server issuing access tokens to the client after successfully authenticating the resource owner and obtaining consent from the resource owner.</li>
-<li><strong>Resource Owner (RO)</strong>: Refers to an entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end user. It can also be an organization or system.</li>
-<li>
-<p><strong>Resource Server (RS)</strong>: Refers to the server hosting the protected resources, capable of accepting and responding to protected resource requests using access tokens.</p>
-</li>
-<li>
-<p><strong>Access Tokens</strong>: Provide an abstraction, replacing different authorization constructs (e.g., username and password, assertion) by a single token understood by the resource server. This abstraction enables issuing access tokens valid for a short period, as well as removing the resource server's need to understand a wide range of authentication schemes. The most common type is the <strong>bearer token</strong> (RFC 6750), which is straightforward to implement and integrate, requiring only the token value for API access. Since anyone possessing a bearer token can use it, bearer tokens must be restricted to a single audience (Resource Server) to limit the impact of token leakage.</p>
-</li>
-<li>
-<p><strong>Refresh Tokens</strong> are credentials used to obtain access tokens. These are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner). Refresh tokens should be protected using sender-constraining mechanisms (DPoP or mTLS) or refresh token rotation.</p>
-</li>
-<li>
-<p><strong>Proof of Possession (PoP) tokens</strong>: Access tokens or refresh tokens that are cryptographically bound to clients through mechanisms like DPoP (RFC 9449) or mTLS-bound access tokens (RFC 8705). These tokens are bound to a private key owned by the client and the client must demonstrate possession of this private key in order to use the token. This approach provides additional protection in scenarios where token interception is a concern, with additional implementation requirements for key management and proof generation.</p>
-</li>
+<li><strong>Trust policy:</strong> which external workloads may obtain credentials.</li>
+<li><strong>Permissions policy:</strong> which resources and operations those credentials authorize. A tightly scoped trust policy does not compensate for an administrative deployment role. <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html">AWS distinguishes the role's trust and permissions policies</a>.</li>
 </ul>
-<h2 id="oauth-20-essential-basics">OAuth 2.0 Essential Basics<a class="headerlink" href="#oauth-20-essential-basics" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Clients and Authorization Server must not expose URLs that forward the user's browser to arbitrary URIs obtained from a query parameter ("open redirectors") which can enable exfiltration of authorization codes and access tokens.</li>
-<li>Clients have ensured that the Authorization Server supports PKCE may rely on the CSRF protection provided by PKCE. In OpenID Connect flows, the "nonce" parameter provides CSRF protection. Otherwise, one-time user CSRF tokens carried in the "state" parameter that are securely bound to the user agent must be used for CSRF protection.</li>
-<li>When an OAuth Client can interact with more than one Authorization Server, Clients should use the issuer "iss" parameter as a countermeasure, or based on an "iss" value in the authorization response (such as the "iss" Claim in the ID Token in OpenID)</li>
-<li>When the other countermeasure options for OAuth clients interacting with more than one Authorization Servers are absent, Clients may instead use distinct redirect URIs to identify authorization endpoints and token endpoints.</li>
-<li>An Authorization Server avoids forwarding or redirecting a request potentially containing user credentials accidentally.</li>
-</ol>
-<h2 id="pkce-proof-key-for-code-exchange-mechanism">PKCE - Proof Key for Code Exchange Mechanism<a class="headerlink" href="#pkce-proof-key-for-code-exchange-mechanism" title="Permanent link">&para;</a></h2>
-<p>OAuth 2.0 public clients utilizing the Authorization Code Grant are susceptible to the authorization code interception attack. Proof Key for Code Exchange (PKCE, pronounced "pixy") is the technique used to mitigate against the threat of authorization code interception attack.</p>
-<p>Originally, PKCE is intended to be used solely focused on securing native apps, but then it became a deployed OAuth feature. It does not only protect against authorization code injection attacks but also protects authorization codes created for public clients as PKCE ensures that the attacker cannot redeem a stolen authorization code at the token endpoint of the authorization server without knowledge of the code_verifier.</p>
-<ol start="6">
-<li>Clients are preventing injection (replay) of authorization codes into the authorization response by using PKCE flow. Additionally, clients may use the OpenID Connect "nonce" parameter and the respective Claim in the ID Token instead. The PKCE challenge or OpenID Connect "nonce" must be transaction-specific and securely bound to the client and the user agent in which the transaction was started. <strong>Note:</strong> PKCE protects authorization codes; use sender-constrained tokens to protect access and refresh tokens.</li>
-<li>When using PKCE, Clients should use PKCE code challenge methods that do not expose the PKCE verifier in the authorization request. Otherwise, attackers who can read the authorization request can break the security provided by the PKCE. Authorization servers must support PKCE.</li>
-<li>If a Client sends a valid PKCE "code_challenge" parameter in the authorization request, the authorization server enforces the correct usage of "code_verifier" at the token endpoint.</li>
-<li>Authorization Servers are mitigating PKCE Downgrade Attacks by ensuring a token request containing a "code_verifier" parameter is accepted only if a "code_challenge" parameter is present in the authorization request.</li>
-</ol>
-<h2 id="implicit-grant-deprecated-do-not-use">Implicit Grant (DEPRECATED — DO NOT USE)<a class="headerlink" href="#implicit-grant-deprecated-do-not-use" title="Permanent link">&para;</a></h2>
-<p>The Implicit Grant (<code>response_type=token</code>) is <strong>deprecated</strong> by <a href="https://datatracker.ietf.org/doc/html/rfc9700#section-2.1.2">RFC 9700 §2.1.2</a> and removed from OAuth 2.1. It exposes access tokens in the URL fragment, which leaks via browser history, referrer headers, and proxy/server logs, and cannot be sender-constrained. Major identity providers have either disabled it or marked it for removal.</p>
-<ol start="10">
-<li>Clients <strong>must</strong> use the Authorization Code Grant with PKCE (<code>response_type=code</code>) for all client types, including SPAs and native applications. Existing applications using the Implicit Grant must migrate. The hybrid <code>code id_token</code> response type may be used only when an OpenID Connect ID Token is required at the authorization endpoint; access tokens must still be obtained via the token endpoint and never via the front channel.</li>
-</ol>
-<h2 id="token-replay-prevention">Token Replay Prevention<a class="headerlink" href="#token-replay-prevention" title="Permanent link">&para;</a></h2>
-<p>Token security is a critical aspect of OAuth 2.0 implementations. Sender-constrained tokens establish a binding between the token and the client. Proof of Possession (PoP) tokens are a specific type of sender-constrained token that use cryptographic binding through a private key owned by the client. This binding requires the client to demonstrate possession of the private key when using the token, adding a layer of security through client authentication at the token usage level.</p>
-<h3 id="pop-mechanisms-comparison">PoP Mechanisms Comparison<a class="headerlink" href="#pop-mechanisms-comparison" title="Permanent link">&para;</a></h3>
-<p><strong>DPoP (Demonstration of Proof of Possession - RFC 9449):</strong></p>
+<h2 id="restrict-which-jobs-are-trusted">Restrict Which Jobs Are Trusted<a class="headerlink" href="#restrict-which-jobs-are-trusted" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The client generates a public-private key pair. The Authorization Server can sender-constrain the access token to the client's public key, for example by including a <code>cnf</code> (confirmation) claim with a JWK thumbprint (<code>jkt</code>), although this is optional and implementation-dependent. For each API request, the client includes a proof-of-possession of its private key taking the form of a JWT signed with this private key that includes a hash of the access token. The Resource Server validates both the access token and the DPoP proof (including the token hash) to ensure the request originates from the legitimate token holder.</li>
-<li>It does not require mutual TLS authentication; proof is provided via the DPoP HTTP headers; suitable for various client types including browsers and mobile applications; requires additional cryptographic operations per request.</li>
+<li>Configure the exact trusted issuer (<code>iss</code>), expected audience (<code>aud</code>), and allowed subject (<code>sub</code>) or equivalent workload attributes. The provider must validate the signature and token validity period as well as these restrictions. Use the actual claims issued for your job and the provider's documented matching rules; for example, <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-considerations">Microsoft Entra requires matching issuer, subject, and audience values</a>.</li>
+<li>Restrict access to the intended organization, repository or project, and deployment context. Trusting a shared CI/CD issuer alone can admit other tenants. Prefer immutable, non-reusable organization and repository identifiers where supported, rather than names that another owner could acquire. <a href="https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines">Google Cloud documents these tenant restrictions and identifier risks</a>.</li>
+<li>Allow only the required branches, environments, or workflows. Avoid wildcards that admit every repository or every job context. Verify which claims the cloud provider can actually enforce; a claim's presence in a token does not mean it is available as a policy condition. Follow the provider's integration documentation, such as <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws">GitHub's AWS OIDC configuration guidance</a>.</li>
+<li>When trusting a deployment environment, protect who can use it and which branches or tags may deploy to it. For GitHub Actions, the default environment-based subject does not also contain the branch. Match the subject format configured for your repository and enforce the branch restriction through environment protection or another supported condition. See the <a href="https://docs.github.com/en/actions/reference/security/oidc">GitHub OIDC subject reference</a>.</li>
 </ul>
-<p><strong>Mutual TLS Certificate-Bound Access Tokens (RFC 8705):</strong></p>
+<h2 id="limit-credential-exposure-and-permissions">Limit Credential Exposure and Permissions<a class="headerlink" href="#limit-credential-exposure-and-permissions" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The client authenticates using a TLS client certificate during the TLS handshake (mutual TLS authentication, mTLS). The Authorization Server binds the access token to the client certificate's thumbprint via the <code>cnf</code> claim. The Resource Server validates that the certificate presented during the TLS handshake matches the certificate bound to the access token.</li>
-<li>It operates at the transport layer; leverages existing TLS infrastructure; can use PKI or self-signed certificates for certificate management; authentication occurs during connection establishment; no per-request proof generation needed.</li>
+<li>Grant only the cloud operations and resources the deployment needs. Use separate identities and trust rules for production and non-production. Keep federation configuration and permission administration outside ordinary deployment roles to prevent a compromised job from widening its own access. See <a href="https://docs.cloud.google.com/iam/docs/best-practices-for-using-workload-identity-federation">Google Cloud's federation security practices</a>.</li>
+<li>Enable OIDC token requests only for jobs that need cloud access. In GitHub Actions, set <code>id-token: write</code> at the job level; it permits token requests and does not itself grant cloud permissions. See <a href="https://docs.github.com/en/actions/reference/security/oidc#workflow-permissions-for-the-requesting-the-oidc-token">GitHub's OIDC permission requirements</a>.</li>
+<li>Request the shortest credential lifetime the provider supports that meets the job's needs. Do not assume credentials expire when the job ends or when its OIDC token expires: issued cloud credentials have their own lifetime. For example, <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_control-access_disable-perms.html">AWS temporary credentials remain valid until expiry unless their access is disabled</a>.</li>
+<li>Treat both the OIDC token and issued credentials as secrets: do not print them, place them in artifacts or caches, or pass them to unrelated jobs. After verifying migration, revoke the replaced static keys and remove pipeline copies so they cannot bypass the federation restrictions. Apply the <a href="Secrets_Management_Cheat_Sheet.html#27-secret-lifecycle">Secrets Management lifecycle guidance</a>.</li>
 </ul>
-<h3 id="when-to-use-pop-tokens">When to Use PoP Tokens<a class="headerlink" href="#when-to-use-pop-tokens" title="Permanent link">&para;</a></h3>
-<p>Proof of Possession tokens are particularly valuable in scenarios requiring enhanced token security properties. Consider PoP tokens for:</p>
+<h2 id="verify-and-monitor-access">Verify and Monitor Access<a class="headerlink" href="#verify-and-monitor-access" title="Permanent link">&para;</a></h2>
+<p>Before production use, test the permitted deployment and verify that unauthorized repositories, branches, and job contexts cannot obtain production credentials. Confirm that the authorized job cannot access resources outside its assigned permissions. Repeat these checks after changes to trust policies, claim formats, or workflow configuration. Use the platform's documented claims, such as the <a href="https://docs.github.com/en/actions/reference/security/oidc">GitHub OIDC reference</a>, to select relevant cases.</p>
+<p>Enable cloud audit events for token exchange and role or service account use. Check which identity fields are recorded and correlate them with CI/CD run records; complete workflow attribution is not automatic. For example, <a href="https://docs.cloud.google.com/iam/docs/best-practices-for-using-workload-identity-federation#enable-data-access-logs">Google Cloud requires enabling relevant data access logs and choosing an unambiguous subject mapping</a>. Alert on unexpected identities and changes to federation trust or permissions.</p>
+<p>Prepare to stop new credential issuance and restrict already-issued credentials if a job is compromised. Removing a trust relationship alone is not a guarantee that existing sessions stop working. Follow the provider's incident procedure, such as <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_revoke-sessions.html">revoking AWS role session permissions</a>, and account for policy propagation delays.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Access tokens that need to be used for more than one audience (Resource Server), as PoP tokens can be safely used across multiple audiences unlike bearer tokens which must be restricted to a single audience</li>
-<li>APIs handling sensitive data (financial, healthcare, personal information, etc.) where additional security layers are beneficial</li>
-<li>High-value transactions (payments, critical operations, etc.) where cryptographic client binding adds assurance</li>
-<li>Long-lived tokens where extended validity periods warrant additional protection mechanisms</li>
-<li>Cross-organizational access (B2B integrations) involving multiple security domains</li>
-<li>Mobile and native applications where the client environment may present additional security considerations</li>
-<li>Distributed architectures where tokens traverse multiple network boundaries</li>
-</ul>
-<p>The selection of token security approach should consider the application's security requirements, existing infrastructure, client capabilities, and operational resources.</p>
-<ol start="11">
-<li>For advanced protection against token replay scenarios, Authorization and Resource Servers may implement mechanisms for sender-constraining access tokens, such as Mutual TLS for OAuth 2.0 (mTLS - RFC 8705) or Demonstration of Proof of Possession (DPoP - RFC 9449). These mechanisms cryptographically bind tokens to specific clients through proof-of-possession of the private key.</li>
-<li>Refresh tokens are sender-constrained (using DPoP or mTLS) or use refresh token rotation (issuing new refresh tokens and invalidating old ones immediately to detect replay attempts). <strong>Note:</strong> Combining PoP-constrained refresh tokens with rotation provides defense-in-depth.</li>
-</ol>
-<h2 id="access-token-privilege-restriction">Access Token Privilege Restriction<a class="headerlink" href="#access-token-privilege-restriction" title="Permanent link">&para;</a></h2>
-<ol start="13">
-<li>The privileges associated with an access token should be restricted to the minimum required for the particular application or use case. This prevents clients from exceeding the privileges authorized by the Resource Owner. It also prevents users from exceeding their privileges authorized by the respective security policy. Privilege restrictions also help to reduce the impact of access token leakage. <strong>Combine with sender-constrained tokens for defense-in-depth.</strong></li>
-<li>Access tokens are restricted to certain Resource Servers (audience restriction), preferably to a single Resource Server. The Authorization Server should associate the access token with certain Resource Servers and every Resource Server is obliged to verify, for every request, whether the access token sent with that request was meant to be used for that particular Resource Server. If not, the Resource Server must refuse to serve the respective request. Clients and Authorization Servers may utilize the parameters "scope" and "resource", respectively to determine the Resource Server they want to access.</li>
-<li>Access tokens are restricted to certain resources and actions on Resource Servers or resources. The Authorization Server should associate the access token with the respective resource and actions and every Resource Server is obliged to verify, for every request, whether the access token sent with that request was meant to be used for that particular action on the particular resource. If not, the Resource Server must refuse to serve the respective request. Clients and Authorization Servers may utilize the parameters "scope" and "authorization_details" to determine those resources and/or actions.</li>
-</ol>
-<h2 id="resource-owner-password-credentials-grant">Resource Owner Password Credentials Grant<a class="headerlink" href="#resource-owner-password-credentials-grant" title="Permanent link">&para;</a></h2>
-<ol start="16">
-<li>The Resource Owner password credentials grant is not used. This grant type insecurely exposes the credentials of the Resource Owner to the client, increasing the attack surface of the application.</li>
-</ol>
-<h2 id="client-authentication">Client Authentication<a class="headerlink" href="#client-authentication" title="Permanent link">&para;</a></h2>
-<ol start="17">
-<li>Authorization Servers are using client authentication if possible. It is recommended to use asymmetric (public-key based) methods for client authentication such as mTLS or "private_key_jwt" (OpenID Connect). When asymmetric methods for client authentication are used, Authorization Servers do not need to store sensitive symmetric keys, making these methods more robust against several attacks.</li>
-</ol>
-<h2 id="other-recommendations">Other Recommendations<a class="headerlink" href="#other-recommendations" title="Permanent link">&para;</a></h2>
-<ol start="18">
-<li>Authorization Servers do not allow clients to influence their "client_id" or "sub" value or any other Claim that can be confused with a genuine Resource Owner. It is recommended to use end-to-end TLS.</li>
-<li>Authorization responses are not transmitted over unencrypted network connections. Authorization Servers must not allow redirect URIs that use the "http" scheme except for native clients that use Loopback Interface Redirection.</li>
-</ol>
-<p>References:</p>
-<ul>
-<li><a href="https://www.rfc-editor.org/info/rfc6749">RFC 6749: OAuth 2.0 Authorization Framework</a></li>
-<li><a href="https://www.rfc-editor.org/info/rfc6750">RFC 6750: OAuth 2.0 Bearer Token Usage</a></li>
-<li><a href="https://www.rfc-editor.org/info/rfc8705">RFC 8705: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens</a></li>
-<li><a href="https://www.rfc-editor.org/info/rfc9207">RFC 9207: OAuth 2.0 Security Best Current Practice</a></li>
-<li><a href="https://www.rfc-editor.org/info/rfc9449">RFC 9449: OAuth 2.0 Demonstrating Proof of Possession (DPoP)</a></li>
-<li><a href="https://www.rfc-editor.org/rfc/rfc9207.html#section-4.4">Mix-Up Attacks (RFC 9207, Section 4.4)</a></li>
-<li><a href="https://www.rfc-editor.org/rfc/rfc9207.html#section-4.4.2">Countermeasures for Mix-Up Attacks (RFC 9207, Section 4.4.2)</a></li>
+<li><a href="https://docs.github.com/en/actions/reference/security/oidc">GitHub: OpenID Connect reference</a></li>
+<li><a href="https://docs.cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines">Google Cloud: Workload Identity Federation with deployment pipelines</a></li>
+<li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html">AWS: Create a role for OpenID Connect federation</a></li>
 </ul>
 
 
