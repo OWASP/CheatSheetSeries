@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Prototype_Pollution_Prevention_Cheat_Sheet.html">
+        <link rel="prev" href="User_Privacy_Protection_Cheat_Sheet.html">
       
       
-        <link rel="next" href="RAG_Security_Cheat_Sheet.html">
+        <link rel="next" href="Virtual_Patching_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Query Parameterization - OWASP Cheat Sheet Series</title>
+        <title>Verifying Third Party Agent Execution Evidence - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#query-parameterization-cheat-sheet" class="md-skip">
+        <a href="#verifying-third-party-agent-execution-evidence-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Query Parameterization
+              Verifying Third Party Agent Execution Evidence
             
           </span>
         </div>
@@ -2823,37 +2823,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Query Parameterization
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -2869,287 +2842,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameterized-query-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Parameterized Query Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parameterized Query Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prepared-statement-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prepared Statement Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Prepared Statement Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-java-built-in-feature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Java built-in feature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-java-with-hibernate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Java with Hibernate
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-net-built-in-feature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using .NET built-in feature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-asp-net-built-in-feature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using ASP .NET built-in feature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-ruby-with-activerecord" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Ruby with ActiveRecord
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-ruby-built-in-feature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Ruby built-in feature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-php-with-php-data-objects" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using PHP with PHP Data Objects
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-cold-fusion-built-in-feature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Cold Fusion built-in feature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-perl-with-database-independent-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using PERL with Database Independent Interface
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-rust-with-sqlx" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Rust with SQLx
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stored-procedure-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stored Procedure Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Stored Procedure Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#oracle-using-plsql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Oracle using PL/SQL
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Oracle using PL/SQL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#normal-stored-procedure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Normal Stored Procedure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stored-procedure-using-bind-variables-in-sql-run-with-execute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stored Procedure Using Bind Variables in SQL Run with EXECUTE
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sql-server-using-transact-sql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SQL Server using Transact-SQL
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="SQL Server using Transact-SQL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#normal-stored-procedure_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Normal Stored Procedure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stored-procedure-using-bind-variables-in-sql-run-with-exec" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stored Procedure Using Bind Variables in SQL Run with EXEC
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3943,10 +3635,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verifying Third Party Agent Execution Evidence
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -3962,6 +3681,170 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#six-questions-to-ask-about-an-execution-record" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Six Questions to Ask About an Execution Record
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Six Questions to Ask About an Execution Record">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-who-could-have-written-or-altered-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Who could have written or altered it?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-what-does-the-timing-evidence-actually-establish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What does the timing evidence actually establish?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-does-it-identify-the-intended-artifact-and-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Does it identify the intended artifact and execution?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-would-an-omitted-event-be-detectable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Would an omitted event be detectable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-what-happens-when-recording-or-delivery-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. What happens when recording or delivery fails?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-can-the-reviewer-verify-it-without-being-able-to-forge-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Can the reviewer verify it without being able to forge it?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-and-donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do's and Don'ts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Do&#39;s and Don&#39;ts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4432,34 +4315,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parameterized-query-examples" class="md-nav__link">
+  <a href="#six-questions-to-ask-about-an-execution-record" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parameterized Query Examples
+        Six Questions to Ask About an Execution Record
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Parameterized Query Examples">
+    <nav class="md-nav" aria-label="Six Questions to Ask About an Execution Record">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#prepared-statement-examples" class="md-nav__link">
+  <a href="#1-who-could-have-written-or-altered-it" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prepared Statement Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Prepared Statement Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-java-built-in-feature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Java built-in feature
+        1. Who could have written or altered it?
       
     </span>
   </a>
@@ -4467,10 +4338,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-java-with-hibernate" class="md-nav__link">
+  <a href="#2-what-does-the-timing-evidence-actually-establish" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using Java with Hibernate
+        2. What does the timing evidence actually establish?
       
     </span>
   </a>
@@ -4478,10 +4349,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-net-built-in-feature" class="md-nav__link">
+  <a href="#3-does-it-identify-the-intended-artifact-and-execution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using .NET built-in feature
+        3. Does it identify the intended artifact and execution?
       
     </span>
   </a>
@@ -4489,10 +4360,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-asp-net-built-in-feature" class="md-nav__link">
+  <a href="#4-would-an-omitted-event-be-detectable" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using ASP .NET built-in feature
+        4. Would an omitted event be detectable?
       
     </span>
   </a>
@@ -4500,10 +4371,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-ruby-with-activerecord" class="md-nav__link">
+  <a href="#5-what-happens-when-recording-or-delivery-fails" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using Ruby with ActiveRecord
+        5. What happens when recording or delivery fails?
       
     </span>
   </a>
@@ -4511,10 +4382,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-ruby-built-in-feature" class="md-nav__link">
+  <a href="#6-can-the-reviewer-verify-it-without-being-able-to-forge-it" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using Ruby built-in feature
+        6. Can the reviewer verify it without being able to forge it?
       
     </span>
   </a>
@@ -4522,146 +4393,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-php-with-php-data-objects" class="md-nav__link">
+  <a href="#worked-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using PHP with PHP Data Objects
+        Worked Examples
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-cold-fusion-built-in-feature" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Cold Fusion built-in feature
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-perl-with-database-independent-interface" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using PERL with Database Independent Interface
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-rust-with-sqlx" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using Rust with SQLx
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stored-procedure-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stored Procedure Examples
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Stored Procedure Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#oracle-using-plsql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Oracle using PL/SQL
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Oracle using PL/SQL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#normal-stored-procedure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Normal Stored Procedure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stored-procedure-using-bind-variables-in-sql-run-with-execute" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stored Procedure Using Bind Variables in SQL Run with EXECUTE
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sql-server-using-transact-sql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SQL Server using Transact-SQL
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="SQL Server using Transact-SQL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#normal-stored-procedure_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Normal Stored Procedure
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stored-procedure-using-bind-variables-in-sql-run-with-exec" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stored Procedure Using Bind Variables in SQL Run with EXEC
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -4671,13 +4409,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
+  <a href="#dos-and-donts" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References
+        Do's and Don'ts
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Do&#39;s and Don&#39;ts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4701,168 +4467,119 @@
   
 
 
-<h1 id="query-parameterization-cheat-sheet">Query Parameterization Cheat Sheet<a class="headerlink" href="#query-parameterization-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="verifying-third-party-agent-execution-evidence-cheat-sheet">Verifying Third-Party Agent Execution Evidence Cheat Sheet<a class="headerlink" href="#verifying-third-party-agent-execution-evidence-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p><a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> is one of the most dangerous web vulnerabilities. As of the <a href="https://owasp.org/Top10/2025/A05_2025-Injection/">OWASP Top 10:2025</a>, it is categorized under A05:2025-Injection.</p>
-<p>It represents a serious threat because SQL Injection allows evil attacker code to change the structure of a web application's SQL statement in a way that can steal data, modify data, or potentially facilitate command injection to the underlying OS.</p>
-<p>This cheat sheet is a derivative work of the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
-<h2 id="parameterized-query-examples">Parameterized Query Examples<a class="headerlink" href="#parameterized-query-examples" title="Permanent link">&para;</a></h2>
-<p>SQL Injection is best prevented through the use of <a href="SQL_Injection_Prevention_Cheat_Sheet.html"><em>parameterized queries</em></a>. The following chart demonstrates, with real-world code samples, how to build parameterized queries in most of the common web languages. The purpose of these code samples is to demonstrate to the web developer how to avoid SQL Injection when building database queries within a web application.</p>
-<p>Please note, many client side frameworks and libraries offer client side query parameterization. These libraries often just build queries with string concatenation before sending raw queries to a server. Please ensure that query parameterization is done server-side!</p>
-<h3 id="prepared-statement-examples">Prepared Statement Examples<a class="headerlink" href="#prepared-statement-examples" title="Permanent link">&para;</a></h3>
-<h4 id="using-java-built-in-feature">Using Java built-in feature<a class="headerlink" href="#using-java-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"customerName"</span><span class="p">);</span>
-<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"SELECT account_balance FROM user_data WHERE user_name = ? "</span><span class="p">;</span><span class="w">  </span>
-<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span>
-<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span>
-<span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span>
-</code></pre></div>
-<h4 id="using-java-with-hibernate">Using Java with Hibernate<a class="headerlink" href="#using-java-with-hibernate" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">// HQL</span>
-<span class="nd">@Entity</span><span class="w"> </span><span class="c1">// declare as entity;</span>
-<span class="nd">@NamedQuery</span><span class="p">(</span>
-<span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">"findByDescription"</span><span class="p">,</span>
-<span class="w"> </span><span class="n">query</span><span class="o">=</span><span class="s">"FROM Inventory i WHERE i.productDescription = :productDescription"</span>
-<span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Inventory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="nd">@Id</span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">productDescription</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// Use case</span>
-<span class="c1">// This should REALLY be validated too</span>
-<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"Product-Description"</span><span class="p">);</span>
-<span class="c1">// Perform input validation to detect attacks</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Inventory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span>
-<span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">"findByDescription"</span><span class="p">)</span>
-<span class="w"> </span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">"productDescription"</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span>
-
-<span class="c1">// Criteria API</span>
-<span class="c1">// This should REALLY be validated too</span>
-<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">"Product-Description"</span><span class="p">);</span>
-<span class="c1">// Perform input validation to detect attacks</span>
-<span class="n">Inventory</span><span class="w"> </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Inventory</span><span class="p">)</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span>
-<span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"productDescription"</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span>
-</code></pre></div>
-<h4 id="using-net-built-in-feature">Using .NET built-in feature<a class="headerlink" href="#using-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"SELECT account_balance FROM user_data WHERE user_name = ?"</span><span class="p">;</span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="n">OleDbCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OleDbCommand</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
-<span class="w">   </span><span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OleDbParameter</span><span class="p">(</span><span class="s">"customerName"</span><span class="p">,</span><span class="w"> </span><span class="n">CustomerName</span><span class="w"> </span><span class="n">Name</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span>
-<span class="w">   </span><span class="n">OleDbDataReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">();</span>
-<span class="w">   </span><span class="c1">// …</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">OleDbException</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="c1">// error handling</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="using-asp-net-built-in-feature">Using ASP .NET built-in feature<a class="headerlink" href="#using-asp-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"SELECT * FROM Customers WHERE CustomerId = @CustomerId"</span><span class="p">;</span>
-<span class="n">SqlCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlCommand</span><span class="p">(</span><span class="n">sql</span><span class="p">);</span>
-<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="s">"@CustomerId"</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">SqlDbType</span><span class="p">.</span><span class="n">Int</span><span class="p">));</span>
-<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">[</span><span class="s">"@CustomerId"</span><span class="p">].</span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="using-ruby-with-activerecord">Using Ruby with ActiveRecord<a class="headerlink" href="#using-ruby-with-activerecord" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">## Create</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'owasp'</span><span class="p">)</span>
-<span class="c1">## Read</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">"name = ?"</span><span class="p">,</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">name</span><span class="w"> </span><span class="p">})</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">"name = :name"</span><span class="p">,</span><span class="w"> </span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
-<span class="c1">## Update</span>
-<span class="n">project</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'owasp'</span><span class="p">)</span>
-<span class="c1">## Delete</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">'name'</span><span class="p">)</span>
-</code></pre></div>
-<h4 id="using-ruby-built-in-feature">Using Ruby built-in feature<a class="headerlink" href="#using-ruby-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">insert_new_user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="n">prepare</span><span class="w"> </span><span class="s2">"INSERT INTO users (name, age, gender) VALUES (?, ? ,?)"</span>
-<span class="n">insert_new_user</span><span class="o">.</span><span class="n">execute</span><span class="w"> </span><span class="s1">'aizatto'</span><span class="p">,</span><span class="w"> </span><span class="s1">'20'</span><span class="p">,</span><span class="w"> </span><span class="s1">'male'</span>
-</code></pre></div>
-<h4 id="using-php-with-php-data-objects">Using PHP with PHP Data Objects<a class="headerlink" href="#using-php-with-php-data-objects" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="x">$stmt = $dbh-&gt;prepare("INSERT INTO REGISTRY (name, value) VALUES (:name, :value)");</span>
-<span class="x">$stmt-&gt;bindParam(':name', $name);</span>
-<span class="x">$stmt-&gt;bindParam(':value', $value);</span>
-</code></pre></div>
-<h4 id="using-cold-fusion-built-in-feature">Using Cold Fusion built-in feature<a class="headerlink" href="#using-cold-fusion-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>&lt;cfquery name = "getFirst" dataSource = "cfsnippets"&gt;
-    SELECT * FROM #strDatabasePrefix#_courses WHERE intCourseID =
-    &lt;cfqueryparam value = #intCourseID# CFSQLType = "CF_SQL_INTEGER"&gt;
-&lt;/cfquery&gt;
-</code></pre></div>
-<h4 id="using-perl-with-database-independent-interface">Using PERL with Database Independent Interface<a class="headerlink" href="#using-perl-with-database-independent-interface" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">my</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"INSERT INTO foo (bar, baz) VALUES ( ?, ? )"</span><span class="p">;</span>
-<span class="k">my</span><span class="w"> </span><span class="nv">$sth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$dbh</span><span class="o">-&gt;</span><span class="n">prepare</span><span class="p">(</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="p">);</span>
-<span class="nv">$sth</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span><span class="w"> </span><span class="nv">$bar</span><span class="p">,</span><span class="w"> </span><span class="nv">$baz</span><span class="w"> </span><span class="p">);</span>
-</code></pre></div>
-<h4 id="using-rust-with-sqlx">Using Rust with SQLx<a class="headerlink" href="#using-rust-with-sqlx" title="Permanent link">&para;</a></h4>
-<!-- contributed by GeekMasher -->
-
-<div class="highlight"><pre><span></span><code><span class="c1">// Input from CLI args but could be anything</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">env</span><span class="p">::</span><span class="n">args</span><span class="p">().</span><span class="n">last</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span>
-
-<span class="c1">// Using build-in macros (compile time checks)</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqlx</span><span class="p">::</span><span class="n">query_as</span><span class="o">!</span><span class="p">(</span>
-<span class="w">        </span><span class="n">User</span><span class="p">,</span>
-<span class="w">        </span><span class="s">"SELECT * FROM users WHERE name = ?"</span><span class="p">,</span>
-<span class="w">        </span><span class="n">username</span>
-<span class="w">    </span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pool</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="k">await</span><span class="w"> </span>
-<span class="w">    </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
-
-<span class="c1">// Using built-in functions</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">users</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqlx</span><span class="p">::</span><span class="n">query_as</span><span class="p">::</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span>
-<span class="w">        </span><span class="s">"SELECT * FROM users WHERE name = ?"</span>
-<span class="w">    </span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">username</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pool</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="k">await</span>
-<span class="w">    </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
-</code></pre></div>
-<h3 id="stored-procedure-examples">Stored Procedure Examples<a class="headerlink" href="#stored-procedure-examples" title="Permanent link">&para;</a></h3>
-<p>The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.</p>
-<p>Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure.</p>
-<p>Here are some examples of using bind variables in stored procedures in different databases.</p>
-<h4 id="oracle-using-plsql">Oracle using PL/SQL<a class="headerlink" href="#oracle-using-plsql" title="Permanent link">&para;</a></h4>
-<h5 id="normal-stored-procedure">Normal Stored Procedure<a class="headerlink" href="#normal-stored-procedure" title="Permanent link">&para;</a></h5>
-<p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span>
-<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserID</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dept</span><span class="p">;</span>
-<span class="k">END</span><span class="p">;</span>
-</code></pre></div>
-<h5 id="stored-procedure-using-bind-variables-in-sql-run-with-execute">Stored Procedure Using Bind Variables in SQL Run with EXECUTE<a class="headerlink" href="#stored-procedure-using-bind-variables-in-sql-run-with-execute" title="Permanent link">&para;</a></h5>
-<p>Bind variables are used to tell the database that the inputs to this dynamic SQL are 'data' and not possibly code:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">AnotherSafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">)</span>
-<span class="w">          </span><span class="k">AS</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span>
-<span class="k">BEGIN</span>
-<span class="w">   </span><span class="n">stmt</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s1">'SELECT balance FROM accounts_table WHERE user_ID = :1</span>
-<span class="s1">            AND department = :2'</span><span class="p">;</span>
-<span class="w">   </span><span class="k">EXECUTE</span><span class="w"> </span><span class="k">IMMEDIATE</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="p">;</span>
-<span class="w">   </span><span class="k">RETURN</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
-<span class="k">END</span><span class="p">;</span>
-</code></pre></div>
-<h4 id="sql-server-using-transact-sql">SQL Server using Transact-SQL<a class="headerlink" href="#sql-server-using-transact-sql" title="Permanent link">&para;</a></h4>
-<h5 id="normal-stored-procedure_1">Normal Stored Procedure<a class="headerlink" href="#normal-stored-procedure_1" title="Permanent link">&para;</a></h5>
-<p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span>
-<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span>
-<span class="k">END</span>
-</code></pre></div>
-<h5 id="stored-procedure-using-bind-variables-in-sql-run-with-exec">Stored Procedure Using Bind Variables in SQL Run with EXEC<a class="headerlink" href="#stored-procedure-using-bind-variables-in-sql-run-with-exec" title="Permanent link">&para;</a></h5>
-<p>Bind variables are used to tell the database that the inputs to this dynamic SQL are 'data' and not possibly code:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span>
-<span class="w">   </span><span class="k">DECLARE</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'SELECT balance FROM accounts_table WHERE '</span>
-<span class="w">                 </span><span class="o">+</span><span class="w"> </span><span class="s1">'user_ID = @UID AND department = @DPT'</span>
-<span class="w">   </span><span class="k">EXEC</span><span class="w"> </span><span class="n">sp_executesql</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="p">,</span>
-<span class="w">                      </span><span class="s1">'@UID VARCHAR(20), @DPT VARCHAR(10)'</span><span class="p">,</span>
-<span class="w">                      </span><span class="o">@</span><span class="n">UID</span><span class="o">=@</span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="o">@</span><span class="n">DPT</span><span class="o">=@</span><span class="n">Dept</span>
-<span class="k">END</span>
-</code></pre></div>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>This cheat sheet helps developers assess execution records supplied by an agent, a Model Context Protocol (MCP) server, or a service they do not control. A supplier can sign a record that omits actions or describes a run that never happened. Verify the specific claim you need, and identify who could fabricate the evidence supporting it.</p>
+<p><a href="https://slsa.dev/spec/v1.2/verifying-artifacts">Supply-chain Levels for Software Artifacts (SLSA) verification guidance</a> separates checking signatures and artifact identity from deciding which producers to trust. Apply the same distinction to execution records. Use these outcomes for each question below:</p>
+<table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>What the evidence supports</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Independently re-checkable</td>
+<td>Another reviewer can verify the stated property using authenticated evidence and trust material the supplier does not exclusively control. This does not establish other properties of the execution.</td>
+</tr>
+<tr>
+<td>Supplier assertion</td>
+<td>The supplier claims the property, but independent evidence is missing. The record can still help with debugging and routine operations.</td>
+</tr>
+<tr>
+<td>No information</td>
+<td>The evidence does not let you assess this property of the execution. Do not infer that the run was clean.</td>
+</tr>
+</tbody>
+</table>
+<p>A signature may establish who made an assertion without establishing that the assertion is true. Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier.</p>
+<p>For producing and protecting your own logs, see the <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a>. For optional message integrity and replay protection between agent and server, see <a href="MCP_Security_Cheat_Sheet.html#7-optional-message-level-integrity">MCP Security Section 7</a>. These checks assess individual records; they do not establish end-to-end completeness across a chain of delegated actions.</p>
+<h2 id="six-questions-to-ask-about-an-execution-record">Six Questions to Ask About an Execution Record<a class="headerlink" href="#six-questions-to-ask-about-an-execution-record" title="Permanent link">&para;</a></h2>
+<h3 id="1-who-could-have-written-or-altered-it">1. Who could have written or altered it?<a class="headerlink" href="#1-who-could-have-written-or-altered-it" title="Permanent link">&para;</a></h3>
+<p>List the component, host, recorder, operator, and signing-key holder. Count independent parties, not processes: several services under one supplier's control remain one party. A recorder fed only by the component preserves that component's account of events. A signing service that accepts arbitrary content from the component does not independently confirm the content.</p>
 <ul>
-<li><a href="http://bobby-tables.com/">The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures</a></li>
-<li>OWASP <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
+<li>Identify an observer that obtains event data independently of the component's own reports.</li>
+<li>Keep its records where the component and supplier cannot rewrite them.</li>
+<li>Corroborate the supplier's record against calls recorded at a gateway or other boundary you control.</li>
+</ul>
+<p>A boundary recorder covers only what crosses that boundary. It cannot establish local file writes or in-process actions, and it cannot inspect encrypted request bodies without access to their plaintext. Where independent observation is unavailable, classify the account of execution as a supplier assertion and limit the decisions you base on it.</p>
+<h3 id="2-what-does-the-timing-evidence-actually-establish">2. What does the timing evidence actually establish?<a class="headerlink" href="#2-what-does-the-timing-evidence-actually-establish" title="Permanent link">&para;</a></h3>
+<p>A timestamp written by the supplier is a supplier assertion. To check freshness, send a fresh, unpredictable challenge value (a nonce) and require it to be signed together with the execution claims. Verify the signature and compare the returned nonce with the one you sent.</p>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc9334#section-10">RFC 9334 Section 10</a> explains the limit: a matching nonce bounds signing to after the challenge was generated; it does not show when the individual claims were captured. A trusted timestamp bound to the signed record can establish that it existed by a particular time, but does not establish that its contents describe real events.</p>
+<p>Record which timing property you checked. Do not label capture as contemporaneous merely because a signature is fresh or a record appears in a transparency log. That claim needs evidence from an observer positioned to witness the execution.</p>
+<h3 id="3-does-it-identify-the-intended-artifact-and-execution">3. Does it identify the intended artifact and execution?<a class="headerlink" href="#3-does-it-identify-the-intended-artifact-and-execution" title="Permanent link">&para;</a></h3>
+<p>A valid signature on a record about another artifact or run does not answer your question.</p>
+<ul>
+<li>Recompute a collision-resistant digest of the expected artifact and compare it with the signed subject. Obtain the expected artifact or digest independently of the report being assessed.</li>
+<li>Separately match the signed execution identifier or challenge to the run you intended to review.</li>
+<li>Check which relevant inputs are covered, such as tool definitions, configuration, prompts, model version, and policy. A binary digest alone does not identify these inputs.</li>
+</ul>
+<p>An artifact digest can legitimately stay the same across many runs. The problem is using that digest as the only binding to an execution. A matched digest establishes artifact identity; a matched run identifier establishes which execution the supplier is claiming to describe. Neither establishes that the reported actions occurred.</p>
+<h3 id="4-would-an-omitted-event-be-detectable">4. Would an omitted event be detectable?<a class="headerlink" href="#4-would-an-omitted-event-be-detectable" title="Permanent link">&para;</a></h3>
+<p>Define the execution or time window and the events an independent observer was positioned to see. Reconcile the record against an expected-event list or per-execution sequence that the supplier cannot silently redefine. A supplier-maintained sequence counts only what the supplier chose to include.</p>
+<p>A transparency log can make changes after entry detectable; it cannot reveal an event that was never submitted. <a href="https://datatracker.ietf.org/doc/html/rfc9162">RFC 9162</a> describes inclusion and consistency checks and warns that a log can present inconsistent views to different clients. Verify those proofs and check how the deployment detects inconsistent views, such as by comparing signed log states across independent observers. The log operator remains a trust dependency.</p>
+<p>A log's total entry count is not an execution's event count. Unrelated entries can increase it while events from the run are missing. Likewise, injecting one expected event and finding it in the returned record is a useful spot-check, not a completeness test. Any coverage claim must remain limited to the events the independent observer could see and reconcile.</p>
+<h3 id="5-what-happens-when-recording-or-delivery-fails">5. What happens when recording or delivery fails?<a class="headerlink" href="#5-what-happens-when-recording-or-delivery-fails" title="Permanent link">&para;</a></h3>
+<p>Determine whether the component continues and drops events, buffers and retries, or stops execution. Check buffer overflow behavior as well as normal operation.</p>
+<ul>
+<li>In an environment you control, interrupt the recording path and observe whether execution continues and gaps become visible.</li>
+<li>Where you cannot test, request evidence from an outage or an exercised failure scenario. Treat documentation alone as a supplier assertion.</li>
+<li>Preserve independently observed delivery failures outside the component's control. A gap marker written solely by the component is still its assertion, even when stored elsewhere.</li>
+</ul>
+<p>A test establishes the behavior observed under its conditions; it does not prove that another execution had no gaps. An empty report from a recorder that may have dropped events provides no basis for declaring that run clean. Stopping execution on every logging failure is not automatically appropriate: it turns a recording outage into an availability failure. Choose the behavior according to the action's risk and make any loss of evidence visible.</p>
+<h3 id="6-can-the-reviewer-verify-it-without-being-able-to-forge-it">6. Can the reviewer verify it without being able to forge it?<a class="headerlink" href="#6-can-the-reviewer-verify-it-without-being-able-to-forge-it" title="Permanent link">&para;</a></h3>
+<p>Use a maintained verifier with trusted signer identities, keys or certificate roots, and permitted algorithms configured independently of the record. A key packaged with the record is not a trust anchor merely because it verifies that record; it must connect to trust you already established. The <a href="https://slsa.dev/spec/v1.2/verifying-artifacts">SLSA verification steps</a> illustrate checking the signature, subject digest, and expected producer before relying on provenance.</p>
+<p>Validate applicable certificate paths and revocation information, as described in <a href="https://datatracker.ietf.org/doc/html/rfc9334#section-12.4">RFC 9334 Section 12.4</a>. Do not accept a signature solely because the cryptographic calculation succeeds.</p>
+<p>Public-key verification does not require the signing secret. By contrast, everyone holding the shared secret needed to verify a message authentication code can also create one. Such a record cannot independently attribute authorship between those key holders. Asking the supplier's service whether its own record is valid also leaves the supplier as the source of the assertion.</p>
+<h3 id="worked-examples">Worked Examples<a class="headerlink" href="#worked-examples" title="Permanent link">&para;</a></h3>
+<p>These examples describe evidence after the stated checks, rather than assigning guarantees to a file format.</p>
+<table>
+<thead>
+<tr>
+<th>Evidence and checks performed</th>
+<th>What you may conclude</th>
+<th>What remains unestablished</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vendor-exported traces, with no independent corroboration</td>
+<td>The vendor supplied these claims.</td>
+<td>Whether the actions occurred and whether the record is complete.</td>
+</tr>
+<tr>
+<td>A signed record verified against your trusted signer, with artifact digest and run identifier matched to your expectations</td>
+<td>That signer asserted these bytes about the expected artifact and run.</td>
+<td>Whether the assertions are true or complete.</td>
+</tr>
+<tr>
+<td>The same record, with verified log inclusion and consistency evidence plus an independently trusted timestamp over the signed record</td>
+<td>The signed record existed by the supported time and is included in the checked log state.</td>
+<td>When events were captured, whether they occurred, or whether any were omitted before submission.</td>
+</tr>
+<tr>
+<td>The record reconciled against events captured by an independent boundary observer</td>
+<td>Whether the record includes the events that observer saw in the stated window.</td>
+<td>Internal actions, other boundaries, or events outside the observer's coverage.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dos-and-donts">Do's and Don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
+<p>Keep the verification policy and expected values outside the evidence under review, following the separation in <a href="https://slsa.dev/spec/v1.2/verifying-artifacts">SLSA verification guidance</a>.</p>
+<h3 id="do">Do<a class="headerlink" href="#do" title="Permanent link">&para;</a></h3>
+<ul>
+<li>State the exact property being checked: signer, artifact, execution binding, timing, or coverage.</li>
+<li>Record the trust assumptions and limits alongside each result.</li>
+<li>Reconcile supplier reports with observations you control when possible.</li>
+<li>Exercise recording failures in an environment you control and preserve the results.</li>
+</ul>
+<h3 id="dont">Don't<a class="headerlink" href="#dont" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Treat a valid signature or log inclusion proof as proof that an action occurred.</li>
+<li>Confuse a stable artifact digest with a unique execution identifier.</li>
+<li>Treat a fresh signature as proof of live capture, or a successful spot-check as proof of completeness.</li>
+<li>Treat missing entries as evidence that nothing happened when recording could have failed.</li>
 </ul>
 
 
