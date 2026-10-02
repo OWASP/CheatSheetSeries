@@ -41,7 +41,7 @@ RSA and ECC-based public-key cryptography (including Curve25519) are not post-qu
 
 Where post-quantum key establishment is required, use a supported protocol or library integration of a standardized mechanism such as **[ML-KEM (NIST FIPS 203)](https://csrc.nist.gov/pubs/fips/203/final)**, typically in a hybrid construction alongside a classical algorithm during migration. ML-KEM establishes a shared secret for symmetric encryption; it does not replace AES for encrypting stored data. Include the public-key protection of stored encryption keys in the migration plan.
 
-For staged migration guidance, see the [Post-Quantum Cryptography Cheat Sheet](Post_Quantum_Cryptography_Cheat_Sheet.md).
+For migration guidance, see the [Post-Quantum Cryptography Cheat Sheet](Post_Quantum_Cryptography_Cheat_Sheet.md).
 
 Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:
 
