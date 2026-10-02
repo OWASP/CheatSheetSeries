@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Post-quantum cryptography (PQC) uses algorithms designed to resist attacks from both classical and quantum computers. This cheat sheet turns [PQC migration planning](https://www.ncsc.gov.uk/guidance/pqc-migration-timelines) into stages for application developers: inventory dependencies, prioritize work, adopt supported implementations, test, and roll out. Start the preparation stages even when a dependency cannot yet migrate.
+Post-quantum cryptography (PQC) uses algorithms designed to resist attacks from both classical and quantum computers. A sufficiently powerful quantum computer could break [RSA, Diffie-Hellman, and elliptic curve cryptography](https://www.rfc-editor.org/rfc/rfc9794.html#section-1), affecting public-key encryption, key exchange, and digital signatures. This cheat sheet turns [PQC migration planning](https://www.ncsc.gov.uk/guidance/pqc-migration-timelines) into stages for application developers: inventory dependencies, prioritize work, adopt supported implementations, test, and roll out. Start the preparation stages even when a dependency cannot yet migrate.
 
 ## Stage 1: Inventory cryptographic dependencies
 
