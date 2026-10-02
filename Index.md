@@ -168,6 +168,8 @@
 
 [Microservices based Security Arch Doc Cheat Sheet](cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md)
 
+[Micro Frontend security cheat sheet](cheatsheets/Micro_Frontend_Security_Cheat_Sheet.md)
+
 [Mobile Application Security Cheat Sheet](cheatsheets/Mobile_Application_Security_Cheat_Sheet.md)
 
 [Multi Tenant Security Cheat Sheet](cheatsheets/Multi_Tenant_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg) ![Sql](assets/Index_Sql.svg)
