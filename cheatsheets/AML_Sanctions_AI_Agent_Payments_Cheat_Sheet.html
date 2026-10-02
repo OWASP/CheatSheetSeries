@@ -5346,17 +5346,17 @@
 <li>Assume that TLS alone provides sufficient integrity. After TLS termination at a load balancer or CDN, the plaintext request is visible to downstream components.</li>
 </ul>
 <h2 id="section-8-receipt-canonicalization-rfc-8785-jcs">Section 8: Receipt Canonicalization (RFC 8785 / JCS)<a class="headerlink" href="#section-8-receipt-canonicalization-rfc-8785-jcs" title="Permanent link">&para;</a></h2>
-<p>A compliance receipt is only verifiable across systems if every party serializes it to the <strong>exact same bytes</strong> before signing and verifying. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different byte streams for the <em>same</em> logical receipt, and a signature over one will fail against the other.</p>
-<p>Use the <strong>JSON Canonicalization Scheme (JCS), <a href="https://www.rfc-editor.org/rfc/rfc8785">RFC 8785</a></strong>, to produce a deterministic byte representation before hashing and signing. The signer canonicalizes, hashes (for example with SHA-256), then signs; every verifier canonicalizes the received receipt identically and checks the signature. This makes receipts verifiable by <strong>any</strong> counterparty, regulator, or downstream agent, not just the issuing system.</p>
+<p>When systems independently serialize the same JSON object for hashing or signature verification, they need an agreed byte representation. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different bytes for the same logical object.</p>
+<p><a href="https://www.rfc-editor.org/rfc/rfc8785">JSON Canonicalization Scheme (JCS), RFC 8785</a> provides one deterministic JSON representation for that use case. It is not required for every signed-token format: a <a href="https://www.rfc-editor.org/rfc/rfc7515.html#section-5.2">JSON Web Signature (JWS)</a> verifier checks the encoded signing input rather than reserializing the payload. Cross-system verification also needs an agreed signature profile and a trusted verification key. Canonicalization alone supplies neither.</p>
 <h3 id="do_7">Do<a class="headerlink" href="#do_7" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Canonicalize every receipt with RFC 8785 (JCS) before signing, and again before verifying.</li>
-<li>Sign over the hash of the canonical bytes, not raw or pretty-printed JSON.</li>
-<li>Record the canonicalization, hash, and signature algorithm in the receipt (for example <code>canon: jcs</code>, <code>alg: ecdsa-p256-sha256</code>) so any verifier can reproduce it.</li>
+<li>If the receipt profile calls for independently serializing JSON, canonicalize the agreed payload before signing and before verification.</li>
+<li>Use the hashing and signing procedure required by the chosen signature profile and API; do not add a separate prehash unless that profile requires it.</li>
+<li>Record the canonicalization and signature profile used so a verifier can reproduce the signing input.</li>
 </ul>
 <h3 id="dont_7">Don't<a class="headerlink" href="#dont_7" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Don't sign framework-default or pretty-printed JSON, because key order or whitespace differences break cross-system verification.</li>
+<li>For a profile that requires reconstructing signed JSON, don't rely on framework-default or pretty-printed serialization; key order and whitespace can differ across systems.</li>
 <li>Don't assume two services emit identical JSON for the same object; they usually will not.</li>
 </ul>
 <h2 id="section-9-cross-agent-payment-accountability">Section 9: Cross-Agent Payment Accountability<a class="headerlink" href="#section-9-cross-agent-payment-accountability" title="Permanent link">&para;</a></h2>
@@ -5378,6 +5378,7 @@
 <h3 id="do_9">Do<a class="headerlink" href="#do_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Include the sanctions-list source(s), version or publication date, and screening timestamp <strong>inside the signed receipt</strong>.</li>
+<li>Bind each screening result and list version to the specific transaction or payment intent in the signed data, so a later verifier can distinguish it from another transaction.</li>
 <li>Define a maximum acceptable list age, record it in the receipt, and fail-closed if it is exceeded.</li>
 <li>Make list freshness auditable after the fact from the receipt alone.</li>
 </ul>
