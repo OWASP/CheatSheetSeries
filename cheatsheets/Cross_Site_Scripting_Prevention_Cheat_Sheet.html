@@ -4889,22 +4889,19 @@
 '    <span class="ni">&amp;#x27;</span>
 </code></pre></div>
 <h3 id="output-encoding-for-html-attribute-contexts">Output Encoding for “HTML Attribute Contexts”<a class="headerlink" href="#output-encoding-for-html-attribute-contexts" title="Permanent link">&para;</a></h3>
-<p>“HTML Attribute Contexts” occur when a variable is placed in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML attribute encoding to variables being placed in most HTML attributes. A list of safe HTML attributes is provided in the <strong>Safe Sinks</strong> section.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">"$varUnsafe"</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">”*x”</span> <span class="na">onblur</span><span class="o">=</span><span class="s">”alert(1)*”</span><span class="p">&gt;</span> // Example Attack
+<p>Use HTML attribute encoding for data inserted into ordinary text attributes, such as <code>title</code> or <code>value</code>. Keep element and attribute names fixed. Attributes containing URLs, CSS, HTML, or JavaScript need controls for those additional contexts.</p>
+<p>The placeholder below represents data already encoded for a quoted HTML attribute:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">"ENCODED DATA"</span><span class="p">&gt;</span>
 </code></pre></div>
-<p><strong>It’s critical to use quotation marks like <code>"</code> or <code>'</code> to surround your variables.</strong> Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.</p>
-<p>If you're writing to a HTML Attribute with JavaScript, look at the <code>.setAttribute</code> and <code>[attribute]</code> methods because they will automatically HTML Attribute Encode. Those are <strong>Safe Sinks</strong> as long as the attribute name is hardcoded and innocuous, like <code>id</code> or <code>class</code>. Generally, attributes that accept JavaScript, such as <code>onClick</code>, are <strong>NOT safe</strong> to use with untrusted attribute values.</p>
+<p><strong>Always surround attribute values with double (<code>"</code>) or single (<code>'</code>) quotation marks.</strong> Use your framework's or library's attribute encoder to protect the surrounding quotes and other HTML syntax. Spaces do not end a quoted value, so encoding every space or every non-alphanumeric character is unnecessary. The <a href="https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state">HTML parsing rules</a> distinguish quoted values from unquoted ones, where whitespace ends the value.</p>
+<p>HTML attribute encoding alone does not protect JavaScript in an event-handler attribute: the HTML parser decodes character references before the JavaScript is interpreted. Encoding more characters as HTML entities does not remove that second context. Prefer <code>addEventListener()</code> with trusted handler functions and pass user values as data. For unavoidable legacy templates, follow the library's <a href="https://github.com/OWASP/owasp-java-encoder/blob/main/docs/contexts.md#encode-for-the-parser-that-receives-the-value">documented JavaScript-in-HTML context</a> for data inside a quoted JavaScript string within a quoted HTML attribute; an encoder cannot make untrusted handler code safe.</p>
+<p>When updating an existing element from JavaScript, <code>element.setAttribute("title", value)</code> assigns the value directly; it does not HTML-encode it. Do not pre-encode a runtime value for this ordinary text attribute. Keep the attribute name fixed and safe: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute#security_considerations">event-handler attributes and <code>srcdoc</code> can interpret their values as code or HTML</a>.</p>
 <h3 id="output-encoding-for-javascript-contexts">Output Encoding for “JavaScript Contexts”<a class="headerlink" href="#output-encoding-for-javascript-contexts" title="Permanent link">&para;</a></h3>
-<p>“JavaScript Contexts” refers to the situation where variables are placed into inline JavaScript and then embedded in an HTML document. This situation commonly occurs in programs that heavily use custom JavaScript that is embedded in their web pages.</p>
-<p>However, the only ‘safe’ location for placing variables in JavaScript is inside a “quoted data value”. All other contexts are unsafe and you should not place variable data in them.</p>
-<p>Examples of “Quoted Data Values”</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="err">'</span><span class="nx">$varUnsafe</span><span class="err">’</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">x</span><span class="o">=</span><span class="err">’</span><span class="nx">$varUnsafe</span><span class="err">’</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">onmouseover</span><span class="o">=</span><span class="s">"'$varUnsafe'"</span><span class="err">&lt;/</span><span class="na">div</span><span class="p">&gt;</span>
+<p>When a server template inserts string data into an inline script, use an encoder documented for both the JavaScript string and the enclosing HTML script. The placeholder below represents data already encoded for that location; the template supplies the quotes:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ENCODED DATA"</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>Encode all characters using the <code>\xHH</code> format. Encoding libraries often have a <code>EncodeForJavaScript</code> or similar to support this function.</p>
-<p>Please look at the <a href="https://owasp.org/www-project-java-encoder/">OWASP Java Encoder JavaScript encoding examples</a> for examples of proper JavaScript use that requires minimal encoding.</p>
+<p>Do not insert untrusted code, identifiers, or expressions. Use a maintained encoder and follow its context contract instead of escaping quotes manually or applying a generic <code>\xHH</code> rule. The <a href="https://github.com/OWASP/owasp-java-encoder/blob/main/docs/contexts.md#encode-for-the-parser-that-receives-the-value">OWASP Java Encoder context guide</a> distinguishes script blocks, quoted event-handler strings, and standalone JavaScript. Support for ordinary template literals depends on the library and version; it does not imply support for tagged templates or <code>${...}</code> expression bodies.</p>
+<p>These encoders protect string placement, not subsequent use: passing the resulting value to <code>eval()</code> or another code-interpreting sink remains unsafe.</p>
 <p>For JSON, verify that the <code>Content-Type</code> header is <code>application/json</code> and not <code>text/html</code> to prevent XSS.</p>
 <h3 id="output-encoding-for-css-contexts">Output Encoding for “CSS Contexts”<a class="headerlink" href="#output-encoding-for-css-contexts" title="Permanent link">&para;</a></h3>
 <p>“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks. <strong>Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.</strong></p>
@@ -4939,7 +4936,7 @@ This is a <strong>Safe Sink</strong> and will automatically CSS encode data in i
 <ul>
 <li>Callback functions</li>
 <li>Where URLs are handled in code such as this CSS { background-url : “javascript:alert(xss)”; }</li>
-<li>All JavaScript event handlers (<code>onclick()</code>, <code>onerror()</code>, <code>onmouseover()</code>).</li>
+<li>Untrusted JavaScript event-handler code (for example, an entire <code>onclick</code> value). Prefer trusted functions registered with <code>addEventListener()</code>; see the HTML Attribute Contexts section for legacy string interpolation.</li>
 <li>Unsafe JS functions like <code>eval()</code>, <code>setInterval()</code>, <code>setTimeout()</code></li>
 </ul>
 <p>Don't place variables into dangerous contexts as even with output encoding, it will not prevent an XSS attack fully.</p>
@@ -4986,7 +4983,7 @@ Sample Defense: HTML Entity Encoding (rule #1)</p>
 <p>Data Type: String
 Context: Safe HTML Attributes
 Code: <code>&lt;input type="text" name="fname" value="UNTRUSTED DATA "&gt;</code>
-Sample Defense: Aggressive HTML Entity Encoding (rule #2), Only place untrusted data into a list of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name.</p>
+Sample Defense: Quote the value and use HTML attribute encoding. Keep attribute names fixed and use ordinary text attributes; apply additional controls for URL, CSS, HTML, or JavaScript values.</p>
 <p>Data Type: String
 Context: GET Parameter
 Code: <code>&lt;a href="/site/search?value=UNTRUSTED DATA "&gt;clickme&lt;/a&gt;</code>
@@ -5002,7 +4999,7 @@ Sample Defense: Strict structural validation (rule #4), CSS hex encoding, Good d
 <p>Data Type: String
 Context: JavaScript Variable
 Code: <code>&lt;script&gt;var currentValue='UNTRUSTED DATA ';&lt;/script&gt; &lt;script&gt;someFunction('UNTRUSTED DATA ');&lt;/script&gt;</code>
-Sample Defense: Ensure JavaScript variables are quoted, JavaScript hex encoding, JavaScript Unicode encoding, avoid backslash encoding (<code>\"</code> or <code>\'</code> or <code>\\</code>).</p>
+Sample Defense: Insert string data only inside a quoted string, using an encoder that also protects the enclosing HTML script context. Do not rely on quote escaping alone.</p>
 <p>Data Type: HTML
 Context: HTML Body
 Code: <code>&lt;div&gt;UNTRUSTED HTML&lt;/div&gt;</code>
@@ -5016,11 +5013,11 @@ Sample Defense: <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XS
 <p>Encoding Type: HTML Entity
 Encoding Mechanism: Convert <code>&amp;</code> to <code>&amp;amp;</code>, Convert <code>&lt;</code> to <code>&amp;lt;</code>, Convert <code>&gt;</code> to <code>&amp;gt;</code>, Convert <code>"</code> to <code>&amp;quot;</code>, Convert <code>'</code> to <code>&amp;#x27;</code></p>
 <p>Encoding Type: HTML Attribute Encoding
-Encoding Mechanism: Encode all characters with the HTML Entity <code>&amp;#xHH;</code> format, including spaces, where <strong>HH</strong> represents the hexadecimal value of the character in Unicode. For example, <code>A</code> becomes <code>&amp;#x41;</code>. All alphanumeric characters (letters A to Z, a to z, and digits 0 to 9) remain unencoded.</p>
+Encoding Mechanism: Use a framework or library encoder for quoted HTML text attributes and surround the value with <code>"</code> or <code>'</code>. Encoding every space or non-alphanumeric character is unnecessary. This does not validate URLs or encode JavaScript, CSS, or HTML contained in an attribute.</p>
 <p>Encoding Type: URL Encoding
 Encoding Mechanism: Use standard percent encoding, as specified in the <a href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">W3C specification</a>, to encode parameter values. Be cautious and only encode parameter values, not the entire URL or path fragments of a URL.</p>
 <p>Encoding Type: JavaScript Encoding
-Encoding Mechanism: Encode all characters using the Unicode <code>\uXXXX</code> encoding format, where <strong>XXXX</strong> represents the hexadecimal Unicode code point. For example, <code>A</code> becomes <code>\u0041</code>. All alphanumeric characters (letters A to Z, a to z, and digits 0 to 9) remain unencoded.</p>
+Encoding Mechanism: Use a library encoder for JavaScript string data in the actual surrounding context. It must protect the string delimiters and, when embedded in HTML, the enclosing script or attribute. Follow the library's supported contexts; hex or Unicode escapes alone are not a substitute for that contract.</p>
 <p>Encoding Type: CSS Hex Encoding
 Encoding Mechanism: CSS encoding supports both <code>\XX</code> and <code>\XXXXXX</code> formats. To ensure proper encoding, consider these options: (a) Add a space after the CSS encode (which will be ignored by the CSS parser), or (b) use the full six-character CSS encoding format by zero-padding the value. For example, <code>A</code> becomes <code>\41</code> (short format) or <code>\000041</code> (full format). Alphanumeric characters (letters A to Z, a to z, and digits 0 to 9) remain unencoded.</p>
 <h2 id="common-anti-patterns-ineffective-approaches-to-avoid">Common Anti-patterns: Ineffective Approaches to Avoid<a class="headerlink" href="#common-anti-patterns-ineffective-approaches-to-avoid" title="Permanent link">&para;</a></h2>
