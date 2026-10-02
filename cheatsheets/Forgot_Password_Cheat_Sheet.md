@@ -47,18 +47,18 @@ Once the user has proved their identity by providing the token (sent via an emai
 
 ### Account Recovery After Suspected Compromise
 
-A standard password reset may not be sufficient when an account is suspected to have been compromised. An attacker with access to the account may have changed the email address, phone number, MFA methods, or other recovery information.
+A password reset alone may not restore control of a compromised account. An attacker may still have an active session or may have changed recovery information or MFA methods.
 
 When recovering a potentially compromised account:
 
-- Treat recently changed recovery information with additional caution. An attacker who has gained access to an account may attempt to replace existing recovery information with information they control. For example, [Google may continue to use previous recovery information for seven days](https://support.google.com/accounts/answer/183723) after recovery information is changed.
-- Consider retaining previously established recovery information for a limited period after a change, or require additional verification before newly changed recovery information can be used for account recovery.
-- Require additional verification when the available recovery information is insufficient to establish the user's identity, as described in the [NIST account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#recovery).
-- Promptly suspend or invalidate authenticators identified as compromised, as described in the [NIST guidance for compromised authenticators](https://pages.nist.gov/800-63-4/sp800-63b/events/#loss-theft-damage-and-compromise).
-- After successful recovery from suspected compromise, invalidate existing sessions to terminate any sessions that may still be controlled by an attacker. See the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
-- Notify the user of the account recovery as described in the [NIST account recovery notification guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#notification).
+- Do not rely solely on recently added or changed recovery information. Use independent, previously established recovery evidence, such as saved recovery codes, in a combination that meets the account's assurance requirements. See [NIST account recovery guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#recovery).
+- Do not automatically restore superseded recovery addresses or phone numbers; they may have been replaced because they were lost or compromised.
+- Promptly suspend or invalidate authenticators identified as compromised, following [NIST guidance for compromised authenticators](https://pages.nist.gov/800-63-4/sp800-63b/events/#loss-theft-damage-and-compromise).
+- Review recovery addresses, phone numbers, and MFA methods with the verified account owner, and remove unauthorized changes. [Google's compromised-account guidance](https://support.google.com/accounts/answer/6294825) identifies these settings for review and correction.
+- After successful recovery, invalidate existing sessions and outstanding password reset and recovery links or codes so they cannot restore an attacker's access. See [session invalidation guidance](Session_Management_Cheat_Sheet.md#session-expiration).
+- Notify the user through all applicable registered notification addresses, including established channels that remain safe to use. Include instructions and contact information for reporting unauthorized recovery, as described in [NIST account notification guidance](https://pages.nist.gov/800-63-4/sp800-63b/events/#notification).
 
-See the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) and [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) for additional guidance on authentication and MFA recovery.
+See [reauthentication after risk events](Authentication_Cheat_Sheet.md#re-authentication-after-risk-events) and [MFA recovery](Multifactor_Authentication_Cheat_Sheet.md#resetting-mfa) for related controls.
 
 ## Methods
 
