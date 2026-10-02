@@ -3401,6 +3401,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#server-side-session-token-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server-Side Session Token Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#used-vs-accepted-session-id-exchange-mechanisms" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4926,6 +4937,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#server-side-session-token-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server-Side Session Token Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#used-vs-accepted-session-id-exchange-mechanisms" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5625,6 +5647,12 @@
 <p>Web development frameworks, such as J2EE, ASP .NET, PHP, and others, provide their own session management features and associated implementation. It is recommended to use these built-in frameworks versus building a home made one from scratch, as they are used worldwide on multiple web environments and have been tested by the web application security and development communities over time.</p>
 <p>However, be advised that these frameworks have also presented vulnerabilities and weaknesses in the past, so it is always recommended to use the latest version available, that potentially fixes all the well-known vulnerabilities, as well as review and change the default configuration to enhance its security by following the recommendations described along this document.</p>
 <p>The storage capabilities or repository used by the session management mechanism to temporarily save the session IDs must be secure, protecting the session IDs against local or remote accidental disclosure or unauthorized access.</p>
+<h3 id="server-side-session-token-storage">Server-Side Session Token Storage<a class="headerlink" href="#server-side-session-token-storage" title="Permanent link">&para;</a></h3>
+<p>Storing random session tokens verbatim can be acceptable in a tightly controlled session store, but anyone who can read it can reuse unexpired tokens. High entropy protects against guessing; it does not protect exposed tokens. If read-only disclosure of the store is in your threat model, store a one-way verifier instead. <a href="https://www.rfc-editor.org/rfc/rfc6819.html#section-4.3.2">RFC 6819 recommends token hashes</a> for the corresponding OAuth access-token database threat.</p>
+<p>One approach is an <a href="https://auth.pilcrowonpaper.com/sessions">identifier and secret verifier split</a>. The cookie carries both values; the server stores the public lookup identifier and the full SHA-256 hash of the verifier. On every request, look up the session by identifier, hash the supplied verifier, and compare it with the stored hash using a constant-time comparison. Never accept the identifier alone as proof of authentication. Use a consistent verifier representation when creating and validating the session. A fast hash is sufficient for these random verifiers; password hashing algorithms are unnecessary.</p>
+<p>Generate the token, or the secret verifier in the split design, using a CSPRNG with at least 128 bits of entropy; prefer 160 bits or more, following <a href="https://www.rfc-editor.org/rfc/rfc6749.html#section-10.10">OAuth's guidance for generated credentials</a>. Generate the verifier independently of the identifier; the public identifier does not count toward the verifier's entropy.</p>
+<p>One-way storage protects against read-only disclosure of session records and backups that contain only verifier hashes. It does not protect against stolen cookies, modification of session records, or compromise of the application. Do not persist the raw verifier alongside its hash.</p>
+<p>In either design, restrict access to the session store and encrypt backups and replicas at rest. Follow the <a href="#logging-sessions-life-cycle-monitoring-creation-usage-and-destruction-of-session-ids">session logging protections</a> and <a href="#renew-the-session-id-after-any-privilege-level-change">session renewal guidance</a>.</p>
 <h3 id="used-vs-accepted-session-id-exchange-mechanisms">Used vs. Accepted Session ID Exchange Mechanisms<a class="headerlink" href="#used-vs-accepted-session-id-exchange-mechanisms" title="Permanent link">&para;</a></h3>
 <p>A web application should make use of cookies for session ID exchange management. If a user submits a session ID through a different exchange mechanism, such as a URL parameter, the web application should avoid accepting it as part of a defensive strategy to stop session fixation.</p>
 <p><strong>NOTE</strong>:</p>
