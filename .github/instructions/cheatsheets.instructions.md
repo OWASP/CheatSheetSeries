@@ -139,3 +139,6 @@ as healthy or cached. HTTP success establishes reachability only. Manually verif
 reachability for links listed as unverified. Then check duplication against
 existing sheets and language. Report language issues as nits unless they change
 the meaning of the advice.
+
+
+When authorized to merge or close, also run `npm run check-pr-approvals -- <PR> --repo OWASP/CheatSheetSeries` after the final push or description edit. Follow the maintainer procedure in `CONTRIBUTING.md` to resolve approval holds on old and current revisions before proceeding; final-commit CI is a separate check. Review code before approval, cancel obsolete runs once queued, and preserve approval protections and historical failures.

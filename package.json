@@ -11,13 +11,15 @@
     "textlint-rule-terminology": "^5.2.12"
   },
   "scripts": {
-    "test": "npm run lint-markdown && npm run lint-terminology && npm run test:link-check",
+    "test": "npm run lint-markdown && npm run lint-terminology && npm run test:link-check && npm run test:workflow-approvals",
     "test:link-check": "node --test tests/link-check/http-checker.test.js tests/link-check/corpus.test.js tests/link-check/cli.test.js tests/link-check/workflow-diagnostics.test.js tests/link-check/policy.test.js",
     "lint-terminology": "textlint ./cheatsheets/",
     "lint-terminology-fix": "textlint --fix ./cheatsheets/",
     "lint-markdown": "markdownlint ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
     "lint-markdown-fix": "markdownlint --fix ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
-    "link-check": "node scripts/Check_Markdown_Links.js"
+    "link-check": "node scripts/Check_Markdown_Links.js",
+    "test:workflow-approvals": "node --test tests/pr-workflow-approvals.test.js",
+    "check-pr-approvals": "node scripts/Check_PR_Workflow_Approvals.js"
   },
   "repository": {
     "type": "git",

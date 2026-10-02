@@ -55,6 +55,8 @@ Then read the **full current content** of each changed `cheatsheets/*.md` (and `
 - **Single-topic focus:** is this one coherent change, or unrelated edits bundled together?
 - **CI status (PR mode):** use platform-native check/status tools if available; otherwise `gh pr checks <N>` — note failing markdownlint/textlint/link-check/scope/citation checks (don't re-do their mechanical work; build on it).
 
+When the maintainer has authorized merging or closing, also run `npm run check-pr-approvals -- <PR> --repo OWASP/CheatSheetSeries` after the final push or PR description edit. Approval holds on old commits and duplicate runs can expire as failures even when current checks pass. Resolve them using [the maintainer procedure](../../CONTRIBUTING.md#before-merging-or-closing-a-pull-request), then verify current CI. Approval of unreviewed code and deletion of failure history are not cleanup methods.
+
 ## Step 3 — Evaluate the five review dimensions
 
 Preferred path when the runtime supports independent reviewer agents: launch all five reviewers in parallel. Pass each one, inline in its prompt: the PR title and body (intent), the unified diff, the full current content of each changed cheat sheet, and the file paths so they can read more if needed.
