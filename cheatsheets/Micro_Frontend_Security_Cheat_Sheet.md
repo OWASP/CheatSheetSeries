@@ -10,20 +10,20 @@ Micro-frontend security should therefore focus on clearly defining application b
 
 This cheat sheet covers:
 
-* Multi-application runtime boundaries
-* Inter-application communication
-* Dynamic module integration
-* Cross-application state and storage
-* Host-to-remote authorization
-* Runtime isolation and sandboxing
-* Software supply-chain security
+- Multi-application runtime boundaries
+- Inter-application communication
+- Dynamic module integration
+- Cross-application state and storage
+- Host-to-remote authorization
+- Runtime isolation and sandboxing
+- Software supply-chain security
 
 The following topics are outside the primary scope and should be addressed using the corresponding OWASP Cheat Sheets:
 
-* General web application vulnerabilities
-* JavaScript and DOM-based XSS prevention
-* OAuth2 token issuance and server-side authentication flows
-* General session management
+- General web application vulnerabilities
+- JavaScript and DOM-based XSS prevention
+- OAuth2 token issuance and server-side authentication flows
+- General session management
 
 ## Architectural Topologies and Threats
 
@@ -35,11 +35,11 @@ Webpack Module Federation allows remote JavaScript modules to be dynamically fet
 
 Because code from multiple repositories executes in the same JavaScript context, a compromised remote module can potentially:
 
-* Execute arbitrary JavaScript in the host context.
-* Access objects exposed by the host application.
-* Manipulate the host DOM.
-* Access client-side storage available to the origin.
-* Interact with application state and APIs accessible to JavaScript.
+- Execute arbitrary JavaScript in the host context.
+- Access objects exposed by the host application.
+- Manipulate the host DOM.
+- Access client-side storage available to the origin.
+- Interact with application state and APIs accessible to JavaScript.
 
 Treat dynamically loaded remote modules as trusted code only when their source, deployment pipeline, integrity, and authorization boundaries are appropriately controlled.
 
@@ -65,11 +65,11 @@ Iframes provide browser-enforced origin boundaries and can provide stronger isol
 
 When using iframes:
 
-* Apply a restrictive `sandbox` policy.
-* Restrict communication through `postMessage`.
-* Validate message origins.
-* Avoid unnecessarily permissive CORS policies.
-* Prevent unauthorized frame navigation.
+- Apply a restrictive `sandbox` policy.
+- Restrict communication through `postMessage`.
+- Validate message origins.
+- Avoid unnecessarily permissive CORS policies.
+- Prevent unauthorized frame navigation.
 
 Example:
 
@@ -88,10 +88,10 @@ Server-side or edge-side composition stitches micro-frontend fragments together 
 
 Security considerations include:
 
-* Fragment injection.
-* SSRF during server-side composition.
-* Inconsistent security headers between fragments.
-* Trust relationships between independently managed services.
+- Fragment injection.
+- SSRF during server-side composition.
+- Inconsistent security headers between fragments.
+- Trust relationships between independently managed services.
 
 ## Runtime Isolation and Secure Communication
 
@@ -111,11 +111,11 @@ Avoid exposing mutable global objects between micro-frontends.
 
 Where state or utilities must be shared:
 
-* Prefer immutable data structures.
-* Minimize global state.
-* Define explicit APIs between applications.
-* Validate data crossing application boundaries.
-* Avoid allowing remote applications to modify host application internals.
+- Prefer immutable data structures.
+- Minimize global state.
+- Define explicit APIs between applications.
+- Validate data crossing application boundaries.
+- Avoid allowing remote applications to modify host application internals.
 
 For prototype manipulation risks, see the Prototype Pollution Prevention Cheat Sheet.
 
@@ -212,11 +212,11 @@ Applications supporting multiple tenants must prevent data from one tenant from 
 
 Shared stores such as Redux or Zustand should have clearly defined boundaries and must not unintentionally expose:
 
-* Tenant-specific information.
-* User information.
-* Authorization state.
-* Internal application state.
-* Sensitive cached API responses.
+- Tenant-specific information.
+- User information.
+- Authorization state.
+- Internal application state.
+- Sensitive cached API responses.
 
 ### Defense-in-Depth Authorization
 
@@ -254,12 +254,12 @@ Dynamic remote loading significantly expands the software supply-chain attack su
 
 When loading remote modules:
 
-* Pin exact versions where possible.
-* Avoid uncontrolled floating versions.
-* Require HTTPS.
-* Verify the source of remote assets.
-* Protect the repositories and deployment infrastructure that publish remote modules.
-* Review dependencies used by independently deployed micro-frontends.
+- Pin exact versions where possible.
+- Avoid uncontrolled floating versions.
+- Require HTTPS.
+- Verify the source of remote assets.
+- Protect the repositories and deployment infrastructure that publish remote modules.
+- Review dependencies used by independently deployed micro-frontends.
 
 Where supported by the loading mechanism, use Subresource Integrity (SRI) to help detect unexpected changes to remotely loaded resources.
 
@@ -286,9 +286,9 @@ Treat each micro-frontend repository and CI/CD pipeline as an independent securi
 
 A compromise of one team's repository or pipeline should not automatically provide write or deployment permissions to:
 
-* The host shell.
-* Other micro-frontends.
-* Shared production infrastructure.
+- The host shell.
+- Other micro-frontends.
+- Shared production infrastructure.
 
 Use separate credentials, permissions, deployment controls, and repository access wherever practical.
 
@@ -312,15 +312,15 @@ Use the following checklist when reviewing a micro-frontend architecture:
 
 ## References
 
-* [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
-* [DOM-based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)
-* [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md)
-* [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
-* [Access Control Cheat Sheet](Access_Control_Cheat_Sheet.md)
-* [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md)
-* [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md)
-* [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md)
-* [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md)
-* [Software Supply Chain Security Cheat Sheet](Software_Supply_Chain_Security_Cheat_Sheet.md)
-* [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md)
-* [GitHub Actions Security Cheat Sheet](GitHub_Actions_Security_Cheat_Sheet.md)
+- [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
+- [DOM-based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)
+- [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md)
+- [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
+- [Access Control Cheat Sheet](Access_Control_Cheat_Sheet.md)
+- [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md)
+- [Prototype Pollution Prevention Cheat Sheet](Prototype_Pollution_Prevention_Cheat_Sheet.md)
+- [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md)
+- [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md)
+- [Software Supply Chain Security Cheat Sheet](Software_Supply_Chain_Security_Cheat_Sheet.md)
+- [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md)
+- [GitHub Actions Security Cheat Sheet](GitHub_Actions_Security_Cheat_Sheet.md)
