@@ -82,18 +82,7 @@ CSWSH allows attackers to hijack authenticated WebSocket connections from malici
 
 Validate the `Origin` header on every handshake. Always use an explicit allowlist of trusted origins. Browsers include this header and malicious JavaScript cannot override it.
 
-```javascript
-const wss = new WebSocket.Server({
-  verifyClient: (info) => {
-    const allowedOrigins = ['https://app.example.com'];
-    if (!allowedOrigins.includes(info.origin)) {
-      console.log(`Rejected unauthorized origin: ${info.origin}`);
-      return false;
-    }
-    return true;
-  }
-});
-```
+For Node.js `ws`, validate the `Origin` header in the HTTP server's `upgrade` event before calling `handleUpgrade`; the library discourages `verifyClient` ([`ws` documentation](https://github.com/websockets/ws/blob/master/doc/ws.md#new-websocketserveroptions-callback)).
 
 **Important:** Use an allowlist, not a denylist. Avoid wildcards or substring matching which are error-prone.
 
@@ -253,7 +242,7 @@ See the [Logging Cheat Sheet](Logging_Cheat_Sheet.md) for more details.
 
 ### Framework-Specific Best Practices
 
-**Node.js:** Use the `verifyClient` callback for origin and authentication checks, set `maxPayload` limits, and disable `perMessageDeflate` compression to prevent security issues.
+**Node.js:** With `ws`, perform origin and authentication checks in the HTTP server's `upgrade` event; set `maxPayload` limits and disable `perMessageDeflate` compression unless needed.
 
 **Python:** With Django Channels, implement authentication middleware and origin validation. Use async exception handling to prevent application crashes from malformed WebSocket messages.
 
