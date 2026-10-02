@@ -22,6 +22,7 @@ Audit links **added or modified in the diff** (don't re-audit the whole file unl
 
 ## How to work
 
+- Check the final `## References` section for usually 2–3 key authoritative primary sources, such as standards bodies, government publications, or official technical specifications/documentation. Exclude blogs, marketing pages, and generic resource lists from that section. Additional authoritative inline citations are welcome, and the final list may repeat key sources cited inline. Keep links selective without treating 2–3 as a hard cap or removing necessary claim support.
 - Actually `WebFetch` each external link and read enough to judge support — do not assume from the URL or domain.
 - Use `WebSearch` to find the correct authoritative source when a citation is weak or wrong, and suggest the better one.
 - For internal links, verify against the repo, not from memory.

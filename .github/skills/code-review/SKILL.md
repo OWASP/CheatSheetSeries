@@ -179,6 +179,14 @@ security review and testing.
 
 ### 3. Links and sources
 
+Check that the cheat sheet ends with the exact heading `## References`, usually
+listing 2–3 key authoritative primary sources, such as standards bodies,
+government publications, or official technical specifications/documentation.
+Exclude blogs, marketing pages, and generic resource lists from that section.
+Additional authoritative inline citations are welcome, and the final list may
+repeat key sources cited inline. Keep links selective without treating 2–3 as
+a hard cap or removing necessary claim support.
+
 Fetch and read every new or changed source to confirm claim support and authority,
 including sources whose links CI reports as healthy or cached. HTTP success
 establishes reachability only. Use CI's status results rather than repeating

@@ -44,7 +44,7 @@ Organize your advice into clear sections. Most cheat sheets have
 
 ## References
 
-Links to external resources, standards, or related cheat sheets.
+Usually 2–3 key authoritative primary sources. Keep this section last.
 ```
 
 ### Introduction
@@ -67,7 +67,9 @@ Look at existing cheat sheets for inspiration:
 
 ### References
 
-Link to authoritative external resources: RFCs, NIST publications, OWASP standards, and related cheat sheets. Don't repeat content from other cheat sheets - link to them instead.
+End every cheat sheet with the exact heading `## References`. Usually list 2–3 key authoritative primary sources, such as standards bodies, government publications, or official technical specifications/documentation. Exclude blogs, marketing pages, and generic resource lists. The list may repeat key sources cited inline.
+
+Additional authoritative inline citations are welcome where they support specific claims. Keep links selective without removing necessary claim support to meet the 2–3 reference target. Cross-link related cheat sheets where relevant rather than repeating their content.
 
 ## Writing Tips
 
@@ -113,7 +115,7 @@ It is much better to give _good_ practices that developers can actually follow t
 
 ### Support Claims with References
 
-When making security recommendations, link to authoritative sources. Inline links work best:
+Support specific security claims with authoritative inline sources, in addition to the final References section:
 
 ```markdown
 Use Argon2id for password hashing as recommended by

@@ -63,6 +63,13 @@ does not help a developer decide or do something, it does not belong.
 
 ## Links and citations
 
+- End every cheat sheet with the exact heading `## References`, usually listing
+  2–3 key authoritative primary sources, such as standards bodies, government
+  publications, or official technical specifications/documentation. Exclude
+  blogs, marketing pages, and generic resource lists from this section.
+- Additional authoritative inline citations are welcome; the final list may
+  repeat key sources cited inline. Keep links selective without removing
+  necessary claim support to meet the 2–3 reference target.
 - Every external link must resolve and must actually support the specific claim
   it is attached to. Prefer primary sources: standards bodies, RFCs, vendor
   security documentation, peer-reviewed work, OWASP projects.
@@ -117,8 +124,8 @@ does not help a developer decide or do something, it does not belong.
 These are deliberate project decisions. Raising them wastes a volunteer's time:
 
 - **No table of contents.** It is generated for the published site.
-- **No `## References` section.** Inline citations and a References section are
-  both accepted; about half the series has no References section.
+- **Sources repeated in References.** The required final `## References`
+  section may repeat key sources cited inline; it is not a list of extra reading.
 - **Essential syntax examples.** Language-specific, injection,
   parameterization, and hardening topics may need short, accurate examples to
   explain a control. This is not a blanket exception for code-heavy content or

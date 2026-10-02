@@ -100,6 +100,7 @@ For detailed guidance on writing effective cheat sheet content, including struct
 - The first section of the cheat sheet should be an introduction which briefly sums up the contents, and provides a short list of key bullet points.
 - The table of contents will be automatically generated on the site, so does not need to be added as a section.
 - Headings should have a blank line after them.
+- End every cheat sheet with the exact heading `## References`, usually listing 2–3 key authoritative primary sources, such as standards bodies, government publications, or official technical documentation. Exclude blogs, marketing pages, and generic resource lists. Additional authoritative inline citations are welcome; the final list may repeat key sources cited inline. Keep links selective without removing necessary claim support.
 
 ### Language
 
