@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**132** cheat sheets available.
+**136** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -25,6 +25,12 @@
 [Authentication Patterns Cheat Sheet](cheatsheets/Authentication_Patterns_Cheat_Sheet.md)
 
 [Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
+
+[Authorization Decisions And Output Handling Cheat Sheet](cheatsheets/Authorization_Decisions_And_Output_Handling_Cheat_Sheet.md)
+
+[Authorization Patterns Cheat Sheet](cheatsheets/Authorization_Patterns_Cheat_Sheet.md)
+
+[Authorization Policy And Data Distribution Cheat Sheet](cheatsheets/Authorization_Policy_And_Data_Distribution_Cheat_Sheet.md)
 
 [Authorization Regression Testing Cheat Sheet](cheatsheets/Authorization_Regression_Testing_Cheat_Sheet.md)
 
@@ -119,6 +125,8 @@
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
 
 ## I
+
+[Identity Propagation Patterns Cheat Sheet](cheatsheets/Identity_Propagation_Patterns_Cheat_Sheet.md)
 
 [Infrastructure as Code Security Cheat Sheet](cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md)
 
