@@ -6,6 +6,8 @@ Authorization implementation is rarely static. As applications evolve, new API e
 
 [Broken Access Control (BAC)](https://owasp.org/Top10/A01_2021-Broken_Access_Control/) was ranked the number-one risk in the OWASP Top Ten 2021, and [Insecure Direct Object Reference (IDOR)](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References) is one of its most frequently exploited sub-categories. This cheat sheet provides actionable, architectural guidance on implementing automated authorization regression testing within the Software Development Life Cycle (SDLC). By shifting from manual, point-in-time penetration testing to continuous, developer-centric regression suites, engineering teams can catch BAC, IDOR, and tenant isolation failures before they reach production.
 
+For baseline controls, see the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md).
+
 Key topics covered in this cheat sheet include:
 
 - Designing an automated authorization test matrix.
@@ -97,36 +99,6 @@ The value of an authorization regression suite is only realized if it prevents v
 
 ## References
 
-### OWASP Resources
-
-- [OWASP Top Ten 2021 — A01: Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
-- [OWASP Web Security Testing Guide v4.2 — Authorization Testing](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/)
-- [OWASP WSTG — Testing for Insecure Direct Object References](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
-- [OWASP Proactive Controls C7: Enforce Access Controls](https://owasp.org/www-project-proactive-controls/v3/en/c7-enforce-access-controls)
-- [OWASP Software Assurance Maturity Model (SAMM): Security Testing](https://owaspsamm.org/model/verification/security-testing/)
-- [OWASP Application Security Verification Standard (ASVS) 4.0 — V4: Access Control](https://raw.githubusercontent.com/OWASP/ASVS/v4.0.3/4.0/OWASP%20Application%20Security%20Verification%20Standard%204.0.3-en.pdf)
-
-### Related OWASP Cheat Sheets
-
-- [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
-- [Authorization Testing Automation Cheat Sheet](Authorization_Testing_Automation_Cheat_Sheet.md)
-- [Insecure Direct Object Reference Prevention Cheat Sheet](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
-- [Multi-Tenant Security Cheat Sheet](Multi_Tenant_Security_Cheat_Sheet.md)
-- [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md)
-
-### Standards and Specifications
-
-- [OpenAPI Specification 3.1.0 — Security Scheme Object](https://spec.openapis.org/oas/v3.1.0#security-scheme-object)
-- [OAuth 2.0 Authorization Framework (RFC 6749)](https://www.rfc-editor.org/rfc/rfc6749)
-- [OAuth 2.0 Bearer Token Usage (RFC 6750)](https://www.rfc-editor.org/rfc/rfc6750)
-- [HTTP Semantics (RFC 9110) — 401 Unauthorized](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2)
-- [HTTP Semantics (RFC 9110) — 403 Forbidden](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4)
-- [CWE-269: Improper Privilege Management](https://cwe.mitre.org/data/definitions/269.html)
-
-### Tools
-
-- [Schemathesis — Property-based API testing](https://schemathesis.readthedocs.io/en/stable/)
-- [Dredd — HTTP API Testing Framework](https://dredd.org/en/latest/)
-- [pytest — Python test framework](https://docs.pytest.org/)
-- [JUnit 5 — Java test framework](https://junit.org/junit5/)
-- [Jest — JavaScript test framework](https://jestjs.io/)
+- [OWASP WSTG: Testing for Insecure Direct Object References](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References)
+- [OWASP SAMM: Security Testing](https://owaspsamm.org/model/verification/security-testing/)
+- [OpenAPI 3.1.0: Security Scheme Object](https://spec.openapis.org/oas/v3.1.0#security-scheme-object)

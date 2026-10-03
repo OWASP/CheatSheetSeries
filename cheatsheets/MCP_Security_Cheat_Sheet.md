@@ -166,8 +166,6 @@ If the threat model calls for integrity after TLS termination, choose a reviewed
 
 ## References
 
-- [MCP Specification — Security Best Practices](https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [mcp-scan — Security Scanner for MCP Servers](https://github.com/invariantlabs-ai/mcp-scan)
-- [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/)
-- [Individual Internet-Draft (work in progress): MCPS message signing](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/)
+- [MCP: Security Best Practices](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices)
+- [MCP: Authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)
+- [MCP: Streamable HTTP](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http)

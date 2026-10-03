@@ -240,7 +240,7 @@ File upload vulnerabilities are security issues that arise when an application d
 
 #### Validate file type and size
 
-Always validate the file type on the server side to ensure that only allowed file types are accepted.
+Always validate the file type on the server side to ensure that only allowed file types are accepted. See the [Symfony validation documentation](https://symfony.com/doc/current/validation.html).
 Also, consider limiting the size of uploaded files to prevent denial-of-service attacks and to ensure that your server has enough resources to handle the uploads.
 
 Example with PHP Attributes:
@@ -567,6 +567,4 @@ For more details refer to [Symfony Secrets Documentation](https://symfony.com/do
 
 - [Symfony CSRF Documentation](https://symfony.com/doc/current/security/csrf.html)
 - [Symfony Twig Documentation](https://symfony.com/doc/current/templates.html)
-- [Symfony Validation Documentation](https://symfony.com/doc/current/validation.html)
-- [Symfony Blackfire Documentation](https://symfony.com/doc/current/the-fast-track/en/29-performance.html)
-- [Doctrine Security Documentation](https://www.doctrine-project.org/projects/doctrine-dbal/en/3.7/reference/security.html)
+- [Doctrine Security Documentation](https://www.doctrine-project.org/projects/doctrine-dbal/en/4.5/reference/security.html)

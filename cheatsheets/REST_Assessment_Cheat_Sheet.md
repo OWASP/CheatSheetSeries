@@ -112,6 +112,9 @@ Missing or weak limits let an attacker guess credentials, harvest data or consum
 
 ## Related Resources
 
-- [REST Security Cheat Sheet](REST_Security_Cheat_Sheet.md) - the other side of this cheat sheet
-- [OWASP API Security Top 10](https://owasp.org/API-Security/) - the API risk categories covered by the sections above
-- [YouTube: RESTful services, web security blind spot](https://www.youtube.com/watch?v=pWq4qGLAZHI) - a video presentation elaborating on most of the topics on this cheat sheet.
+See the [REST Security Cheat Sheet](REST_Security_Cheat_Sheet.md) for implementation guidance corresponding to these assessment topics.
+
+## References
+
+- [RFC 8725: JSON Web Token Best Current Practices](https://datatracker.ietf.org/doc/html/rfc8725)
+- [RFC 6750: OAuth 2.0 Bearer Token Usage](https://www.rfc-editor.org/rfc/rfc6750#section-3.1)

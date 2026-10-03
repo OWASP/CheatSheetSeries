@@ -242,9 +242,6 @@ Use this checklist together with the W3C [registration](https://www.w3.org/TR/we
 
 ## References
 
-- [W3C Web Authentication Level 2](https://www.w3.org/TR/webauthn-2/)
 - [W3C Web Authentication Level 3](https://www.w3.org/TR/webauthn-3/)
 - [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html)
-- [NIST Supplemental Guidance for Syncable Authenticators](https://pages.nist.gov/800-63-4/sp800-63b/syncable/)
-- [Passkeys.dev Developer Resources](https://passkeys.dev/)
-- [MDN Web Authentication API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API)
+- [NIST SP 800-63B-4: Syncable Authenticators](https://pages.nist.gov/800-63-4/sp800-63b/syncable/)

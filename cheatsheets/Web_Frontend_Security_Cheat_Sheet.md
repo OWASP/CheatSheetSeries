@@ -202,3 +202,8 @@ Use the framework to serialize data; building payloads by hand can introduce sec
 #### Use JSON and XML schema for web services
 
 Use a third-party library to validate web service inputs.
+
+## References
+
+- [MDN: innerHTML Security Considerations](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML#security_considerations)
+- [DOMPurify: HTML Sanitization](https://github.com/cure53/DOMPurify#what-does-it-do)

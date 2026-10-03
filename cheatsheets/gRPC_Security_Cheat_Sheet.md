@@ -441,3 +441,5 @@ grpcurl -plaintext -H "authorization: Bearer invalid_token" \
 ## References
 
 - [gRPC Authentication Documentation](https://grpc.io/docs/guides/auth/)
+- [gRPC: Deadlines](https://grpc.io/docs/guides/deadlines/)
+- [gRPC: Reflection](https://grpc.io/docs/guides/reflection/)

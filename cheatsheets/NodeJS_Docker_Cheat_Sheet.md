@@ -476,3 +476,8 @@ And finally, the command that builds the Node.js Docker image:
 **Note:** Secrets are a new feature in Docker and if you’re using an older version, you might need to enable it Buildkit as follows:
 
     DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
+
+## References
+
+- [Node.js Docker: Best Practices](https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md)
+- [Docker: Build secrets](https://docs.docker.com/build/building/secrets/)

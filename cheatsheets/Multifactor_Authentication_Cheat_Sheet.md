@@ -551,16 +551,8 @@ Attackers attempt to force authentication through legacy protocols or authentica
 - Prevent fallback from phishing-resistant authenticators to lower-assurance authentication methods unless required by a documented security policy.
 - Follow OAuth 2.0 Security Best Current Practice (RFC 9700) to prevent OAuth protocol-level downgrade and mix-up attacks.
 
-## References and Further Reading
+## References
 
-- [NIST SP 800‑63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
-- [NIST SP 800-63](https://pages.nist.gov/800-63-3/sp800-63b.html)
-- [Your Pa$$word doesn't matter](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984)
-- [FIDO2](https://fidoalliance.org/fido2/)
-- [ENISA Handbook on Security of Personal Data Processing](https://www.enisa.europa.eu/publications/handbook-on-security-of-personal-data-processing/@@download/fullReport)
-- [Google Cloud Adding MFA](https://cloud.google.com/identity-platform/docs/web/mfa)
-- [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
-- [FIDO Alliance Specifications](https://fidoalliance.org/specifications/)
-- [W3C WebAuthn](https://www.w3.org/TR/webauthn-3/)
-- [RFC 6238 – TOTP](https://datatracker.ietf.org/doc/html/rfc6238)
-- [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
+- [NIST SP 800-63B-4: Authentication and Authenticator Management](https://pages.nist.gov/800-63-4/sp800-63b.html)
+- [W3C Web Authentication Level 3](https://www.w3.org/TR/webauthn-3/)
+- [RFC 6238: Time-Based One-Time Password Algorithm](https://datatracker.ietf.org/doc/html/rfc6238)

@@ -151,6 +151,8 @@ Some features are inherently abuse magnets because they dispense value in respon
 
 ## Threat Model from the Business Process
 
+See the [Abuse Case Cheat Sheet](Abuse_Case_Cheat_Sheet.md) for identifying misuse scenarios.
+
 Most threat modeling is done from a technical angle: data flow diagrams, trust boundaries, STRIDE categories. That's useful, but it misses the bugs where the code is technically correct and the process is the problem. Business logic threat modeling asks different questions.
 
 ### Questions to Ask Early
@@ -208,6 +210,8 @@ Map every sensitive operation to every entry point that can trigger it, and veri
 For general access control guidance, see the [Access Control Cheat Sheet](Access_Control_Cheat_Sheet.md) and the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md). For the higher-sensitivity case of financial or state-changing transactions, see the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md).
 
 ## Validate Inputs for Business Meaning, Not Just Format
+
+See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md) for validation controls.
 
 Input validation typically focuses on format: is this a well-formed integer, is this within length limits, does it match a whitelist of characters. That catches injection attacks but not business logic abuse. The input can be perfectly formatted and still semantically invalid.
 
@@ -338,12 +342,6 @@ Before shipping any feature that handles money, permissions, or state, walkthrou
 
 ## References
 
-- [OWASP Web Security Testing Guide - Business Logic Testing](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/)
 - [CWE-840: Business Logic Errors](https://cwe.mitre.org/data/definitions/840.html)
 - [CWE-841: Improper Enforcement of Behavioral Workflow](https://cwe.mitre.org/data/definitions/841.html)
-- [CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition](https://cwe.mitre.org/data/definitions/367.html)
-- [OWASP Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
-- [OWASP Access Control Cheat Sheet](Access_Control_Cheat_Sheet.md)
-- [OWASP Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md)
-- [OWASP Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md)
-- [OWASP Abuse Case Cheat Sheet](Abuse_Case_Cheat_Sheet.md)
+- [CWE-367: Time-of-check Time-of-use Race Condition](https://cwe.mitre.org/data/definitions/367.html)

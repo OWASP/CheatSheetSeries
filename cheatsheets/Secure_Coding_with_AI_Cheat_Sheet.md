@@ -124,7 +124,7 @@ For comprehensive MCP security guidance, see the [MCP Security Cheat Sheet](http
 - Trust tool descriptions as benign. They are an injection surface.
 - Allow MCP tools unrestricted filesystem, network, or credential access on the developer's machine.
 
-Reference: CVE-2026-39313 -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.
+Reference: [CVE-2026-39313](https://github.com/advisories/GHSA-353c-v8x9-v7c3) -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.
 
 ## Section 5: Agent Runtime Sandboxing
 
@@ -236,6 +236,8 @@ AI coding assistants send code context (open files, project structure, terminal 
 - Assume that `.gitignore` prevents AI tools from reading files. `.gitignore` only affects git -- AI tools read from the filesystem directly.
 
 ## Section 10: Prompt-to-Code Supply Chain Risk
+
+See the [Software Supply Chain Security Cheat Sheet](Software_Supply_Chain_Security_Cheat_Sheet.md) for controls throughout the development lifecycle.
 
 AI coding agents modify not just application code but also build scripts, CI/CD configurations, package scripts, and deployment infrastructure. Changes to these files execute automatically in trusted contexts with elevated privileges.
 
@@ -349,11 +351,6 @@ AI-generated code must have a human owner. Every AI-assisted change should be re
 
 ## References
 
-- [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
-- [OWASP LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
-- [OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html)
-- [OWASP Secure Coding Practices Quick Reference Guide](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
-- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html)
-- [OWASP Top 10 for LLM Applications](https://genai.owasp.org/)
-- [OWASP AISVS](https://github.com/OWASP/AISVS)
-- CVE-2026-39313 -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.
+- [NIST SP 800-218: Secure Software Development Framework](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf)
+- [OpenSSF: Concise Guide for Evaluating Open Source Software](https://best.openssf.org/Concise-Guide-for-Evaluating-Open-Source-Software)
+- [OWASP AI Security Verification Standard](https://github.com/OWASP/AISVS)

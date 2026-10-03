@@ -100,3 +100,9 @@ Keep the verification policy and expected values outside the evidence under revi
 - Confuse a stable artifact digest with a unique execution identifier.
 - Treat a fresh signature as proof of live capture, or a successful spot-check as proof of completeness.
 - Treat missing entries as evidence that nothing happened when recording could have failed.
+
+## References
+
+- [SLSA: Verifying Artifacts](https://slsa.dev/spec/v1.2/verifying-artifacts)
+- [RFC 9334: Remote ATtestation procedureS (RATS) Architecture](https://datatracker.ietf.org/doc/html/rfc9334#section-10)
+- [RFC 9162: Certificate Transparency Version 2.0](https://datatracker.ietf.org/doc/html/rfc9162)

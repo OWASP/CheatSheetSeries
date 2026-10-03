@@ -138,6 +138,5 @@ Details related to current or recent logins should also be made visible to the u
 
 ## References
 
-- [OWASP Credential Stuffing Article](https://owasp.org/www-community/attacks/Credential_stuffing)
-- [OWASP Automated Threats to Web Applications](https://owasp.org/www-project-automated-threats-to-web-applications/)
-- Project: [OAT-008 Credential Stuffing](https://owasp.org/www-community/attacks/Credential_stuffing), which is one of 20 defined threats in the [OWASP Automated Threat Handbook](https://owasp.org/www-pdf-archive/Automated-threat-handbook.pdf) this project produced.
+- [OWASP: Credential Stuffing](https://community.owasp.org/attacks/Credential_stuffing)
+- [NIST SP 800-63B-4: Password Verifiers](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)

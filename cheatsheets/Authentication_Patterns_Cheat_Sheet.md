@@ -152,3 +152,8 @@ Security risks increase significantly when authentication logic and credentials 
 - **Authenticate internal service calls with proxy-mediated mTLS and workload identity.** Give every workload its own cryptographic identity, for example an X.509 SVID issued through [SPIFFE](https://spiffe.io/docs/latest/spiffe-about/overview/), and have the sidecar enforce mutual authentication with [TLS](https://www.rfc-editor.org/rfc/rfc8446) client certificates on every service-to-service connection, as NIST SP 800-204 (MS-SS-4) recommends. See also [Client Certificates and Mutual TLS](Transport_Layer_Security_Cheat_Sheet.md#client-certificates-and-mutual-tls).
 - **Do not embed authentication in new systems.** Service-level embedded authentication fragments identity, duplicates credential stores, and rules out SSO. Reserve it for legacy code you cannot change, and even then follow the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 - **Treat network-layer (node-level) authentication as a transport complement, never as the sole control.** It authenticates nodes, not users or workloads, and [NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final) is explicit that network location alone does not imply trust. Combine it with edge-level or proxy-mediated authentication; NIST SP 800-204 (MS-SS-13) likewise positions layer 3 segmentation as a complement to service mesh controls.
+
+## References
+
+- [NIST SP 800-204: Security Strategies for Microservices-Based Application Systems](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204.pdf)
+- [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)

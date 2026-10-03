@@ -306,27 +306,5 @@ You can disable the cache mechanism if you accept the degraded performance relat
 
 ## References
 
-### XS Leaks
-
-- [XS Leaks Wiki](https://xsleaks.dev/)
-- [XS Leaks Attacks & Prevention](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XS-Leaks)
-
-### Fetch Metadata
-
-- [Fetch Metadata and Isolation Policies](https://xsleaks.dev/docs/defenses/isolation-policies/)
-- [Protect your resources from attacks with Fetch Metadata](https://web.dev/fetch-metadata/)
-
-### Framing protection
-
-- [Preventing framing with policies](https://pragmaticwebsecurity.com/articles/securitypolicies/preventing-framing-with-policies.html)
-- [CSP 'frame-ancestors' policy](https://content-security-policy.com/frame-ancestors/)
-
-### SameSite
-
-- [SameSite cookies explained](https://web.dev/samesite-cookies-explained/)
-- [SameSite cookies recipes](https://web.dev/samesite-cookie-recipes/)
-
-### COOP and CORP header
-
-- [Making your site "cross-origin isolated"](https://web.dev/coop-coep/)
-- [MDN Web Docs about CORP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cross-Origin_Resource_Policy_%28CORP%29)
+- [MDN: Cross-Site Leaks](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XS-Leaks)
+- [W3C: Fetch Metadata Request Headers](https://www.w3.org/TR/fetch-metadata/)

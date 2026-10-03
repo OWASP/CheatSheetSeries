@@ -324,25 +324,9 @@ One final note: If deploying interceptors / filters as an XSS defense was a usef
 
 ## Related Articles
 
-**XSS Attack Cheat Sheet:**
+See the [XSS Filter Evasion Cheat Sheet](XSS_Filter_Evasion_Cheat_Sheet.md) for examples that illustrate why filtering alone is insufficient.
 
-The following article describes how attackers can exploit different kinds of XSS vulnerabilities (and this article was created to help you avoid them):
+## References
 
-- OWASP: [XSS Filter Evasion Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html).
-
-**Description of XSS Vulnerabilities:**
-
-- OWASP article on [XSS](https://owasp.org/www-community/attacks/xss/) Vulnerabilities.
-
-**Discussion about the Types of XSS Vulnerabilities:**
-
-- [Types of Cross-Site Scripting](https://owasp.org/www-community/Types_of_Cross-Site_Scripting).
-
-**How to Review Code for Cross-Site Scripting Vulnerabilities:**
-
-- [OWASP Code Review Guide](https://owasp.org/www-project-code-review-guide/) article on [Reviewing Code for Cross-site scripting](https://wiki.owasp.org/index.php/Reviewing_Code_for_Cross-site_scripting) Vulnerabilities.
-
-**How to Test for Cross-Site Scripting Vulnerabilities:**
-
-- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) article on testing for Cross-Site Scripting vulnerabilities.
-- [XSS Experimental Minimal Encoding Rules](https://wiki.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules) Provides examples and guidelines for experimental minimal encoding strategies to prevent Cross-Site Scripting (XSS) attacks.
+- [OWASP Java Encoder: Output Contexts and Boundaries](https://github.com/OWASP/owasp-java-encoder/blob/main/docs/contexts.md#encode-for-the-parser-that-receives-the-value)
+- [DOMPurify Documentation](https://github.com/cure53/DOMPurify)

@@ -89,7 +89,7 @@ Least privilege, defined by [NIST](https://csrc.nist.gov/glossary/term/least_pri
 
 > The principle that a security architecture is designed so that each entity is granted the minimum system resources and authorizations that the entity needs to perform its function".
 
-In the context of CI/CD environments, this principle should be applied to at least three main areas: the secrets used within pipeline steps to access external resources, the access one pipeline or step has to other resources configured in the CI/CD platform (Palo Alto Networks, n.d.), and the permissions of the OS user executing the pipeline.
+In the context of CI/CD environments, this principle should be applied to at least three main areas: the secrets used within pipeline steps to access external resources, the access one pipeline or step has to other resources configured in the CI/CD platform ([OWASP pipeline-based access controls](https://owasp.github.io/www-project-top-10-ci-cd-security-risks/CICD-SEC-05-Insufficient-PBAC)), and the permissions of the OS user executing the pipeline.
 
 Regardless of the specific application, the general guidance remains the same: access must be justified, not assumed. One should adopt a "deny by default" mindset. Any identities used within the pipeline must be assigned only the minimum permissions necessary to do its job. For example, if a pipeline must access an AWS service in order to complete its task, the AWS credentials used in that pipeline must only be able to perform the specific operations on the  specific services and resources it requires to perform its task. Similarly, credential sharing across pipelines should be kept to a minimum; in particular, such sharing should not occur across pipelines having different levels of sensitivity or value. If pipeline A does not require access to the same secrets pipeline B requires, they should ideally not be shared. Finally, the OS accounts responsible for running the pipeline should not have root or comparable privileges; this will help mitigate impact in case of compromise.
 
@@ -97,7 +97,7 @@ Regardless of the specific application, the general guidance remains the same: a
 
 Although proper secrets management and application of the principle of least privilege are necessary for secure IAM, they are not sufficient. The lifecycle of identities, from creation to deprovisioning, must be carefully managed to reduce risk for CI/CD and other environments.
 
-In the initial or "Joiner" phase of Identity Management (as defined in the [ILM Playbook](https://www.idmanagement.gov/playbooks/ilm/)), considerations include using a centralized IdP rather than allowing local accounts, disallowing shared accounts, disallowing self-provisioning of identities, and only allowing email accounts with domains controlled by the organization responsible for the CI/CD environment (OWASP, n.d.). Once provisioned, identities must be tracked, maintained, and, when necessary, deprovisioned. Of particular concern in complex, distributed CI/CD environments is ensuring that an accurate, comprehensive, and up-to-date inventory of identities is maintained. The format of this inventory can vary by organizational needs, but, in addition to the identity itself, suggested fields include identity owner or responsible party, identity provider, last used, last updated, granted permissions, and permissions actually used by the identity. Such an inventory will help one readily identify identities which may be over-privileged or which may be candidates for deprovisioning. Proper identity maintenance must not be overlooked; the "forgotten" identity can be the vector an attacker users to compromise a CI/CD system.
+In the initial or "Joiner" phase of Identity Management (as defined in the [ILM Playbook](https://www.idmanagement.gov/playbooks/ilm/)), considerations include using a centralized IdP rather than allowing local accounts, disallowing shared accounts, disallowing self-provisioning of identities, and only allowing email accounts with domains controlled by the organization responsible for the CI/CD environment ([OWASP CI/CD identity and access management](https://owasp.org/www-project-top-10-ci-cd-security-risks/CICD-SEC-02-Inadequate-Identity-And-Access-Management)). Once provisioned, identities must be tracked, maintained, and, when necessary, deprovisioned. Of particular concern in complex, distributed CI/CD environments is ensuring that an accurate, comprehensive, and up-to-date inventory of identities is maintained. The format of this inventory can vary by organizational needs, but, in addition to the identity itself, suggested fields include identity owner or responsible party, identity provider, last used, last updated, granted permissions, and permissions actually used by the identity. Such an inventory will help one readily identify identities which may be over-privileged or which may be candidates for deprovisioning. Proper identity maintenance must not be overlooked; the "forgotten" identity can be the vector an attacker users to compromise a CI/CD system.
 
 ## Managing Third-Party Code
 
@@ -109,7 +109,7 @@ Using third-party packages with known vulnerabilities is a well-known problem in
 
 Dependency chain abuse involves the exploitation of flaws within a system's dependency chain and dependency resolution processes; a successful attack can result in the execution of malicious code from an attacker controlled package. The dependency chain itself refers to the set of packages, including internal, direct third-party, and transitive dependencies, that a software solution requires to function. An attacker can take advantage of this dependency chain through methods such as [dependency confusion](https://fossa.com/blog/dependency-confusion-understanding-preventing-attacks/), [typosquatting](https://blog.gitguardian.com/protecting-your-software-supply-chain-understanding-typosquatting-and-dependency-confusion-attacks/), or takeover of a valid package maintainer's account. Dependency chain abuse attacks can be quite complex and comprehensive defense is correspondingly so; however, basic mitigation are quite straightforward.
 
-Mitigation techniques begin early on in the SDLC, well before the CI/CD pipeline begins execution. The project's package management technology (such as npm) should be configured in such a way as to ensure dependency references are immutable (CISA et al. 2022). Version pinning should be performed, the version chosen for pinning must be one that is known to be valid and secure, and the integrity of any package the system downloads should be validated by comparing its hash or checksum to a  known good hash of the pinned package. The exact procedures to achieve this will vary depending on the project's underlying technology, but, in general, both version pinning and hash verification can be performed via a platform's "lock" or similar file (i.e. [package-lock.json](https://docs.npmjs.com/cli/v7/configuring-npm/package-lock-json) or  [Pipfile.lock](https://pipenv.pypa.io/en/latest/pipfile.html)). Remember to [enforce the lockfile](https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#2-enforce-the-lockfile). Prefer using private repositories where possible, and configure the package manager to use only a single private feed (Microsoft, 2021). For private packages, leverage [scoped NPM packages](https://docs.npmjs.com/cli/v10/using-npm/scope),  [ID prefixes for NuGet packages](https://learn.microsoft.com/en-us/nuget/nuget-org/id-prefix-reservation), or a comparable feature to reduce the risk of dependency confusion. Finally, regardless of the platform used, ensure the file(s) responsible for controlling these settings (such as `.npmrc` in node environments), is committed to source control and accessible in the CI/CD environment.
+Mitigation techniques begin early on in the SDLC, well before the CI/CD pipeline begins execution. The project's package management technology (such as npm) should be configured in such a way as to ensure dependency references are immutable (CISA et al. 2022). Version pinning should be performed, the version chosen for pinning must be one that is known to be valid and secure, and the integrity of any package the system downloads should be validated by comparing its hash or checksum to a  known good hash of the pinned package. The exact procedures to achieve this will vary depending on the project's underlying technology, but, in general, both version pinning and hash verification can be performed via a platform's "lock" or similar file (i.e. [package-lock.json](https://docs.npmjs.com/cli/v7/configuring-npm/package-lock-json) or  [Pipfile.lock](https://pipenv.pypa.io/en/latest/pipfile.html)). Remember to [enforce the lockfile](https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#2-enforce-the-lockfile). Prefer using private repositories where possible, and configure the package manager to use only a single private feed ([Microsoft's feed configuration guidance](https://github.com/MicrosoftDocs/azure-devops-docs/blob/main/docs/artifacts/concepts/best-practices.md)). For private packages, leverage [scoped NPM packages](https://docs.npmjs.com/cli/v10/using-npm/scope),  [ID prefixes for NuGet packages](https://learn.microsoft.com/en-us/nuget/nuget-org/id-prefix-reservation), or a comparable feature to reduce the risk of dependency confusion. Finally, regardless of the platform used, ensure the file(s) responsible for controlling these settings (such as `.npmrc` in node environments), is committed to source control and accessible in the CI/CD environment.
 
 ### Plug-In and Integration Management
 
@@ -142,39 +142,5 @@ Once an appropriate logging strategy has been defined and necessary configuratio
 
 ## References
 
-### General References
-
-- [CISA, NSA, & ODNI (2022). Securing the Software Supply Chain: Recommended Processes for Developers](https://www.cisa.gov/sites/default/files/publications/ESF_SECURING_THE_SOFTWARE_SUPPLY_CHAIN_DEVELOPERS.PDF)
-- [Microsoft (2021). 3 Ways to Mitigate Risks Using Private Package Feeds](https://azure.microsoft.com/mediahandler/files/resourcefiles/3-ways-to-mitigate-risk-using-private-package-feeds/3%20Ways%20to%20Mitigate%20Risk%20When%20Using%20Private%20Package%20Feeds%20-%20v1.0.pdf)
-- [OWASP (n.d.). OWASP Top 10 CI/CD Security Risks](https://owasp.org/www-project-top-10-ci-cd-security-risks/)
-- [Palo Alto Networks (n.d.). What is Insufficient Pipeline-Based Access Controls](https://www.paloaltonetworks.com/cyberpedia/pipeline-based-access-controls-cicd-sec5)
-
-### CI/CD Platforms
-
-- [CircleCI](https://circleci.com/)
-- [Jenkins](https://www.jenkins.io/)
-- [SignServer](https://www.signserver.org/)
-- [TeamCity](https://www.jetbrains.com/teamcity/)
-- [TravisCI](https://www.jenkins.io/)
-
-### IaC Scanning
-
-- [Checkov](https://www.sigstore.dev/)
-- [Kics](https://www.kics.io/)
-- [SonarSource](https://www.sonarsource.com/)
-- [TerraScan](https://runterrascan.io/)
-
-### Integrity Verification and Signing
-
-- [In-toto](https://in-toto.io/)
-- [SignServer](https://www.signserver.org/)
-- [SigStore](https://www.sigstore.dev/)
-- [SLSA](https://slsa.dev/)
-
-### Secrets Management Tools
-
-- [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html)
-- [Azure Key Vault](https://azure.microsoft.com/en-us/products/key-vault/)
-- [CyberArk Secrets Management](https://www.cyberark.com/products/secrets-management/)
-- [Google Cloud Key Management](https://cloud.google.com/security/products/security-key-management)
-- [HashiCorp Vault](https://www.hashicorp.com/products/vault)
+- [CISA, NSA, and ODNI: Securing the Software Supply Chain - Recommended Practices for Developers](https://www.cisa.gov/sites/default/files/publications/ESF_SECURING_THE_SOFTWARE_SUPPLY_CHAIN_DEVELOPERS.PDF)
+- [NIST: Security Considerations for Code Signing](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.01262018.pdf)

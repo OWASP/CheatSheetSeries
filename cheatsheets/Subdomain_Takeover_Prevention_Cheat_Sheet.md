@@ -213,8 +213,5 @@ If a subdomain takeover is discovered:
 
 ## References
 
-- [OWASP Web Security Testing Guide: Test for Subdomain Takeover (WSTG-CONFIG-10)](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover)
-- [can-i-take-over-xyz: Community-maintained list of vulnerable services](https://github.com/EdOverflow/can-i-take-over-xyz)
-- [Microsoft: Prevent dangling DNS entries and avoid subdomain takeover](https://learn.microsoft.com/en-us/azure/security/fundamentals/subdomain-takeover)
-- [dnsReaper: Subdomain takeover detection tool](https://github.com/punk-security/dnsReaper)
-- [HackerOne Hacktivity: Subdomain takeover reports](https://hackerone.com/hacktivity?querystring=subdomain+takeover)
+- [OWASP WSTG 4.1: Test for Subdomain Takeover](https://owasp.github.io/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover)
+- [Microsoft: Prevent Dangling DNS Entries and Avoid Subdomain Takeover](https://learn.microsoft.com/en-us/azure/security/fundamentals/subdomain-takeover)

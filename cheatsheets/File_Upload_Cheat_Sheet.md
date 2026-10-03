@@ -163,3 +163,8 @@ The application should set proper request limits as well for the download servic
 ## Java Code Snippets
 
 [Document Upload Protection](https://github.com/righettod/document-upload-protection) repository written by Dominique for certain document types in Java.
+
+## References
+
+- [Microsoft: Upload Files in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-6.0)
+- [CWE-434: Unrestricted Upload of File with Dangerous Type](https://cwe.mitre.org/data/definitions/434.html)

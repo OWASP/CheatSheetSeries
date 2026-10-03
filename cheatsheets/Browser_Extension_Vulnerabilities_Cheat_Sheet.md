@@ -326,10 +326,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 ```
 
-## Conclusion
+## References
 
-By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.
-
-🔹 References:
-[Google Chrome Extension Security Guide](https://developer.chrome.com/docs/extensions/mv3/security/)  
-[Mozilla Firefox Extension Security Best Practices](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Security_best_practices)
+- [Chrome Extensions: Stay Secure](https://developer.chrome.com/docs/extensions/mv3/security/)
+- [MDN: WebExtension Security Best Practices](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Security_best_practices)

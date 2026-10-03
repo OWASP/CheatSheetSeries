@@ -291,3 +291,8 @@ Closing our list of npm security best practices are the following tips to reduce
 - Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with `npm info` to fetch more information about contributors and latest versions.
 - Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.
 - When installing packages, append the `--ignore-scripts` to reduce the risk of arbitrary command execution. For example: `npm install my-malicious-package --ignore-scripts`
+
+## References
+
+- [npm: Trusted Publishing with OIDC](https://docs.npmjs.com/trusted-publishers/)
+- [npm: Configuring Two-Factor Authentication](https://docs.npmjs.com/configuring-two-factor-authentication/)

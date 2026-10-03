@@ -263,3 +263,8 @@ Activate [designMode](https://developer.mozilla.org/en-US/docs/Web/API/Document/
 ```javascript
 document.designMode = "on";
 ```
+
+## References
+
+- [MDN: Content-Security-Policy frame-ancestors Directive](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors)
+- [MDN: X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)

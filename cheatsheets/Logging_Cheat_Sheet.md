@@ -371,12 +371,8 @@ Who is responsible for harm?
 - An attacker prevent damages the log in order to cover their tracks.
 - An attacker causes the wrong identity to be logged in order to conceal the responsible party.
 
-## Related articles
+## References
 
-- OWASP [ESAPI Documentation](https://owasp.org/www-project-enterprise-security-api/).
-- OWASP [Logging Project](https://owasp.org/www-project-security-logging/).
-- IETF [syslog protocol](https://tools.ietf.org/rfc/rfc5424.txt).
-- Mitre [Common Event Expression (CEE)](https://cee.mitre.org/) (as of 2014 no longer actively developed).
-- NIST [SP 800-92 Guide to Computer Security Log Management](https://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf).
-- PCISSC [PCI DSS v2.0 Requirement 10 and PA-DSS v2.0 Requirement 4](https://www.pcisecuritystandards.org/security_standards/documents.php).
-- W3C [Extended Log File Format](https://www.w3.org/TR/WD-logfile.html).
+- [NIST SP 800-92: Guide to Computer Security Log Management](https://csrc.nist.gov/pubs/sp/800/92/final)
+- [RFC 5424: The Syslog Protocol](https://datatracker.ietf.org/doc/html/rfc5424.html)
+- [W3C: Extended Log File Format (Working Draft)](https://www.w3.org/TR/WD-logfile.html)

@@ -185,3 +185,8 @@ public void handle(Callback[] callbacks) {
 ## Disclosure
 
 All of the code in the attached JAAS cheat sheet has been copied verbatim from this [free source](https://jaasbook.wordpress.com/2009/09/27/intro/).
+
+## References
+
+- [Oracle JAAS Reference Guide](https://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html)
+- [Oracle JAAS: LoginModule Developer's Guide](https://docs.oracle.com/en/java/javase/13/security/java-authentication-and-authorization-service-jaas-loginmodule-developers-guide1.html)

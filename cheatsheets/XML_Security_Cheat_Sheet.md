@@ -860,3 +860,9 @@ java.io.IOException: Server returned HTTP response code: 401 for URL: http://192
 ]>
 <root>&user;</root>
 ```
+
+## References
+
+- [W3C: Extensible Markup Language (XML) 1.0](https://www.w3.org/TR/xml/)
+- [W3C: XML Schema Definition Language (XSD) 1.1, Part 2 — Datatypes](https://www.w3.org/TR/xmlschema11-2/)
+- [Oracle Java 25: JAXP Security Guide](https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html)

@@ -14,7 +14,7 @@ This cheat sheet provides clear definitions and distinctions for security termin
 
 ## Data Handling: Encoding, Escaping, Sanitization, and Serialization
 
-These terms relate to how data is transformed for transport, storage, or display.
+These terms relate to how data is transformed for transport, storage, or display. See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md) for validation guidance.
 
 ### Encoding
 
@@ -52,7 +52,7 @@ These terms relate to how data is transformed for transport, storage, or display
 
 ## Cryptography: Encryption, Hashing, and Signatures
 
-These terms relate to protecting the confidentiality, integrity, and authenticity of data.
+These terms relate to protecting the confidentiality, integrity, and authenticity of data. See the [Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md) and [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) for implementation guidance.
 
 ### Encryption
 
@@ -115,7 +115,5 @@ When working with OAuth2, SAML, or OIDC, these terms are frequently used:
 
 ## References
 
-- [OWASP ASVS Standard](https://owasp.org/www-project-application-security-verification-standard/)
-- [OWASP Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md)
-- [OWASP Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md)
-- [OWASP Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md)
+- [RFC 4949: Internet Security Glossary, Version 2](https://www.rfc-editor.org/info/rfc4949/)
+- [OpenID Connect Core 1.0: Terminology](https://openid.net/specs/openid-connect-core-1_0.html#Terminology)

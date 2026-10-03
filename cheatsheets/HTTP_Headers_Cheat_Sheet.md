@@ -64,7 +64,7 @@ Modern browsers default to [`strict-origin-when-cross-origin`](https://developer
 
 ### Content-Type
 
-The `Content-Type` representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending). If not set correctly, the resource (e.g. an image) may be interpreted as HTML, making XSS vulnerabilities possible.
+The [`Content-Type`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending). If not set correctly, the resource (e.g. an image) may be interpreted as HTML, making XSS vulnerabilities possible.
 
 Although it is recommended to always set the `Content-Type` header correctly, it would constitute a vulnerability only if the content is intended to be rendered by the client and the resource is untrusted (provided or modified by a user).
 
@@ -94,7 +94,7 @@ These directives help reduce the risk of sensitive data being stored or exposed 
 
 ### Set-Cookie
 
-The `Set-Cookie` HTTP response header is used to send a cookie from the server to the user agent, so the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.
+The [`Set-Cookie`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) HTTP response header is used to send a cookie from the server to the user agent, so the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.
 
 This is not a security header per se, but its security attributes are crucial.
 
@@ -104,13 +104,15 @@ This is not a security header per se, but its security attributes are crucial.
 
 ### Strict-Transport-Security (HSTS)
 
-The HTTP `Strict-Transport-Security` response header (often abbreviated as HSTS) instructs browsers to only access the website using HTTPS, even if a user attempts to connect over HTTP.
+The HTTP [`Strict-Transport-Security`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) response header (often abbreviated as HSTS) instructs browsers to only access the website using HTTPS, even if a user attempts to connect over HTTP.
 
 #### Recommendation
 
 > `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
 
 - *NOTE*: Read carefully how this header works before using it. If the HSTS header is misconfigured or if there is a problem with the SSL/TLS certificate being used, legitimate users might be unable to access the website. For example, if the HSTS header is set to a very long duration and the SSL/TLS certificate expires or is revoked, legitimate users might be unable to access the website until the HSTS header duration has expired.
+
+See the [HSTS preload requirements](https://hstspreload.org/) before requesting preload inclusion.
 
 Please check out [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for more information.
 
@@ -162,7 +164,7 @@ Isolates the browsing context exclusively to same-origin documents.
 
 ### Cross-Origin-Embedder-Policy (COEP)
 
-The HTTP `Cross-Origin-Embedder-Policy` (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using [CORP](#cross-origin-resource-policy-corp) or CORS).
+The HTTP [`Cross-Origin-Embedder-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy) (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using [CORP](#cross-origin-resource-policy-corp) or CORS).
 
 - *NOTE*: Enabling this will block cross-origin resources not configured correctly from loading.
 
@@ -176,7 +178,7 @@ A document can only load resources from the same origin, or resources explicitly
 
 ### Cross-Origin-Resource-Policy (CORP)
 
-The `Cross-Origin-Resource-Policy` (CORP) header allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like [Spectre](https://meltdownattack.com/), as it allows browsers to block a given response before it enters an attacker's process.
+The [`Cross-Origin-Resource-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy) (CORP) header allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like [Spectre](https://meltdownattack.com/), as it allows browsers to block a given response before it enters an attacker's process.
 
 #### Recommendation
 
@@ -198,7 +200,7 @@ Set it and disable all the features that your site does not need or allow them o
 
 ### Server
 
-The `Server` header describes the software used by the origin server that handled the request — that is, the server that generated the response.
+The [`Server`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server) header describes the software used by the origin server that handled the request — that is, the server that generated the response.
 
 This is not a security header, but how it is used is relevant for security.
 
@@ -395,19 +397,6 @@ Online tools usually test the homepage of the given address. But SmartScanner sc
 
 ## References
 
-- [MDN Web Docs: Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition)
-- [MDN Web Docs: Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
 - [MDN Web Docs: X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options)
-- [MDN Web Docs: X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)
-- [MDN Web Docs: X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection)
-- [MDN Web Docs: Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
-- [MDN Web Docs: Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT)
-- [MDN Web Docs: Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
 - [MDN Web Docs: Cross-Origin-Opener-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy)
-- [MDN Web Docs: Cross-Origin-Resource-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy)
-- [MDN Web Docs: Cross-Origin-Embedder-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy)
-- [MDN Web Docs: Server](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server)
-- [HSTS Preload List](https://hstspreload.org/)
-- [Content Security Policy Reference](https://content-security-policy.com/)
-- [Resource Policy Reference](https://resourcepolicy.fyi/)
-- [OWASP Secure Headers Project](https://owasp.org/www-project-secure-headers/)
+- [OWASP Secure Headers Project: Response Headers](https://owasp.github.io/www-project-secure-headers/response-headers/)

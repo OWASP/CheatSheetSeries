@@ -87,7 +87,6 @@ Even with proper validation and logic, monitoring is crucial for detecting abuse
 
 ## References
 
-- [OWASP Web Security Testing Guide – Business Logic Testing](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/10-Test-Payment-Functionality)
-- [Idempotency in Payment APIs – Stripe Docs](https://stripe.com/docs/api/idempotent_requests)
-- [3rd Party Payment Gateway API integration](https://docs.konnect.network/docs/en/api-integration/intro)
-- [How to identify a carding attack](https://www.payway.com/blog/carding-explained-how-to-stop-a-silent-threat-to-your-business)
+- [OWASP WSTG: Payment Functionality](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/10-Business_Logic/10-Payment_Functionality/)
+- [Adyen: API idempotency](https://docs.adyen.com/development-resources/api-idempotency)
+- [Adyen: Verify HMAC signatures](https://docs.adyen.com/development-resources/webhooks/secure-webhooks/verify-hmac-signatures)

@@ -27,7 +27,7 @@ Running a personalization, targeting, ranking, or lookalike model on personal da
 
 ## 2. Protect the Corpus (Training and Retrieval)
 
-Training data and Retrieval-Augmented Generation (RAG) indexes are written by adversarial participants at line rate.
+Training data and Retrieval-Augmented Generation (RAG) indexes are written by adversarial participants at line rate. See the [RAG Security Cheat Sheet](RAG_Security_Cheat_Sheet.md) for pipeline controls.
 
 - Sign dataset manifests and RAG chunks with an offline key using the [in-toto attestation framework](https://github.com/in-toto/attestation) wrapped in a [DSSE envelope](https://github.com/secure-systems-lab/dsse), the same envelope shape [sigstore model-transparency](https://github.com/sigstore/model-transparency) uses for model artifacts.
 - Tag every training row and RAG chunk with a participant-provenance tag so scoped-rollback ("exclude every row from partner X during window Y") is answerable without re-hashing.
@@ -46,6 +46,8 @@ Training data and Retrieval-Augmented Generation (RAG) indexes are written by ad
 | Unadjudicated Sophisticated Invalid Traffic (SIVT) events enter training | Admit-then-reverse regression test on a beacon later SIVT-reversed | Admission lag vs. adjudication lag per mode |
 
 ## 3. Protect Inference and the Prompt Boundary
+
+For general input-boundary controls, see the [LLM Prompt Injection Prevention Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md).
 
 Every scoring surface exposed to a paying partner is a queryable oracle ([Tramèr et al. 2016](https://arxiv.org/abs/1609.02943)).
 
@@ -92,6 +94,8 @@ Every outcome callback is money and a training label in one packet.
 
 ## 5. Protect the AI Supply Chain and Generative Provenance
 
+For model lifecycle controls, see the [Secure AI Model Ops Cheat Sheet](Secure_AI_Model_Ops_Cheat_Sheet.md).
+
 Model artifacts, feature stores, RAG indexes, and generative endpoints are reachable through paths that never cross the ad-serving surface.
 
 - Sign every model artifact with [OpenSSF Model Signing](https://openssf.org/projects/model-signing/). Block deploy on signature failure. Pair signing with a trigger-scan behavioral gate for externally sourced classifiers.
@@ -114,19 +118,7 @@ Model artifacts, feature stores, RAG indexes, and generative endpoints are reach
 
 ## References
 
-**Generic mechanics defer to:**
-
-- [OWASP LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
-- [OWASP RAG Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/RAG_Security_Cheat_Sheet.html)
-- [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
-- [OWASP Secure AI/ML Model Ops Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secure_AI_Model_Ops_Cheat_Sheet.html)
-- [OWASP JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html)
-- [OWASP Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)
-
-**Regulatory anchors:** [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj) Art. 4(4), 9, 17; [DSA](https://eur-lex.europa.eu/eli/reg/2022/2065/oj) Art. 26, 28; [EU AI Act](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) Art. 3(60), 6, 50; [COPPA](https://www.law.cornell.edu/cfr/text/16/part-312); [California CPRA](https://cppa.ca.gov/pdf/20260101_ccpa_statute.pdf#page=8); [CJEU C-604/22](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62022CJ0604).
-
-**Standards:** [RFC 9421](https://www.rfc-editor.org/info/rfc9421/) HTTP Message Signatures; [RFC 9530](https://www.rfc-editor.org/rfc/rfc9530.html) Digest Fields; [RFC 9525](https://www.rfc-editor.org/rfc/rfc9525.html) service identity in TLS; [C2PA 2.4](https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_hard_bindings); [OpenSSF Model Signing](https://openssf.org/projects/model-signing/); [CycloneDX ML-BOM](https://cyclonedx.org/capabilities/mlbom/); [MITRE ATLAS](https://atlas.mitre.org/); [NIST AI 100-2e2025](https://csrc.nist.gov/pubs/ai/100/2/e2025/final); [OpenRTB](https://github.com/InteractiveAdvertisingBureau/openrtb2.x); [VAST](https://iabtechlab.com/standards/vast/) and [SIMID](https://iabtechlab.com/simid/); [MRC IVT Guidelines](https://mediaratingcouncil.org/standards-and-guidelines).
-
-**Adversarial ML anchors:** [Tramèr 2016](https://arxiv.org/abs/1609.02943) (extraction); [Shokri 2017](https://arxiv.org/abs/1610.05820) (membership inference); [Qi 2023](https://arxiv.org/abs/2306.13213) (visual jailbreaks); [Hubinger 2024](https://arxiv.org/abs/2401.05566) (sleeper agents); [Hu 2024](https://arxiv.org/abs/2402.07179) (GGPP retrieval steering).
-
-**OWASP LLM Top 10 (2025):** [LLM01](https://genai.owasp.org/llmrisk/llm01-prompt-injection/), [LLM02](https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/), [LLM06](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/), [LLM07](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/), [LLM10](https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/).
+- [NIST AI 100-2e2025: Adversarial Machine Learning — A Taxonomy and Terminology of Attacks and Mitigations](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf)
+- [RFC 9421: HTTP Message Signatures](https://www.rfc-editor.org/info/rfc9421/)
+- [C2PA 2.4 Technical Specification: Hard Bindings](https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_hard_bindings)
+- [Shokri et al.: Membership Inference Attacks Against Machine Learning Models](https://arxiv.org/abs/1610.05820)

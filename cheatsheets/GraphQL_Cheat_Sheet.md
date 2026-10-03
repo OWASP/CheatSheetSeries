@@ -24,6 +24,8 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 ## Best Practices and Recommendations
 
+For the original security analysis, see [Doyensec's GraphQL security overview](https://blog.doyensec.com/2018/05/17/graphql-security-overview.html).
+
 ### Input Validation
 
 Adding strict input validation can help prevent against injection and DoS. The main design for GraphQL is that the user supplies one or more identifiers and the backend has a number of data fetchers making HTTP, DB, or other calls using the given identifiers. This means that user input will be included in HTTP requests, DB queries, or other requests/calls which provides opportunity for injection that could lead to various injection attacks or DoS.
@@ -187,7 +189,7 @@ However, containerization platforms tend to make this task much easier. See the 
 
 To ensure that a GraphQL API has proper access control, do the following:
 
-- Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with [RBAC](Authorization_Cheat_Sheet.md#rbac) or other access control mechanisms.
+- Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with [RBAC](Authorization_Cheat_Sheet.md#prefer-attribute-and-relationship-based-access-control-over-rbac) or other access control mechanisms.
     - This will prevent [IDOR](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) issues, including both [BOLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) and [BFLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md).
 - Enforce authorization checks on both edges and nodes (see example [bug report](https://hackerone.com/reports/489146) where nodes did not have authorization checks but edges did).
 - Use [Interfaces](https://graphql.org/learn/schema/#interfaces) and [Unions](https://graphql.org/learn/schema/#union-types) to create structured, hierarchical data types which can be used to return more or fewer object properties, according to requester permissions.
@@ -203,9 +205,13 @@ It's possible for a GraphQL API to support access to objects using their ID even
 
 #### Query Access (Data Fetching)
 
+[Detectify's New Relic disclosure](https://labs.detectify.com/crowdsource-community/graphql-abuse-bypass-account-level-permissions-through-parameter-smuggling/) illustrates why field access must respect account permissions.
+
 As part of a GraphQL API there will be various data fields that can be returned. One thing to consider is if you want different levels of access around these fields. For example, you may only want certain consumers to be able to fetch certain data fields rather than allowing all consumers to be able to retrieve all available fields. This can be done by adding a check in the code to ensure that the requester should be able to read a field they are trying to fetch.
 
 #### Mutation Access (Data Manipulation)
+
+For an original case study, see [Pen Test Partners' WordPress GraphQL disclosure](https://www.pentestpartners.com/security-blog/pwning-wordpress-graphql/).
 
 GraphQL supports mutation, or manipulation of data, in addition to its most common use case of data fetching. If an API implements/allows mutation then there may need to be access controls put in place to restrict which consumers, if any, can modify data through the API. Setups that require mutation access control would include APIs where only read access is intended for requesters or where only certain parties should be able to modify certain fields.
 
@@ -310,27 +316,7 @@ app.use('/graphql', graphqlHTTP({
 
 GraphQL APIs in production shouldn't return stack traces or be in debug mode. Doing this is implementation specific, but using middleware is one popular way to have better control over errors the server returns. To [disable excessive errors](https://www.apollographql.com/docs/apollo-server/data/errors/) with Apollo Server, either pass `debug: false` to the Apollo Server constructor or set the `NODE_ENV` environment variable to 'production' or 'test'. However, if you would like to log the stack trace internally without returning it to the user see [here](https://www.apollographql.com/docs/apollo-server/data/errors/#masking-and-logging-errors) for how to mask and log errors so they are available to the developers but not callers of the API.
 
-## Other Resources
+## References
 
-### Tools
-
-- [InQL Scanner](https://github.com/doyensec/inql) - Security scanner for GraphQL. Particularly useful for generating queries and mutations automatically from given schema and then feeding them to scanner.
-- [GraphiQL](https://github.com/graphql/graphiql) - Schema/object exploration
-- [GraphQL Voyager](https://github.com/APIs-guru/graphql-voyager) - Schema/object exploration
-
-### GraphQL Security Best Practices + Documentation
-
-- [Protecting GraphQL APIs from security threats - blog post](https://medium.com/swlh/protecting-your-graphql-api-from-security-vulnerabilities-e8afdfa6fbe4)
-- [https://nordicapis.com/security-points-to-consider-before-implementing-graphql/](https://nordicapis.com/security-points-to-consider-before-implementing-graphql/)
-- [Limiting resource usage to prevent DoS (timeouts, throttling, complexity management, depth limiting, etc.)](https://developer.github.com/v4/guides/resource-limitations/)
-- [GraphQL Security Perspectives](https://www.abhaybhargav.com/from-the-trenches-diy-security-perspectives-of-graphql/)
-- [A developer's security perspective of GraphQL](https://planes.studio/blog/how-to-survive-a-penetration-test-as-a-graph-ql-developer)
-
-### More on GraphQL Attacks
-
-- [Some common GraphQL attacks + attacker mindset](https://blog.doyensec.com/2018/05/17/graphql-security-overview.html)
-- [Bypassing permissions by smuggling parameters](https://labs.detectify.com/2018/03/14/graphql-abuse/)
-- [Bug bounty writeup about GraphQL](https://medium.com/bugbountywriteup/graphql-voyager-as-a-tool-for-security-testing-86d3c634bcd9)
-- [Security talk about Abusing GraphQL](https://www.youtube.com/watch?v=NPDp7GHmMa0)
-- [Real](https://vulners.com/myhack58/MYHACK58:62201994269) [world](https://www.pentestpartners.com/security-blog/pwning-wordpress-graphql/) [attacks](https://hackerone.com/reports/419883) [against](https://vulners.com/hackerone/H1:435066) [GraphQL](https://www.jonbottarini.com/2018/01/02/abusing-internal-api-to-achieve-idor-in-new-relic/) [in the](https://about.gitlab.com/blog/2019/07/03/security-release-gitlab-12-dot-0-dot-3-released/#authorization-issues-in-graphql) past
-- [Attack examples against GraphQL](https://raz0r.name/articles/looting-graphql-endpoints-for-fun-and-profit/)
+- [GraphQL: Security](https://graphql.org/learn/security/)
+- [GraphQL: Authorization](https://graphql.org/learn/authorization/)

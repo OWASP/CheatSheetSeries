@@ -165,7 +165,7 @@ Server side: if `company_url` is non-empty, silently drop the request or route t
 
 - Apply per-username **and** per-IP limits with separate windows.
 - Check the submitted password against breach corpora (e.g., HaveIBeenPwned k-Anonymity API) — do not block, but require a step-up.
-- On suspicious patterns, require MFA even for low-risk users.
+- On suspicious patterns, require MFA even for low-risk users. See the [Authentication](Authentication_Cheat_Sheet.md) and [Multifactor Authentication](Multifactor_Authentication_Cheat_Sheet.md) cheat sheets for implementation guidance.
 - See the [Credential Stuffing Prevention Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md) for full guidance.
 
 ### Inventory / scalping (OAT-005, OAT-015)
@@ -273,9 +273,5 @@ Anti-bot defenses collect data. Treat them like any other data-processing activi
 
 ## References
 
-- [OWASP Automated Threats to Web Applications (OAT)](https://owasp.org/www-project-automated-threats-to-web-applications/)
-- [OWASP Credential Stuffing Prevention Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md)
-- [OWASP Logging Cheat Sheet](Logging_Cheat_Sheet.md)
-- [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md)
-- [OWASP Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md)
-- HaveIBeenPwned — [Pwned Passwords API](https://haveibeenpwned.com/API/v3#PwnedPasswords)
+- [Pwned Passwords API](https://haveibeenpwned.com/API/v3#PwnedPasswords)
+- [OWASP Automated Threat Handbook](https://wiki.owasp.org/images/3/33/Automated-threat-handbook.pdf)

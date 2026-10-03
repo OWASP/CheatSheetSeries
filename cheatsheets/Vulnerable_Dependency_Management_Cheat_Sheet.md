@@ -315,3 +315,9 @@ Language ecosystem packages are rarely covered that way, so the choice there is 
 - Publication of the patch itself and of its provenance, so that the change can be reviewed instead of being trusted blindly.
 - Delivery as a compatible artifact through a registry or proxy that the build already uses, so that no manifest rewrite is required.
 - A documented way out, so that leaving the source does not mean re-patching everything from scratch.
+
+## References
+
+- [OpenSSF: Concise Guide for Evaluating Open Source Software](https://best.openssf.org/Concise-Guide-for-Evaluating-Open-Source-Software)
+- [Debian security FAQ](https://www.debian.org/security/faq)
+- [Red Hat: Backporting Security Fixes](https://access.redhat.com/security/updates/backporting)

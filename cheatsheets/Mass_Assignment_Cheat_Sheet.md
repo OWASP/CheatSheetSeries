@@ -278,6 +278,7 @@ Take a look [here](http://json-lib.sourceforge.net/advanced.html) for the docume
 
 Take a look [here](http://flexjson.sourceforge.net/#Serialization) for the documentation.
 
-## References and future reading
+## References
 
-- [Mass Assignment, Rails and You](https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695)
+- [Ruby on Rails: Strong Parameters](https://guides.rubyonrails.org/action_controller_overview.html#strong-parameters)
+- [Spring Framework: DataBinder Security Considerations](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/validation/DataBinder.html)

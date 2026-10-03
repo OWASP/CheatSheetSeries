@@ -33,13 +33,13 @@ This cheat sheet provides practical guidance for conducting effective manual sec
 **For All Reviews:**
 
 - Understand application architecture and business requirements
-- Gather threat models and previous security findings
+- Gather [threat models](Threat_Modeling_Cheat_Sheet.md) and previous security findings
 - Identify critical assets and high-risk functions
 - Review security requirements and documentation
 
 **Additional for Baseline Reviews:**
 
-- Map complete application boundaries and dependencies
+- Map complete [application boundaries and dependencies](Attack_Surface_Analysis_Cheat_Sheet.md)
 - Analyze overall security architecture
 - Review security incident history
 - Audit all third-party libraries
@@ -75,9 +75,11 @@ This cheat sheet provides practical guidance for conducting effective manual sec
 
 ## Common Vulnerability Patterns
 
+For request forgery and redirect checks, also consult the [CSRF Prevention](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md), [SSRF Prevention](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md), and [Unvalidated Redirects and Forwards](Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md) cheat sheets.
+
 ### Input Validation Vulnerabilities
 
-Check for missing server-side validation, improper sanitization, and weak input filtering. For more information, see [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+Check for missing server-side validation, improper sanitization, and weak input filtering. For more information, see [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md) and [Mass Assignment Cheat Sheet](Mass_Assignment_Cheat_Sheet.md).
 
 ### Injection Vulnerabilities
 
@@ -161,6 +163,8 @@ Align review with common attack patterns:
 
 ### Business Logic Review
 
+Use the [Abuse Case Cheat Sheet](Abuse_Case_Cheat_Sheet.md) to identify misuse scenarios.
+
 Analyze application workflows for:
 
 - State management and transition validation
@@ -199,7 +203,7 @@ Analyze application workflows for:
 
 - [ ] **Server-side enforcement**: All access controls enforced server-side
 - [ ] **Fail-safe defaults**: Default deny access policy
-- [ ] **IDOR prevention**: Proper authorization for resource access
+- [ ] **IDOR prevention**: Proper authorization for resource access (see [Insecure Direct Object Reference Prevention Cheat Sheet](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md))
 - [ ] **Function-level controls**: Administrative functions properly protected
 - [ ] **Role validation**: Role assignments cannot be manipulated
 - [ ] **Privilege escalation**: Horizontal and vertical escalation prevented
@@ -222,7 +226,7 @@ Analyze application workflows for:
 - [ ] **Workflow integrity**: Proper state validation in multi-step processes
 - [ ] **Race condition prevention**: Synchronization in concurrent operations
 - [ ] **Transaction atomicity**: Proper rollback and consistency mechanisms
-- [ ] **Resource limits**: Rate limiting and resource quotas implemented
+- [ ] **Resource limits**: Rate limiting and resource quotas implemented (see [Denial of Service Cheat Sheet](Denial_of_Service_Cheat_Sheet.md))
 - [ ] **Business rule enforcement**: Cannot bypass rules through direct API access
 
 ### Configuration & Deployment
@@ -421,7 +425,7 @@ Analyze workflows for:
 
 ### Security Architecture Review
 
-Review architecture patterns for consistent security enforcement and proper API security controls.
+Review architecture patterns for consistent security enforcement and proper API security controls; see the [Secure Product Design Cheat Sheet](Secure_Product_Design_Cheat_Sheet.md).
 
 ### Memory Safety
 
@@ -429,34 +433,5 @@ Review buffer management, integer overflow protection, and resource limits.
 
 ## References
 
-**OWASP Resources:**
-
-- [OWASP Code Review Guide](https://owasp.org/www-project-code-review-guide/)
-- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- [OWASP Application Security Verification Standard (ASVS)](https://owasp.org/www-project-application-security-verification-standard/)
-- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
-
-**Related OWASP Cheat Sheets:**
-
-- [Threat Modeling Cheat Sheet](Threat_Modeling_Cheat_Sheet.md)
-- [Abuse Case Cheat Sheet](Abuse_Case_Cheat_Sheet.md)
-- [Attack Surface Analysis Cheat Sheet](Attack_Surface_Analysis_Cheat_Sheet.md)
-- [Secure Product Design Cheat Sheet](Secure_Product_Design_Cheat_Sheet.md)
-- [Mass Assignment Cheat Sheet](Mass_Assignment_Cheat_Sheet.md)
-- [Insecure Direct Object Reference Prevention Cheat Sheet](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
-- [Cross-Site Request Forgery Prevention Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
-- [Server Side Request Forgery Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
-- [Unvalidated Redirects and Forwards Cheat Sheet](Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-- [Denial of Service Cheat Sheet](Denial_of_Service_Cheat_Sheet.md)
-
-**Industry Standards:**
-
-- [CWE/SANS Top 25 Most Dangerous Software Errors](https://cwe.mitre.org/top25/)
-- [NIST Secure Software Development Framework (SSDF)](https://csrc.nist.gov/Projects/ssdf)
-- [ISO/IEC 27034 - Application Security](https://www.iso.org/standard/44378.html)
-
-**Additional Resources:**
-
-- [Microsoft Security Development Lifecycle (SDL)](https://www.microsoft.com/en-us/securityengineering/sdl/)
-- [CERT Secure Coding Standards](https://wiki.sei.cmu.edu/confluence/display/seccode)
+- [OWASP Code Review Guide, Version 2](https://raw.githubusercontent.com/OWASP/www-project-code-review-guide/master/assets/OWASP_Code_Review_Guide_v2.pdf)
+- [NIST SP 800-218: Secure Software Development Framework (SSDF) Version 1.1](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf)

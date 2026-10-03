@@ -15,7 +15,7 @@ Agent-initiated payments are subject to the same regulatory framework as human-i
 - **Bank Secrecy Act (BSA)**: Requires financial institutions to maintain effective AML programs, including customer identification, transaction monitoring, and suspicious activity reporting. The [Bank Secrecy Act](https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act) does not distinguish between human-initiated and agent-initiated transactions.
 - **OFAC Sanctions**: The Office of Foreign Assets Control requires all US persons and entities to screen transactions against the Specially Designated Nationals (SDN) list and other sanctions lists. Screening obligations apply regardless of whether the transaction was initiated by a human or an agent.
 - **FinCEN Requirements**: [FinCEN](https://www.fincen.gov/) rules require Customer Identification Programs (CIP), Customer Due Diligence (CDD), and Suspicious Activity Reports (SARs). When an agent acts on behalf of a customer, the institution must be able to identify both the customer and the agent.
-- **UK Financial Sanctions (OFSI)**: HM Treasury's Office of Financial Sanctions Implementation maintains the [UK Consolidated Sanctions List](https://www.gov.uk/government/publications/financial-sanctions-consolidated-list-of-targets). Screening is mandatory for all financial transactions regardless of initiation method.
+- **UK Financial Sanctions (OFSI)**: The Foreign, Commonwealth & Development Office publishes the [UK Sanctions List](https://www.gov.uk/government/publications/the-uk-sanctions-list). Screening is mandatory for all financial transactions regardless of initiation method.
 - **EU Sanctions**: The [EU Consolidated Sanctions List](https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions) applies to all transactions processed through EU-regulated entities. Agent-initiated transactions are not exempt.
 - **OCC BSA/AML Exam Procedures**: [OCC examiners](https://www.occ.treas.gov/topics/supervision-and-examination/bsa/index-bsa.html) assess whether institutions have controls to identify the originator of each transaction. When agents initiate transactions, the institution must demonstrate that agent identity was verified and the transaction was screened.
 
@@ -43,7 +43,7 @@ Before an agent is permitted to access sanctions screening services or initiate 
 
 ## Section 2: Entity Screening
 
-Entity screening against global sanctions lists (OFAC SDN, UK HMT, EU Consolidated, UN Consolidated) remains fundamentally unchanged when agents are the callers. The screening engine matches names, addresses, vessels, and identifiers against the lists. What changes is the context around the screening request. The authoritative source for the United States is the [OFAC Sanctions List Search](https://sanctionssearch.ofac.treas.gov/).
+Entity screening against global sanctions lists (OFAC SDN, UK Sanctions List, EU Consolidated, UN Consolidated) remains fundamentally unchanged when agents are the callers. The screening engine matches names, addresses, vessels, and identifiers against the lists. What changes is the context around the screening request. The authoritative source for the United States is the [OFAC Sanctions List Search](https://sanctionssearch.ofac.treas.gov/).
 
 ### Do
 
@@ -262,16 +262,6 @@ The consolidated controls below align with the AI-system-specific verification r
 
 ## References
 
-- [OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html) -- Section 7: Message-Level Integrity
-- [OWASP Artificial Intelligence Security Verification Standard (AISVS)](https://github.com/OWASP/AISVS) -- Chapter 10: MCP Security Requirements
-- [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/) -- MCP01 (Token Mismanagement), MCP07 (Insufficient Auth), MCP08 (Lack of Audit)
-- [OWASP API Security Top 10 (2023)](https://owasp.org/API-Security/editions/2023/en/0x00-header/) -- API4 Unrestricted Resource Consumption
-- [IETF draft-sharif-mcps-secure-mcp](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/) -- Cryptographic Security Layer for MCP
-- [NIST SP 800-53 Revision 5](https://csrc.nist.gov/pubs/sp/800/53/r5/final) -- Security and Privacy Controls for Information Systems and Organizations
-- [NIST SP 800-209](https://csrc.nist.gov/pubs/sp/800/209/final) -- Security Guidelines for Storage Infrastructure
-- [OFAC Sanctions List Search](https://sanctionssearch.ofac.treas.gov/)
-- [UK HM Treasury Consolidated Sanctions List](https://www.gov.uk/government/publications/financial-sanctions-consolidated-list-of-targets)
-- [EU Consolidated Financial Sanctions List](https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions)
-- [FinCEN](https://www.fincen.gov/) -- BSA / AML regulations and SAR filings
-- [FinCEN Customer Due Diligence (CDD) Requirements](https://www.fincen.gov/resources/statutes-regulations/federal-register-notices/customer-due-diligence-requirements)
-- [OCC BSA/AML Examination Procedures](https://www.occ.treas.gov/topics/supervision-and-examination/bsa/index-bsa.html)
+- [FinCEN: Customer Due Diligence Requirements for Financial Institutions](https://www.gpo.gov/fdsys/pkg/FR-2016-05-11/pdf/2016-10567.pdf)
+- [NIST SP 800-53 Rev. 5: Security and Privacy Controls](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
+- [OFAC: A Framework for Compliance Commitments](https://ofac.treasury.gov/system/files/126/framework_ofac_cc.pdf)

@@ -130,6 +130,8 @@ def lambda_handler(event, context):
 
 ### 6. Secrets Management
 
+See the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) for secret lifecycle controls.
+
 - Fetch secrets at runtime from a vault or caching extension — not from platform-level function configuration (e.g. Lambda Environment Variables).
 - Use ephemeral credentials (STS, workload identity federation).
 - Rotate secrets automatically.
@@ -234,8 +236,6 @@ shasum -a 256 layer.zip
 
 ## References
 
-- [OWASP Serverless Top 10](https://owasp.org/www-project-serverless-top-10/)
-- [AWS Lambda Security Best Practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
-- [Azure Functions Security](https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts)
-- [Google Cloud Functions Security](https://cloud.google.com/run/docs/securing/security)
-- [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+- [AWS Lambda: Best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
+- [Azure Functions: Security concepts](https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts)
+- [Google Cloud Run: Security](https://docs.cloud.google.com/run/docs/securing/security)

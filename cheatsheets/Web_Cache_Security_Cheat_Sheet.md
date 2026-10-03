@@ -144,8 +144,4 @@ Use these checks alongside the [HTTP caching requirements in RFC 9111](https://w
 
 - [RFC 9111: HTTP Caching](https://www.rfc-editor.org/rfc/rfc9111.html)
 - [MDN: HTTP Caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching)
-- [MDN: Vary Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary)
-- [OWASP: Cache Poisoning](https://owasp.org/www-community/attacks/Cache_Poisoning)
 - [Cloudflare: Avoid Web Cache Poisoning](https://developers.cloudflare.com/cache/cache-security/avoid-web-poisoning/)
-- [Cloudflare: Cache Deception Armor](https://developers.cloudflare.com/cache/cache-security/cache-deception-armor/)
-- [Cloudflare: Cache Keys](https://developers.cloudflare.com/cache/how-to/cache-keys/)

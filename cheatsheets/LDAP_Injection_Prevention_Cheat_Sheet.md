@@ -161,7 +161,7 @@ An attacker can still bypass bind authentication through an anonymous connection
 
 Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-## Related Articles
+## References
 
-- OWASP article on [LDAP Injection](https://owasp.org/www-community/attacks/LDAP_Injection) Vulnerabilities.
-- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) article on how to [Test for LDAP Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/06-Testing_for_LDAP_Injection.html) Vulnerabilities.
+- [RFC 4515: LDAP String Representation of Search Filters](https://datatracker.ietf.org/doc/html/rfc4515)
+- [RFC 4514: LDAP String Representation of Distinguished Names](https://datatracker.ietf.org/doc/html/rfc4514)

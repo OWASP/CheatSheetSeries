@@ -1,8 +1,8 @@
 # OAuth 2.0 Protocol Cheatsheet
 
-This cheatsheet describes the best current security practices for OAuth 2.0 as derived from its RFC. OAuth became the standard for API protection and the basis for federated login using OpenID Connect. OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables clients to verify the identity of the end user based on the authentication performed by an authorization server, as well as to obtain basic profile information about the end user in an interoperable and REST-like manner.
+This cheatsheet describes the best current security practices for [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749.html) as derived from its RFC. OAuth became the standard for API protection and the basis for federated login using OpenID Connect. OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables clients to verify the identity of the end user based on the authentication performed by an authorization server, as well as to obtain basic profile information about the end user in an interoperable and REST-like manner.
 
-**Note:** OAuth 2.0 supports different token types to address various security and implementation requirements. **Bearer tokens** (RFC 6750) provide simplicity and broad adoption. **Proof of Possession (PoP) tokens** offer advanced security through cryptographic binding between tokens and clients. The appropriate token type depends on your application's security requirements, threat model, and implementation constraints.
+**Note:** OAuth 2.0 supports different token types to address various security and implementation requirements. **Bearer tokens** ([RFC 6750](https://www.rfc-editor.org/rfc/rfc6750.html)) provide simplicity and broad adoption. **Proof of Possession (PoP) tokens** offer advanced security through cryptographic binding between tokens and clients. The appropriate token type depends on your application's security requirements, threat model, and implementation constraints.
 
 ## Terminology
 
@@ -11,7 +11,7 @@ This cheatsheet describes the best current security practices for OAuth 2.0 as d
 - **Resource Owner (RO)**: Refers to an entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end user. It can also be an organization or system.
 - **Resource Server (RS)**: Refers to the server hosting the protected resources, capable of accepting and responding to protected resource requests using access tokens.
 
-- **Access Tokens**: Provide an abstraction, replacing different authorization constructs (e.g., username and password, assertion) by a single token understood by the resource server. This abstraction enables issuing access tokens valid for a short period, as well as removing the resource server's need to understand a wide range of authentication schemes. The most common type is the **bearer token** (RFC 6750), which is straightforward to implement and integrate, requiring only the token value for API access. Since anyone possessing a bearer token can use it, bearer tokens must be restricted to a single audience (Resource Server) to limit the impact of token leakage.
+- **Access Tokens**: Provide an abstraction, replacing different authorization constructs (e.g., username and password, assertion) by a single token understood by the resource server. This abstraction enables issuing access tokens valid for a short period, as well as removing the resource server's need to understand a wide range of authentication schemes. The most common type is the **bearer token** (RFC 6750), which is straightforward to implement and integrate, requiring only the token value for API access. Since anyone possessing a bearer token can use it, bearer tokens should be audience-restricted, preferably to a single Resource Server, to limit the impact of token leakage.
 - **Refresh Tokens** are credentials used to obtain access tokens. These are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner). Refresh tokens should be protected using sender-constraining mechanisms (DPoP or mTLS) or refresh token rotation.
 
 - **Proof of Possession (PoP) tokens**: Access tokens or refresh tokens that are cryptographically bound to clients through mechanisms like DPoP (RFC 9449) or mTLS-bound access tokens (RFC 8705). These tokens are bound to a private key owned by the client and the client must demonstrate possession of this private key in order to use the token. This approach provides additional protection in scenarios where token interception is a concern, with additional implementation requirements for key management and proof generation.
@@ -21,7 +21,7 @@ This cheatsheet describes the best current security practices for OAuth 2.0 as d
 1. Clients and Authorization Server must not expose URLs that forward the user's browser to arbitrary URIs obtained from a query parameter ("open redirectors") which can enable exfiltration of authorization codes and access tokens.
 2. Clients have ensured that the Authorization Server supports PKCE may rely on the CSRF protection provided by PKCE. In OpenID Connect flows, the "nonce" parameter provides CSRF protection. Otherwise, one-time user CSRF tokens carried in the "state" parameter that are securely bound to the user agent must be used for CSRF protection.
 3. When an OAuth Client can interact with more than one Authorization Server, Clients should use the issuer "iss" parameter as a countermeasure, or based on an "iss" value in the authorization response (such as the "iss" Claim in the ID Token in OpenID)
-4. When the other countermeasure options for OAuth clients interacting with more than one Authorization Servers are absent, Clients may instead use distinct redirect URIs to identify authorization endpoints and token endpoints.
+4. When the other [mix-up countermeasure options](https://www.rfc-editor.org/rfc/rfc9700.html#section-4.4.2) for OAuth clients interacting with more than one Authorization Servers are absent, Clients may instead use distinct redirect URIs to identify authorization endpoints and token endpoints.
 5. An Authorization Server avoids forwarding or redirecting a request potentially containing user credentials accidentally.
 
 ## PKCE - Proof Key for Code Exchange Mechanism
@@ -37,7 +37,7 @@ Originally, PKCE is intended to be used solely focused on securing native apps, 
 
 ## Implicit Grant (DEPRECATED — DO NOT USE)
 
-The Implicit Grant (`response_type=token`) is **deprecated** by [RFC 9700 §2.1.2](https://datatracker.ietf.org/doc/html/rfc9700#section-2.1.2) and removed from OAuth 2.1. It exposes access tokens in the URL fragment, which leaks via browser history, referrer headers, and proxy/server logs, and cannot be sender-constrained. Major identity providers have either disabled it or marked it for removal.
+The Implicit Grant (`response_type=token`) is **deprecated** by [RFC 9700 §2.1.2](https://datatracker.ietf.org/doc/html/rfc9700#section-2.1.2) and removed from OAuth 2.1. It exposes access tokens in the URL fragment, which can be retained in [browser history](https://www.rfc-editor.org/rfc/rfc9700.html#section-4.3.2) and is accessible to [scripts running on the response page](https://www.rfc-editor.org/rfc/rfc9110.html#section-17.11); these tokens cannot be sender-constrained. Major identity providers have either disabled it or marked it for removal.
 
 10. Clients **must** use the Authorization Code Grant with PKCE (`response_type=code`) for all client types, including SPAs and native applications. Existing applications using the Implicit Grant must migrate. The hybrid `code id_token` response type may be used only when an OpenID Connect ID Token is required at the authorization endpoint; access tokens must still be obtained via the token endpoint and never via the front channel.
 
@@ -49,7 +49,7 @@ Token security is a critical aspect of OAuth 2.0 implementations. Sender-constra
 
 **DPoP (Demonstration of Proof of Possession - RFC 9449):**
 
-- The client generates a public-private key pair. The Authorization Server can sender-constrain the access token to the client's public key, for example by including a `cnf` (confirmation) claim with a JWK thumbprint (`jkt`), although this is optional and implementation-dependent. For each API request, the client includes a proof-of-possession of its private key taking the form of a JWT signed with this private key that includes a hash of the access token. The Resource Server validates both the access token and the DPoP proof (including the token hash) to ensure the request originates from the legitimate token holder.
+- The client generates a public-private key pair. The Authorization Server binds each DPoP access token to this public key. For JWT access tokens, the Authorization Server represents the binding using the `cnf` (confirmation) claim with a JWK thumbprint (`jkt`), as specified in [RFC 9449 Section 6.1](https://www.rfc-editor.org/rfc/rfc9449.html#section-6.1). For opaque tokens, the Resource Server can obtain the same binding through [token introspection](https://www.rfc-editor.org/rfc/rfc9449.html#section-6.2). For each API request, the client includes a proof-of-possession of its private key taking the form of a JWT signed with this private key that includes a hash of the access token. The Resource Server validates both the access token and the DPoP proof (including the token hash) to ensure the request originates from the legitimate token holder.
 - It does not require mutual TLS authentication; proof is provided via the DPoP HTTP headers; suitable for various client types including browsers and mobile applications; requires additional cryptographic operations per request.
 
 **Mutual TLS Certificate-Bound Access Tokens (RFC 8705):**
@@ -61,7 +61,7 @@ Token security is a critical aspect of OAuth 2.0 implementations. Sender-constra
 
 Proof of Possession tokens are particularly valuable in scenarios requiring enhanced token security properties. Consider PoP tokens for:
 
-- Access tokens that need to be used for more than one audience (Resource Server), as PoP tokens can be safely used across multiple audiences unlike bearer tokens which must be restricted to a single audience
+- APIs where sender-constraining can limit replay of a leaked access token. Both bearer and PoP tokens should be [audience-restricted](https://www.rfc-editor.org/rfc/rfc9700.html#section-2.3), preferably to a single Resource Server
 - APIs handling sensitive data (financial, healthcare, personal information, etc.) where additional security layers are beneficial
 - High-value transactions (payments, critical operations, etc.) where cryptographic client binding adds assurance
 - Long-lived tokens where extended validity periods warrant additional protection mechanisms
@@ -93,12 +93,8 @@ The selection of token security approach should consider the application's secur
 18. Authorization Servers do not allow clients to influence their "client_id" or "sub" value or any other Claim that can be confused with a genuine Resource Owner. It is recommended to use end-to-end TLS.
 19. Authorization responses are not transmitted over unencrypted network connections. Authorization Servers must not allow redirect URIs that use the "http" scheme except for native clients that use Loopback Interface Redirection.
 
-References:
+## References
 
-- [RFC 6749: OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/info/rfc6749)
-- [RFC 6750: OAuth 2.0 Bearer Token Usage](https://www.rfc-editor.org/info/rfc6750)
-- [RFC 8705: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens](https://www.rfc-editor.org/info/rfc8705)
-- [RFC 9207: OAuth 2.0 Security Best Current Practice](https://www.rfc-editor.org/info/rfc9207)
-- [RFC 9449: OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://www.rfc-editor.org/info/rfc9449)
-- [Mix-Up Attacks (RFC 9207, Section 4.4)](https://www.rfc-editor.org/rfc/rfc9207.html#section-4.4)
-- [Countermeasures for Mix-Up Attacks (RFC 9207, Section 4.4.2)](https://www.rfc-editor.org/rfc/rfc9207.html#section-4.4.2)
+- [RFC 9700: Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html)
+- [RFC 9449: OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://www.rfc-editor.org/rfc/rfc9449.html)
+- [RFC 8705: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens](https://www.rfc-editor.org/rfc/rfc8705.html)

@@ -71,3 +71,9 @@ Browser storage is [separated by origin](https://developer.mozilla.org/en-US/doc
 Keep session identifiers out of `localStorage` and `sessionStorage`. When using a backend-for-frontend, keep upstream access tokens on the server and use a session cookie configured according to the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md#cookies). An `HttpOnly` cookie prevents JavaScript from reading the cookie, but compromised code in the host can still make authenticated requests. Apply [cross-site request forgery protection](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) to cookie-authenticated operations.
 
 Return only data the authenticated user is authorized to access. Clear shared state and cached responses on logout or tenant changes to avoid displaying stale data. This cleanup does not replace backend tenant checks or protect information already exposed to a compromised remote.
+
+## References
+
+- [MDN: Same-Origin Policy](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy)
+- [MDN: postMessage Security Concerns](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#security_concerns)
+- [MDN: iframe Sandbox](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#sandbox)

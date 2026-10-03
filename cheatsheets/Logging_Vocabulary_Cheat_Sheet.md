@@ -1460,3 +1460,8 @@ WARN
 As important as what you DO log is what you DON'T log. Private or secret information, source code, keys, certs, etc. should never be logged.
 
 For comprehensive overview of items that should be excluded from logging, please see the [OWASP Logging Cheat Sheet](../cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude).
+
+## References
+
+- [RFC 5424: The Syslog Protocol](https://datatracker.ietf.org/doc/html/rfc5424.html)
+- [NIST SP 800-92: Guide to Computer Security Log Management](https://csrc.nist.gov/pubs/sp/800/92/final)

@@ -640,6 +640,8 @@ function func() {
 
 This list mainly focuses on issues that are common in Node.js applications, with recommendations and examples. In addition to these, there are general [security by design principles](https://wiki.owasp.org/index.php/Security_by_Design_Principles) that apply to web applications regardless of technologies used in application server. You should also keep those principles in mind while developing your applications. You can always refer to [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) to learn more about web application vulnerabilities and mitigation techniques used against them.
 
-## Additional resources about Node.js security
+## References
 
-[Awesome Node.js Security resources](https://github.com/lirantal/awesome-nodejs-security)
+- [Node.js Security Best Practices](https://nodejs.org/learn/getting-started/security-best-practices)
+- [Node.js Permissions](https://nodejs.org/api/permissions.html)
+- [Express: Production Security Best Practices](https://expressjs.com/en/advanced/best-practice-security/)

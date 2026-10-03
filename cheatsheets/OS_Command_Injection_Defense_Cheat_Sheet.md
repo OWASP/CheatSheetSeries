@@ -260,24 +260,7 @@ In addition, it is good security practice to follow these recommendations:
 - **Hardcode options**: required flags (e.g., `--directory-prefix`) should be in the code, not in user input.  
 - **Validate and restrict input as much as possible**: apply strict validation rules, whitelists, and format checks to minimize the attack surface.
 
-## Related articles
+## References
 
-### Description of Command Injection Vulnerability
-
-- OWASP [Command Injection](https://owasp.org/www-community/attacks/Command_Injection).
-
-### How to Avoid Vulnerabilities
-
-- C Coding: [Do not call system()](https://wiki.sei.cmu.edu/confluence/pages/viewpage.action?pageId=87152177).
-
-### How to Review Code
-
-- OWASP [Reviewing Code for OS Injection](https://wiki.owasp.org/index.php/Reviewing_Code_for_OS_Injection).
-
-### How to Test
-
-- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) article on [Testing for Command Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/12-Testing_for_Command_Injection.html).
-
-### External References
-
-- [CWE Entry 77 on Command Injection](https://cwe.mitre.org/data/definitions/77.html).
+- [SEI CERT C: Do not call system()](https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/rules/environment-env/env33-c/)
+- [CWE-77: Command Injection](https://cwe.mitre.org/data/definitions/77.html)

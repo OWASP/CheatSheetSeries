@@ -4,7 +4,7 @@
 
 Email addresses are widely used as primary identifiers in authentication and account recovery workflows. Improper handling of email validation, normalization, and verification can lead to account takeover, user enumeration, and identity confusion.
 
-This cheat sheet provides guidance on securely handling email addresses within identity systems.
+This cheat sheet provides guidance on securely handling email addresses within identity systems. See the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) for broader identity controls.
 
 ## Goals
 
@@ -82,7 +82,7 @@ Email ownership must be verified before enabling account use.
 
 ## Password Reset Flows
 
-Password reset is a high-risk operation.
+Password reset is a high-risk operation. See the [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md) for recovery controls.
 
 ### Recommendations
 
@@ -147,6 +147,6 @@ Monitoring email-related flows helps detect abuse.
 
 ## References
 
-- [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322)
-- [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md)
-- [OWASP Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md)
+- [RFC 5322: Internet Message Format](https://datatracker.ietf.org/doc/html/rfc5322)
+- [RFC 5321: Simple Mail Transfer Protocol](https://www.rfc-editor.org/info/rfc5321/)
+- [NIST SP 800-63B-4: Authentication and Authenticator Management](https://pages.nist.gov/800-63-4/sp800-63b.html)

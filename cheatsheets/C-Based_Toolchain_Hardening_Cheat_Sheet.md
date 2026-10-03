@@ -656,3 +656,9 @@ Finally, for runtime hardening, Microsoft provides **Windows Defender Exploit Gu
 Additionally, the [Process Mitigation Management Tool](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/customize-exploit-protection) (`ProcessMitigations` module) allows administrators to configure exploit mitigation policies via PowerShell and Group Policy.
 
 ![Windows2](../assets/C-Based_Toolchain_Hardening_Windows2.png)
+
+## References
+
+- [GCC: Instrumentation Options](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
+- [Clang Compiler User’s Manual](https://clang.llvm.org/docs/UsersManual.html)
+- [Microsoft: Security Best Practices for C++](https://learn.microsoft.com/en-us/cpp/security/security-best-practices-for-cpp?view=msvc-170)

@@ -161,6 +161,6 @@ For more information please check following cheat sheets:
 
 ## References
 
-- [MongoDB Security Official Document](https://www.mongodb.com/docs/manual/security/)
-- [Security best practices for Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security.html)
+- [MongoDB: Security Checklist for Self-Managed Deployments](https://www.mongodb.com/docs/manual/administration/security-checklist/)
+- [Amazon DynamoDB: Preventative Security Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security-preventative.html)
 - [WSTG - Testing for NoSQL Injection](https://github.com/OWASP/wstg/blob/master/document/4-Web_Application_Security_Testing/07-Injection/05.6-NoSQL_Injection.md)
