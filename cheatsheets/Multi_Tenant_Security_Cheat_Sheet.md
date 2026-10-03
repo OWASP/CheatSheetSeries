@@ -168,10 +168,10 @@ A normal `SET` persists until the session ends after its transaction commits, wh
 - Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.
 - Commit or roll back before returning the connection to the pool.
 
+SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
+
 <details>
 <summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
-
-SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
 
 ```python
 from sqlalchemy import event, Column, String, text
