@@ -4,6 +4,8 @@
 
 This cheat sheet provides Django REST Framework security advice for developers. It is a basic set of guidelines for Django REST developers who need to secure fundamental aspects of an application.
 
+For the original analysis of unsafe deserialization and serializer field selection, see sections 4.4.1.12 and 4.4.1.18 of [Django REST Framework (DRF) Secure Code Guidelines](https://openaccess.uoc.edu/handle/10609/147246).
+
 ## What is a view in Django?
 
 A view in Django is a Python class or a function that returns a web response after it receives a web request. That response can be in simple HTTP, an HTML template, or an HTTP redirect request that redirects a user to another page.
@@ -155,8 +157,8 @@ Semgrep – [Semgrep](https://semgrep.dev/) is a fast, open-source, static analy
 
 PyCharm Security – [Pycharm-security](https://pycharm-security.readthedocs.io/en/latest/index.html) is a plugin for PyCharm, or JetBrains IDEs with the Python plugin. The plugin looks at Python code for common security vulnerabilities and suggests fixes. It can also be executed from a Docker container. It has about 40 checks and some are Django specific.
 
-## Related Articles and References
+## References
 
-- [Django REST Framework (DRF) Secure Code Guidelines](https://openaccess.uoc.edu/handle/10609/147246)
-- [Django’s security policies](https://docs.djangoproject.com/en/stable/internals/security/)
 - [Security in Django](https://docs.djangoproject.com/en/stable/topics/security/)
+- [Django REST framework permissions](https://www.django-rest-framework.org/api-guide/permissions/)
+- [Django REST framework settings](https://www.django-rest-framework.org/api-guide/settings/)
