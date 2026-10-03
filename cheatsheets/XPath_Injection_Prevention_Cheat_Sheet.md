@@ -42,3 +42,9 @@ Keep these controls separate from the binding mechanism:
 During code review, locate calls that evaluate or compile XPath. Trace each expression back to application-controlled text and verify that external values reach it only through variable binding. For fixed query mappings, verify that unknown choices are rejected. Include correctness checks for ordinary valid values, absent records, and access to resources outside the caller's permissions.
 
 For security assessment guidance, see the [Web Security Testing Guide's XPath injection chapter](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/09-XPath_Injection/).
+
+## References
+
+- [CWE-643: XPath Injection](https://cwe.mitre.org/data/definitions/643.html)
+- [lxml: XPath Variables](https://lxml.de/xpathxslt.html#the-xpath-method)
+- [W3C XPath 3.1: Variable References](https://www.w3.org/TR/xpath-31/#id-variables)

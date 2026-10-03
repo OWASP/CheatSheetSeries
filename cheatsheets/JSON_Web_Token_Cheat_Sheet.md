@@ -519,28 +519,7 @@ Full JWE implementation guidance is out of scope for this cheat sheet and will b
 
 ## References
 
-Main JWT and JOSE specifications:
-
-- [RFC 7515](https://datatracker.ietf.org/doc/html/rfc7515), JSON Web Signature (JWS)
-- [RFC 7516](https://datatracker.ietf.org/doc/html/rfc7516), JSON Web Encryption (JWE)
-- [RFC 7517](https://datatracker.ietf.org/doc/html/rfc7517), JSON Web Key (JWK)
-- [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519), JSON Web Token (JWT)
-- [RFC 8725](https://datatracker.ietf.org/doc/html/rfc8725), JWT Best Practices
-
-Some applications of JWTs:
-
-- [JWT Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068)
-
-IANA registries:
-
-- [JSON Object Signing and Encryption (JOSE) IANA Reguistry](https://www.iana.org/assignments/jose/jose.xhtml)
-- [JSON Web Token IANA Reguistry (JWT)](https://www.iana.org/assignments/jwt/jwt.xhtml)
-
-Attacks on JWT and JOSE:
-
-- [{JWT}.{Attack}.Playbook](https://github.com/ticarpi/jwt_tool/wiki) - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.
-- [JWT.io Discussion Forum](https://community.auth0.com/c/jwt/8) (Hosted by [Auth0](https://auth0.com/))
-
-Other useful links:
-
-- [JWT IANA Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
+- [RFC 7519: JSON Web Token](https://datatracker.ietf.org/doc/html/rfc7519)
+- [RFC 8725: JSON Web Token Best Current Practices](https://datatracker.ietf.org/doc/html/rfc8725)
+- [RFC 7516: JSON Web Encryption](https://datatracker.ietf.org/doc/html/rfc7516)
+- [RFC 7517: JSON Web Key](https://datatracker.ietf.org/doc/html/rfc7517)

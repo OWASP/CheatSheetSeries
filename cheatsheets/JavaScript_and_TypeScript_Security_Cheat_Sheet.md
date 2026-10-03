@@ -17,7 +17,7 @@ This cheat sheet lists secure development practices for JavaScript and TypeScrip
 
 ### `eval`, `Function`, and `with`
 
-Never build code from strings. `eval` and `new Function` execute arbitrary code with the current runtime's privileges, so any attacker-influenced input reaching them is code injection ([CWE-94](https://cwe.mitre.org/data/definitions/94.html)). In browsers, `setTimeout` and `setInterval` with a string argument compile it the same way through implied `eval`.
+Never build code from strings. See [MDN's eval guidance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval). `eval` and `new Function` execute arbitrary code with the current runtime's privileges, so any attacker-influenced input reaching them is code injection ([CWE-94](https://cwe.mitre.org/data/definitions/94.html)). In browsers, `setTimeout` and `setInterval` with a string argument compile it the same way through implied `eval`.
 
 - Parse data with `JSON.parse`, never `eval`.
 - Replace dynamic dispatch with static maps of functions instead of constructing calls from names.
@@ -37,7 +37,7 @@ Nested quantifiers such as `(a+)+`, and repeated ambiguous alternatives such as 
 
 ### Strict Mode
 
-Ship ES modules (strict by default) or declare `'use strict'`. Strict mode turns silent mistakes into errors: assignment to undeclared variables throws, `this` stays `undefined` in plain functions instead of becoming the global object, and `with` is rejected. It does not fix injection, XSS, or prototype pollution; treat it as hygiene, not a security boundary.
+Ship ES modules (strict by default) or declare `'use strict'`, as described in [MDN's strict mode documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode). Strict mode turns silent mistakes into errors: assignment to undeclared variables throws, `this` stays `undefined` in plain functions instead of becoming the global object, and `with` is rejected. It does not fix injection, XSS, or prototype pollution; treat it as hygiene, not a security boundary.
 
 ## Object and Property Safety (Including Prototype Pollution)
 
@@ -78,16 +78,6 @@ Types are erased at runtime, so TypeScript alone enforces nothing against a mali
 
 ## References
 
-- Issue [#2337](https://github.com/OWASP/CheatSheetSeries/issues/2337) - proposal and discussion.
-- [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md).
-- [Third Party JavaScript Management Cheat Sheet](Third_Party_Javascript_Management_Cheat_Sheet.md).
-- [MDN: eval](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval) - why direct and indirect `eval` differ and why both are discouraged.
-- [MDN: Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) - what strict mode changes.
-- [MDN: window.postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) - origin and source validation.
-- [W3C Trusted Types](https://w3c.github.io/trusted-types/dist/spec/) - sink allowlisting for DOM injection.
-- [TypeScript Handbook: `unknown`](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown) - `any` versus `unknown`, and why `unknown` must be narrowed.
-- [CSP: `EnsureCSPDoesNotBlockStringCompilation`](https://w3c.github.io/webappsec-csp/#can-compile-strings) - what a policy must contain to actually block string-to-code compilation.
-- [CWE-79: Cross-site Scripting](https://cwe.mitre.org/data/definitions/79.html).
-- [CWE-94: Code Injection](https://cwe.mitre.org/data/definitions/94.html).
-- [CWE-1321: Prototype Pollution](https://cwe.mitre.org/data/definitions/1321.html).
-- [CWE-1333: ReDoS](https://cwe.mitre.org/data/definitions/1333.html).
+- [MDN: Window.postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
+- [TypeScript Handbook: unknown](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown)
+- [W3C Trusted Types](https://w3c.github.io/trusted-types/dist/spec/)

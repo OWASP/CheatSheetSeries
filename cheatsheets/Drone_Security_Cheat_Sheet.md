@@ -114,13 +114,13 @@ Below are some protocols used by drone systems to communicate. This can be eithe
 
 Recent CVEs underscore the risk of unauthenticated MAVLink. The absence of default authentication is not theoretical — it has produced critical, remotely-reachable vulnerabilities across both dominant open-source autopilots:
 
-- CVE-2026-1579 (PX4, CVSS 9.8, CISA ICSA-26-090-02, CWE-306): with MAVLink 2 message signing disabled, an unauthenticated party can send SERIAL_CONTROL to obtain interactive shell access.
+- [CVE-2026-1579](https://www.cisa.gov/news-events/ics-advisories/icsa-26-090-02) (PX4, CVSS 9.8, CISA ICSA-26-090-02, CWE-306): with MAVLink 2 message signing disabled, an unauthenticated party can send SERIAL_CONTROL to obtain interactive shell access.
 
-- CVE-2026-38971 (ArduPilot ArduPlane ≤ 4.6.3, CVSS 9.1, CWE-125): an out-of-bounds read in the SERIAL_CONTROL handler (GCS_serial_control.cpp), reachable over MAVLink by an unauthenticated attacker — flight-controller memory disclosure and denial of service.
+- [CVE-2026-38971](https://www.cve.org/CVERecord?id=CVE-2026-38971) (ArduPilot ArduPlane ≤ 4.6.3, CVSS 9.1, CWE-125): an out-of-bounds read in the SERIAL_CONTROL handler (GCS_serial_control.cpp), reachable over MAVLink by an unauthenticated attacker — flight-controller memory disclosure and denial of service.
 
 - CVE-2026-32743 and related PX4 issues (CWE-121): MAVLink-reachable stack buffer overflows in the log handler cause denial of service.
 
-- CVE-2020-10283 (MAVLink): an earlier command-injection issue from missing ground-control-station identity verification — the weakness is long-standing, not new.
+- [CVE-2020-10283](https://www.cve.org/CVERecord?id=CVE-2020-10283) (MAVLink): an earlier authentication downgrade issue — the weakness is long-standing, not new.
 
 Defense-in-depth beyond message signing. Because signing is frequently disabled in the field and any software mitigation runs in the same trust domain an attacker may have compromised, consider enforcing protocol integrity out-of-band:
 
@@ -194,34 +194,5 @@ There are multiple GitHub repos that help with drone attack [simulations](https:
 
 ## References
 
-- [ESP8266 Wi-Fi deauther](https://github.com/SpacehuhnTech/esp8266_deauther)
-
-- [Command Injection explanation](https://owasp.org/www-community/attacks/Command_Injection)
-
-- [key rotations at certain frequencies](https://cloud.google.com/kms/docs/key-rotation#:~:text=A%20rotation%20schedule%20defines%20the,require%20periodic%2C%20automatic%20key%20rotation.)
-
-- [Vulnerable Just works bluetooth protocol](https://devzone.nordicsemi.com/f/nordic-q-a/17165/ble-just-works-pairing)
-
-- [Drone Exploit Module](https://github.com/dhondta/dronesploit)
-
-- [Vulnerable Drone System Simulation](https://github.com/nicholasaleks/Damn-Vulnerable-Drone)
-
-- [Drones from a Cybersecurity Perspective](https://dronewolf.darkwolf.io/intro)
-
-- [Dynamic Watermarking in UAVs](https://ieeexplore.ieee.org/abstract/document/9994719)
-
-- [GPS spoofing and prevention](https://www.okta.com/identity-101/gps-spoofing/)
-
-- [NIST SP 800-193 Platform Firmware Resiliency Guidelines](https://csrc.nist.gov/pubs/sp/800/193/final)
-
-- [ETSI EN 303 645 (Consumer IoT Security)](https://www.etsi.org/technologies/consumer-iot-security)
-
-- [OWASP Internet of Things](https://owasp.org/www-project-internet-of-things/)
-
-- [Trusted Firmware](https://www.trustedfirmware.org/)
-  
-- [CVE-2026-1579 – PX4 MAVLink unauthenticated shell access (CISA ICSA-26-090-02)](https://www.cisa.gov/news-events/ics-advisories/icsa-26-090-02)
-  
-- [CVE-2026-38971 – ArduPilot MAVLink SERIAL_CONTROL out-of-bounds read](https://www.cve.org/CVERecord?id=CVE-2026-38971)
-
-- [CVE-2020-10283 – MAVLink missing GCS authentication](https://www.cve.org/CVERecord?id=CVE-2020-10283)
+- [NIST SP 800-193: Platform Firmware Resiliency Guidelines](https://csrc.nist.gov/pubs/sp/800/193/final)
+- [MAVLink: Message Signing (Authentication)](https://mavlink.io/en/guide/message_signing.html)

@@ -403,3 +403,9 @@ For further reading, visit the
 [OWASP Mobile Top 10 Project](https://owasp.org/www-project-mobile-top-10/).
 For a more detailed framework for mobile security, see the
 [OWASP Mobile Application Security Project](https://mas.owasp.org/).
+
+## References
+
+- [OWASP MASVS-STORAGE-1: Secure Storage of Sensitive Data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
+- [Android Keystore System](https://developer.android.com/privacy-and-security/keystore)
+- [Apple Platform Security: The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web)

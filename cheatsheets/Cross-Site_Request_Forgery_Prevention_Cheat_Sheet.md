@@ -1058,15 +1058,8 @@ export class CSRFProtectedFetch {
 // };
 ```
 
-## References in Related Cheat Sheets
+## References
 
-### CSRF
-
-- [OWASP Testing for Cross-Site Request Forgery](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery)
-- [PortSwigger Web Security Academy](https://portswigger.net/web-security/csrf)
-- [Mozilla Web Security Cheat Sheet](https://infosec.mozilla.org/guidelines/web_security#csrf-prevention)
-- [Common CSRF Prevention Misconceptions](https://medium.com/keylogged/common-csrf-prevention-misconceptions-67fd026d94a8)
-- [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
-- For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/5.5.x-SNAPSHOT/reference/html5/#csrf)
-- For PHP and Apache: [CSRFProtector Project](https://github.com/OWASP/www-project-csrfprotector )
-- For Angular: [Cross-Site Request Forgery (XSRF) Protection](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security)
+- [W3C: Fetch Metadata Request Headers](https://www.w3.org/TR/fetch-metadata/)
+- [Barth, Jackson, and Mitchell: Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
+- [OWASP WSTG: Testing for Cross-Site Request Forgery](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/06-Session_Management_Testing/05-Testing_for_Cross_Site_Request_Forgery/)

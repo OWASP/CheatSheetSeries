@@ -4,6 +4,8 @@
 
 FastAPI is a Python web framework using the Asynchronous Server Gateway Interface (ASGI). This cheat sheet covers authentication dependencies, input and output models, and deployment controls, building on the [FastAPI security documentation](https://fastapi.tiangolo.com/tutorial/security/).
 
+See the [REST Security Cheat Sheet](REST_Security_Cheat_Sheet.md) for general API controls.
+
 Code snippets illustrate individual controls, not complete applications. They assume an existing FastAPI application and application-specific user and persistence functions; adapt and test them for your application.
 
 ## Dependency Injection and Access Control
@@ -179,5 +181,5 @@ Configure the ASGI server's proxy trust explicitly so clients cannot spoof the c
 
 ## References
 
-- [OWASP API Security Top 10 (2023)](https://owasp.github.io/API-Security/editions/2023/en/0x00-header/)
-- [OWASP REST Security Cheat Sheet](../cheatsheets/REST_Security_Cheat_Sheet.md)
+- [FastAPI: Dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/)
+- [FastAPI: OAuth2 with JWT tokens](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)

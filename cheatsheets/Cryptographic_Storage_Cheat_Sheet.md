@@ -200,5 +200,6 @@ A key derivation function (KDF) could be used to generate a KEK from user-suppli
 
 ## References
 
+- [NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf)
 - [NIST FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard](https://csrc.nist.gov/pubs/fips/203/final)
 - [NIST: Post-Quantum Cryptography FAQ](https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs)

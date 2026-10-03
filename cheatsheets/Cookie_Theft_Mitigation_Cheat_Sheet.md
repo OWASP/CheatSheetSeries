@@ -35,6 +35,8 @@ At the same time, even if the IP-Geo does not change, there is also the possibil
 
 ### Cookie Theft Detection
 
+For an implementation case study, see [Slack's compromised-cookie detection design](https://slack.engineering/catching-compromised-cookies/).
+
 By storing session information on the server side when a session is established, it is possible to detect session hijacking when that information is significantly changed.
 
 The following are the core information that should be saved.
@@ -128,5 +130,5 @@ This specification is still in the drafting stages, but it's considered that it 
 
 ## References
 
-- [Catching Compromised Cookies - Engineering at Slack](https://slack.engineering/catching-compromised-cookies/)
-- [Device Bound Session Credentials explainer](https://github.com/WICG/dbsc/blob/main/README.md)
+- [NIST SP 800-63B-4: Authentication and Authenticator Management](https://pages.nist.gov/800-63-4/sp800-63b.html)
+- [Device Bound Session Credentials explainer](https://github.com/w3c/webappsec-dbsc/blob/main/README.md)

@@ -164,3 +164,8 @@ Suppose a company uses Zabbix as an IT monitoring system. In this case, the poli
 ## Useful links
 
 - Full network segmentation cheat sheet by [sergiomarotco](https://github.com/sergiomarotco): [link](https://github.com/sergiomarotco/Network-segmentation-cheat-sheet).
+
+## References
+
+- [NIST SP 800-41 Rev. 1: Guidelines on Firewalls and Firewall Policy](https://csrc.nist.gov/pubs/sp/800/41/r1/final)
+- [NIST SP 800-215: Guide to a Secure Enterprise Network Landscape](https://csrc.nist.gov/pubs/sp/800/215/final)

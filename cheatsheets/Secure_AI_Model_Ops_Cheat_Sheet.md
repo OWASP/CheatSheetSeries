@@ -7,6 +7,8 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 
 ## Common Security Issues
 
+For prompt-specific defenses, see the [LLM Prompt Injection Prevention Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md).
+
 Data Poisoning – A threat where attackers inject malicious data into training datasets to manipulate model behavior.
 
 Model Inversion & Extraction – Techniques that allow attackers to reconstruct training data or extract model parameters via inference queries.
@@ -117,10 +119,6 @@ Weak Runtime Isolation - Shared training or inference infrastructure allows cros
 
 ## References
 
-- [OWASP LLM Prompt Injection Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md)  
-- [OWASP ASVS / Proactive Controls](https://owasp.org/www-project-application-security-verification-standard/)  
-- [OWASP AISVS](https://owasp.org/www-project-artificial-intelligence-security-verification-standard-aisvs-docs/)
-- [NIST AI Risk Management Framework (AI RMF)](https://www.nist.gov/itl/ai-risk-management-framework)  
-- [Microsoft Responsible AI Guidelines](https://www.microsoft.com/en-us/ai/principles-and-approach)  
-- [Google Threat Modeling](https://services.google.com/fh/files/misc/ds-threat-modeling-security-service-en.pdf)  
-- [MITRE ATLAS Framework](https://atlas.mitre.org/)
+- [NIST SP 800-218A: Secure Software Development Practices for Generative AI and Dual-Use Foundation Models](https://csrc.nist.gov/pubs/sp/800/218/a/final)
+- [NIST AI 100-2 E2025: Adversarial Machine Learning](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)
+- [OWASP AI Security Verification Standard](https://github.com/OWASP/AISVS)

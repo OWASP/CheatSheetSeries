@@ -38,7 +38,7 @@ As developers determine what transaction data is significant, their decisions sh
 
 For example, if an SMS message confirms significant transaction data, the developer could respond by returning the target account, amount and type of transfer to the user. However, it is inconvenient for an unconnected [CAP reader](https://en.wikipedia.org/wiki/Chip_Authentication_Program) to require users to enter that data. In such cases, the developer should probably return the minimum amount of significant transaction data (e.g. partial target account number and amount) for confirmation.
 
-In general, the user must verify all significant transaction data as a part of the transaction authorization process. If a transaction process requires a user to enter transaction data into an external device, the user should be prompted to confirm a specific value in the transaction (e.g. a target account number). The absence of a meaningful prompt could be easily abused by social engineering techniques and malware as described below in Section 1.4. Also, for more detailed discussion of input overloading problems, see [here](http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf).
+In general, the user must verify all significant transaction data as a part of the transaction authorization process. If a transaction process requires a user to enter transaction data into an external device, the user should be prompted to confirm a specific value in the transaction (e.g. a target account number). The absence of a meaningful prompt could be easily abused by social engineering techniques and malware as described below in Section 1.4. Also, for more detailed discussion of input overloading problems, see [here](https://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf).
 
 ### 1.2 Change of authorization token should be authorized using the current authorization token
 
@@ -152,6 +152,8 @@ To prevent multiple replay attacks, each set of authorization credentials should
 
 ## Remarks
 
+For the original implementation recommendations, see [Wojciech Dworakowski's AppSec EU 2015 presentation](https://www.slideshare.net/slideshow/ebanking-transaction-authorization-appsec-eu-2015-amsterdam/48703604). For banking threat-modeling context, see [Morana and Ucedavelez's AppSec EU 2011 presentation](https://www.slideshare.net/slideshow/owasp-app-seceu2011version1/8333111).
+
 Here are some other issues that should be considered while implementing transaction authorizations, but are beyond the scope of this cheat sheet:
 
 - Which transactions should be authorized? All transactions or only some of them? Each application is different and an application owner should decide if all transactions should be authorized or only some of them. The developers should consider risk analysis, risk exposition of given application, and other safeguards implemented in an application.
@@ -161,16 +163,8 @@ Here are some other issues that should be considered while implementing transact
 - **There are some anti-malware solutions that protect against such threats but these solutions [cannot be 100% effective](http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html) and should be used only as an additional layer of protection.**
 - Protecting your signing keys with a second factor such as passwords, biometrics, etc. or leveraging secure elements (TEE, TPM, Smart card).
 
-## References and future reading
+## References
 
-References and future reading:
-
-- Wojciech Dworakowski: [E-banking transaction authorization - possible vulnerabilities, security verification and best practices for implementation. Presentation from AppSec EU 2015](http://www.slideshare.net/wojdwo/ebanking-transaction-authorization-appsec-eu-2015-amsterdam).
-- Saar Drimer, Steven J. Murdoch, and Ross Anderson: [Optimised to Fail - Card Readers for Online Banking](http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf).
-- Jakub Kałużny, Mateusz Olejarka: [Script-based Malware Detection in Online Banking Security Overview](http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html).
-- [List of websites and whether or not they support 2FA](https://twofactorauth.org/).
-- Laerte Peotta, Marcelo D. Holtz, Bernardo M. David, Flavio G. Deus, Rafael Timóteo de Sousa Jr: [A Formal Classification Of Internet Banking Attacks and Vulnerabilities](http://airccse.org/journal/jcsit/0211ijcsit13.pdf).
-- Marco Morana, Tony Ucedavelez: [Threat Modeling of Banking Malware-Based Attacks](https://owasp.org/www-pdf-archive/Marco_Morana_and_Tony_UV_-_Threat_Modeling_of_Banking_Malware.pdf).
-- OWASP [Anti-Malware - Knowledge Base](https://wiki.owasp.org/index.php/OWASP_Anti-Malware_-_Knowledge_Base).
-- OWASP [Anti-Malware Project - Awareness Program](https://wiki.owasp.org/index.php/OWASP_Anti-Malware_Project_-_Awareness_Program).
-- Arjan Blom , Gerhard de Koning Gans , Erik Poll , Joeri de Ruiter , and Roel Verdult: [Designed to Fail - A USB-Connected Reader for Online Banking](http://www.cs.ru.nl/~rverdult/Designed_to_Fail_A_USB-Connected_Reader_for_Online_Banking-NORDSEC_2012.pdf)
+- [Drimer, Murdoch and Anderson: Optimised to Fail — Card Readers for Online Banking](https://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf)
+- [Peotta et al.: A Formal Classification of Internet Banking Attacks and Vulnerabilities](https://airccse.org/journal/jcsit/0211ijcsit13.pdf)
+- [Blom et al.: Designed to Fail — A USB-Connected Reader for Online Banking](https://www.cs.ru.nl/~rverdult/Designed_to_Fail_A_USB-Connected_Reader_for_Online_Banking-NORDSEC_2012.pdf)

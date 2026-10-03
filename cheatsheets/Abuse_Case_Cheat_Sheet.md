@@ -449,3 +449,8 @@ All figures were created using <https://www.draw.io/> site and exported (as PNG 
 All XML descriptor files for each schema are available below (using XML description, modification of the schema is possible using DRAW.IO site):
 
 [Schemas descriptors archive](../assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip)
+
+## References
+
+- [OWASP SAMM: Misuse/Abuse Testing](https://owaspsamm.org/model/verification/requirements-driven-testing/stream-b/)
+- [OWASP SAMM: Security Requirements](https://owaspsamm.org/model/design/security-requirements/)

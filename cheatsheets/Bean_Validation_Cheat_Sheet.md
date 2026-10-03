@@ -471,3 +471,8 @@ private String articleTitle;
 ```
 
 Spring MVC will then look up a message with ID *article.title.error* in a defined MessageSource. More on this [documentation](https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).
+
+## References
+
+- [Jakarta Bean Validation 3.0 Specification](https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html)
+- [Hibernate Validator 9.0: Interpolating Constraint Error Messages](https://docs.hibernate.org/validator/9.0/reference/en-US/html_single/#chapter-message-interpolation)

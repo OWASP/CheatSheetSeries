@@ -17,7 +17,7 @@ The term **host** refers to the original site the user goes to, such as a shoppi
 
 ## Major risks
 
-The single greatest risk is a compromise of the third party JavaScript server, and the injection of malicious JavaScript into the original tag JavaScript. This has happened in 2018 and likely earlier.
+The single greatest risk is a compromise of the third party JavaScript server, and the injection of malicious JavaScript into the original tag JavaScript. See [RiskIQ's report of the 2018 Ticketmaster incident](https://www.globenewswire.com/fr/news-release/2018/07/10/1535094/0/en/RiskIQ-Finds-Ticketmaster-Breach-Part-of-Massive-Credit-Card-Skimming-Campaign-Affecting-over-800-e-Commerce-Sites.html).
 
 The invocation of third-party JS code in a web application requires consideration for 3 risks in particular:
 
@@ -32,6 +32,8 @@ This risk arises from the fact that there is usually no guarantee that the code 
 Typical defenses include, but are not restricted to: in-house script mirroring (to prevent alterations by 3rd parties), sub-resource integrity (to enable browser-level interception) and secure transmission of the third-party code (to prevent modifications while in-transit). See below for more details.
 
 ### Risk 2: Execution of arbitrary code on client systems
+
+For original research on vulnerable third-party integrations, see [Randy Westergren's ad-network findings](https://randywestergren.com/widespread-xss-vulnerabilities-ad-network-code-affecting-top-tier-publishers-retailers/).
 
 This risk arises from the fact that third-party JavaScript code is rarely reviewed by the invoking party prior to its integration into a website/application. As the client reaches the hosting website/application, this third-party code gets executed, thus granting the third-party the exact same privileges that were granted to the user (similar to [XSS attacks](https://owasp.org/www-community/attacks/xss/)).
 
@@ -49,6 +51,8 @@ Typical defenses include, but are not restricted to:
 - ...
 
 ### Risk 3: Disclosure of sensitive information to 3rd parties
+
+[ClearSky's original Magecart investigation](https://www.clearskysec.com/magecart/) documents payment-data theft through injected JavaScript.
 
 When a third-party script is invoked in a website/application, the browser directly contacts the third-party servers. By default, the request includes all regular HTTP headers. In addition to the originating IP address of the browser, the third-party also obtains other data such as the referrer (in non-https requests) and any cookies previously set by the third-party, for example when visiting another organization's website that also invokes the third-party script.
 
@@ -300,8 +304,6 @@ The MarSecOps requirements to implement technical controls at the speed of chang
 
 ## References
 
-- [Widespread XSS Vulnerabilities in Ad Network Code Affecting Top Tier Publishers, Retailers](https://randywestergren.com/widespread-xss-vulnerabilities-ad-network-code-affecting-top-tier-publishers-retailers/).
-- [Inside and Beyond Ticketmaster: The Many Breaches of Magecart](https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/).
-- [Magecart – a malicious infrastructure for stealing payment details from online shops](https://www.clearskysec.com/magecart/).
-- [Compromised E-commerce Sites Lead to "Magecart"](https://www.riskiq.com/blog/labs/magecart-keylogger-injection/)
-- [Inbenta, blamed for Ticketmaster breach, admits it was hacked](https://www.zdnet.com/article/inbenta-blamed-for-ticketmaster-breach-says-other-sites-not-affected/).
+- [W3C: Subresource Integrity](https://www.w3.org/TR/sri/)
+- [W3C: Content Security Policy Level 3](https://www.w3.org/TR/CSP3/)
+- [MDN: Window.postMessage()](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)

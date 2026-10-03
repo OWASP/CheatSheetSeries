@@ -1000,3 +1000,8 @@ class ECDHSimple {
 ```
 
 </details>
+
+## References
+
+- [Oracle: Secure Coding Guidelines for Java SE](https://www.oracle.com/java/technologies/javase/seccodeguide.html)
+- [Tink: Authenticated Encryption with Associated Data](https://developers.google.com/tink/aead)

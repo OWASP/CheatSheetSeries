@@ -227,5 +227,5 @@ In order to accurately test out the newly created virtual patches, it may be nec
 
 ## References
 
-- [OWASP Virtual Patching Best Practices](https://owasp.org/www-community/Virtual_Patching_Best_Practices).
-- [OWASP Securing WebGoat with ModSecurity](https://wiki.owasp.org/index.php/Category:OWASP_Securing_WebGoat_using_ModSecurity_Project).
+- [OWASP Virtual Patching Best Practices](https://community.owasp.org/Virtual_Patching_Best_Practices)
+- [OWASP CRS: Making Rules](https://coreruleset.org/docs/3-about-rules/creating/)

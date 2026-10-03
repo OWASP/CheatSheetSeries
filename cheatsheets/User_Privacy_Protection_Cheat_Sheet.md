@@ -115,3 +115,8 @@ Honesty goes a long way towards cultivating a culture of trust between a web app
 More insight regarding secure logging can be found at:
 
 - [OWASP Logging Cheat Sheet](Logging_Cheat_Sheet.md)
+
+## References
+
+- [RFC 6973: Privacy Considerations for Internet Protocols](https://www.rfc-editor.org/info/rfc6973/)
+- [RFC 6797: HTTP Strict Transport Security (HSTS)](https://www.rfc-editor.org/info/rfc6797/)

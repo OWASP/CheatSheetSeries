@@ -742,8 +742,9 @@ Managing secrets in a multi-cloud environment presents unique challenges due to 
 - [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md)
 - [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md)
 - [OWASP WrongSecrets project](https://github.com/OWASP/wrongsecrets/)
-- [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
-- [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
-- [GitHub listing on secrets detection tools](https://github.com/topics/secrets-detection)
-- [NIST SP 800-57 Recommendation for Key Management](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final)
-- [OpenCRE References to secrets](https://opencre.org/cre/223-780)
+
+## References
+
+- [NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final)
+- [AWS Secrets Manager: Best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html)
+- [Azure Key Vault: Secure your secrets](https://learn.microsoft.com/en-us/azure/key-vault/secrets/secure-secrets)

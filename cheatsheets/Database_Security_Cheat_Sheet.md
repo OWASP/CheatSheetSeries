@@ -117,3 +117,8 @@ The following sections give some further recommendations for specific database s
 ### Redis
 
 - See the [Redis security guide](https://redis.io/topics/security).
+
+## References
+
+- [Microsoft: Securing SQL Server](https://learn.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server)
+- [PostgreSQL: Secure TCP/IP Connections with SSL](https://www.postgresql.org/docs/current/ssl-tcp.html)

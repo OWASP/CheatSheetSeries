@@ -164,3 +164,9 @@ Use a Content Security Policy to limit the damage of several threats described i
 - [Vulnerable Dependency Management](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html)
 - [Node.js Security](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html)
 - [Server-Side Request Forgery Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
+
+## References
+
+- [DOMPurify: HTML Sanitization](https://github.com/cure53/DOMPurify#what-does-it-do)
+- [React: use server Security Considerations](https://react.dev/reference/rsc/use-server)
+- [Vite: Environment Variables and Modes](https://vite.dev/guide/env-and-mode)

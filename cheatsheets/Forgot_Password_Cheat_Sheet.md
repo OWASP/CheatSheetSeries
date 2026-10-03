@@ -93,7 +93,7 @@ URL tokens are passed in the query string of the URL, and are typically sent to 
    - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. The URL should either be hard-coded, or validated against a list of trusted domains.
    - Ensure that the URL is using HTTPS.
 3. The user receives the email, and browses to the URL with the attached token.
-   - Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
+   - Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `no-referrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
    - Implement appropriate protection to prevent users from brute-forcing tokens in the URL, such as rate limiting.
 4. If required, perform any additional validation steps such as requiring the user to answer [security questions](#security-questions).
 5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
@@ -126,3 +126,8 @@ Security questions should not be used as the sole mechanism for resetting passwo
 ## Account Lockout
 
 Accounts should not be locked out in response to a forgotten password attack, as this can be used to deny access to users with known usernames. For more details on account lockouts, see the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
+
+## References
+
+- [NIST SP 800-63B-4: Account Recovery](https://pages.nist.gov/800-63-4/sp800-63b/events/#recovery)
+- [OWASP Application Security Verification Standard (ASVS): V6.4 Authentication Factor Lifecycle and Recovery](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v64-authentication-factor-lifecycle-and-recovery)

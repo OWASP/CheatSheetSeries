@@ -39,3 +39,8 @@ Map release SBOMs to deployed systems and reassess components when new advisorie
 Vulnerability Exploitability eXchange (VEX) documents state whether a vulnerability affects a particular product. Before accepting a "not affected" claim, authenticate the issuer, verify document integrity, and assess its justification against the exact product version and deployment conditions. [CISA's consumption guidance](https://www.cisa.gov/sites/default/files/2024-08/SECURING_THE_SOFTWARE_SUPPLY_CHAIN_RECOMMENDED_PRACTICES_FOR_SOFTWARE_BILL_OF_MATERIALS_CONSUMPTION-508.pdf) recommends checking VEX veracity and reassessing risk over time.
 
 Use the [Vulnerable Dependency Management Cheat Sheet](Vulnerable_Dependency_Management_Cheat_Sheet.md) to select and verify remediation. After rebuilding, compare the new SBOM with the previous release and update deployment mappings. An updated inventory does not by itself prove that the vulnerability is fixed or the mitigations work.
+
+## References
+
+- [OWASP CycloneDX: Authoritative Guide to SBOM](https://cyclonedx.org/guides/OWASP_CycloneDX-Authoritative-Guide-to-SBOM-en.pdf)
+- [CISA: Recommended Practices for Software Bill of Materials Consumption](https://www.cisa.gov/sites/default/files/2024-08/SECURING_THE_SOFTWARE_SUPPLY_CHAIN_RECOMMENDED_PRACTICES_FOR_SOFTWARE_BILL_OF_MATERIALS_CONSUMPTION-508.pdf)

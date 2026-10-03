@@ -192,7 +192,5 @@ Validating and sanitizing user-input to determine whether the URL is safe is not
 
 ## References
 
-- [CWE Entry 601 on Open Redirects](http://cwe.mitre.org/data/definitions/601.html).
-- [WASC Article on URL Redirector Abuse](http://projects.webappsec.org/w/page/13246981/URL%20Redirector%20Abuse)
-- [Google blog article on the dangers of open redirects](http://googlewebmastercentral.blogspot.com/2009/01/open-redirect-urls-is-your-site-being.html).
-- [Preventing Open Redirection Attacks (C\#)](http://www.asp.net/mvc/tutorials/security/preventing-open-redirection-attacks).
+- [CWE Entry 601 on Open Redirects](https://cwe.mitre.org/data/definitions/601.html)
+- [Microsoft: Prevent Open Redirect Attacks in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/security/preventing-open-redirects?view=aspnetcore-10.0)

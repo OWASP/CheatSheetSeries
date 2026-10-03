@@ -588,3 +588,8 @@ document.write(x);
 ```
 
 Semgrep rule to identify above dom xss [link](https://semgrep.dev/s/we30).
+
+## References
+
+- [MDN: innerHTML Security Considerations](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML#security_considerations)
+- [DOMPurify: HTML Sanitization](https://github.com/cure53/DOMPurify#what-does-it-do)

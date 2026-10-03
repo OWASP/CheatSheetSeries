@@ -288,8 +288,6 @@ Use only reputable crypto libraries that are well maintained and updated, as wel
 
 ## References
 
-- [NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management - Part 1: General](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final)
-- [NIST SP 800-38D: Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC](https://csrc.nist.gov/pubs/sp/800/38/d/final)
+- [NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final)
+- [NIST SP 800-38D: Galois/Counter Mode (GCM) and GMAC](https://csrc.nist.gov/pubs/sp/800/38/d/final)
 - [NIST SP 800-88 Rev. 2: Guidelines for Media Sanitization](https://csrc.nist.gov/pubs/sp/800/88/r2/final)
-- [OWASP Application Security Verification Standard (ASVS) 5.0 Chapter V13: Configuration](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x22-V13-Configuration.md)
-- [Practical Cryptography for Developers](https://cryptobook.nakov.com/)

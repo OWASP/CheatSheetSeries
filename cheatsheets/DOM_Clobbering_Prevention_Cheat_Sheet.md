@@ -186,8 +186,6 @@ Encapsulating variables and functions within objects or classes can help prevent
 
 ## References
 
-- [domclob.xyz](https://domclob.xyz)
-- [PortSwigger: DOM Clobbering Strikes Back](https://portswigger.net/research/dom-clobbering-strikes-back)
-- [Blogpost: XSS in GMail’s AMP4Email](https://research.securitum.com/xss-in-amp4email-dom-clobbering/)
-- [HackTricks: DOM Clobbering](https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting/dom-clobbering)
-- [HTMLHell: DOM Clobbering](https://www.htmhell.dev/adventcalendar/2022/12/)
+- [WHATWG HTML: Named Access on the Window Object](https://html.spec.whatwg.org/multipage/nav-history-apis.html#named-access-on-the-window-object)
+- [DOMPurify Documentation](https://github.com/cure53/DOMPurify)
+- [WHATWG Web IDL: Legacy Platform Object Abstract Operations](https://webidl.spec.whatwg.org/#legacy-platform-object-abstract-ops)

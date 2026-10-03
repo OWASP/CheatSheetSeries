@@ -509,3 +509,8 @@ Example of the rendering:
 ## Sources of the prototype
 
 [GitHub repository](https://github.com/righettod/poc-authz-testing)
+
+## References
+
+- [Authorization matrix testing prototype](https://github.com/righettod/poc-authz-testing)
+- [OWASP SAMM: Security Testing](https://owaspsamm.org/model/verification/security-testing/)

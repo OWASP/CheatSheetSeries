@@ -10,6 +10,8 @@ This cheat sheet provides best practices to secure multi-tenant applications, en
 
 ## Key Risks
 
+Use the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md) for baseline access controls.
+
 - **Cross-Tenant Data Leakage**: Bugs or misconfigurations exposing one tenant's data to another.
 - **Tenant Impersonation**: Attackers gaining access to another tenant's context or resources.
 - **Broken Tenant Isolation**: Insufficient separation at database, cache, storage, or compute layers.
@@ -166,10 +168,10 @@ A normal `SET` persists until the session ends after its transaction commits, wh
 - Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.
 - Commit or roll back before returning the connection to the pool.
 
+SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
+
 <details>
 <summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
-
-SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
 
 ```python
 from sqlalchemy import event, Column, String, text
@@ -1056,11 +1058,6 @@ class CrossTenantAccessMonitor:
 
 ## References
 
-- [OWASP Cloud Tenant Isolation](https://owasp.org/www-project-cloud-tenant-isolation/)
-- [OWASP Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
-- [AWS SaaS Tenant Isolation Strategies](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/tenant-isolation.html)
-- [AWS SaaS Performance Efficiency Guidance](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html)
-- [Microsoft Multitenant Messaging Guidance](https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging)
-- [PostgreSQL Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
-- [PostgreSQL SET](https://www.postgresql.org/docs/current/sql-set.html)
-- [SQLAlchemy ORM Query Events](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria)
+- [AWS SaaS Lens: Tenant Isolation](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/tenant-isolation.html)
+- [PostgreSQL: Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+- [Microsoft: Messaging in Multitenant Solutions](https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging)

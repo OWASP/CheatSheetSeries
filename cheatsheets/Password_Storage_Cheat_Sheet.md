@@ -169,7 +169,7 @@ The work factor for PBKDF2 is implemented through an iteration count, which shou
 
 - PBKDF2-HMAC-SHA256: 600,000 iterations (recommended)
 - PBKDF2-HMAC-SHA512: 220,000 iterations
-- PBKDF2-HMAC-SHA1: 1,400,000 iterations — **legacy only**, do not select for new systems. NIST SP 800-131A Rev. 2 disallows SHA-1 for new use after 2030.
+- PBKDF2-HMAC-SHA1: 1,400,000 iterations — **legacy only**, do not select for new systems.
 
 ### Parallel PBKDF2
 
@@ -200,3 +200,9 @@ Remember that once your password hashing method is selected, it will have to be 
 ### International Characters
 
 Your hashing library must be able to accept a wide range of characters and should be compatible with all Unicode codepoints, so users can use the full range of characters available on modern devices - especially mobile keyboards. They should be able to select passwords from various languages and include pictograms. Prior to hashing the entropy of the user's entry should not be reduced, and password hashing libraries need to be able to use input that may contain a NULL byte.
+
+## References
+
+- [NIST SP 800-63B-4: Password Verifiers](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)
+- [RFC 9106: Argon2 Inputs and Outputs](https://datatracker.ietf.org/doc/html/rfc9106#section-3.1)
+- [RFC 7914: scrypt Parameters](https://www.rfc-editor.org/rfc/rfc7914.html#section-2)

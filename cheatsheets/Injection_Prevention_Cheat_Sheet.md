@@ -259,3 +259,9 @@ If a parameterized API is not available, you should carefully escape special cha
 [LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet in Java](Injection_Prevention_in_Java_Cheat_Sheet.md)
+
+## References
+
+- [RFC 4514: LDAP Distinguished Names](https://datatracker.ietf.org/doc/html/rfc4514)
+- [RFC 4515: LDAP Search Filters](https://datatracker.ietf.org/doc/html/rfc4515)
+- [Oracle JDBC: Using Prepared Statements](https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)

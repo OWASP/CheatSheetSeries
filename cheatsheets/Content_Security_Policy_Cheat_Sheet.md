@@ -127,6 +127,8 @@ __DO NOT__ use `X-Content-Security-Policy` or `X-WebKit-CSP`. Their implementati
 
 ## CSP Types (granular/allowlist based or strict)
 
+For original research on allowlist weaknesses, see [CSP Is Dead, Long Live CSP!](https://research.google/pubs/csp-is-dead-long-live-csp-on-the-insecurity-of-whitelists-and-the-future-of-content-security-policy/).
+
 The original mechanism for building a CSP involved creating allow-lists which would define the content and sources that were permitted in the context of the HTML page.
 
 However, current leading practice is to create a "Strict" CSP which is much easier to deploy and more secure as it is less likely to be bypassed.
@@ -368,14 +370,6 @@ document.getElementById("button1").addEventListener('click', doSomething);
 
 ## References
 
-- [Strict CSP](https://web.dev/strict-csp)
-- [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)
-- [Content-Security-Policy](https://content-security-policy.com/)
-- [MDN CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
-- [CSP Wikipedia](https://en.wikipedia.org/wiki/Content_Security_Policy)
-- [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
-- [Breaking Bad CSP](https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp)
-- [CSP A Successful Mess Between Hardening And Mitigation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation)
-- [Content Security Policy Guide on AppSec Monkey](https://www.appsecmonkey.com/blog/content-security-policy-header/)
-- CSP Generator: [Chrome](https://chrome.google.com/webstore/detail/content-security-policy-c/ahlnecfloencbkpfnpljbojmjkfgnmdc)/[Firefox](https://addons.mozilla.org/en-US/firefox/addon/csp-generator/)
-- [CSP evaluator](https://csp-evaluator.withgoogle.com/)
+- [W3C Content Security Policy Level 3](https://www.w3.org/TR/CSP3/)
+- [MDN Content-Security-Policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy)
+- [Strict CSP deployment guidance](https://web.dev/articles/strict-csp)

@@ -268,6 +268,8 @@ Even if everything upstream is secure, the model can still generate outputs that
 
 ## Section 10: Tool Invocation and Agent Safety
 
+For MCP message integrity and tool boundaries, see the [MCP Security Cheat Sheet](MCP_Security_Cheat_Sheet.md).
+
 Modern RAG is rarely standalone -- it is embedded in agent systems where retrieved content influences model decisions which trigger tool calls. This is where theoretical RAG risks become real-world damage: retrieved content influences the model, the model invokes a tool, and the tool takes an irreversible action.
 
 ### Do
@@ -376,9 +378,6 @@ When any component of the RAG pipeline fails, the system must deny the request r
 
 ## References
 
-- [OWASP AISVS C08](https://github.com/OWASP/AISVS) -- Memory, Embeddings and Vector Database Security
-- [OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html) -- Section 7: Message-Level Integrity
-- [OWASP Top 10 for LLM Applications](https://genai.owasp.org/) -- LLM06: Sensitive Information Disclosure, LLM01: Prompt Injection
-- [OWASP Top 10 for Agentic Applications](https://genai.owasp.org/) -- ASI06: Memory and Context Poisoning (see the GenAI project site for the latest URL)
-- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) -- Governance, mapping, measuring, and managing AI risks
-- Song & Raghunathan (2020), "Information Leakage in Embedding Models" -- Background on embedding inversion attacks and differential privacy
+- [OWASP AISVS C08: Memory, Embeddings and Vector Database Security](https://github.com/OWASP/AISVS/blob/main/1.0/en/0x10-C08-Memory-Embeddings-and-Vector-Database.md)
+- [NIST AI 100-2e2025: Adversarial Machine Learning — A Taxonomy and Terminology of Attacks and Mitigations](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf)
+- [Song and Raghunathan: Information Leakage in Embedding Models](https://arxiv.org/abs/2004.00053)

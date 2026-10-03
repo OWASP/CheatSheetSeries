@@ -8,6 +8,8 @@ This cheat sheet covers both sides. It shows how to prove that a delivery is gen
 
 ## Threat Model Summary
 
+Use the [Threat Modeling Cheat Sheet](Threat_Modeling_Cheat_Sheet.md) to assess the integration’s trust boundaries.
+
 Forged deliveries are the headline threat: without verification, an attacker can post fake events that trigger order fulfillment, account access, or record changes, as [Stripe's webhook documentation](https://docs.stripe.com/webhooks#verify-events) warns. Signature verification is the first control to implement; the others close the gaps it leaves.
 
 | Threat | Primary control |
@@ -102,6 +104,8 @@ Publishers retry on failure, Stripe for [up to three days with exponential backo
 
 ### Rate Limiting
 
+For broader resource controls, see the [Denial of Service Cheat Sheet](Denial_of_Service_Cheat_Sheet.md).
+
 Without limits, a misconfigured publisher or an attacker can flood the endpoint. Both sides need protection.
 
 - Publisher: apply per-subscriber delivery limits, exponential backoff with jitter, and a maximum retry count, and disable endpoints that keep failing for days ([Standard Webhooks: Deliverability and reliability](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#deliverability-and-reliability)).
@@ -122,6 +126,8 @@ When subscribers register their own callback URLs, an attacker registers an inte
 ## Endpoint Hardening
 
 ### Input Validation
+
+See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md) and [Injection Prevention Cheat Sheet](Injection_Prevention_Cheat_Sheet.md) for validation and downstream interpretation controls.
 
 - A valid signature proves who sent the payload, not that its contents are safe. Enforce a maximum body size, reject unexpected `Content-Type` values, and validate against a strict schema before processing, following the REST Security Cheat Sheet's [Input validation](REST_Security_Cheat_Sheet.md#input-validation) and [Validate content types](REST_Security_Cheat_Sheet.md#validate-content-types) sections. Publishers should keep payloads small; the Standard Webhooks specification recommends [under 20 KB](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#payload-size).
 - Downstream, use parameterized queries for SQL ([Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md)) and context-appropriate output encoding wherever payload fields are rendered as HTML ([Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)).
@@ -183,9 +189,6 @@ Run these tests before going to production and after any change to webhook handl
 
 ## References
 
-- [Standard Webhooks specification](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md)
-- [Stripe: Receive Stripe events in your webhook endpoint](https://docs.stripe.com/webhooks)
-- [GitHub: Validating webhook deliveries](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries)
-- [GitHub: Best practices for using webhooks](https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks)
-- [IANA IPv4 Special-Purpose Address Registry](https://www.iana.org/assignments/iana-ipv4-special-registry) and [IPv6 Special-Purpose Address Registry](https://www.iana.org/assignments/iana-ipv6-special-registry)
-- Related OWASP cheat sheets: [Transport Layer Security](Transport_Layer_Security_Cheat_Sheet.md), [Secrets Management](Secrets_Management_Cheat_Sheet.md), [Server-Side Request Forgery Prevention](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md), [REST Security](REST_Security_Cheat_Sheet.md), [Input Validation](Input_Validation_Cheat_Sheet.md), [Injection Prevention](Injection_Prevention_Cheat_Sheet.md), [Query Parameterization](Query_Parameterization_Cheat_Sheet.md), [Cross Site Scripting Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), [Cross-Site Request Forgery Prevention](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md), [Logging](Logging_Cheat_Sheet.md), [OAuth2](OAuth2_Cheat_Sheet.md), [Denial of Service](Denial_of_Service_Cheat_Sheet.md), [Threat Modeling](Threat_Modeling_Cheat_Sheet.md)
+- [Standard Webhooks Specification](https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md)
+- [Stripe: Receive Stripe Events in Your Webhook Endpoint](https://docs.stripe.com/webhooks)
+- [GitHub: Validating Webhook Deliveries](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries)

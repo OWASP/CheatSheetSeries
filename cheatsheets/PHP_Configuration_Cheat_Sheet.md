@@ -114,3 +114,8 @@ zend.exception_ignore_args = On
 descendent of Suhosin for PHP 7 and onwards, with [modern
 features](https://snuffleupagus.readthedocs.io/features.html). It's considered
 stable, and is usable in production.
+
+## References
+
+- [PHP Manual: Core php.ini Directives](https://www.php.net/manual/ini.core.php)
+- [Snuffleupagus: Security Features](https://snuffleupagus.readthedocs.io/features.html)

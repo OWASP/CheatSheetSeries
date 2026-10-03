@@ -6,6 +6,8 @@ The Pinning Cheat Sheet is a technical guide to implementing certificate and pub
 
 ## What's the problem
 
+For baseline TLS configuration, see the [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md).
+
 Users, developers, and applications expect security on their communication channels, but some channels may not meet this expectation. Channels built using well known protocols like SSL, and TLS can be vulnerable to Man-in-the-Middle (MITM) attacks if certificate-based trusts are misused. Malicious attacks come in two forms:
 
 1. An attacker is able to acquire a rogue digital certificate from a trusted certificate authority (CA) in the name of the victim site;
@@ -159,16 +161,5 @@ Otherwise, you can validate certificates by yourself using [ses.setCertificateVe
 
 ## References
 
-- OWASP [Injection Theory](https://owasp.org/www-community/Injection_Theory)
-- OWASP [Data Validation](https://wiki.owasp.org/index.php/Data_Validation)
-- OWASP [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md)
-- OWASP [Mobile Security Testing Guide](https://github.com/OWASP/owasp-mstg)
-- IETF [RFC 1421 (PEM Encoding)](http://www.ietf.org/rfc/rfc1421.txt)
-- IETF [RFC 4648 (Base16, Base32, and Base64 Encodings)](http://www.ietf.org/rfc/rfc4648.txt)
-- IETF [RFC 5280 (Internet X.509, PKIX)](http://www.ietf.org/rfc/rfc5280.txt)
-- IETF [RFC 3279 (PKI, X509 Algorithms and CRL Profiles)](http://www.ietf.org/rfc/rfc3279.txt)
-- IETF [RFC 4055 (PKI, X509 Additional Algorithms and CRL Profiles)](http://www.ietf.org/rfc/rfc4055.txt)
-- IETF [RFC 2246 (TLS 1.0)](http://www.ietf.org/rfc/rfc2246.txt)
-- IETF [RFC 4346 (TLS 1.1)](http://www.ietf.org/rfc/rfc4346.txt)
-- IETF [RFC 5246 (TLS 1.2)](http://www.ietf.org/rfc/rfc5246.txt)
-- IETF [PKCS #1: RSA Cryptography Specifications Version 2.2](https://tools.ietf.org/html/rfc8017)
+- [Android: Network security configuration](https://developer.android.com/privacy-and-security/security-config)
+- [RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile](https://datatracker.ietf.org/doc/html/rfc5280)

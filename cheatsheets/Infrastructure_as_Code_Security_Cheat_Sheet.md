@@ -48,6 +48,5 @@ CI/CD pipeline and Consolidated reporting - enabling the security checks to be m
 
 ## References
 
-- Securing Infrastructure as code: <https://www.opcito.com/blogs/securing-infrastructure-as-code>
-- Infrastructure as code security: <https://dzone.com/articles/infrastructure-as-code-security>
-- Shifting cloud security left with infrastructure as code: <https://securityboulevard.com/2020/04/shifting-cloud-security-left-with-infrastructure-as-code/>
+- [Terraform: Manage sensitive data in your configuration](https://developer.hashicorp.com/terraform/language/manage-sensitive-data)
+- [NIST SP 800-218: Secure Software Development Framework](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf)

@@ -493,8 +493,6 @@ The official registry rule is [xmlinputfactory-possible-xxe](https://semgrep.dev
 
 ## References
 
-- [OWASP Top 10-2017 A4: XML External Entities (XXE)](https://owasp.org/www-project-top-ten/2017/A4_2017-XML_External_Entities_%28XXE%29.html)
-- [Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"](https://dl.packetstormsecurity.net/papers/general/XMLDTDEntityAttacks.pdf)
-- [FindSecBugs XXE Detection](https://find-sec-bugs.github.io/bugs.htm#XXE_SAXPARSER)
-- [XXEbugFind Tool](https://github.com/ssexxe/XXEBugFind)
-- [Testing for XML Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.html)
+- [Oracle Java 25: JAXP Security Guide](https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html)
+- [Python: XML Security](https://docs.python.org/3/library/xml.html)
+- [Morgan and Al Ibrahim: XML Schema, DTD, and Entity Attacks](https://dl.packetstormsecurity.net/papers/general/XMLDTDEntityAttacks.pdf)

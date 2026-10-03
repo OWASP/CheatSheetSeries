@@ -6,6 +6,8 @@ This cheat sheet will discuss common and necessary security patterns to follow w
 
 ## Risk Analysis, Threat Modeling, and Attack Surface Assessments
 
+See the [Secure Product Design Cheat Sheet](Secure_Product_Design_Cheat_Sheet.md) for application design guidance.
+
 With any application architecture, understanding the risks and threats is extremely important for proper security. No one can spend their entire budget or bandwidth focused on security, so properly allocating security resources is necessary.
 Therefore, enterprises must perform risk assessments, threat modeling activities, and attack surface assessments to identify the following:
 
@@ -333,5 +335,5 @@ Refer to the documentation provided by the cloud service provider to understand 
 
 ## References
 
-- [Secure Product Design](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html)
-- [CISA Security Technical Reference Architecture](https://www.cisa.gov/sites/default/files/publications/Cloud%20Security%20Technical%20Reference%20Architecture.pdf)
+- [CISA: Cloud Security Technical Reference Architecture](https://www.cisa.gov/sites/default/files/publications/Cloud%20Security%20Technical%20Reference%20Architecture.pdf)
+- [CISA: Zero Trust Maturity Model Version 2.0](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)

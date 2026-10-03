@@ -128,3 +128,8 @@ This protection should be provided by your XML parser/schema validator. To verif
 ## Endpoint Security Profile
 
 **Rule**: Web services must be compliant with [Web Services-Interoperability (WS-I)](https://en.wikipedia.org/wiki/Web_Services_Interoperability) Basic Profile at minimum.
+
+## References
+
+- [NIST SP 800-95: Guide to Secure Web Services](https://csrc.nist.gov/pubs/sp/800/95/final)
+- [W3C XML Encryption Syntax and Processing Version 1.1](https://www.w3.org/TR/xmlenc-core1/)

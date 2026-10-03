@@ -123,6 +123,7 @@ Rate limiting is the process of controlling traffic rate from and to a server or
 - **Filter services** support different mechanics to filter out malicious or non compliant traffic
 - **Comply with relevant data protection/privacy laws** - a lot of providers route traffic through USA/UK
 
-## Related Articles
+## References
 
-- [CERT-EU Publication](http://cert.europa.eu/static/WhitePapers/CERT-EU-SWP_14_09_DDoS_final.pdf)
+- [CERT-EU: DDoS Overview and Incident Response Guide](https://cert.europa.eu/static/WhitePapers/CERT-EU-SWP_14_09_DDoS_final.pdf)
+- [Juniper: Network DoS Attacks](https://www.juniper.net/documentation/us/en/software/junos/denial-of-service/topics/topic-map/security-network-dos-attack.html)

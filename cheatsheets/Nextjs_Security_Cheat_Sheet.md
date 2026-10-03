@@ -2,6 +2,8 @@
 
 ## Introduction
 
+For the underlying runtime and secret handling, see the [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md) and [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md).
+
 Next.js applications have several server entry points and can render or cache data on both sides of the server/client boundary. The framework's [authentication guidance](https://nextjs.org/docs/app/guides/authentication) recommends placing authorization close to the data source instead of relying on routing or user interface checks.
 
 Apply these principles to the relevant framework surfaces:
@@ -132,7 +134,4 @@ Security tests should fail when a new application entry point or cache is added 
 
 - [Next.js Authentication Guide](https://nextjs.org/docs/app/guides/authentication)
 - [Next.js Data Security Guide](https://nextjs.org/docs/app/guides/data-security)
-- [Next.js Server Actions Guide](https://nextjs.org/docs/app/guides/server-actions)
 - [Next.js Proxy Reference](https://nextjs.org/docs/app/api-reference/file-conventions/proxy)
-- [Node.js Security Cheat Sheet](Nodejs_Security_Cheat_Sheet.md)
-- [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md)

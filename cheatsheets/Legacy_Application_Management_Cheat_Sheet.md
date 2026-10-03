@@ -74,3 +74,8 @@ Legacy applications should be subject to an especially high degree of security m
 - Be vigilant to any anomalous network traffic into and out of the legacy application environment and to any surges in network activity.
 - If you have access to an internal or hired incident response team, ensure that they are aware that incident response and investigation of unusual events should be prioritized for critical legacy systems. Processes for handling application downtime and compromise ideally are to be documented in advance as a part of an incident response playbook. This needs to give staff a clear rundown of emergency procedures including escalation contacts and details of incident response leaders.
 - Incident response planning should occur within the broader context of a business continuity plan.
+
+## References
+
+- [NIST SP 800-40 Rev. 4: Guide to Enterprise Patch Management Planning](https://csrc.nist.gov/pubs/sp/800/40/r4/final)
+- [Red Hat: Backporting Security Fixes](https://access.redhat.com/security/updates/backporting)

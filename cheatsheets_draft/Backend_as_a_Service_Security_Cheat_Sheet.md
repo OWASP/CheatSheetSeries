@@ -89,9 +89,10 @@ Use separate projects, data, policies, and credentials for development, preview 
 
 Add per-user and per-tenant limits, quotas, spend alerts, and anomaly detection appropriate to each surface. These controls reduce bulk extraction, automated abuse, function amplification, and billing impact; they do not replace authorization. Application or device attestation is also defense in depth: [Firebase App Check explicitly complements user authentication and does not eliminate every abuse vector](https://firebase.google.com/docs/app-check). See the OWASP [Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) for generic abuse controls.
 
+For supporting services, see the [Database Security](../cheatsheets/Database_Security_Cheat_Sheet.md), [REST Security](../cheatsheets/REST_Security_Cheat_Sheet.md), and [Vulnerable Dependency Management](../cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md) cheat sheets.
+
 ## References
 
-- [Database Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html)
-- [REST Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html)
-- [Serverless FaaS Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.html)
-- [Vulnerable Dependency Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html)
+- [Firebase Security Rules](https://firebase.google.com/docs/rules)
+- [Supabase: Row-Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security)
+- [Appwrite: Permissions](https://appwrite.io/docs/advanced/security/permissions)

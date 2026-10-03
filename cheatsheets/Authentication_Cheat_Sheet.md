@@ -120,12 +120,6 @@ Re-authentication is critical when an account has experienced high-risk activity
 - **Secure Session Management**
   Invalidate sessions after re-authentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
-#### References
-
-- [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
-- OWASP ASVS – 2.2.2: Re-authentication requirements
-- NIST 800-63B: Digital Identity Guidelines – Authentication Assurance Levels
-
 ### Consider Strong Transaction Authentication
 
 Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md).
@@ -444,3 +438,9 @@ Questions that should be considered when implementing a mechanism like this incl
 - How do we mutate, extend, or revoke tokens/cookies when a mid‑session risk check escalates?
 - How do we synchronize state across multiple concurrent devices or browser tabs?
 - What monitoring and alerting will be in place for potentially suspicious activity, including how the user is notified.
+
+## References
+
+- [NIST SP 800-63B-4: Password Verifiers](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)
+- [OWASP Application Security Verification Standard (ASVS): V6 Authentication](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v6-authentication)
+- [OpenID Connect Core 1.0: ID Token Validation](https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation)

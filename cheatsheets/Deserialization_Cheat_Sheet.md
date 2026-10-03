@@ -54,6 +54,8 @@ print(yaml.load(document))
 
 ### Java
 
+For historical research on Java deserialization and defensive allowlisting, see [Java Deserialization Attacks — German OWASP Day 2016](../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf).
+
 The following techniques are all good for preventing attacks against deserialization against [Java's Serializable format](https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html).
 
 Implementation advice:
@@ -357,30 +359,6 @@ If the application knows before deserialization which messages will need to be p
 
 ## References
 
-- [Java-Deserialization-Cheat-Sheet](https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet)
-- [Deserialization of untrusted data](https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data)
-- [Java Deserialization Attacks - German OWASP Day 2016](../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf)
-- [AppSecCali 2015 - Marshalling Pickles](http://www.slideshare.net/frohoff1/appseccali-2015-marshalling-pickles)
-- [FoxGlove Security - Vulnerability Announcement](http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#websphere)
-- [Java deserialization cheat sheet aimed at pen testers](https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet)
-- [A proof-of-concept tool for generating payloads that exploit unsafe Java object deserialization.](https://github.com/frohoff/ysoserial)
-- [Java De-serialization toolkits](https://github.com/brianwrf/hackUtils)
-- [Java de-serialization tool](https://github.com/frohoff/ysoserial)
-- [Burp Suite extension](https://github.com/federicodotta/Java-Deserialization-Scanner/releases)
-- [Java secure deserialization library](https://github.com/ikkisoft/SerialKiller)
-- [Serianalyzer is a static bytecode analyzer for deserialization](https://github.com/mbechler/serianalyzer)
-- [Payload generator](https://github.com/mbechler/marshalsec)
-- [Android Java Deserialization Vulnerability Tester](https://github.com/modzero/modjoda)
-- Burp Suite Extension
-    - [JavaSerialKiller](https://github.com/NetSPI/JavaSerialKiller)
-    - [Java Deserialization Scanner](https://github.com/federicodotta/Java-Deserialization-Scanner)
-    - [Burp-ysoserial](https://github.com/summitt/burp-ysoserial)
-    - [SuperSerial](https://github.com/DirectDefense/SuperSerial)
-    - [SuperSerial-Active](https://github.com/DirectDefense/SuperSerial-Active)
-- .Net
-    - [Alvaro Muñoz: .NET Serialization: Detecting and defending vulnerable endpoints](https://www.youtube.com/watch?v=qDoBlLwREYk)
-    - [James Forshaw - Black Hat USA 2012 - Are You My Type? Breaking .net Sandboxes Through Serialization](https://www.youtube.com/watch?v=Xfbu-pQ1tIc)
-    - [Jonathan Birch BlueHat v17 - Dangerous Contents - Securing .Net Deserialization](https://www.youtube.com/watch?v=oxlD8VWWHE8)
-    - [Alvaro Muñoz & Oleksandr Mirosh - Friday the 13th: Attacking JSON - AppSecUSA 2017](https://www.youtube.com/watch?v=NqHsaVhlxAQ)
-- Python
-    - [Exploiting Insecure Deserialization bugs found in the Wild (Python Pickles)](https://macrosec.tech/index.php/2021/06/29/exploiting-insecuredeserialization-bugs-found-in-the-wild-python-pickles.)
+- [Oracle Java 17: Serialization Filtering](https://docs.oracle.com/en/java/javase/17/core/serialization-filtering1.html)
+- [Microsoft: Deserialization Risks in Use of BinaryFormatter and Related Types](https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide)
+- [Python: pickle Security Warning](https://docs.python.org/3/library/pickle.html)

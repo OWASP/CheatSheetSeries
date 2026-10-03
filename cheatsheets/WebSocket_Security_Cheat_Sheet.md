@@ -69,6 +69,8 @@ Check that your WAF supports WebSocket traffic inspection beyond the initial han
 
 ### Authentication and Authorization
 
+For general identity and session controls, see the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) and [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
+
 WebSockets don't have built-in authentication. Browsers include cookies in WebSocket handshake requests, making WebSocket applications vulnerable to Cross-Site WebSocket Hijacking (CSWSH).
 
 CSWSH allows attackers to hijack authenticated WebSocket connections from malicious websites:
@@ -191,7 +193,7 @@ const message = JSON.parse(data);
 // const message = eval('(' + data + ')');
 ```
 
-See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md) for more details.
+See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md), [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), and [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md) for more details.
 
 ### Service Tunneling Risks
 
@@ -256,8 +258,5 @@ Regularly update WebSocket libraries and monitor security advisories. Past versi
 
 ## References
 
-- [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
-- [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md)
-- [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md)
-- [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md)
+- [RFC 6455: The WebSocket Protocol](https://datatracker.ietf.org/doc/html/rfc6455)
 - [CWE-1385: Missing Origin Validation in WebSockets](https://cwe.mitre.org/data/definitions/1385.html)
