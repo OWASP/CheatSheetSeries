@@ -159,4 +159,4 @@ PyCharm Security – [Pycharm-security](https://pycharm-security.readthedocs.io/
 
 - [Security in Django](https://docs.djangoproject.com/en/stable/topics/security/)
 - [Django REST framework permissions](https://www.django-rest-framework.org/api-guide/permissions/)
-- [Django security policies](https://docs.djangoproject.com/en/stable/internals/security/)
+- [Django REST framework settings](https://www.django-rest-framework.org/api-guide/settings/)
