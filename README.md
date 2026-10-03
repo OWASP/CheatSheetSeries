@@ -17,11 +17,6 @@ In order to read the cheat sheets and **reference** them, use the project [offic
 - [Jakub Maćkowski](https://github.com/mackowski)
 - [Gabriel Corona](https://github.com/randomstuff)
 
-### Core team
-
-- [Kevin W. Wall](https://github.com/kwwall)
-- [Shlomo Zalman Heigh](https://github.com/szh)
-
 ## Chat With Us
 
 We're easy to find on Slack:
