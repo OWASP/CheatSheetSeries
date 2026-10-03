@@ -4,6 +4,8 @@
 
 This cheat sheet provides Django REST Framework security advice for developers. It is a basic set of guidelines for Django REST developers who need to secure fundamental aspects of an application.
 
+For the original analysis of unsafe deserialization and serializer field selection, see sections 4.4.1.12 and 4.4.1.18 of [Django REST Framework (DRF) Secure Code Guidelines](https://openaccess.uoc.edu/handle/10609/147246).
+
 ## What is a view in Django?
 
 A view in Django is a Python class or a function that returns a web response after it receives a web request. That response can be in simple HTTP, an HTML template, or an HTTP redirect request that redirects a user to another page.
