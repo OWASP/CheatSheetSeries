@@ -3072,6 +3072,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5401,6 +5412,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5426,7 +5448,7 @@
 <p>The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures. There are many security challenges need to be addressed in the application design and implementation phases. In order to address some security challenges it is necessity to collect security-specific information on application architecture.
 The goal of this article is to provide a concrete proposal of approach to collect microservice-based architecture information to securing application.</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the <a href="https://github.com/OWASP/ASVS">OWASP Application Security Verification Standard Project</a> under the section <a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">V1 "Architecture, Design and Threat Modeling Requirements"</a>):</p>
+<p>During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the <a href="https://github.com/OWASP/ASVS">OWASP Application Security Verification Standard Project</a> under the section <a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">V1 "Architecture, Design and Threat Modeling Requirements"</a>):</p>
 <ol>
 <li>Threat modeling and enforcement of the principle of least privilege:<ul>
 <li>What scopes or API keys does microservice minimally need to access other microservice APIs?</li>
@@ -5699,7 +5721,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.2</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.2</a></li>
 <li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md">OWASP Attack Surface Analysis Cheat Sheet</a></li>
 </ul>
 <h4 id="data-leakage-analysis">Data leakage analysis<a class="headerlink" href="#data-leakage-analysis" title="Permanent link">&para;</a></h4>
@@ -5714,7 +5736,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects_1">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_1" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.2</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.2</a></li>
 <li><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A3-Sensitive_Data_Exposure">OWASP Top 10-2017 A3-Sensitive Data Exposure</a></li>
 </ul>
 <h4 id="applications-trust-boundaries-components-and-significant-data-flows-justification">Application's trust boundaries, components, and significant data flows justification<a class="headerlink" href="#applications-trust-boundaries-components-and-significant-data-flows-justification" title="Permanent link">&para;</a></h4>
@@ -5731,7 +5753,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects_2">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_2" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.4</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.4</a></li>
 </ul>
 <h4 id="analysis-of-the-applications-high-level-architecture">Analysis of the application's high-level architecture<a class="headerlink" href="#analysis-of-the-applications-high-level-architecture" title="Permanent link">&para;</a></h4>
 <h5 id="implementation-tips_3">Implementation tips<a class="headerlink" href="#implementation-tips_3" title="Permanent link">&para;</a></h5>
@@ -5744,14 +5766,14 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects_3">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_3" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.5</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.5</a></li>
 </ul>
 <h4 id="implementation-of-centralized-security-controls-verification">Implementation of centralized security controls verification<a class="headerlink" href="#implementation-of-centralized-security-controls-verification" title="Permanent link">&para;</a></h4>
 <h5 id="implementation-tips_4">Implementation tips<a class="headerlink" href="#implementation-tips_4" title="Permanent link">&para;</a></h5>
 <p>To verify implementation of centralized, simple (economy of design), vetted, secure, and reusable security controls to avoid duplicate, missing, ineffective, or insecure controls analyze data collected under the section "Identify and describe infrastructure services".</p>
 <h5 id="mapping-to-owasp-projects_4">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_4" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.6</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.6</a></li>
 </ul>
 <h4 id="enforcement-of-the-principle-of-least-privilege">Enforcement of the principle of least privilege<a class="headerlink" href="#enforcement-of-the-principle-of-least-privilege" title="Permanent link">&para;</a></h4>
 <h5 id="implementation-tips_5">Implementation tips<a class="headerlink" href="#implementation-tips_5" title="Permanent link">&para;</a></h5>
@@ -5764,7 +5786,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects_5">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_5" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.4.3</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.4.3</a></li>
 </ul>
 <h4 id="sensitive-data-identification-and-classification">Sensitive data identification and classification<a class="headerlink" href="#sensitive-data-identification-and-classification" title="Permanent link">&para;</a></h4>
 <h5 id="implementation-tips_6">Implementation tips<a class="headerlink" href="#implementation-tips_6" title="Permanent link">&para;</a></h5>
@@ -5775,7 +5797,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects_6">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_6" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.8.1</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.8.1</a></li>
 </ul>
 <h4 id="application-components-businesssecurity-functions-verification">Application components business/security functions verification<a class="headerlink" href="#application-components-businesssecurity-functions-verification" title="Permanent link">&para;</a></h4>
 <h5 id="implementation-tips_7">Implementation tips<a class="headerlink" href="#implementation-tips_7" title="Permanent link">&para;</a></h5>
@@ -5786,7 +5808,12 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects_7">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_7" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.11.1</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.11.1</a></li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204.pdf">NIST SP 800-204: Security Strategies for Microservices-based Application Systems</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS 4: Architecture, Design and Threat Modeling</a></li>
 </ul>
 
 

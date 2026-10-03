@@ -1791,10 +1791,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references-and-further-reading" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References and Further Reading
+        References
       
     </span>
   </a>
@@ -4809,10 +4809,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references-and-further-reading" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References and Further Reading
+        References
       
     </span>
   </a>
@@ -5104,7 +5104,7 @@ docker<span class="w"> </span>service<span class="w"> </span>create<span class="
 <span class="w">    </span><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_secret</span>
 </code></pre></div>
-<p>While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> for more information.</p>
+<p>While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> and <a href="Kubernetes_Security_Cheat_Sheet.html">Kubernetes Security Cheat Sheet</a> for more information.</p>
 <h3 id="rule-13-enhance-supply-chain-security">RULE #13 - Enhance Supply Chain Security<a class="headerlink" href="#rule-13-enhance-supply-chain-security" title="Permanent link">&para;</a></h3>
 <p>Building on the principles in <a href="#rule-9---integrate-container-scanning-tools-into-your-cicd-pipeline">Rule #9</a>, enhancing supply chain security involves implementing additional measures to secure the entire lifecycle of container images from creation to deployment. Some of the key practices include:</p>
 <ul>
@@ -5121,15 +5121,11 @@ docker<span class="w"> </span>service<span class="w"> </span>create<span class="
 <li>Rootless Containers: The fork-exec model facilitates Podman's ability to run containers without requiring root privileges. When a non-root user initiates a container start, Podman forks and execs under the user's permissions.</li>
 <li>SELinux Integration: Podman is built to work with SELinux, which provides an additional layer of security by enforcing mandatory access controls on containers and their interactions with the host system.</li>
 </ol>
-<h2 id="references-and-further-reading">References and Further Reading<a class="headerlink" href="#references-and-further-reading" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/OWASP/Docker-Security">OWASP Docker Top 10</a>
-<a href="https://docs.docker.com/develop/security-best-practices/">Docker Security Best Practices</a>
-<a href="https://docs.docker.com/engine/security/">Docker Engine Security</a>
-<a href="Kubernetes_Security_Cheat_Sheet.html">Kubernetes Security Cheat Sheet</a>
-<a href="https://slsa.dev/">SLSA - Supply Chain Levels for Software Artifacts</a>
-<a href="https://sigstore.dev/">Sigstore</a>
-<a href="https://docs.docker.com/build/attestations/">Docker Build Attestation</a>
-<a href="https://docs.docker.com/engine/security/trust/">Docker Content Trust</a></p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.docker.com/engine/security/">Docker Engine Security</a></li>
+<li><a href="https://docs.docker.com/build/metadata/attestations/">Docker Build Attestations</a></li>
+</ul>
 
 
 

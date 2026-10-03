@@ -6036,6 +6036,7 @@
 <li>Assume that because retrieved content was safe, the generated output is also safe. Models can combine benign inputs into harmful outputs.</li>
 </ul>
 <h2 id="section-10-tool-invocation-and-agent-safety">Section 10: Tool Invocation and Agent Safety<a class="headerlink" href="#section-10-tool-invocation-and-agent-safety" title="Permanent link">&para;</a></h2>
+<p>For MCP message integrity and tool boundaries, see the <a href="MCP_Security_Cheat_Sheet.html">MCP Security Cheat Sheet</a>.</p>
 <p>Modern RAG is rarely standalone -- it is embedded in agent systems where retrieved content influences model decisions which trigger tool calls. This is where theoretical RAG risks become real-world damage: retrieved content influences the model, the model invokes a tool, and the tool takes an irreversible action.</p>
 <h3 id="do_11">Do<a class="headerlink" href="#do_11" title="Permanent link">&para;</a></h3>
 <ul>
@@ -6139,12 +6140,9 @@
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/OWASP/AISVS">OWASP AISVS C08</a> -- Memory, Embeddings and Vector Database Security</li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html">OWASP MCP Security Cheat Sheet</a> -- Section 7: Message-Level Integrity</li>
-<li><a href="https://genai.owasp.org/">OWASP Top 10 for LLM Applications</a> -- LLM06: Sensitive Information Disclosure, LLM01: Prompt Injection</li>
-<li><a href="https://genai.owasp.org/">OWASP Top 10 for Agentic Applications</a> -- ASI06: Memory and Context Poisoning (see the GenAI project site for the latest URL)</li>
-<li><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a> -- Governance, mapping, measuring, and managing AI risks</li>
-<li>Song &amp; Raghunathan (2020), "Information Leakage in Embedding Models" -- Background on embedding inversion attacks and differential privacy</li>
+<li><a href="https://github.com/OWASP/AISVS/blob/main/1.0/en/0x10-C08-Memory-Embeddings-and-Vector-Database.md">OWASP AISVS C08: Memory, Embeddings and Vector Database Security</a></li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf">NIST AI 100-2e2025: Adversarial Machine Learning — A Taxonomy and Terminology of Attacks and Mitigations</a></li>
+<li><a href="https://arxiv.org/abs/2004.00053">Song and Raghunathan: Information Leakage in Embedding Models</a></li>
 </ul>
 
 

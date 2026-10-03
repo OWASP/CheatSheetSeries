@@ -5082,7 +5082,7 @@
 <h1 id="email-validation-and-verification-in-identity-systems-cheat-sheet">Email Validation and Verification in Identity Systems Cheat Sheet<a class="headerlink" href="#email-validation-and-verification-in-identity-systems-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Email addresses are widely used as primary identifiers in authentication and account recovery workflows. Improper handling of email validation, normalization, and verification can lead to account takeover, user enumeration, and identity confusion.</p>
-<p>This cheat sheet provides guidance on securely handling email addresses within identity systems.</p>
+<p>This cheat sheet provides guidance on securely handling email addresses within identity systems. See the <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a> for broader identity controls.</p>
 <h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Safely treat email as an identifier</li>
@@ -5153,7 +5153,7 @@
 <li>Do not activate accounts before verification is completed</li>
 </ul>
 <h2 id="password-reset-flows">Password Reset Flows<a class="headerlink" href="#password-reset-flows" title="Permanent link">&para;</a></h2>
-<p>Password reset is a high-risk operation.</p>
+<p>Password reset is a high-risk operation. See the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> for recovery controls.</p>
 <h3 id="recommendations_4">Recommendations<a class="headerlink" href="#recommendations_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Use single-use, time-limited tokens</li>
@@ -5207,9 +5207,9 @@
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://datatracker.ietf.org/doc/html/rfc5322">RFC 5322</a></li>
-<li><a href="Authentication_Cheat_Sheet.html">OWASP Authentication Cheat Sheet</a></li>
-<li><a href="Forgot_Password_Cheat_Sheet.html">OWASP Forgot Password Cheat Sheet</a></li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc5322">RFC 5322: Internet Message Format</a></li>
+<li><a href="https://www.rfc-editor.org/info/rfc5321/">RFC 5321: Simple Mail Transfer Protocol</a></li>
+<li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html">NIST SP 800-63B-4: Authentication and Authenticator Management</a></li>
 </ul>
 
 

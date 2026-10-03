@@ -3554,6 +3554,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5021,6 +5032,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5198,30 +5220,11 @@ switch(PARAM):
 <h3 id="allow-list-input-validation">Allow-list Input Validation<a class="headerlink" href="#allow-list-input-validation" title="Permanent link">&para;</a></h3>
 <p>In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>. Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.</p>
 <h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
-<p><strong>SQL Injection Attack Cheat Sheets</strong>:</p>
-<p>The following articles describe how to exploit different kinds of SQL injection vulnerabilities on various platforms (that this article was created to help you avoid):</p>
+<p>See the <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a> for language-specific examples of prepared statements and stored procedures.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/">SQL Injection Cheat Sheet</a></li>
-<li>Bypassing WAF's with SQLi - <a href="https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF">SQL Injection Bypassing WAF</a></li>
-</ul>
-<p><strong>Description of SQL Injection Vulnerabilities</strong>:</p>
-<ul>
-<li>OWASP article on <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> Vulnerabilities</li>
-<li>OWASP article on <a href="https://owasp.org/www-community/attacks/Blind_SQL_Injection">Blind_SQL_Injection</a> Vulnerabilities</li>
-</ul>
-<p><strong>How to Avoid SQL Injection Vulnerabilities</strong>:</p>
-<ul>
-<li><a href="https://github.com/OWASP/DevGuide">OWASP Developers Guide</a> article on how to avoid SQL injection vulnerabilities</li>
-<li>OWASP Cheat Sheet that provides <a href="Query_Parameterization_Cheat_Sheet.html">numerous language specific examples of parameterized queries using both Prepared Statements and Stored Procedures</a></li>
-<li><a href="http://bobby-tables.com/">The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures</a></li>
-</ul>
-<p><strong>How to Review Code for SQL Injection Vulnerabilities</strong>:</p>
-<ul>
-<li><a href="https://wiki.owasp.org/index.php/Category:OWASP_Code_Review_Project">OWASP Code Review Guide</a> article on how to <a href="https://wiki.owasp.org/index.php/Reviewing_Code_for_SQL_Injection">Review Code for SQL Injection</a> Vulnerabilities</li>
-</ul>
-<p><strong>How to Test for SQL Injection Vulnerabilities</strong>:</p>
-<ul>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide">OWASP Testing Guide</a> article on how to <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection.html">Test for SQL Injection</a> Vulnerabilities</li>
+<li><a href="https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html">Oracle JDBC: Using Prepared Statements</a></li>
+<li><a href="https://www.php.net/pdo.prepared-statements">PHP PDO: Prepared Statements and Stored Procedures</a></li>
 </ul>
 
 

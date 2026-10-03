@@ -4665,7 +4665,7 @@
 </ul>
 <h2 id="dangerous-language-surface">Dangerous Language Surface<a class="headerlink" href="#dangerous-language-surface" title="Permanent link">&para;</a></h2>
 <h3 id="eval-function-and-with"><code>eval</code>, <code>Function</code>, and <code>with</code><a class="headerlink" href="#eval-function-and-with" title="Permanent link">&para;</a></h3>
-<p>Never build code from strings. <code>eval</code> and <code>new Function</code> execute arbitrary code with the current runtime's privileges, so any attacker-influenced input reaching them is code injection (<a href="https://cwe.mitre.org/data/definitions/94.html">CWE-94</a>). In browsers, <code>setTimeout</code> and <code>setInterval</code> with a string argument compile it the same way through implied <code>eval</code>.</p>
+<p>Never build code from strings. See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval">MDN's eval guidance</a>. <code>eval</code> and <code>new Function</code> execute arbitrary code with the current runtime's privileges, so any attacker-influenced input reaching them is code injection (<a href="https://cwe.mitre.org/data/definitions/94.html">CWE-94</a>). In browsers, <code>setTimeout</code> and <code>setInterval</code> with a string argument compile it the same way through implied <code>eval</code>.</p>
 <ul>
 <li>Parse data with <code>JSON.parse</code>, never <code>eval</code>.</li>
 <li>Replace dynamic dispatch with static maps of functions instead of constructing calls from names.</li>
@@ -4683,7 +4683,7 @@
 <li>For the attack mechanics and detection tooling, see the <a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">OWASP ReDoS guidance</a>; use linear-time patterns as the primary control and input-length caps as defense in depth.</li>
 </ul>
 <h3 id="strict-mode">Strict Mode<a class="headerlink" href="#strict-mode" title="Permanent link">&para;</a></h3>
-<p>Ship ES modules (strict by default) or declare <code>'use strict'</code>. Strict mode turns silent mistakes into errors: assignment to undeclared variables throws, <code>this</code> stays <code>undefined</code> in plain functions instead of becoming the global object, and <code>with</code> is rejected. It does not fix injection, XSS, or prototype pollution; treat it as hygiene, not a security boundary.</p>
+<p>Ship ES modules (strict by default) or declare <code>'use strict'</code>, as described in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">MDN's strict mode documentation</a>. Strict mode turns silent mistakes into errors: assignment to undeclared variables throws, <code>this</code> stays <code>undefined</code> in plain functions instead of becoming the global object, and <code>with</code> is rejected. It does not fix injection, XSS, or prototype pollution; treat it as hygiene, not a security boundary.</p>
 <h2 id="object-and-property-safety-including-prototype-pollution">Object and Property Safety (Including Prototype Pollution)<a class="headerlink" href="#object-and-property-safety-including-prototype-pollution" title="Permanent link">&para;</a></h2>
 <p>Prototype pollution (<a href="https://cwe.mitre.org/data/definitions/1321.html">CWE-1321</a>) occurs when attacker-controlled keys such as <code>__proto__</code>, <code>constructor</code>, or <code>prototype</code> reach a recursive merge or path setter and modify an object's prototype. This can alter the behavior of objects that inherit from that prototype. These are the JavaScript-specific essentials only; the full protection guidance lives in the dedicated <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html">Prototype Pollution Prevention Cheat Sheet</a>.</p>
 <ul>
@@ -4717,19 +4717,9 @@
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Issue <a href="https://github.com/OWASP/CheatSheetSeries/issues/2337">#2337</a> - proposal and discussion.</li>
-<li><a href="Nodejs_Security_Cheat_Sheet.html">Node.js Security Cheat Sheet</a>.</li>
-<li><a href="Third_Party_Javascript_Management_Cheat_Sheet.html">Third Party JavaScript Management Cheat Sheet</a>.</li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval">MDN: eval</a> - why direct and indirect <code>eval</code> differ and why both are discouraged.</li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">MDN: Strict mode</a> - what strict mode changes.</li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN: window.postMessage</a> - origin and source validation.</li>
-<li><a href="https://w3c.github.io/trusted-types/dist/spec/">W3C Trusted Types</a> - sink allowlisting for DOM injection.</li>
-<li><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown">TypeScript Handbook: <code>unknown</code></a> - <code>any</code> versus <code>unknown</code>, and why <code>unknown</code> must be narrowed.</li>
-<li><a href="https://w3c.github.io/webappsec-csp/#can-compile-strings">CSP: <code>EnsureCSPDoesNotBlockStringCompilation</code></a> - what a policy must contain to actually block string-to-code compilation.</li>
-<li><a href="https://cwe.mitre.org/data/definitions/79.html">CWE-79: Cross-site Scripting</a>.</li>
-<li><a href="https://cwe.mitre.org/data/definitions/94.html">CWE-94: Code Injection</a>.</li>
-<li><a href="https://cwe.mitre.org/data/definitions/1321.html">CWE-1321: Prototype Pollution</a>.</li>
-<li><a href="https://cwe.mitre.org/data/definitions/1333.html">CWE-1333: ReDoS</a>.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN: Window.postMessage</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown">TypeScript Handbook: unknown</a></li>
+<li><a href="https://w3c.github.io/trusted-types/dist/spec/">W3C Trusted Types</a></li>
 </ul>
 
 

@@ -5077,6 +5077,7 @@
 <li>Uses of <code>jsonpickle</code> with <code>encode</code> or <code>store</code> methods.</li>
 </ol>
 <h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
+<p>For historical research on Java deserialization and defensive allowlisting, see <a href="../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf">Java Deserialization Attacks — German OWASP Day 2016</a>.</p>
 <p>The following techniques are all good for preventing attacks against deserialization against <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">Java's Serializable format</a>.</p>
 <p>Implementation advice:</p>
 <ul>
@@ -5315,39 +5316,9 @@ deserialization of any class (<a href="https://bitbucket.org/snakeyaml/snakeyaml
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet">Java-Deserialization-Cheat-Sheet</a></li>
-<li><a href="https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data">Deserialization of untrusted data</a></li>
-<li><a href="../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf">Java Deserialization Attacks - German OWASP Day 2016</a></li>
-<li><a href="http://www.slideshare.net/frohoff1/appseccali-2015-marshalling-pickles">AppSecCali 2015 - Marshalling Pickles</a></li>
-<li><a href="http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/#websphere">FoxGlove Security - Vulnerability Announcement</a></li>
-<li><a href="https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet">Java deserialization cheat sheet aimed at pen testers</a></li>
-<li><a href="https://github.com/frohoff/ysoserial">A proof-of-concept tool for generating payloads that exploit unsafe Java object deserialization.</a></li>
-<li><a href="https://github.com/brianwrf/hackUtils">Java De-serialization toolkits</a></li>
-<li><a href="https://github.com/frohoff/ysoserial">Java de-serialization tool</a></li>
-<li><a href="https://github.com/federicodotta/Java-Deserialization-Scanner/releases">Burp Suite extension</a></li>
-<li><a href="https://github.com/ikkisoft/SerialKiller">Java secure deserialization library</a></li>
-<li><a href="https://github.com/mbechler/serianalyzer">Serianalyzer is a static bytecode analyzer for deserialization</a></li>
-<li><a href="https://github.com/mbechler/marshalsec">Payload generator</a></li>
-<li><a href="https://github.com/modzero/modjoda">Android Java Deserialization Vulnerability Tester</a></li>
-<li>Burp Suite Extension<ul>
-<li><a href="https://github.com/NetSPI/JavaSerialKiller">JavaSerialKiller</a></li>
-<li><a href="https://github.com/federicodotta/Java-Deserialization-Scanner">Java Deserialization Scanner</a></li>
-<li><a href="https://github.com/summitt/burp-ysoserial">Burp-ysoserial</a></li>
-<li><a href="https://github.com/DirectDefense/SuperSerial">SuperSerial</a></li>
-<li><a href="https://github.com/DirectDefense/SuperSerial-Active">SuperSerial-Active</a></li>
-</ul>
-</li>
-<li>.Net<ul>
-<li><a href="https://www.youtube.com/watch?v=qDoBlLwREYk">Alvaro Muñoz: .NET Serialization: Detecting and defending vulnerable endpoints</a></li>
-<li><a href="https://www.youtube.com/watch?v=Xfbu-pQ1tIc">James Forshaw - Black Hat USA 2012 - Are You My Type? Breaking .net Sandboxes Through Serialization</a></li>
-<li><a href="https://www.youtube.com/watch?v=oxlD8VWWHE8">Jonathan Birch BlueHat v17 - Dangerous Contents - Securing .Net Deserialization</a></li>
-<li><a href="https://www.youtube.com/watch?v=NqHsaVhlxAQ">Alvaro Muñoz &amp; Oleksandr Mirosh - Friday the 13th: Attacking JSON - AppSecUSA 2017</a></li>
-</ul>
-</li>
-<li>Python<ul>
-<li><a href="https://macrosec.tech/index.php/2021/06/29/exploiting-insecuredeserialization-bugs-found-in-the-wild-python-pickles.">Exploiting Insecure Deserialization bugs found in the Wild (Python Pickles)</a></li>
-</ul>
-</li>
+<li><a href="https://docs.oracle.com/en/java/javase/17/core/serialization-filtering1.html">Oracle Java 17: Serialization Filtering</a></li>
+<li><a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide">Microsoft: Deserialization Risks in Use of BinaryFormatter and Related Types</a></li>
+<li><a href="https://docs.python.org/3/library/pickle.html">Python: pickle Security Warning</a></li>
 </ul>
 
 

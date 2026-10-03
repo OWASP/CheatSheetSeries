@@ -6017,7 +6017,7 @@
 <li><em>NOTE:</em> For more information on configuring this header please see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy">Mozilla Referrer-Policy</a>.</li>
 </ul>
 <h3 id="content-type">Content-Type<a class="headerlink" href="#content-type" title="Permanent link">&para;</a></h3>
-<p>The <code>Content-Type</code> representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending). If not set correctly, the resource (e.g. an image) may be interpreted as HTML, making XSS vulnerabilities possible.</p>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type"><code>Content-Type</code></a> representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending). If not set correctly, the resource (e.g. an image) may be interpreted as HTML, making XSS vulnerabilities possible.</p>
 <p>Although it is recommended to always set the <code>Content-Type</code> header correctly, it would constitute a vulnerability only if the content is intended to be rendered by the client and the resource is untrusted (provided or modified by a user).</p>
 <h4 id="recommendation_4">Recommendation<a class="headerlink" href="#recommendation_4" title="Permanent link">&para;</a></h4>
 <blockquote>
@@ -6042,14 +6042,14 @@
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">MDN - Cache-Control</a></li>
 </ul>
 <h3 id="set-cookie">Set-Cookie<a class="headerlink" href="#set-cookie" title="Permanent link">&para;</a></h3>
-<p>The <code>Set-Cookie</code> HTTP response header is used to send a cookie from the server to the user agent, so the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.</p>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie"><code>Set-Cookie</code></a> HTTP response header is used to send a cookie from the server to the user agent, so the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.</p>
 <p>This is not a security header per se, but its security attributes are crucial.</p>
 <h4 id="recommendation_6">Recommendation<a class="headerlink" href="#recommendation_6" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Please read <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies">Session Management Cheat Sheet</a> for a detailed explanation on cookie configuration options.</li>
 </ul>
 <h3 id="strict-transport-security-hsts">Strict-Transport-Security (HSTS)<a class="headerlink" href="#strict-transport-security-hsts" title="Permanent link">&para;</a></h3>
-<p>The HTTP <code>Strict-Transport-Security</code> response header (often abbreviated as HSTS) instructs browsers to only access the website using HTTPS, even if a user attempts to connect over HTTP.</p>
+<p>The HTTP <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security"><code>Strict-Transport-Security</code></a> response header (often abbreviated as HSTS) instructs browsers to only access the website using HTTPS, even if a user attempts to connect over HTTP.</p>
 <h4 id="recommendation_7">Recommendation<a class="headerlink" href="#recommendation_7" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><code>Strict-Transport-Security: max-age=63072000; includeSubDomains; preload</code></p>
@@ -6057,6 +6057,7 @@
 <ul>
 <li><em>NOTE</em>: Read carefully how this header works before using it. If the HSTS header is misconfigured or if there is a problem with the SSL/TLS certificate being used, legitimate users might be unable to access the website. For example, if the HSTS header is set to a very long duration and the SSL/TLS certificate expires or is revoked, legitimate users might be unable to access the website until the HSTS header duration has expired.</li>
 </ul>
+<p>See the <a href="https://hstspreload.org/">HSTS preload requirements</a> before requesting preload inclusion.</p>
 <p>Please check out <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security Cheat Sheet</a> for more information.</p>
 <h3 id="expect-ct">Expect-CT ❌<a class="headerlink" href="#expect-ct" title="Permanent link">&para;</a></h3>
 <p>The <code>Expect-CT</code> header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.</p>
@@ -6091,7 +6092,7 @@
 <p><code>Cross-Origin-Opener-Policy: same-origin</code></p>
 </blockquote>
 <h3 id="cross-origin-embedder-policy-coep">Cross-Origin-Embedder-Policy (COEP)<a class="headerlink" href="#cross-origin-embedder-policy-coep" title="Permanent link">&para;</a></h3>
-<p>The HTTP <code>Cross-Origin-Embedder-Policy</code> (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using <a href="#cross-origin-resource-policy-corp">CORP</a> or CORS).</p>
+<p>The HTTP <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy"><code>Cross-Origin-Embedder-Policy</code></a> (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using <a href="#cross-origin-resource-policy-corp">CORP</a> or CORS).</p>
 <ul>
 <li><em>NOTE</em>: Enabling this will block cross-origin resources not configured correctly from loading.</li>
 </ul>
@@ -6105,7 +6106,7 @@
 <li><code>&lt;img src="https://thirdparty.com/img.png" crossorigin&gt;</code></li>
 </ul>
 <h3 id="cross-origin-resource-policy-corp">Cross-Origin-Resource-Policy (CORP)<a class="headerlink" href="#cross-origin-resource-policy-corp" title="Permanent link">&para;</a></h3>
-<p>The <code>Cross-Origin-Resource-Policy</code> (CORP) header allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like <a href="https://meltdownattack.com/">Spectre</a>, as it allows browsers to block a given response before it enters an attacker's process.</p>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy"><code>Cross-Origin-Resource-Policy</code></a> (CORP) header allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like <a href="https://meltdownattack.com/">Spectre</a>, as it allows browsers to block a given response before it enters an attacker's process.</p>
 <h4 id="recommendation_13">Recommendation<a class="headerlink" href="#recommendation_13" title="Permanent link">&para;</a></h4>
 <p>Limit current resource loading to the site and sub-domains only.</p>
 <blockquote>
@@ -6123,7 +6124,7 @@
 <li><em>NOTE</em>: This example is disabling geolocation, camera, and microphone for all domains.</li>
 </ul>
 <h3 id="server">Server<a class="headerlink" href="#server" title="Permanent link">&para;</a></h3>
-<p>The <code>Server</code> header describes the software used by the origin server that handled the request — that is, the server that generated the response.</p>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server"><code>Server</code></a> header describes the software used by the origin server that handled the request — that is, the server that generated the response.</p>
 <p>This is not a security header, but how it is used is relevant for security.</p>
 <h4 id="recommendation_15">Recommendation<a class="headerlink" href="#recommendation_15" title="Permanent link">&para;</a></h4>
 <p>Remove this header or set non-informative values.</p>
@@ -6262,22 +6263,9 @@ If you do not control links on your website, you might want to set <code>off</co
 Online tools usually test the homepage of the given address. But SmartScanner scans the whole website. So, you can make sure all of your web pages have the right HTTP Headers in place.</p>
 <h2 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition">MDN Web Docs: Content-Disposition</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">MDN Web Docs: Content-Type</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options">MDN Web Docs: X-Content-Type-Options</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options">MDN Web Docs: X-Frame-Options</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection">MDN Web Docs: X-XSS-Protection</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">MDN Web Docs: Strict-Transport-Security</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT">MDN Web Docs: Expect-CT</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie">MDN Web Docs: Set-Cookie</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy">MDN Web Docs: Cross-Origin-Opener-Policy</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy">MDN Web Docs: Cross-Origin-Resource-Policy</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy">MDN Web Docs: Cross-Origin-Embedder-Policy</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server">MDN Web Docs: Server</a></li>
-<li><a href="https://hstspreload.org/">HSTS Preload List</a></li>
-<li><a href="https://content-security-policy.com/">Content Security Policy Reference</a></li>
-<li><a href="https://resourcepolicy.fyi/">Resource Policy Reference</a></li>
-<li><a href="https://owasp.org/www-project-secure-headers/">OWASP Secure Headers Project</a></li>
+<li><a href="https://owasp.github.io/www-project-secure-headers/response-headers/">OWASP Secure Headers Project: Response Headers</a></li>
 </ul>
 
 

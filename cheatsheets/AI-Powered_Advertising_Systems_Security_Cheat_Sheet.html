@@ -4576,7 +4576,7 @@
 </tbody>
 </table>
 <h2 id="2-protect-the-corpus-training-and-retrieval">2. Protect the Corpus (Training and Retrieval)<a class="headerlink" href="#2-protect-the-corpus-training-and-retrieval" title="Permanent link">&para;</a></h2>
-<p>Training data and Retrieval-Augmented Generation (RAG) indexes are written by adversarial participants at line rate.</p>
+<p>Training data and Retrieval-Augmented Generation (RAG) indexes are written by adversarial participants at line rate. See the <a href="RAG_Security_Cheat_Sheet.html">RAG Security Cheat Sheet</a> for pipeline controls.</p>
 <ul>
 <li>Sign dataset manifests and RAG chunks with an offline key using the <a href="https://github.com/in-toto/attestation">in-toto attestation framework</a> wrapped in a <a href="https://github.com/secure-systems-lab/dsse">DSSE envelope</a>, the same envelope shape <a href="https://github.com/sigstore/model-transparency">sigstore model-transparency</a> uses for model artifacts.</li>
 <li>Tag every training row and RAG chunk with a participant-provenance tag so scoped-rollback ("exclude every row from partner X during window Y") is answerable without re-hashing.</li>
@@ -4619,6 +4619,7 @@
 </tbody>
 </table>
 <h2 id="3-protect-inference-and-the-prompt-boundary">3. Protect Inference and the Prompt Boundary<a class="headerlink" href="#3-protect-inference-and-the-prompt-boundary" title="Permanent link">&para;</a></h2>
+<p>For general input-boundary controls, see the <a href="LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">LLM Prompt Injection Prevention Cheat Sheet</a>.</p>
 <p>Every scoring surface exposed to a paying partner is a queryable oracle (<a href="https://arxiv.org/abs/1609.02943">Tramèr et al. 2016</a>).</p>
 <ul>
 <li>Return tier labels, not raw scores, on partner-visible outputs. This raises extraction cost rather than preventing it. <a href="https://arxiv.org/abs/1609.02943">Tramèr et al. 2016</a> Section 6 extracts models matching the target on over 99 percent of inputs from labels alone, needing up to 100 times more queries, so the query budget is the control. Money fields required by the protocol (OpenRTB <code>seatbid.bid.price</code>, search ad-rank, retail sponsored-rank) must stay precise; guard those with query budgets and probing detection.</li>
@@ -4714,6 +4715,7 @@
 </tbody>
 </table>
 <h2 id="5-protect-the-ai-supply-chain-and-generative-provenance">5. Protect the AI Supply Chain and Generative Provenance<a class="headerlink" href="#5-protect-the-ai-supply-chain-and-generative-provenance" title="Permanent link">&para;</a></h2>
+<p>For model lifecycle controls, see the <a href="Secure_AI_Model_Ops_Cheat_Sheet.html">Secure AI Model Ops Cheat Sheet</a>.</p>
 <p>Model artifacts, feature stores, RAG indexes, and generative endpoints are reachable through paths that never cross the ad-serving surface.</p>
 <ul>
 <li>Sign every model artifact with <a href="https://openssf.org/projects/model-signing/">OpenSSF Model Signing</a>. Block deploy on signature failure. Pair signing with a trigger-scan behavioral gate for externally sourced classifiers.</li>
@@ -4763,19 +4765,12 @@
 </tbody>
 </table>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<p><strong>Generic mechanics defer to:</strong></p>
 <ul>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">OWASP LLM Prompt Injection Prevention Cheat Sheet</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/RAG_Security_Cheat_Sheet.html">OWASP RAG Security Cheat Sheet</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html">OWASP AI Agent Security Cheat Sheet</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Secure_AI_Model_Ops_Cheat_Sheet.html">OWASP Secure AI/ML Model Ops Cheat Sheet</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html">OWASP JSON Web Token Cheat Sheet</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">OWASP Content Security Policy Cheat Sheet</a></li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf">NIST AI 100-2e2025: Adversarial Machine Learning — A Taxonomy and Terminology of Attacks and Mitigations</a></li>
+<li><a href="https://www.rfc-editor.org/info/rfc9421/">RFC 9421: HTTP Message Signatures</a></li>
+<li><a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_hard_bindings">C2PA 2.4 Technical Specification: Hard Bindings</a></li>
+<li><a href="https://arxiv.org/abs/1610.05820">Shokri et al.: Membership Inference Attacks Against Machine Learning Models</a></li>
 </ul>
-<p><strong>Regulatory anchors:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">GDPR</a> Art. 4(4), 9, 17; <a href="https://eur-lex.europa.eu/eli/reg/2022/2065/oj">DSA</a> Art. 26, 28; <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">EU AI Act</a> Art. 3(60), 6, 50; <a href="https://www.law.cornell.edu/cfr/text/16/part-312">COPPA</a>; <a href="https://cppa.ca.gov/pdf/20260101_ccpa_statute.pdf#page=8">California CPRA</a>; <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62022CJ0604">CJEU C-604/22</a>.</p>
-<p><strong>Standards:</strong> <a href="https://www.rfc-editor.org/info/rfc9421/">RFC 9421</a> HTTP Message Signatures; <a href="https://www.rfc-editor.org/rfc/rfc9530.html">RFC 9530</a> Digest Fields; <a href="https://www.rfc-editor.org/rfc/rfc9525.html">RFC 9525</a> service identity in TLS; <a href="https://spec.c2pa.org/specifications/specifications/2.4/specs/C2PA_Specification.html#_hard_bindings">C2PA 2.4</a>; <a href="https://openssf.org/projects/model-signing/">OpenSSF Model Signing</a>; <a href="https://cyclonedx.org/capabilities/mlbom/">CycloneDX ML-BOM</a>; <a href="https://atlas.mitre.org/">MITRE ATLAS</a>; <a href="https://csrc.nist.gov/pubs/ai/100/2/e2025/final">NIST AI 100-2e2025</a>; <a href="https://github.com/InteractiveAdvertisingBureau/openrtb2.x">OpenRTB</a>; <a href="https://iabtechlab.com/standards/vast/">VAST</a> and <a href="https://iabtechlab.com/simid/">SIMID</a>; <a href="https://mediaratingcouncil.org/standards-and-guidelines">MRC IVT Guidelines</a>.</p>
-<p><strong>Adversarial ML anchors:</strong> <a href="https://arxiv.org/abs/1609.02943">Tramèr 2016</a> (extraction); <a href="https://arxiv.org/abs/1610.05820">Shokri 2017</a> (membership inference); <a href="https://arxiv.org/abs/2306.13213">Qi 2023</a> (visual jailbreaks); <a href="https://arxiv.org/abs/2401.05566">Hubinger 2024</a> (sleeper agents); <a href="https://arxiv.org/abs/2402.07179">Hu 2024</a> (GGPP retrieval steering).</p>
-<p><strong>OWASP LLM Top 10 (2025):</strong> <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">LLM01</a>, <a href="https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/">LLM02</a>, <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">LLM06</a>, <a href="https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/">LLM07</a>, <a href="https://genai.owasp.org/llmrisk/llm102025-unbounded-consumption/">LLM10</a>.</p>
 
 
 

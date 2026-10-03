@@ -4941,7 +4941,7 @@
 <p>Analytics tags send information back to a marketing information database; information like what user action was just taken, browser metadata, location information, page metadata etc. The rationale for analytics tags is to provide data from the user's browser DOM to the vendor for some form of marketing analysis. This data can be anything available in the DOM. The data is used for user navigation and clickstream analysis, identification of the user to determine further content to display etc., and various marketing analysis functions.</p>
 <p>The term <strong>host</strong> refers to the original site the user goes to, such as a shopping or news site, that contains or retrieves and executes third party JavaScript tag for marketing analysis of the user actions.</p>
 <h2 id="major-risks">Major risks<a class="headerlink" href="#major-risks" title="Permanent link">&para;</a></h2>
-<p>The single greatest risk is a compromise of the third party JavaScript server, and the injection of malicious JavaScript into the original tag JavaScript. This has happened in 2018 and likely earlier.</p>
+<p>The single greatest risk is a compromise of the third party JavaScript server, and the injection of malicious JavaScript into the original tag JavaScript. See <a href="https://www.globenewswire.com/fr/news-release/2018/07/10/1535094/0/en/RiskIQ-Finds-Ticketmaster-Breach-Part-of-Massive-Credit-Card-Skimming-Campaign-Affecting-over-800-e-Commerce-Sites.html">RiskIQ's report of the 2018 Ticketmaster incident</a>.</p>
 <p>The invocation of third-party JS code in a web application requires consideration for 3 risks in particular:</p>
 <ol>
 <li>The loss of control over changes to the client application,</li>
@@ -4952,6 +4952,7 @@
 <p>This risk arises from the fact that there is usually no guarantee that the code hosted at the third-party will remain the same as seen from the developers and testers: new features may be pushed in the third-party code at any time, thus potentially breaking the interface or data-flows and exposing the availability of your application to its users/customers.</p>
 <p>Typical defenses include, but are not restricted to: in-house script mirroring (to prevent alterations by 3rd parties), sub-resource integrity (to enable browser-level interception) and secure transmission of the third-party code (to prevent modifications while in-transit). See below for more details.</p>
 <h3 id="risk-2-execution-of-arbitrary-code-on-client-systems">Risk 2: Execution of arbitrary code on client systems<a class="headerlink" href="#risk-2-execution-of-arbitrary-code-on-client-systems" title="Permanent link">&para;</a></h3>
+<p>For original research on vulnerable third-party integrations, see <a href="https://randywestergren.com/widespread-xss-vulnerabilities-ad-network-code-affecting-top-tier-publishers-retailers/">Randy Westergren's ad-network findings</a>.</p>
 <p>This risk arises from the fact that third-party JavaScript code is rarely reviewed by the invoking party prior to its integration into a website/application. As the client reaches the hosting website/application, this third-party code gets executed, thus granting the third-party the exact same privileges that were granted to the user (similar to <a href="https://owasp.org/www-community/attacks/xss/">XSS attacks</a>).</p>
 <p>Any testing performed prior to entering production loses some of its validity, including <code>AST testing</code> (<a href="https://www.veracode.com/security/interactive-application-security-testing-iast">IAST</a>, <a href="https://www.veracode.com/sites/default/files/pdf/resources/whitepapers/what-is-rasp.pdf">RAST</a>, <a href="https://www.sqreen.com/web-application-security/what-is-sast">SAST</a>, <a href="https://www.sqreen.com/web-application-security/what-is-dast">DAST</a>, etc.).</p>
 <p>While it is widely accepted that the probability of having rogue code intentionally injected by the third-party is low, there are still cases of malicious injections in third-party code after the organization's servers were compromised (ex: Yahoo, January 2014).</p>
@@ -4964,6 +4965,7 @@
 <li>...</li>
 </ul>
 <h3 id="risk-3-disclosure-of-sensitive-information-to-3rd-parties">Risk 3: Disclosure of sensitive information to 3rd parties<a class="headerlink" href="#risk-3-disclosure-of-sensitive-information-to-3rd-parties" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.clearskysec.com/magecart/">ClearSky's original Magecart investigation</a> documents payment-data theft through injected JavaScript.</p>
 <p>When a third-party script is invoked in a website/application, the browser directly contacts the third-party servers. By default, the request includes all regular HTTP headers. In addition to the originating IP address of the browser, the third-party also obtains other data such as the referrer (in non-https requests) and any cookies previously set by the third-party, for example when visiting another organization's website that also invokes the third-party script.</p>
 <p>In many cases, this grants the third-party primary access to information on the organization's users / customers / clients. Additionally, if the third-party is sharing the script with other entities, it also collects secondary data from all the other entities, thus knowing who the organization's visitors are but also what other organizations they interact with.</p>
 <p>A typical case is the current situation with major news/press sites that invoke third-party code (typically for ad engines, statistics and JavaScript APIs): any user visiting any of these websites also informs the 3rd parties of the visit. In many cases, the third-party also gets to know what news articles each individual user is clicking specifically (leakage occurs through the HTTP referrer field) and thus can establish deeper personality profiles.</p>
@@ -5147,11 +5149,9 @@
 <p>The MarSecOps requirements to implement technical controls at the speed of change that marketing wants or without a significant number of dedicated resources, can make data layer and Subresource Integrity controls impractical.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://randywestergren.com/widespread-xss-vulnerabilities-ad-network-code-affecting-top-tier-publishers-retailers/">Widespread XSS Vulnerabilities in Ad Network Code Affecting Top Tier Publishers, Retailers</a>.</li>
-<li><a href="https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/">Inside and Beyond Ticketmaster: The Many Breaches of Magecart</a>.</li>
-<li><a href="https://www.clearskysec.com/magecart/">Magecart – a malicious infrastructure for stealing payment details from online shops</a>.</li>
-<li><a href="https://www.riskiq.com/blog/labs/magecart-keylogger-injection/">Compromised E-commerce Sites Lead to "Magecart"</a></li>
-<li><a href="https://www.zdnet.com/article/inbenta-blamed-for-ticketmaster-breach-says-other-sites-not-affected/">Inbenta, blamed for Ticketmaster breach, admits it was hacked</a>.</li>
+<li><a href="https://www.w3.org/TR/sri/">W3C: Subresource Integrity</a></li>
+<li><a href="https://www.w3.org/TR/CSP3/">W3C: Content Security Policy Level 3</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN: Window.postMessage()</a></li>
 </ul>
 
 

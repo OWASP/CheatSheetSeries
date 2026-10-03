@@ -5180,6 +5180,7 @@
 <h1 id="fastapi-security-cheat-sheet">FastAPI Security Cheat Sheet<a class="headerlink" href="#fastapi-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>FastAPI is a Python web framework using the Asynchronous Server Gateway Interface (ASGI). This cheat sheet covers authentication dependencies, input and output models, and deployment controls, building on the <a href="https://fastapi.tiangolo.com/tutorial/security/">FastAPI security documentation</a>.</p>
+<p>See the <a href="REST_Security_Cheat_Sheet.html">REST Security Cheat Sheet</a> for general API controls.</p>
 <p>Code snippets illustrate individual controls, not complete applications. They assume an existing FastAPI application and application-specific user and persistence functions; adapt and test them for your application.</p>
 <h2 id="dependency-injection-and-access-control">Dependency Injection and Access Control<a class="headerlink" href="#dependency-injection-and-access-control" title="Permanent link">&para;</a></h2>
 <p>Use FastAPI's dependency injection system, through <code>Depends()</code>, to enforce authentication and authorization consistently. Missing or insufficient dependencies can leave sensitive operations accessible to unauthorized users. See the <a href="https://fastapi.tiangolo.com/tutorial/dependencies/">FastAPI dependencies tutorial</a>.</p>
@@ -5304,8 +5305,8 @@
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://owasp.github.io/API-Security/editions/2023/en/0x00-header/">OWASP API Security Top 10 (2023)</a></li>
-<li><a href="REST_Security_Cheat_Sheet.html">OWASP REST Security Cheat Sheet</a></li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/dependencies/">FastAPI: Dependencies</a></li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/">FastAPI: OAuth2 with JWT tokens</a></li>
 </ul>
 
 

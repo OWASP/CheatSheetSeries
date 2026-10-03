@@ -4847,6 +4847,7 @@
 <p>However, multi-tenancy introduces critical security challenges: a single vulnerability can expose all tenants' data, misconfigurations can leak data across tenant boundaries, and resource contention can impact availability.</p>
 <p>This cheat sheet provides best practices to secure multi-tenant applications, ensure tenant isolation, and prevent cross-tenant attacks.</p>
 <h2 id="key-risks">Key Risks<a class="headerlink" href="#key-risks" title="Permanent link">&para;</a></h2>
+<p>Use the <a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a> for baseline access controls.</p>
 <ul>
 <li><strong>Cross-Tenant Data Leakage</strong>: Bugs or misconfigurations exposing one tenant's data to another.</li>
 <li><strong>Tenant Impersonation</strong>: Attackers gaining access to another tenant's context or resources.</li>
@@ -5019,10 +5020,9 @@
 <li>Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.</li>
 <li>Commit or roll back before returning the connection to the pool.</li>
 </ul>
+<p>SQLAlchemy <a href="https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile">deprecated <code>QueryEvents.before_compile</code></a> because it does not cover ORM-level attribute and relationship loads. The current <a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria">recommended pattern</a> combines <code>SessionEvents.do_orm_execute</code> with <code>with_loader_criteria</code> so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.</p>
 <details>
 <summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
-
-SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
 
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">event</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">text</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">declared_attr</span><span class="p">,</span> <span class="n">with_loader_criteria</span>
@@ -5891,14 +5891,9 @@ SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://owasp.org/www-project-cloud-tenant-isolation/">OWASP Cloud Tenant Isolation</a></li>
-<li><a href="Authorization_Cheat_Sheet.html">OWASP Authorization Cheat Sheet</a></li>
-<li><a href="https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/tenant-isolation.html">AWS SaaS Tenant Isolation Strategies</a></li>
-<li><a href="https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html">AWS SaaS Performance Efficiency Guidance</a></li>
-<li><a href="https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging">Microsoft Multitenant Messaging Guidance</a></li>
-<li><a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">PostgreSQL Row Security Policies</a></li>
-<li><a href="https://www.postgresql.org/docs/current/sql-set.html">PostgreSQL SET</a></li>
-<li><a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria">SQLAlchemy ORM Query Events</a></li>
+<li><a href="https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/tenant-isolation.html">AWS SaaS Lens: Tenant Isolation</a></li>
+<li><a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html">PostgreSQL: Row Security Policies</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging">Microsoft: Messaging in Multitenant Solutions</a></li>
 </ul>
 
 

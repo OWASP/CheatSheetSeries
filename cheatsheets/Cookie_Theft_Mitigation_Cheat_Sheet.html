@@ -4563,6 +4563,7 @@
 <p>In other words, it is not possible to say with certainty that it is an attack just because the IP-Geo has changed. This means that there are <strong>False Positives</strong> (it seems to be an attack, but it is not) in this detection method.</p>
 <p>At the same time, even if the IP-Geo does not change, there is also the possibility that the attacker is attacking from within the same country. This means that this detection method has <strong>False Negatives</strong> (it seems not to be an attack, but it is).</p>
 <h3 id="cookie-theft-detection">Cookie Theft Detection<a class="headerlink" href="#cookie-theft-detection" title="Permanent link">&para;</a></h3>
+<p>For an implementation case study, see <a href="https://slack.engineering/catching-compromised-cookies/">Slack's compromised-cookie detection design</a>.</p>
 <p>By storing session information on the server side when a session is established, it is possible to detect session hijacking when that information is significantly changed.</p>
 <p>The following are the core information that should be saved.</p>
 <ul>
@@ -4636,8 +4637,8 @@
 <p>This specification is still in the drafting stages, but it's considered that it will be possible to solve the Cookie Theft Attack in the future.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://slack.engineering/catching-compromised-cookies/">Catching Compromised Cookies - Engineering at Slack</a></li>
-<li><a href="https://github.com/WICG/dbsc/blob/main/README.md">Device Bound Session Credentials explainer</a></li>
+<li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html">NIST SP 800-63B-4: Authentication and Authenticator Management</a></li>
+<li><a href="https://github.com/w3c/webappsec-dbsc/blob/main/README.md">Device Bound Session Credentials explainer</a></li>
 </ul>
 
 

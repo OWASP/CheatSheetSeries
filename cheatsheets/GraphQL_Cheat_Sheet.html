@@ -2111,52 +2111,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-resources" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Other Resources
+        References
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Other Resources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#graphql-security-best-practices-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GraphQL Security Best Practices + Documentation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#more-on-graphql-attacks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        More on GraphQL Attacks
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4984,52 +4945,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#other-resources" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Other Resources
+        References
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Other Resources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#graphql-security-best-practices-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GraphQL Security Best Practices + Documentation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#more-on-graphql-attacks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        More on GraphQL Attacks
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -5077,6 +4999,7 @@
 <li>Abuse of insecure default configurations</li>
 </ul>
 <h2 id="best-practices-and-recommendations">Best Practices and Recommendations<a class="headerlink" href="#best-practices-and-recommendations" title="Permanent link">&para;</a></h2>
+<p>For the original security analysis, see <a href="https://blog.doyensec.com/2018/05/17/graphql-security-overview.html">Doyensec's GraphQL security overview</a>.</p>
 <h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
 <p>Adding strict input validation can help prevent against injection and DoS. The main design for GraphQL is that the user supplies one or more identifiers and the backend has a number of data fetchers making HTTP, DB, or other calls using the given identifiers. This means that user input will be included in HTTP requests, DB queries, or other requests/calls which provides opportunity for injection that could lead to various injection attacks or DoS.</p>
 <p>See the OWASP Cheat Sheets on <a href="Input_Validation_Cheat_Sheet.html">Input Validation</a> and general <a href="Injection_Prevention_Cheat_Sheet.html">injection prevention</a> for full details to best perform input validation and prevent injection.</p>
@@ -5203,7 +5126,7 @@
 <h3 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h3>
 <p>To ensure that a GraphQL API has proper access control, do the following:</p>
 <ul>
-<li>Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with <a href="Authorization_Cheat_Sheet.html#rbac">RBAC</a> or other access control mechanisms.<ul>
+<li>Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with <a href="Authorization_Cheat_Sheet.html#prefer-attribute-and-relationship-based-access-control-over-rbac">RBAC</a> or other access control mechanisms.<ul>
 <li>This will prevent <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">IDOR</a> issues, including both <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md">BOLA</a> and <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md">BFLA</a>.</li>
 </ul>
 </li>
@@ -5217,8 +5140,10 @@
 <p>It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md">Broken Object Level Authentication</a>, also known as <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">IDOR</a>.</p>
 <p>It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are <code>node</code> or <code>nodes</code> or both fields in a query object, and these can be used to access objects directly by <code>ID</code>. You can check whether your schema has these fields by running this on the command-line (assuming that <code>schema.json</code> contains your GraphQL schema): <code>cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node</code>. Removing these fields from the schema should disable the functionality, but you should always apply proper authorization checks to verify the caller has access to the object they are requesting.</p>
 <h4 id="query-access-data-fetching">Query Access (Data Fetching)<a class="headerlink" href="#query-access-data-fetching" title="Permanent link">&para;</a></h4>
+<p><a href="https://labs.detectify.com/crowdsource-community/graphql-abuse-bypass-account-level-permissions-through-parameter-smuggling/">Detectify's New Relic disclosure</a> illustrates why field access must respect account permissions.</p>
 <p>As part of a GraphQL API there will be various data fields that can be returned. One thing to consider is if you want different levels of access around these fields. For example, you may only want certain consumers to be able to fetch certain data fields rather than allowing all consumers to be able to retrieve all available fields. This can be done by adding a check in the code to ensure that the requester should be able to read a field they are trying to fetch.</p>
 <h4 id="mutation-access-data-manipulation">Mutation Access (Data Manipulation)<a class="headerlink" href="#mutation-access-data-manipulation" title="Permanent link">&para;</a></h4>
+<p>For an original case study, see <a href="https://www.pentestpartners.com/security-blog/pwning-wordpress-graphql/">Pen Test Partners' WordPress GraphQL disclosure</a>.</p>
 <p>GraphQL supports mutation, or manipulation of data, in addition to its most common use case of data fetching. If an API implements/allows mutation then there may need to be access controls put in place to restrict which consumers, if any, can modify data through the API. Setups that require mutation access control would include APIs where only read access is intended for requesters or where only certain parties should be able to modify certain fields.</p>
 <h3 id="batching-attacks">Batching Attacks<a class="headerlink" href="#batching-attacks" title="Permanent link">&para;</a></h3>
 <p>GraphQL supports batching requests, also known as <a href="https://www.apollographql.com/blog/query-batching-in-apollo-63acfd859862/">query batching</a>. This lets callers to either batch multiple queries or batch requests for multiple object instances in a single network call, which allows for what is called a <a href="https://lab.wallarm.com/graphql-batching-attack/">batching attack</a>. This is a form of brute force attack, specific to GraphQL, that usually allows for faster and less detectable exploits. Here is the most common way to do query batching:</p>
@@ -5296,29 +5221,10 @@ If your API is publicly consumed, you might want to consider disabling it for no
 </code></pre></div>
 <h4 id="dont-return-excessive-errors">Don't Return Excessive Errors<a class="headerlink" href="#dont-return-excessive-errors" title="Permanent link">&para;</a></h4>
 <p>GraphQL APIs in production shouldn't return stack traces or be in debug mode. Doing this is implementation specific, but using middleware is one popular way to have better control over errors the server returns. To <a href="https://www.apollographql.com/docs/apollo-server/data/errors/">disable excessive errors</a> with Apollo Server, either pass <code>debug: false</code> to the Apollo Server constructor or set the <code>NODE_ENV</code> environment variable to 'production' or 'test'. However, if you would like to log the stack trace internally without returning it to the user see <a href="https://www.apollographql.com/docs/apollo-server/data/errors/#masking-and-logging-errors">here</a> for how to mask and log errors so they are available to the developers but not callers of the API.</p>
-<h2 id="other-resources">Other Resources<a class="headerlink" href="#other-resources" title="Permanent link">&para;</a></h2>
-<h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/doyensec/inql">InQL Scanner</a> - Security scanner for GraphQL. Particularly useful for generating queries and mutations automatically from given schema and then feeding them to scanner.</li>
-<li><a href="https://github.com/graphql/graphiql">GraphiQL</a> - Schema/object exploration</li>
-<li><a href="https://github.com/APIs-guru/graphql-voyager">GraphQL Voyager</a> - Schema/object exploration</li>
-</ul>
-<h3 id="graphql-security-best-practices-documentation">GraphQL Security Best Practices + Documentation<a class="headerlink" href="#graphql-security-best-practices-documentation" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://medium.com/swlh/protecting-your-graphql-api-from-security-vulnerabilities-e8afdfa6fbe4">Protecting GraphQL APIs from security threats - blog post</a></li>
-<li><a href="https://nordicapis.com/security-points-to-consider-before-implementing-graphql/">https://nordicapis.com/security-points-to-consider-before-implementing-graphql/</a></li>
-<li><a href="https://developer.github.com/v4/guides/resource-limitations/">Limiting resource usage to prevent DoS (timeouts, throttling, complexity management, depth limiting, etc.)</a></li>
-<li><a href="https://www.abhaybhargav.com/from-the-trenches-diy-security-perspectives-of-graphql/">GraphQL Security Perspectives</a></li>
-<li><a href="https://planes.studio/blog/how-to-survive-a-penetration-test-as-a-graph-ql-developer">A developer's security perspective of GraphQL</a></li>
-</ul>
-<h3 id="more-on-graphql-attacks">More on GraphQL Attacks<a class="headerlink" href="#more-on-graphql-attacks" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://blog.doyensec.com/2018/05/17/graphql-security-overview.html">Some common GraphQL attacks + attacker mindset</a></li>
-<li><a href="https://labs.detectify.com/2018/03/14/graphql-abuse/">Bypassing permissions by smuggling parameters</a></li>
-<li><a href="https://medium.com/bugbountywriteup/graphql-voyager-as-a-tool-for-security-testing-86d3c634bcd9">Bug bounty writeup about GraphQL</a></li>
-<li><a href="https://www.youtube.com/watch?v=NPDp7GHmMa0">Security talk about Abusing GraphQL</a></li>
-<li><a href="https://vulners.com/myhack58/MYHACK58:62201994269">Real</a> <a href="https://www.pentestpartners.com/security-blog/pwning-wordpress-graphql/">world</a> <a href="https://hackerone.com/reports/419883">attacks</a> <a href="https://vulners.com/hackerone/H1:435066">against</a> <a href="https://www.jonbottarini.com/2018/01/02/abusing-internal-api-to-achieve-idor-in-new-relic/">GraphQL</a> <a href="https://about.gitlab.com/blog/2019/07/03/security-release-gitlab-12-dot-0-dot-3-released/#authorization-issues-in-graphql">in the</a> past</li>
-<li><a href="https://raz0r.name/articles/looting-graphql-endpoints-for-fun-and-profit/">Attack examples against GraphQL</a></li>
+<li><a href="https://graphql.org/learn/security/">GraphQL: Security</a></li>
+<li><a href="https://graphql.org/learn/authorization/">GraphQL: Authorization</a></li>
 </ul>
 
 

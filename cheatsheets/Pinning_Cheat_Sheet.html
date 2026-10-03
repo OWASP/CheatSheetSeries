@@ -4833,6 +4833,7 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>The Pinning Cheat Sheet is a technical guide to implementing certificate and public key pinning as discussed by Jeffrey Walton at the Virginia chapter's presentation <a href="https://wiki.owasp.org/images/8/8f/Securing-Wireless-Channels-in-the-Mobile-Space.ppt">Securing Wireless Channels in the Mobile Space</a>. This guide is focused on providing clear, simple, actionable guidance for securing the channel in a hostile environment where actors could be malicious and the conference of trust a liability.</p>
 <h2 id="whats-the-problem">What's the problem<a class="headerlink" href="#whats-the-problem" title="Permanent link">&para;</a></h2>
+<p>For baseline TLS configuration, see the <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>.</p>
 <p>Users, developers, and applications expect security on their communication channels, but some channels may not meet this expectation. Channels built using well known protocols like SSL, and TLS can be vulnerable to Man-in-the-Middle (MITM) attacks if certificate-based trusts are misused. Malicious attacks come in two forms:</p>
 <ol>
 <li>An attacker is able to acquire a rogue digital certificate from a trusted certificate authority (CA) in the name of the victim site;</li>
@@ -4947,19 +4948,8 @@
 <p>Otherwise, you can validate certificates by yourself using <a href="https://electronjs.org/docs/api/session#sessetcertificateverifyprocproc">ses.setCertificateVerifyProc(proc)</a>.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>OWASP <a href="https://owasp.org/www-community/Injection_Theory">Injection Theory</a></li>
-<li>OWASP <a href="https://wiki.owasp.org/index.php/Data_Validation">Data Validation</a></li>
-<li>OWASP <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a></li>
-<li>OWASP <a href="https://github.com/OWASP/owasp-mstg">Mobile Security Testing Guide</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc1421.txt">RFC 1421 (PEM Encoding)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc4648.txt">RFC 4648 (Base16, Base32, and Base64 Encodings)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc5280.txt">RFC 5280 (Internet X.509, PKIX)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc3279.txt">RFC 3279 (PKI, X509 Algorithms and CRL Profiles)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc4055.txt">RFC 4055 (PKI, X509 Additional Algorithms and CRL Profiles)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc2246.txt">RFC 2246 (TLS 1.0)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc4346.txt">RFC 4346 (TLS 1.1)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc5246.txt">RFC 5246 (TLS 1.2)</a></li>
-<li>IETF <a href="https://tools.ietf.org/html/rfc8017">PKCS #1: RSA Cryptography Specifications Version 2.2</a></li>
+<li><a href="https://developer.android.com/privacy-and-security/security-config">Android: Network security configuration</a></li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc5280">RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile</a></li>
 </ul>
 
 

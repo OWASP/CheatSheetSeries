@@ -3958,10 +3958,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references-and-future-reading" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References and future reading
+        References
       
     </span>
   </a>
@@ -4831,10 +4831,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references-and-future-reading" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References and future reading
+        References
       
     </span>
   </a>
@@ -4891,7 +4891,7 @@
 <li>The users having a positive experience</li>
 </ul>
 <p>For example, if an SMS message confirms significant transaction data, the developer could respond by returning the target account, amount and type of transfer to the user. However, it is inconvenient for an unconnected <a href="https://en.wikipedia.org/wiki/Chip_Authentication_Program">CAP reader</a> to require users to enter that data. In such cases, the developer should probably return the minimum amount of significant transaction data (e.g. partial target account number and amount) for confirmation.</p>
-<p>In general, the user must verify all significant transaction data as a part of the transaction authorization process. If a transaction process requires a user to enter transaction data into an external device, the user should be prompted to confirm a specific value in the transaction (e.g. a target account number). The absence of a meaningful prompt could be easily abused by social engineering techniques and malware as described below in Section 1.4. Also, for more detailed discussion of input overloading problems, see <a href="http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf">here</a>.</p>
+<p>In general, the user must verify all significant transaction data as a part of the transaction authorization process. If a transaction process requires a user to enter transaction data into an external device, the user should be prompted to confirm a specific value in the transaction (e.g. a target account number). The absence of a meaningful prompt could be easily abused by social engineering techniques and malware as described below in Section 1.4. Also, for more detailed discussion of input overloading problems, see <a href="https://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf">here</a>.</p>
 <h3 id="12-change-of-authorization-token-should-be-authorized-using-the-current-authorization-token">1.2 Change of authorization token should be authorized using the current authorization token<a class="headerlink" href="#12-change-of-authorization-token-should-be-authorized-using-the-current-authorization-token" title="Permanent link">&para;</a></h3>
 <p>If a user can use the application interface to change the authorization token, they should be able to authorize the operation with their current authorization credentials (as is the case with <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/04-Authentication_Testing/09-Testing_for_Weak_Password_Change_or_Reset_Functionalities.html">password change procedure</a>). For example: when a user changes a phone number for SMS codes, an authorization SMS code should be sent to the current phone number.</p>
 <h3 id="13-change-of-authorization-method-should-be-authorized-using-the-current-authorization-method">1.3 Change of authorization method should be authorized using the current authorization method<a class="headerlink" href="#13-change-of-authorization-method-should-be-authorized-using-the-current-authorization-method" title="Permanent link">&para;</a></h3>
@@ -4974,6 +4974,7 @@
 <h3 id="210-authorization-credentials-should-be-unique-for-every-operation">2.10 Authorization credentials should be unique for every operation<a class="headerlink" href="#210-authorization-credentials-should-be-unique-for-every-operation" title="Permanent link">&para;</a></h3>
 <p>To prevent multiple replay attacks, each set of authorization credentials should be unique for every operation. These credentials can be generated with different methods depending on the mechanism. For example: developers can use a timestamp, a sequence number, or a random value in signed transaction data or as a part of a challenge.</p>
 <h2 id="remarks">Remarks<a class="headerlink" href="#remarks" title="Permanent link">&para;</a></h2>
+<p>For the original implementation recommendations, see <a href="https://www.slideshare.net/slideshow/ebanking-transaction-authorization-appsec-eu-2015-amsterdam/48703604">Wojciech Dworakowski's AppSec EU 2015 presentation</a>. For banking threat-modeling context, see <a href="https://www.slideshare.net/slideshow/owasp-app-seceu2011version1/8333111">Morana and Ucedavelez's AppSec EU 2011 presentation</a>.</p>
 <p>Here are some other issues that should be considered while implementing transaction authorizations, but are beyond the scope of this cheat sheet:</p>
 <ul>
 <li>Which transactions should be authorized? All transactions or only some of them? Each application is different and an application owner should decide if all transactions should be authorized or only some of them. The developers should consider risk analysis, risk exposition of given application, and other safeguards implemented in an application.</li>
@@ -4983,18 +4984,11 @@
 <li><strong>There are some anti-malware solutions that protect against such threats but these solutions <a href="http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html">cannot be 100% effective</a> and should be used only as an additional layer of protection.</strong></li>
 <li>Protecting your signing keys with a second factor such as passwords, biometrics, etc. or leveraging secure elements (TEE, TPM, Smart card).</li>
 </ul>
-<h2 id="references-and-future-reading">References and future reading<a class="headerlink" href="#references-and-future-reading" title="Permanent link">&para;</a></h2>
-<p>References and future reading:</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Wojciech Dworakowski: <a href="http://www.slideshare.net/wojdwo/ebanking-transaction-authorization-appsec-eu-2015-amsterdam">E-banking transaction authorization - possible vulnerabilities, security verification and best practices for implementation. Presentation from AppSec EU 2015</a>.</li>
-<li>Saar Drimer, Steven J. Murdoch, and Ross Anderson: <a href="http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf">Optimised to Fail - Card Readers for Online Banking</a>.</li>
-<li>Jakub Kałużny, Mateusz Olejarka: <a href="http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html">Script-based Malware Detection in Online Banking Security Overview</a>.</li>
-<li><a href="https://twofactorauth.org/">List of websites and whether or not they support 2FA</a>.</li>
-<li>Laerte Peotta, Marcelo D. Holtz, Bernardo M. David, Flavio G. Deus, Rafael Timóteo de Sousa Jr: <a href="http://airccse.org/journal/jcsit/0211ijcsit13.pdf">A Formal Classification Of Internet Banking Attacks and Vulnerabilities</a>.</li>
-<li>Marco Morana, Tony Ucedavelez: <a href="https://owasp.org/www-pdf-archive/Marco_Morana_and_Tony_UV_-_Threat_Modeling_of_Banking_Malware.pdf">Threat Modeling of Banking Malware-Based Attacks</a>.</li>
-<li>OWASP <a href="https://wiki.owasp.org/index.php/OWASP_Anti-Malware_-_Knowledge_Base">Anti-Malware - Knowledge Base</a>.</li>
-<li>OWASP <a href="https://wiki.owasp.org/index.php/OWASP_Anti-Malware_Project_-_Awareness_Program">Anti-Malware Project - Awareness Program</a>.</li>
-<li>Arjan Blom , Gerhard de Koning Gans , Erik Poll , Joeri de Ruiter , and Roel Verdult: <a href="http://www.cs.ru.nl/~rverdult/Designed_to_Fail_A_USB-Connected_Reader_for_Online_Banking-NORDSEC_2012.pdf">Designed to Fail - A USB-Connected Reader for Online Banking</a></li>
+<li><a href="https://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf">Drimer, Murdoch and Anderson: Optimised to Fail — Card Readers for Online Banking</a></li>
+<li><a href="https://airccse.org/journal/jcsit/0211ijcsit13.pdf">Peotta et al.: A Formal Classification of Internet Banking Attacks and Vulnerabilities</a></li>
+<li><a href="https://www.cs.ru.nl/~rverdult/Designed_to_Fail_A_USB-Connected_Reader_for_Online_Banking-NORDSEC_2012.pdf">Blom et al.: Designed to Fail — A USB-Connected Reader for Online Banking</a></li>
 </ul>
 
 

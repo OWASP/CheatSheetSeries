@@ -5043,7 +5043,7 @@ For more information refer to <a href="OS_Command_Injection_Defense_Cheat_Sheet.
 <h3 id="file-upload-vulnerabilities">File Upload Vulnerabilities<a class="headerlink" href="#file-upload-vulnerabilities" title="Permanent link">&para;</a></h3>
 <p>File upload vulnerabilities are security issues that arise when an application does not properly validate and handle file uploads. It's important to ensure that file uploads are handled securely to prevent various types of attacks. Here are some general guidelines to help mitigate this issue in Symfony:</p>
 <h4 id="validate-file-type-and-size">Validate file type and size<a class="headerlink" href="#validate-file-type-and-size" title="Permanent link">&para;</a></h4>
-<p>Always validate the file type on the server side to ensure that only allowed file types are accepted.
+<p>Always validate the file type on the server side to ensure that only allowed file types are accepted. See the <a href="https://symfony.com/doc/current/validation.html">Symfony validation documentation</a>.
 Also, consider limiting the size of uploaded files to prevent denial-of-service attacks and to ensure that your server has enough resources to handle the uploads.</p>
 <p>Example with PHP Attributes:</p>
 <div class="highlight"><pre><span></span><code><span class="x">use Symfony\Component\HttpFoundation\File\UploadedFile;</span>
@@ -5300,9 +5300,7 @@ It's very important to note that if there are environment variables and secrets 
 <ul>
 <li><a href="https://symfony.com/doc/current/security/csrf.html">Symfony CSRF Documentation</a></li>
 <li><a href="https://symfony.com/doc/current/templates.html">Symfony Twig Documentation</a></li>
-<li><a href="https://symfony.com/doc/current/validation.html">Symfony Validation Documentation</a></li>
-<li><a href="https://symfony.com/doc/current/the-fast-track/en/29-performance.html">Symfony Blackfire Documentation</a></li>
-<li><a href="https://www.doctrine-project.org/projects/doctrine-dbal/en/3.7/reference/security.html">Doctrine Security Documentation</a></li>
+<li><a href="https://www.doctrine-project.org/projects/doctrine-dbal/en/4.5/reference/security.html">Doctrine Security Documentation</a></li>
 </ul>
 
 

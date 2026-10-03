@@ -4912,6 +4912,7 @@
 <p>Webhooks are HTTP callbacks: a <strong>publisher</strong> pushes event notifications to a URL that a <strong>subscriber</strong> registered, so both parties run HTTP servers (<a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#what-are-webhooks">Standard Webhooks specification</a>). A webhook endpoint is therefore a public, unauthenticated <code>POST</code> handler unless you add the authentication yourself, and a publisher that delivers to user-supplied URLs is an outbound request engine that attackers will try to aim at your internal network.</p>
 <p>This cheat sheet covers both sides. It shows how to prove that a delivery is genuine, stop replays and duplicate processing, keep signing secrets safe, and prevent the publisher from being used as a proxy.</p>
 <h2 id="threat-model-summary">Threat Model Summary<a class="headerlink" href="#threat-model-summary" title="Permanent link">&para;</a></h2>
+<p>Use the <a href="Threat_Modeling_Cheat_Sheet.html">Threat Modeling Cheat Sheet</a> to assess the integration’s trust boundaries.</p>
 <p>Forged deliveries are the headline threat: without verification, an attacker can post fake events that trigger order fulfillment, account access, or record changes, as <a href="https://docs.stripe.com/webhooks#verify-events">Stripe's webhook documentation</a> warns. Signature verification is the first control to implement; the others close the gaps it leaves.</p>
 <table>
 <thead>
@@ -5042,6 +5043,7 @@
 <li>Do not assume in-order delivery. Fetch the object's current state from the publisher's API when an event may be stale. Use a sequence or version field only when the publisher documents its ordering guarantees; timestamps alone may not establish order (<a href="https://docs.stripe.com/webhooks#event-ordering">Stripe: Event ordering</a>).</li>
 </ul>
 <h3 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
+<p>For broader resource controls, see the <a href="Denial_of_Service_Cheat_Sheet.html">Denial of Service Cheat Sheet</a>.</p>
 <p>Without limits, a misconfigured publisher or an attacker can flood the endpoint. Both sides need protection.</p>
 <ul>
 <li>Publisher: apply per-subscriber delivery limits, exponential backoff with jitter, and a maximum retry count, and disable endpoints that keep failing for days (<a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#deliverability-and-reliability">Standard Webhooks: Deliverability and reliability</a>).</li>
@@ -5060,6 +5062,7 @@
 </ul>
 <h2 id="endpoint-hardening">Endpoint Hardening<a class="headerlink" href="#endpoint-hardening" title="Permanent link">&para;</a></h2>
 <h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
+<p>See the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a> and <a href="Injection_Prevention_Cheat_Sheet.html">Injection Prevention Cheat Sheet</a> for validation and downstream interpretation controls.</p>
 <ul>
 <li>A valid signature proves who sent the payload, not that its contents are safe. Enforce a maximum body size, reject unexpected <code>Content-Type</code> values, and validate against a strict schema before processing, following the REST Security Cheat Sheet's <a href="REST_Security_Cheat_Sheet.html#input-validation">Input validation</a> and <a href="REST_Security_Cheat_Sheet.html#validate-content-types">Validate content types</a> sections. Publishers should keep payloads small; the Standard Webhooks specification recommends <a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md#payload-size">under 20 KB</a>.</li>
 <li>Downstream, use parameterized queries for SQL (<a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a>) and context-appropriate output encoding wherever payload fields are rendered as HTML (<a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>).</li>
@@ -5181,12 +5184,9 @@
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md">Standard Webhooks specification</a></li>
-<li><a href="https://docs.stripe.com/webhooks">Stripe: Receive Stripe events in your webhook endpoint</a></li>
-<li><a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries">GitHub: Validating webhook deliveries</a></li>
-<li><a href="https://docs.github.com/en/webhooks/using-webhooks/best-practices-for-using-webhooks">GitHub: Best practices for using webhooks</a></li>
-<li><a href="https://www.iana.org/assignments/iana-ipv4-special-registry">IANA IPv4 Special-Purpose Address Registry</a> and <a href="https://www.iana.org/assignments/iana-ipv6-special-registry">IPv6 Special-Purpose Address Registry</a></li>
-<li>Related OWASP cheat sheets: <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security</a>, <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management</a>, <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">Server-Side Request Forgery Prevention</a>, <a href="REST_Security_Cheat_Sheet.html">REST Security</a>, <a href="Input_Validation_Cheat_Sheet.html">Input Validation</a>, <a href="Injection_Prevention_Cheat_Sheet.html">Injection Prevention</a>, <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization</a>, <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention</a>, <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery Prevention</a>, <a href="Logging_Cheat_Sheet.html">Logging</a>, <a href="OAuth2_Cheat_Sheet.html">OAuth2</a>, <a href="Denial_of_Service_Cheat_Sheet.html">Denial of Service</a>, <a href="Threat_Modeling_Cheat_Sheet.html">Threat Modeling</a></li>
+<li><a href="https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md">Standard Webhooks Specification</a></li>
+<li><a href="https://docs.stripe.com/webhooks">Stripe: Receive Stripe Events in Your Webhook Endpoint</a></li>
+<li><a href="https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries">GitHub: Validating Webhook Deliveries</a></li>
 </ul>
 
 

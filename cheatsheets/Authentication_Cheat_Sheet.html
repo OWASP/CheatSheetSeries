@@ -896,17 +896,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1301,6 +1290,17 @@
     <span class="md-ellipsis">
       
         Adaptive or Risk Based Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
       
     </span>
   </a>
@@ -5156,17 +5156,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -5567,6 +5556,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5692,12 +5692,6 @@ Re-authentication is critical when an account has experienced high-risk activity
   Make re-authentication decisions based on context (e.g., geolocation, device type, prior patterns)</li>
 <li><strong>Secure Session Management</strong>
   Invalidate sessions after re-authentication and rotate tokens—see the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">OWASP Session Management Cheat Sheet</a></li>
-</ul>
-<h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
-<ul>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">OWASP Session Management Cheat Sheet</a></li>
-<li>OWASP ASVS – 2.2.2: Re-authentication requirements</li>
-<li>NIST 800-63B: Digital Identity Guidelines – Authentication Assurance Levels</li>
 </ul>
 <h3 id="consider-strong-transaction-authentication">Consider Strong Transaction Authentication<a class="headerlink" href="#consider-strong-transaction-authentication" title="Permanent link">&para;</a></h3>
 <p>Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
@@ -5979,6 +5973,12 @@ ENDIF
 <li>How do we mutate, extend, or revoke tokens/cookies when a mid‑session risk check escalates?</li>
 <li>How do we synchronize state across multiple concurrent devices or browser tabs?</li>
 <li>What monitoring and alerting will be in place for potentially suspicious activity, including how the user is notified.</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver">NIST SP 800-63B-4: Password Verifiers</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v6-authentication">OWASP Application Security Verification Standard (ASVS): V6 Authentication</a></li>
+<li><a href="https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation">OpenID Connect Core 1.0: ID Token Validation</a></li>
 </ul>
 
 

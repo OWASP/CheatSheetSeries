@@ -4802,16 +4802,16 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p>Recent CVEs underscore the risk of unauthenticated MAVLink. The absence of default authentication is not theoretical — it has produced critical, remotely-reachable vulnerabilities across both dominant open-source autopilots:</p>
 <ul>
 <li>
-<p>CVE-2026-1579 (PX4, CVSS 9.8, CISA ICSA-26-090-02, CWE-306): with MAVLink 2 message signing disabled, an unauthenticated party can send SERIAL_CONTROL to obtain interactive shell access.</p>
+<p><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-090-02">CVE-2026-1579</a> (PX4, CVSS 9.8, CISA ICSA-26-090-02, CWE-306): with MAVLink 2 message signing disabled, an unauthenticated party can send SERIAL_CONTROL to obtain interactive shell access.</p>
 </li>
 <li>
-<p>CVE-2026-38971 (ArduPilot ArduPlane ≤ 4.6.3, CVSS 9.1, CWE-125): an out-of-bounds read in the SERIAL_CONTROL handler (GCS_serial_control.cpp), reachable over MAVLink by an unauthenticated attacker — flight-controller memory disclosure and denial of service.</p>
+<p><a href="https://www.cve.org/CVERecord?id=CVE-2026-38971">CVE-2026-38971</a> (ArduPilot ArduPlane ≤ 4.6.3, CVSS 9.1, CWE-125): an out-of-bounds read in the SERIAL_CONTROL handler (GCS_serial_control.cpp), reachable over MAVLink by an unauthenticated attacker — flight-controller memory disclosure and denial of service.</p>
 </li>
 <li>
 <p>CVE-2026-32743 and related PX4 issues (CWE-121): MAVLink-reachable stack buffer overflows in the log handler cause denial of service.</p>
 </li>
 <li>
-<p>CVE-2020-10283 (MAVLink): an earlier command-injection issue from missing ground-control-station identity verification — the weakness is long-standing, not new.</p>
+<p><a href="https://www.cve.org/CVERecord?id=CVE-2020-10283">CVE-2020-10283</a> (MAVLink): an earlier authentication downgrade issue — the weakness is long-standing, not new.</p>
 </li>
 </ul>
 <p>Defense-in-depth beyond message signing. Because signing is frequently disabled in the field and any software mitigation runs in the same trust domain an attacker may have compromised, consider enforcing protocol integrity out-of-band:</p>
@@ -5152,54 +5152,8 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p>There are multiple GitHub repos that help with drone attack <a href="https://github.com/nicholasaleks/Damn-Vulnerable-Drone">simulations</a> and <a href="https://github.com/dhondta/dronesploit">actual exploits</a>. Be sure to check them out too for a deeper understanding of drone security.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>
-<p><a href="https://github.com/SpacehuhnTech/esp8266_deauther">ESP8266 Wi-Fi deauther</a></p>
-</li>
-<li>
-<p><a href="https://owasp.org/www-community/attacks/Command_Injection">Command Injection explanation</a></p>
-</li>
-<li>
-<p><a href="https://cloud.google.com/kms/docs/key-rotation#:~:text=A%20rotation%20schedule%20defines%20the,require%20periodic%2C%20automatic%20key%20rotation.">key rotations at certain frequencies</a></p>
-</li>
-<li>
-<p><a href="https://devzone.nordicsemi.com/f/nordic-q-a/17165/ble-just-works-pairing">Vulnerable Just works bluetooth protocol</a></p>
-</li>
-<li>
-<p><a href="https://github.com/dhondta/dronesploit">Drone Exploit Module</a></p>
-</li>
-<li>
-<p><a href="https://github.com/nicholasaleks/Damn-Vulnerable-Drone">Vulnerable Drone System Simulation</a></p>
-</li>
-<li>
-<p><a href="https://dronewolf.darkwolf.io/intro">Drones from a Cybersecurity Perspective</a></p>
-</li>
-<li>
-<p><a href="https://ieeexplore.ieee.org/abstract/document/9994719">Dynamic Watermarking in UAVs</a></p>
-</li>
-<li>
-<p><a href="https://www.okta.com/identity-101/gps-spoofing/">GPS spoofing and prevention</a></p>
-</li>
-<li>
-<p><a href="https://csrc.nist.gov/pubs/sp/800/193/final">NIST SP 800-193 Platform Firmware Resiliency Guidelines</a></p>
-</li>
-<li>
-<p><a href="https://www.etsi.org/technologies/consumer-iot-security">ETSI EN 303 645 (Consumer IoT Security)</a></p>
-</li>
-<li>
-<p><a href="https://owasp.org/www-project-internet-of-things/">OWASP Internet of Things</a></p>
-</li>
-<li>
-<p><a href="https://www.trustedfirmware.org/">Trusted Firmware</a></p>
-</li>
-<li>
-<p><a href="https://www.cisa.gov/news-events/ics-advisories/icsa-26-090-02">CVE-2026-1579 – PX4 MAVLink unauthenticated shell access (CISA ICSA-26-090-02)</a></p>
-</li>
-<li>
-<p><a href="https://www.cve.org/CVERecord?id=CVE-2026-38971">CVE-2026-38971 – ArduPilot MAVLink SERIAL_CONTROL out-of-bounds read</a></p>
-</li>
-<li>
-<p><a href="https://www.cve.org/CVERecord?id=CVE-2020-10283">CVE-2020-10283 – MAVLink missing GCS authentication</a></p>
-</li>
+<li><a href="https://csrc.nist.gov/pubs/sp/800/193/final">NIST SP 800-193: Platform Firmware Resiliency Guidelines</a></li>
+<li><a href="https://mavlink.io/en/guide/message_signing.html">MAVLink: Message Signing (Authentication)</a></li>
 </ul>
 
 

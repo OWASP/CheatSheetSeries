@@ -4890,6 +4890,7 @@
 <p><strong>WAF support:</strong></p>
 <p>Check that your WAF supports WebSocket traffic inspection beyond the initial handshake. If not, rely on server-side validation and application logging.</p>
 <h3 id="authentication-and-authorization">Authentication and Authorization<a class="headerlink" href="#authentication-and-authorization" title="Permanent link">&para;</a></h3>
+<p>For general identity and session controls, see the <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a> and <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>.</p>
 <p>WebSockets don't have built-in authentication. Browsers include cookies in WebSocket handshake requests, making WebSocket applications vulnerable to Cross-Site WebSocket Hijacking (CSWSH).</p>
 <p>CSWSH allows attackers to hijack authenticated WebSocket connections from malicious websites:</p>
 <ol>
@@ -4978,7 +4979,7 @@
 <span class="c1">// Dangerous - enables code execution</span>
 <span class="c1">// const message = eval('(' + data + ')');</span>
 </code></pre></div>
-<p>See the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a> for more details.</p>
+<p>See the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>, <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>, and <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a> for more details.</p>
 <h3 id="service-tunneling-risks">Service Tunneling Risks<a class="headerlink" href="#service-tunneling-risks" title="Permanent link">&para;</a></h3>
 <p>While WebSockets can tunnel TCP services (VNC, FTP, SSH), this creates security risks. If your application has XSS vulnerabilities, attackers could access these services directly from victims' browsers. If tunneling is necessary, implement additional authentication and access controls beyond the WebSocket layer.</p>
 <h3 id="denial-of-service-protection">Denial-of-Service Protection<a class="headerlink" href="#denial-of-service-protection" title="Permanent link">&para;</a></h3>
@@ -5020,10 +5021,7 @@
 <p>Regularly update WebSocket libraries and monitor security advisories. Past versions of popular libraries (<code>ws</code>, Spring STOMP, Python <code>websockets</code>) have had critical security vulnerabilities including DoS and RCE issues.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a></li>
-<li><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
-<li><a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a></li>
-<li><a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a></li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc6455">RFC 6455: The WebSocket Protocol</a></li>
 <li><a href="https://cwe.mitre.org/data/definitions/1385.html">CWE-1385: Missing Origin Validation in WebSockets</a></li>
 </ul>
 

@@ -2593,6 +2593,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4555,6 +4566,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4645,6 +4667,12 @@
 <p>Browser storage is <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy#cross-origin_data_storage_access">separated by origin</a>. Storage key prefixes, separate state stores, and component boundaries do not provide security isolation between scripts in the same page. Treat data exposed in the page or origin storage as available to every remote executing there.</p>
 <p>Keep session identifiers out of <code>localStorage</code> and <code>sessionStorage</code>. When using a backend-for-frontend, keep upstream access tokens on the server and use a session cookie configured according to the <a href="Session_Management_Cheat_Sheet.html#cookies">Session Management Cheat Sheet</a>. An <code>HttpOnly</code> cookie prevents JavaScript from reading the cookie, but compromised code in the host can still make authenticated requests. Apply <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">cross-site request forgery protection</a> to cookie-authenticated operations.</p>
 <p>Return only data the authenticated user is authorized to access. Clear shared state and cached responses on logout or tenant changes to avoid displaying stale data. This cleanup does not replace backend tenant checks or protect information already exposed to a compromised remote.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy">MDN: Same-Origin Policy</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#security_concerns">MDN: postMessage Security Concerns</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#sandbox">MDN: iframe Sandbox</a></li>
+</ul>
 
 
 

@@ -5741,7 +5741,7 @@
 <li>Trust tool descriptions as benign. They are an injection surface.</li>
 <li>Allow MCP tools unrestricted filesystem, network, or credential access on the developer's machine.</li>
 </ul>
-<p>Reference: CVE-2026-39313 -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.</p>
+<p>Reference: <a href="https://github.com/advisories/GHSA-353c-v8x9-v7c3">CVE-2026-39313</a> -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.</p>
 <h2 id="section-5-agent-runtime-sandboxing">Section 5: Agent Runtime Sandboxing<a class="headerlink" href="#section-5-agent-runtime-sandboxing" title="Permanent link">&para;</a></h2>
 <p>Agentic coding tools execute commands, install packages, write files, and access the network on the developer's machine. Without sandboxing, a compromised agent context has the same privileges as the developer.</p>
 <h3 id="do_4">Do<a class="headerlink" href="#do_4" title="Permanent link">&para;</a></h3>
@@ -5844,6 +5844,7 @@
 <li>Assume that <code>.gitignore</code> prevents AI tools from reading files. <code>.gitignore</code> only affects git -- AI tools read from the filesystem directly.</li>
 </ul>
 <h2 id="section-10-prompt-to-code-supply-chain-risk">Section 10: Prompt-to-Code Supply Chain Risk<a class="headerlink" href="#section-10-prompt-to-code-supply-chain-risk" title="Permanent link">&para;</a></h2>
+<p>See the <a href="Software_Supply_Chain_Security_Cheat_Sheet.html">Software Supply Chain Security Cheat Sheet</a> for controls throughout the development lifecycle.</p>
 <p>AI coding agents modify not just application code but also build scripts, CI/CD configurations, package scripts, and deployment infrastructure. Changes to these files execute automatically in trusted contexts with elevated privileges.</p>
 <h3 id="do_9">Do<a class="headerlink" href="#do_9" title="Permanent link">&para;</a></h3>
 <ul>
@@ -5981,14 +5982,9 @@
 </table>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html">OWASP AI Agent Security Cheat Sheet</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">OWASP LLM Prompt Injection Prevention Cheat Sheet</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html">OWASP MCP Security Cheat Sheet</a></li>
-<li><a href="https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/">OWASP Secure Coding Practices Quick Reference Guide</a></li>
-<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html">OWASP Software Supply Chain Security Cheat Sheet</a></li>
-<li><a href="https://genai.owasp.org/">OWASP Top 10 for LLM Applications</a></li>
-<li><a href="https://github.com/OWASP/AISVS">OWASP AISVS</a></li>
-<li>CVE-2026-39313 -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.</li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf">NIST SP 800-218: Secure Software Development Framework</a></li>
+<li><a href="https://best.openssf.org/Concise-Guide-for-Evaluating-Open-Source-Software">OpenSSF: Concise Guide for Evaluating Open Source Software</a></li>
+<li><a href="https://github.com/OWASP/AISVS">OWASP AI Security Verification Standard</a></li>
 </ul>
 
 

@@ -1011,56 +1011,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="References">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#owasp-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OWASP Resources
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#related-owasp-cheat-sheets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related OWASP Cheat Sheets
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#standards-and-specifications" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standards and Specifications
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
@@ -4691,56 +4641,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="References">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#owasp-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OWASP Resources
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#related-owasp-cheat-sheets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related OWASP Cheat Sheets
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#standards-and-specifications" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standards and Specifications
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tools
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
     </ul>
@@ -4767,6 +4667,7 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Authorization implementation is rarely static. As applications evolve, new API endpoints are added, data layers are refactored, and microservices are decoupled. While initial security testing might validate access controls at launch, the "Day 2" problem emerges quickly: <strong>How do engineering teams ensure that new features or structural changes do not break existing authorization logic?</strong></p>
 <p><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">Broken Access Control (BAC)</a> was ranked the number-one risk in the OWASP Top Ten 2021, and <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References">Insecure Direct Object Reference (IDOR)</a> is one of its most frequently exploited sub-categories. This cheat sheet provides actionable, architectural guidance on implementing automated authorization regression testing within the Software Development Life Cycle (SDLC). By shifting from manual, point-in-time penetration testing to continuous, developer-centric regression suites, engineering teams can catch BAC, IDOR, and tenant isolation failures before they reach production.</p>
+<p>For baseline controls, see the <a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a>.</p>
 <p>Key topics covered in this cheat sheet include:</p>
 <ul>
 <li>Designing an automated authorization test matrix.</li>
@@ -4842,39 +4743,10 @@
 <li><strong>Monitoring in Lower Environments:</strong> Configure CI environments to flag unusual volumes of <a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2"><code>401 Unauthorized</code></a> or <a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4"><code>403 Forbidden</code></a> responses during integration testing, which may indicate that a developer's functional changes are colliding with existing security controls.</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<h3 id="owasp-resources">OWASP Resources<a class="headerlink" href="#owasp-resources" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP Top Ten 2021 — A01: Broken Access Control</a></li>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/">OWASP Web Security Testing Guide v4.2 — Authorization Testing</a></li>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References">OWASP WSTG — Testing for Insecure Direct Object References</a></li>
-<li><a href="https://owasp.org/www-project-proactive-controls/v3/en/c7-enforce-access-controls">OWASP Proactive Controls C7: Enforce Access Controls</a></li>
-<li><a href="https://owaspsamm.org/model/verification/security-testing/">OWASP Software Assurance Maturity Model (SAMM): Security Testing</a></li>
-<li><a href="https://raw.githubusercontent.com/OWASP/ASVS/v4.0.3/4.0/OWASP%20Application%20Security%20Verification%20Standard%204.0.3-en.pdf">OWASP Application Security Verification Standard (ASVS) 4.0 — V4: Access Control</a></li>
-</ul>
-<h3 id="related-owasp-cheat-sheets">Related OWASP Cheat Sheets<a class="headerlink" href="#related-owasp-cheat-sheets" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a></li>
-<li><a href="Authorization_Testing_Automation_Cheat_Sheet.html">Authorization Testing Automation Cheat Sheet</a></li>
-<li><a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">Insecure Direct Object Reference Prevention Cheat Sheet</a></li>
-<li><a href="Multi_Tenant_Security_Cheat_Sheet.html">Multi-Tenant Security Cheat Sheet</a></li>
-<li><a href="CI_CD_Security_Cheat_Sheet.html">CI/CD Security Cheat Sheet</a></li>
-</ul>
-<h3 id="standards-and-specifications">Standards and Specifications<a class="headerlink" href="#standards-and-specifications" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://spec.openapis.org/oas/v3.1.0#security-scheme-object">OpenAPI Specification 3.1.0 — Security Scheme Object</a></li>
-<li><a href="https://www.rfc-editor.org/rfc/rfc6749">OAuth 2.0 Authorization Framework (RFC 6749)</a></li>
-<li><a href="https://www.rfc-editor.org/rfc/rfc6750">OAuth 2.0 Bearer Token Usage (RFC 6750)</a></li>
-<li><a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2">HTTP Semantics (RFC 9110) — 401 Unauthorized</a></li>
-<li><a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4">HTTP Semantics (RFC 9110) — 403 Forbidden</a></li>
-<li><a href="https://cwe.mitre.org/data/definitions/269.html">CWE-269: Improper Privilege Management</a></li>
-</ul>
-<h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://schemathesis.readthedocs.io/en/stable/">Schemathesis — Property-based API testing</a></li>
-<li><a href="https://dredd.org/en/latest/">Dredd — HTTP API Testing Framework</a></li>
-<li><a href="https://docs.pytest.org/">pytest — Python test framework</a></li>
-<li><a href="https://junit.org/junit5/">JUnit 5 — Java test framework</a></li>
-<li><a href="https://jestjs.io/">Jest — JavaScript test framework</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References">OWASP WSTG: Testing for Insecure Direct Object References</a></li>
+<li><a href="https://owaspsamm.org/model/verification/security-testing/">OWASP SAMM: Security Testing</a></li>
+<li><a href="https://spec.openapis.org/oas/v3.1.0#security-scheme-object">OpenAPI 3.1.0: Security Scheme Object</a></li>
 </ul>
 
 

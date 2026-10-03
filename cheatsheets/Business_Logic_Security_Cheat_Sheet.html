@@ -5730,6 +5730,7 @@
 <li><strong>Asymmetric consequences.</strong> Actions that give value should be harder than actions that don't. Making someone wait 30 seconds, or complete a CAPTCHA, to claim a reward is fine. The legitimate user clicks once and moves on; the automated abuser suffers a per-request cost.</li>
 </ul>
 <h2 id="threat-model-from-the-business-process">Threat Model from the Business Process<a class="headerlink" href="#threat-model-from-the-business-process" title="Permanent link">&para;</a></h2>
+<p>See the <a href="Abuse_Case_Cheat_Sheet.html">Abuse Case Cheat Sheet</a> for identifying misuse scenarios.</p>
 <p>Most threat modeling is done from a technical angle: data flow diagrams, trust boundaries, STRIDE categories. That's useful, but it misses the bugs where the code is technically correct and the process is the problem. Business logic threat modeling asks different questions.</p>
 <h3 id="questions-to-ask-early">Questions to Ask Early<a class="headerlink" href="#questions-to-ask-early" title="Permanent link">&para;</a></h3>
 <ul>
@@ -5772,6 +5773,7 @@
 <h3 id="reference-related-guidance">Reference Related Guidance<a class="headerlink" href="#reference-related-guidance" title="Permanent link">&para;</a></h3>
 <p>For general access control guidance, see the <a href="Access_Control_Cheat_Sheet.html">Access Control Cheat Sheet</a> and the <a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a>. For the higher-sensitivity case of financial or state-changing transactions, see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
 <h2 id="validate-inputs-for-business-meaning-not-just-format">Validate Inputs for Business Meaning, Not Just Format<a class="headerlink" href="#validate-inputs-for-business-meaning-not-just-format" title="Permanent link">&para;</a></h2>
+<p>See the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a> for validation controls.</p>
 <p>Input validation typically focuses on format: is this a well-formed integer, is this within length limits, does it match a whitelist of characters. That catches injection attacks but not business logic abuse. The input can be perfectly formatted and still semantically invalid.</p>
 <h3 id="validate-ranges">Validate Ranges<a class="headerlink" href="#validate-ranges" title="Permanent link">&para;</a></h3>
 <p>A quantity can be a positive integer and still be wrong. A discount can be numeric and still absurd. Validate against the meaningful range for the business:</p>
@@ -5873,15 +5875,9 @@
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/">OWASP Web Security Testing Guide - Business Logic Testing</a></li>
 <li><a href="https://cwe.mitre.org/data/definitions/840.html">CWE-840: Business Logic Errors</a></li>
 <li><a href="https://cwe.mitre.org/data/definitions/841.html">CWE-841: Improper Enforcement of Behavioral Workflow</a></li>
-<li><a href="https://cwe.mitre.org/data/definitions/367.html">CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition</a></li>
-<li><a href="Authorization_Cheat_Sheet.html">OWASP Authorization Cheat Sheet</a></li>
-<li><a href="Access_Control_Cheat_Sheet.html">OWASP Access Control Cheat Sheet</a></li>
-<li><a href="Transaction_Authorization_Cheat_Sheet.html">OWASP Transaction Authorization Cheat Sheet</a></li>
-<li><a href="Input_Validation_Cheat_Sheet.html">OWASP Input Validation Cheat Sheet</a></li>
-<li><a href="Abuse_Case_Cheat_Sheet.html">OWASP Abuse Case Cheat Sheet</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/367.html">CWE-367: Time-of-check Time-of-use Race Condition</a></li>
 </ul>
 
 

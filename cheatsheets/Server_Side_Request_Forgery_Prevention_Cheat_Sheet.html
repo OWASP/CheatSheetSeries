@@ -3713,10 +3713,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
+  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References
+        Tools and code used for schemas
       
     </span>
   </a>
@@ -3724,10 +3724,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tools and code used for schemas
+        References
       
     </span>
   </a>
@@ -4912,10 +4912,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
+  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        References
+        Tools and code used for schemas
       
     </span>
   </a>
@@ -4923,10 +4923,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tools and code used for schemas
+        References
       
     </span>
   </a>
@@ -5283,11 +5283,6 @@ The user leverages the web application as a proxy to the HR system.</p>
 <h2 id="semgrep-rules">Semgrep Rules<a class="headerlink" href="#semgrep-rules" title="Permanent link">&para;</a></h2>
 <p><a href="https://semgrep.dev/">Semgrep</a> is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
 Explore the <a href="https://semgrep.dev/r?q=ssrf">Semgrep rules</a> for SSRF to effectively identify and investigate potential SSRF vulnerabilities.</p>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<p>Online version of the <a href="https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM">SSRF bible</a> (PDF version is used in this cheat sheet).</p>
-<p>Article about <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b">Bypassing SSRF Protection</a>.</p>
-<p>Articles about SSRF attacks: <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a">Part 1</a>, <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-2-fun-with-ipv4-addresses-eb51971e476d">part 2</a> and  <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-part-3-other-advanced-techniques-3f48cbcad27e">part 3</a>.</p>
-<p>Article about <a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a></p>
 <h2 id="tools-and-code-used-for-schemas">Tools and code used for schemas<a class="headerlink" href="#tools-and-code-used-for-schemas" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://mermaidjs.github.io/mermaid-live-editor">Mermaid Online Editor</a> and <a href="https://mermaidjs.github.io/">Mermaid documentation</a>.</li>
@@ -5306,6 +5301,12 @@ Explore the <a href="https://semgrep.dev/r?q=ssrf">Semgrep rules</a> for SSRF to
     Note left of VulnerableApplication: Include response&lt;br&gt;from the&lt;br&gt;TargetedApplication
 </code></pre></div>
 <p>Draw.io schema XML code for the "<a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.xml">case 1 for network layer protection about flows that we want to prevent</a>" schema (printscreen are used to capture PNG image inserted into this cheat sheet).</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://cwe.mitre.org/data/definitions/918">CWE-918: Server-Side Request Forgery (SSRF)</a></li>
+<li><a href="https://url.spec.whatwg.org/#url-parsing">WHATWG URL Standard: URL Parsing</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html">Amazon EC2: Access Instance Metadata</a></li>
+</ul>
 
 
 
