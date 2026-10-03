@@ -133,7 +133,7 @@ url = "https://site.com?data=" + urlencode(parameter)
 <a href='attributeEncode(url)'>link</a>
 ```
 
-If you're using JavaScript to construct a URL Query Value, look into using `window.encodeURIComponent(x)`. This is a **Safe Sink** and will automatically URL encode data in it.
+When using JavaScript to construct a URL, use [`encodeURIComponent()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent) to encode each untrusted query parameter value. It encodes a URL component; it does not validate a complete URL.
 
 ### Dangerous Contexts
 
