@@ -333,6 +333,8 @@ To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out 
 | **Azure IMDS** | `169.254.169.254` |
 | **Localhost** | `127.0.0.0/8`, `0.0.0.0/8`, `::1/128` |
 | **RFC1918 Private** | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` |
+| **IPv6 Unique Local** | `fc00::/7` ([RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193#section-3.1)) |
+| **IPv6 Link-Local** | `fe80::/10` ([RFC 4291](https://datatracker.ietf.org/doc/html/rfc4291#section-2.5.6)) |
 | **Multicast** | `224.0.0.0/4`, `ff00::/8` |
 
 **Full production example:** [ComputerCraft SSRF deny-list](https://github.com/cc-tweaked/CC-Tweaked/blob/b9ed66983d714bcb5c6bf15b428e01a035106dbf/projects/core/src/main/java/dan200/computercraft/core/apis/http/options/AddressPredicate.java#L112-L157)
