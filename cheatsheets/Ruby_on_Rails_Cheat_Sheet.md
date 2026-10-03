@@ -464,10 +464,7 @@ Another area of tooling is the security testing tool [Gauntlt](http://gauntlt.or
 
 Launched in May 2013 and very similar to brakeman scanner, the [dawnscanner](https://github.com/thesp0nge/dawnscanner) rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 1.6.6 has more than 235 ruby specific CVE security checks.
 
-## Related Articles and References
+## References
 
-- [The Official Rails Security Guide](https://guides.rubyonrails.org/security.html)
-- [OWASP Ruby on Rails Security Guide](https://owasp.org/www-pdf-archive/Rails_Security_2.pdf)
-- [The Ruby Security Reviewers Guide](http://code.google.com/p/ruby-security/wiki/Guide)
-- [The Ruby on Rails Security Mailing List](https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-security)
-- [Rails Insecure Defaults](https://codeclimate.com/blog/rails-insecure-defaults/)
+- [Securing Rails Applications](https://guides.rubyonrails.org/security.html)
+- [Rails security policy](https://rubyonrails.org/security)
