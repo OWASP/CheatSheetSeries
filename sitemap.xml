@@ -61,6 +61,18 @@
          <lastmod>2026-10-03</lastmod>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Decisions_And_Output_Handling_Cheat_Sheet.html</loc>
+         <lastmod>2026-10-03</lastmod>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Patterns_Cheat_Sheet.html</loc>
+         <lastmod>2026-10-03</lastmod>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Policy_And_Data_Distribution_Cheat_Sheet.html</loc>
+         <lastmod>2026-10-03</lastmod>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Regression_Testing_Cheat_Sheet.html</loc>
          <lastmod>2026-10-03</lastmod>
     </url>
@@ -210,6 +222,10 @@
     </url>
     <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</loc>
+         <lastmod>2026-10-03</lastmod>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Identity_Propagation_Patterns_Cheat_Sheet.html</loc>
          <lastmod>2026-10-03</lastmod>
     </url>
     <url>

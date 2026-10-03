@@ -4,10 +4,10 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="qIAtVkNcChMtB1bcW1sn-1" value="PIP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="qIAtVkNcChMtB1bcW1sn-1" value="Data source" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="420" y="198" width="126" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="qIAtVkNcChMtB1bcW1sn-2" value="PIP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="qIAtVkNcChMtB1bcW1sn-2" value="Data source" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="410" y="188" width="126" height="50" as="geometry" />
         </mxCell>
         <mxCell id="qIAtVkNcChMtB1bcW1sn-4" value="PDP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
@@ -16,7 +16,7 @@
         <mxCell id="qIAtVkNcChMtB1bcW1sn-5" value="data" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="104" y="272" width="145" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="qIAtVkNcChMtB1bcW1sn-6" value="PIP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="qIAtVkNcChMtB1bcW1sn-6" value="Data source" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="400" y="180" width="126" height="50" as="geometry" />
         </mxCell>
         <mxCell id="qIAtVkNcChMtB1bcW1sn-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="1" source="qIAtVkNcChMtB1bcW1sn-8" target="qIAtVkNcChMtB1bcW1sn-4">
@@ -73,7 +73,7 @@
         <mxCell id="qIAtVkNcChMtB1bcW1sn-23" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="501" y="120" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="qIAtVkNcChMtB1bcW1sn-24" value="PEP is typically part of the service code and PIP is a service DB, or some other service" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;base=18;size=30;position=0.73;position2=0.86;flipV=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+        <mxCell id="qIAtVkNcChMtB1bcW1sn-24" value="The PEP restricts data read from the application database or service" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;base=18;size=30;position=0.73;position2=0.86;flipV=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
           <mxGeometry x="290" y="100" width="140" height="88" as="geometry" />
         </mxCell>
       </root>
