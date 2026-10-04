@@ -309,7 +309,7 @@ For more details refer to [OWASP Path Traversal](https://owasp.org/www-community
 
 You can protect your application from a directory traversal attack by validating whether the absolute path of the requested file location is correct or strip out the directory information from filename input.
 
-- Check if the path exists using the PHP *realpath* function and check that it leads to the storage directory
+- Resolve the base directory and requested path with [`realpath()`](https://www.php.net/manual/en/function.realpath.php), rejecting failures. Include the directory separator in the containment check so a sibling such as `/storage-private` cannot match `/storage`.
 
 ```php
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -329,16 +329,19 @@ class ExampleController extends AbstractController
         $realBase = realpath($storagePath);
         $realPath = realpath($filePath);
 
-        if ($realPath === false || !str_starts_with($realPath, $realBase))
+        if ($realBase === false || $realPath === false
+            || !str_starts_with($realPath, $realBase . DIRECTORY_SEPARATOR))
         {
-            //Directory Traversal!
+            throw $this->createNotFoundException();
         }
 
-        // ...
+        // Use $realPath for the authorized file operation.
 
     }
 }
 ```
+
+This illustrative check assumes untrusted users cannot change the directories or symbolic links between validation and file access. Check the caller's permission to access the resolved file separately.
 
 - Strip out directory information with PHP *basename* function
 
