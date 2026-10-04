@@ -94,27 +94,27 @@ It's a common misconception to include timestamps as a value to specify the CSRF
 
 ##### Pseudo-Code For Implementing HMAC CSRF Tokens
 
-Below is an example in pseudo-code that demonstrates the implementation steps described above:
+This illustrative pseudo-code uses lowercase hexadecimal strings for the random value and HMAC digest. Use the same encoding and length convention during generation and validation: [hex encoding represents each byte with two characters](https://docs.python.org/3/library/stdtypes.html#bytes.hex).
 
 ```code
 // Gather the values
 secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
 sessionID = session.sessionID // Current authenticated user session
-randomValue = cryptographic.randomValue(64) // Cryptographic random value
+randomValue = cryptographic.randomValue(64).toHex() // 64 random bytes, encoded as 128 hex characters
 
 // Create the CSRF Token
-message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue.toHex() // HMAC message payload
+message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue // HMAC message payload
 hmac = hmac("SHA256", secret, message) // Generate the HMAC hash
 // Add the `randomValue` to the HMAC hash to create the final CSRF token.
 // Avoid using the `message` because it contains the sessionID in plain text,
 // which the server already stores separately.
-csrfToken = hmac.toHex() + "." + randomValue.toHex()
+csrfToken = hmac.toHex() + "." + randomValue
 
 // Store the CSRF Token in a cookie
 response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without HttpOnly flag
 ```
 
-Below is an example in pseudo-code that demonstrates validation of the CSRF token once it is sent back from the client:
+Before validation, reject missing tokens or tokens that do not contain exactly two lowercase hexadecimal components: a 64-character SHA-256 HMAC and the 128-character random value. Recompute the HMAC using the current authenticated session, and [compare digests in the same representation with a constant-time function](https://docs.python.org/3/library/hmac.html#hmac.compare_digest):
 
 ```code
 // Get the CSRF token from the request
@@ -131,13 +131,13 @@ sessionID = session.sessionID // Current authenticated user session
 message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue
 
 // Generate the expected HMAC
-expectedHmac = hmac("SHA256", secret, message)
+expectedHmac = hmac("SHA256", secret, message).toHex()
 
 // Compare the HMAC from the request with the expected HMAC
 if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
     // HMAC validation failed, reject the request
     response.sendError(403, "Invalid CSRF token")
-    logError("Invalid CSRF token", hmacFromRequest, expectedHmac)
+    logError("Invalid CSRF token") // Do not log token values
     return
 }
 
