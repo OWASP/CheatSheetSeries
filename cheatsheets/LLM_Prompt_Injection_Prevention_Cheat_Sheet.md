@@ -197,13 +197,13 @@ class PromptInjectionFilter:
         return text[:10000]  # Limit length
 ```
 
-The `_is_similar_word` helper above is intentionally minimal and only catches anagram-style scrambles. For production deployments, prefer an established [string metric](https://en.wikipedia.org/wiki/String_metric) library so the detector covers a wider range of obfuscations:
+The `_is_similar_word` helper above is intentionally minimal and only catches anagram-style scrambles. An established string metric library can add other forms of fuzzy matching, but similarity alone does not identify malicious intent:
 
-- **Levenshtein / Damerau-Levenshtein distance**: catches insertions, deletions, substitutions, and (Damerau variant) adjacent transpositions. Threshold of `1` or `2` over short keywords reliably catches typoglycemia variants and common typos. Available in `python-Levenshtein`, `rapidfuzz`, Java `apache-commons-text`, and Go `agnivade/levenshtein`.
+- **Levenshtein / Damerau-Levenshtein distance**: counts insertions, deletions, substitutions, and (Damerau variant) adjacent transpositions. A threshold of `1` or `2` only matches variants within that distance; scrambling middle letters can require more edits. See the RapidFuzz [Levenshtein](https://rapidfuzz.github.io/RapidFuzz/Usage/distance/Levenshtein.html#distance) and [Damerau-Levenshtein](https://rapidfuzz.github.io/RapidFuzz/Usage/distance/DamerauLevenshtein.html#distance) documentation.
 - **Jaro-Winkler similarity**: weights matching prefixes higher, useful when the attacker preserves the start of a token. Common in record-linkage libraries.
 - **Phonetic algorithms (Soundex, Metaphone, NYSIIS)**: catch homophone-style obfuscations but are English-biased; combine with one of the above rather than using alone.
 
-Pick the algorithm that matches the obfuscation classes in your threat model, set a strict similarity threshold, and pre-compute it against the keyword list at startup so per-request cost stays bounded.
+Choose the metric and threshold using representative benign and adversarial inputs; measure missed variants and false positives. Limit input length and comparison work before matching. Keyword preprocessing can reduce repeated work, but comparisons still depend on request input; see the library's [performance characteristics](https://rapidfuzz.github.io/RapidFuzz/Usage/distance/DamerauLevenshtein.html#performance).
 
 ### Structured Prompts with Clear Separation
 
