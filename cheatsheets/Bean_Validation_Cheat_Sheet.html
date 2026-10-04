@@ -4789,7 +4789,7 @@
 <h3 id="bean-validation">Bean Validation<a class="headerlink" href="#bean-validation" title="Permanent link">&para;</a></h3>
 <p><img alt="JSR" src="../assets/Bean_Validation_Cheat_Sheet_JSR.png" /></p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<p>The examples in this guide use Hibernate Validator.</p>
+<p>The illustrative examples below use the legacy <code>javax.validation</code> API, including its <a href="https://docs.hibernate.org/beanvalidation/spec/1.1/api/javax/validation/constraints/package-summary.html">built-in constraint package</a>, with Hibernate Validator. <a href="https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html">Jakarta Validation 3.0</a> uses <code>jakarta.validation</code>; use API and provider versions compatible with your application.</p>
 <p>Add Hibernate Validator to your <strong>pom.xml</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
 <span class="w">   </span><span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
@@ -4824,7 +4824,7 @@
 <h2 id="predefined-constraints">Predefined Constraints<a class="headerlink" href="#predefined-constraints" title="Permanent link">&para;</a></h2>
 <h3 id="pattern">@Pattern<a class="headerlink" href="#pattern" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
-<p><code>@Pattern(regex=,flag=)</code></p>
+<p><code>@Pattern(regexp=,flags=)</code></p>
 <p><strong>Data Type</strong>:</p>
 <p><code>CharSequence</code></p>
 <p><strong>Use</strong>:</p>
@@ -4832,11 +4832,11 @@
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Pattern</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Pattern</span><span class="p">;</span>
 
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Article</span><span class="w">  </span><span class="p">{</span>
-<span class="w"> </span><span class="c1">//Constraint: Alpha Numeric article titles only using a regular expression</span>
-<span class="w"> </span><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"[a-zA-Z0-9 ]"</span><span class="p">)</span>
+<span class="w"> </span><span class="c1">//Constraint: One or more ASCII letters, digits, or spaces</span>
+<span class="w"> </span><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"[a-zA-Z0-9 ]+"</span><span class="p">)</span>
 <span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">articleTitle</span><span class="p">;</span>
 <span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getArticleTitle</span><span class="p">()</span><span class="w">  </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w">  </span><span class="n">articleTitle</span><span class="p">;</span>
@@ -4885,19 +4885,19 @@
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Digits</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Digits</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Customer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">//Constraint: Age can only be 3 digits long or less</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Customer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">//Constraint: Age can only be 3 digits long or less</span>
 <span class="w">  </span><span class="nd">@Digits</span><span class="p">(</span><span class="n">integer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">fraction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
 
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getAge</span><span class="p">()</span><span class="w">  </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getAge</span><span class="p">()</span><span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setAge</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">age</span><span class="p">)</span><span class="w">  </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setAge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="p">)</span><span class="w">  </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="p">...</span>
@@ -4941,20 +4941,20 @@
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Size</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Size</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Message</span><span class="w"> </span><span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Message</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">   </span><span class="c1">//Constraint: Message must be at least 10 characters long, but less than 500</span>
-<span class="w">   </span><span class="nd">@Size</span><span class="p">(</span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">)</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">   </span><span class="c1">//Constraint: Message must contain 10 to 500 characters, inclusive</span>
+<span class="w">   </span><span class="nd">@Size</span><span class="p">(</span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">)</span>
+<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
 
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getMessage</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setMessage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setMessage</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
 <span class="p">...</span>
@@ -4994,37 +4994,38 @@
 <p><strong>Data Type</strong>:</p>
 <p><code>java.util.Date</code>, <code>java.util.Calendar</code>, <code>java.time.chrono.ChronoZonedDateTime</code>, <code>java.time.Instant</code>, <code>java.time.OffsetDateTime</code></p>
 <p><strong>Use</strong>:</p>
-<p>Checks whether the annotated date is in the past / future</p>
+<p>Checks whether the annotated date is in the past / future. Use a supported date type, such as <code>java.util.Date</code>; <a href="https://docs.hibernate.org/beanvalidation/spec/1.1/api/javax/validation/constraints/Future.html"><code>@Future</code> does not validate date strings</a>.</p>
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Past</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Future</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Date</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Past</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Future</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DoctorVisit</span><span class="w"> </span><span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DoctorVisit</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">   </span><span class="c1">//Constraint: Birthdate must be in the past</span>
+<span class="w">   </span><span class="c1">//Constraint: Birthdate must be in the past</span>
 <span class="w">   </span><span class="nd">@Past</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">birthDate</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">birthDate</span><span class="p">;</span>
 
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="nf">getBirthDate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">birthDate</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="nf">getBirthDate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">birthDate</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setBirthDate</span><span class="p">(</span><span class="n">Date</span><span class="w"> </span><span class="n">birthDate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">birthDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">birthDate</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setBirthDate</span><span class="p">(</span><span class="n">Date</span><span class="w"> </span><span class="n">birthDate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">birthDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">birthDate</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
-<span class="w">   </span><span class="c1">//Constraint: Schedule visit date must be in the future</span>
+<span class="w">   </span><span class="c1">//Constraint: Schedule visit date must be in the future</span>
 <span class="w">   </span><span class="nd">@Future</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">;</span>
 
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getScheduledVisitDate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="n">Date</span><span class="w"> </span><span class="nf">getScheduledVisitDate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setScheduledVisitDate</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">scheduledVisitDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setScheduledVisitDate</span><span class="p">(</span><span class="n">Date</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">scheduledVisitDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scheduledVisitDate</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
 <span class="p">...</span>
@@ -5069,24 +5070,24 @@
 <p><strong>Reference:</strong></p>
 <p><a href="https://docs.jboss.org/hibernate/validator/9.0/reference/en-US/html_single/#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Min</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Max</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Min</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.validation.constraints.Max</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Review</span><span class="w"> </span><span class="p">{</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Review</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w"> </span><span class="c1">//Constraint: Review rating must be between 1 and 5</span>
-<span class="w"> </span><span class="nd">@Min</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="w"> </span><span class="nd">@Max</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">;</span>
+<span class="w"> </span><span class="c1">//Constraint: Review rating must be between 1 and 5</span>
+<span class="w"> </span><span class="nd">@Min</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w"> </span><span class="nd">@Max</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">;</span>
 
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getReviewRating</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">;</span>
-<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">getReviewRating</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
 
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setReviewRating</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="k">this</span><span class="p">.</span><span class="na">reviewRating</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">;</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setReviewRating</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">this</span><span class="p">.</span><span class="na">reviewRating</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reviewRating</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="w"> </span><span class="p">...</span>
+<span class="w"> </span><span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
 <p><strong>Controller</strong>:</p>
@@ -5137,8 +5138,8 @@
 <p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/">documentation</a>.</p>
 <h2 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h2>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"[a-zA-Z0-9 ]"</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s">"article.title.error"</span><span class="p">)</span>
-<span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">articleTitle</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"[a-zA-Z0-9 ]+"</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s">"article.title.error"</span><span class="p">)</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">articleTitle</span><span class="p">;</span>
 </code></pre></div>
 <p>Spring MVC will then look up a message with ID <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/">documentation</a>.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>

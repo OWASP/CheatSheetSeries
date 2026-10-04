@@ -5093,7 +5093,7 @@
 <tbody>
 <tr>
 <td><code>Cache-Control: no-store</code></td>
-<td>Header used to direct caching done by browsers. Providing <code>no-store</code> indicates that any caches of any kind (private or shared) should not store the response that contains the header. A browser must make a new request everytime the API is called to fetch the latest response. This header with a <code>no-store</code> value prevents sensitive information from being cached or stored.</td>
+<td>Instructs compliant private and shared HTTP caches not to store the response or reuse it for another request (<a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.5">RFC 9111</a>). This does not prevent storage by application code: the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache">Cache API</a> does not honor HTTP caching headers. Keep sensitive responses out of application-managed caches; see the <a href="HTML5_Security_Cheat_Sheet.html#offline-applications">offline application guidance</a>.</td>
 </tr>
 <tr>
 <td><code>Content-Security-Policy: frame-ancestors 'none'</code></td>

@@ -5051,15 +5051,10 @@ gem<span class="w"> </span><span class="s1">'omniauth'</span>
 <p>The above request would redirect the user to <code>http://www.example.com/checkout</code>. The security concern associated with this functionality is leveraging an organization's trusted brand to phish users and trick them into visiting a malicious site, in our example, <code>badhacker.com</code>.</p>
 <p>Example:</p>
 <p><code>http://www.example.com/redirect?url=http://badhacker.com</code></p>
-<p>The most basic, but restrictive protection is to use the <code>:only_path</code> option. Setting this to true will essentially strip out any host information. However, the <code>:only_path</code> option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allowlist, this is one approach that can work:</p>
-<div class="highlight"><pre><span></span><code><span class="k">begin</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">path</span>
-<span class="w">    </span><span class="n">redirect_to</span><span class="w"> </span><span class="n">path</span>
-<span class="w">  </span><span class="k">end</span>
-<span class="k">rescue</span><span class="w"> </span><span class="no">URI</span><span class="o">::</span><span class="no">InvalidURIError</span>
-<span class="w">  </span><span class="n">redirect_to</span><span class="w"> </span><span class="s1">'/'</span>
-<span class="k">end</span>
+<p>For redirects that must stay within the application, use Rails' <a href="https://api.rubyonrails.org/v8.1.3.1/classes/ActionController/Redirecting.html#method-i-url_from"><code>url_from</code></a> to validate the destination against the request host and provide a fixed fallback:</p>
+<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">url_from</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">"/"</span>
 </code></pre></div>
+<p>Do not treat <code>URI.parse(value).path</code> as redirect validation: the path of <code>https://trusted.example//evil.example/path</code> is <code>//evil.example/path</code>, which is a protocol-relative external destination. Keep Rails' open-redirect protection enabled; if the application requires specific destinations, use an application-defined allowlist instead.</p>
 <p>If matching user input against a list of approved sites or TLDs against regular expression is a must, it makes sense to leverage a library such as <code>URI.parse()</code> to obtain the host and then take the host value and match it against regular expression patterns. Those regular expressions must, at a minimum, have anchors or there is a greater chance of an attacker bypassing the validation routine.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">require</span><span class="w"> </span><span class="s1">'uri'</span>

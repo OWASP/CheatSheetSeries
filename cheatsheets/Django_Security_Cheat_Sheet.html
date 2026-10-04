@@ -4792,7 +4792,7 @@
 <p>Include the <code>django.middleware.security.SecurityMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> to add security-related headers to your responses. This module is used to set the following parameters:</p>
 <ul>
 <li><code>SECURE_CONTENT_TYPE_NOSNIFF</code>: Set this key to <code>True</code>. Protects against MIME type sniffing attacks by enabling the header <code>X-Content-Type-Options: nosniff</code>.</li>
-<li><code>SECURE_HSTS_SECONDS</code>: Ensures the site is only accessible via HTTPS.</li>
+<li><code>SECURE_HSTS_SECONDS</code>: A positive value adds <a href="https://docs.djangoproject.com/en/5.2/ref/middleware/#http-strict-transport-security">HTTP Strict Transport Security (HSTS)</a> to HTTPS responses, instructing supporting browsers to use HTTPS for the specified period. It does not reject HTTP requests on the server or protect a browser's first connection before it knows the policy; <a href="https://www.rfc-editor.org/rfc/rfc6797.html#section-12.3">preloading addresses that initial-connection gap</a>.</li>
 </ul>
 <p>Include the <code>django.middleware.clickjacking.XFrameOptionsMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> (This module should be listed after the <code>django.middleware.security.SecurityMiddleware</code> module as ordering is important). This module is used to set the following parameters:</p>
 <ul>
@@ -4840,7 +4840,7 @@
 <ul>
 <li>Include the <code>django.middleware.security.SecurityMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> if not already added.</li>
 <li>Set the <code>SECURE_SSL_REDIRECT = True</code> in the <code>settings.py</code> file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.</li>
-<li>If your Django application is behind a proxy or load balancer, set the <code>SECURE_PROXY_SSL_HEADER</code> setting so that Django can detect the original request's protocol. For further details refer to <a href="https://docs.djangoproject.com/en/5.2/ref/settings/#secure-proxy-ssl-header">SECURE_PROXY_SSL_HEADER documentation</a>.</li>
+<li>Configure <code>SECURE_PROXY_SSL_HEADER</code> only behind a trusted proxy that strips client-supplied copies of the chosen header and sets its HTTPS-indicating value only for requests originally received over HTTPS. Prevent clients from bypassing that proxy to supply the trusted header directly. If these conditions cannot be guaranteed, leave the setting at <code>None</code>; see <a href="https://docs.djangoproject.com/en/5.2/ref/settings/#secure-proxy-ssl-header">Django's proxy-header security warning</a>.</li>
 </ul>
 <h2 id="admin-panel-url">Admin panel URL<a class="headerlink" href="#admin-panel-url" title="Permanent link">&para;</a></h2>
 <p>It is advisable to modify the default URL leading to the admin panel (example.com/admin/), in order to slightly increase the difficulty for automated attacks. Here’s how to do it:</p>

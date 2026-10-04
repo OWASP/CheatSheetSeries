@@ -4857,7 +4857,7 @@
 <h3 id="rate-limiting">Rate limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
 <p>Rate limiting is the process of controlling traffic rate from and to a server or component. It can be implemented on infrastructure as well as on an application level. Rate limiting can be based on (offending) IPs, on IP block lists, on geolocation, etc.</p>
 <ul>
-<li><strong>Define a minimum ingress data rate limit</strong> and drop all connections below that rate. Note that if the rate limit is set too low, this could impact clients. Inspect the logs to establish a baseline of genuine traffic rate. (Protection against slow HTTP attacks)</li>
+<li><strong>Define a minimum ingress data rate</strong> with request-read timeouts to mitigate slow HTTP attacks; see <a href="https://httpd.apache.org/docs/current/mod/mod_reqtimeout.html#requestreadtimeout">Apache's minimum-rate and timeout controls</a> for an example. A minimum rate set too high can reject legitimate slow clients; setting it too low weakens protection against slow senders. Inspect the logs to establish a baseline of genuine traffic rates.</li>
 <li><strong>Define an absolute connection timeout</strong></li>
 <li><strong>Define a maximum ingress data rate limit</strong> then drop all connections above that rate.</li>
 <li><strong>Define a total bandwidth size limit</strong> to prevent bandwidth exhaustion</li>
