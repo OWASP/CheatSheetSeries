@@ -20,7 +20,7 @@ Every connection must be encrypted and authenticated, whether it's between your 
 
 ### 3. Access to Resources is Granted on a Per-Session Basis
 
-Don't give permanent access to anything. Each time someone tries to access a resource, evaluate whether they should be allowed. [Sessions](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) should be short-lived and require re-authentication when they expire. No "set it and forget it" access.
+Authorize each resource session with the least privileges needed. Authorization for one resource must not automatically grant access to another. [NIST SP 800-207, Section 2.1](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf) permits a sufficiently recent trust evaluation; it does not require a new interactive login for every request. Set [session expiration and reauthentication requirements](Session_Management_Cheat_Sheet.md#automatic-session-expiration) according to resource sensitivity and risk.
 
 ### 4. Access is Determined by Dynamic Policy
 
@@ -32,11 +32,11 @@ Continuously check the health and security of all devices and systems. If you ca
 
 ### 6. All Authentication and Authorization is Dynamic and Strictly Enforced
 
-Security decisions happen in real-time for every access request. Don't rely on static rules or permanent permissions. The system should automatically adjust access based on current risk levels, revoke access for compromised accounts, and isolate suspicious devices.
+Enforce authentication and authorization before granting access, and reevaluate ongoing sessions according to policy. Trigger reauthentication or reauthorization when policy requires it, such as after a time limit, a request for another resource, or suspicious activity. Revoke access when the applicable policy no longer permits it, balancing security with availability and usability as described in [NIST SP 800-207, Section 2.1](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf).
 
 ### 7. Collect Information to Improve Security Posture
 
-Gather as much security data as possible about users, devices, network traffic, and system behavior. Use this information to detect threats, improve policies, and make better security decisions. This data is essential for compliance and incident investigation.
+Collect asset posture, traffic, and access-request data to improve security decisions. Assess and mitigate the privacy risks of this monitoring, as described in [NIST SP 800-207, Section 6.2](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf). Apply the [Logging Cheat Sheet](Logging_Cheat_Sheet.md#data-to-exclude) guidance on excluding sensitive data and protecting collected logs.
 
 ## Core Zero Trust Architecture Components
 
@@ -48,7 +48,7 @@ Zero Trust uses three main parts that work together:
 
 **Policy Enforcement Point** - These actually block or allow access attempts. This includes firewalls, proxy servers, application gateways, and API gateways. The important thing is that enforcement happens everywhere, not just at your network edge.
 
-These three parts work together on every access request in real time, creating security that adapts to changing situations.
+These components decide, establish, monitor, and terminate resource access according to policy; this does not require a new interactive login at every enforcement point.
 
 ## How Zero Trust Addresses Modern Security Challenges
 
