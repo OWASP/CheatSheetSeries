@@ -10,11 +10,13 @@ This cheat sheet demonstrates that input filtering is an incomplete defense for 
 
 ### Basic XSS Test Without Filter Evasion
 
-This attack, which uses normal XSS JavaScript injection, serves as a baseline for the cheat sheet (the quotes are not required in any modern browser so they are omitted here):
+For this baseline test, host a script containing only `alert('XSS')` on an HTTPS endpoint you control. Replace the placeholder URL below with that script's URL:
 
 ```html
-<SCRIPT SRC=https://cdn.jsdelivr.net/gh/Moksh45/host-xss.rocks/index.js></SCRIPT>
+<SCRIPT SRC=https://example.com/xss-test.js></SCRIPT>
 ```
+
+Use a script you have reviewed and control: [external scripts execute in the context of the tested page](https://developer.mozilla.org/en-US/docs/Web/API/HTMLScriptElement/src#security_considerations). A mutable third-party script can change what runs during your test.
 
 ### XSS Locator (Polyglot)
 
