@@ -59,7 +59,7 @@ tools = [
 
 #### Tool Authorization Middleware
 
-Enforce authorization in the execution component, outside the agent's context. A `user_confirmed` flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Changes to the target or parameters require new approval. Apply the [High-Impact Action Integrity Controls](#high-impact-action-integrity-controls) and the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md). Fail closed for unknown tools or missing approval requirements.
+Enforce authorization in the execution component, outside the agent's context. A `user_confirmed` flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Check and consume the approval in one atomic step immediately before execution so concurrent or repeated requests cannot reuse it. Changes to the target or parameters require new approval. Apply the [High-Impact Action Integrity Controls](#high-impact-action-integrity-controls) and the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md). Fail closed for unknown tools or missing approval requirements.
 
 ### 2. Input Validation & Prompt Injection Defense
 
@@ -425,7 +425,7 @@ Authenticate communicating agents and enforce the sender's permissions at the re
 
 When message signatures are needed, use a maintained protocol implementation. Protect the sender, intended recipient, message type, payload, creation and expiry times, and a unique message identifier. For HTTP, [RFC 9421 explains why verification must require all security-relevant components to be signed](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.2.1).
 
-Enforce a bounded validity window and reject repeated message identifiers before execution, retaining replay state for the entire acceptance window. A timestamp check alone permits repeated execution within that window; see [RFC 9421's replay considerations](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.2.2). Keep transport encryption: [message signatures do not provide confidentiality](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.1.2).
+Enforce a bounded validity window and reject repeated message identifiers before execution. A timestamp check alone permits repeated execution within that window; see [RFC 9421's replay considerations](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.2.2). Check and record each identifier in one atomic step, and keep the record for the entire acceptance window, including any clock-skew allowance. Share that state across every receiver instance that can accept the message, and reject messages when it is unavailable; [RFC 9449's DPoP replay guidance notes that single-use checks may not be feasible when servers behind one endpoint have no shared state](https://www.rfc-editor.org/rfc/rfc9449.html#section-11.1). Keep transport encryption: [message signatures do not provide confidentiality](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.1.2).
 
 ### 8. Data Protection & Privacy
 
