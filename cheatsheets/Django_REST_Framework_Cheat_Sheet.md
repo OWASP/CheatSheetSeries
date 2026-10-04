@@ -61,9 +61,9 @@ To prevent this problem, only display the minimum amount of required information
 
 ### API4:2019 Lack of Resources & Rate Limiting
 
-To prevent this problem, configure the setting DEFAULT_THROTTLE_CLASSES and DO NOT overwrite the throttle class on a class-based (variable `throttle_classes`) or function-based (decorator `throttle_classes`) view, unless you are confident about the change and understand the impact.
+Configure `DEFAULT_THROTTLE_CLASSES` and `DEFAULT_THROTTLE_RATES` for application usage policies, and review any per-view overrides. DRF explicitly warns that its [built-in throttling is not a security defense against brute force or denial-of-service attacks](https://www.django-rest-framework.org/api-guide/throttling/). Its cache operations are non-atomic, so concurrent requests can exceed the configured limit.
 
-EXTRA: If possible, do rate limiting with a WAF or similar. DRF should be the last layer of rate limiting.
+Enforce abuse controls at the reverse proxy or API gateway as well as in the application. Apply request-size and resource limits; see the [Denial of Service Cheat Sheet](Denial_of_Service_Cheat_Sheet.md) for layered defenses.
 
 ### API5:2019 Broken Function Level Authorization
 
