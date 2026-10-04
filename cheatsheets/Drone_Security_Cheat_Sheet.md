@@ -134,7 +134,7 @@ Defense-in-depth beyond message signing. Because signing is frequently disabled 
 
    - Most attacks require **physical access** to exploit CAN. It works on a differential signal and hardware hacking may be possible by tapping into them.
 
-   - There exist tools like **DroneCAN** which make using secure CAN communications easy.
+   - Do not rely on DroneCAN alone to authenticate CAN senders. Its [multi-frame cyclic redundancy check (CRC)](https://dronecan.github.io/Specification/4.1_CAN_bus_transport_layer/#transfer-crc) is an unkeyed checksum, not a message authentication code. Protect physical bus access and isolate the bus from untrusted components.
 
 3. **ZigBee** – A low-power wireless protocol often used for telemetry and sensor communication in backup systems.
 
@@ -156,7 +156,7 @@ Defense-in-depth beyond message signing. Because signing is frequently disabled 
 
    - Use **802.11w Management Frame Protection (MFP)** to mitigate deauthentication attacks (these are crafted packets that emulate a server and cause deauthentication).
 
-   - Disable **SSID broadcasting** and use **MAC filtering** where feasible. This is advisable because it essentially hides your drone's Wi-Fi adapters from simple scans.
+   - Do not rely on hiding the Wi-Fi network name or filtering media access control (MAC) addresses to prevent unauthorized access: [hidden networks remain discoverable and MAC addresses can be spoofed](https://support.apple.com/en-ca/102766#hiddennetwork). Use Wi-Fi authentication and encryption as described above.
 
 By implementing these security measures, drone operators can significantly reduce the risks of cyberattacks and unauthorized access to UAV communication systems.
 
