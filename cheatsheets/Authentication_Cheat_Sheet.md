@@ -108,8 +108,8 @@ Re-authentication is critical when an account has experienced high-risk activity
   Use risk-based authentication models that adapt to the user's behavior and context
 - **Multi-Factor Authentication (MFA)**
   Require an additional layer of verification for sensitive actions or events
-- **Challenge-Based Verification**
-  Prompt users to confirm their identity with a challenge question or secondary method
+- **Bound Authenticators**
+  Require an authenticator already bound to the account, such as the current password or a passkey. Do not substitute security questions, which are excluded by [ASVS 6.4.2](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v64-authentication-factor-lifecycle-and-recovery).
 
 #### Implementation Recommendations
 
@@ -286,7 +286,7 @@ It may be more user-friendly to only require a CAPTCHA be solved after a small n
 
 #### Security Questions and Memorable Words
 
-The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does **not** constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so they must be carefully chosen. The [Choosing and Using Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on this.
+Do not use security questions for authentication or re-authentication; [ASVS 6.4.2](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v64-authentication-factor-lifecycle-and-recovery) excludes knowledge-based authentication. When verifying a password or memorable word, request and verify the full secret rather than selected characters, as required by [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver). See the [Choosing and Using Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) for guidance limited to legacy systems.
 
 ## Logging and Monitoring
 
