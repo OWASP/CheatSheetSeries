@@ -163,7 +163,9 @@ After ensuring the validity of the incoming domain name, the second layer of val
 1. Build an allowlist with all the domain names of every identified and trusted applications.
 2. Verify that the domain name received is part of this allowlist (string strict comparison with case sensitive).
 
-Unfortunately here, the application is still vulnerable to the `DNS pinning` bypass mentioned in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:
+Domain allowlisting alone does not prevent DNS rebinding. Validate the resolved destination IP addresses against the application's permitted networks, then ensure the HTTP client connects only to validated addresses. A second, unchecked DNS lookup between validation and connection can bypass these checks; see [GitLab's URL blocker guidance](https://docs.gitlab.com/development/secure_coding_guidelines/ruby/#url-blocker--validation-libraries).
+
+Use an HTTP client mechanism that connects to the validated IP while preserving the original hostname for the HTTP `Host` header, TLS Server Name Indication (SNI), and certificate verification, as illustrated by [curl's custom address resolution](https://everything.curl.dev/usingcurl/connections/name.html#provide-a-custom-ip-address-for-a-name). Apply the destination policy to retries and fallback connections as well. The following DNS configuration and monitoring provide additional detection, not a substitute for connection-time enforcement:
 
 1. Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.
 2. Monitor the domains allowlist in order to detect when any of them resolves to a/an:
@@ -301,12 +303,12 @@ The first validation on the input data presented in the case [n°1](Server_Side_
      - The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).
    - For domain name:
         1. The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
-        2. To prevent the `DNS pinning` attack described in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf), the application will retrieve all the IP addresses behind the domain name provided (taking records *A* + *AAAA* for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.
+        2. Retrieve all the IP addresses behind the domain name (records *A* + *AAAA* for IPv4 + IPv6) and apply the same public-address verification described above. Bind the connection to a validated address as described under [domain name validation](#domain-name); checking DNS answers separately does not prevent DNS rebinding.
 3. The application will receive the protocol to use for the request via a dedicated input parameter for which it will verify the value against an allowed list of protocols (`HTTP` or `HTTPS`).
 4. The application will receive the parameter name for the token to pass to the *TargetedApplication* via a dedicated input parameter for which it will only allow the characters set `[a-z]{1,10}`.
 5. The application will receive the token itself via a dedicated input parameter for which it will only allow the characters set `[a-zA-Z0-9]{20}`.
 6. The application will receive and validate (from a security point of view) any business data needed to perform a valid call.
-7. The application will build the HTTP POST request **using only validated information** and will send it (*don't forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
+7. The application will build the HTTP POST request **using only validated information** and connect only to an IP address validated in step 2 (*don't forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
 
 ##### Network layer
 
