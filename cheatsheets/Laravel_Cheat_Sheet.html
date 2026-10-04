@@ -5161,7 +5161,7 @@
 <div class="highlight"><pre><span></span><code><span class="x">'http_only' =&gt; true,</span>
 </code></pre></div>
 <ul>
-<li>Unless you are using sub-domain route registrations in your Laravel application, it is recommended to set the cookie <code>domain</code> attribute to null so that only the same origin (excluding subdomains) can set the cookie. This can be configured in your <code>config/session.php</code> file:</li>
+<li>Unless cookies must be shared with subdomains, set <code>domain</code> to <code>null</code> in <code>config/session.php</code> to omit the Domain attribute. This restricts <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#domaindomain-value">where the browser sends that cookie</a> to the setting host; it does not prevent sibling subdomains from setting same-name parent-domain cookies. For stronger protection against these cookie collisions, use a <a href="Session_Management_Cheat_Sheet.html#cookie-name-prefixes"><code>__Host-</code> session cookie</a> with <code>Secure</code>, <code>Path=/</code>, and no Domain attribute on supporting browsers:</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="x">'domain' =&gt; null,</span>
 </code></pre></div>
@@ -5291,26 +5291,26 @@
 <p>Since the column name is dictated by user input, it is similar to column name SQL injection.</p>
 <h2 id="cross-site-scripting-xss">Cross Site Scripting (XSS)<a class="headerlink" href="#cross-site-scripting-xss" title="Permanent link">&para;</a></h2>
 <p><a href="https://owasp.org/www-community/attacks/xss/">XSS attacks</a> are injection attacks where malicious scripts (such as JavaScript code snippets) are injected into trusted websites.</p>
-<p>Laravel's <a href="https://laravel.com/docs/blade">Blade templating engine</a> has echo statements <code>{{ }}</code> that automatically escape variables using the <code>htmlspecialchars</code> PHP function to protect against XSS attacks.</p>
+<p>Laravel's <a href="https://laravel.com/framework/docs/blade#displaying-data">Blade echo statements</a> <code>{{ }}</code> HTML-escape ordinary string values using <code>htmlspecialchars</code>. This is appropriate for HTML text and quoted ordinary text attributes, but does not validate URL schemes or encode JavaScript or CSS contexts.</p>
 <p>Laravel also offers displaying unescaped data using the unescaped syntax <code>{!! !!}</code>. This must not be used on any untrusted data, otherwise your application will be subject to an XSS attack.</p>
 <p>For instance, if you have something like this in any of your Blade templates, it would result in a vulnerability:</p>
 <div class="highlight"><pre><span></span><code>{!! request()-&gt;input('somedata') !!}
 </code></pre></div>
-<p>This, however, is safe to do:</p>
-<div class="highlight"><pre><span></span><code>{{ request()-&gt;input('somedata') }}
+<p>For example, render untrusted text inside an ordinary HTML element:</p>
+<div class="highlight"><pre><span></span><code>&lt;span&gt;{{ request()-&gt;input('somedata') }}&lt;/span&gt;
 </code></pre></div>
-<p>For other information on XSS prevention that is not specific to Laravel, you may refer the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheatsheet</a>.</p>
+<p>For data embedded in JavaScript, follow Laravel's <a href="https://laravel.com/framework/docs/blade#rendering-json"><code>Js::from</code> guidance</a>. For URLs, CSS, and other output contexts, follow the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>.</p>
 <h2 id="unrestricted-file-uploads">Unrestricted File Uploads<a class="headerlink" href="#unrestricted-file-uploads" title="Permanent link">&para;</a></h2>
 <p>Unrestricted file upload attacks entail attackers uploading malicious files to compromise web applications. This section describes how to protect against such attacks while building Laravel applications. You may also refer the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheatsheet</a> to learn more.</p>
 <h3 id="always-validate-file-type-and-size">Always Validate File Type and Size<a class="headerlink" href="#always-validate-file-type-and-size" title="Permanent link">&para;</a></h3>
-<p>Always validate the file type (extension or MIME type) and file size to avoid storage DOS attacks and remote code execution:</p>
+<p>Validate allowed file types and impose a maximum file size as one layer of protection. This illustrative rule uses <a href="https://laravel.com/framework/docs/12.x/validation#rule-max"><code>max</code></a> to cap the file size rather than requiring an exact size:</p>
 <div class="highlight"><pre><span></span><code><span class="x">$request-&gt;validate([</span>
-<span class="x">    'photo' =&gt; 'file|size:100|mimes:jpg,bmp,png'</span>
+<span class="x">    'photo' =&gt; 'file|max:100|mimes:jpg,bmp,png'</span>
 <span class="x">]);</span>
 </code></pre></div>
 <p>Storage DOS attacks exploit missing file size validations and upload massive files to cause a denial of service (DOS) by exhausting the disk space.</p>
 <p>Remote code execution attacks entail first, uploading malicious executable files (such as PHP files) and then, triggering their malicious code by visiting the file URL (if public).</p>
-<p>Both these attacks can be avoided by simple file validations as mentioned above.</p>
+<p>These validations alone do not prevent either attack. Laravel's <a href="https://laravel.com/framework/docs/12.x/validation#rule-mimes"><code>mimes</code> rule</a> infers type from content; it does not validate the user-supplied extension or make the file safe to execute. Generate stored filenames, keep uploads outside the webroot or on a separate host, and ensure uploaded files cannot be executed by the server. Bound aggregate storage and upload frequency as well as individual file size. Follow the <a href="File_Upload_Cheat_Sheet.html#file-upload-protection">File Upload Cheat Sheet</a> for the remaining controls.</p>
 <h3 id="do-not-rely-on-user-input-to-dictate-filenames-or-path">Do Not Rely On User Input To Dictate Filenames or Path<a class="headerlink" href="#do-not-rely-on-user-input-to-dictate-filenames-or-path" title="Permanent link">&para;</a></h3>
 <p>If your application allows user controlled data to construct the path of a file upload, this may result in overwriting a critical file or storing the file in a bad location.</p>
 <p>Consider the following code:</p>

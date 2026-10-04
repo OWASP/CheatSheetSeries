@@ -5106,11 +5106,11 @@
 </ol>
 <h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
 <p>For historical research on Java deserialization and defensive allowlisting, see <a href="../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf">Java Deserialization Attacks — German OWASP Day 2016</a>.</p>
-<p>The following techniques are all good for preventing attacks against deserialization against <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">Java's Serializable format</a>.</p>
+<p>The following techniques can reduce risks when using <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">Java's Serializable format</a>.</p>
 <p>Implementation advice:</p>
 <ul>
-<li>In your code, override the <code>ObjectInputStream#resolveClass()</code> method to prevent arbitrary classes from being deserialized. This safe behavior can be wrapped in a library like <a href="https://github.com/ikkisoft/SerialKiller">SerialKiller</a>.</li>
-<li>Use a safe replacement for the generic <code>readObject()</code> method as seen here. Note that this addresses "<a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">billion laughs</a>" type attacks by checking input length and number of objects deserialized.</li>
+<li>Configure <a href="https://docs.oracle.com/en/java/javase/17/core/serialization-filtering1.html">serialization filters</a> with an application-specific class allowlist and resource limits before reading objects.</li>
+<li>If maintaining a <code>resolveClass()</code> override, account for its <a href="#harden-your-own-javaioobjectinputstream">limitations below</a>; class checks alone do not bound resource consumption.</li>
 </ul>
 <h4 id="clear-box-review_2">Clear-box Review<a class="headerlink" href="#clear-box-review_2" title="Permanent link">&para;</a></h4>
 <p>Be aware of the following Java API uses for potential serialization vulnerability.</p>
@@ -5145,14 +5145,14 @@
 <span class="p">}</span>
 </code></pre></div>
 <h4 id="harden-your-own-javaioobjectinputstream">Harden Your Own java.io.ObjectInputStream<a class="headerlink" href="#harden-your-own-javaioobjectinputstream" title="Permanent link">&para;</a></h4>
-<p>The <code>java.io.ObjectInputStream</code> class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:</p>
+<p>The <code>java.io.ObjectInputStream</code> class is used to deserialize objects. A custom class-resolution allowlist may be useful if:</p>
 <ul>
 <li>you can change the code that does the deserialization;</li>
 <li>you know what classes you expect to deserialize.</li>
 </ul>
-<p>The general idea is to override <a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)"><code>ObjectInputStream.html#resolveClass()</code></a> in order to restrict which classes are allowed to be deserialized.</p>
-<p>Because this call happens before a <code>readObject()</code> is called, you can be sure that no deserialization activity will occur unless the type is one that you allow.</p>
-<p>A simple example is shown here, where the <code>LookAheadObjectInputStream</code> class is guaranteed to <strong>not</strong> deserialize any other type besides the <code>Bicycle</code> class:</p>
+<p>The general idea is to override <code>ObjectInputStream.resolveClass()</code> to restrict ordinary class resolution during deserialization.</p>
+<p>This does not check every object: the <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/serialization/input.html#the-objectinputstream-class">serialization specification</a> handles strings separately and resolves dynamic proxy class descriptors through <code>resolveProxyClass()</code>.</p>
+<p>The following example allows only <code>Bicycle</code> through <code>resolveClass()</code>. It is an illustrative class check, not a complete deserialization defense:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">LookAheadObjectInputStream</span><span class="p">(</span><span class="n">InputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
@@ -5160,7 +5160,7 @@
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/**</span>
-<span class="cm">    * Only deserialize instances of our expected Bicycle class</span>
+<span class="cm">    * Restrict ordinary class resolution to our expected Bicycle class</span>
 <span class="cm">    */</span>
 <span class="w">    </span><span class="nd">@Override</span>
 <span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="nf">resolveClass</span><span class="p">(</span><span class="n">ObjectStreamClass</span><span class="w"> </span><span class="n">desc</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="p">{</span>
@@ -5171,6 +5171,7 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<p>Use <a href="https://docs.oracle.com/en/java/javase/17/core/serialization-filtering1.html">serialization filtering</a> to combine a class allowlist with limits on graph depth, references, array lengths, and stream bytes. Also bound the serialized input size separately: filters are not called for concretely encoded strings or primitives. Filtering does not make arbitrary untrusted deserialization safe.</p>
 <p>More complete implementations of this approach have been proposed by various community members:</p>
 <ul>
 <li><a href="https://github.com/ikkisoft/SerialKiller">NibbleSec</a> - a library that allows creating lists of classes that are allowed to be deserialized</li>

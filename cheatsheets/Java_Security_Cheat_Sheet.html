@@ -5960,8 +5960,9 @@
 <a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html">JSON Template Layout</a>
 introduced in
 <a href="https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0">Log4j 2.14.0</a>
-and limit the size of strings to 500 bytes using the
-<a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength"><code>maxStringLength</code> configuration attribute</a>:</p>
+and truncate string values longer than 500 characters using the
+<a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength"><code>maxStringLength</code> configuration attribute</a>.
+The truncation suffix is appended after this limit; this does not cap the encoded byte size or the total JSON document size:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"https://logging.apache.org/xml/ns"</span>
 <span class="w">               </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
@@ -5972,7 +5973,7 @@ and limit the size of strings to 500 bytes using the
 <span class="w">    </span><span class="nt">&lt;Socket</span><span class="w"> </span><span class="na">name=</span><span class="s">"SOCKET"</span>
 <span class="w">            </span><span class="na">host=</span><span class="s">"localhost"</span>
 <span class="w">            </span><span class="na">port=</span><span class="s">"12345"</span><span class="nt">&gt;</span>
-<span class="w">      </span><span class="cm">&lt;!-- Limit the size of any string field in the produced JSON document to 500 bytes --&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- Truncate strings longer than 500 characters, then append the truncation suffix --&gt;</span>
 <span class="w">      </span><span class="nt">&lt;JsonTemplateLayout</span><span class="w"> </span><span class="na">maxStringLength=</span><span class="s">"500"</span>
 <span class="w">                          </span><span class="na">nullEventDelimiterEnabled=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/Socket&gt;</span>
@@ -5994,7 +5995,7 @@ for more tips.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.logging.log4j.Logger</span><span class="p">;</span>
 <span class="p">...</span>
 <span class="c1">// Most common way to declare a logger</span>
-<span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">LOGGER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">();</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">();</span>
 <span class="c1">// GOOD!</span>
 <span class="c1">//</span>
 <span class="c1">// Use parameterized logging to add user data to a message</span>

@@ -6828,7 +6828,7 @@
 <li>The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.</li>
 <li>When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.</li>
 <li>TOTP is widely used, and many users will already have at least one TOTP app installed.</li>
-<li>As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they steal the phone.</li>
+<li>A screen lock reduces theft risk but does not guarantee protection if the phone is stolen while unlocked. Enable authenticator-app access protection where available; for example, <a href="https://support.google.com/accounts/answer/1066447?hl=en-rd">Google Authenticator’s Privacy Screen</a> requires device verification before app use.</li>
 </ul>
 <h5 id="cons_3">Cons<a class="headerlink" href="#cons_3" title="Permanent link">&para;</a></h5>
 <ul>
@@ -7048,7 +7048,7 @@ NIST SP 800-63B-4 designates SMS and PSTN-delivered codes as a <em>restricted</e
 <li>Enforce re-authentication</li>
 <li>Deny access and trigger alerting or account protection flows</li>
 </ul>
-<p>For more details on when to trigger reauthentication after high-risk events—such as account recovery or suspicious activity—see the <a href="Authentication_Cheat_Sheet.html#reauthentication-after-risk-events">Reauthentication After Risk Events</a> section in the Authentication Cheat Sheet</p>
+<p>For more details on when to trigger reauthentication after high-risk events—such as account recovery or suspicious activity—see the <a href="Authentication_Cheat_Sheet.html#re-authentication-after-risk-events">Reauthentication After Risk Events</a> section in the Authentication Cheat Sheet</p>
 <p>This method is widely used in modern authentication systems to balance usability and security. However, developers must ensure that risk signals cannot be spoofed and that fallback mechanisms are not weaker than the primary MFA methods.</p>
 <p><strong>Example Use Case</strong>: A user logs in from a trusted device in a usual location — no additional prompt is needed. But if they log in from a new country using a Tor exit node, the system requires SMS verification or triggers an account lock until further verification.</p>
 <h2 id="mfa-attack-patterns-and-mitigations">MFA Attack Patterns and Mitigations<a class="headerlink" href="#mfa-attack-patterns-and-mitigations" title="Permanent link">&para;</a></h2>
