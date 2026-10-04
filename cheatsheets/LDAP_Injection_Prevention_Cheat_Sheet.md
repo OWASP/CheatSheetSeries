@@ -129,7 +129,7 @@ NamingEnumeration<SearchResult> results =
 
 `Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://datatracker.ietf.org/doc/html/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
 
-`Encoder.LdapDistinguishedNameEncode` encodes input according to [RFC2253](https://tools.ietf.org/html/rfc2253) where unsafe characters are converted to `#XX` where `XX` is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (`\X`). In addition to this a space or octothorpe (`#`) at the beginning of the input string is `\` escaped as is a space at the end of a string.
+Use `Encoder.LdapDistinguishedNameEncode` for distinguished-name attribute values. In [DN string escaping](https://datatracker.ietf.org/doc/html/rfc4514#section-2.4), `\XX` represents an escaped byte using two hexadecimal digits; selected special characters can instead be prefixed with a backslash. Escape leading spaces or `#` and trailing spaces. A leading `#` followed by hexadecimal pairs represents an entire attribute value encoded using Basic Encoding Rules (BER), not individual character escapes.
 
 `LdapDistinguishedNameEncode(string, bool, bool)` is also provided so you may turn off the initial or final character escaping rules, for example if you are concatenating the escaped distinguished name fragment into the midst of a complete distinguished name.
 
