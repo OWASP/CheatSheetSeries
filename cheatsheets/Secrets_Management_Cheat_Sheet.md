@@ -103,44 +103,10 @@ Cloud-native secret managers often provide built-in support for automated rotati
     - The secrets manager is configured to trigger a rotation Lambda function on a schedule.
     - The Lambda function has the necessary permissions to update the database password and the secret value in the secrets manager.
     - The rotation process typically involves multiple steps (create new secret, set new secret, test new secret, finish rotation) to ensure a safe transition.
-- **AWS Lambda Rotation Function (Conceptual Python Code):**
 
-    ```python
-    import boto3
-    import os
+For AWS, start from the [rotation function templates](https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_available-rotation-templates.html). Secrets Manager invokes the function [separately for each rotation step](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_lambda.html); retrieve the pending credential from the secret version identified by `ClientRequestToken`, rather than relying on a local variable from an earlier invocation.
 
-    def lambda_handler(event, context):
-        secret_name = event['SecretId']
-        token = event['ClientRequestToken']
-        step = event['Step']
-
-        secrets_manager = boto3.client('secretsmanager')
-        # Get the secret metadata
-        metadata = secrets_manager.describe_secret(SecretId=secret_name)
-
-        if step == "createSecret":
-            # Create a new version of the secret
-            new_password = generate_new_password()
-            secrets_manager.put_secret_value(
-                SecretId=secret_name,
-                ClientRequestToken=token,
-                SecretString=f'{{"password":"{new_password}"}}',
-                VersionStages=['AWSPENDING']
-            )
-        elif step == "setSecret":
-            # Update the database with the new password
-            update_database_password(new_password)
-        elif step == "testSecret":
-            # Test the new secret
-            test_database_connection(new_password)
-        elif step == "finishSecret":
-            # Mark the new version of the secret as current
-            secrets_manager.update_version_stage(
-                SecretId=secret_name,
-                VersionStage="AWSCURRENT",
-                MoveToVersionId=token
-            )
-    ```
+Follow the [rotation function security checks](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_lambda-functions.html) and [template validation](https://github.com/aws-samples/aws-secrets-manager-rotation-lambdas/blob/master/SecretsManagerRotationTemplate/lambda_function.py): ensure rotation is enabled and the request token identifies a known secret version. Safely return if that version is already `AWSCURRENT`; otherwise, require `AWSPENDING`. Before changing credentials, validate the current credential and confirm that the pending version targets the intended database and user under the chosen rotation strategy. These checks prevent the privileged function from being redirected to another resource. Test the pending credential before promoting its version to `AWSCURRENT`.
 
 These examples demonstrate how you can create architectures that not only manage secrets securely but also automate the rotation process, significantly reducing the risk of compromised credentials.
 
