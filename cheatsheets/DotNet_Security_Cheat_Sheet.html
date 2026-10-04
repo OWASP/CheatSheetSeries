@@ -6171,11 +6171,11 @@ technology or language and is therefore out of scope for this cheat sheet. See t
 </code></pre></div>
 <h5 id="using-net-core-20-or-later">Using .NET Core 2.0 or later<a class="headerlink" href="#using-net-core-20-or-later" title="Permanent link">&para;</a></h5>
 <p>Starting with .NET Core 2.0 it is possible to <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-7.0#aspnet-core-antiforgery-configuration">automatically generate and verify the antiforgery token</a>.</p>
-<p>If you are using <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro">tag-helpers</a>, which is the default for most web project templates, then all forms will automatically send the anti-forgery token. You can check if tag-helpers are enabled by checking if your main <code>_ViewImports.cshtml</code> file contains:</p>
+<p>With <a href="https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-7.0#aspnet-core-antiforgery-configuration">FormTagHelper enabled</a>, a form with <code>method="post"</code> and an absent or empty <code>action</code> automatically gets an antiforgery token unless token generation is disabled. This does not apply to every form. You can check whether tag helpers are enabled in your main <code>_ViewImports.cshtml</code> file:</p>
 <div class="highlight"><pre><span></span><code><span class="n">@addTagHelper</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">Microsoft</span><span class="p">.</span><span class="n">AspNetCore</span><span class="p">.</span><span class="n">Mvc</span><span class="p">.</span><span class="n">TagHelpers</span>
 </code></pre></div>
-<p><code>IHtmlHelper.BeginForm</code> also sends anti-forgery-tokens automatically.</p>
-<p>If you are not using tag-helpers or <code>IHtmlHelper.BeginForm</code>, you must use the requisite helper on forms as seen here:</p>
+<p><code>IHtmlHelper.BeginForm</code> generates an antiforgery token by default for methods other than GET. Token generation must be paired with server-side validation, as described below.</p>
+<p>For forms that need antiforgery protection without automatic token generation, add the token explicitly:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">"RelevantAction"</span> <span class="p">&gt;</span>
 @Html.AntiForgeryToken()
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
@@ -6630,9 +6630,7 @@ go to <a href="http://github.com/johnstaveley/SecurityEssentials/">Security Esse
 </ul>
 <h2 id="wcf-guidance">WCF Guidance<a class="headerlink" href="#wcf-guidance" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Keep in mind that the only safe way to pass a request in RESTful services is via <code>HTTP POST</code>, with TLS enabled.
-Using <code>HTTP GET</code> necessitates putting the data in the URL (e.g. the query string) which is visible to the user and will
-be logged and stored in their browser history.</li>
+<li>Use HTTPS for RESTful requests regardless of HTTP method, and choose methods according to their semantics. Keep sensitive values out of URLs, which can be exposed in logs and browser history even with HTTPS. <a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-17.9">POST can carry sensitive form data in the request body rather than the URL</a>, but POST alone does not provide confidentiality or authorization.</li>
 <li>Avoid <a href="https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.basichttpbinding?view=netframework-4.7.2">BasicHttpBinding</a>. It has no default security configuration. Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.wshttpbinding?view=netframework-4.7.2">WSHttpBinding</a> instead.</li>
 <li>Use at least two security modes for your binding. Message security includes security provisions in the headers. Transport security means use of SSL. <a href="https://docs.microsoft.com/en-us/dotnet/framework/wcf/samples/ws-transport-with-message-credential">TransportWithMessageCredential</a> combines the two.</li>
 <li>Test your WCF implementation with a fuzzer like <a href="https://www.zaproxy.org/">ZAP</a>.</li>
