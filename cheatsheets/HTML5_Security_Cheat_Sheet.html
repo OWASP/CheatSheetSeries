@@ -4938,8 +4938,8 @@
 <li>Service Workers run on a separate, scriptable thread and intercept network requests for the registered scope. Because they can transparently serve cached responses, they have a significant security impact:<ul>
 <li>Only register Service Workers from your own origin and <strong>only serve the worker script over HTTPS</strong> with a long-cache-busting filename (e.g. <code>sw.&lt;hash&gt;.js</code>).</li>
 <li>Validate that the scope of the Service Worker is restricted (use the <code>scope</code> option or the <code>Service-Worker-Allowed</code> response header) so a compromised worker cannot intercept unrelated paths.</li>
-<li>A malicious or compromised Service Worker can intercept <em>every</em> request from its scope until it is unregistered or the cache TTL expires; have a documented kill-switch (e.g. an unregister flow you can ship in a hotfix).</li>
-<li>Do not cache responses that contain sensitive data. Send <code>Cache-Control: no-store</code> on those responses so the Cache API will not retain them.</li>
+<li>A malicious or compromised Service Worker can intercept requests from the pages it controls. Have a documented recovery process that <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API">updates or unregisters the worker</a> and removes affected caches. Expiring cached data does not unregister a worker.</li>
+<li>Do not put responses containing sensitive data into the Cache API. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache"><code>Cache</code> does not honor HTTP caching headers, and entries do not expire automatically</a>; service-worker code must explicitly exclude these responses and delete any sensitive entries already stored. Continue sending <code>Cache-Control: no-store</code> to control HTTP caches.</li>
 </ul>
 </li>
 </ul>
