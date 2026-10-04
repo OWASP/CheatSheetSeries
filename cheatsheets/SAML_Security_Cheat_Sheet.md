@@ -283,7 +283,7 @@ SAML Signing keys are a top security asset and [target of attackers](https://www
 - Validate NotBefore and NotOnorAfter
 - Validate Recipient attribute, `InResponseTo`, and `<saml:SubjectConfirmationData>` (`Recipient`, `NotOnOrAfter`, `InResponseTo`)
 - Explicitly verify the signature algorithm is at least RSA-SHA-256 (or stronger). Reject SHA-1-based algorithms (`http://www.w3.org/2000/09/xmldsig#rsa-sha1`, `...#hmac-sha1`) and `<ds:DigestMethod Algorithm="...sha1">`. NIST SP 800-131A Rev. 2 disallows SHA-1 in digital signatures.
-- Verify the `<ds:Reference URI>` in the XML signature covers the `<saml:Assertion>` element being trusted. This mitigates [XML Signature Wrapping](https://arxiv.org/pdf/1401.7483v1.pdf) attacks.
+- Verify that the XML signature's `<ds:Reference URI>` resolves to the signed Assertion or Response, and that the exact assertion used for authentication is protected by that validated signature. [SAML Core sections 5.3 and 5.4](https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) define signature inheritance and references; [approved errata E93](https://docs.oasis-open.org/security/saml/v2.0/errata05/os/saml-v2.0-errata05-os.html#__RefHeading__10669_188893729) permits Response signatures in the browser SSO profile. Reject assertions outside the validated signed content and follow the [signature-wrapping defenses](#validate-signatures).
 - Define criteria for SAML logout
 - Exchange assertions only over secure transports like TLS
 - Define criteria for session management
