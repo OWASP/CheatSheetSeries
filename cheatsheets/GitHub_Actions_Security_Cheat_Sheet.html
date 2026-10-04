@@ -5219,9 +5219,9 @@ Additionally, this trigger can bypass pull request approval mechanisms, allowing
 </ol>
 <p>Alternatively, consider replacing the <code>issue_comment</code> trigger with label-based triggers.
 When using the <code>pull_request</code> trigger with the labeled event, <code>github.event.pull_request.head.sha</code> contains the latest commit SHA for the pull request.
-Labels can only be applied by authorized users (i.e., GitHub accounts with write permissions), so the workflow does not need to implement additional authorization checks.
-Additionally, since the event is triggered by a user with write permissions, the workflow can consume <code>GITHUB_TOKEN</code> with <code>write</code> permissions and required GitHub secrets.
-The workflow should check out the code using the trusted commit SHA available via <code>github.event.pull_request.head.sha</code>, which reflects the state of the pull request at the time the label was applied.</p>
+Users with <a href="https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels#applying-a-label">triage access can apply labels</a>. Verify that the actor applying a workflow-triggering label is authorized for that operation; permission to label does not establish that the commit has been reviewed.
+Applying a label does not elevate workflow permissions. For pull requests from forks of public repositories, <code>pull_request</code> workflows still receive a read-only <code>GITHUB_TOKEN</code> and no other secrets, as described in <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflows-in-forked-repositories">GitHub's fork workflow restrictions</a>.
+After reviewing the proposed code, check out the exact commit SHA available via <code>github.event.pull_request.head.sha</code>, which reflects the state of the pull request at the time the label was applied. Do not treat the label as approval for later commits.</p>
 <blockquote>
 <p>[!IMPORTANT]
 In general, never check out code using mutable references (e.g., pull request numbers or branch names) - always use immutable references such as a full commit SHA.</p>

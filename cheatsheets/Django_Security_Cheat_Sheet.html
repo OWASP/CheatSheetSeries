@@ -4771,7 +4771,7 @@
 <li><code>X_FRAME_OPTIONS</code>: Set this key to 'DENY' or 'SAMEORIGIN'. This setting adds the <code>X-Frame-Options</code> header to all HTTP responses. This protects against clickjacking attacks.</li>
 </ul>
 <h2 id="content-security-policy">Content Security Policy<a class="headerlink" href="#content-security-policy" title="Permanent link">&para;</a></h2>
-<p>Django does not provide built-in Content Security Policy (CSP) support by default. CSP can be implemented using third-party libraries such as <code>django-csp</code> or by configuring HTTP response headers.</p>
+<p>Django 6.0 and later provide built-in Content Security Policy (CSP) support. Enable <code>django.middleware.csp.ContentSecurityPolicyMiddleware</code> and configure <code>SECURE_CSP</code> to enforce a policy, or <code>SECURE_CSP_REPORT_ONLY</code> to monitor violations without blocking content. Follow <a href="https://docs.djangoproject.com/en/6.0/howto/csp/">Django's CSP configuration guide</a>. Earlier versions require a third-party library such as <code>django-csp</code> or configuration of HTTP response headers.</p>
 <p>For more details:</p>
 <ul>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">OWASP Content Security Policy Cheat Sheet</a></li>
