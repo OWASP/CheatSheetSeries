@@ -540,11 +540,11 @@ And finally, OPA can regulate use of service mesh architectures. Often, administ
 
 ### Limiting resource usage on a cluster
 
-It is important to define resource quotas for containers in Kubernetes, since all resources in a Kubernetes cluster are created with unbounded CPU limits and memory requests/limits by default. If you run resource-unbound containers, your system will be in risk of Denial of Service (DoS) or “noisy neighbor” scenarios. Fortunately, OPA can use resource quotas on a namespace, which will limit the number or capacity of resources granted to that namespace and restrict that namespace by defining its CPU capacity, memory, or persistent disk space.
+Use Kubernetes [ResourceQuota](https://kubernetes.io/docs/concepts/policy/resource-quotas/) to limit aggregate resource requests, limits, and object counts within a namespace, reducing resource-exhaustion risks between tenants. This is a built-in admission control; it does not require OPA.
 
-Additionally, the OPA can limit how many pods, services, or volumes exist in each namespace, and it can restrict the maximum or minimum size of some of the resources above. The resource quotas provide default limits when none are specified and prevent users from requesting unreasonably high or low values for commonly reserved resources like memory.
+Use [LimitRange](https://kubernetes.io/docs/concepts/policy/limit-range/) for per-Pod or per-container minimum and maximum allocations and default requests or limits. ResourceQuota does not supply these defaults or enforce a minimum allocation for each Pod.
 
-Below is an example of defining namespace resource quota in the appropriate yaml. It limits the number of pods in the namespace to 4, limits their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.
+The example below permits at most four non-terminal Pods in the namespace. Across those Pods, total CPU requests cannot exceed 1 CPU and total memory requests cannot exceed 1 GiB; total CPU limits cannot exceed 2 CPUs and total memory limits cannot exceed 2 GiB. These are namespace totals, not a per-Pod range.
 
 `compute-resources.yaml`:
 
