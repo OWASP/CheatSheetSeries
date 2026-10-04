@@ -78,27 +78,21 @@ If you must accept HTML content from users, consider a markup language for rich 
 
 If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the `#sanitize` method that lets you list allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
 
-An often overlooked XSS attack vector for older versions of rails is the `href` value of a link:
+User-controlled link destinations require URL validation in addition to HTML escaping:
 
 ``` ruby
 <%= link_to "Personal Website", @user.website %>
 ```
 
-If `@user.website` contains a link that starts with `javascript:`, the content will execute when a user clicks the generated link:
+If `@user.website` contains a `javascript:` URL, clicking the generated link can execute script:
 
 ``` html
 <a href="javascript:alert('Haxored')">Personal Website</a>
 ```
 
-Newer Rails versions escape such links in a better way.
+[`link_to`](https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to) does not enforce a URL-scheme allowlist. Validate personal website URLs to allow only `https` or `http` before rendering them, and retain HTML attribute escaping. See the [XSS prevention rules](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#xss-prevention-rules-summary) for URL validation and encoding requirements. Do not use `html_safe` to bypass escaping.
 
-``` ruby
-link_to "Personal Website", 'javascript:alert(1);'.html_safe()
-# Will generate:
-# "<a href="javascript:alert(1);">Personal Website</a>"
-```
-
-Using [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) is one more security measure to forbid execution for links starting with `javascript:` .
+A restrictive Content Security Policy can additionally [block `javascript:` navigation](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript#description), but it does not replace URL validation.
 
 [Brakeman scanner](https://github.com/presidentbeef/brakeman) helps in finding XSS problems in Rails apps.
 
