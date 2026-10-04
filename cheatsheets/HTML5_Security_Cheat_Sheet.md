@@ -93,12 +93,12 @@ As the behavior using the elements above is different between the browsers, eith
 - For [HTML links](https://www.scaler.com/topics/html/html-links/), add the attribute `rel="noopener noreferrer"` to every link.
 - For JavaScript, use this function to open a window (or tab):
 
-``` javascript
-function openPopup(url, name, windowFeatures){
-  //Open the popup and set the opener and referrer policy instruction
-  var newWindow = window.open(url, name, 'noopener,noreferrer,' + windowFeatures);
-  //Reset the opener link
-  newWindow.opener = null;
+```javascript
+function openPopup(url, name, windowFeatures = "") {
+  const features = ["noopener", "noreferrer", windowFeatures]
+    .filter(Boolean)
+    .join(",");
+  window.open(url, name, features);
 }
 ```
 
