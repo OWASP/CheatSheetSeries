@@ -4,7 +4,7 @@
 
 Business logic vulnerabilities are flaws in the way an application implements its intended workflow. They aren't missing input sanitization or unescaped output. The code does what the developer told it to do, but what the developer told it to do doesn't match what the business actually needs. A user skips a required step, submits a request out of order, pays a negative price, stacks coupons in a way nobody planned for, or wins a race against the server's own bookkeeping.
 
-No scanner will find these bugs for you. They don't have a signature to match on. They show up in code that looks perfectly fine in isolation because the bug isn't in any single function. It's in the gap between what the developer assumed and what a user can actually do.
+Generic scanners often miss business logic flaws because they lack the application's business rules. Automated analysis can still detect some patterns, including [workflow enforcement weaknesses](https://cwe.mitre.org/data/definitions/841.html). Combine tools with review and testing that checks the intended business process.
 
 This cheat sheet covers practical patterns for preventing business logic abuse. It's aimed at developers building features, not at penetration testers looking for them. For testing guidance, see the [OWASP Web Security Testing Guide, Business Logic Testing section](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/).
 
@@ -18,7 +18,7 @@ Key takeaways:
 
 ## Why Business Logic Flaws Are Different
 
-Most well-known web vulnerabilities (SQL injection, XSS, CSRF, path traversal) have a clear technical signature. A security scanner can fuzz parameters, look for reflected payloads, and produce a reasonable report. Business logic bugs don't work that way.
+Most well-known web vulnerabilities (SQL injection, XSS, CSRF, path traversal) have a clear technical signature. A security scanner can fuzz parameters, look for reflected payloads, and produce a reasonable report. Business logic flaws often require additional knowledge of the intended workflow.
 
 Consider an e-commerce checkout. The server accepts a request containing a product ID, quantity, and coupon code. Every input is validated: the product ID exists, the quantity is a positive integer, the coupon code matches a known pattern. No technical rule is broken. But the application recalculates the total from the client-submitted price instead of looking it up server-side, so a user can pay one cent for a television. That's a business logic bug, and no amount of input validation helps, because the input is syntactically perfect.
 
@@ -29,7 +29,7 @@ The patterns repeat across industries:
 - An endpoint performs two operations (check balance, then debit) without a lock, so two concurrent requests both pass the balance check and both debit.
 - A feature intended to reward legitimate use (referrals, points, promo credits) has no controls against one user creating many accounts.
 
-None of these are subtle once you see them. They're just invisible to tools that don't understand the business process.
+Review these patterns against the application's business rules; a clean scanner report does not show that those rules are enforced.
 
 ## Always Re-derive Security-relevant Values Server-side
 
