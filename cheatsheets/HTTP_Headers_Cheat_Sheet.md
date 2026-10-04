@@ -81,12 +81,12 @@ The `Cache-Control` header defines how responses are cached by browsers and inte
 
 #### Recommendation
 
-- Use `no-store` for sensitive data to prevent any form of caching.
+- Use [`no-store`](https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.5) for sensitive responses to prohibit storage in compliant HTTP caches.
 - Use `private` to allow caching only in non-shared (user-specific) caches and to prevent storage in shared caches (note that private caches may still persist the response).
 - Avoid relying on default caching behavior for sensitive or protected content.
 - Be aware that `no-cache` does not prevent caching; it allows caches to store responses. It requires revalidation with the origin server before reuse.
 
-These directives help reduce the risk of sensitive data being stored or exposed through caching, but use `no-store` when storage of sensitive data must be strictly prevented.
+`no-store` does not control every storage mechanism: the [Cache API does not honor HTTP caching headers](https://developer.mozilla.org/en-US/docs/Web/API/Cache). Explicitly exclude sensitive responses from application-managed caches and remove existing sensitive entries; see [Offline Applications](HTML5_Security_Cheat_Sheet.md#offline-applications).
 
 #### References
 
