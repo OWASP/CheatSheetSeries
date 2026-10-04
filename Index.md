@@ -240,7 +240,7 @@
 
 [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Vbnet](assets/Index_Vbnet.svg)
 
-[Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
+[Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md)
 
 [Secure AI Model Ops Cheat Sheet](cheatsheets/Secure_AI_Model_Ops_Cheat_Sheet.md)
 
