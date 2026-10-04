@@ -7083,7 +7083,7 @@ WARN</p>
 <hr />
 <h3 id="sensitive_deleteuseridfileobject">sensitive_delete:[userid,file|object]<a class="headerlink" href="#sensitive_deleteuseridfileobject" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
-All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of the file should be maintained according to legal/privacy requirements.</p>
+Log and periodically review deletion events for sensitive files and data. Record the action and object identifier without copying the sensitive contents into the log. Retain the underlying data according to the applicable <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf#page=378">information-retention requirements (NIST SI-12)</a>, then <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf#page=379">securely dispose of it and retained copies when no longer needed (SI-12(3))</a>. Keep the deletion audit record according to the <a href="Logging_Cheat_Sheet.html#disposal-of-logs">log retention and disposal requirements</a>; recording a deletion event does not itself require archiving the deleted file.</p>
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
@@ -7092,7 +7092,7 @@ WARN</p>
     "appid": "foobar.netportal_auth",
     "event": "sensitive_delete:joebob1, /users/admin/some/important/path",
     "level": "WARN",
-    "description": "User joebob1 marked file /users/admin/some/important/path for deletion",
+    "description": "User joebob1 deleted file /users/admin/some/important/path",
     ...
 }
 </code></pre></div>
