@@ -51,7 +51,7 @@ In addition, the following headers, which can be change depending on the Device 
 - Accept
 - Accept-Encoding
 
-Also, recent browsers sends request headers called `Sec-Fetch-*` that provides information about the browsing contexts, so these values can also be used as a reference. It's not sent by every browser, and it's not always sent even if browser supported, so it should not be relied upon.
+The following [`Sec-CH-*` Client Hint headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Client_hints#hint_types) provide information about the browser, device, or user preferences. These differ from [`Sec-Fetch-*` Fetch Metadata headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site), which describe request context. Client Hints may be omitted depending on browser support, server requests, and client permissions, so treat them as optional signals.
 
 - sec-ch-prefers-color-scheme
 - sec-ch-ua
