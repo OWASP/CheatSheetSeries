@@ -298,7 +298,7 @@ Note: if you don't store metadata about the secret nor prepare to move, you will
 
 OpenID Connect (OIDC) lets an application delegate user authentication to an identity provider (IdP), instead of storing and verifying the user's password itself. It does not require passwordless authentication: [OpenID Connect Core Section 3.1.2.3](https://openid.net/specs/openid-connect-core-1_0.html#Authenticates) leaves the IdP's authentication method, including passwords, outside the protocol's scope.
 
-OIDC alone does not eliminate phishing, credential stuffing, or weak passwords at the IdP. Choose an IdP that enforces appropriate authentication controls; for phishing resistance, require [phishing-resistant authentication](https://pages.nist.gov/800-63-4/sp800-63b.html#phishres), such as WebAuthn. See the [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md).
+OIDC alone does not eliminate phishing, credential stuffing, or weak passwords at the IdP. Choose an IdP that enforces appropriate authentication controls; for phishing resistance, require [phishing-resistant authentication](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/#verifimpers), such as WebAuthn. See the [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md).
 
 Federation still requires protecting issued tokens and any client credentials. Follow the [OAuth2 Cheat Sheet](OAuth2_Cheat_Sheet.md) for token transmission, storage, validation, expiration, and refresh-token protection. OIDC does not replace other application secrets, such as database credentials or API keys.
 
