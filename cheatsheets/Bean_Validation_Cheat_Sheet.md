@@ -155,17 +155,17 @@ Checks whether the annotated value is a number having up to integer digits and f
 ```java
 import javax.validation.constraints.Digits;
 
-public class Customer {
-  //Constraint: Age can only be 3 digits long or less
+public class Customer {
+  //Constraint: Age can only be 3 digits long or less
   @Digits(integer = 3, fraction = 0)
   private int age;
 
-  public int getAge()  {
-    return age;
+  public int getAge()  {
+    return age;
   }
 
-  public void setAge(int age)  {
-      this.age = age;
+  public void setAge(int age)  {
+      this.age = age;
     }
 
     ...
@@ -224,20 +224,20 @@ Checks if the annotated element's size is between min and max (inclusive)
 **Model**:
 
 ```java
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Size;
 
-public class Message {
+public class Message {
 
-   //Constraint: Message must be at least 10 characters long, but less than 500
-   @Size(min = 10, max = 500)
-   private String message;
+   //Constraint: Message must be at least 10 characters long, but less than 500
+   @Size(min = 10, max = 500)
+   private String message;
 
-   public String getMessage() {
-      return message;
+   public String getMessage() {
+      return message;
    }
 
-   public void setMessage(String message) {
-      this.message = message;
+   public void setMessage(String message) {
+      this.message = message;
    }
 
 ...
@@ -297,33 +297,33 @@ Checks whether the annotated date is in the past / future. Use a supported date 
 
 ```java
 import java.util.Date;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Future;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Future;
 
-public class DoctorVisit {
+public class DoctorVisit {
 
-   //Constraint: Birthdate must be in the past
+   //Constraint: Birthdate must be in the past
    @Past
-   private Date birthDate;
+   private Date birthDate;
 
-   public Date getBirthDate() {
-      return birthDate;
+   public Date getBirthDate() {
+      return birthDate;
    }
 
-   public void setBirthDate(Date birthDate) {
-      this.birthDate = birthDate;
+   public void setBirthDate(Date birthDate) {
+      this.birthDate = birthDate;
    }
 
-   //Constraint: Schedule visit date must be in the future
+   //Constraint: Schedule visit date must be in the future
    @Future
-   private Date scheduledVisitDate;
+   private Date scheduledVisitDate;
 
-   public Date getScheduledVisitDate() {
-      return scheduledVisitDate;
+   public Date getScheduledVisitDate() {
+      return scheduledVisitDate;
    }
 
-   public void setScheduledVisitDate(Date scheduledVisitDate) {
-      this.scheduledVisitDate = scheduledVisitDate;
+   public void setScheduledVisitDate(Date scheduledVisitDate) {
+      this.scheduledVisitDate = scheduledVisitDate;
    }
 
 ...
@@ -384,24 +384,24 @@ Checks whether the annotated value is higher/lower than or equal to the specifie
 **Model**:
 
 ```java
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
 
-public class Review {
+public class Review {
 
- //Constraint: Review rating must be between 1 and 5
- @Min(1)
- @Max(5)
- private int reviewRating;
+ //Constraint: Review rating must be between 1 and 5
+ @Min(1)
+ @Max(5)
+ private int reviewRating;
 
- public int getReviewRating() {
-   return reviewRating;
- }
+ public int getReviewRating() {
+   return reviewRating;
+ }
 
- public void setReviewRating(int reviewRating) {
-   this.reviewRating = reviewRating;
+ public void setReviewRating(int reviewRating) {
+   this.reviewRating = reviewRating;
 }
- ...
+ ...
 }
 ```
 
@@ -467,8 +467,8 @@ Creating custom constraints is beyond the scope of this guide. Please see this [
 It is possible to specify a message ID with the validation annotation, so that error messages are customized :
 
 ```java
-@Pattern(regexp = "[a-zA-Z0-9 ]+", message="article.title.error")
-private String articleTitle;
+@Pattern(regexp = "[a-zA-Z0-9 ]+", message="article.title.error")
+private String articleTitle;
 ```
 
 Spring MVC will then look up a message with ID *article.title.error* in a defined MessageSource. More on this [documentation](https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).
