@@ -572,36 +572,34 @@ For more information on configuring resource quotas, refer to the Kubernetes doc
 
 ### Use Kubernetes network policies to control traffic between pods and clusters
 
-If your cluster runs different applications, a compromised application could attack other neighboring applications. This scenario might happen because Kubernetes allows every pod to contact every other pod by default. If ingress from an external network endpoint is allowed, the pod will be able to send its traffic to an endpoint outside the cluster.
+A compromised application can attack neighboring applications. By default, Pods are non-isolated for ingress and egress. Configure policies for each direction you need to restrict; allowing inbound traffic does not itself configure an outbound policy.
 
 It is strongly recommended that developers implement network segmentation, because it is a key security control that ensures that containers can only communicate with other approved containers and prevents attackers from pursuing lateral movement across containers. However, applying network segmentation in the cloud is challenging because of the “dynamic” nature of container network identities (IPs).
 
-While users of Google Cloud Platform can benefit from automatic firewall rules, which prevent cross-cluster communication, other users can apply similar implementations by deploying on-premises using network firewalls or SDN solutions. Also, the Kubernetes Network SIG is working on methods that will greatly improve the pod-to-pod communication policies. A new network policy API should address the need to create firewall rules around pods, limiting the network access that a containerized can have.
+Use the current [`networking.k8s.io/v1` NetworkPolicy API](https://kubernetes.io/docs/concepts/services-networking/network-policies/). Your cluster must use a network plugin that enforces NetworkPolicy; creating the resource alone has no effect without one.
 
-The following is an example of a network policy that controls the network for “backend” pods, which only allows inbound network access from “frontend” pods:
+This illustrative ingress policy selects `segment=backend` Pods in `tenant-a` and allows TCP port 80 from `segment=frontend` Pods in that same namespace. Policies are additive: another policy can allow additional traffic. This policy does not restrict egress, and traffic from a Pod's own node remains allowed.
 
-```json
-POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys
-{
-  "kind": "NetworkPolicy",
-  "metadata": {
-    "name": "pol1"
-  },
-  "spec": {
-    "allowIncoming": {
-      "from": [{
-        "pods": { "segment": "frontend" }
-      }],
-      "toPorts": [{
-        "port": 80,
-        "protocol": "TCP"
-      }]
-    },
-    "podSelector": {
-      "segment": "backend"
-    }
-  }
-}
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pol1
+  namespace: tenant-a
+spec:
+  podSelector:
+    matchLabels:
+      segment: backend
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              segment: frontend
+      ports:
+        - port: 80
+          protocol: TCP
 ```
 
 For more information on configuring network policies, refer to the Kubernetes documentation at <https://kubernetes.io/docs/concepts/services-networking/network-policies>.
