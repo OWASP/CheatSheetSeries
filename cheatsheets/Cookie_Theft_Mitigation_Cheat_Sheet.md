@@ -95,7 +95,7 @@ As a compromise, if there is a suspicion of session hijacking, it could be good 
 function cookieTheftDetectionMiddleware(req, res) {
   const currentIP = req.clientIP
   const expectedIP = req.session.ip
-  if (checkGeoIPRange(currentIP, expected) === false) {
+  if (checkGeoIPRange(currentIP, expectedIP) === false) {
      // Validation
   }
   const currentUA = req.userAgent
