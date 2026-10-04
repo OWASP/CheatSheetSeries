@@ -49,19 +49,19 @@ SameSite cookies are a strong **defense-in-depth** mechanism against **some** cl
 
 ![XS Leaks eTLD explanation](../assets/XS_Leaks_eTLD.png)
 
-In the context of the SameSite attribute, we consider the site to be the combination of the TLD (top-level domain) and the domain name before it. For example:
+For SameSite cookies, a [site](https://developer.mozilla.org/en-US/docs/Glossary/Site) consists of the scheme and the registrable domain (eTLD+1). The port is not part of the site. For example:
 
-| Full URL                                      | Site (eTLD+1)             |
+| Full URL                                      | Site (scheme + eTLD+1)             |
 | --------------------------------------------  | ------------------------  |
-| `https://example.com:443/data?query=test`     | `example.com`             |
+| `https://example.com:443/data?query=test`     | `https://example.com`     |
 
 Why are we talking about eTLD+1 and not just TLD+1? It's because of domains like `.github.io` or `.eu.org`. Such parts are not atomic enough to be compared well. For this reason, a list of "effective" TLDs (eTLDs) was created and can be found [here](https://publicsuffix.org/list/public_suffix_list.dat).
 
-Sites that have the same eTLD+1 are considered SameSite, examples:
+Sites with the same scheme and eTLD+1 are considered same-site. For example:
 
 | Origin A                  | Origin B                   | SameSite?                    |
 | ------------------------- | -------------------------- | ---------------------        |
-| `https://example.com`     | `http://example.com`       | Yes, schemes don't matter    |
+| `https://example.com`     | `http://example.com`       | No, different schemes    |
 | `https://evil.net`        | `https://example.com`      | No, different eTLD+1          |
 | `https://sub.example.com` | `https://data.example.com` | Yes, subdomains don't matter |
 
