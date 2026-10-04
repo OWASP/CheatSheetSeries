@@ -25,7 +25,7 @@ The important point is this - **Code level fixes and Virtual Patching are NOT mu
 The two main goals of Virtual Patching are:
 
 - **Minimize Time-to-Fix** - Fixing application source code takes time. The main purpose of a virtual patch is to implement a mitigation for the identified vulnerability as soon as possible. The urgency of this response may be different: for example if the vulnerability was identified in-house through code reviews or penetration testing vs. finding a vulnerability as part of live incident response.
-- **Attack Surface Reduction** - Block the known exploitation path while a permanent fix is prepared. Test alternate encodings, affected endpoints, and paths that bypass the enforcement layer before claiming coverage. A passing test for one payload does not establish complete protection; [CRS rule-writing guidance](https://coreruleset.org/docs/3-about-rules/creating/#advanced-transformation-usage) illustrates how small payload changes can evade a rule.
+- **Attack Surface Reduction** - Block the known exploitation path while a permanent fix is prepared. Test alternate encodings, affected endpoints, and paths that bypass the enforcement layer before claiming coverage. A passing test for one payload does not establish complete protection; [Core Rule Set (CRS) rule-writing guidance](https://coreruleset.org/docs/3-about-rules/creating/#advanced-transformation-usage) illustrates how small payload changes can evade a rule.
 
 ## Virtual Patching Tools
 
