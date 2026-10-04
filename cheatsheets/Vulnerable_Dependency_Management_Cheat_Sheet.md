@@ -114,21 +114,21 @@ Provider can share any of the below with the development team:
 
 If a workaround is provided, it should be applied and validated on the testing environment, and thereafter deployed to production.
 
-If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe.
+Identify the reachable calls to affected functions and the conditions required to exploit the vulnerability. Use a wrapper only when its checks block those conditions on every affected call path. Otherwise, disable the affected functionality or isolate it while pursuing a fix. Treat the wrapper as a temporary mitigation, and track the upgrade or replacement that removes the vulnerable dependency.
 
 Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.
 
-_Example using java code in which the impacted function suffers from a [Remote Code Execution](https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/) issue:_
+_Illustrative allowlist wrapper: use this only if analysis of the specific vulnerability establishes that the accepted values cannot trigger it. This pattern is not a general defense against remote code execution._
 
 ```java
 public void callFunctionWithRCEIssue(String externalInput){
     //Apply input validation on the external input using regex
     if(Pattern.matches("[a-zA-Z0-9]{1,50}", externalInput)){
-        //Call the flawed function using safe input
+        //Call only with values covered by the vulnerability-specific analysis
         functionWithRCEIssue(externalInput);
     }else{
-        //Log the detection of exploitation
-        SecurityLogger.warn("Exploitation of the RCE issue XXXXX detected !");
+        //Log rejected input without assuming it was an exploit
+        SecurityLogger.warn("Input rejected by temporary vulnerability mitigation");
         //Raise an exception leading to a generic error send to the client...
     }
 }
@@ -138,7 +138,7 @@ If the provider has provided nothing about the vulnerability, [Case 3](#case-3) 
 
 **Step 2:**
 
-If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn't affect the application.
+Use any provider-supplied exploit as a regression test. Blocking that payload does not prove that the library is secure: test alternate inputs and all reachable paths to the affected functionality. The [Core Rule Set rule-writing guidance](https://coreruleset.org/docs/3-about-rules/creating/#advanced-transformation-usage) illustrates how small payload changes can bypass a filter. Follow the [virtual patch testing guidance](Virtual_Patching_Cheat_Sheet.md#implementationtesting-phase) and keep the permanent fix on the remediation plan.
 
 If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
 
