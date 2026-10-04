@@ -345,15 +345,15 @@ There are three useful placements:
 - **Output screening.** Score the primary model's response against a policy before it is returned to the user or passed to a downstream tool. This is where successful injections that produced system prompt leakage, exfiltration markup, or policy-violating content can be caught after the fact.
 - **Action screening.** For agent systems, evaluate each proposed tool call against the original user intent. A guardrail that sees only the user's task and the action the agent wants to take, without the untrusted intermediate context, will refuse actions that drifted because of an injected instruction.
 
-The strongest architectural form of this idea is **CaMeL** (CApabilities for MachinE Learning), [described by Google DeepMind](https://arxiv.org/pdf/2503.18813). It improves upon the original **Dual-LLM pattern** [proposed by Simon Willison](https://simonwillison.net/2023/Apr/25/dual-llm-pattern/#update-11th-april-2025-camel-addresses-flaws-in-this-proposal) to prevent injected data from manipulating tool arguments. CaMeL secures the system through strict data tracking:
+One architectural approach is **CaMeL** (CApabilities for MachinE Learning), [described by Google DeepMind](https://arxiv.org/pdf/2503.18813). It improves upon the original **Dual-LLM pattern** [proposed by Simon Willison](https://simonwillison.net/2023/Apr/25/dual-llm-pattern/#update-11th-april-2025-camel-addresses-flaws-in-this-proposal) to prevent injected data from manipulating tool arguments. CaMeL secures the system through strict data tracking:
 
 - **Privileged planning:** A Privileged LLM only job is to write a step-by-step plan using computer code (like pseudo-python [example on Google research repo](https://github.com/google-research/camel-prompt-injection)) to fulfill the request. Essentially, this planner AI never looks at the potentially risky or untrusted documents, it just sets up a blueprint.
 - **Quarantined parsing:** A quarantined LLM with zero tool access parses the untrusted data, this AI is allowed to read the risky document and extract information from it, but it is locked in a digital quarantine, it has zero power to use tools, take actions or act, even if it reads a hacker's prompt injection.
 - **Capability tracking:** A custom interpreter program executes the plan, tracking the data flow graph and enforcing security policies via metadata tags (capabilities).
 
-If an injection attempts an unauthorized action such as exfiltrating a confidential file to an attacker, the interpreter detects the rule violation and automatically blocks the tool execution. CaMeL's design doesn't just try to teach the AI to "be good", it mathematically separates the planning from the reading and tracks every piece of data so bad actions are blocked.
+CaMeL blocks tool calls that violate its configured capability policies. Its [threat model and limitations](https://arxiv.org/html/2503.18813v2#S3) matter: the primary model assumes a trusted user prompt and uncompromised memory, and it does not prevent misleading summaries or phishing text that leave protected data flows unchanged. Protection depends on the policies and dependency tracking; the paper also discusses side-channel risks.
 
-It is important to notice that although CaMeL is a promising path towards prompt injection mitigation and doesn't throw more AI on top of AI, its implementation is still in early stages and requires further research and development to be widely adopted.
+Treat the released code as a [research artifact](https://github.com/google-research/camel-prompt-injection), not a supported security component: its authors warn that the implementation may contain security bugs and do not plan to maintain it.
 
 **Caveats:**
 
