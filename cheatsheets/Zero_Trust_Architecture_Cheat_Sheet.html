@@ -4748,10 +4748,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#phase-1-get-the-basics-right-months-1-6" class="md-nav__link">
+  <a href="#phase-1-get-the-basics-right" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 1: Get the Basics Right (Months 1-6)
+        Phase 1: Get the Basics Right
       
     </span>
   </a>
@@ -4759,10 +4759,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-2-add-real-zero-trust-controls-months-6-18" class="md-nav__link">
+  <a href="#phase-2-add-zero-trust-controls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 2: Add Real Zero Trust Controls (Months 6-18)
+        Phase 2: Add Zero Trust Controls
       
     </span>
   </a>
@@ -4770,10 +4770,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-3-advanced-capabilities-months-18-36" class="md-nav__link">
+  <a href="#phase-3-advanced-capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 3: Advanced Capabilities (Months 18-36)
+        Phase 3: Advanced Capabilities
       
     </span>
   </a>
@@ -5535,10 +5535,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#phase-1-get-the-basics-right-months-1-6" class="md-nav__link">
+  <a href="#phase-1-get-the-basics-right" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 1: Get the Basics Right (Months 1-6)
+        Phase 1: Get the Basics Right
       
     </span>
   </a>
@@ -5546,10 +5546,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-2-add-real-zero-trust-controls-months-6-18" class="md-nav__link">
+  <a href="#phase-2-add-zero-trust-controls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 2: Add Real Zero Trust Controls (Months 6-18)
+        Phase 2: Add Zero Trust Controls
       
     </span>
   </a>
@@ -5557,10 +5557,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#phase-3-advanced-capabilities-months-18-36" class="md-nav__link">
+  <a href="#phase-3-advanced-capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Phase 3: Advanced Capabilities (Months 18-36)
+        Phase 3: Advanced Capabilities
       
     </span>
   </a>
@@ -6005,7 +6005,7 @@
 <ul>
 <li><strong>DNS filtering</strong>: Block access to malicious websites</li>
 <li><strong>Web filtering</strong>: Control what websites users can visit</li>
-<li><strong>Replace VPNs</strong>: Use Zero Trust Network Access (ZTNA) instead</li>
+<li><strong>Limit remote access</strong>: Prefer access to specific resources over broad network access. During migration, restrict and monitor any VPN access that remains necessary; a VPN connection alone must not authorize access to other resources.</li>
 <li><strong>Monitor traffic</strong>: Analyze all network connections</li>
 </ul>
 <h2 id="application-and-data-protection">Application and Data Protection<a class="headerlink" href="#application-and-data-protection" title="Permanent link">&para;</a></h2>
@@ -6043,19 +6043,19 @@
 <li>How quickly you respond to incidents (MTTR)</li>
 </ul>
 <h2 id="implementation-steps">Implementation Steps<a class="headerlink" href="#implementation-steps" title="Permanent link">&para;</a></h2>
-<p>Zero Trust implementation requires a structured approach. It's not like installing one security tool - it's more like updating your entire security approach while keeping everything running. Here's what actually works:</p>
-<h3 id="phase-1-get-the-basics-right-months-1-6">Phase 1: Get the Basics Right (Months 1-6)<a class="headerlink" href="#phase-1-get-the-basics-right-months-1-6" title="Permanent link">&para;</a></h3>
+<p>Plan migration around your resources, risks, and dependencies. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf">NIST SP 800-207, Section 7</a> recommends incremental migration and allows existing and Zero Trust workflows to coexist. The phases below are illustrative activities, not a fixed schedule.</p>
+<h3 id="phase-1-get-the-basics-right">Phase 1: Get the Basics Right<a class="headerlink" href="#phase-1-get-the-basics-right" title="Permanent link">&para;</a></h3>
 <p>Before you invest in new Zero Trust technologies, you need to know what you're protecting:</p>
 <p><strong>Figure out what you have</strong> - Make a list of all users, devices, applications, and how data moves around. This sounds easy but takes longer than you think. You'll find forgotten systems, shadow IT, and connections nobody documented.</p>
 <p><strong>Set up strong MFA everywhere</strong> - Use phishing-resistant MFA as described in <a href="#multi-factor-authentication-mfa">Multi-Factor Authentication</a>, rather than treating a biometric match alone as MFA. Plan for user training since this changes how people log in.</p>
-<p><strong>Replace your VPN</strong> - Regular VPNs give too much access once someone logs in. Switch to Zero Trust Network Access (ZTNA) that only gives access to specific applications. This is usually a significant change users notice.</p>
+<p><strong>Narrow remote access</strong> - Move suitable workflows to application-specific access, such as Zero Trust Network Access (ZTNA). Test authentication and resource authorization before retiring existing access paths. Restrict and monitor legacy VPN paths during the transition rather than treating network admission as authorization.</p>
 <p><strong>Control admin access</strong> - Set up privileged access management (PAM) for administrative accounts. Remove permanent admin rights and switch to temporary access. This may slow some processes initially.</p>
-<h3 id="phase-2-add-real-zero-trust-controls-months-6-18">Phase 2: Add Real Zero Trust Controls (Months 6-18)<a class="headerlink" href="#phase-2-add-real-zero-trust-controls-months-6-18" title="Permanent link">&para;</a></h3>
+<h3 id="phase-2-add-zero-trust-controls">Phase 2: Add Zero Trust Controls<a class="headerlink" href="#phase-2-add-zero-trust-controls" title="Permanent link">&para;</a></h3>
 <p>Now you start building actual Zero Trust capabilities:</p>
 <p><strong>Break up your network</strong> - Split your flat network into smaller, separate segments. Start with your most important applications. This is technically hard and network teams might not like the extra work.</p>
 <p><strong>Monitor devices constantly</strong> - Set up systems that continuously check device health, updates, and security. Devices that aren't secure automatically lose access or get limited access. This creates pressure for people to keep their devices updated.</p>
 <p><strong>Secure applications properly</strong> - Enforce identity-aware access at application entry points and <a href="Authorization_Cheat_Sheet.html#validate-the-permissions-on-every-request">resource-level authorization</a> within the application. WAF filtering complements these checks; it does not establish the user's right to access an object or perform a business action.</p>
-<h3 id="phase-3-advanced-capabilities-months-18-36">Phase 3: Advanced Capabilities (Months 18-36)<a class="headerlink" href="#phase-3-advanced-capabilities-months-18-36" title="Permanent link">&para;</a></h3>
+<h3 id="phase-3-advanced-capabilities">Phase 3: Advanced Capabilities<a class="headerlink" href="#phase-3-advanced-capabilities" title="Permanent link">&para;</a></h3>
 <p>Build advanced capabilities:</p>
 <p><strong>Add behavior monitoring</strong> - Use systems that learn how users and devices normally act. When behavior looks weird, the system can automatically change access or ask for more verification. This needs machine learning and lots of data.</p>
 <p><strong>Automate responses</strong> - Build tools that can automatically isolate compromised accounts, quarantine suspicious devices, and update security policies based on new threats. The goal is to respond faster than humans can.</p>
@@ -6065,8 +6065,7 @@
 <p><strong>Stay current</strong> - Update threat intelligence, adjust risk scoring, and change policies based on new attack methods. What worked last year might not work now.</p>
 <p><strong>Plan ahead</strong> - Start thinking about post-quantum cryptography, new authentication methods, and AI-powered security tools.</p>
 <p><strong>Measure what matters</strong> - Track how fast you detect threats, how fast you respond, how many policy violations happen, and whether users are happy. Use this data to keep improving.</p>
-<p><strong>Reality check:</strong> Most organizations take 3-5 years to fully implement Zero Trust, and that's with dedicated teams and management support. Don't expect quick results - this takes time.</p>
-<p>These phases line up with the <a href="https://www.cisa.gov/zero-trust-maturity-model">CISA Zero Trust Maturity Model v2.0</a>, but your timeline will depend on your organization's size and resources.</p>
+<p>Use the <a href="https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf">CISA Zero Trust Maturity Model v2.0</a> to assess progress across identity, devices, networks, applications and workloads, and data. Its Traditional, Initial, Advanced, and Optimal stages describe capabilities, not calendar deadlines; pillars may progress at different rates.</p>
 <h2 id="legacy-system-challenges">Legacy System Challenges<a class="headerlink" href="#legacy-system-challenges" title="Permanent link">&para;</a></h2>
 <h3 id="common-problems">Common Problems<a class="headerlink" href="#common-problems" title="Permanent link">&para;</a></h3>
 <p>Legacy systems present some of the biggest challenges in Zero Trust implementations, and they're often where attackers focus their efforts because these systems are harder to secure.</p>
@@ -6106,7 +6105,7 @@
 <h3 id="organizational-mistakes">Organizational Mistakes<a class="headerlink" href="#organizational-mistakes" title="Permanent link">&para;</a></h3>
 <p><strong>No executive support</strong> - Zero Trust implementation requires significant changes to how people work, substantial budget for new tools, and coordination across multiple teams. Without strong leadership commitment and budget approval, your project will stall when it encounters resistance or resource constraints. Get executive sponsorship before you start, not after you run into problems.</p>
 <p><strong>Skipping user training</strong> - Zero Trust changes how people authenticate, access applications, and handle security alerts. If you don't invest in educating your staff about why these changes are necessary and how to work with them, you'll face constant resistance and support tickets. Plan for comprehensive training programs, not just email announcements.</p>
-<p><strong>Moving too fast</strong> - Some organizations try to implement Zero Trust in a few months, which usually leads to broken workflows, user frustration, and incomplete security coverage. Zero Trust is a multi-year journey that requires careful planning and phased implementation. Rushing the process often means having to redo work later when problems surface.</p>
+<p><strong>Skipping migration validation</strong> - Pilot changes on selected workflows, verify that legitimate access still works, and monitor policy decisions before expanding deployment. Choose the next workflow based on risk and dependencies, as described in <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf">NIST SP 800-207, Section 7.3</a>.</p>
 <p><strong>Vendor lock-in</strong> - Zero Trust involves many different technologies, and some vendors will try to sell you a complete "Zero Trust platform" that locks you into their ecosystem. Keep your options open by choosing solutions that support open standards and can integrate with multiple vendors. Your security architecture should be flexible enough to adapt as threats and technologies evolve.</p>
 <h2 id="compliance-benefits">Compliance Benefits<a class="headerlink" href="#compliance-benefits" title="Permanent link">&para;</a></h2>
 <p>Zero Trust architecture helps organizations meet various compliance requirements:</p>
@@ -6149,13 +6148,14 @@
 <p>Zero Trust requires several technology categories working together:</p>
 <ul>
 <li><strong>Identity and Access Management</strong>: Strong authentication (MFA) and risk-based access decisions</li>
-<li><strong>Zero Trust Network Access (ZTNA)</strong>: Application-level access instead of network-level VPNs</li>
+<li><strong>Zero Trust Network Access (ZTNA)</strong>: Resource-specific access controls, with restricted legacy access paths during migration</li>
 <li><strong>Web Application Security</strong>: Protect applications and APIs from OWASP Top 10 attacks</li>
 <li><strong>Security Monitoring</strong>: Real-time visibility and automated response to threats</li>
 </ul>
 <h3 id="policy-as-code-continuous-verification-telemetry-signals">Policy-as-Code + Continuous Verification + Telemetry Signals<a class="headerlink" href="#policy-as-code-continuous-verification-telemetry-signals" title="Permanent link">&para;</a></h3>
+<p>The following are implementation options for cloud-native workloads, not universal Zero Trust requirements. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf">NIST SP 800-207, Section 2.1</a> defines technology-agnostic principles. For implementation guidance, see <a href="Kubernetes_Security_Cheat_Sheet.html#implementing-centralized-policy-management">Kubernetes policy management</a> and <a href="CI_CD_Security_Cheat_Sheet.html">CI/CD Security</a>.</p>
 <h4 id="1-policy-as-code-pac">1. Policy-as-Code (PaC)<a class="headerlink" href="#1-policy-as-code-pac" title="Permanent link">&para;</a></h4>
-<p>Zero Trust policies should be defined as <strong>code</strong>, not manually, ensuring consistency, reproducibility, and auditability.</p>
+<p>Policy-as-code can make supported policy changes version-controlled, testable, and auditable. Choose enforcement mechanisms that fit the resources and workflows being protected.</p>
 <p><strong>Key principles:</strong></p>
 <ul>
 <li>Version-controlled policies</li>
@@ -6179,7 +6179,7 @@
 <li>RBAC enforcement</li>
 </ul>
 <h4 id="2-continuous-verification">2. Continuous Verification<a class="headerlink" href="#2-continuous-verification" title="Permanent link">&para;</a></h4>
-<p>Zero Trust requires <strong>every access, deployment, and configuration change</strong> to be automatically verified.</p>
+<p>Automated deployment and configuration checks can help enforce workload security policies. They complement the resource-access authentication and authorization described above.</p>
 <p><strong>Verification examples:</strong></p>
 <ul>
 <li>Workload identity verification (SPIFFE/SPIRE, IAM)</li>
@@ -6189,7 +6189,7 @@
 <li>Network policy drift detection</li>
 <li>Automated enforcement at admission</li>
 </ul>
-<p>This approach prevents risky components from entering clusters during CI/CD.</p>
+<p>Admission checks can reject deployments that violate configured policies; they do not replace runtime resource authorization.</p>
 <h4 id="3-telemetry-signals">3. Telemetry Signals<a class="headerlink" href="#3-telemetry-signals" title="Permanent link">&para;</a></h4>
 <p>Zero Trust decisions rely on <strong>telemetry signals</strong> collected continuously across all layers.</p>
 <p><strong>Suggested signals to collect:</strong></p>
@@ -6214,7 +6214,7 @@
 <li><strong>Telemetry Signals</strong> → Runtime signals provide continuous monitoring.</li>
 <li><strong>Feedback Loop</strong> → Collected signals are used to refine policies.</li>
 </ol>
-<p>This three-part approach makes Zero Trust a <strong>dynamic, continuously adaptive security model</strong>.</p>
+<p>Use this feedback loop to improve the selected controls without treating a particular tool or deployment pipeline as proof of Zero Trust.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf">NIST SP 800-207: Zero Trust Architecture</a></li>
