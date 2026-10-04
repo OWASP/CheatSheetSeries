@@ -1055,7 +1055,7 @@ WARN
 ### sensitive_delete:[userid,file|object]
 
 **Description**
-All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of the file should be maintained according to legal/privacy requirements.
+Log and periodically review deletion events for sensitive files and data. Record the action and object identifier without copying the sensitive contents into the log. Retain the underlying data according to the applicable [information-retention requirements (NIST SI-12)](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf#page=378), then [securely dispose of it and retained copies when no longer needed (SI-12(3))](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf#page=379). Keep the deletion audit record according to the [log retention and disposal requirements](Logging_Cheat_Sheet.md#disposal-of-logs); recording a deletion event does not itself require archiving the deleted file.
 
 **Level:**
 WARN
@@ -1068,7 +1068,7 @@ WARN
     "appid": "foobar.netportal_auth",
     "event": "sensitive_delete:joebob1, /users/admin/some/important/path",
     "level": "WARN",
-    "description": "User joebob1 marked file /users/admin/some/important/path for deletion",
+    "description": "User joebob1 deleted file /users/admin/some/important/path",
     ...
 }
 ```
