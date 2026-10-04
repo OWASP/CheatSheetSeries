@@ -180,9 +180,9 @@ Analyze application workflows for:
 
 - [ ] **Server-side validation**: All inputs validated on server regardless of client-side checks
 - [ ] **Allowlist validation**: Uses allowlists rather than blocklists for input validation
-- [ ] **Output encoding**: Context-appropriate encoding (HTML, JavaScript, CSS, URL, SQL)
+- [ ] **Output encoding**: Context-appropriate encoding (HTML, JavaScript, CSS, URL)
 - [ ] **File upload security**: Content-based validation, size limits, safe storage
-- [ ] **SQL injection prevention**: Parameterized queries or stored procedures used
+- [ ] **SQL injection prevention**: [Parameterized queries or safely implemented stored procedures](SQL_Injection_Prevention_Cheat_Sheet.md#primary-defenses) used, with user-controlled data values passed as parameters instead of concatenated into SQL
 - [ ] **Length limits**: Input length restrictions enforced
 - [ ] **Character handling**: Special characters and Unicode properly processed
 - [ ] **Error messages**: No sensitive information disclosed in error responses
