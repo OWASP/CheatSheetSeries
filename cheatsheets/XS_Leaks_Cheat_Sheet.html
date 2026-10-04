@@ -5163,23 +5163,23 @@
 <p>SameSite cookies are a strong <strong>defense-in-depth</strong> mechanism against <strong>some</strong> classes of XS Leaks and <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF attacks</a>, which can significantly reduce the attack surface, but may not completely cut them (see, e.g., <a href="https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/xs-leaks.html">window-based XS Leak</a> attacks like <a href="https://xsleaks.dev/docs/attacks/frame-counting/">frame counting</a> and <a href="https://xsleaks.dev/docs/attacks/navigations/">navigation</a>).</p>
 <h3 id="how-do-we-know-that-two-sites-are-samesite">How do we know that two sites are SameSite?<a class="headerlink" href="#how-do-we-know-that-two-sites-are-samesite" title="Permanent link">&para;</a></h3>
 <p><img alt="XS Leaks eTLD explanation" src="../assets/XS_Leaks_eTLD.png" /></p>
-<p>In the context of the SameSite attribute, we consider the site to be the combination of the TLD (top-level domain) and the domain name before it. For example:</p>
+<p>For SameSite cookies, a <a href="https://developer.mozilla.org/en-US/docs/Glossary/Site">site</a> consists of the scheme and the registrable domain (eTLD+1). The port is not part of the site. For example:</p>
 <table>
 <thead>
 <tr>
 <th>Full URL</th>
-<th>Site (eTLD+1)</th>
+<th>Site (scheme + eTLD+1)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>https://example.com:443/data?query=test</code></td>
-<td><code>example.com</code></td>
+<td><code>https://example.com</code></td>
 </tr>
 </tbody>
 </table>
 <p>Why are we talking about eTLD+1 and not just TLD+1? It's because of domains like <code>.github.io</code> or <code>.eu.org</code>. Such parts are not atomic enough to be compared well. For this reason, a list of "effective" TLDs (eTLDs) was created and can be found <a href="https://publicsuffix.org/list/public_suffix_list.dat">here</a>.</p>
-<p>Sites that have the same eTLD+1 are considered SameSite, examples:</p>
+<p>Sites with the same scheme and eTLD+1 are considered same-site. For example:</p>
 <table>
 <thead>
 <tr>
@@ -5192,7 +5192,7 @@
 <tr>
 <td><code>https://example.com</code></td>
 <td><code>http://example.com</code></td>
-<td>Yes, schemes don't matter</td>
+<td>No, different schemes</td>
 </tr>
 <tr>
 <td><code>https://evil.net</code></td>

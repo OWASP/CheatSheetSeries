@@ -5390,11 +5390,11 @@
 </code></pre></div>
 <p>Always use prepared statements for database operations to prevent <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL injection</a>.</p>
 <h3 id="implement-message-size-limits">Implement Message Size Limits<a class="headerlink" href="#implement-message-size-limits" title="Permanent link">&para;</a></h3>
-<p>gRPC's streaming capabilities allow clients to send arbitrarily large messages, potentially exhausting server memory and triggering denial-of-service conditions. Set clear limits on message sizes.</p>
+<p>Set application-appropriate limits on individual messages in both directions. In grpc-go, the server's <a href="https://pkg.go.dev/google.golang.org/grpc#MaxRecvMsgSize"><code>MaxRecvMsgSize</code></a> already defaults to 4 MiB. A stream can still carry many individually valid messages, so a per-message limit does not bound the total data or processing work for the stream.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Go - Set message size limits</span>
 <span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">NewServer</span><span class="p">(</span>
-<span class="w">    </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">MaxRecvMsgSize</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">),</span><span class="w"> </span><span class="c1">// 4MB max receive</span>
-<span class="w">    </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">MaxSendMsgSize</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">),</span><span class="w"> </span><span class="c1">// 4MB max send</span>
+<span class="w">    </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">MaxRecvMsgSize</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">),</span><span class="w"> </span><span class="c1">// 4 MiB max receive</span>
+<span class="w">    </span><span class="nx">grpc</span><span class="p">.</span><span class="nx">MaxSendMsgSize</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">),</span><span class="w"> </span><span class="c1">// 4 MiB max send</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>Limit streaming sessions and message counts to prevent resource exhaustion. Monitor and enforce maximum messages per stream and maximum session duration.</p>

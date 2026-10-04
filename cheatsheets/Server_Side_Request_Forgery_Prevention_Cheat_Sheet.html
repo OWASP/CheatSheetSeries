@@ -5125,7 +5125,8 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>Build an allowlist with all the domain names of every identified and trusted applications.</li>
 <li>Verify that the domain name received is part of this allowlist (string strict comparison with case sensitive).</li>
 </ol>
-<p>Unfortunately here, the application is still vulnerable to the <code>DNS pinning</code> bypass mentioned in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>. Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:</p>
+<p>Domain allowlisting alone does not prevent DNS rebinding. Validate the resolved destination IP addresses against the application's permitted networks, then ensure the HTTP client connects only to validated addresses. A second, unchecked DNS lookup between validation and connection can bypass these checks; see <a href="https://docs.gitlab.com/development/secure_coding_guidelines/ruby/#url-blocker--validation-libraries">GitLab's URL blocker guidance</a>.</p>
+<p>Use an HTTP client mechanism that connects to the validated IP while preserving the original hostname for the HTTP <code>Host</code> header, TLS Server Name Indication (SNI), and certificate verification, as illustrated by <a href="https://everything.curl.dev/usingcurl/connections/name.html#provide-a-custom-ip-address-for-a-name">curl's custom address resolution</a>. Apply the destination policy to retries and fallback connections as well. The following DNS configuration and monitoring provide additional detection, not a substitute for connection-time enforcement:</p>
 <ol>
 <li>Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.</li>
 <li>Monitor the domains allowlist in order to detect when any of them resolves to a/an:
@@ -5240,7 +5241,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).</li>
 <li>For domain name:<ol>
 <li>The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.</li>
-<li>To prevent the <code>DNS pinning</code> attack described in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>, the application will retrieve all the IP addresses behind the domain name provided (taking records <em>A</em> + <em>AAAA</em> for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.</li>
+<li>Retrieve all the IP addresses behind the domain name (records <em>A</em> + <em>AAAA</em> for IPv4 + IPv6) and apply the same public-address verification described above. Bind the connection to a validated address as described under <a href="#domain-name">domain name validation</a>; checking DNS answers separately does not prevent DNS rebinding.</li>
 </ol>
 </li>
 </ul>
@@ -5249,7 +5250,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>The application will receive the parameter name for the token to pass to the <em>TargetedApplication</em> via a dedicated input parameter for which it will only allow the characters set <code>[a-z]{1,10}</code>.</li>
 <li>The application will receive the token itself via a dedicated input parameter for which it will only allow the characters set <code>[a-zA-Z0-9]{20}</code>.</li>
 <li>The application will receive and validate (from a security point of view) any business data needed to perform a valid call.</li>
-<li>The application will build the HTTP POST request <strong>using only validated information</strong> and will send it (<em>don't forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in the web client used</em>).</li>
+<li>The application will build the HTTP POST request <strong>using only validated information</strong> and connect only to an IP address validated in step 2 (<em>don't forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in the web client used</em>).</li>
 </ol>
 <h5 id="network-layer_1">Network layer<a class="headerlink" href="#network-layer_1" title="Permanent link">&para;</a></h5>
 <p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>

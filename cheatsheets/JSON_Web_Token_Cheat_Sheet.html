@@ -5429,15 +5429,17 @@
 <p>Example of validation not vulnerable because MAC algorithms are not accepted:</p>
 <div class="highlight"><pre><span></span><code><span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">"ES256"</span><span class="p">])</span>
 </code></pre></div>
-<p>Example of validation not vulnerable because the key is strictly typed:</p>
+<p>Illustrative signature verification using <a href="https://jose.authlib.org/en/guide/jwk/#import-keys">joserfc's typed key import</a> and a trusted EC public key. <a href="https://jose.authlib.org/en/guide/jwt/#validate-claims">Claim validation</a> is still required before accepting the token. Replace the example key with your issuer's trusted public key; <code>encoded</code> is the received token string.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">joserfc</span><span class="w"> </span><span class="kn">import</span> <span class="n">jwt</span><span class="p">,</span> <span class="n">jwk</span>
 
-<span class="c1"># {"kty":"EC",</span>
-<span class="c1">#  "crv":"P-256",</span>
-<span class="c1">#  "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",</span>
-<span class="c1">#  "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"}</span>
-<span class="n">public_key</span> <span class="o">=</span> <span class="n">jwk</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="n">jwk</span><span class="p">)</span>
-<span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+<span class="n">public_jwk</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"kty"</span><span class="p">:</span> <span class="s2">"EC"</span><span class="p">,</span>
+    <span class="s2">"crv"</span><span class="p">:</span> <span class="s2">"P-256"</span><span class="p">,</span>
+    <span class="s2">"x"</span><span class="p">:</span> <span class="s2">"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU"</span><span class="p">,</span>
+    <span class="s2">"y"</span><span class="p">:</span> <span class="s2">"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">public_key</span> <span class="o">=</span> <span class="n">jwk</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="n">public_jwk</span><span class="p">)</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="n">public_key</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">"ES256"</span><span class="p">])</span>
 </code></pre></div>
 <p>References:</p>
 <ul>
