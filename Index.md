@@ -82,7 +82,7 @@
 
 [Dependency Graph SBOM Cheat Sheet](cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.md)
 
-[Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Python](assets/Index_Python.svg)
+[Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg)
 
 [Django REST Framework Cheat Sheet](cheatsheets/Django_REST_Framework_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
