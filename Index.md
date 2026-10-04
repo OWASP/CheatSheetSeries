@@ -256,7 +256,7 @@
 
 [Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg) ![Ruby](assets/Index_Ruby.svg) ![Bash](assets/Index_Bash.svg)
 
-[Serverless FaaS Security Cheat Sheet](cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg) ![Json](assets/Index_Json.svg) ![Bash](assets/Index_Bash.svg)
+[Serverless FaaS Security Cheat Sheet](cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg) ![Json](assets/Index_Json.svg)
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
 
