@@ -6,7 +6,7 @@ With the spread of 2FA and Passkey, the login process has become more robust, an
 
 However, if attacker can steal a valid session cookie instead, it is possible to hijack the user session for the duration of the session lifetime period. In other words, stealing a session cookie has the same impact as stealing authentication credentials until it expires. No matter how robust your authentication process is, it will not be a sufficient countermeasure for Cookie Theft.
 
-Generally, cookie theft is carried out directly against users through malware or phishing attacks. Therefore, the only thing a service can do is to _detect as quickly as possible when a stolen cookie is used_.
+Cookie theft can occur through malware, phishing, or application vulnerabilities. Apply the preventive controls in the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md), and monitor for misuse of stolen cookies. Detection complements these controls; it does not replace them.
 
 ## Cookie Theft Mitigation
 
@@ -118,15 +118,13 @@ If this comparison has a significant impact on performance, it may be possible t
 
 ## Device Bound Session Credentials
 
-The fundamental problem that leads to Cookie Theft attack is that the session cookies are accepted without checking who sent them. Servers only check whether the values are valid. Such values are generally referred to as "Bearer Token".
+Ordinary session cookies are bearer credentials: anyone possessing a valid cookie can use it until it expires or the server invalidates it.
 
-To solve this problem, it is effective to make the Session Cookie itself as "Sender Constrained Token". The Device Bound Session Credentials API was proposed for this purpose.
+Device Bound Session Credentials (DBSC) uses a device-bound signing key to prove possession when refreshing short-lived cookies, as described in the [DBSC refresh design](https://github.com/w3c/webappsec-dbsc/blob/main/README.md#browser-initiated-refreshes). Ordinary application requests still use those cookies as bearer credentials; DBSC does not bind every request to the key.
 
-[Device Bound Session Credentials explainer](https://github.com/WICG/dbsc/blob/main/README.md)
+An attacker can replay a stolen cookie during its remaining lifetime. Protecting the key limits the attacker's ability to refresh the session from another device; it does not make a stolen cookie immediately unusable.
 
-This API combines the Public Key Encryption with the owner verification of Session Cookies. By verifying the owner using the private key generated internally by the browser, even if an attacker succeeded to steal the session cookie, they will not be able to impersonate the user unless they also steal the private key that the browser keeping secret internally.
-
-This specification is still in the drafting stages, but it's considered that it will be possible to solve the Cookie Theft Attack in the future.
+DBSC also does not prevent abuse while an attacker retains access to the compromised browser or device. Such an attacker may obtain fresh cookies or use the protected key through the compromised environment. Account for these [documented threat-model limits](https://github.com/w3c/webappsec-dbsc/blob/main/README.md#non-goals) when choosing session lifetimes and incident-response controls.
 
 ## References
 
