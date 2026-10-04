@@ -162,33 +162,32 @@ By implementing these security measures, drone operators can significantly reduc
 
 ## Summary
 
-The following table summaries the different attack vectors for a drone system.
+The table maps common attacks to relevant controls. Choose controls for the interfaces actually present on the drone and GCS; the impact depends on the implementation. Radio interference, forged messages, and software vulnerabilities require different defenses.
 
-| Attack |  | Targets | | | | | Security Measures | |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Type | Nature | Privacy| Data Confidentiality | Integrity | Accessibility | Authentication | Cryptographic | Non-Cryptographic |
-| Malware | Infection | x | x |x |x |x | Control access, system integrity solutions and multi-factor authentication | Hybrid lightweight Intrusion Detection System |
-| BackDoor Access | Infection |x|x|x| x|x | Multi-factor robust authentication scheme | Hybrid lightweight Intrusion Detection System, vulnerability assessment |
-| Social Engineering | Exploitation | x|x |- |- |x | N/A | Raising awareness, training operators |
-| Baiting | Exploitation |x| x| x|- |x | N/A | Raising awareness, training operators |
-| Injection/Modification | Exploitation |x |- |x |- |- | Message authentication or digital signature | Machine-Learning hybrid Intrusion Detection System, timestamps |
-| Fabrication | Exploitation |x |- |x |- |x | Multi-factor authentication, message authentication or digital signature | Assigning privilege |
-| Reconnaissance | Information gathering | x| x| -|- |- | Encrypted traffic/stream | Hybrid lightweight Intrusion Detection System |
-| Scanning | Information gathering | x|x |x |- |- | Encrypted traffic/stream | Hybrid lightweight Intrusion Detection System or Honeypot |
-| Three-Way Handshake | Interception | -|- |- |x |x | - | Traffic filtering, close unused TCP/FTP ports |
-| Eavesdropping | Interception | x| x| -| -| -| Securing communication/traffic, secure connection | N/A |
-| Traffic Analysis | Interception | x|- |- |- |- | Securing communication/traffic, secure connection | N/A |
-| Man-in-the-Middle | Authentication |x |x |x |- |- | Multi-factor authentication & lightweight strong cryptographic authentication protocol | Lightweight hybrid Intrusion Detection System |
-| Password Breaking | Cracking | x|x |x |x |- | Strong periodic passwords, strong encryption | Lightweight Intrusion Detection System |
-| Wi-Fi Aircrack | Cracking | x|x |x |x |- | Strong & periodic passwords, strong encryption algorithm | Lightweight Intrusion Detection System at the physical layer |
-| Wi-Fi Jamming | Jamming | x| x| x| x|- | N/A | Frequency hopping, frequency range variation |
-| De-Authentication | Jamming | x| x| x| x| -| N/A | Frequency hopping, frequency range variation |
-| Replay | Message reuse | x| x| x| x| -| Message authentication and validated freshness | Replay-state tracking |
-| Buffer Overflow | Jamming |x |x | x| x|- | N/A | Frequency hopping, frequency range variation |
-| Denial of Service | Jamming |x |x |x |x |- | N/A | Frequency hopping, frequency range variation |
-| ARP Cache Poison | Jamming |x |x | x| x|- | N/A | Frequency hopping, frequency range variation |
-| Ping-of-Death | Jamming | x| x| x| x| -| N/A | Frequency range variation |
-| GPS Spoofing | Jamming | x| x| x| x| -| N/A | Return-to-base, frequency range variation |
+| Attack or exposure | Security measures and limitations |
+| --- | --- |
+| Malware | Install firmware and GCS software from trusted sources and keep them updated; restrict scripts and plugins. Follow the [GCS hardening guidance](https://ardupilot.org/dev/docs/security-landing-page.html#ground-control-stations). |
+| Backdoor access | Restrict administrative interfaces and use [verified firmware](https://ardupilot.org/dev/docs/secure-firmware.html). Login authentication alone cannot prevent access through a backdoor that bypasses it. |
+| Social engineering | Train operators to [verify suspicious requests through a trusted contact channel](https://www.ncsc.gov.uk/collection/phishing-scams/spot-scams), especially requests for credentials or software installation. |
+| Baiting | Restrict untrusted removable media and peripherals on the GCS and companion computer; combine operator training with [device access controls](https://www.ncsc.gov.uk/collection/device-security-guidance/policies-and-settings/using-peripherals-securely). |
+| Message injection or modification | Authenticate messages and validate their contents before acting on them; apply the [MAVLink controls above](#secure-communication-protocols). A valid signature does not make an unsafe command safe. |
+| Fabricated commands | Require authenticated commands from trusted controllers. For MAVLink, [reject unsigned commands on untrusted links and protect the shared signing key](https://mavlink.io/en/guide/message_signing.html#accepting_unsigned_packets); any holder of that key can sign messages. |
+| Reconnaissance | Reduce exposed interfaces and protect sensitive telemetry. [Encryption does not conceal all traffic metadata](https://datatracker.ietf.org/doc/html/rfc8446#appendix-E.3). |
+| Network scanning | [Disable unused interfaces and restrict network access](https://ardupilot.org/dev/docs/security-landing-page.html#security-attack-surface). Encrypting traffic does not close reachable ports. |
+| TCP SYN flooding | For exposed TCP services, use the platform's [SYN-flood protections](https://datatracker.ietf.org/doc/html/rfc4987#section-3), such as SYN cookies. A normal three-way handshake is not an attack. |
+| Eavesdropping | Encrypt sensitive telemetry and control traffic using the [secure communication protocols above](#secure-communication-protocols). Message signing alone does not provide confidentiality. |
+| Traffic analysis | Evaluate [protocol-supported padding](https://datatracker.ietf.org/doc/html/rfc8446#appendix-E.3) when packet lengths expose sensitive information. Ordinary encryption does not hide traffic timing or volume; padding has bandwidth and latency costs. |
+| Man-in-the-middle | Authenticate the communicating peers and encrypt the connection; validate certificates or provisioned keys. See the [TLS Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md). |
+| Password guessing or cracking | Use strong, unique passwords, login rate limits, and multifactor authentication where supported; see the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md). Do not rely on periodic password changes. |
+| Wi-Fi credential attacks | Use [WPA3 and a strong network password](https://support.apple.com/en-ca/102766#security) where supported. Avoid WEP and other deprecated security modes; an intrusion detection system does not repair weak authentication. |
+| Wi-Fi radio jamming | Configure and test [link-loss failsafes](https://docs.px4.io/main/en/config/safety#data-link-loss-failsafe) for the vehicle and mission. These reduce the consequences of a lost link; they do not prevent radio interference. |
+| Forged Wi-Fi deauthentication | Require [802.11w Management Frame Protection](https://www.cisco.com/c/en/us/support/docs/wireless-mobility/wireless-lan-wlan/212576-configure-802-11w-management-frame-prote.pdf) on compatible endpoints. It protects against forged management frames, not radio jamming. |
+| Replay | Authenticate messages and validate freshness; maintain replay state, including across restarts. See the [MAVLink signing guidance above](#secure-communication-protocols). |
+| Buffer overflow | Use memory-safe components or enforce [buffer bounds checks](https://cwe.mitre.org/data/definitions/120.html), and patch vulnerable parsers. Changing radio frequencies does not fix memory corruption. |
+| Denial of service through resource exhaustion | Bound message sizes and processing resources, apply rate limits, and isolate critical control functions. See the [Denial of Service Cheat Sheet](Denial_of_Service_Cheat_Sheet.md); radio changes do not resolve application resource exhaustion. |
+| Address Resolution Protocol (ARP) cache poisoning | On IP networks, isolate untrusted participants and use [dynamic ARP inspection with trusted address bindings](https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst9500/software/release/16-8/configuration_guide/sec/b_168_sec_9500_cg/configuring_dynamic_arp_inspection.html) where supported. This is a local network attack, not radio jamming. |
+| Ping-of-Death / malformed IP packets | Keep the network stack patched and use supported [malformed-packet filtering](https://www.cisco.com/c/en/us/td/docs/switches/lan/csbss/CBS220/CLI-Guide/b_220CLI/security_dos_commands.pdf). Changing radio frequencies does not correct packet-processing vulnerabilities. |
+| GPS spoofing | Use navigation consistency checks and evaluate [non-GPS navigation as a backup](https://ardupilot.org/dev/docs/security-landing-page.html#security-attack-surface). Do not assume return-to-home is safe when its position estimate is untrusted; test the vehicle's navigation failsafes. |
 
 There are multiple GitHub repos that help with drone attack [simulations](https://github.com/nicholasaleks/Damn-Vulnerable-Drone) and [actual exploits](https://github.com/dhondta/dronesploit). Be sure to check them out too for a deeper understanding of drone security.
 
