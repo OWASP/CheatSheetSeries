@@ -5745,12 +5745,8 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <ul>
 <li>In .NET (both Framework and Core), the strongest hashing algorithm for general hashing requirements is
   <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.sha512">System.Security.Cryptography.SHA512</a>.</li>
-<li>In .NET Framework 4.6 and earlier, the strongest algorithm for password hashing is PBKDF2, implemented as
-  <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rfc2898derivebytes">System.Security.Cryptography.Rfc2898DeriveBytes</a>.</li>
-<li>In .NET Framework 4.6.1 and later and .NET Core, the strongest algorithm for password hashing is PBKDF2, implemented as
-  <a href="https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing">Microsoft.AspNetCore.Cryptography.KeyDerivation.Pbkdf2</a>
-  which has several significant advantages over <code>Rfc2898DeriveBytes</code>.</li>
-<li>When using a hashing function to hash non-unique inputs such as passwords, use a salt value added to the original value before hashing.</li>
+<li>For new ASP.NET Core applications, use ASP.NET Core Identity and its <code>PasswordHasher&lt;TUser&gt;</code> for password storage. <a href="https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-10.0">Microsoft advises against calling <code>KeyDerivation.Pbkdf2</code> directly for this purpose</a>; it is a low-level primitive intended for integration with existing cryptographic systems.</li>
+<li>Do not use general-purpose hashes such as SHA-512 directly for password storage.</li>
 <li>Refer to the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> for more information.</li>
 </ul>
 <h4 id="passwords">Passwords<a class="headerlink" href="#passwords" title="Permanent link">&para;</a></h4>

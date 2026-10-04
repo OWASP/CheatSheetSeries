@@ -5974,13 +5974,11 @@ documentation for more information.)</li>
 <ul>
 <li>Widgets on the lock screen may display sensitive data, potentially
 exposing it without the device being unlocked.</li>
-<li><strong>How</strong>: For iOS/iPadOS versions 17 and higher, use <code>WidgetInfo.isLocked</code>
-to detect lock screen state. For earlier iOS versions, implement custom
-logic based on available widget states since <code>widgetFamily</code> alone doesn't
-directly provide lock screen information. Apply conditional logic to mask
-or restrict sensitive widget content when appropriate security conditions
-aren't met. (See Apple's <a href="https://support.apple.com/guide/security/widgetkit-security-secbb0a1f9b4/web">WidgetKit security</a>
-for more information.)</li>
+<li><strong>How</strong>: Mark sensitive views with <code>privacySensitive(_:)</code> and provide redacted
+placeholders so WidgetKit can honor the user's privacy settings. If the widget
+must hide its content while the device is locked, enable the Data Protection
+capability for the widget extension and select <code>NSFileProtectionComplete</code>.
+Follow Apple's <a href="https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension">widget privacy guidance</a>.</li>
 </ul>
 <h4 id="additional-security-considerations">Additional Security Considerations<a class="headerlink" href="#additional-security-considerations" title="Permanent link">&para;</a></h4>
 <ul>
