@@ -265,17 +265,13 @@ Example:
 
 `http://www.example.com/redirect?url=http://badhacker.com`
 
-The most basic, but restrictive protection is to use the `:only_path` option. Setting this to true will essentially strip out any host information. However, the `:only_path` option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allowlist, this is one approach that can work:
+For redirects that must stay within the application, use Rails' [`url_from`](https://api.rubyonrails.org/v8.1.3.1/classes/ActionController/Redirecting.html#method-i-url_from) to validate the destination against the request host and provide a fixed fallback:
 
-``` ruby
-begin
-  if path = URI.parse(params[:url]).path
-    redirect_to path
-  end
-rescue URI::InvalidURIError
-  redirect_to '/'
-end
+```ruby
+redirect_to url_from(params[:url]) || "/"
 ```
+
+Do not treat `URI.parse(value).path` as redirect validation: the path of `https://trusted.example//evil.example/path` is `//evil.example/path`, which is a protocol-relative external destination. Keep Rails' open-redirect protection enabled; if the application requires specific destinations, use an application-defined allowlist instead.
 
 If matching user input against a list of approved sites or TLDs against regular expression is a must, it makes sense to leverage a library such as `URI.parse()` to obtain the host and then take the host value and match it against regular expression patterns. Those regular expressions must, at a minimum, have anchors or there is a greater chance of an attacker bypassing the validation routine.
 
