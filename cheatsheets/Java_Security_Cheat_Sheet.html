@@ -5837,14 +5837,9 @@
 <h4 id="symptom_4">Symptom<a class="headerlink" href="#symptom_4" title="Permanent link">&para;</a></h4>
 <p>Injection of this type occur when the application uses untrusted user input to build an HTTP response and sent it to browser.</p>
 <h4 id="how-to-prevent_4">How to prevent<a class="headerlink" href="#how-to-prevent_4" title="Permanent link">&para;</a></h4>
-<p>Either apply strict input validation (allowlist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).</p>
+<p>Use <a href="https://owasp.org/projects/java-encoder?tab=how-to-use">context-specific output encoding</a> when displaying untrusted text. When the application intentionally accepts HTML markup, use an <a href="https://github.com/OWASP/java-html-sanitizer#crafting-a-policy">HTML sanitization policy</a> for the permitted elements and attributes. Input validation enforces business rules; it does not replace these XSS controls. See the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for HTML, attribute, JavaScript, and CSS context requirements.</p>
 <h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
-<span class="cm">INPUT WAY: Receive data from user</span>
-<span class="cm">Here it's recommended to use strict input validation using allowlist approach.</span>
-<span class="cm">In fact, you ensure that only allowed characters are part of the input received.</span>
-<span class="cm">*/</span>
-
+<div class="highlight"><pre><span></span><code><span class="c1">// Illustrative business validation; output still needs the appropriate XSS control.</span>
 <span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"You user login is owasp-user01"</span><span class="p">;</span>
 
 <span class="cm">/* First we check that the value contains only expected character*/</span>
@@ -5853,25 +5848,10 @@
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="cm">/* If the first check pass then ensure that potential dangerous character</span>
-<span class="cm">that we have allowed for business requirement are not used in a dangerous way.</span>
-<span class="cm">For example here we have allowed the character '-', and, this can</span>
-<span class="cm">be used in SQL injection so, we</span>
-<span class="cm">ensure that this character is not used is a continuous form.</span>
-<span class="cm">Use the API COMMONS LANG v3 to help in String analysis...</span>
-<span class="cm">*/</span>
-<span class="n">If</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">countMatches</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span><span class="w"> </span><span class="s">""</span><span class="p">),</span><span class="w"> </span><span class="s">"--"</span><span class="p">))</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="c1">// Plain text for an ordinary HTML body position, such as the content of a div.</span>
+<span class="n">String</span><span class="w"> </span><span class="n">encodedText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Encode</span><span class="p">.</span><span class="na">forHtml</span><span class="p">(</span><span class="n">userInput</span><span class="p">);</span>
 
-<span class="cm">/*</span>
-<span class="cm">OUTPUT WAY: Send data to user</span>
-<span class="cm">Here we escape + sanitize any data sent to user</span>
-<span class="cm">Use the OWASP Java HTML Sanitizer API to handle sanitizing</span>
-<span class="cm">Use the OWASP Java Encoder API to handle HTML tag encoding (escaping)</span>
-<span class="cm">*/</span>
-
+<span class="c1">// Allowed markup for an HTML body position; not for attributes, script, or style.</span>
 <span class="n">String</span><span class="w"> </span><span class="n">outputToUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;"</span><span class="p">;</span>
 <span class="n">outputToUser</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">"&lt;script&gt;alert(22);&lt;/script&gt;&lt;img src='#' onload='javascript:alert(23);'&gt;"</span><span class="p">;</span>
 
@@ -5881,8 +5861,7 @@
 <span class="cm">/* Sanitize the output that will be sent to user*/</span>
 <span class="n">String</span><span class="w"> </span><span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy</span><span class="p">.</span><span class="na">sanitize</span><span class="p">(</span><span class="n">outputToUser</span><span class="p">);</span>
 
-<span class="cm">/* Encode HTML Tag*/</span>
-<span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Encode</span><span class="p">.</span><span class="na">forHtml</span><span class="p">(</span><span class="n">safeOutput</span><span class="p">);</span>
+<span class="cm">/* Keep the permitted markup: encoding this whole fragment would display tags as text. */</span>
 <span class="n">String</span><span class="w"> </span><span class="n">finalSafeOutputExpected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;"</span><span class="p">;</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">finalSafeOutputExpected</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">safeOutput</span><span class="p">))</span>
 <span class="p">{</span>
