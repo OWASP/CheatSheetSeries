@@ -168,7 +168,7 @@ No IdP should use SHA-1 as the certificate signing hash. SHA-256 is the minimum 
 
 ##### Certificate Lifetime
 
-Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore these in favor of guaranteeing uptime if certificate rotation does not happen on time. The SAML certificate lifetime should be handled well enough that ignoring these is not needed. Ignoring the certificate's validity period is fundamentally a bad idea. While [NIST SP 800-57 (Part 1, Rev. 5)](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) allows RSA 2048 bit keys to last for 3 years, the maximum lifetime of a SAML signing certificate should be two years. If the private key is not well protected, such as in a Hardware Security Module (HSM), that may be too long to be safe.
+X.509 certificates contain [`notBefore` and `notAfter` validity dates](https://www.rfc-editor.org/rfc/rfc5280.html#section-4.1.2.5). Plan certificate replacement before expiry rather than ignoring the validity period. Choose the signing key's usage period based on its protection, use, and threat model; see [Cryptoperiods and Rotation](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation). [NIST SP 800-57 Part 1 Rev. 5, Section 5.3.4](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf#page=49) distinguishes certificate validity from key usage periods: renewing a certificate with the same public key does not rotate the private key or restart its usage period.
 
 ##### Extended Key Usage (EKU) and Key Usage (KU)
 
@@ -210,7 +210,7 @@ As most IdPs and SPs treat the X.509 certificates as an explicit trust, private 
 
 Trusting third-party CAs, if done improperly, could result in unintended over-trust, for things such as TLS and code signing. If you choose to trust third-party CAs, make sure they are only trusted for the process of IdP signature validation.
 
-If third-party CAs are used they still should not issue SAML signing certificates where the lifetime of the certificate exceeds that of the underlying key pair, based on guidance from a standards organization such as [NIST, NSA, etc.](https://www.keylength.com/en/). If using the strongest private key types, this puts the upper limit at two years.
+Private CA-issued signing certificates must not extend beyond the signing key's approved usage period. Apply the [same lifetime and rotation policy](#certificate-lifetime) to CA-issued and self-signed signing certificates.
 
 ##### Self-Signed
 
