@@ -7,7 +7,7 @@ This cheat sheet is intended to provide guidance for developers on how to defend
 There are three main mechanisms that can be used to defend against these attacks:
 
 - Preventing the browser from loading the page in frame using the [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) or [Content Security Policy (frame-ancestors)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) HTTP headers.
-- Preventing session cookies from being included when the page is loaded in a frame using the [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) cookie attribute.
+- Preventing session cookies from being included in cross-site iframe requests using the [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) cookie attribute.
 - Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a "frame-buster").
 
 These mechanisms address frame-based clickjacking. [DoubleClickjacking](#defending-against-doubleclickjacking) uses separate windows and requires additional safeguards for sensitive actions.
@@ -98,11 +98,9 @@ Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For e
 
 ## Defending with SameSite Cookies
 
-The `SameSite` cookie attribute defined in [RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7) is primarily intended to defend against [cross-site request forgery (CSRF)](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md#samesite-cookie-attribute); however it can also provide protection against Clickjacking attacks.
+Cookies marked `SameSite=Strict` or `SameSite=Lax` are withheld from [cross-site iframe requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value). This can prevent clickjacking that depends on those cookies for authentication. See the [CSRF guidance on SameSite](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md#samesite-cookie-attribute) for its other security uses.
 
-Cookies with a `SameSite` attribute of either `strict` or `lax` will not be included in requests made to a page within an `<iframe>`. This means that if the session cookies are marked as `SameSite`, any Clickjacking attack that requires the victim to be authenticated will not work, as the cookie will not be sent. An article on the [Netsparker blog](https://www.netsparker.com/blog/web-security/same-site-cookie-attribute-prevent-cross-site-request-forgery/) provides further details on which types of requests cookies are sent for with the different SameSite policies.
-
-This approach is discussed on the [JavaScript.info website](https://javascript.info/clickjacking#samesite-cookie-attribute).
+SameSite does not block framing or withhold cookies from same-site requests. An attacker-controlled sibling subdomain with the same scheme can be [same-site while remaining a different origin](https://developer.mozilla.org/en-US/docs/Glossary/Site). Use [CSP `frame-ancestors`](#defending-with-content-security-policy-csp-frame-ancestors-directive) to restrict which origins may frame the page, even when SameSite cookies are configured.
 
 ### Limitations
 
