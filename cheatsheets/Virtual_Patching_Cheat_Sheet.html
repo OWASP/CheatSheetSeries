@@ -5029,8 +5029,8 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>The goal with this cheat Sheet is to present a concise virtual patching framework that organizations can follow to maximize the timely implementation of mitigation protections.</p>
 <h2 id="definition-virtual-patching">Definition: Virtual Patching<a class="headerlink" href="#definition-virtual-patching" title="Permanent link">&para;</a></h2>
-<p><strong>A security policy enforcement layer which prevents and reports the exploitation attempt of a known vulnerability.</strong></p>
-<p>The virtual patch works when the security enforcement layer analyzes transactions and intercepts attacks in transit, so malicious traffic never reaches the web application. The resulting impact of virtual patching is that, while the actual source code of the application itself has not been modified, the exploitation attempt does not succeed.</p>
+<p><strong>A security policy enforcement layer that detects and blocks matching exploitation attempts against a known vulnerability without changing the vulnerable code.</strong></p>
+<p>A virtual patch reduces exposure only for traffic the enforcement layer inspects and attack variants its rules recognize. It does not remove the underlying vulnerability. Test for bypasses and continue the code or vendor fix; <a href="https://coreruleset.org/docs/3-about-rules/creating/#advanced-transformation-usage">rule matching and transformations can miss attacks</a>.</p>
 <h2 id="why-not-just-fix-the-code">Why Not Just Fix the Code<a class="headerlink" href="#why-not-just-fix-the-code" title="Permanent link">&para;</a></h2>
 <p>From a purely technical perspective, the number one remediation strategy would be for an organization to correct the identified vulnerability within the source code of the web application. This concept is universally agreed upon by both web application security experts and system owners. Unfortunately, in real world business situations, there arise many scenarios where updating the source code of a web application is not easy such as:</p>
 <ul>
@@ -5043,7 +5043,7 @@
 <p>The two main goals of Virtual Patching are:</p>
 <ul>
 <li><strong>Minimize Time-to-Fix</strong> - Fixing application source code takes time. The main purpose of a virtual patch is to implement a mitigation for the identified vulnerability as soon as possible. The urgency of this response may be different: for example if the vulnerability was identified in-house through code reviews or penetration testing vs. finding a vulnerability as part of live incident response.</li>
-<li><strong>Attack Surface Reduction</strong> - Focus on minimizing the attack vector. In some cases, such as missing positive security input validation, it is possible to achieve 100% attack surface reduction. In other cases, such with missing output encoding for XSS flaws, you may only be able to limit the exposures. Keep in mind - 50% reduction in 10 minutes is better than 100% reduction in 48 hrs.</li>
+<li><strong>Attack Surface Reduction</strong> - Block the known exploitation path while a permanent fix is prepared. Test alternate encodings, affected endpoints, and paths that bypass the enforcement layer before claiming coverage. A passing test for one payload does not establish complete protection; <a href="https://coreruleset.org/docs/3-about-rules/creating/#advanced-transformation-usage">Core Rule Set (CRS) rule-writing guidance</a> illustrates how small payload changes can evade a rule.</li>
 </ul>
 <h2 id="virtual-patching-tools">Virtual Patching Tools<a class="headerlink" href="#virtual-patching-tools" title="Permanent link">&para;</a></h2>
 <p>Notice that the definition above did not list any specific tool as there are a number of different options that may be used for virtual patching efforts such as:</p>
@@ -5081,7 +5081,7 @@ reqID Parameter prone to SQL Injection.
 </ul>
 <!-- textlint-disable -->
 <ul>
-<li><strong>Virtual Patching Pre-Authorization</strong> – Virtual Patches need to be implemented quickly so the normal governance processes and authorizations steps for standard software patches need to be expedited. Since virtual patches are not actually modifying source code, they do not require the same amount of regression testing as normal software patches. Categorizing virtual patches in the same group as Anti-Virus updates or Network IDS signatures helps to speed up the authorization process and minimize extended testing phases.</li>
+<li><strong>Virtual Patching Pre-Authorization</strong> – Establish an expedited review and rollout process before an incident. Test both exploit attempts and legitimate application workflows: <a href="https://coreruleset.org/docs/2-how-crs-works/2-3-false-positives-and-tuning/#poor-user-experience">false positives can block valid transactions</a> even though application code is unchanged. Define monitoring and rollback criteria before enabling blocking.</li>
 </ul>
 <!-- textlint-enable -->
 <ul>

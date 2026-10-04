@@ -6722,7 +6722,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <p>Open Source projects such as <a href="https://github.com/aquasecurity/trivy">Trivy</a>, <a href="https://github.com/anchore/grype">Grype</a>, and <a href="https://github.com/quay/clair">Clair</a> can assist in identifying and prioritizing vulnerabilities.</p>
 <p>--</p>
 <h3 id="apply-security-context-to-your-pods-and-containers">Apply security context to your pods and containers<a class="headerlink" href="#apply-security-context-to-your-pods-and-containers" title="Permanent link">&para;</a></h3>
-<p>The security context is a property that is defined in the deployment yaml and controls the security parameters for all pod/container/volumes, and it should be applied throughout your infrastructure. When the security context property is properly implemented everywhere, it can eliminate entire classes of attacks that rely on privileged access. For example, any attack that depends on installing software or writing to the file system will be stopped if you specify read-only root file systems in the security context.</p>
+<p>Use <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Pod and container security contexts</a> to restrict process privileges and filesystem access. Set <code>readOnlyRootFilesystem: true</code> in each container's <code>securityContext</code> to prevent writes to its root filesystem. This does not make mounted volumes read-only or prevent attacks that do not require filesystem writes.</p>
 <p>When you are configuring the security context for your pods, only grant the privileges that are needed for the resources to function in your containers and volumes. Some of the important parameters in the security context property are:</p>
 <p>Security Context Settings:</p>
 <ol>
@@ -6744,20 +6744,19 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 </li>
 </ol>
 <h4 id="security-context-example-a-pod-definition-that-includes-security-context-parameters">Security context example: A pod definition that includes security context parameters<a class="headerlink" href="#security-context-example-a-pod-definition-that-includes-security-context-parameters" title="Permanent link">&para;</a></h4>
+<p>This illustrative manifest assumes an application image configured to run as a numeric non-root user and without writes to the root filesystem. Replace the example image with your application image.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello-world</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">  </span><span class="c1"># specification of the pod’s containers</span>
-<span class="w">  </span><span class="c1"># ...</span>
-<span class="w">  </span><span class="c1"># ...</span>
-<span class="w">  </span><span class="c1"># Security Context</span>
 <span class="w">  </span><span class="nt">securityContext</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">readOnlyRootFilesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="nt">runAsNonRoot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.example.com/app:tag</span>
+<span class="w">      </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">readOnlyRootFilesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <p>For more information on security context for Pods, refer to the documentation at <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context">https://kubernetes.io/docs/tasks/configure-pod-container/security-context</a></p>
 <p>--</p>

@@ -5975,10 +5975,13 @@ isXML(xmldoc,parseroptions);
 </ul>
 <p><strong>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</strong></p>
 <h2 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h2>
-<p><strong>When using the default XML parser (based on libxml2), PHP 8.0 and newer <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php">prevent XXE by default</a>.</strong></p>
-<p><strong>For PHP versions prior to 8.0, per <a href="https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="x">libxml_set_external_entity_loader(null);</span>
+<p>With libxml 2.9.0 or later, entity substitution is disabled by default. Do not enable <code>LIBXML_NOENT</code>, <code>LIBXML_DTDLOAD</code>, or <code>LIBXML_DTDVALID</code> for untrusted XML without explicitly blocking external resources; these options can require <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php">additional protection against external entity loading</a>.</p>
+<p>To reject external entity resolution, install a <a href="https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php">resolver callback that returns <code>null</code></a> before processing untrusted XML and keep it installed for that operation:</p>
+<div class="highlight"><pre><span></span><code><span class="x">libxml_set_external_entity_loader(function () {</span>
+<span class="x">    return null;</span>
+<span class="x">});</span>
 </code></pre></div>
+<p>Passing <code>null</code> directly to <code>libxml_set_external_entity_loader()</code> is not equivalent to returning <code>null</code> from the callback and does not block external entity loading, as the <a href="https://github.com/php/php-src/security/advisories/GHSA-3qrf-m4j2-pcrr">PHP security advisory's mitigation</a> demonstrates.</p>
 <p>A description of how to abuse this in PHP is presented in a good <a href="https://sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
 <h2 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
 <p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities">xml vulnerabilities</a>. As of the 1st January 2020 Python 2 is no longer supported, however the Python website still contains <a href="https://docs.python.org/2/library/xml.html#xml-vulnerabilities">some legacy documentation</a>.</p>
