@@ -235,7 +235,7 @@ Most websites use standardized TOTP tokens, allowing the user to install any aut
 - The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.
 - When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.
 - TOTP is widely used, and many users will already have at least one TOTP app installed.
-- As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they steal the phone.
+- A screen lock reduces theft risk but does not guarantee protection if the phone is stolen while unlocked. Enable authenticator-app access protection where available; for example, [Google Authenticator’s Privacy Screen](https://support.google.com/accounts/answer/1066447?hl=en-rd) requires device verification before app use.
 
 ##### Cons
 
