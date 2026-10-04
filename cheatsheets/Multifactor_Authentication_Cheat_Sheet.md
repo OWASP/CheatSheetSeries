@@ -108,7 +108,7 @@ Having to frequently login with MFA creates an additional burden for users, and 
 
 #### Passkeys
 
-[Passkeys](https://passkeys.dev/) based on the FIDO2 standard are a new form of MFA that combines characteristics of [possession-based](#something-you-have) and either [knowledge-based](#something-you-know) or [inherence-based](#something-you-are) authentication. The user is required to have a physical device (such as a mobile phone) and to enter a [PIN](#passwords-and-pins) or use [biometric authentication](#biometrics) in order to authenticate. The user's device then generates a cryptographic key that is used to authenticate with the server. This is a very secure form of MFA and is resistant to phishing attacks while also being frictionless for the user.
+Passkeys can provide phishing-resistant MFA by combining possession of the credential private key with local [PIN](#passwords-and-pins) or [biometric](#biometrics) verification. When using passkeys as MFA, require user verification and [validate the returned user-verification flag on the server](https://www.w3.org/TR/webauthn-3/#sctn-verifying-assertion); a touch confirming user presence alone is not a second factor. The credential key pair is created during [registration](https://www.w3.org/TR/webauthn-3/#sctn-registering-a-new-credential); authentication uses the existing private key to sign a challenge. For registration, verification, and recovery guidance, see the [Passkey Security Cheat Sheet](Passkey_Security_Cheat_Sheet.md).
 
 ### Failed Login Attempts
 
