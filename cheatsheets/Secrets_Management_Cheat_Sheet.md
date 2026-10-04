@@ -296,24 +296,11 @@ Note: if you don't store metadata about the secret nor prepare to move, you will
 
 ### 2.12 Passwordless Authentication and Token Security
 
-While not a direct replacement for all types of secrets (e.g., API keys, database credentials), passwordless authentication mechanisms like **OpenID Connect (OIDC)** can significantly reduce the attack surface by moving away from user-managed passwords. Instead of passwords, applications rely on trusted identity providers (IdPs) to authenticate users and receive secure tokens.
+OpenID Connect (OIDC) lets an application delegate user authentication to an identity provider (IdP), instead of storing and verifying the user's password itself. It does not require passwordless authentication: [OpenID Connect Core Section 3.1.2.3](https://openid.net/specs/openid-connect-core-1_0.html#Authenticates) leaves the IdP's authentication method, including passwords, outside the protocol's scope.
 
-**How it helps:**
+OIDC alone does not eliminate phishing, credential stuffing, or weak passwords at the IdP. Choose an IdP that enforces appropriate authentication controls; for phishing resistance, require [phishing-resistant authentication](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/#verifimpers), such as WebAuthn. See the [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md).
 
-- **Reduces Password-Related Risks:** Eliminates threats like phishing, credential stuffing, and weak password practices.
-- **Centralized Identity Management:** Authentication is handled by a specialized IdP, which can enforce strong authentication policies (e.g., MFA).
-- **Short-Lived Sessions:** OIDC tokens are typically short-lived, limiting the window of opportunity for an attacker if a token is compromised.
-
-**Token Security is Crucial:**
-
-Adopting passwordless authentication shifts the security focus from protecting static passwords to protecting dynamic tokens (e.g., ID tokens, access tokens, refresh tokens). These tokens are bearer tokens, meaning anyone who possesses one can use them. Therefore, it is critical to:
-
-- **Secure Token Transmission:** Always transmit tokens over TLS.
-- **Protect Tokens in Storage:** Do not store tokens in insecure locations like local storage in a browser. Use secure, HTTP-only cookies or appropriate secure storage mechanisms for mobile applications.
-- **Validate Tokens Correctly:** Always validate the signature, issuer, and audience of a token to ensure it is legitimate.
-- **Manage Token Lifetime:** Use short-lived access tokens and implement a secure refresh token rotation strategy.
-
-For more detailed guidance on securing OAuth 2.0 and OpenID Connect implementations, refer to the [OAuth2 Cheat Sheet](OAuth2_Cheat_Sheet.md).
+Federation still requires protecting issued tokens and any client credentials. Follow the [OAuth2 Cheat Sheet](OAuth2_Cheat_Sheet.md) for token transmission, storage, validation, expiration, and refresh-token protection. OIDC does not replace other application secrets, such as database credentials or API keys.
 
 ## 3 Continuous Integration (CI) and Continuous Deployment (CD)
 
