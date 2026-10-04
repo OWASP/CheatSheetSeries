@@ -1208,9 +1208,7 @@ HttpContext.Current.Response.Headers.Remove("Server");
 
 ## WCF Guidance
 
-- Keep in mind that the only safe way to pass a request in RESTful services is via `HTTP POST`, with TLS enabled.
-Using `HTTP GET` necessitates putting the data in the URL (e.g. the query string) which is visible to the user and will
-be logged and stored in their browser history.
+- Use HTTPS for RESTful requests regardless of HTTP method, and choose methods according to their semantics. Keep sensitive values out of URLs, which can be exposed in logs and browser history even with HTTPS. [POST can carry sensitive form data in the request body rather than the URL](https://www.rfc-editor.org/rfc/rfc9110.html#section-17.9), but POST alone does not provide confidentiality or authorization.
 - Avoid [BasicHttpBinding](https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.basichttpbinding?view=netframework-4.7.2). It has no default security configuration. Use [WSHttpBinding](https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.wshttpbinding?view=netframework-4.7.2) instead.
 - Use at least two security modes for your binding. Message security includes security provisions in the headers. Transport security means use of SSL. [TransportWithMessageCredential](https://docs.microsoft.com/en-us/dotnet/framework/wcf/samples/ws-transport-with-message-credential) combines the two.
 - Test your WCF implementation with a fuzzer like [ZAP](https://www.zaproxy.org/).
