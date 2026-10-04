@@ -95,7 +95,7 @@ Visible CAPTCHAs (image grids, distorted text) are accessibility-hostile, machin
 
 Prefer the following alternatives or layer them:
 
-- **Cryptographic attestation tokens** — Privacy Pass (RFC 9576), Apple Private Access Tokens, and emerging device-attestation APIs. The client proves "I am a real device on a known platform" without identifying the user.
+- **Cryptographic attestation tokens** — [Privacy Pass](https://www.rfc-editor.org/rfc/rfc9576.html#section-3.5.1) lets an origin verify that a client satisfied an issuer's attestation policy, such as a CAPTCHA, a device check, or account validation. Select trusted issuers whose policies match your use case; a valid token is not a general proof that the requester is human. [Privacy guarantees](https://www.rfc-editor.org/rfc/rfc9576.html#section-3.3) depend on the deployment and its trust assumptions.
 - **Managed challenges** — Cloudflare Turnstile returns a validation result, not a risk score. [Validate each token server-side with Siteverify](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), require `success: true`, and check the expected hostname and configured action. Tokens expire after five minutes and are single-use.
 - **Invisible risk scoring** — reCAPTCHA v3 and hCaptcha Enterprise return scores for application-defined thresholds.
 - **Proof of Work (PoW)** — the client must compute a hash that costs single-digit milliseconds for a human but accumulates significantly across thousands of bot requests. Useful for unauthenticated, expensive endpoints.
