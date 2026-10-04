@@ -156,9 +156,9 @@ _COUNTERMEASURES_ sheet:
 
 _ABUSE CASES_ sheet:
 
-| Abuse case unique ID | Feature ID impacted |                     Abuse case's attack description                     | Attack referential ID (if applicable) | CVSS V3 risk rating (score) |                CVSS V3 string                | Kind of abuse case | Countermeasure ID applicable | Handling decision (To Address or Risk Accepted) |
-| :------------------: | :-----------------: | :---------------------------------------------------------------------: | :-----------------------------------: | :-------------------------: | :------------------------------------------: | :----------------: | :--------------------------: | :---------------------------------------------: |
-|    ABUSE_CASE_001    |     FEATURE_001     | Upload Office file with malicious macro in charge of dropping a malware |               CAPEC-17                |         HIGH (7.7)          | CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H |     Technical      |         DEFENSE_001          |                   To Address                    |
+| Abuse case unique ID | Feature ID impacted | Abuse case's attack description | Attack referential ID (if applicable) | Business risk rating | CVSS severity and vector (if applicable) | Kind of abuse case | Countermeasure ID applicable | Handling decision (To Address or Risk Accepted) |
+| ------------------- | ------------------- | ------------------------------ | ------------------------------------ | -------------------- | --------------------------------------- | ------------------ | ---------------------------- | ---------------------------------------------- |
+| ABUSE_CASE_001 | FEATURE_001 | Upload Office file with malicious macro in charge of dropping a malware | CAPEC-17 | To be assessed | Not assigned | Technical | DEFENSE_001 | To Address |
 
 #### Step 2: During the workshop
 
@@ -171,8 +171,8 @@ For each feature, follow this flow:
 3. For each attack proposed:
    1. Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).
    2. Technical people give feedback about the feasibility of the proposed countermeasure.
-   3. Penetration testers use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: [CVSS V3 calculator](https://www.first.org/cvss/calculator/3.0))
-   4. Risk leaders should accept or modify the risk rating to determine the final risk score which accurately reflects the real business impact for the company.
+   3. If an abuse case involves a specific vulnerability, penetration testers may record its Common Vulnerability Scoring System (CVSS) severity score and vector. [FIRST explains that CVSS measures severity and should not be used alone to assess risk](https://www.first.org/cvss/v3.1/user-guide#2-1-CVSS-Measures-Severity-not-Risk).
+   4. Risk leaders assess the abuse case's likelihood and business impact using the organization's risk assessment method. Record this business risk rating and its rationale separately from any CVSS score; do not modify a CVSS score to represent business risk.
 
 4. Business, Risk, and Technical leaders should find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the _ABUSE CASES_ sheet (**if risk is accepted then add a comment to explain why**).
 5. Pass to next feature...
