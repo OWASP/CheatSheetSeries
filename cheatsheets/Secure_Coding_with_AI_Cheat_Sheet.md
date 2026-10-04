@@ -223,7 +223,7 @@ AI coding assistants send code context (open files, project structure, terminal 
 
 - Review what context your AI coding assistant sends to the provider. Most tools document this.
 - Configure AI tools to exclude sensitive directories from context. Add `.env`, `.env.*`, `*.pem`, `*.key`, `credentials.json`, `serviceAccountKey.json`, and similar sensitive files to your AI tool's context exclusion list (`.cursorignore`, `.copilotignore`, or equivalent).
-- Audit what your AI coding tool sends by enabling request logging or using a network proxy to inspect outbound API calls.
+- Audit what your AI coding tool sends using controlled request inspection. Exclude or redact credentials, personal data, and sensitive source code before recording captured traffic; follow the [Logging Cheat Sheet data exclusions](Logging_Cheat_Sheet.md#data-to-exclude).
 - Use self-hosted or air-gapped AI coding tools for projects handling classified, regulated, or highly sensitive code.
 - Store all secrets in environment variables, vault services, or encrypted secret stores -- never in files within the project tree where AI tools can read them.
 
@@ -272,7 +272,7 @@ AI-powered CI/CD agents (review bots, automated code fixers, PR assistants) run 
 - Scope CI agent credentials to the minimum required permissions. Review bots should not have deploy keys or write access to secrets.
 - Filter and sanitize PR content (title, body, comments, diff) before passing it to CI agents as context. PR content is attacker-controlled input.
 - Run CI agents in isolated environments with no access to production secrets or credentials beyond what the specific job requires.
-- Log all CI agent actions with full context for audit. Monitor for unexpected file modifications, network calls, or secret access patterns.
+- Log CI agent action metadata, correlation identifiers, authorization decisions, and outcomes. Exclude secrets and sensitive prompt, tool-argument, and response content; apply the [Logging Cheat Sheet](Logging_Cheat_Sheet.md#data-to-exclude). Monitor for unexpected file modifications, network calls, or secret access patterns.
 - Implement approval gates before CI agents can push commits, modify workflows, or access sensitive resources.
 
 ### Don't
