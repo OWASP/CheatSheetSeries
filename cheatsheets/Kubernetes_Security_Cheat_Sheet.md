@@ -355,7 +355,7 @@ Open Source projects such as [Trivy](https://github.com/aquasecurity/trivy), [Gr
 
 ### Apply security context to your pods and containers
 
-The security context is a property that is defined in the deployment yaml and controls the security parameters for all pod/container/volumes, and it should be applied throughout your infrastructure. When the security context property is properly implemented everywhere, it can eliminate entire classes of attacks that rely on privileged access. For example, any attack that depends on installing software or writing to the file system will be stopped if you specify read-only root file systems in the security context.
+Use [Pod and container security contexts](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) to restrict process privileges and filesystem access. Set `readOnlyRootFilesystem: true` in each container's `securityContext` to prevent writes to its root filesystem. This does not make mounted volumes read-only or prevent attacks that do not require filesystem writes.
 
 When you are configuring the security context for your pods, only grant the privileges that are needed for the resources to function in your containers and volumes. Some of the important parameters in the security context property are:
 
@@ -375,21 +375,21 @@ Security Context Settings:
 
 #### Security context example: A pod definition that includes security context parameters
 
+This illustrative manifest assumes an application image configured to run as a numeric non-root user and without writes to the root filesystem. Replace the example image with your application image.
+
 ```yaml
 apiVersion: v1
-
 kind: Pod
 metadata:
   name: hello-world
 spec:
-  containers:
-  # specification of the pod’s containers
-  # ...
-  # ...
-  # Security Context
   securityContext:
-    readOnlyRootFilesystem: true
     runAsNonRoot: true
+  containers:
+    - name: app
+      image: registry.example.com/app:tag
+      securityContext:
+        readOnlyRootFilesystem: true
 ```
 
 For more information on security context for Pods, refer to the documentation at <https://kubernetes.io/docs/tasks/configure-pod-container/security-context>
