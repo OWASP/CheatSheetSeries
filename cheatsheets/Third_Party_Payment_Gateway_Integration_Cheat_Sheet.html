@@ -4629,7 +4629,7 @@
 <li>Match the expected amount, currency, and order ID.</li>
 <li>Validate the authenticity of callbacks (e.g., HMAC signatures, secret tokens).</li>
 <li>Implement idempotency: only process an order once regardless of how many times the callback is received.</li>
-<li>Use a unique transaction ID with an expiry timestamp to mitigate callback replay attacks. Reject any callback with expired or reused transaction IDs.</li>
+<li>Treat checkout expiry separately from webhook signature freshness. Gateways can <a href="https://docs.stripe.com/webhooks#automatic-retries">retry delivery</a> or <a href="https://docs.stripe.com/webhooks#event-ordering">send events out of order</a>; verify late notifications and reconcile the current payment state instead of discarding them solely because the checkout expired. Use persistent duplicate-event records and idempotent fulfillment as described in the <a href="Webhook_Security_Cheat_Sheet.html#idempotency-and-duplicate-events">Webhook Security Cheat Sheet</a>.</li>
 <li>Only server-to-server callbacks should be trusted for payment verification and order fulfillment.</li>
 <li>Log all callback attempts for forensic analysis.</li>
 </ul>

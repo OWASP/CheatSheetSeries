@@ -1691,10 +1691,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox" class="md-nav__link">
+  <a href="#guideline-9-keep-html-sanitization-separate-from-javascript-execution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GUIDELINE #9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox
+        GUIDELINE #9 - Keep HTML sanitization separate from JavaScript execution
       
     </span>
   </a>
@@ -5128,10 +5128,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox" class="md-nav__link">
+  <a href="#guideline-9-keep-html-sanitization-separate-from-javascript-execution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GUIDELINE #9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox
+        GUIDELINE #9 - Keep HTML sanitization separate from JavaScript execution
       
     </span>
   </a>
@@ -5556,16 +5556,8 @@ Another option provided by Gaz (Gareth) was to use a specific code construct to 
 <span class="w">  </span><span class="nx">myMapType</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"moreUntrustedData"</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h3 id="guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox">GUIDELINE #9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox<a class="headerlink" href="#guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox" title="Permanent link">&para;</a></h3>
-<p>Run your JavaScript in a ECMAScript 5 <a href="https://github.com/jcoglan/canopy">canopy</a> or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).</p>
-<p>Examples of some JavaScript sandbox / sanitizers:</p>
-<ul>
-<li><a href="https://github.com/leizongmin/js-xss">js-xss</a></li>
-<li><a href="https://github.com/apostrophecms/sanitize-html">sanitize-html</a></li>
-<li><a href="https://github.com/cure53/DOMPurify">DOMPurify</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API">MDN - HTML Sanitizer API</a></li>
-<li><a href="https://owasp.org/www-pdf-archive/OWASPSummit2011DOMSandboxingBrowserSecurityTrack.pdf">OWASP Summit 2011 - DOM Sandboxing</a></li>
-</ul>
+<h3 id="guideline-9-keep-html-sanitization-separate-from-javascript-execution">GUIDELINE #9 - Keep HTML sanitization separate from JavaScript execution<a class="headerlink" href="#guideline-9-keep-html-sanitization-separate-from-javascript-execution" title="Permanent link">&para;</a></h3>
+<p>Use an HTML sanitizer such as <a href="https://github.com/cure53/DOMPurify#what-does-it-do">DOMPurify</a> when the application must render untrusted markup; see the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization">HTML sanitization guidance</a>. HTML sanitizers filter markup and do not provide a sandbox for executing arbitrary JavaScript. Do not pass untrusted code to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_direct_eval!"><code>eval()</code> or <code>Function()</code></a>.</p>
 <h3 id="guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects">GUIDELINE #10 - Don't eval() JSON to convert it to native JavaScript objects<a class="headerlink" href="#guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects" title="Permanent link">&para;</a></h3>
 <p>Don't <code>eval()</code> JSON to convert it to native JavaScript objects. Use the built-in <code>JSON.parse()</code> to deserialize JSON into JavaScript values, and <code>JSON.stringify()</code> to serialize JavaScript values into JSON. <code>JSON.parse()</code> rejects anything that is not valid JSON, so it cannot execute attacker-supplied code the way <code>eval()</code> can.</p>
 <blockquote>
