@@ -421,7 +421,7 @@ A feature of more advanced applications is the ability to require different auth
 
 For example, an application may require MFA for the first login from a particular device but not for subsequent logins from that device. Alternatively, a single sign-on solution may authenticate the user and allow them to remain logged in for a day but require a reauthentication if they try to access their profile page.
 
-Another option is the opposite approach where an application allows low risk access with just something that identifies the device (e.g., a specific mobile device fingerprint, a persistent cookie and browser fingerprint, etc. from the previous IP address) and then gradually requires stronger authentication for more sensitive operations. An example might be to allow someone to trigger something to see their current bank balance, but not the account number or anything else. If they need to see transactions, then the application puts them through some base level authentication and if they want to do any money movement, then MFA is required.
+Use device fingerprints, IP addresses, and remembered-device cookies as risk signals, not as substitutes for authentication. [NIST session guidance](https://pages.nist.gov/800-63-4/sp800-63b/session/) distinguishes an authenticated session secret from device and browser characteristics used for monitoring. Require authentication or a valid authenticated session before exposing private account data. For example, a banking application may allow balance viewing within an authenticated session and require stronger or fresher authentication for transaction details or money movement.
 
 Questions that should be considered when implementing a mechanism like this include:
 
