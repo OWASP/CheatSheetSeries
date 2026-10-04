@@ -6897,9 +6897,10 @@
 <h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">&para;</a></h2>
 <p>This cheat sheet demonstrates that input filtering is an incomplete defense for XSS by supplying testers with a series of XSS attacks that can bypass certain XSS defensive filters.</p>
 <h3 id="basic-xss-test-without-filter-evasion">Basic XSS Test Without Filter Evasion<a class="headerlink" href="#basic-xss-test-without-filter-evasion" title="Permanent link">&para;</a></h3>
-<p>This attack, which uses normal XSS JavaScript injection, serves as a baseline for the cheat sheet (the quotes are not required in any modern browser so they are omitted here):</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">SCRIPT</span> <span class="na">SRC</span><span class="o">=</span><span class="s">https://cdn.jsdelivr.net/gh/Moksh45/host-xss.rocks/index.js</span><span class="p">&gt;&lt;/</span><span class="nt">SCRIPT</span><span class="p">&gt;</span>
+<p>For this baseline test, host a script containing only <code>alert('XSS')</code> on an HTTPS endpoint you control. Replace the placeholder URL below with that script's URL:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">SCRIPT</span> <span class="na">SRC</span><span class="o">=</span><span class="s">https://example.com/xss-test.js</span><span class="p">&gt;&lt;/</span><span class="nt">SCRIPT</span><span class="p">&gt;</span>
 </code></pre></div>
+<p>Use a script you have reviewed and control: <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLScriptElement/src#security_considerations">external scripts execute in the context of the tested page</a>. A mutable third-party script can change what runs during your test.</p>
 <h3 id="xss-locator-polyglot">XSS Locator (Polyglot)<a class="headerlink" href="#xss-locator-polyglot" title="Permanent link">&para;</a></h3>
 <p>This test delivers a 'polyglot test XSS payload' that executes in multiple contexts, including HTML, script strings, JavaScript, and URLs:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">javascript</span><span class="o">:</span><span class="cm">/*--&gt;&lt;/title&gt;&lt;/style&gt;&lt;/textarea&gt;&lt;/script&gt;&lt;/xmp&gt;</span>

@@ -5129,20 +5129,17 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com
 userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmin=true
 </code></pre></div>
 <h3 id="exploitability">Exploitability<a class="headerlink" href="#exploitability" title="Permanent link">&para;</a></h3>
-<p>This functionality becomes exploitable when:</p>
-<ul>
-<li>Attacker can guess common sensitive fields.</li>
-<li>Attacker has access to source code and can review the models for sensitive fields.</li>
-<li>AND the object with sensitive fields has an empty constructor.</li>
-</ul>
+<p>Mass assignment is exploitable when attacker-controlled input can initialize or update fields that the caller is not authorized to change, such as a role or account owner. Field names may be guessed or discovered; source-code access is not required. <a href="https://cwe.mitre.org/data/definitions/915.html">CWE-915</a> defines the weakness in terms of insufficient control over writable attributes.</p>
+<p>An empty constructor is not a general prerequisite. For example, <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html">Spring supports both constructor and setter binding</a>. Review which inputs the binding mechanism exposes, including nested objects.</p>
 <h3 id="github-case-study">GitHub case study<a class="headerlink" href="#github-case-study" title="Permanent link">&para;</a></h3>
 <p>In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. <a href="https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/">GitHub's Blog Post</a>.</p>
 <h3 id="solutions">Solutions<a class="headerlink" href="#solutions" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Allow-list the bindable, non-sensitive fields.</li>
-<li>Block-list the non-bindable, sensitive fields.</li>
-<li>Use <a href="https://martinfowler.com/eaaCatalog/dataTransferObject.html">Data Transfer Objects</a> (DTOs).</li>
+<li>Prefer dedicated input objects, such as Data Transfer Objects (DTOs), containing only fields the caller may edit; see <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html">Spring's model design guidance</a>.</li>
+<li>Explicitly allow-list fields when binding to an object with additional properties.</li>
+<li>Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable. <a href="https://cwe.mitre.org/data/definitions/915.html">CWE-915 recommends allowlists over denylists</a>. The block-list examples below illustrate mechanisms encountered in existing applications, not the recommended design.</li>
 </ul>
+<p>DTOs and field allowlists restrict writable properties; they do not replace <a href="Authorization_Cheat_Sheet.html#validate-the-permissions-on-every-request">authorization for the requested object and operation</a>.</p>
 <h2 id="general-solutions">General Solutions<a class="headerlink" href="#general-solutions" title="Permanent link">&para;</a></h2>
 <p>An architectural approach is to create Data Transfer Objects and avoid binding input directly to domain objects. Only the fields that are meant to be editable by the user are included in the DTO.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserRegistrationFormDTO</span><span class="w"> </span><span class="p">{</span>
@@ -5164,25 +5161,26 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <span class="w">    </span><span class="nd">@InitBinder</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">"userid"</span><span class="p">,</span><span class="s">"password"</span><span class="p">,</span><span class="s">"email"</span><span class="o">]</span><span class="p">);</span>
+<span class="w">        </span><span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="s">"userid"</span><span class="p">,</span><span class="w"> </span><span class="s">"password"</span><span class="p">,</span><span class="w"> </span><span class="s">"email"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-">here</a> for the documentation.</p>
+<p>See <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html">Spring's model design guidance</a> for dedicated input objects and allowed fields.</p>
 <h4 id="block-listing">Block-listing<a class="headerlink" href="#block-listing" title="Permanent link">&para;</a></h4>
+<p>Spring describes <code>disallowedFields</code> as fragile because fields can be missed or added later. Prefer the allow-list above; this example only excludes the named property.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@Controller</span>
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span>
 <span class="p">{</span>
 <span class="w">   </span><span class="nd">@InitBinder</span>
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
 <span class="w">   </span><span class="p">{</span>
-<span class="w">      </span><span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">"isAdmin"</span><span class="o">]</span><span class="p">);</span>
+<span class="w">      </span><span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="s">"isAdmin"</span><span class="p">);</span>
 <span class="w">   </span><span class="p">}</span>
 <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-">here</a> for the documentation.</p>
+<p>See the <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html">Spring data binding limitations</a>.</p>
 <h3 id="nodejs-mongoose">NodeJS + Mongoose<a class="headerlink" href="#nodejs-mongoose" title="Permanent link">&para;</a></h3>
 <h4 id="allow-listing_1">Allow-listing<a class="headerlink" href="#allow-listing_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>

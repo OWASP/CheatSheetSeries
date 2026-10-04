@@ -4705,13 +4705,13 @@
 <h2 id="introduction-what-is-jaas-authentication">Introduction - What is JAAS authentication<a class="headerlink" href="#introduction-what-is-jaas-authentication" title="Permanent link">&para;</a></h2>
 <p>The process of verifying the identity of a user or another system is authentication.</p>
 <p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html">JAAS</a>, as an authentication framework manages the authenticated user's identity and credentials from login to logout.</p>
-<p>The JAAS authentication lifecycle:</p>
+<p>The <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/security/auth/spi/LoginModule.html">JAAS authentication lifecycle</a>:</p>
 <ol>
-<li>Create <code>LoginContext</code>.</li>
-<li>Read the configuration file for one or more <code>LoginModules</code> to initialize.</li>
-<li>Call <code>LoginContext.initialize()</code> for each LoginModule to initialize.</li>
-<li>Call <code>LoginContext.login()</code> for each LoginModule.</li>
-<li>If login successful then call <code>LoginContext.commit()</code> else call <code>LoginContext.abort()</code></li>
+<li>The application creates a <code>LoginContext</code> using the configured login name and a callback handler.</li>
+<li>The <code>LoginContext</code> reads the configuration and instantiates the configured <code>LoginModule</code>s.</li>
+<li>The <code>LoginContext</code> calls each module's <code>initialize()</code> with the shared <code>Subject</code> and other context.</li>
+<li>The application calls <code>LoginContext.login()</code>, which invokes the configured modules' <code>login()</code> methods according to their control flags.</li>
+<li>If overall authentication succeeds, the <code>LoginContext</code> invokes the modules' <code>commit()</code> methods; otherwise, it invokes their <code>abort()</code> methods.</li>
 </ol>
 <h2 id="configuration-file">Configuration file<a class="headerlink" href="#configuration-file" title="Permanent link">&para;</a></h2>
 <p>The JAAS configuration file contains a <code>LoginModule</code> stanza for each <code>LoginModule</code> available for logging on to the application.</p>
@@ -4749,8 +4749,8 @@ Where:
 <li><code>loginContext.login();</code></li>
 </ul>
 </li>
-<li>The value in succeeded Option is returned from <code>loginContext.login()</code>.</li>
-<li>If the login was successful, a subject was created.</li>
+<li><code>LoginContext.login()</code> returns without a value when authentication succeeds and throws a <code>LoginException</code> when it fails.</li>
+<li>Retrieve the authenticated <code>Subject</code> using <code>loginContext.getSubject()</code> after successful login.</li>
 </ul>
 <h2 id="loginmodulejava">LoginModule.java<a class="headerlink" href="#loginmodulejava" title="Permanent link">&para;</a></h2>
 <p>A <code>LoginModule</code> must have the following authentication methods:</p>
@@ -4765,7 +4765,7 @@ Where:
 <p>In <code>Main()</code>, after the <code>LoginContext</code> reads the correct stanza from the config file, the <code>LoginContext</code> instantiates the <code>LoginModule</code> specified in the stanza.</p>
 <ul>
 <li><code>initialize()</code> methods signature:<ul>
-<li><code>Public void initialize (Subject subject, CallbackHandler callbackHandler, Map sharedState, Map options)</code></li>
+<li><code>public void initialize(Subject subject, CallbackHandler callbackHandler, Map&lt;String, ?&gt; sharedState, Map&lt;String, ?&gt; options)</code></li>
 </ul>
 </li>
 <li>The arguments above should be saved as follows:<ul>
@@ -4776,7 +4776,7 @@ Where:
 </ul>
 </li>
 <li>What the <code>initialize()</code> method does:<ul>
-<li>Builds a subject object of the <code>Subject</code> class contingent on a successful <code>login()</code>.</li>
+<li>Stores the supplied shared <code>Subject</code>; successful <code>commit()</code> associates authenticated principals and credentials with that object.</li>
 <li>Sets the <code>CallbackHandler</code> which interacts with the user to gather login information.</li>
 <li>If a <code>LoginContext</code> specifies 2 or more LoginModules, which is legal, they can share information via a <code>sharedState</code> map.</li>
 <li>Saves state information such as debug and succeeded in an options Map.</li>
@@ -4808,21 +4808,7 @@ Where:
 <li>Private credentials include passwords and public keys.</li>
 </ul>
 <p>Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject.</p>
-<p>Below, is an example <code>commit()</code> method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject's username is then added to their public credentials.</p>
-<p>Code snippet setting then adding any principals and a public credentials to a subject:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">commit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">If</span><span class="w"> </span><span class="p">(</span><span class="n">userAuthenticated</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">Set</span><span class="w"> </span><span class="n">groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserService</span><span class="p">.</span><span class="na">findGroups</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Iterator</span><span class="w"> </span><span class="n">itr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">groups</span><span class="p">.</span><span class="na">iterator</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="n">itr</span><span class="p">.</span><span class="na">hasNext</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">groupName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="w"> </span><span class="n">itr</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="p">();</span>
-<span class="w">            </span><span class="n">UserGroupPrincipal</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserGroupPrincipal</span><span class="w"> </span><span class="p">(</span><span class="n">GroupName</span><span class="p">);</span>
-<span class="w">            </span><span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="w"> </span><span class="p">().</span><span class="na">add</span><span class="w"> </span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="n">UsernameCredential</span><span class="w"> </span><span class="n">cred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UsernameCredential</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
-<span class="w">        </span><span class="n">subject</span><span class="p">.</span><span class="na">getPublicCredentials</span><span class="p">().</span><span class="na">add</span><span class="w"> </span><span class="p">(</span><span class="n">cred</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<p>Implement <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/security/auth/spi/LoginModule.html#commit()"><code>commit()</code></a> using the authentication state saved by <code>login()</code>. Associate principals and credentials with the shared <code>Subject</code> only when this module's authentication succeeded; otherwise, clean up its saved state. Return <code>true</code> on success, <code>false</code> when the module is ignored, or throw <code>LoginException</code> on failure.</p>
 <h3 id="abort">abort()<a class="headerlink" href="#abort" title="Permanent link">&para;</a></h3>
 <p>The <code>abort()</code> method is called when authentication doesn't succeed. Before the <code>abort()</code> method exits the <code>LoginModule</code>, care should be taken to reset state including the username and password input fields.</p>
 <h3 id="logout">logout()<a class="headerlink" href="#logout" title="Permanent link">&para;</a></h3>

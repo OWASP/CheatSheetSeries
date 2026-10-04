@@ -5020,9 +5020,9 @@
 </tr>
 <tr>
 <td>GitHub Pages (Custom Domains)</td>
-<td>Custom domain on repository</td>
+<td>Unverified custom domain</td>
 <td><code>*.github.io</code></td>
-<td>The primary risk is with custom domain configurations. When a repository using a custom domain is deleted or made private, the custom domain association is removed and an attacker can configure the same custom domain on their own GitHub Pages repository. Note: claiming the default <code>username.github.io</code> subdomain requires registering that GitHub username, which is not possible while the original account exists.</td>
+<td>Takeover can occur when a domain still points to GitHub Pages after its repository is deleted or Pages is disabled, and the domain is not verified. <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages">Account or organization domain verification</a> prevents other GitHub users from publishing to the verified domain and its immediate subdomains.</td>
 </tr>
 <tr>
 <td>Heroku</td>
@@ -5080,8 +5080,8 @@
 <tbody>
 <tr>
 <td>AWS CloudFront</td>
-<td>Distribution deleted while CNAME remains</td>
-<td>When a CloudFront distribution is deleted but the CNAME record still points to the <code>*.cloudfront.net</code> hostname, an attacker can create a new CloudFront distribution and add the victim's domain as an alternate domain name (CNAME). CloudFront does not always verify domain ownership when adding alternate domain names, making this exploitable. If the distribution still exists but is merely disabled, takeover is not possible.</td>
+<td>Dangling DNS alone does not establish claimability</td>
+<td>Adding a new alternate domain name requires an attached trusted, valid TLS certificate covering that name. <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html">CloudFront checks the certificate subject alternative name</a>. Verify these prerequisites rather than treating a deleted distribution as sufficient evidence of takeover, and remove stale DNS records.</td>
 </tr>
 <tr>
 <td>AWS Route 53 (NS Delegation)</td>
@@ -5184,7 +5184,8 @@
 <li><strong>Azure App Service:</strong> Supports <a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain">custom domain verification via TXT records</a>. Adding a verification TXT record (e.g., <code>asuid.subdomain TXT &lt;verification-id&gt;</code>) ties the custom domain to a specific Azure subscription. Keep this TXT record in place even after decommissioning the App Service to prevent another tenant from claiming the domain.</li>
 <li><strong>Google Cloud:</strong> Many GCP services require domain verification through Google Search Console or a DNS TXT record before a custom domain can be associated. Retain verification records as long as the DNS record exists.</li>
 <li><strong>Cloudflare:</strong> Standard setup requires domain ownership via nameserver delegation. Cloudflare for SaaS configurations should use the <a href="https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/">custom hostname verification</a> feature.</li>
-<li><strong>AWS:</strong> AWS does not currently offer a universal domain verification mechanism for services like S3 or Elastic Beanstalk. For CloudFront, associating a distribution with a custom domain and keeping the distribution active (even if serving a redirect) prevents another account from claiming the domain name as an alternate CNAME.</li>
+<li><strong>GitHub Pages:</strong> Verify the domain in the owning account or organization's Pages settings and retain the verification TXT record. This protects the verified domain and immediate subdomains, not arbitrary deeper names covered by wildcard DNS; see <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages">GitHub's verification scope and instructions</a>.</li>
+<li><strong>AWS CloudFront:</strong> <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html">New alternate domain names require a trusted certificate covering the name</a>. A name already associated with another distribution cannot be added as the same alternate name. Continue removing stale DNS during decommissioning; protections differ across AWS services.</li>
 </ul>
 <p>Where no domain verification is available, the DNS record itself is the only control. Removing it promptly on decommissioning is the only reliable protection.</p>
 <h3 id="5-restrict-wildcard-dns-records">5. Restrict Wildcard DNS Records<a class="headerlink" href="#5-restrict-wildcard-dns-records" title="Permanent link">&para;</a></h3>

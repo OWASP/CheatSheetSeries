@@ -5096,7 +5096,7 @@
 <p>Where possible, always log:</p>
 <ul>
 <li>Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values<ul>
-<li>A specific event for failures to validate a value against a discrete and finite list of valid values (e.g. a country from a dropdown). This is a high security event as it can only be attack activity. For example <code>input_validation_fail[:field,userid]</code>.</li>
+<li>Log failures to validate a value against a discrete and finite list of valid values (e.g. a country from a dropdown), such as <code>input_validation_fail[:field,userid]</code>. Treat these as suspicious events, not proof of an attack: <a href="https://github.com/OWASP/OCSD/blob/main/Curriculum/07%20-%20Secure%20Logging/07.03%20-%20Supplementary%20Reading%20Materials.md#user-content-input-validation-failures">unexpected input can also result from misuse or client defects</a>. Evaluate severity and alerting using repetition, correlation, and request context.</li>
 </ul>
 </li>
 <li>Output validation failures e.g. database record set mismatch, invalid data encoding</li>

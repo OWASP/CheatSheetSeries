@@ -5058,26 +5058,26 @@
 <p>The previously described mechanisms are difficult to make secure because you can only see the code if you proxy the requests or if you get access to the GUI and see what is configured. The JavaScript is generally obfuscated so even seeing it is usually not useful. It is also instantly deployable because each new page request from a browser executes the requests to the aggregator which gets the JavaScript from the third party vendor. So as soon as any JavaScript files are changed on the vendor, or modified on the aggregator, the next call for them from any browser will get the changed JavaScript. One way to manage this risk is with the <em>Subresource Integrity</em> standard described below.</p>
 <h3 id="server-direct-data-layer">Server Direct Data Layer<a class="headerlink" href="#server-direct-data-layer" title="Permanent link">&para;</a></h3>
 <p>The tag manager developer user interface can be used to create JavaScript that can get data from anywhere in the browser DOM and store it anywhere on the page. This can allow vulnerabilities because the interface can be used to generate code to get unvalidated data from the DOM (e.g. URL parameters) and store it in some page location that would execute JavaScript.</p>
-<p>The best way to make the generated code secure is to confine it to getting DOM data from a host defined data layer.</p>
+<p>Use a host-defined data layer to limit the data intended for collection. This agreement does not restrict the privileges of JavaScript executing in the page.</p>
 <p>The data layer is either:</p>
 <ol>
 <li>a DIV object with attribute values that have the marketing or user behavior data that the third-party wants</li>
 <li>a set of JSON objects with the same data. Each variable or attribute contains the value of some DOM element or the description of a user action. The data layer is the complete set of values that all vendors need for that page. The data layer is created by the host developers.</li>
 </ol>
 <p>When specific events happen that the business has defined, a JavaScript handler for that event sends values from the data layer directly to the tag manager server. The tag manager server then sends the data to whatever third party or parties is supposed to get it. The event handler code is created by the host developers using the tag manager developer user interface. The event handler code is loaded from the tag manager servers on every page load.</p>
-<p><strong>This is a secure technique</strong> because only your JavaScript executes on your users browser, and only the data you decide on is sent to the vendor.</p>
+<p>A data layer is not a sandbox. <a href="https://developers.google.com/tag-platform/learn/sst-fundamentals/2-what-is-sst">Web tag-manager containers can execute custom JavaScript and HTML tags in the browser</a>, so remotely managed event handlers remain part of the page's code trust boundary. Restrict tag-manager publishing access and review changes as application code.</p>
 <p>This requires cooperation between the host, the aggregator or tag manager and the vendors.</p>
 <p>The host developers have to work with the vendor in order to know what type of data the vendor needs to do their analysis. Then the host programmer determines what DOM element will have that data.</p>
 <p>The host developers have to work with the tag manager or aggregator to agree on the protocol to send the data to the aggregator: what URL, parameters, format etc.</p>
 <p>The tag manager or aggregator has to work with the vendor to agree on the protocol to send the data to the vendor: what URL, parameters, format etc. Does the vendor have an API?</p>
 <h2 id="security-defense-considerations">Security Defense Considerations<a class="headerlink" href="#security-defense-considerations" title="Permanent link">&para;</a></h2>
 <h3 id="server-direct-data-layer_1">Server Direct Data Layer<a class="headerlink" href="#server-direct-data-layer_1" title="Permanent link">&para;</a></h3>
-<p>The server direct mechanism is a good security standard for third party JavaScript management, deployment and execution. A good practice for the host page is to create a data layer of DOM objects.</p>
+<p>A server-side collector can filter the data sent to vendors and move eligible tags out of the browser. It does not isolate any scripts that still run in the page.</p>
 <p>The data layer can perform any validation of the values, especially values from DOM objects exposed to the user like URL parameters and input fields, if these are required for the marketing analysis.</p>
 <p>An example statement for a corporate standard document is 'The tag JavaScript can only access values in the host data layer. The tag JavaScript can never access a URL parameter.</p>
 <p>You the host page developer have to agree with the third-party vendors or the tag manager what attribute in the data layer will have what value so they can create the JavaScript to read that value.</p>
 <p>User interface tags cannot be made secure using the data layer architecture because their function (or one of their functions) is to change the user interface on the client, not to send data about the user actions.</p>
-<p>Analytics tags can be made secure using the data layer architecture because the only action needed is to send data from the data layer to the third party. Only first party code is executed; first to populate the data layer (generally on page load); then event handler JavaScript sends whatever data is needed from that page to the third party database or tag manager.</p>
+<p>For analytics that do not need browser execution, send a fixed event schema through a collector you control and run vendor integrations server-side. <a href="https://developers.google.com/tag-platform/learn/sst-fundamentals/2-what-is-sst">Server-side tagging complements rather than replaces client-side collection</a>. Audit the scripts actually loaded before claiming that only first-party code executes.</p>
 <p>This is also a very scalable solution. Large ecommerce sites can easily have hundreds of thousands of URL and parameter combinations, with different sets of URLs and parameters being included in different marketing analysis campaigns. The marketing logic could have 30 or 40 different vendor tags on a single page.</p>
 <p>For example user actions in pages about specified cities, from specified locations on specified days should send data layer elements 1, 2 and 3. User actions in pages about other cities should send data layer elements 2 and 3 only. Since the event handler code to send data layer data on each page is controlled by the host developers or marketing technologists using the tag manager developer interface, the business logic about when and what data layer elements are sent to the tag manager server, can be changed and deployed in minutes. No interaction is needed with the third parties; they continue getting the data they expect but now it comes from different contexts that the host marketing technologists have chosen.</p>
 <p>Changing third party vendors just means changing the data dissemination rules at the tag manager server, no changes are needed in the host code. The data also goes directly only to the tag manager so the execution is fast. The event handler JavaScript does not have to connect to multiple third party sites.</p>
@@ -5165,7 +5165,7 @@
 <p>The most complete and preventive controls for any site containing non-trivial marketing tags are -</p>
 <ol>
 <li>
-<p>A data layer that calls the marketing server or tag manager APIs , so that only your code executes on your page (inversion of control).</p>
+<p>A controlled collector and server-side vendor integrations to reduce third-party browser code; a data layer alone does not enforce code isolation.</p>
 </li>
 <li>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity</a>.</p>

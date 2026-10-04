@@ -4892,16 +4892,16 @@
 <p><strong>Rule</strong>: Limit the number of simultaneous open files, network connections and started processes.</p>
 <h3 id="message-throughput">Message Throughput<a class="headerlink" href="#message-throughput" title="Permanent link">&para;</a></h3>
 <p>Throughput represents the number of web service requests served during a specific amount of time.</p>
-<p><strong>Rule</strong>: Configuration should be optimized for maximum message throughput to avoid running into DoS-like situations.</p>
+<p><strong>Rule</strong>: Enforce request-rate and execution-time limits based on tested service capacity and the cost of each operation. Tune stricter limits for expensive operations, following <a href="https://api-security.owasp.org/editions/2023/en/0xa4-unrestricted-resource-consumption/#how-to-prevent">OWASP's resource-consumption guidance</a>. Maximizing throughput alone does not prevent resource exhaustion.</p>
 <h3 id="xml-denial-of-service-protection">XML Denial of Service Protection<a class="headerlink" href="#xml-denial-of-service-protection" title="Permanent link">&para;</a></h3>
 <p>XML Denial of Service is probably the most serious attack against web services. So the web service must provide the following validation:</p>
 <p><strong>Rule</strong>: Validation against recursive payloads.</p>
 <p><strong>Rule</strong>: Validation against oversized payloads.</p>
 <p><strong>Rule</strong>: Protection against <a href="https://www.ws-attacks.org/XML_Entity_Expansion">XML entity expansion</a>.</p>
-<p><strong>Rule</strong>: Validating against overlong element names. If you are working with <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a>-based Web Services, the element names are those <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> Actions.</p>
+<p><strong>Rule</strong>: Reject XML element names that exceed configured length limits. SOAP action identifiers are separate from XML element names; for example, the <a href="https://www.w3.org/TR/soap12-part2/#ActionFeature">SOAP 1.2 Action feature</a> uses a URI value that can guide message dispatch or routing.</p>
 <p>This protection should be provided by your XML parser/schema validator. To verify, build test cases to make sure your parser to resistant to these types of attacks.</p>
 <h2 id="endpoint-security-profile">Endpoint Security Profile<a class="headerlink" href="#endpoint-security-profile" title="Permanent link">&para;</a></h2>
-<p><strong>Rule</strong>: Web services must be compliant with <a href="https://en.wikipedia.org/wiki/Web_Services_Interoperability">Web Services-Interoperability (WS-I)</a> Basic Profile at minimum.</p>
+<p><strong>Rule</strong>: Treat Web Services Interoperability (WS-I) Basic Profile conformance as an interoperability requirement, not a security baseline. Its <a href="https://docs.oasis-open.org/ws-brsp/BasicProfile/v1.2/BasicProfile-v1.2.html#_Toc392058316">security section</a> permits conformant services without security countermeasures. Independently enforce the transport security, authentication, authorization, and resource limits described above.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://csrc.nist.gov/pubs/sp/800/95/final">NIST SP 800-95: Guide to Secure Web Services</a></li>

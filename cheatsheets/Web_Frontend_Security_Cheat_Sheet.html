@@ -4306,10 +4306,10 @@ redirect_from: "/cheatsheets/AJAX_Security_Cheat_Sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#dont-perform-encryption-in-client-side-code" class="md-nav__link">
+  <a href="#choose-encryption-for-the-threat-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Don't perform encryption in client-side code
+        Choose encryption for the threat model
       
     </span>
   </a>
@@ -5022,10 +5022,10 @@ redirect_from: "/cheatsheets/AJAX_Security_Cheat_Sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#dont-perform-encryption-in-client-side-code" class="md-nav__link">
+  <a href="#choose-encryption-for-the-threat-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Don't perform encryption in client-side code
+        Choose encryption for the threat model
       
     </span>
   </a>
@@ -5247,7 +5247,7 @@ This applies to:</p>
 <h5 id="alternatives">Alternatives<a class="headerlink" href="#alternatives" title="Permanent link">&para;</a></h5>
 <ul>
 <li>Use Templating Engines (with auto-escaping) for reusable, structured HTML snippets.</li>
-<li>Use Modern Frameworks (React, Vue, Angular, Svelte) for complex applications. They standardize DOM manipulation, provide reactivity, and inherently handle sanitization for dynamic data. However, developers must avoid unsafe APIs (e.g., <code>dangerouslySetInnerHTML</code> in React, <code>[innerHTML]</code> in Angular) to prevent XSS vulnerabilities.</li>
+<li>Use framework text bindings, which generally escape text rather than sanitize arbitrary markup; <a href="https://vuejs.org/guide/best-practices/security">Vue documents this distinction</a>. Raw-HTML APIs such as <a href="https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html">React's <code>dangerouslySetInnerHTML</code></a> require trusted, sanitized HTML. URL and style bindings need controls appropriate to their context; see <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html#framework-security">Framework Security</a>.</li>
 </ul>
 <h4 id="use-of-textcontent-or-innertext-for-dom-updates-for-text-only-content">Use of <code>textContent</code> or <code>innerText</code> for DOM updates (for text-only content)<a class="headerlink" href="#use-of-textcontent-or-innertext-for-dom-updates-for-text-only-content" title="Permanent link">&para;</a></h4>
 <p>In AJAX and monolithic server-side rendering applications (e.g., PHP, ASP.NET), dynamic Document Object Model (DOM) updates are common for rendering text-only content from APIs or user inputs.</p>
@@ -5298,8 +5298,8 @@ This applies to:</p>
 </ul>
 <h4 id="never-transmit-secrets-to-the-client">Never transmit secrets to the client<a class="headerlink" href="#never-transmit-secrets-to-the-client" title="Permanent link">&para;</a></h4>
 <p>Anything sent to the client can be read or modified by the user, so keep all that secret stuff on the server please.</p>
-<h4 id="dont-perform-encryption-in-client-side-code">Don't perform encryption in client-side code<a class="headerlink" href="#dont-perform-encryption-in-client-side-code" title="Permanent link">&para;</a></h4>
-<p>Use TLS/SSL and encrypt on the server!</p>
+<h4 id="choose-encryption-for-the-threat-model">Choose encryption for the threat model<a class="headerlink" href="#choose-encryption-for-the-threat-model" title="Permanent link">&para;</a></h4>
+<p>Use TLS for transport. Client-side encryption can also be appropriate for end-to-end protection or encryption before upload, as described in the <a href="https://www.w3.org/TR/webcrypto/#use-cases">Web Cryptography use cases</a>. Use reviewed protocols and implementations rather than designing a cryptographic protocol yourself. Browser cryptography does not protect plaintext or keys from malicious code running in the application; account for XSS and key management as described in the <a href="https://www.w3.org/TR/webcrypto/#security-considerations">Web Cryptography security considerations</a>.</p>
 <h4 id="dont-perform-security-impacting-logic-on-client-side">Don't perform security impacting logic on client-side<a class="headerlink" href="#dont-perform-security-impacting-logic-on-client-side" title="Permanent link">&para;</a></h4>
 <p>This principle serves as a fail-safe—if a security decision is ambiguous, perform it on the server.</p>
 <h3 id="server-side">Server-Side<a class="headerlink" href="#server-side" title="Permanent link">&para;</a></h3>

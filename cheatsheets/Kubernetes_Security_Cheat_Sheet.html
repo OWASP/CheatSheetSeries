@@ -6870,9 +6870,9 @@ Kubernetes deprecated Pod Security Policies in favor of Pod Security Standards a
 <h5 id="opa-for-service-mesh-authorization">OPA for service mesh authorization<a class="headerlink" href="#opa-for-service-mesh-authorization" title="Permanent link">&para;</a></h5>
 <p>And finally, OPA can regulate use of service mesh architectures. Often, administrators ensure that compliance regulations are satisfied by building policies into the service mesh even when modification to source code is involved. Even if you’re not embedding OPA to implement application authorization logic (the top use case discussed above), you can control the APIs microservices by putting authorization policies into the service mesh. But if you are motivated by security, you can implement policies in the service mesh to limit lateral movement within a microservice architecture.</p>
 <h3 id="limiting-resource-usage-on-a-cluster">Limiting resource usage on a cluster<a class="headerlink" href="#limiting-resource-usage-on-a-cluster" title="Permanent link">&para;</a></h3>
-<p>It is important to define resource quotas for containers in Kubernetes, since all resources in a Kubernetes cluster are created with unbounded CPU limits and memory requests/limits by default. If you run resource-unbound containers, your system will be in risk of Denial of Service (DoS) or “noisy neighbor” scenarios. Fortunately, OPA can use resource quotas on a namespace, which will limit the number or capacity of resources granted to that namespace and restrict that namespace by defining its CPU capacity, memory, or persistent disk space.</p>
-<p>Additionally, the OPA can limit how many pods, services, or volumes exist in each namespace, and it can restrict the maximum or minimum size of some of the resources above. The resource quotas provide default limits when none are specified and prevent users from requesting unreasonably high or low values for commonly reserved resources like memory.</p>
-<p>Below is an example of defining namespace resource quota in the appropriate yaml. It limits the number of pods in the namespace to 4, limits their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.</p>
+<p>Use Kubernetes <a href="https://kubernetes.io/docs/concepts/policy/resource-quotas/">ResourceQuota</a> to limit aggregate resource requests, limits, and object counts within a namespace, reducing resource-exhaustion risks between tenants. This is a built-in admission control; it does not require OPA.</p>
+<p>Use <a href="https://kubernetes.io/docs/concepts/policy/limit-range/">LimitRange</a> for per-Pod or per-container minimum and maximum allocations and default requests or limits. ResourceQuota does not supply these defaults or enforce a minimum allocation for each Pod.</p>
+<p>The example below permits at most four non-terminal Pods in the namespace. Across those Pods, total CPU requests cannot exceed 1 CPU and total memory requests cannot exceed 1 GiB; total CPU limits cannot exceed 2 CPUs and total memory limits cannot exceed 2 GiB. These are namespace totals, not a per-Pod range.</p>
 <p><code>compute-resources.yaml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ResourceQuota</span>
@@ -6891,31 +6891,29 @@ Kubernetes deprecated Pod Security Policies in favor of Pod Security Standards a
 </code></pre></div>
 <p>For more information on configuring resource quotas, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/policy/resource-quotas/">https://kubernetes.io/docs/concepts/policy/resource-quotas/</a>.</p>
 <h3 id="use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters">Use Kubernetes network policies to control traffic between pods and clusters<a class="headerlink" href="#use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters" title="Permanent link">&para;</a></h3>
-<p>If your cluster runs different applications, a compromised application could attack other neighboring applications. This scenario might happen because Kubernetes allows every pod to contact every other pod by default. If ingress from an external network endpoint is allowed, the pod will be able to send its traffic to an endpoint outside the cluster.</p>
+<p>A compromised application can attack neighboring applications. By default, Pods are non-isolated for ingress and egress. Configure policies for each direction you need to restrict; allowing inbound traffic does not itself configure an outbound policy.</p>
 <p>It is strongly recommended that developers implement network segmentation, because it is a key security control that ensures that containers can only communicate with other approved containers and prevents attackers from pursuing lateral movement across containers. However, applying network segmentation in the cloud is challenging because of the “dynamic” nature of container network identities (IPs).</p>
-<p>While users of Google Cloud Platform can benefit from automatic firewall rules, which prevent cross-cluster communication, other users can apply similar implementations by deploying on-premises using network firewalls or SDN solutions. Also, the Kubernetes Network SIG is working on methods that will greatly improve the pod-to-pod communication policies. A new network policy API should address the need to create firewall rules around pods, limiting the network access that a containerized can have.</p>
-<p>The following is an example of a network policy that controls the network for “backend” pods, which only allows inbound network access from “frontend” pods:</p>
-<div class="highlight"><pre><span></span><code><span class="err">POST</span><span class="w"> </span><span class="err">/apis/</span><span class="kc">net</span><span class="err">.alpha.kuber</span><span class="kc">netes</span><span class="err">.io/v</span><span class="mi">1</span><span class="err">alpha</span><span class="mi">1</span><span class="err">/</span><span class="kc">na</span><span class="err">mespaces/</span><span class="kc">tenant</span><span class="mi">-</span><span class="err">a/</span><span class="kc">net</span><span class="err">workpolicys</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NetworkPolicy"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pol1"</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"spec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"allowIncoming"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
-<span class="w">        </span><span class="nt">"pods"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"segment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"frontend"</span><span class="w"> </span><span class="p">}</span>
-<span class="w">      </span><span class="p">}],</span>
-<span class="w">      </span><span class="nt">"toPorts"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
-<span class="w">        </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TCP"</span>
-<span class="w">      </span><span class="p">}]</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">"podSelector"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"segment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"backend"</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<p>Use the current <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/"><code>networking.k8s.io/v1</code> NetworkPolicy API</a>. Your cluster must use a network plugin that enforces NetworkPolicy; creating the resource alone has no effect without one.</p>
+<p>This illustrative ingress policy selects <code>segment=backend</code> Pods in <code>tenant-a</code> and allows TCP port 80 from <code>segment=frontend</code> Pods in that same namespace. Policies are additive: another policy can allow additional traffic. This policy does not restrict egress, and traffic from a Pod's own node remains allowed.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkPolicy</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pol1</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tenant-a</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">segment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">backend</span>
+<span class="w">  </span><span class="nt">policyTypes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
+<span class="w">  </span><span class="nt">ingress</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">podSelector</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">segment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">frontend</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
 </code></pre></div>
 <p>For more information on configuring network policies, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies">https://kubernetes.io/docs/concepts/services-networking/network-policies</a>.</p>
 <h3 id="securing-data">Securing data<a class="headerlink" href="#securing-data" title="Permanent link">&para;</a></h3>
