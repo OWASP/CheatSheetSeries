@@ -51,6 +51,8 @@ Implement authentication checks for each protected service method.
 
 #### Token-Based Authentication
 
+The following [unary server interceptor](https://pkg.go.dev/google.golang.org/grpc#UnaryServerInterceptor) illustrates authentication for unary RPCs only. Register it with the server; protected streaming RPCs need equivalent checks in a [stream server interceptor](https://pkg.go.dev/google.golang.org/grpc#StreamServerInterceptor) before invoking the stream handler. Registering a unary interceptor does not protect streaming methods.
+
 ```go
 // Go - JWT token validation interceptor
 func authInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
@@ -177,7 +179,7 @@ Limit streaming sessions and message counts to prevent resource exhaustion. Moni
 
 ### Implement Request Rate Limiting
 
-Protect services from request flooding and resource exhaustion.
+Protect services from request flooding and resource exhaustion. The example below limits unary RPCs only. Apply stream admission limits through a stream interceptor and enforce per-message limits within the stream; limiting stream creation alone does not limit the messages sent over an existing stream.
 
 ```go
 // Go - Rate limiting with memory management
