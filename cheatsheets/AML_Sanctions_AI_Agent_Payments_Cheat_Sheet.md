@@ -6,7 +6,7 @@ AI agents are initiating regulated financial transactions in production. Masterc
 
 This cheat sheet provides practical controls for fintechs, banks, and payment processors when autonomous AI agents -- rather than human users in browser sessions -- initiate or facilitate regulated payments. It covers agent identity verification, entity screening, audit trail requirements, and fail-closed enforcement.
 
-Use the [MCP authentication and authorization guidance](MCP_Security_Cheat_Sheet.md#6-authentication-authorization--transport-security) when exposing screening tools through MCP. Message-level signing is an [optional additional control](MCP_Security_Cheat_Sheet.md#7-optional-message-level-integrity), not a core MCP requirement. The signed-audit and receipt design in Sections 4 and 8-10 is one option for systems that need verification beyond a transport connection.
+Use the [MCP authentication and authorization guidance](MCP_Security_Cheat_Sheet.md#6-authentication-authorization-transport-security) when exposing screening tools through MCP. Message-level signing is an [optional additional control](MCP_Security_Cheat_Sheet.md#7-optional-message-level-integrity), not a core MCP requirement. The signed-audit and receipt design in Sections 4 and 8-10 is one option for systems that need verification beyond a transport connection.
 
 ## Regulatory Context
 
@@ -79,7 +79,7 @@ The agent itself is software. But the agent has an operator -- the developer, co
 
 ## Section 4: Signed Audit Trail
 
-Keep tamper-evident audit records that associate the authenticated agent with the screening request and result. The following bullets describe an optional signed, hash-chained audit design. The [MCPS Internet-Draft](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/) proposes one such design; it is an individual work in progress, not an adopted MCP standard. Select a reviewed, interoperable profile when this protection is needed, and apply the [log-protection controls](Logging_Cheat_Sheet.md#protection) regardless of the chosen design.
+Keep tamper-evident audit records that associate the authenticated agent with the screening request and result. The following bullets describe an optional signed, hash-chained audit design. The [MCPS Internet-Draft](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/) separately proposes a message-signing and replay-protection layer; it is an individual work in progress, not an adopted MCP standard. Select a reviewed, interoperable profile when this protection is needed, and apply the [log-protection controls](Logging_Cheat_Sheet.md#protection) regardless of the chosen design.
 
 ### Do
 
