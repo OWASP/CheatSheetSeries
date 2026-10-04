@@ -197,8 +197,8 @@ If complete elimination cannot be achieved:
 
 #### Eliminate `secrets: inherit` while reusing workflows
 
-When using the `inherit` keyword while invoking a reusable workflow, all the calling workflow’s secrets (organization, repository and environment secrets) are passed to the called workflow, even if the called workflow does not need them.
-When you call a reusable workflow, explicitly pass each secret required by the called workflow.
+When invoking a reusable workflow, `secrets: inherit` passes all secrets available to the calling workflow, including secrets the called workflow may not need. [Explicitly pass only the required secrets](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows#using-inputs-and-secrets-in-a-reusable-workflow).
+Also review any `environment` selected by a job inside the reusable workflow: GitHub documents that the environment's secrets are used there and can override secrets passed by the caller. An explicit caller secret map does not remove that separate source of access.
 
 #### Mask sensitive data
 
