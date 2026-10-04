@@ -57,26 +57,9 @@ tools = [
 ]
 ```
 
-#### Tool Authorization Middleware Example (Python)
+#### Tool Authorization Middleware
 
-```python
-from functools import wraps
-
-SENSITIVE_TOOLS = ["send_email", "execute_code", "database_write", "file_delete"]
-
-def require_confirmation(func):
-    @wraps(func)
-    async def wrapper(tool_name, params, context):
-        if tool_name in SENSITIVE_TOOLS:
-            if not context.get("user_confirmed"):
-                return {
-                    "status": "pending_confirmation",
-                    "message": f"Action '{tool_name}' requires user approval",
-                    "params": sanitize_for_display(params)
-                }
-        return await func(tool_name, params, context)
-    return wrapper
-```
+Enforce authorization in the execution component, outside the agent's context. A `user_confirmed` flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Changes to the target or parameters require new approval. Apply the [High-Impact Action Integrity Controls](#high-impact-action-integrity-controls) and the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md). Fail closed for unknown tools or missing approval requirements.
 
 ### 2. Input Validation & Prompt Injection Defense
 
@@ -435,108 +418,11 @@ class AgentMonitor:
 
 #### Secure Multi-Agent Communication
 
-```python
-from typing import Optional
-import jwt
-from datetime import datetime, timedelta
+Authenticate communicating agents and enforce the sender's permissions at the receiving service before executing a request. A valid message signature does not grant permission to perform the requested action.
 
-import uuid
-from pybreaker import CircuitBreaker  # pip install pybreaker
-# Usage: CircuitBreaker(fail_max=5, reset_timeout=60)
-# Generate UUIDs inline with: str(uuid.uuid4())
+When message signatures are needed, use a maintained protocol implementation. Protect the sender, intended recipient, message type, payload, creation and expiry times, and a unique message identifier. For HTTP, [RFC 9421 explains why verification must require all security-relevant components to be signed](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.2.1).
 
-class AgentTrustLevel(Enum):
-    UNTRUSTED = 0
-    INTERNAL = 1
-    PRIVILEGED = 2
-    SYSTEM = 3
-
-class SecureAgentBus:
-    """Secure communication layer for multi-agent systems."""
-    
-    def __init__(self, signing_key: bytes):
-        self.signing_key = signing_key
-        self.agent_registry = {}
-        self.message_validators = []
-        self.circuit_breakers = {}
-    
-    def register_agent(self, agent_id: str, trust_level: AgentTrustLevel,
-                       allowed_recipients: List[str]):
-        self.agent_registry[agent_id] = {
-            "trust_level": trust_level,
-            "allowed_recipients": allowed_recipients,
-            "allowed_message_types": self._get_allowed_types(trust_level)
-        }
-        self.circuit_breakers[agent_id] = CircuitBreaker(
-            fail_max=5,
-            reset_timeout=60
-        )
-    
-    async def send_message(self, sender_id: str, recipient_id: str,
-                          message_type: str, payload: dict) -> dict:
-        # Validate sender
-        sender = self.agent_registry.get(sender_id)
-        if not sender:
-            raise SecurityViolation(f"Unknown sender agent: {sender_id}")
-        
-        # Check circuit breaker
-        if self.circuit_breakers[sender_id].current_state == "open":
-            raise RuntimeError(f"Agent {sender_id} is temporarily blocked")
-        
-        # Validate recipient authorization
-        if recipient_id not in sender["allowed_recipients"]:
-            await self._log_security_event(
-                "unauthorized_message_attempt",
-                {"sender": sender_id, "recipient": recipient_id}
-            )
-            raise SecurityViolation("Sender not authorized to message recipient")
-        
-        # Validate message type
-        if message_type not in sender["allowed_message_types"]:
-            raise SecurityViolation(f"Message type '{message_type}' not allowed")
-        
-        # Sanitize payload
-        sanitized_payload = self._sanitize_payload(payload, sender["trust_level"])
-        
-        # Create signed message
-        signed_message = {
-            "sender": sender_id,
-            "recipient": recipient_id,
-            "type": message_type,
-            "payload": sanitized_payload,
-            "timestamp": datetime.utcnow().isoformat(),
-            "signature": self._sign_message(sender_id, recipient_id, 
-                                           message_type, sanitized_payload)
-        }
-        
-        return signed_message
-    
-    async def receive_message(self, recipient_id: str, message: dict) -> dict:
-        # Verify signature
-        if not self._verify_signature(message):
-            raise SecurityViolation("Invalid message signature")
-        
-        # Check message freshness (prevent replay attacks)
-        msg_time = datetime.fromisoformat(message["timestamp"])
-        if (datetime.utcnow() - msg_time) > timedelta(minutes=5):
-            raise SecurityViolation("Message expired (possible replay attack)")
-        
-        # Validate recipient
-        if message["recipient"] != recipient_id:
-            raise SecurityViolation("Message recipient mismatch")
-        
-        return message["payload"]
-    
-    def _sanitize_payload(self, payload: dict, trust_level: AgentTrustLevel) -> dict:
-        """Remove sensitive data based on trust level."""
-        if trust_level < AgentTrustLevel.PRIVILEGED:
-            # Remove system-level fields for lower trust agents
-            payload = {k: v for k, v in payload.items() 
-                      if not k.startswith("_system")}
-        
-        # Always sanitize potential injection content
-        return sanitize_untrusted_content(payload)
-```
+Enforce a bounded validity window and reject repeated message identifiers before execution, retaining replay state for the entire acceptance window. A timestamp check alone permits repeated execution within that window; see [RFC 9421's replay considerations](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.2.2). Keep transport encryption: [message signatures do not provide confidentiality](https://www.rfc-editor.org/rfc/rfc9421.html#section-7.1.2).
 
 ### 8. Data Protection & Privacy
 
