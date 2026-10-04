@@ -87,7 +87,7 @@ then add listener in main document for [blur event](https://developer.mozilla.or
 
 If you don't need other origins to embed your application in a frame, you can consider using one of two mechanisms:
 
-- **Content Security Policy frame ancestors** directive. [Read more about syntax](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src).
+- **Content Security Policy `frame-ancestors`** directive. [Read more about syntax](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors).
 - **X-Frame-Options**  - mainly if you want to support old browsers.
 
 Setting up framing protection efficiently blocks the ability to embed your application in a frame on the attacker-controlled origin and protects from other attacks like [Clickjacking](https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html).
