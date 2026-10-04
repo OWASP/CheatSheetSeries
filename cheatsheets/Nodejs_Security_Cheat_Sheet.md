@@ -226,7 +226,7 @@ JavaScript is a dynamic language and depending on how the framework parses a URL
 
 #### Perform output escaping
 
-Use output encoding that matches the destination context to prevent cross-site scripting (XSS). [escape-html](https://github.com/component/escape-html#escapehtmlstring) supports ordinary HTML text and quoted HTML attribute values; it does not safely encode JavaScript, CSS, or URL contexts. Follow the [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#output-encoding) for context-specific controls. When you need to render user-supplied HTML (rather than escape it), use a maintained sanitizer such as [DOMPurify](https://github.com/cure53/DOMPurify) (with `jsdom` for server-side use) or [`sanitize-html`](https://www.npmjs.com/package/sanitize-html). Avoid `node-esapi`, which is no longer actively maintained.
+Use output encoding that matches the destination context to prevent cross-site scripting (XSS). [escape-html](https://github.com/component/escape-html#escapehtmlstring) supports ordinary HTML text and quoted ordinary-text attribute values; it does not safely encode JavaScript, CSS, or URL contexts. Follow the [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#output-encoding) for context-specific controls. When you need to render user-supplied HTML (rather than escape it), use a maintained sanitizer such as [DOMPurify](https://github.com/cure53/DOMPurify) (with `jsdom` for server-side use) or [`sanitize-html`](https://www.npmjs.com/package/sanitize-html). Avoid `node-esapi`, which is no longer actively maintained.
 
 #### Perform application activity logging
 
