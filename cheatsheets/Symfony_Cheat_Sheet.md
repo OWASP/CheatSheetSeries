@@ -431,34 +431,19 @@ $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 
 ### Session & Cookies Management
 
-By default, sessions are securely configured and enabled. However, they can be controlled manually in `config/packages/framework.yaml` under the `framework.session` key. Make sure to set the following in your session configuration to make your application more aware.
-
-Ensure `cookie_secure` is not explicitly set to `false`(it is set to `true` by default). Setting http only to `true` means that the cookie won't be accessible by JavaScript.
+Configure session cookies under `framework.session` in `config/packages/framework.yaml`. For an HTTPS application, explicitly set [`cookie_secure: true`](https://symfony.com/doc/current/reference/configuration/framework.html#cookie-secure); `auto` sets it to `false` for HTTP requests and does not guarantee secure cookies. Keep [`cookie_httponly: true`](https://symfony.com/doc/current/reference/configuration/framework.html#cookie-httponly) to prevent JavaScript from reading the cookie.
 
 ```yaml
-cookie_httponly: true
+framework:
+    session:
+        cookie_secure: true
+        cookie_httponly: true
+        cookie_samesite: lax
 ```
 
-Make sure to set a short session TTL duration. According to [OWASP's recommendations](Session_Management_Cheat_Sheet.md), aim for a session TTL of 2-5 minutes for high-value applications and 15-30 minutes for lower-risk applications.
+Use `cookie_samesite: lax`, or `strict` where the application's navigation flows permit it. [SameSite restricts cross-site cookie sending](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value); it does not isolate all origins. For example, sibling subdomains with the same scheme can be [same-site](https://developer.mozilla.org/en-US/docs/Glossary/Site). Retain CSRF protection for state-changing requests.
 
-```yaml
-cookie_lifetime: 5
-```
-
-It is recommended to set `cookie_samesite` to either `lax` or `strict` to prevent cookies from being sent from cross-origin requests. `lax` allows the cookie to be sent along with "safe" top-level navigations and same-site requests. With `strict`  it would not be possible to send any cookie when the HTTP request is not from the same domain.
-
-```yaml
-cookie_samesite: lax|strict
-```
-
-Setting `cookie_secure` to `auto` assures us that cookies are only sent over secure connections, meaning `true` for HTTPS and `false` for HTTP protocol.
-
-```yaml
-cookie_secure: auto
-```
-
-OWASP provides more general information about sessions in [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
-You may also refer to the [Cookie Security Guide](https://owasp.org/www-chapter-london/assets/slides/OWASPLondon20171130_Cookie_Security_Myths_Misconceptions_David_Johansson.pdf).
+[`cookie_lifetime`](https://symfony.com/doc/current/reference/configuration/framework.html#cookie-lifetime) is measured in seconds: `5` means five seconds, not five minutes. Cookie expiration does not enforce a server-side session timeout. Implement server-side idle and absolute expiration as described in the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md#automatic-session-expiration).
 
 ---
 In Symfony, sessions are managed by the framework itself and rely on Symfony's session handling mechanisms rather than PHP's default session handling via the `session.auto_start = 1` directive in the php.ini file.
