@@ -216,12 +216,9 @@ HTTP Strict Transport Security (HSTS) instructs the user's browser to always req
 
 ### Client Certificates and Mutual TLS
 
-In a typical TLS configuration, a certificate on the server allows the client to verify the server's identity and provides an encrypted connection between them. However, this approach has two main weaknesses:
+A typical TLS connection authenticates the server, while mutual TLS (mTLS) also authenticates the client using a client certificate and proof of its private key. In TLS 1.3, this proof is bound to the handshake transcript by [CertificateVerify](https://www.rfc-editor.org/rfc/rfc8446.html#section-4.4.3). This [channel binding](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/#verifimpers) prevents an intermediary from relaying the client's authentication onto a separate TLS connection to the legitimate server.
 
-- The server lacks a mechanism to verify the client's identity.
-- An attacker, obtaining a valid certificate for the domain, can intercept the connection. This interception is often used by businesses to inspect TLS traffic, by installing a trusted CA certificate on their client systems.
-
-Client certificates, central to mutual TLS (mTLS), address these issues. In mTLS, both the client and server authenticate each other using TLS. The client proves their identity to the server with their own certificate. This not only enables strong authentication of the client but also prevents an intermediate party from decrypting TLS traffic, even if they have a trusted CA certificate on the client system.
+TLS provides [confidentiality between its endpoints](https://www.rfc-editor.org/rfc/rfc8446.html#section-1); mTLS does not make data confidential from a TLS endpoint whose server certificate the client accepts. If the client accepts an attacker's certificate for the target domain, the attacker can read application data sent to that endpoint, even when the client uses a certificate. Validate the server's identity and trust configuration independently; see [Public Key Pinning](#public-key-pinning) for applications that need to restrict server trust further.
 
 Challenges and Considerations
 
