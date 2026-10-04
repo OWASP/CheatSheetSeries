@@ -314,7 +314,7 @@ app.use('/graphql', graphqlHTTP({
 
 #### Don't Return Excessive Errors
 
-GraphQL APIs in production shouldn't return stack traces or be in debug mode. Doing this is implementation specific, but using middleware is one popular way to have better control over errors the server returns. To [disable excessive errors](https://www.apollographql.com/docs/apollo-server/data/errors/) with Apollo Server, either pass `debug: false` to the Apollo Server constructor or set the `NODE_ENV` environment variable to 'production' or 'test'. However, if you would like to log the stack trace internally without returning it to the user see [here](https://www.apollographql.com/docs/apollo-server/data/errors/#masking-and-logging-errors) for how to mask and log errors so they are available to the developers but not callers of the API.
+GraphQL APIs in production shouldn't return stack traces or be in debug mode. Doing this is implementation specific, but using middleware is one popular way to have better control over errors the server returns. To [disable excessive errors](https://www.apollographql.com/docs/apollo-server/data/errors/) with Apollo Server, either pass `includeStacktraceInErrorResponses: false` to the Apollo Server constructor or set the `NODE_ENV` environment variable to 'production' or 'test'. However, if you would like to log the stack trace internally without returning it to the user see [here](https://www.apollographql.com/docs/apollo-server/data/errors/#masking-and-logging-errors) for how to mask and log errors so they are available to the developers but not callers of the API.
 
 ## References
 
