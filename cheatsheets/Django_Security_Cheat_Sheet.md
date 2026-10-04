@@ -122,7 +122,7 @@ Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in t
 
 ## Content Security Policy
 
-Django does not provide built-in Content Security Policy (CSP) support by default. CSP can be implemented using third-party libraries such as `django-csp` or by configuring HTTP response headers.
+Django 6.0 and later provide built-in Content Security Policy (CSP) support. Enable `django.middleware.csp.ContentSecurityPolicyMiddleware` and configure `SECURE_CSP` to enforce a policy, or `SECURE_CSP_REPORT_ONLY` to monitor violations without blocking content. Follow [Django's CSP configuration guide](https://docs.djangoproject.com/en/6.0/howto/csp/). Earlier versions require a third-party library such as `django-csp` or configuration of HTTP response headers.
 
 For more details:
 
