@@ -330,7 +330,7 @@ For LLM agents with tool access:
 ### Comprehensive Monitoring
 
 - Implement request rate limiting per user/IP
-- Log all LLM interactions for security analysis
+- Log security-relevant metadata and decisions, excluding credentials, secrets, and unnecessary sensitive prompt or response content; follow the [Logging Cheat Sheet](Logging_Cheat_Sheet.md#data-to-exclude).
 - Set up alerting for suspicious patterns
 - Monitor for encoding attempts and HTML injection
 - Track agent reasoning patterns and tool usage
@@ -510,7 +510,7 @@ For benign controls, record structured policy decisions (allow, block, or human 
 
 **Deployment Phase:**
 
-- [ ] Configure comprehensive logging for all LLM interactions
+- [ ] Configure security logging with sensitive-data exclusions for LLM interactions
 - [ ] Set up monitoring and alerting for suspicious patterns and usage anomalies
 - [ ] Establish incident response procedures for security breaches
 - [ ] Train users on safe LLM interaction practices
