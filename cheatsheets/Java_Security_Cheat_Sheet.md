@@ -239,17 +239,12 @@ Injection of this type occur when the application uses untrusted user input to b
 
 #### How to prevent
 
-Either apply strict input validation (allowlist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
+Use [context-specific output encoding](https://owasp.org/projects/java-encoder?tab=how-to-use) when displaying untrusted text. When the application intentionally accepts HTML markup, use an [HTML sanitization policy](https://github.com/OWASP/java-html-sanitizer#crafting-a-policy) for the permitted elements and attributes. Input validation enforces business rules; it does not replace these XSS controls. See the [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for HTML, attribute, JavaScript, and CSS context requirements.
 
 #### Example
 
 ``` java
-/*
-INPUT WAY: Receive data from user
-Here it's recommended to use strict input validation using allowlist approach.
-In fact, you ensure that only allowed characters are part of the input received.
-*/
-
+// Illustrative business validation; output still needs the appropriate XSS control.
 String userInput = "You user login is owasp-user01";
 
 /* First we check that the value contains only expected character*/
@@ -258,25 +253,10 @@ if (!Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput))
     return false;
 }
 
-/* If the first check pass then ensure that potential dangerous character
-that we have allowed for business requirement are not used in a dangerous way.
-For example here we have allowed the character '-', and, this can
-be used in SQL injection so, we
-ensure that this character is not used is a continuous form.
-Use the API COMMONS LANG v3 to help in String analysis...
-*/
-If (0 != StringUtils.countMatches(userInput.replace(" ", ""), "--"))
-{
-    return false;
-}
+// Plain text for an ordinary HTML body position, such as the content of a div.
+String encodedText = Encode.forHtml(userInput);
 
-/*
-OUTPUT WAY: Send data to user
-Here we escape + sanitize any data sent to user
-Use the OWASP Java HTML Sanitizer API to handle sanitizing
-Use the OWASP Java Encoder API to handle HTML tag encoding (escaping)
-*/
-
+// Allowed markup for an HTML body position; not for attributes, script, or style.
 String outputToUser = "You <p>user login</p> is <strong>owasp-user01</strong>";
 outputToUser += "<script>alert(22);</script><img src='#' onload='javascript:alert(23);'>";
 
@@ -286,8 +266,7 @@ PolicyFactory policy = new HtmlPolicyBuilder().allowElements("p", "strong").toFa
 /* Sanitize the output that will be sent to user*/
 String safeOutput = policy.sanitize(outputToUser);
 
-/* Encode HTML Tag*/
-safeOutput = Encode.forHtml(safeOutput);
+/* Keep the permitted markup: encoding this whole fragment would display tags as text. */
 String finalSafeOutputExpected = "You <p>user login</p> is <strong>owasp-user01</strong>";
 if (!finalSafeOutputExpected.equals(safeOutput))
 {
