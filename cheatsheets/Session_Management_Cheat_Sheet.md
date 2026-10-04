@@ -246,15 +246,15 @@ WHATWG suggests the use of `sessionStorage` for data that is relevant for one-in
 
 ## Web Workers
 
-Web Workers run JavaScript code in a global context separate from the one of the current window. A communication channel with the main execution window exists, which is called `MessageChannel`.
+Web Workers run JavaScript in a separate global context. The main window and worker communicate through messages using [`postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers#sending_messages_to_and_from_a_dedicated_worker).
 
 ### Use Case
 
-Web Workers are an alternative for browser storage of (session) secrets when storage persistence across page refresh is not a requirement. For Web Workers to provide secure browser storage, any code that requires the secret should exist within the Web Worker and the secret should never be transmitted to the main window context.
+A worker can keep a secret in memory when persistence across page refresh is not required. To isolate the secret from the main window, obtain it within the worker, keep secret-dependent operations there, and never return the secret to the main window.
 
-Storing secrets within the memory of a Web Worker offers the same security guarantees as an HttpOnly cookie: the confidentiality of the secret is protected. Still, an XSS attack can be used to send messages to the Web Worker to perform an operation that requires the secret. The Web Worker will return the result of the operation to the main execution thread.
+This isolation can reduce direct access to an existing secret, but it does not make the application safe against XSS. Malicious page code can still request secret-dependent operations and read their results. The [OAuth browser-apps Internet-Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps#section-8.3) also explains that isolating an existing refresh token does not prevent malicious code from obtaining new tokens through another authorization flow.
 
-The advantage of a Web Worker implementation compared to an HttpOnly cookie is that a Web Worker allows for some isolated JavaScript code to access the secret; an HttpOnly cookie is not accessible to any JavaScript. If the frontend JavaScript code requires access to the secret, the Web Worker implementation is the only browser storage option that preserves the secret confidentiality.
+Use a worker only when browser-side code needs secret-dependent operations. Expose a narrow message interface and enforce authorization on the server. Worker isolation does not replace XSS prevention or server-side session controls; prefer an HttpOnly cookie or a backend that holds tokens when the browser does not need to handle them.
 
 ## Session ID Life Cycle
 
