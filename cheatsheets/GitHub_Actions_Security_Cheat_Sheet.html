@@ -5289,8 +5289,8 @@ For cloud deployment trust restrictions and credential handling, see the <a href
 <li>Rotate secrets regularly.</li>
 </ul>
 <h4 id="eliminate-secrets-inherit-while-reusing-workflows">Eliminate <code>secrets: inherit</code> while reusing workflows<a class="headerlink" href="#eliminate-secrets-inherit-while-reusing-workflows" title="Permanent link">&para;</a></h4>
-<p>When using the <code>inherit</code> keyword while invoking a reusable workflow, all the calling workflow’s secrets (organization, repository and environment secrets) are passed to the called workflow, even if the called workflow does not need them.
-When you call a reusable workflow, explicitly pass each secret required by the called workflow.</p>
+<p>When invoking a reusable workflow, <code>secrets: inherit</code> passes all secrets available to the calling workflow, including secrets the called workflow may not need. <a href="https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows#using-inputs-and-secrets-in-a-reusable-workflow">Explicitly pass only the required secrets</a>.
+Also review any <code>environment</code> selected by a job inside the reusable workflow: GitHub documents that the environment's secrets are used there and can override secrets passed by the caller. An explicit caller secret map does not remove that separate source of access.</p>
 <h4 id="mask-sensitive-data">Mask sensitive data<a class="headerlink" href="#mask-sensitive-data" title="Permanent link">&para;</a></h4>
 <p>Mask all sensitive information that is not a GitHub secret by using <code>::add-mask::{value}</code>.
 Masking a value prevents a string or variable from being printed in the log</p>

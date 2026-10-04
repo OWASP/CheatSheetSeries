@@ -5188,9 +5188,9 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <ul>
 <li>Sign artifacts and build provenance (for example, use Sigstore / cosign or similar signing tools) so consumers can verify integrity before installing.</li>
 </ul>
-<p>Sigstore Example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// sign-and-verify.js</span>
-<span class="c1">// npm install sigstore fs</span>
+<p>Illustrative <a href="https://github.com/sigstore/sigstore-js/tree/main/packages/client#verifybundle-payload-options">Sigstore 5 verification example</a>, assuming a <a href="https://docs.sigstore.dev/quickstart/verification-cheat-sheet/#verifying-a-signature-created-by-a-workflow">GitHub Actions signing workflow</a>. Replace the placeholder repository and workflow with your trusted release policy. Verify both the expected issuer and certificate identity; identity patterns are regular expressions, so anchor them and escape literal dots. Never derive this policy from the untrusted bundle.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// sign-and-verify.mjs</span>
+<span class="c1">// npm install sigstore@5</span>
 
 <span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'fs'</span><span class="p">;</span>
 <span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">sigstore</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'sigstore'</span><span class="p">;</span>
@@ -5205,7 +5205,11 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Signed:'</span><span class="p">,</span><span class="w"> </span><span class="nx">artifact</span><span class="p">);</span>
 
 <span class="c1">// --- Verify ---</span>
-<span class="k">await</span><span class="w"> </span><span class="nx">sigstore</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">bundle</span><span class="p">);</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">sigstore</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">bundle</span><span class="p">,</span><span class="w"> </span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">certificateIssuer</span><span class="o">:</span><span class="w"> </span><span class="s1">'https://token.actions.githubusercontent.com'</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">certificateIdentityURI</span><span class="o">:</span>
+<span class="w">    </span><span class="s1">'^https://github\\.com/OWNER/REPOSITORY/\\.github/workflows/release\\.yml@refs/heads/main$'</span><span class="p">,</span>
+<span class="p">});</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Verified OK!'</span><span class="p">);</span>
 </code></pre></div>
 <ul>

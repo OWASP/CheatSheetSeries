@@ -4945,15 +4945,11 @@
 <li>Apart from this attribute, to prevent Clickjacking attacks and unsolicited framing it is encouraged to use the header <code>X-Frame-Options</code> which supports the <code>deny</code> and <code>same-origin</code> values. Other solutions like framebusting <code>if(window!==window.top) { window.top.location=location;}</code> are not recommended.</li>
 </ul>
 <h2 id="credential-and-personally-identifiable-information-pii-input-hints">Credential and Personally Identifiable Information (PII) Input hints<a class="headerlink" href="#credential-and-personally-identifiable-information-pii-input-hints" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Protect the input values from being cached by the browser.</li>
-</ul>
-<blockquote>
-<p>Access a financial account from a public computer. Even though one is logged-off, the next person who uses the machine can log-in because the browser autocomplete functionality. To mitigate this, we tell the input fields not to assist in any way.</p>
-</blockquote>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">spellcheck</span><span class="o">=</span><span class="s">"false"</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">"off"</span> <span class="na">autocorrect</span><span class="o">=</span><span class="s">"off"</span> <span class="na">autocapitalize</span><span class="o">=</span><span class="s">"off"</span><span class="p">&gt;&lt;/</span><span class="nt">input</span><span class="p">&gt;</span>
+<p>Form attributes provide input and autofill hints; they are not a guarantee that the browser will avoid storing sensitive values.</p>
+<p>For sensitive fields where autofill is inappropriate, <code>autocomplete="off"</code> requests that the browser not remember or prefill the value. However, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete#description">browsers may still offer to save and autofill login credentials</a>. Do not treat this attribute as protection against credential reuse on a shared computer.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"text"</span> <span class="na">spellcheck</span><span class="o">=</span><span class="s">"false"</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">"off"</span> <span class="na">autocorrect</span><span class="o">=</span><span class="s">"off"</span> <span class="na">autocapitalize</span><span class="o">=</span><span class="s">"off"</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>Text areas and input fields for PII (name, email, address, phone number) and login credentials (username, password) should be prevented from being stored in the browser. Use these HTML5 attributes to prevent the browser from storing PII from your form:</p>
+<p>These attributes can adjust input assistance, but do not enforce a no-storage policy:</p>
 <ul>
 <li><code>spellcheck="false"</code></li>
 <li><code>autocomplete="off"</code></li>

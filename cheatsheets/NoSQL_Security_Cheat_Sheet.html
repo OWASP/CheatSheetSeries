@@ -4803,7 +4803,7 @@
 
 <h1 id="nosql-security-cheat-sheet">NoSQL Security Cheat Sheet<a class="headerlink" href="#nosql-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>NoSQL databases (MongoDB, CouchDB, Cassandra etc.) power many modern applications with flexible schemas and horizontal scale. But their different query models and deployment patterns create <strong>more security risks</strong> compared with relational databases.
+<p>NoSQL databases (MongoDB, CouchDB, Cassandra etc.) power many modern applications with flexible schemas and horizontal scale.
 This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p>
 <h2 id="threats-common-failure-modes">Threats &amp; Common Failure Modes<a class="headerlink" href="#threats-common-failure-modes" title="Permanent link">&para;</a></h2>
 <ul>
@@ -4941,7 +4941,7 @@ This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p
 </ul>
 <h2 id="examples-of-dangerous-patterns-brief">Examples of Dangerous Patterns (brief)<a class="headerlink" href="#examples-of-dangerous-patterns-brief" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Allowing client to submit <code>{ "$where": "this.balance &gt; 0" }</code> → remote code execution or heavy CPU.</li>
+<li>Accepting client-controlled <code>$where</code> expressions executes untrusted JavaScript inside MongoDB and can consume excessive resources. Use standard query operators instead, and <a href="https://www.mongodb.com/docs/drivers/client-libraries-best-practices/#restrict-server-side-javascript-execution">disable server-side scripting</a> when it is not needed.</li>
 <li>Concatenating user input into query language strings or shell commands for DB tools.</li>
 <li>Leaving MongoDB unsecured (no auth) listening on public IP.</li>
 </ul>

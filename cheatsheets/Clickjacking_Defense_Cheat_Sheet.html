@@ -4960,8 +4960,8 @@
 <li>This only allows the current site to frame the content.</li>
 </ul>
 </li>
-<li><code>Content-Security-Policy: frame-ancestors 'self' *.somesite.com https://myfriend.site.com;</code><ul>
-<li>This allows the current site, as well as any page on <code>somesite.com</code> (using any protocol), and only the page <code>myfriend.site.com</code>, using HTTPS only on the default port (443).</li>
+<li><code>Content-Security-Policy: frame-ancestors 'self' https://*.somesite.com https://myfriend.site.com;</code><ul>
+<li>For an HTTPS page, this allows its own origin, HTTPS subdomains of <code>somesite.com</code>, and <code>https://myfriend.site.com</code> to frame it. The two HTTPS host expressions use the default port (443). The <a href="https://www.w3.org/TR/CSP3/#match-hosts">wildcard matches subdomains</a>, not the bare <code>somesite.com</code> host; add that host explicitly if required.</li>
 </ul>
 </li>
 </ul>
@@ -5056,7 +5056,7 @@
 <p>This way, everything can be in the document HEAD and you only need one method/taglib in your API.</p>
 <h2 id="windowconfirm-protection">window.confirm() Protection<a class="headerlink" href="#windowconfirm-protection" title="Permanent link">&para;</a></h2>
 <p>The use of X-Frame-Options or a frame-breaking script is a more fail-safe method of clickjacking protection. However, in scenarios where content must be frameable, then a <code>window.confirm()</code> can be used to help mitigate Clickjacking by informing the user of the action they are about to perform.</p>
-<p>Invoking <code>window.confirm()</code> will display a popup that cannot be framed. If the <code>window.confirm()</code> originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the <code>window.confirm()</code> originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. For example:</p>
+<p>Treat <code>window.confirm()</code> as supplementary confirmation, not a guarantee that users will see a dialog or an origin label. Browsers can <a href="https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#cannot-show-simple-dialogs">suppress simple dialogs</a>, for example in a sandboxed frame without <code>allow-modals</code>; <code>confirm()</code> then returns <code>false</code>. Only perform the action after a <code>true</code> result, as below:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">action_confirm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">"Are you sure you want to delete your youtube account?"</span><span class="p">)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">action_confirm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>

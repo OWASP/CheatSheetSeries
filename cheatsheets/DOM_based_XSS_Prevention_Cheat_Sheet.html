@@ -5348,39 +5348,21 @@
 </code></pre></div>
 <p>The <code>setAttribute(name_string,value_string)</code> method is dangerous because it implicitly coerces the <em>value_string</em> into the DOM attribute datatype of <em>name_string</em>.</p>
 <p>In the case above, the attribute name is an JavaScript event handler, so the attribute value is implicitly converted to JavaScript code and evaluated. In the case above, JavaScript encoding does not mitigate against DOM based XSS.</p>
-<p>Other JavaScript methods which take code as a string types will have a similar problem as outline above (<code>setTimeout</code>, <code>setInterval</code>, new Function, etc.). This is in stark contrast to JavaScript encoding in the event handler attribute of a HTML tag (HTML parser) where JavaScript encoding mitigates against XSS.</p>
-<div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- Does NOT work  --&gt;</span>
-<span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"bb"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029"</span><span class="p">&gt;</span> Test Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<p>Other JavaScript methods that interpret strings as code, such as <code>setTimeout</code>, <code>setInterval</code>, and <code>Function</code>, have the same risk. HTML event-handler attributes also contain <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-content-attributes">JavaScript function bodies</a>. Escaping every character in one payload may produce a syntax error, but JavaScript encoding is not a defense for this context: escaped identifiers remain executable when the surrounding syntax is valid.</p>
+<div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- Executes alert(1) when clicked; encoding the identifier does not make it safe. --&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"bb"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"\u0061\u006c\u0065\u0072\u0074(1)"</span><span class="p">&gt;</span>Test Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>An alternative to using <code>Element.setAttribute(...)</code> to set DOM attributes is to set the attribute directly. Directly setting event handler attributes will allow JavaScript encoding to mitigate against DOM based XSS. Please note, it is always dangerous design to put untrusted data directly into a command execution context.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"bb"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span> Test Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<p>Setting the JavaScript <code>onclick</code> property is different from setting an HTML attribute. It expects a callback; assigning a primitive string <a href="https://webidl.spec.whatwg.org/#LegacyTreatNonObjectAsNull">sets it to null</a>, whether or not the string is encoded. This is type conversion, not a benefit of JavaScript encoding. Assign a trusted function, and keep untrusted values as data inside that function rather than compiling them as code.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"bb"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>Test Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">//The following does NOT work because the event handler is being set to a string.</span>
-<span class="c1">//"alert(7)" is JavaScript encoded.</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Neither string becomes a handler.</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bb"</span><span class="p">).</span><span class="nx">onclick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"alert(7)"</span><span class="p">;</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bb"</span><span class="p">).</span><span class="nx">onclick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0029"</span><span class="p">;</span>
 
-<span class="c1">//The following does NOT work because the event handler is being set to a string.</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bb"</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"testIt"</span><span class="p">;</span>
-
-<span class="c1">//The following does NOT work because of the encoded "(" and ")".</span>
-<span class="c1">//"alert(77)" is JavaScript encoded.</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bb"</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029</span><span class="p">;</span>
-
-<span class="c1">//The following example is tricky</span>
-<span class="c1">// first testIt will be assigned as an onmousehover event handler, The second testIt will fire while parsing.</span>
-<span class="c1">// because second testIt is a separate js statement</span>
-<span class="c1">// this happen because of ; separator</span>
-<span class="c1">//"testIt;testIt" is JavaScript encoded.</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bb"</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073</span>
-<span class="w">                                            </span><span class="nx">\u0074\u0049\u0074</span><span class="p">;</span>
-
-<span class="c1">//The following DOES WORK because the encoded value is a valid variable name or function reference.</span>
-<span class="c1">//"testIt" is JavaScript encoded</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bb"</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074</span><span class="p">;</span>
-
-<span class="kd">function</span><span class="w"> </span><span class="nx">testIt</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="nx">alert</span><span class="p">(</span><span class="s2">"I was called."</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="c1">// A trusted function is a handler.</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"bb"</span><span class="p">).</span><span class="nx">onclick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">"I was called."</span><span class="p">);</span>
+<span class="p">};</span>
 </code></pre></div>
 <p>There are other places in JavaScript where JavaScript encoding is accepted as valid executable code.</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">\u0062</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">\u0062</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span><span class="w"> </span><span class="nx">\u0062</span><span class="o">++</span><span class="p">){</span>

