@@ -2,7 +2,7 @@
 
 ## Introduction
 
-NoSQL databases (MongoDB, CouchDB, Cassandra etc.) power many modern applications with flexible schemas and horizontal scale. But their different query models and deployment patterns create **more security risks** compared with relational databases.
+NoSQL databases (MongoDB, CouchDB, Cassandra etc.) power many modern applications with flexible schemas and horizontal scale.
 This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.
 
 ## Threats & Common Failure Modes
@@ -160,7 +160,7 @@ For more information please check following cheat sheets:
 
 ## Examples of Dangerous Patterns (brief)
 
-- Allowing client to submit `{ "$where": "this.balance > 0" }` → remote code execution or heavy CPU.
+- Accepting client-controlled `$where` expressions executes untrusted JavaScript inside MongoDB and can consume excessive resources. Use standard query operators instead, and [disable server-side scripting](https://www.mongodb.com/docs/drivers/client-libraries-best-practices/#restrict-server-side-javascript-execution) when it is not needed.
 - Concatenating user input into query language strings or shell commands for DB tools.
 - Leaving MongoDB unsecured (no auth) listening on public IP.
 
