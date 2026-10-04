@@ -5121,7 +5121,7 @@ Rootless mode does not require root privileges even during the installation of t
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>secret<span class="w"> </span>create<span class="w"> </span>my_secret<span class="w"> </span>/path/to/super-secret-data.txt
 docker<span class="w"> </span>service<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>--secret<span class="w"> </span>my_secret<span class="w"> </span>nginx:latest
 </code></pre></div>
-<p>Or for Docker Compose:</p>
+<p>For local Docker Compose, <a href="https://docs.docker.com/compose/how-tos/use-secrets/#use-secrets">file-backed secrets are bind mounts</a>. Protect the source files on the host with appropriate access permissions and storage encryption; declaring a Compose secret does not encrypt these files. This differs from <a href="https://docs.docker.com/engine/swarm/secrets/#how-docker-manages-secrets">Swarm-managed secrets</a>, which are distributed over mutual TLS and stored in an encrypted Raft log:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.8"</span>
 <span class="nt">secrets</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">my_secret</span><span class="p">:</span>
