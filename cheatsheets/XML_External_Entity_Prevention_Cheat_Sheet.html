@@ -5690,9 +5690,9 @@
 <div class="highlight"><pre><span></span><code><span class="n">SAXParser</span><span class="o">*</span><span class="w"> </span><span class="n">parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXParser</span><span class="p">;</span>
 <span class="n">parser</span><span class="o">-&gt;</span><span class="n">setDisableDefaultEntityResolution</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
 </code></pre></div>
-<p>Use of SAX2XMLReader, do this to prevent XXE:</p>
+<p>For <code>SAX2XMLReader</code>, configure the reader that will parse the document. The <a href="https://xerces.apache.org/xerces-c/program-sax2-3.html">Xerces-C++ feature documentation</a> describes <code>fgXercesDisableDefaultEntityResolution</code>: it prevents fallback resolution when <code>resolveEntity</code> returns <code>NULL</code>. A custom resolver must also reject unapproved resources.</p>
 <div class="highlight"><pre><span></span><code><span class="n">SAX2XMLReader</span><span class="o">*</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMLReaderFactory</span><span class="o">::</span><span class="n">createXMLReader</span><span class="p">();</span>
-<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setFeature</span><span class="p">(</span><span class="n">XMLUni</span><span class="o">::</span><span class="n">fgXercesDisableDefaultEntityResolution</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<span class="n">reader</span><span class="o">-&gt;</span><span class="n">setFeature</span><span class="p">(</span><span class="n">XMLUni</span><span class="o">::</span><span class="n">fgXercesDisableDefaultEntityResolution</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
 </code></pre></div>
 <h2 id="coldfusion">ColdFusion<a class="headerlink" href="#coldfusion" title="Permanent link">&para;</a></h2>
 <p>Per <a href="https://www.hoyahaxa.com/2022/11/on-coldfusion-xxe-and-other-xml-attacks.html">this blog post</a>, both Adobe ColdFusion and Lucee have built-in mechanisms to disable support for external XML entities.</p>
@@ -5984,63 +5984,9 @@ isXML(xmldoc,parseroptions);
 <p>Passing <code>null</code> directly to <code>libxml_set_external_entity_loader()</code> is not equivalent to returning <code>null</code> from the callback and does not block external entity loading, as the <a href="https://github.com/php/php-src/security/advisories/GHSA-3qrf-m4j2-pcrr">PHP security advisory's mitigation</a> demonstrates.</p>
 <p>A description of how to abuse this in PHP is presented in a good <a href="https://sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
 <h2 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
-<p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities">xml vulnerabilities</a>. As of the 1st January 2020 Python 2 is no longer supported, however the Python website still contains <a href="https://docs.python.org/2/library/xml.html#xml-vulnerabilities">some legacy documentation</a>.</p>
-<p>The table below shows you which various XML parsing modules in Python 3 are vulnerable to certain XXE attacks.</p>
-<table>
-<thead>
-<tr>
-<th>Attack Type</th>
-<th>sax</th>
-<th>etree</th>
-<th>minidom</th>
-<th>pulldom</th>
-<th>xmlrpc</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Billion Laughs</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-</tr>
-<tr>
-<td>Quadratic Blowup</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-</tr>
-<tr>
-<td>External Entity Expansion</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-</tr>
-<tr>
-<td>DTD Retrieval</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-</tr>
-<tr>
-<td>Decompression Bomb</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Vulnerable</td>
-</tr>
-</tbody>
-</table>
-<p>To protect your application from the applicable attacks, the <a href="https://github.com/tiran/defusedxml">defusedxml</a> package exists to help you sanitize your input and protect your application against DDoS and remote attacks.</p>
+<p>Follow Python's current <a href="https://docs.python.org/3/library/xml.html#xml-security">XML security guidance</a>. The built-in parsers rely on Expat, which may be bundled with Python or supplied by the operating system. Check <code>pyexpat.EXPAT_VERSION</code> in the deployed interpreter and keep both Python and Expat updated. Expat versions below 2.7.2 may be affected by entity-expansion, large-token, or dynamic-memory denial-of-service vulnerabilities; a Python version alone does not establish the linked Expat version.</p>
+<p>Expat itself does not access files or the network by default. Higher-level APIs and custom handlers still need an external-resource policy. Independently bound input size and decompressed data: the standard-library <code>xmlrpc</code> module is vulnerable to decompression bombs.</p>
+<p>For untrusted XML, use the <a href="https://github.com/tiran/defusedxml#defusedxml">defusedxml parsing interfaces</a> in place of the corresponding standard-library parsing functions. Keep entity and external-resource rejection enabled, and set <code>forbid_dtd=True</code> on APIs that offer it when DTDs are unnecessary. These interfaces reject prohibited constructs; they do not sanitize XML or replace application resource limits.</p>
 <h2 id="semgrep-rules">Semgrep Rules<a class="headerlink" href="#semgrep-rules" title="Permanent link">&para;</a></h2>
 <p><a href="https://semgrep.dev/">Semgrep</a> is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.</p>
 <h3 id="java_1">Java<a class="headerlink" href="#java_1" title="Permanent link">&para;</a></h3>

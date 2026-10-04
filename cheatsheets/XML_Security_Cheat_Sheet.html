@@ -6047,9 +6047,9 @@
 </code></pre></div>
 <p>The remote file <code>note.dtd</code> could be susceptible to tampering when transmitted using the unencrypted HTTP protocol. One tool available to facilitate this type of attack is mitmproxy .</p>
 <h5 id="dns-cache-poisoning">DNS-Cache Poisoning<a class="headerlink" href="#dns-cache-poisoning" title="Permanent link">&para;</a></h5>
-<p>Remote schema poisoning may also be possible even when using encrypted protocols like Hypertext Transfer Protocol Secure (HTTPS). <strong>When software performs reverse Domain Name System (DNS) resolution on an IP address to obtain the hostname, it may not properly ensure that the IP address is truly associated with the hostname.</strong> In this case, the software enables an attacker to redirect content to their own Internet Protocol (IP) addresses.</p>
+<p>Domain Name System (DNS) cache poisoning can change the IP address returned by a forward hostname lookup and redirect a schema connection. With HTTPS, the client must also <a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-4.3.4">verify the certificate against the requested hostname</a>. DNS redirection alone does not let an attacker substitute schema content when that verification succeeds.</p>
 <p>The previous example referenced the host <code>example.com</code> using an unencrypted protocol.</p>
-<p>When switching to HTTPS, the location of the remote schema will look like <code>https://example/note.dtd</code>. In a normal scenario, the IP of <code>example.com</code> resolves to <code>1.1.1.1</code>:</p>
+<p>When switching to HTTPS, the location of the remote schema is <code>https://example.com/note.dtd</code>. Suppose a hostname lookup normally returns the following address:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example.com
 example.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">1</span>.1.1.1
 </code></pre></div>
@@ -6057,7 +6057,7 @@ example.com<span class="w"> </span>has<span class="w"> </span>address<span cla
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example.com
 example.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">2</span>.2.2.2
 </code></pre></div>
-<p>When accessing the remote file, the victim may be actually retrieving the contents of a location controlled by an attacker.</p>
+<p>The redirected HTTPS connection must fail if the attacker cannot present a certificate trusted for <code>example.com</code>. Content substitution requires an additional failure, such as disabled certificate verification or compromise of the certificate trust chain or legitimate server credentials. Keep certificate and hostname verification enabled and stop schema retrieval on verification failure. HTTPS authenticates the server; it does not make a schema safe if the legitimate host is compromised.</p>
 <h5 id="evil-employee-attack">Evil Employee Attack<a class="headerlink" href="#evil-employee-attack" title="Permanent link">&para;</a></h5>
 <p>When third parties host and define schemas, the contents are not under the control of the schemas' users. <strong>Any modifications introduced by a malicious employee-or an external attacker in control of these files-could impact all users processing the schemas. Subsequently, attackers could affect the confidentiality, integrity, or availability of other services (especially if the schema in use is <a href="https://www.w3schools.com/xml/xml_dtd_intro.asp">DTD</a>).</strong></p>
 <h3 id="xml-entity-expansion">XML Entity Expansion<a class="headerlink" href="#xml-entity-expansion" title="Permanent link">&para;</a></h3>
