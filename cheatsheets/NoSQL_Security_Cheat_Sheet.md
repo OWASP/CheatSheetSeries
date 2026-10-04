@@ -52,12 +52,14 @@ const filter = { name };
 db.collection('users').find(filter)
 ```
 
-**Safe (whitelisting for operators):**
+**Additional pattern rejection:**
 
 ```js
-// Reject operator injection by disallowing $ in keys or operator values
+// Reject a pattern in the serialized request body.
 if (JSON.stringify(req.body).includes('"$')) throw Error("Invalid input");
 ```
+
+This [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#description) check is a denylist, not an operator allowlist. It also rejects ordinary string values that begin with `$`, and it does not validate allowed fields or their types. Use [field-specific validation](Input_Validation_Cheat_Sheet.md#input-validation-strategies) before building queries.
 
 Notes:
 
@@ -105,7 +107,7 @@ For more information please check following cheat sheets:
 ### Configuration Hardening
 
 - Change default ports and disable sample/demo users.
-- Turn off or restrict features that execute code on the server (e.g., MongoDB `db.eval`, server-side scripting).
+- Turn off or restrict features that execute code on the server, such as [MongoDB server-side JavaScript](https://www.mongodb.com/docs/drivers/client-libraries-best-practices/#restrict-server-side-javascript-execution).
 - Require TLS for internal replication links where supported.
 
 ### Secrets Management
