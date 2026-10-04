@@ -35,7 +35,9 @@ If TLS 1.2 is still required, prefer AEAD‑based suites there as well and avoid
 - Null ciphers;
 - Anonymous ciphers (`TLS_*_anon_*`);
 - EXPORT ciphers (`TLS_*_EXPORT_*`);
-- RSA transport (`TLS_RSA_*`) and ephemeral/static Diffie-Hellman key agreement (`TLS_DH_*`, `TLS_ECDH_*`) which do not provide forward secrecy.
+- RSA key transport (`TLS_RSA_*`) and static Diffie-Hellman key agreement (`TLS_DH_*`, `TLS_ECDH_*`), which [do not provide forward secrecy](https://www.rfc-editor.org/rfc/rfc9325.html#section-4.1).
+
+For TLS 1.2, prefer [ECDHE cipher suites with authenticated encryption](https://www.rfc-editor.org/rfc/rfc9325.html#section-4.2). Ephemeral Diffie-Hellman provides forward secrecy; finite-field DHE suites (`TLS_DHE_*`) are nevertheless discouraged in TLS 1.2 because of construction and parameter-negotiation weaknesses, as explained in [RFC 9325 Section 4.1](https://www.rfc-editor.org/rfc/rfc9325.html#section-4.1).
 
 The Mozilla Foundation provides an [easy-to-use secure configuration generator](https://ssl-config.mozilla.org/) for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.
 
