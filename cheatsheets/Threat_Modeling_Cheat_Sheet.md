@@ -111,7 +111,7 @@ Equipped with an understanding of both the system and applicable threats, it is 
 
 - **Mitigate:** Take action to reduce the likelihood that the threat will materialize.
 - **Eliminate:** Simply remove the feature or component that is causing the threat.
-- **Transfer:** Shift responsibility to another entity such as the customer.
+- **Transfer:** Allocate contractual or financial responsibility to another party. [Risk transfer does not itself reduce the likelihood or harmful consequences of an event](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=908030#page=52); document who owns the remaining controls and residual risk.
 - **Accept:** Do not mitigate, eliminate, or transfer the risk because none of the above options are acceptable given business requirements or constraints.
 
 Document each threat's response and turn agreed mitigations into actionable security requirements. Record how the team will implement each mitigation and why it accepts any remaining risk. Keep these decisions current as the system changes, as recommended by [NIST SP 800-218, practice PW.1.2](https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-218.pdf#page=20).
