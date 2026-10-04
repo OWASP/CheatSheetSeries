@@ -189,14 +189,14 @@ ERROR :
 *Incorrect usage:*
 
 ```java
-ProcessBuilder b = new ProcessBuilder("C:\DoStuff.exe -arg1 -arg2");
+ProcessBuilder b = new ProcessBuilder("C:\\DoStuff.exe -arg1 -arg2");
 ```
 
-In this example, the command together with the arguments are passed as a one string, making it easy to manipulate that expression and inject malicious strings.
+This creates a builder with one command-list element, not a program followed by two arguments. [`ProcessBuilder`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html) represents the executable and its arguments as a list. The snippet does not start a process or demonstrate shell-command injection.
 
 *Correct Usage:*
 
-Here is an example that starts a process with a modified working directory. The command and each of the arguments are passed separately. This makes it easy to validate each term and reduces the risk of malicious strings being inserted.
+This illustrative example starts a process with a modified working directory and passes the executable and each argument separately. Keep the executable and working directory trusted, and validate any untrusted arguments for the invoked program. Argument separation does not replace [argument validation](#layer-2).
 
 ``` java
 ProcessBuilder pb = new ProcessBuilder("TrustedCmd", "TrustedArg1", "TrustedArg2");
