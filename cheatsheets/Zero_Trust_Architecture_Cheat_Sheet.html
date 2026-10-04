@@ -6013,7 +6013,7 @@
 <p>Protect your applications with these controls:</p>
 <ul>
 <li><strong>Identity-aware proxy</strong>: Check user identity before allowing app access</li>
-<li><strong>Web Application Firewalls (WAFs)</strong>: Block OWASP Top 10 attacks at the application layer. Deploy at network edge, internal segments, or as part of API gateways</li>
+<li><strong>Web Application Firewalls (WAFs)</strong>: Use request filtering as defense in depth for common attack patterns, such as those covered by <a href="https://devguide.owasp.org/en/09-operations/04-crs/">OWASP CRS</a>. A WAF does not replace application authorization or business-rule enforcement; enforce <a href="https://top10.owasp.org/2025/A01_2025-Broken_Access_Control/#how-to-prevent">access control in trusted server-side code</a>.</li>
 <li><strong>API security gateways</strong>: Authenticate every API call, validate request schemas, and enforce rate limits for microservices communication using <a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html">REST security best practices</a></li>
 <li><strong>Secure development</strong>: Build security into your development process</li>
 </ul>
@@ -6054,7 +6054,7 @@
 <p>Now you start building actual Zero Trust capabilities:</p>
 <p><strong>Break up your network</strong> - Split your flat network into smaller, separate segments. Start with your most important applications. This is technically hard and network teams might not like the extra work.</p>
 <p><strong>Monitor devices constantly</strong> - Set up systems that continuously check device health, updates, and security. Devices that aren't secure automatically lose access or get limited access. This creates pressure for people to keep their devices updated.</p>
-<p><strong>Secure applications properly</strong> - Add identity-aware proxies and web application firewalls (WAFs) that make security decisions based on who's trying to access what, not just where they're connecting from.</p>
+<p><strong>Secure applications properly</strong> - Enforce identity-aware access at application entry points and <a href="Authorization_Cheat_Sheet.html#validate-the-permissions-on-every-request">resource-level authorization</a> within the application. WAF filtering complements these checks; it does not establish the user's right to access an object or perform a business action.</p>
 <h3 id="phase-3-advanced-capabilities-months-18-36">Phase 3: Advanced Capabilities (Months 18-36)<a class="headerlink" href="#phase-3-advanced-capabilities-months-18-36" title="Permanent link">&para;</a></h3>
 <p>Build advanced capabilities:</p>
 <p><strong>Add behavior monitoring</strong> - Use systems that learn how users and devices normally act. When behavior looks weird, the system can automatically change access or ask for more verification. This needs machine learning and lots of data.</p>

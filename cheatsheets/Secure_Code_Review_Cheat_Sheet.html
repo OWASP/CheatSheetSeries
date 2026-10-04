@@ -5596,9 +5596,9 @@
 <ul class="task-list">
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Server-side validation</strong>: All inputs validated on server regardless of client-side checks</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Allowlist validation</strong>: Uses allowlists rather than blocklists for input validation</li>
-<li class="task-list-item"><input type="checkbox" disabled/> <strong>Output encoding</strong>: Context-appropriate encoding (HTML, JavaScript, CSS, URL, SQL)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Output encoding</strong>: Context-appropriate encoding (HTML, JavaScript, CSS, URL)</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>File upload security</strong>: Content-based validation, size limits, safe storage</li>
-<li class="task-list-item"><input type="checkbox" disabled/> <strong>SQL injection prevention</strong>: Parameterized queries or stored procedures used</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>SQL injection prevention</strong>: <a href="SQL_Injection_Prevention_Cheat_Sheet.html#primary-defenses">Parameterized queries or safely implemented stored procedures</a> used, with user-controlled data values passed as parameters instead of concatenated into SQL</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Length limits</strong>: Input length restrictions enforced</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Character handling</strong>: Special characters and Unicode properly processed</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Error messages</strong>: No sensitive information disclosed in error responses</li>
@@ -5633,7 +5633,7 @@
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Certificate validation</strong>: Proper validation including hostname verification</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Random generation</strong>: Cryptographically secure random number generation</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Data protection</strong>: Encryption at rest and in transit</li>
-<li class="task-list-item"><input type="checkbox" disabled/> <strong>IV/Nonce handling</strong>: Unique and unpredictable initialization vectors</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>IV/Nonce handling</strong>: Follow the selected mode's requirements for initialization vectors (IVs) and nonces. For example, <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf#page=27">cipher block chaining (CBC) requires unpredictable IVs</a>, while <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf#page=26">Galois/Counter Mode (GCM) requires IV uniqueness under each key</a> and permits deterministic generation</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Library maintenance</strong>: Up-to-date cryptographic libraries</li>
 <li class="task-list-item"><input type="checkbox" disabled/> <strong>Side-channel protection</strong>: Consideration of timing and other side-channel attacks</li>
 </ul>

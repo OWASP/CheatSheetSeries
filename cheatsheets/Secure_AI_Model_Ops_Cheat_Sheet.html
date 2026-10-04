@@ -4730,7 +4730,8 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 <h2 id="common-security-issues">Common Security Issues<a class="headerlink" href="#common-security-issues" title="Permanent link">&para;</a></h2>
 <p>For prompt-specific defenses, see the <a href="LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">LLM Prompt Injection Prevention Cheat Sheet</a>.</p>
 <p>Data Poisoning – A threat where attackers inject malicious data into training datasets to manipulate model behavior.</p>
-<p>Model Inversion &amp; Extraction – Techniques that allow attackers to reconstruct training data or extract model parameters via inference queries.</p>
+<p>Model Inversion &amp; Extraction – Attacks that infer information about training data or recreate a model's behavior or parameters, respectively. <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf#page=41">NIST distinguishes these attack goals</a>.</p>
+<p>Membership Inference – Determining whether a particular data sample was used to train a model; see <a href="https://csrc.nist.gov/glossary/term/membership_inference_attack">NIST's membership-inference definition</a>.</p>
 <p>Adversarial Examples – Slightly modified inputs crafted to mislead model predictions without obvious changes to human observers.</p>
 <p>Prompt Injection – A manipulation technique that breaks LLM outputs by injecting malicious input to override or hijack intended behavior.</p>
 <p>Unsecured APIs – Publicly exposed inference endpoints lacking authentication, rate limiting, or input validation.</p>
@@ -4743,7 +4744,7 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 <h2 id="real-world-examples">Real-World Examples<a class="headerlink" href="#real-world-examples" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Data Poisoning via Public Dataset Manipulation: Attackers inject mislabeled samples into open-source datasets. These poisoned samples, when used during training, degrade model accuracy or introduce bias.</li>
-<li>Model Inversion in Healthcare ML: An attacker infers whether a specific individual’s data was part of a medical model’s training dataset.</li>
+<li>Membership Inference in Healthcare ML: An attacker infers whether a specific individual’s data was part of a medical model’s training dataset.</li>
 <li>Malicious Model Files: A <code>.pt</code> or <code>.pkl</code> file embedded with malware is uploaded to a pipeline and executed during deserialization.</li>
 <li>Insecure LLM Prompt Injection: Inputs like <code>"Ignore all previous instructions..."</code> manipulate chatbot behavior and may leak internal system prompts.</li>
 <li>Leaked API Keys on GitHub: OpenAI or Hugging Face API keys accidentally committed and exploited for free access or abuse.</li>

@@ -5493,7 +5493,7 @@
 <h3 id="reporting-directives">Reporting Directives<a class="headerlink" href="#reporting-directives" title="Permanent link">&para;</a></h3>
 <p>Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.</p>
 <ul>
-<li><code>report-to</code> (CSP Level 3, used together with the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Reporting_API">Reporting API</a>) is the <strong>primary, current</strong> reporting directive. It references a group name defined in the <code>Reporting-Endpoints</code> (or legacy <code>Report-To</code>) response header containing a JSON-formatted endpoint list.<ul>
+<li><code>report-to</code> (CSP Level 3, used together with the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Reporting_API">Reporting API</a>) is the <strong>primary, current</strong> reporting directive. It references an endpoint name defined in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Reporting-Endpoints#syntax">Reporting-Endpoints response header</a>, which uses comma-separated <code>name="URL"</code> entries. The legacy <code>Report-To</code> header uses JSON instead.<ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to">MDN report-to documentation</a></li>
 </ul>
 </li>
