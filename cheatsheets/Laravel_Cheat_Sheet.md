@@ -410,7 +410,9 @@ public function verifyDomain(Request $request)
 }
 ```
 
-The above code is vulnerable as the user data is not escaped properly. To do so, you may use the `escapeshellcmd` and/or `escapeshellarg` PHP functions.
+Avoid invoking operating-system commands when a PHP library can perform the operation. If a process is required, keep the executable fixed and pass arguments separately using [Symfony Process with an argument array](https://symfony.com/doc/current/components/process.html#using-features-from-the-os-shell). Validate the domain against the expected format before passing it to `whois`; argument separation does not stop a value from being interpreted as a command option. See [Argument Injection](OS_Command_Injection_Defense_Cheat_Sheet.md#argument-injection) for this remaining risk.
+
+Do not use [`escapeshellcmd()`](https://www.php.net/manual/en/function.escapeshellcmd.php) as a substitute for separating arguments: it still permits extra arguments. If shell invocation is unavoidable, [`escapeshellarg()`](https://www.php.net/manual/en/function.escapeshellarg.php) escapes a single argument, but you must still validate its meaning to the called program.
 
 ## Other Injections
 
