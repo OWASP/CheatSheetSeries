@@ -267,16 +267,18 @@ The principle is simple, a resource loaded from cache memory will load incompara
 
 An attacker can embed a resource on their site that is only accessible to a user with the admin role. Then, using JavaScript, read the load time of a particular resource and, based on this information, deduce whether the resource is in cache or not.
 
+The example selects the first matching [resource timing entry](https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType#return_value) already recorded in the timeline. Set `THRESHOLD` for the measurement context; a short duration alone does not prove a cache hit.
+
 ```javascript
-    // Threshold above which we consider a resource to have loaded from the server
+    // Illustrative timing threshold for this measurement context
     // const THRESHOLD = ...
 
     const adminImagePerfEntry = window.performance
-        .getEntries()
-        .filter((entry) => entry.name.endsWith('admin.svg'));
+        .getEntriesByType('resource')
+        .find((entry) => entry.name.endsWith('admin.svg'));
 
-    if (adminImagePerfEntry.duration < THRESHOLD) {
-        console.log('Image loaded from cache!')
+    if (adminImagePerfEntry && adminImagePerfEntry.duration < THRESHOLD) {
+        console.log('Possible cache hit (timing heuristic)');
     }
 ```
 
