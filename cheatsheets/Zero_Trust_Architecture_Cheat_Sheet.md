@@ -391,9 +391,11 @@ Zero Trust requires several technology categories working together:
 
 ### Policy-as-Code + Continuous Verification + Telemetry Signals
 
+The following are implementation options for cloud-native workloads, not universal Zero Trust requirements. [NIST SP 800-207, Section 2.1](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf) defines technology-agnostic principles. For implementation guidance, see [Kubernetes policy management](Kubernetes_Security_Cheat_Sheet.md#implementing-centralized-policy-management) and [CI/CD Security](CI_CD_Security_Cheat_Sheet.md).
+
 #### 1. Policy-as-Code (PaC)
 
-Zero Trust policies should be defined as **code**, not manually, ensuring consistency, reproducibility, and auditability.
+Policy-as-code can make supported policy changes version-controlled, testable, and auditable. Choose enforcement mechanisms that fit the resources and workflows being protected.
 
 **Key principles:**
 
@@ -419,7 +421,7 @@ Zero Trust policies should be defined as **code**, not manually, ensuring consis
 
 #### 2. Continuous Verification
 
-Zero Trust requires **every access, deployment, and configuration change** to be automatically verified.
+Automated deployment and configuration checks can help enforce workload security policies. They complement the resource-access authentication and authorization described above.
 
 **Verification examples:**
 
@@ -430,7 +432,7 @@ Zero Trust requires **every access, deployment, and configuration change** to be
 - Network policy drift detection
 - Automated enforcement at admission
 
-This approach prevents risky components from entering clusters during CI/CD.
+Admission checks can reject deployments that violate configured policies; they do not replace runtime resource authorization.
 
 #### 3. Telemetry Signals
 
@@ -458,7 +460,7 @@ Zero Trust decisions rely on **telemetry signals** collected continuously across
 3. **Telemetry Signals** → Runtime signals provide continuous monitoring.
 4. **Feedback Loop** → Collected signals are used to refine policies.
 
-This three-part approach makes Zero Trust a **dynamic, continuously adaptive security model**.
+Use this feedback loop to improve the selected controls without treating a particular tool or deployment pipeline as proof of Zero Trust.
 
 ## References
 
