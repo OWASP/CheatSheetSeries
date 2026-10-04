@@ -43,9 +43,12 @@ db.collection('users').find(filter)
 
 **Safe (use driver query objects / parameterization):**
 
+Building a query object does not prevent operator injection when an untrusted value is itself an object. For example, MongoDB interprets `{ name: { $ne: "" } }` as a [not-equal query](https://www.mongodb.com/docs/manual/reference/operator/query/ne/). Validate the expected scalar type before constructing the filter; do not pass client-supplied objects through as field values.
+
 ```js
-// SAFE: let driver handle query structure
-const filter = { name: req.query.name };
+const name = req.query.name;
+if (typeof name !== 'string') throw new Error("Invalid name");
+const filter = { name };
 db.collection('users').find(filter)
 ```
 
@@ -74,6 +77,8 @@ Notes:
 from pymongo import MongoClient
 client = MongoClient(uri, tls=True)
 collection = client.mydb.users
+if not isinstance(email_input, str):
+    raise ValueError("Invalid email")
 user = collection.find_one({"email": email_input})
 ```
 
