@@ -29,16 +29,17 @@ With an mTLS approach, each microservice can legitimately identify who it talks 
 The token-based approach works at the application layer. A token is a container that may contain the caller ID (microservice ID) and its permissions (scopes). The caller microservice can obtain a signed token by invoking a special security token service using its own service ID and password and then attaches it to every outgoing request, e.g., via HTTP headers. The called microservice can extract the token and validate it online or offline.
 ![Signed ID propagation](../assets/Token_validation.png)
 
-1. Online scenario:
-    - To validate incoming tokens, the microservice invokes a centralized service token service via network call.
-    - Revoked (compromised) tokens can be detected.
-    - High latency.
-    - Should be applied to critical requests.
-2. Offline scenario:
-    - To validate incoming tokens, the microservice uses the downloaded service token service public key.
-    - Revoked (compromised) tokens may not be detected.
-    - Low latency.
-    - Should be applied to non-critical requests.
+Choose token validation based on the required revocation response time, token lifetime, and availability requirements:
+
+1. Online validation:
+    - The microservice queries the token service. For OAuth, [token introspection](https://www.rfc-editor.org/rfc/rfc7662.html#section-2.2) reports whether a token is active and can reflect revocation known to the authorization server.
+    - Network calls add latency and a dependency on the token service's availability. [Caching introspection responses delays detection of revocation](https://www.rfc-editor.org/rfc/rfc7662.html#section-4); bound cache duration to the required freshness and never beyond token expiry.
+2. Local validation:
+    - The microservice validates a signed token using trusted issuer keys and the applicable token profile. For example, [RFC 9068 defines validation for JSON Web Token (JWT) access tokens](https://www.rfc-editor.org/rfc/rfc9068.html#section-4); signature verification alone is insufficient. See [validation at each boundary](Identity_Propagation_Patterns_Cheat_Sheet.md#validation-at-each-boundary).
+    - This avoids a per-request introspection call, but local validation alone does not detect server-side revocation before token expiry. Use [token lifetimes or an additional revocation mechanism](https://www.rfc-editor.org/info/rfc7009/#section-3) that meets the required response time.
+
+Neither approach replaces service-level authorization. Reject requests when the required token validation cannot be completed.
+
 In most cases, token-based authentication works over TLS, which provides confidentiality and integrity of data in transit.
 
 ## Logging
