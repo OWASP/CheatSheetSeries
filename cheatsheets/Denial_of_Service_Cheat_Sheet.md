@@ -119,7 +119,7 @@ Rate limiting is the process of controlling traffic rate from and to a server or
 
 ### Global-Level remediations: Commercial cloud filter services
 
-- Consider using a filter service in order to resist larger attacks (up to 500GBit/s)
+- Consider a DDoS filtering service for larger attacks. [Assess the provider's mitigation capacity and coverage](https://www.cisa.gov/sites/default/files/2023-09/TLP%20CLEAR%20-DDOS%20Mitigations%20Guidance_508c.pdf) against your availability requirements; do not assume a fixed attack-size ceiling.
 - **Filter services** support different mechanics to filter out malicious or non compliant traffic
 - **Comply with relevant data protection/privacy laws** - a lot of providers route traffic through USA/UK
 
