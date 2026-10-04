@@ -157,7 +157,7 @@ DO: Use a strong hashing algorithm.
 
 #### Passwords
 
-DO: Enforce passwords with a minimum complexity that will survive a dictionary attack; i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase entropy.
+DO: Follow the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls) for password length and breached-password screening. Allow long passphrases without mandatory character-composition rules.
 
 #### Encryption
 
@@ -739,21 +739,21 @@ in your dependencies are detected and acted upon.
 DO: Use [ASP.NET Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&).
 ASP.NET Core Identity framework is well configured by default, where it uses secure password hashes and an individual salt. Identity uses the PBKDF2 hashing function for passwords, and generates a random salt per user.
 
-DO: Set secure password policy
+DO: Configure password length and composition settings according to [NIST’s password guidance](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/#passwordver): at least 15 characters when passwords can be used without multifactor authentication (MFA), or at least eight when only used with MFA, without mandatory character-composition rules.
 
-e.g ASP.NET Core Identity
+This ASP.NET Core Identity example assumes passwords can be used without MFA. Identity’s [default password validator](https://github.com/dotnet/aspnetcore/blob/215a587e52efa710de84138b0a3374b860b924d8/src/Identity/Extensions.Core/src/PasswordValidator.cs) measures length in UTF-16 code units, so add Unicode code-point length validation to enforce NIST’s minimum. These settings also do not implement breached-password screening; follow the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls) for the complete policy.
 
 ``` csharp
 //Startup.cs
 services.Configure<IdentityOptions>(options =>
 {
  // Password settings
- options.Password.RequireDigit = true;
- options.Password.RequiredLength = 8;
- options.Password.RequireNonAlphanumeric = true;
- options.Password.RequireUppercase = true;
- options.Password.RequireLowercase = true;
- options.Password.RequiredUniqueChars = 6;
+ options.Password.RequireDigit = false;
+ options.Password.RequiredLength = 15;
+ options.Password.RequireNonAlphanumeric = false;
+ options.Password.RequireUppercase = false;
+ options.Password.RequireLowercase = false;
+ options.Password.RequiredUniqueChars = 1;
 
  options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
  options.Lockout.MaxFailedAccessAttempts = 3;
