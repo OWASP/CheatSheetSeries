@@ -558,7 +558,7 @@ struct sockaddr_in addr;
 addr.sin_port = htons(atoi(argv[2]));
 ```
 
-The following would probably serve you much better. Notice `atoi` and friends are not used because they can silently fail. In addition, the code is instrumented so you don't need to waste a lot of time debugging potential problems:
+The following would probably serve you much better. Notice `atoi` and friends are not used because they can silently fail. In addition, the code is instrumented so you don't need to waste a lot of time debugging potential problems: Check the [16-bit transport port range](https://www.rfc-editor.org/rfc/rfc6335.html#section-6) before narrowing the value; the maximum value of `unsigned int` may be larger than a port can represent.
 
 ```c
 const char* cstr = GetPortString();
@@ -580,8 +580,8 @@ ASSERT(t > 0);
 if(!(t > 0))
     throw runtime_error("WTF??? Port is too small");
 
-ASSERT(t < static_cast<long long>(numeric_limits<unsigned int>::max()));
-if(!(t < static_cast<long long>(numeric_limits<unsigned int>::max())))
+ASSERT(t <= 65535);
+if(!(t <= 65535))
     throw runtime_error("WTF??? Port is too large");
 
 // OK to use port
