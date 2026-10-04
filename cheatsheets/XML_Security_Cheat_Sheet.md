@@ -455,11 +455,11 @@ The remote file `note.dtd` could be susceptible to tampering when transmitted us
 
 ##### DNS-Cache Poisoning
 
-Remote schema poisoning may also be possible even when using encrypted protocols like Hypertext Transfer Protocol Secure (HTTPS). **When software performs reverse Domain Name System (DNS) resolution on an IP address to obtain the hostname, it may not properly ensure that the IP address is truly associated with the hostname.** In this case, the software enables an attacker to redirect content to their own Internet Protocol (IP) addresses.
+Domain Name System (DNS) cache poisoning can change the IP address returned by a forward hostname lookup and redirect a schema connection. With HTTPS, the client must also [verify the certificate against the requested hostname](https://www.rfc-editor.org/rfc/rfc9110.html#section-4.3.4). DNS redirection alone does not let an attacker substitute schema content when that verification succeeds.
 
 The previous example referenced the host `example.com` using an unencrypted protocol.
 
-When switching to HTTPS, the location of the remote schema will look like `https://example/note.dtd`. In a normal scenario, the IP of `example.com` resolves to `1.1.1.1`:
+When switching to HTTPS, the location of the remote schema is `https://example.com/note.dtd`. Suppose a hostname lookup normally returns the following address:
 
 ```bash
 $ host example.com
@@ -473,7 +473,7 @@ $ host example.com
 example.com has address 2.2.2.2
 ```
 
-When accessing the remote file, the victim may be actually retrieving the contents of a location controlled by an attacker.
+The redirected HTTPS connection must fail if the attacker cannot present a certificate trusted for `example.com`. Content substitution requires an additional failure, such as disabled certificate verification or compromise of the certificate trust chain or legitimate server credentials. Keep certificate and hostname verification enabled and stop schema retrieval on verification failure. HTTPS authenticates the server; it does not make a schema safe if the legitimate host is compromised.
 
 ##### Evil Employee Attack
 
