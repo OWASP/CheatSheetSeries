@@ -5485,21 +5485,21 @@
 
 <h1 id="aml-and-sanctions-compliance-for-ai-agent-payments-cheat-sheet">AML and Sanctions Compliance for AI Agent Payments Cheat Sheet<a class="headerlink" href="#aml-and-sanctions-compliance-for-ai-agent-payments-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>AI agents are initiating regulated financial transactions in production. Mastercard Agent Pay, Visa Intelligent Commerce, and Google A2A payments are live. Every agent-initiated payment carries the same Bank Secrecy Act (BSA), Anti-Money Laundering (AML), and sanctions screening obligations as human-initiated payments.</p>
+<p>AI agents are initiating regulated financial transactions in production. Mastercard Agent Pay, Visa Intelligent Commerce, and Google A2A payments are live. Using an AI agent does not remove applicable Anti-Money Laundering (AML) or sanctions obligations. Determine the requirements for the institution, transaction, customer relationship, and jurisdiction before implementing the controls below.</p>
 <p>This cheat sheet provides practical controls for fintechs, banks, and payment processors when autonomous AI agents -- rather than human users in browser sessions -- initiate or facilitate regulated payments. It covers agent identity verification, entity screening, audit trail requirements, and fail-closed enforcement.</p>
 <p>Use the <a href="MCP_Security_Cheat_Sheet.html#6-authentication-authorization-transport-security">MCP authentication and authorization guidance</a> when exposing screening tools through MCP. Message-level signing is an <a href="MCP_Security_Cheat_Sheet.html#7-optional-message-level-integrity">optional additional control</a>, not a core MCP requirement. The signed-audit and receipt design in Sections 4 and 8-10 is one option for systems that need verification beyond a transport connection.</p>
 <h2 id="regulatory-context">Regulatory Context<a class="headerlink" href="#regulatory-context" title="Permanent link">&para;</a></h2>
-<p>Agent-initiated payments are subject to the same regulatory framework as human-initiated payments. Key regulations include:</p>
+<p>The applicable obligations depend on the institution's regulated role, the transaction, and the jurisdictions involved. Have compliance owners identify the requirements the payment service must enforce:</p>
 <ul>
-<li><strong>Bank Secrecy Act (BSA)</strong>: Requires financial institutions to maintain effective AML programs, including customer identification, transaction monitoring, and suspicious activity reporting. The <a href="https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act">Bank Secrecy Act</a> does not distinguish between human-initiated and agent-initiated transactions.</li>
-<li><strong>OFAC Sanctions</strong>: The Office of Foreign Assets Control requires all US persons and entities to screen transactions against the Specially Designated Nationals (SDN) list and other sanctions lists. Screening obligations apply regardless of whether the transaction was initiated by a human or an agent.</li>
-<li><strong>FinCEN Requirements</strong>: <a href="https://www.fincen.gov/">FinCEN</a> rules require Customer Identification Programs (CIP), Customer Due Diligence (CDD), and Suspicious Activity Reports (SARs). When an agent acts on behalf of a customer, the institution must be able to identify both the customer and the agent.</li>
-<li><strong>UK Financial Sanctions (OFSI)</strong>: The Foreign, Commonwealth &amp; Development Office publishes the <a href="https://www.gov.uk/government/publications/the-uk-sanctions-list">UK Sanctions List</a>. Screening is mandatory for all financial transactions regardless of initiation method.</li>
-<li><strong>EU Sanctions</strong>: The <a href="https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions">EU Consolidated Sanctions List</a> applies to all transactions processed through EU-regulated entities. Agent-initiated transactions are not exempt.</li>
-<li><strong>OCC BSA/AML Exam Procedures</strong>: <a href="https://www.occ.treas.gov/topics/supervision-and-examination/bsa/index-bsa.html">OCC examiners</a> assess whether institutions have controls to identify the originator of each transaction. When agents initiate transactions, the institution must demonstrate that agent identity was verified and the transaction was screened.</li>
+<li><strong>Bank Secrecy Act (BSA)</strong>: US <a href="https://www.fincen.gov/resources/statutes-and-regulations/bank-secrecy-act">BSA regulations</a> establish recordkeeping, reporting, and other requirements for covered financial institutions and businesses. Determine which requirements apply to the service's activities.</li>
+<li><strong>Office of Foreign Assets Control (OFAC) Sanctions</strong>: Comply with applicable sanctions prohibitions and blocking requirements. Screening supports those controls, but <a href="https://ofac.treasury.gov/faqs/43">OFAC does not impose a general requirement to scan names or use screening software</a>. Complete the necessary analysis before concluding a transaction.</li>
+<li><strong>Financial Crimes Enforcement Network (FinCEN)</strong>: Apply Customer Identification Program (CIP) and Customer Due Diligence (CDD) requirements to the relevant customers and beneficial owners under the institution's applicable rules and exceptions. The <a href="https://www.fincen.gov/resources/statutes-and-regulations/cdd-final-rule">CDD rule covers specified types of financial institutions</a>; authenticating software does not identify the legal customer. <a href="https://www.fincen.gov/resources/statutes-regulations/guidance/interagency-interpretive-guidance-customer-identification">CIP guidance distinguishes an account owner from a person merely acting as that owner's agent</a>.</li>
+<li><strong>UK Financial Sanctions</strong>: The Office of Financial Sanctions Implementation (OFSI) provides guidance on applying the sanctions requirements relevant to the parties and activities. <a href="https://www.gov.uk/government/publications/financial-sanctions-enforcement-and-monetary-penalties-guidance/financial-sanctions-enforcement-and-monetary-penalties-guidance#due-diligence">OFSI assesses whether due diligence is appropriate to the sanctions risk and transaction</a>; it does not prescribe one level or type of due diligence for every case.</li>
+<li><strong>EU Sanctions</strong>: Identify the applicable sanctions regimes and legal acts. The <a href="https://finance.ec.europa.eu/eu-and-world/sanctions-restrictive-measures/overview-sanctions-and-related-resources_en">European Commission's sanctions resources</a> distinguish the consolidated list of designated parties from the legal acts governing sanctions; a list check alone does not establish compliance with every restriction.</li>
+<li><strong>Funds-Transfer Recordkeeping</strong>: Follow the requirements applicable to the institution's role and payment type. The <a href="https://bsaaml.ffiec.gov/manual/AssessingComplianceWithBSARegulatoryRequirements/09">FFIEC examination manual</a> describes thresholds, exceptions, and required originator and beneficiary information; it does not establish a universal requirement for a cryptographic software-agent identity.</li>
 </ul>
 <h3 id="key-principle">Key Principle<a class="headerlink" href="#key-principle" title="Permanent link">&para;</a></h3>
-<p>Regulators do not care whether a transaction was initiated by a human clicking a button or an agent calling an API. The compliance obligations are identical. The burden is on the institution to prove that screening occurred, that the agent was authorized, and that the results are tamper-evident.</p>
+<p>Separate legal customer and counterparty identification from software authentication and authorization. Record which customer an agent acts for and what it may do as an application security control. Have compliance owners define the required screening, monitoring, reporting, and retention rules; do not treat an agent credential or a successful list match check as proof that all legal obligations are satisfied.</p>
 <h2 id="section-1-agent-identity-before-screening">Section 1: Agent Identity Before Screening<a class="headerlink" href="#section-1-agent-identity-before-screening" title="Permanent link">&para;</a></h2>
 <p>Before an agent is permitted to access sanctions screening services or initiate a payment, its identity must be cryptographically verified. Self-declared identity headers (e.g. <code>X-Agent-ID</code>, <code>X-Agent-Role</code>) without cryptographic proof MUST be rejected. For protected MCP endpoints, follow the <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization">MCP authorization profile</a> and validate authorization on every request.</p>
 <h3 id="do">Do<a class="headerlink" href="#do" title="Permanent link">&para;</a></h3>
@@ -5534,11 +5534,11 @@
 <li>Expose raw sanctions list data to agents. Agents should call a screening API, not download the full list.</li>
 </ul>
 <h2 id="section-3-agent-operator-screening">Section 3: Agent Operator Screening<a class="headerlink" href="#section-3-agent-operator-screening" title="Permanent link">&para;</a></h2>
-<p>The agent itself is software. But the agent has an operator -- the developer, company, or deployer that built and runs it. The agent's operator must also be screened against sanctions lists. The framework for verifying the underlying entity follows the <a href="https://www.fincen.gov/resources/statutes-regulations/federal-register-notices/customer-due-diligence-requirements">FinCEN Customer Due Diligence Requirements</a> applied to the operator as the regulated counterparty behind the agent.</p>
+<p>Identify the customer and organization responsible for operating the agent. Determine which parties require sanctions screening and due diligence under the institution's approved compliance program. Do not assume that every developer, deployer, or operator is the legal customer merely because it provides the software; <a href="https://www.fincen.gov/resources/statutes-regulations/guidance/interagency-interpretive-guidance-customer-identification">FinCEN's CIP guidance</a> makes customer identification depend on the account relationship. Bind the authenticated agent to the verified account and its delegated permissions as an application security control.</p>
 <h3 id="do_2">Do<a class="headerlink" href="#do_2" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Screen the agent's declared operator (organization name, jurisdiction, registration number) against sanctions lists during agent onboarding.</li>
-<li>Re-screen agent operators periodically (at minimum when sanctions lists are updated) and revoke agent access if the operator becomes sanctioned.</li>
+<li>Verify the organization responsible for the agent during onboarding and screen the parties identified by the institution's compliance program against applicable sanctions lists.</li>
+<li>Define rescreening triggers and frequency in the compliance program, including relevant list and ownership changes; restrict agent access when the required assessment does not permit the relationship to continue.</li>
 <li>Record the operator's screening status as part of the agent's trust profile.</li>
 <li>Require agents to declare their operator identity as part of their cryptographic passport or identity credential.</li>
 </ul>
@@ -5679,11 +5679,11 @@
 <tbody>
 <tr>
 <td>Agent identity before screening (Section 1)</td>
-<td>KYC/KYB attribution; FATF Recommendation 10 (Customer Due Diligence)</td>
+<td>Technical attribution and authorization; does not replace applicable customer or beneficial-owner identification</td>
 </tr>
 <tr>
 <td>Entity and operator screening (Sections 2-3)</td>
-<td>OFAC, EU, UK, and UN sanctions screening; FATF Recommendation 6</td>
+<td>Screening parties identified by the applicable sanctions compliance program; not a universal legal duty to screen every software operator</td>
 </tr>
 <tr>
 <td>Signed audit trail and receipt (Sections 4, 8-10)</td>
@@ -5691,7 +5691,7 @@
 </tr>
 <tr>
 <td>Sanctions-list freshness in receipt (Section 10)</td>
-<td>Obligation to screen against current lists; sanctions-evasion controls</td>
+<td>Evidence of which list data supported the assessment; list screening alone does not establish compliance</td>
 </tr>
 <tr>
 <td>Fail-closed enforcement (Section 5)</td>
@@ -5717,12 +5717,12 @@
 <ul>
 <li>Verify agent identity cryptographically before every screening request.</li>
 <li>When using a message-signing profile, sign and verify screening requests and responses and enforce its replay controls.</li>
-<li>Screen both the counterparty entity and the agent's operator against sanctions lists.</li>
+<li>Screen counterparties and relevant operator entities as defined by the institution's applicable compliance program.</li>
 <li>Protect screening audit records against unauthorized changes and deletion; use hash chaining when the chosen audit design requires it.</li>
 <li>Withhold transaction execution on a screening error, timeout, or ambiguous result until the required assessment permits proceeding.</li>
 <li>Rate limit based on cryptographic agent identity, not IP address.</li>
 <li>Apply graduated trust levels with different access rights and rate limits.</li>
-<li>Re-screen agent operators periodically as sanctions lists are updated.</li>
+<li>Re-screen relevant parties according to the compliance program's list-change and other review triggers.</li>
 <li>Make audit records exportable for regulatory examination.</li>
 </ul>
 <h3 id="dont_11">Don't<a class="headerlink" href="#dont_11" title="Permanent link">&para;</a></h3>
