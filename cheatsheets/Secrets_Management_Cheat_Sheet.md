@@ -40,7 +40,7 @@ Manual maintenance not only increases the risk of leakage; it also introduces th
 Therefore, it is better to limit or remove the human interaction with the actual secrets. You can restrict human interaction in multiple ways:
 
 - **Secrets pipeline:** Having a secrets pipeline that does large parts of the secret management (e.g., creation, rotation, etc.)
-- **Using dynamic secrets:** When an application starts, it could request its database credentials, which, when dynamically generated, will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential reuse. Should the application's database credentials be stolen, upon reboot they would be expired.
+- **Using dynamic secrets:** When an application starts, it could request its database credentials, which, when dynamically generated, will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential reuse. Configure a short [lease duration](https://developer.hashicorp.com/vault/docs/concepts/lease) and revoke credentials when they are no longer needed. Restarting the application does not itself revoke stolen credentials; they remain usable until the backing service expires or revokes them.
 - **Automated rotation of static secrets:** Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
 
 Rotating certain keys, such as encryption keys, might trigger full or partial data re-encryption. Different strategies for rotating keys exist:
