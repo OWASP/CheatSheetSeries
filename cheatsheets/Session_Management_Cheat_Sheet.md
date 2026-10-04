@@ -252,7 +252,7 @@ Web Workers run JavaScript in a separate global context. The main window and wor
 
 A worker can keep a secret in memory when persistence across page refresh is not required. To isolate the secret from the main window, obtain it within the worker, keep secret-dependent operations there, and never return the secret to the main window.
 
-This isolation can reduce direct access to an existing secret, but it does not make the application safe against XSS. Malicious page code can still request secret-dependent operations and read their results. The [OAuth browser-apps Internet-Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps#section-8.3) also explains that isolating an existing refresh token does not prevent malicious code from obtaining new tokens through another authorization flow.
+This isolation can reduce direct access to an existing secret, but it does not make the application safe against XSS. Malicious page code can still request secret-dependent operations and read their results. The [OAuth browser-apps guidance](https://www.rfc-editor.org/rfc/rfc10017.html#section-8.3) also explains that isolating an existing refresh token does not prevent malicious code from obtaining new tokens through another authorization flow.
 
 Use a worker only when browser-side code needs secret-dependent operations. Expose a narrow message interface and enforce authorization on the server. Worker isolation does not replace XSS prevention or server-side session controls; prefer an HttpOnly cookie or a backend that holds tokens when the browser does not need to handle them.
 
