@@ -4556,7 +4556,7 @@
 </li>
 </ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p>Simple example, using a long (2 years = 63072000 seconds) max-age. This example is dangerous since it lacks <code>includeSubDomains</code>:</p>
+<p>This example sets a long (2 years = 63072000 seconds) max-age for the issuing host. Without <code>includeSubDomains</code>, <a href="https://www.rfc-editor.org/rfc/rfc6797.html#section-6.1.2">this policy does not extend to its subdomains</a>; see the <a href="#problems">subdomain cookie risks</a> below:</p>
 <p><code>Strict-Transport-Security: max-age=63072000</code></p>
 <p>This example is useful if all present and future subdomains will be HTTPS. This is a more secure option but will block access to certain pages that can only be served over HTTP:</p>
 <p><code>Strict-Transport-Security: max-age=63072000; includeSubDomains</code></p>
