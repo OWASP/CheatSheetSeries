@@ -307,10 +307,15 @@ it can execute even if the device is locked.
 - Sensitive app functionalities triggered via Shortcuts should always
 require device unlock before execution.
 
-- **How**: Store secure tokens in Keychain that the app validates before
-executing sensitive shortcuts. Implement checks with
-`UIApplication.shared.isProtectedDataAvailable` to restrict execution
-of sensitive actions when the device is locked.
+- **How**: For sensitive App Intents (iOS/iPadOS 16+), set
+[`authenticationPolicy`](https://developer.apple.com/documentation/appintents/appintent/authenticationpolicy)
+to [`.requiresLocalDeviceAuthentication`](https://developer.apple.com/documentation/appintents/intentauthenticationpolicy/requireslocaldeviceauthentication).
+This requires unlocking the device running the intent if it is locked; it does
+not require fresh authentication when that device is already unlocked. Continue
+to enforce the app's session and authorization checks.
+[`isProtectedDataAvailable`](https://developer.apple.com/documentation/uikit/uiapplication/isprotecteddataavailable)
+reports protected-file availability and can be true when content protection is
+disabled; do not use it as an authentication check.
 
 #### Siri Permissions
 
@@ -318,13 +323,13 @@ of sensitive actions when the device is locked.
   https://support.apple.com/guide/iphone/change-siri-accessibility-settings-iphaff1d606/ios.)
   commands, which is by default accessible even when the device is locked
   potentially enabling unauthorized actions.
-- **How**: Configure `requiresUserAuthentication` to `true` on intents that expose
-sensitive information or functionality. Additionally, set
-`INIntent.userConfirmationRequired = true` for operations requiring explicit
-user confirmation. These settings ensure proper authentication
-(e.g., Face ID or PIN) and explicit approval before Siri can
-execute sensitive commands. (For more information, see Apple Developer's
-[SiriKit](https://developer.apple.com/documentation/sirikit) documentation.)
+- **How**: Apply the App Intent authentication policy above to sensitive Siri
+actions. For explicit approval before destructive work, call
+[`requestConfirmation()`](https://developer.apple.com/documentation/appintents/appintent/requestconfirmation())
+and stop if the user cancels; confirmation does not replace authentication or
+authorization. For legacy SiriKit intents handled by the app, set the supported
+intent's Authentication level to **Restricted While Locked** in Xcode, which
+configures [`INIntentsRestrictedWhileLocked`](https://developer.apple.com/documentation/bundleresources/information-property-list/inintentsrestrictedwhilelocked).
 
 #### Deep Link Security
 
