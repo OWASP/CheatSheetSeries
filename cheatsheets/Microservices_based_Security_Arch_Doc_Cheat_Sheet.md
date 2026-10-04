@@ -169,7 +169,7 @@ To analyze possible data leakage analyze data collected under the following sect
 
 ##### Implementation tips
 
-To verify documentation and justification of all the application's trust boundaries, components, and significant data flows analyze data collected under the following sections:
+Start the review of the application's trust boundaries, components, and significant data flows with the inventories from these sections:
 
 - Identify and describe application-functionality services
 - Identify and describe infrastructure services
@@ -178,6 +178,8 @@ To verify documentation and justification of all the application's trust boundar
 - Identify "service-to-storage" relations
 - Identify "service-to-service" synchronous communications
 - Identify "service-to-service" asynchronous communications
+
+Use these inventories as inputs to a [system model](Threat_Modeling_Cheat_Sheet.md#system-modeling). Mark the trust boundaries and the flows that cross them, and justify each crossing. Record the endpoint identities, authentication and authorization enforcement points, and protections for data in transit (see [NIST SP 800-204, sections 4.1 and 4.3](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204.pdf)). Check these controls against the deployed configuration and behavior; the inventories alone do not verify enforcement.
 
 ##### Mapping to OWASP projects
 
