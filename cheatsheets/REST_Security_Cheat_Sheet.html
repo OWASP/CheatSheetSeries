@@ -4969,12 +4969,12 @@
 <ul>
 <li>A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See <a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html">here</a> and <a href="https://www.youtube.com/watch?v=bW5pS4e_MX8&gt;">here</a></li>
 </ul>
-<p>Some claims have been standardized and should be present in JWT used for access controls. At least the following of the standard claims should be verified:</p>
+<p>For JWTs used for API access control, require and validate <code>iss</code>, <code>aud</code>, and <code>exp</code> by default; these claims are mandatory for tokens conforming to <a href="https://www.rfc-editor.org/rfc/rfc9068.html#section-2.2">RFC 9068, Section 2.2</a>. Require and validate any additional claims that the token profile makes mandatory. Check:</p>
 <ul>
 <li><code>iss</code> or issuer - is this a trusted issuer? Is it the expected owner of the signing key?</li>
 <li><code>aud</code> or audience - is the relying party in the target audience for this JWT?</li>
 <li><code>exp</code> or expiration time - is the current time before the end of the validity period of this token?</li>
-<li><code>nbf</code> or not before time - is the current time after the start of the validity period of this token?</li>
+<li><code>nbf</code> or not before time - if present, is the current time at or after the start of the token's validity period? This claim is optional in <a href="https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.5">RFC 7519, Section 4.1.5</a>; require it if the token profile requires it.</li>
 </ul>
 <p>As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a unique, server-issued identifier (the <code>jti</code> claim, optionally combined with <code>aud</code>) should be submitted to a denylist on the API which will invalidate that JWT for any requests until the expiration of the token. See the <a href="JSON_Web_Token_Cheat_Sheet.html#jwt-denylist">JSON_Web_Token_Cheat_Sheet</a> for further details.</p>
 <h2 id="api-keys">API Keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h2>
