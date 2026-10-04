@@ -143,9 +143,9 @@ Just like building HTML or SQL you may cause XML injection bugs, so stay away fr
 
 Anything sent to the client can be read or modified by the user, so keep all that secret stuff on the server please.
 
-#### Don't perform encryption in client-side code
+#### Choose encryption for the threat model
 
-Use TLS/SSL and encrypt on the server!
+Use TLS for transport. Client-side encryption can also be appropriate for end-to-end protection or encryption before upload, as described in the [Web Cryptography use cases](https://www.w3.org/TR/webcrypto/#use-cases). Use reviewed protocols and implementations rather than designing a cryptographic protocol yourself. Browser cryptography does not protect plaintext or keys from malicious code running in the application; account for XSS and key management as described in the [Web Cryptography security considerations](https://www.w3.org/TR/webcrypto/#security-considerations).
 
 #### Don't perform security impacting logic on client-side
 
