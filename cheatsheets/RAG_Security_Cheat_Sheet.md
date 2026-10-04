@@ -16,7 +16,7 @@ Not all controls need to be implemented at once. The following priority guide he
 
 **Implement immediately (foundational):**
 
-- Document hashing and integrity verification at ingestion (Section 1)
+- Document provenance and integrity verification against a protected baseline (Section 1)
 - Context window protection with delimiters and chunk limits (Section 3)
 - Access control metadata on every vector chunk (Section 4)
 - Tenant and classification isolation in vector stores (Section 6)
@@ -54,8 +54,9 @@ This is the most common and immediately exploitable RAG attack vector. Any organ
 
 ### Do
 
-- Hash every document at ingestion time (SHA-256 minimum) and store the hash alongside the document metadata.
-- Verify document hashes before retrieval. If the hash does not match, reject the document and alert the security team.
+- Record a SHA-256 digest of each approved document in a separately controlled manifest. An attacker who can replace both a document and its stored digest can make a modified document pass the hash check.
+- Protect the manifest with a digital signature or a [message authentication code (MAC)](https://csrc.nist.gov/Projects/message-authentication-codes), keeping signing or MAC keys outside the document store's write permissions. Verify the manifest's authenticity and the document's digest before retrieval; reject failures and alert the security team.
+- A matching digest establishes consistency with the approved baseline, not that the content is safe or free of prompt injection. Review and authorize baseline updates separately from ordinary document writes.
 - Implement document provenance tracking -- record who uploaded the document, when, from what source, and with what approval.
 - Scan ingested documents for known adversarial patterns (prompt injection markers, hidden instructions, invisible Unicode characters, zero-width spaces).
 - Maintain an allowlist of trusted document sources and reject documents from unknown or unapproved sources.
