@@ -63,7 +63,7 @@ Code is the ultimate expression of the intention for a product and as such it mu
 
 Some basics of secure coding include:
 
-   1. Input validation: Check input types, formats, lengths, and business constraints before processing. For SQL data values, use [parameterized queries](SQL_Injection_Prevention_Cheat_Sheet.md#primary-defenses); validation does not make string concatenation safe. Enforce buffer bounds separately when using memory-unsafe components.
+   1. Input validation: Check input types, formats, lengths, and business constraints before processing. For SQL data values, use [parameterized queries](SQL_Injection_Prevention_Cheat_Sheet.md#primary-defenses); input validation does not replace parameterization. Enforce buffer bounds separately when using memory-unsafe components.
    2. Error handling: Handle errors and exceptions in a secure manner, such as by logging them in a secure way and not disclosing sensitive information to an attacker.
    3. Authentication and Authorization: Implement strong authentication and authorization mechanisms to ensure that only authorized users can access sensitive data and resources.
    4. Cryptography: Use cryptographic functions and protocols to protect data in transit and at rest, such as HTTPS and encryption - the expected levels for a given Product Security Level can often be found by reviewing your Golden Path / Paved Road documentation.
