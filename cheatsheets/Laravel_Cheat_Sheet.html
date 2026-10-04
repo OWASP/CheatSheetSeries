@@ -5387,7 +5387,8 @@
 <span class="x">    exec('whois '.$request-&gt;input('domain'));</span>
 <span class="x">}</span>
 </code></pre></div>
-<p>The above code is vulnerable as the user data is not escaped properly. To do so, you may use the <code>escapeshellcmd</code> and/or <code>escapeshellarg</code> PHP functions.</p>
+<p>Avoid invoking operating-system commands when a PHP library can perform the operation. If a process is required, keep the executable fixed and pass arguments separately using <a href="https://symfony.com/doc/current/components/process.html#using-features-from-the-os-shell">Symfony Process with an argument array</a>. Validate the domain against the expected format before passing it to <code>whois</code>; argument separation does not stop a value from being interpreted as a command option. See <a href="OS_Command_Injection_Defense_Cheat_Sheet.html#argument-injection">Argument Injection</a> for this remaining risk.</p>
+<p>Do not use <a href="https://www.php.net/manual/en/function.escapeshellcmd.php"><code>escapeshellcmd()</code></a> as a substitute for separating arguments: it still permits extra arguments. If shell invocation is unavoidable, <a href="https://www.php.net/manual/en/function.escapeshellarg.php"><code>escapeshellarg()</code></a> escapes a single argument, but you must still validate its meaning to the called program.</p>
 <h2 id="other-injections">Other Injections<a class="headerlink" href="#other-injections" title="Permanent link">&para;</a></h2>
 <p>Object injection, eval code injection and extract variable hijacking attacks involve unserializing, evaluating or using the <code>extract</code> function on untrusted user input data.</p>
 <p>Some examples are:</p>

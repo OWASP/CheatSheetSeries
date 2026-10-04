@@ -630,10 +630,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tool-authorization-middleware-example-python" class="md-nav__link">
+  <a href="#tool-authorization-middleware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tool Authorization Middleware Example (Python)
+        Tool Authorization Middleware
       
     </span>
   </a>
@@ -4814,10 +4814,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tool-authorization-middleware-example-python" class="md-nav__link">
+  <a href="#tool-authorization-middleware" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tool Authorization Middleware Example (Python)
+        Tool Authorization Middleware
       
     </span>
   </a>
@@ -5176,24 +5176,8 @@
     <span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
-<h4 id="tool-authorization-middleware-example-python">Tool Authorization Middleware Example (Python)<a class="headerlink" href="#tool-authorization-middleware-example-python" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
-
-<span class="n">SENSITIVE_TOOLS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"send_email"</span><span class="p">,</span> <span class="s2">"execute_code"</span><span class="p">,</span> <span class="s2">"database_write"</span><span class="p">,</span> <span class="s2">"file_delete"</span><span class="p">]</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">require_confirmation</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="n">SENSITIVE_TOOLS</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"user_confirmed"</span><span class="p">):</span>
-                <span class="k">return</span> <span class="p">{</span>
-                    <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"pending_confirmation"</span><span class="p">,</span>
-                    <span class="s2">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Action '</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">' requires user approval"</span><span class="p">,</span>
-                    <span class="s2">"params"</span><span class="p">:</span> <span class="n">sanitize_for_display</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-                <span class="p">}</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
-</code></pre></div>
+<h4 id="tool-authorization-middleware">Tool Authorization Middleware<a class="headerlink" href="#tool-authorization-middleware" title="Permanent link">&para;</a></h4>
+<p>Enforce authorization in the execution component, outside the agent's context. A <code>user_confirmed</code> flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Changes to the target or parameters require new approval. Apply the <a href="#high-impact-action-integrity-controls">High-Impact Action Integrity Controls</a> and the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>. Fail closed for unknown tools or missing approval requirements.</p>
 <h3 id="2-input-validation-prompt-injection-defense">2. Input Validation &amp; Prompt Injection Defense<a class="headerlink" href="#2-input-validation-prompt-injection-defense" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Treat all external data as untrusted (user messages, retrieved documents, API responses, emails).</li>
@@ -5532,107 +5516,9 @@
 <li>Apply circuit breakers to prevent cascading failures.</li>
 </ul>
 <h4 id="secure-multi-agent-communication">Secure Multi-Agent Communication<a class="headerlink" href="#secure-multi-agent-communication" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">jwt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pybreaker</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircuitBreaker</span>  <span class="c1"># pip install pybreaker</span>
-<span class="c1"># Usage: CircuitBreaker(fail_max=5, reset_timeout=60)</span>
-<span class="c1"># Generate UUIDs inline with: str(uuid.uuid4())</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">AgentTrustLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">UNTRUSTED</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">PRIVILEGED</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">SYSTEM</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">SecureAgentBus</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Secure communication layer for multi-agent systems."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signing_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">signing_key</span> <span class="o">=</span> <span class="n">signing_key</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">message_validators</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">register_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trust_level</span><span class="p">:</span> <span class="n">AgentTrustLevel</span><span class="p">,</span>
-                       <span class="n">allowed_recipients</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"trust_level"</span><span class="p">:</span> <span class="n">trust_level</span><span class="p">,</span>
-            <span class="s2">"allowed_recipients"</span><span class="p">:</span> <span class="n">allowed_recipients</span><span class="p">,</span>
-            <span class="s2">"allowed_message_types"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_allowed_types</span><span class="p">(</span><span class="n">trust_level</span><span class="p">)</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">CircuitBreaker</span><span class="p">(</span>
-            <span class="n">fail_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-            <span class="n">reset_timeout</span><span class="o">=</span><span class="mi">60</span>
-        <span class="p">)</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sender_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                          <span class="n">message_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="c1"># Validate sender</span>
-        <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sender_id</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">sender</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown sender agent: </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-        <span class="c1"># Check circuit breaker</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">sender_id</span><span class="p">]</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="s2">"open"</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Agent </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2"> is temporarily blocked"</span><span class="p">)</span>
-
-        <span class="c1"># Validate recipient authorization</span>
-        <span class="k">if</span> <span class="n">recipient_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">"allowed_recipients"</span><span class="p">]:</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_security_event</span><span class="p">(</span>
-                <span class="s2">"unauthorized_message_attempt"</span><span class="p">,</span>
-                <span class="p">{</span><span class="s2">"sender"</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span> <span class="s2">"recipient"</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">}</span>
-            <span class="p">)</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Sender not authorized to message recipient"</span><span class="p">)</span>
-
-        <span class="c1"># Validate message type</span>
-        <span class="k">if</span> <span class="n">message_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">"allowed_message_types"</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Message type '</span><span class="si">{</span><span class="n">message_type</span><span class="si">}</span><span class="s2">' not allowed"</span><span class="p">)</span>
-
-        <span class="c1"># Sanitize payload</span>
-        <span class="n">sanitized_payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sender</span><span class="p">[</span><span class="s2">"trust_level"</span><span class="p">])</span>
-
-        <span class="c1"># Create signed message</span>
-        <span class="n">signed_message</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"sender"</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span>
-            <span class="s2">"recipient"</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">,</span>
-            <span class="s2">"type"</span><span class="p">:</span> <span class="n">message_type</span><span class="p">,</span>
-            <span class="s2">"payload"</span><span class="p">:</span> <span class="n">sanitized_payload</span><span class="p">,</span>
-            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
-            <span class="s2">"signature"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sign_message</span><span class="p">(</span><span class="n">sender_id</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">,</span> 
-                                           <span class="n">message_type</span><span class="p">,</span> <span class="n">sanitized_payload</span><span class="p">)</span>
-        <span class="p">}</span>
-
-        <span class="k">return</span> <span class="n">signed_message</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">receive_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="c1"># Verify signature</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verify_signature</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Invalid message signature"</span><span class="p">)</span>
-
-        <span class="c1"># Check message freshness (prevent replay attacks)</span>
-        <span class="n">msg_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">])</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">msg_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Message expired (possible replay attack)"</span><span class="p">)</span>
-
-        <span class="c1"># Validate recipient</span>
-        <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="s2">"recipient"</span><span class="p">]</span> <span class="o">!=</span> <span class="n">recipient_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">"Message recipient mismatch"</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">message</span><span class="p">[</span><span class="s2">"payload"</span><span class="p">]</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">trust_level</span><span class="p">:</span> <span class="n">AgentTrustLevel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Remove sensitive data based on trust level."""</span>
-        <span class="k">if</span> <span class="n">trust_level</span> <span class="o">&lt;</span> <span class="n">AgentTrustLevel</span><span class="o">.</span><span class="n">PRIVILEGED</span><span class="p">:</span>
-            <span class="c1"># Remove system-level fields for lower trust agents</span>
-            <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> 
-                      <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"_system"</span><span class="p">)}</span>
-
-        <span class="c1"># Always sanitize potential injection content</span>
-        <span class="k">return</span> <span class="n">sanitize_untrusted_content</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
-</code></pre></div>
+<p>Authenticate communicating agents and enforce the sender's permissions at the receiving service before executing a request. A valid message signature does not grant permission to perform the requested action.</p>
+<p>When message signatures are needed, use a maintained protocol implementation. Protect the sender, intended recipient, message type, payload, creation and expiry times, and a unique message identifier. For HTTP, <a href="https://www.rfc-editor.org/rfc/rfc9421.html#section-7.2.1">RFC 9421 explains why verification must require all security-relevant components to be signed</a>.</p>
+<p>Enforce a bounded validity window and reject repeated message identifiers before execution, retaining replay state for the entire acceptance window. A timestamp check alone permits repeated execution within that window; see <a href="https://www.rfc-editor.org/rfc/rfc9421.html#section-7.2.2">RFC 9421's replay considerations</a>. Keep transport encryption: <a href="https://www.rfc-editor.org/rfc/rfc9421.html#section-7.1.2">message signatures do not provide confidentiality</a>.</p>
 <h3 id="8-data-protection-privacy">8. Data Protection &amp; Privacy<a class="headerlink" href="#8-data-protection-privacy" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Minimize sensitive data in agent context.</li>
