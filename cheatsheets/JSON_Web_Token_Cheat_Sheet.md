@@ -285,17 +285,19 @@ Example of validation not vulnerable because MAC algorithms are not accepted:
 decoded = jwt.decode(token, public_key_bytes, algorithms=["ES256"])
 ```
 
-Example of validation not vulnerable because the key is strictly typed:
+Illustrative signature verification using [joserfc's typed key import](https://jose.authlib.org/en/guide/jwk/#import-keys) and a trusted EC public key. [Claim validation](https://jose.authlib.org/en/guide/jwt/#validate-claims) is still required before accepting the token. Replace the example key with your issuer's trusted public key; `encoded` is the received token string.
 
 ```python
 from joserfc import jwt, jwk
 
-# {"kty":"EC",
-#  "crv":"P-256",
-#  "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
-#  "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"}
-public_key = jwk.import_key(jwk)
-decoded = jwt.decode(encoded, public_key)
+public_jwk = {
+    "kty": "EC",
+    "crv": "P-256",
+    "x": "f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+    "y": "x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0",
+}
+public_key = jwk.import_key(public_jwk)
+decoded = jwt.decode(encoded, public_key, algorithms=["ES256"])
 ```
 
 References:
