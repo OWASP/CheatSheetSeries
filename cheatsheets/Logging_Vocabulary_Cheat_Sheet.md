@@ -1175,10 +1175,10 @@ INFO
 
 ---
 
-### session_logout:[userid,sessionid]
+### session_logout:[userid]
 
 **Description**
-When a user explicitly logs out (as opposed to a timeout or administrative revocation) the event may be logged. This is a more explicit alternative to `session_expired:[userid,logout]` for systems that distinguish a user-initiated logout.
+When a user explicitly logs out (as opposed to a timeout or administrative revocation) the event may be logged. This is a more explicit alternative to `session_expired:[userid,logout]` for systems that distinguish a user-initiated logout. Do not include the raw session ID or bearer token. If session correlation is needed, follow the [Session Management logging guidance](Session_Management_Cheat_Sheet.md#logging-sessions-life-cycle-monitoring-creation-usage-and-destruction-of-session-ids).
 
 **Level:**
 INFO
@@ -1189,7 +1189,7 @@ INFO
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "session_logout:joebob1,kx12ab",
+    "event": "session_logout:joebob1",
     "level": "INFO",
     "description": "User joebob1 logged out",
     ...
