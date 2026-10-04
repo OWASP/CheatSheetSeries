@@ -18,7 +18,7 @@ One advantage of this approach is that the validation constraints and the corres
 
 ## Setup
 
-The illustrative examples below use the legacy `javax.validation` API, including its [built-in constraint package](https://docs.hibernate.org/beanvalidation/spec/1.1/api/javax/validation/constraints/package-summary.html), with Hibernate Validator. Jakarta Validation 3.0 uses `jakarta.validation`; use API and provider versions compatible with your application.
+The illustrative examples below use the legacy `javax.validation` API, including its [built-in constraint package](https://docs.hibernate.org/beanvalidation/spec/1.1/api/javax/validation/constraints/package-summary.html), with Hibernate Validator. [Jakarta Validation 3.0](https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html) uses `jakarta.validation`; use API and provider versions compatible with your application.
 
 Add Hibernate Validator to your **pom.xml**:
 
