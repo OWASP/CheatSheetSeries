@@ -99,11 +99,11 @@ Every screening interaction must produce a tamper-evident audit record that a co
 
 ## Section 5: Fail-Closed Enforcement
 
-When screening fails -- due to a timeout, service outage, malformed response, or any other error -- the system MUST deny the transaction. Silent pass-through on screening failure is a compliance violation. The fail-closed posture is consistent with the AC-4 information-flow-enforcement and AU-12 audit-record-generation control families defined in [NIST SP 800-53 Revision 5](https://csrc.nist.gov/pubs/sp/800/53/r5/final).
+Treat an incomplete or unavailable screening result as unresolved, never as clearance. Withhold transaction execution while the required assessment is unresolved; use bounded retries, manual review, or rejection according to the institution's approved policy. [OFAC advises financial institutions not to conclude transactions before the necessary analysis is complete](https://ofac.treasury.gov/faqs/43). A service failure is not itself a confirmed sanctions match; compliance owners must define the appropriate response for each case.
 
 ### Do
 
-- Deny the payment or transaction if screening cannot be completed successfully.
+- Hold or reject the payment when required screening cannot be completed; do not release it unless the required assessment permits proceeding.
 - Return a clear, structured error to the agent indicating that screening failed and the transaction cannot proceed.
 - Log all screening failures with the same level of detail as successful screens, including the reason for failure.
 - Alert compliance teams when screening failure rates exceed a threshold, as this may indicate a denial-of-service attack designed to force fail-open behavior.
@@ -222,7 +222,7 @@ The controls in this cheat sheet map to common AML and sanctions obligations. Th
 | Entity and operator screening (Sections 2-3) | OFAC, EU, UK, and UN sanctions screening; FATF Recommendation 6 |
 | Signed audit trail and receipt (Sections 4, 8-10) | Recordkeeping; FATF Recommendation 11; multi-year retention (BSA, EU AMLD) |
 | Sanctions-list freshness in receipt (Section 10) | Obligation to screen against current lists; sanctions-evasion controls |
-| Fail-closed enforcement (Section 5) | Blocking obligations for sanctioned parties |
+| Fail-closed enforcement (Section 5) | Preventing execution while required checks are unresolved; distinguish this technical gate from legal blocking obligations for confirmed sanctions matches |
 | Trust-tiered limits (Section 6) | Risk-based approach (FATF Recommendation 1); monitoring thresholds |
 
 ### Do
@@ -243,7 +243,7 @@ The consolidated controls below align with the AI-system-specific verification r
 - Sign every screening request and response with unique nonces and timestamps.
 - Screen both the counterparty entity and the agent's operator against sanctions lists.
 - Maintain a hash-chained, tamper-evident audit trail of every screening interaction.
-- Fail closed on any screening error, timeout, or ambiguous result.
+- Withhold transaction execution on a screening error, timeout, or ambiguous result until the required assessment permits proceeding.
 - Rate limit based on cryptographic agent identity, not IP address.
 - Apply graduated trust levels with different access rights and rate limits.
 - Re-screen agent operators periodically as sanctions lists are updated.
