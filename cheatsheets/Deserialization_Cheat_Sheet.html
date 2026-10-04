@@ -5086,23 +5086,17 @@
 <h4 id="opaque-box-review">Opaque-box Review<a class="headerlink" href="#opaque-box-review" title="Permanent link">&para;</a></h4>
 <p>If the traffic data contains the symbol dot <code>.</code> at the end, it's very likely that the data was sent in serialization. It will be only true if the data is not being encoded using Base64 or Hexadecimal schemas. If the data is being encoded, then it's best to check if the serialization is likely happening or not by looking at the starting characters of the parameter value. For example if data is Base64 encoded, then it will most likely start with <code>gASV</code>.</p>
 <h4 id="clear-box-review_1">Clear-box Review<a class="headerlink" href="#clear-box-review_1" title="Permanent link">&para;</a></h4>
-<p>The following API in Python will be vulnerable to serialization attack. Search code for the pattern below.</p>
+<p>Review the following APIs for untrusted input:</p>
 <ol>
-<li>The uses of <code>pickle/c_pickle/_pickle</code> with <code>load/loads</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
-<span class="n">data</span> <span class="o">=</span> <span class="s2">""" cos.system(S'dir')tR. """</span>
-<span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-<ol start="2">
-<li>Uses of <code>PyYAML</code> with <code>load</code>:</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
-<span class="n">document</span> <span class="o">=</span> <span class="s2">"!!python/object/apply:os.system ['ipconfig']"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">document</span><span class="p">))</span>
-</code></pre></div>
-<ol start="3">
-<li>Uses of <a href="https://jsonpickle.readthedocs.io/en/latest/api.html#jsonpickle.decode"><code>jsonpickle.decode()</code></a> with untrusted input.</li>
+<li>
+<p>Uses of <a href="https://docs.python.org/3/library/pickle.html#pickle.loads"><code>pickle.load()</code> or <code>pickle.loads()</code></a>. Unpickling can execute arbitrary code; never unpickle untrusted data. <code>pickle.loads()</code> expects bytes-like input, not a Python 3 string.</p>
+</li>
+<li>
+<p>Uses of <a href="https://github.com/yaml/pyyaml/blob/6.0.3/lib/yaml/__init__.py#L74-L156">PyYAML's unsafe loaders</a>, such as <code>yaml.unsafe_load()</code> or <code>yaml.load()</code> with <code>Loader=yaml.Loader</code> or <code>Loader=yaml.UnsafeLoader</code>. For untrusted YAML, use <a href="https://pyyaml.org/wiki/PyYAMLDocumentation#the-yaml-package"><code>yaml.safe_load()</code></a>, and do not register custom constructors that allow arbitrary object creation. Current PyYAML requires an explicit <code>Loader</code> argument for <code>yaml.load()</code>.</p>
+</li>
+<li>
+<p>Uses of <a href="https://jsonpickle.readthedocs.io/en/latest/api.html#jsonpickle.decode"><code>jsonpickle.decode()</code></a> with untrusted input.</p>
+</li>
 </ol>
 <h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
 <p>For historical research on Java deserialization and defensive allowlisting, see <a href="../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf">Java Deserialization Attacks — German OWASP Day 2016</a>.</p>
