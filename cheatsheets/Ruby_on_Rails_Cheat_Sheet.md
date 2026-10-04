@@ -123,9 +123,9 @@ config.force_ssl = true
 
 Uncomment the line 3 as above in your configuration.
 
-Generally speaking, Rails does not provide authentication by itself. However, most developers using Rails leverage libraries such as Devise or AuthLogic to provide authentication.
+Rails 8.0 introduced a built-in [authentication generator](https://guides.rubyonrails.org/security.html#authentication) for basic authentication and password reset functionality. It is a starting point that must be adapted to the application, including implementing its sign-up flow. Libraries such as Devise remain another option.
 
-To enable authentication it is possible to use Devise gem.
+The following examples use the Devise gem.
 
 Install it using:
 
