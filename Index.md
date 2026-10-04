@@ -42,7 +42,7 @@
 
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
 
-[Bot Management and Anti-Automation Cheat Sheet](cheatsheets/Bot_Management_and_Anti-Automation_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Html](assets/Index_Html.svg) ![Python](assets/Index_Python.svg)
+[Bot Management and Anti-Automation Cheat Sheet](cheatsheets/Bot_Management_and_Anti-Automation_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Python](assets/Index_Python.svg)
 
 [Browser Extension Vulnerabilities Cheat Sheet](cheatsheets/Browser_Extension_Vulnerabilities_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
 
