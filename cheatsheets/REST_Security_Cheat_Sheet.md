@@ -51,12 +51,12 @@ The relying party or token consumer validates a JWT by verifying its integrity a
 
 - A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See [here](https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html) and [here](https://www.youtube.com/watch?v=bW5pS4e_MX8>)
 
-Some claims have been standardized and should be present in JWT used for access controls. At least the following of the standard claims should be verified:
+For JWTs used for API access control, require and validate `iss`, `aud`, and `exp` by default; these claims are mandatory for tokens conforming to [RFC 9068, Section 2.2](https://www.rfc-editor.org/rfc/rfc9068.html#section-2.2). Require and validate any additional claims that the token profile makes mandatory. Check:
 
 - `iss` or issuer - is this a trusted issuer? Is it the expected owner of the signing key?
 - `aud` or audience - is the relying party in the target audience for this JWT?
 - `exp` or expiration time - is the current time before the end of the validity period of this token?
-- `nbf` or not before time - is the current time after the start of the validity period of this token?
+- `nbf` or not before time - if present, is the current time at or after the start of the token's validity period? This claim is optional in [RFC 7519, Section 4.1.5](https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.5); require it if the token profile requires it.
 
 As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a unique, server-issued identifier (the `jti` claim, optionally combined with `aud`) should be submitted to a denylist on the API which will invalidate that JWT for any requests until the expiration of the token. See the [JSON_Web_Token_Cheat_Sheet](JSON_Web_Token_Cheat_Sheet.md#jwt-denylist) for further details.
 
