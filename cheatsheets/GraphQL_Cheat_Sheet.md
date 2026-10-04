@@ -304,10 +304,12 @@ GraphQLSchema schema = GraphQLSchema.newSchema()
 
 _**Disable Introspection & GraphiQL - JavaScript**_
 
+For existing applications using the [deprecated `express-graphql` middleware](https://github.com/graphql/express-graphql#this-library-is-deprecated), this illustration assumes `NoIntrospection` is an imported introspection-denying validation rule. Use a maintained server implementation for new applications.
+
 ```javascript
 app.use('/graphql', graphqlHTTP({
   schema: MySessionAwareGraphQLSchema,
-+ validationRules: [NoIntrospection]
+  validationRules: [NoIntrospection],
   graphiql: process.env.NODE_ENV === 'development',
 }));
 ```
