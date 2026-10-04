@@ -138,7 +138,7 @@ If the provider has provided nothing about the vulnerability, [Case 3](#case-3) 
 
 **Step 2:**
 
-Use any provider-supplied exploit as a regression test. Blocking that payload does not prove that the library is secure: test alternate inputs and all reachable paths to the affected functionality. The [CRS rule-writing guidance](https://coreruleset.org/docs/3-about-rules/creating/#advanced-transformation-usage) illustrates how small payload changes can bypass a filter. Follow the [virtual patch testing guidance](Virtual_Patching_Cheat_Sheet.md#implementationtesting-phase) and keep the permanent fix on the remediation plan.
+Use any provider-supplied exploit as a regression test. Blocking that payload does not prove that the library is secure: test alternate inputs and all reachable paths to the affected functionality. The [Core Rule Set rule-writing guidance](https://coreruleset.org/docs/3-about-rules/creating/#advanced-transformation-usage) illustrates how small payload changes can bypass a filter. Follow the [virtual patch testing guidance](Virtual_Patching_Cheat_Sheet.md#implementationtesting-phase) and keep the permanent fix on the remediation plan.
 
 If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
 
