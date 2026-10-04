@@ -14,7 +14,7 @@ Fortunately, applications built with modern web frameworks have fewer XSS bugs, 
 
 - _escape hatches_ that frameworks use to directly manipulate the DOM
 - React’s `dangerouslySetInnerHTML` without sanitizing the HTML
-- React cannot handle `javascript:` or `data:` URLs without specialized validation
+- Unvalidated URL values: [React 19 blocks `javascript:` URLs in `src` and `href`](https://react.dev/blog/2024/04/25/react-19-upgrade-guide#other-breaking-changes), but this does not replace application-specific [URL validation](#xss-prevention-rules-summary)
 - Angular’s `bypassSecurityTrustAs*` functions
 - Lit's `unsafeHTML` function
 - Polymer's `inner-h-t-m-l` attribute and `htmlLiteral` function
