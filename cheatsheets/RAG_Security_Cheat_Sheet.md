@@ -312,7 +312,7 @@ RAG pipelines must not be treated as black boxes. Full observability across ever
 ### Do
 
 - Trace each request using correlation IDs, retrieved document IDs, authorization decisions, model versions, and tool invocation outcomes. Do not log raw queries, retrieved content, model inputs, outputs, or tool arguments by default; these may contain secrets or sensitive personal data. Apply the [Logging Cheat Sheet's data-exclusion guidance](Logging_Cheat_Sheet.md#data-to-exclude).
-- If incident investigation requires content capture, collect only the necessary redacted fields in a restricted evidence store. Apply [log access controls and retention limits](Logging_Cheat_Sheet.md#protection), and ensure investigators are authorized to access the underlying documents.
+- If incident investigation requires content capture, collect only the necessary redacted fields in a restricted evidence store. Apply [log access controls](Logging_Cheat_Sheet.md#protection) and [retention limits](Logging_Cheat_Sheet.md#disposal-of-logs), and ensure investigators are authorized to access the underlying documents.
 - Alert on anomalous patterns:
     - Unusual retrieval patterns (a user suddenly retrieving from document collections they have never accessed)
     - Repeated prompt injection attempts
