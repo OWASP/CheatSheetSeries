@@ -207,7 +207,9 @@ Pick the algorithm that matches the obfuscation classes in your threat model, se
 
 ### Structured Prompts with Clear Separation
 
-Use structured formats that clearly separate instructions from user data. See [StruQ research](https://arxiv.org/abs/2402.06363) for the foundational approach to structured queries.
+Keep trusted instructions separate from untrusted data, but do not treat text labels or prompt wording as an enforcement boundary. [StruQ's design](https://arxiv.org/html/2402.06363v2#S4) combines reserved delimiter tokens, front-end filtering, and a specially trained model; the string templates below do not implement it.
+
+These examples illustrate formatting only. They do not establish prompt-injection resistance or authorize actions; enforce permissions at the [tool boundary](#agent-specific-defenses).
 
 ```python
 def create_structured_prompt(system_instructions: str, user_data: str) -> str:
