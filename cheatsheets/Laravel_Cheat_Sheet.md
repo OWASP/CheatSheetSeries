@@ -253,7 +253,7 @@ Since the column name is dictated by user input, it is similar to column name SQ
 
 [XSS attacks](https://owasp.org/www-community/attacks/xss/) are injection attacks where malicious scripts (such as JavaScript code snippets) are injected into trusted websites.
 
-Laravel's [Blade templating engine](https://laravel.com/docs/blade) has echo statements `{{ }}` that automatically escape variables using the `htmlspecialchars` PHP function to protect against XSS attacks.
+Laravel's [Blade echo statements](https://laravel.com/framework/docs/blade#displaying-data) `{{ }}` HTML-escape ordinary string values using `htmlspecialchars`. This is appropriate for HTML text and quoted ordinary text attributes, but does not validate URL schemes or encode JavaScript or CSS contexts.
 
 Laravel also offers displaying unescaped data using the unescaped syntax `{!! !!}`. This must not be used on any untrusted data, otherwise your application will be subject to an XSS attack.
 
@@ -263,13 +263,13 @@ For instance, if you have something like this in any of your Blade templates, it
 {!! request()->input('somedata') !!}
 ```
 
-This, however, is safe to do:
+For example, render untrusted text inside an ordinary HTML element:
 
 ```blade
-{{ request()->input('somedata') }}
+<span>{{ request()->input('somedata') }}</span>
 ```
 
-For other information on XSS prevention that is not specific to Laravel, you may refer the [Cross Site Scripting Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
+For data embedded in JavaScript, follow Laravel's [`Js::from` guidance](https://laravel.com/framework/docs/blade#rendering-json). For URLs, CSS, and other output contexts, follow the [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 ## Unrestricted File Uploads
 
