@@ -440,7 +440,7 @@ All security policies should include the following conditions:
 - Privilege escalation is not allowed.
 - The root filesystem is read-only.
 - The default (masked) /proc filesystem mount is used.
-- The host network or process space should NOT be used - using `hostNetwork: true` will cause NetworkPolicies to be ignored since the Pod will use its host network.
+- Avoid sharing the host network or process namespace. [NetworkPolicy behavior for `hostNetwork` Pods depends on the network plugin](https://kubernetes.io/docs/concepts/services-networking/network-policies/#networkpolicy-and-hostnetwork-pods); verify enforcement rather than assuming these Pods receive the same isolation as other Pods.
 - Unused and unnecessary Linux capabilities are eliminated.
 - Use SELinux options for more fine-grained process controls.
 - Give each application its own Kubernetes Service Account.
