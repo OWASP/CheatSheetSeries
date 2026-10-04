@@ -4849,11 +4849,9 @@ However, the execution model (short-lived, event-driven functions running in man
 <ul>
 <li>Scan dependencies (<code>npm audit</code>, <code>pip-audit</code>, <code>safety</code>).</li>
 <li>Use minimal deployment packages.</li>
-<li>Sign packages with checksums.</li>
+<li>Sign deployment packages and verify signatures against an approved publisher before deployment. A checksum alone does not authenticate the publisher.</li>
 </ul>
-<p><strong>AWS Lambda Layer Hash Validation:</strong></p>
-<div class="highlight"><pre><span></span><code>shasum<span class="w"> </span>-a<span class="w"> </span><span class="m">256</span><span class="w"> </span>layer.zip
-</code></pre></div>
+<p>For AWS Lambda, use <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html">code signing configurations</a> with allowed signing profiles and <code>UntrustedArtifactOnDeployment</code> set to <code>Enforce</code>; the default <code>Warn</code> setting allows deployments that fail expiry, publisher, or revocation checks. Layers added to functions with code signing enabled must also be signed by an allowed profile.</p>
 <h2 id="dos-and-donts">Do’s and Don’ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
 <p><strong>Do</strong>:</p>
 <ul>
