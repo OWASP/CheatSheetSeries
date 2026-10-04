@@ -277,11 +277,11 @@ Unrestricted file upload attacks entail attackers uploading malicious files to c
 
 ### Always Validate File Type and Size
 
-Always validate the file type (extension or MIME type) and file size to avoid storage DOS attacks and remote code execution:
+Validate allowed file types and impose a maximum file size as one layer of protection. This illustrative rule uses [`max`](https://laravel.com/framework/docs/12.x/validation#rule-max) to cap the file size rather than requiring an exact size:
 
 ```php
 $request->validate([
-    'photo' => 'file|size:100|mimes:jpg,bmp,png'
+    'photo' => 'file|max:100|mimes:jpg,bmp,png'
 ]);
 ```
 
@@ -289,7 +289,7 @@ Storage DOS attacks exploit missing file size validations and upload massive fil
 
 Remote code execution attacks entail first, uploading malicious executable files (such as PHP files) and then, triggering their malicious code by visiting the file URL (if public).
 
-Both these attacks can be avoided by simple file validations as mentioned above.
+These validations alone do not prevent either attack. Laravel's [`mimes` rule](https://laravel.com/framework/docs/12.x/validation#rule-mimes) infers type from content; it does not validate the user-supplied extension or make the file safe to execute. Generate stored filenames, keep uploads outside the webroot or on a separate host, and ensure uploaded files cannot be executed by the server. Bound aggregate storage and upload frequency as well as individual file size. Follow the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md#file-upload-protection) for the remaining controls.
 
 ### Do Not Rely On User Input To Dictate Filenames or Path
 
