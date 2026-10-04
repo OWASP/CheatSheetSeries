@@ -4944,18 +4944,14 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 <p>The method <code>html_safe</code> of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. <strong>This method itself is un-safe!</strong></p>
 <p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.</p>
 <p>If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the <code>#sanitize</code> method that lets you list allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.</p>
-<p>An often overlooked XSS attack vector for older versions of rails is the <code>href</code> value of a link:</p>
+<p>User-controlled link destinations require URL validation in addition to HTML escaping:</p>
 <div class="highlight"><pre><span></span><code><span class="o">&lt;%=</span><span class="w"> </span><span class="n">link_to</span><span class="w"> </span><span class="s2">"Personal Website"</span><span class="p">,</span><span class="w"> </span><span class="vi">@user</span><span class="o">.</span><span class="n">website</span><span class="w"> </span><span class="o">%&gt;</span>
 </code></pre></div>
-<p>If <code>@user.website</code> contains a link that starts with <code>javascript:</code>, the content will execute when a user clicks the generated link:</p>
+<p>If <code>@user.website</code> contains a <code>javascript:</code> URL, clicking the generated link can execute script:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"javascript:alert('Haxored')"</span><span class="p">&gt;</span>Personal Website<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>Newer Rails versions escape such links in a better way.</p>
-<div class="highlight"><pre><span></span><code><span class="n">link_to</span><span class="w"> </span><span class="s2">"Personal Website"</span><span class="p">,</span><span class="w"> </span><span class="s1">'javascript:alert(1);'</span><span class="o">.</span><span class="n">html_safe</span><span class="p">()</span>
-<span class="c1"># Will generate:</span>
-<span class="c1"># "&lt;a href="javascript:alert(1);"&gt;Personal Website&lt;/a&gt;"</span>
-</code></pre></div>
-<p>Using <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a> is one more security measure to forbid execution for links starting with <code>javascript:</code> .</p>
+<p><a href="https://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a> does not enforce a URL-scheme allowlist. Validate personal website URLs to allow only <code>https</code> or <code>http</code> before rendering them, and retain HTML attribute escaping. See the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html#xss-prevention-rules-summary">XSS prevention rules</a> for URL validation and encoding requirements. Do not use <code>html_safe</code> to bypass escaping.</p>
+<p>A restrictive Content Security Policy can additionally <a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript#description">block <code>javascript:</code> navigation</a>, but it does not replace URL validation.</p>
 <p><a href="https://github.com/presidentbeef/brakeman">Brakeman scanner</a> helps in finding XSS problems in Rails apps.</p>
 <p>OWASP provides more general information about XSS in a top level page: <a href="https://owasp.org/www-community/attacks/xss/">Cross-site Scripting (XSS)</a>.</p>
 <h3 id="sessions">Sessions<a class="headerlink" href="#sessions" title="Permanent link">&para;</a></h3>
