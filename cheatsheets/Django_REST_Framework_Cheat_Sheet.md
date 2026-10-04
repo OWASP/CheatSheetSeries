@@ -73,7 +73,7 @@ DO NOT use `rest_framework.permissions.AllowAny` except for public API endpoints
 
 ### API6:2019 Mass Assignment
 
-To prevent this problem, use Meta.fields (allowlist approach) when using ModelForms. DO NOT use Meta.exclude (denylist approach) or `ModelForms.Meta.fields = "__all__"`
+For DRF APIs, explicitly allowlist the fields in `ModelSerializer.Meta.fields`; avoid `Meta.exclude` and `fields = "__all__"`, which can expose newly added model fields. Follow the [serializer field selection guidance](https://www.django-rest-framework.org/api-guide/serializers/#specifying-which-fields-to-include). Fields that clients may read but must not change should be [read-only](https://www.django-rest-framework.org/api-guide/serializers/#specifying-read-only-fields): use `Meta.read_only_fields` for generated fields, or `read_only=True` on explicitly declared fields. These serializer controls do not replace authorization checks for the requested operation.
 
 ### API7:2019 Security Misconfiguration
 
