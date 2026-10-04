@@ -1055,7 +1055,7 @@ WARN
 ### sensitive_delete:[userid,file|object]
 
 **Description**
-Log and periodically review deletion events for sensitive files and data. Record the action and object identifier without copying the sensitive contents into the log. Retain the underlying data only for the applicable retention period or legal hold, then securely dispose of it and retained copies. Keep the deletion audit record according to the [log retention and disposal requirements](Logging_Cheat_Sheet.md#disposal-of-logs); recording a deletion event does not itself require archiving the deleted file.
+Log and periodically review deletion events for sensitive files and data. Record the action and object identifier without copying the sensitive contents into the log. Retain the underlying data according to the applicable [information-retention requirements (NIST SI-12)](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf#page=378), then [securely dispose of it and retained copies when no longer needed (SI-12(3))](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf#page=379). Keep the deletion audit record according to the [log retention and disposal requirements](Logging_Cheat_Sheet.md#disposal-of-logs); recording a deletion event does not itself require archiving the deleted file.
 
 **Level:**
 WARN
