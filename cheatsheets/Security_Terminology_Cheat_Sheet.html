@@ -4779,24 +4779,24 @@
 <h3 id="encoding">Encoding<a class="headerlink" href="#encoding" title="Permanent link">&para;</a></h3>
 <p><strong>Definition:</strong> Transforming data into a different format using a publicly available scheme, so that it can be safely consumed by a different system.</p>
 <ul>
-<li><strong>Purpose:</strong> Not for security, but for data usability and compatibility.</li>
+<li><strong>Purpose:</strong> Represent data for a particular transport, storage, or output context.</li>
 <li><strong>Reversibility:</strong> Always reversible.</li>
 <li><strong>Examples:</strong> Base64, URL Encoding, HTML Entity Encoding.</li>
-<li><strong>Security Context:</strong> Using the wrong encoding can lead to vulnerabilities, but encoding itself is not a security control.</li>
+<li><strong>Security Context:</strong> Base64 does not provide confidentiality. Context-appropriate <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XSS#output_encoding">output encoding is an XSS defense</a>; using the wrong encoding for the destination context can leave an injection vulnerability.</li>
 </ul>
 <h3 id="escaping">Escaping<a class="headerlink" href="#escaping" title="Permanent link">&para;</a></h3>
-<p><strong>Definition:</strong> A sub-type of encoding where specific characters are prefixed with a "signal" character (like a backslash) to prevent them from being misinterpreted by a parser as control characters.</p>
+<p><strong>Definition:</strong> Representing characters with parser-specific escape sequences so they are interpreted literally in a particular context.</p>
 <ul>
 <li><strong>Purpose:</strong> To ensure the interpreter treats the data as text rather than code/commands.</li>
-<li><strong>Examples:</strong> <code>\'</code> in SQL, <code>\n</code> in strings, <code>&amp;lt;</code> in HTML.</li>
-<li><strong>Security Context:</strong> Essential for preventing Injection attacks (XSS, SQLi).</li>
+<li><strong>Examples:</strong> <code>\"</code> inside a JSON string, <code>&amp;lt;</code> in HTML text.</li>
+<li><strong>Security Context:</strong> Escaping rules depend on the parser and context. For SQL values, use <a href="SQL_Injection_Prevention_Cheat_Sheet.html#primary-defenses">parameterized queries</a> instead of constructing SQL with escaped strings.</li>
 </ul>
 <h3 id="sanitization">Sanitization<a class="headerlink" href="#sanitization" title="Permanent link">&para;</a></h3>
 <p><strong>Definition:</strong> The process of cleaning or filtering input by removing, replacing, or modifying potentially dangerous characters or content.</p>
 <ul>
 <li><strong>Purpose:</strong> To make "dirty" input "clean" according to a security policy.</li>
-<li><strong>Examples:</strong> Stripping <code>&lt;script&gt;</code> tags from HTML input, removing special characters from a filename.</li>
-<li><strong>Security Context:</strong> Use as a secondary defense; prefer parameterized queries or output escaping where possible.</li>
+<li><strong>Examples:</strong> Using a maintained HTML sanitizer to allow approved elements and attributes in user-authored HTML.</li>
+<li><strong>Security Context:</strong> Use <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization">HTML sanitization</a> when untrusted input must be rendered as HTML. Removing <code>&lt;script&gt;</code> tags alone is insufficient; other elements and attributes can execute scripts. Use output encoding when the value should be displayed as text.</li>
 </ul>
 <h3 id="serialization">Serialization<a class="headerlink" href="#serialization" title="Permanent link">&para;</a></h3>
 <p><strong>Definition:</strong> Converting an object or data structure into a format that can be stored or transmitted (e.g., a byte stream) and later reconstructed.</p>
