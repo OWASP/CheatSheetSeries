@@ -483,7 +483,7 @@ Before implementing such a JWT denylist, you should consider whether there is a 
 - Token Status List is a scalable solution for revocation of the JWT by the issuer.
 - Freshness and replay protection can often by implementing by using a `nonce` bound to the session in the JWT claims. This approach is [used in OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes).
 - Token reuse can be mitigated by using short expiration time in the JWT.
-- The risk of token exfiltration can be mitigated by using sender constrained JWT (such a [DPoP](https://datatracker.ietf.org/doc/html/rfc9449) or [TLS-bound JWT](https://www.rfc-editor.org/info/rfc8705/#section-3)).
+- Sender-constrained access tokens, such as [DPoP-bound tokens](https://datatracker.ietf.org/doc/html/rfc9449#section-2) or [mutual-TLS certificate-bound tokens](https://www.rfc-editor.org/rfc/rfc8705.html#section-3), limit an attacker's ability to use a stolen token without its associated private key. They do not prevent token disclosure. Protect tokens and keys, use HTTPS, and prevent [untrusted code from using the client's signing key](https://datatracker.ietf.org/doc/html/rfc9449#section-11.4).
 
 ## Token Confidentiality and JWE
 
