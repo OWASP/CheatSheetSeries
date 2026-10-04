@@ -370,7 +370,7 @@ It is also possible to use the [Systems Manager Parameter Store](https://docs.aw
 
 - you'll need to make sure you've specified encryption yourself (secrets manager does that by default)
 - it offers fewer auto-rotation capabilities (you will likely need to build a custom function)
-- it doesn't support cross-account access
+- cross-account sharing is limited to [advanced parameters](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html); sharing encrypted `SecureString` values also requires a customer managed AWS KMS key and separately granting access to that key
 - it doesn't support cross-region replication
 - there are fewer [Security Hub Controls](https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp-controls.html) available
 
@@ -398,7 +398,7 @@ Check out the [Secret Manager best practices](https://cloud.google.com/secret-ma
 
 For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/).
 
-Contrary to other clouds, permissions are granted at the _**Key Vault**_ level. This means secrets for separate workloads and separate sensitivity levels should be in separated Key Vaults accordingly.
+Azure's [role-based access control (RBAC)](https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-guide) supports role assignments for individual secrets, keys, and certificates. Follow the [Identity and Access Management guidance](#43-identity-and-access-management-iam) for access scopes and vault boundaries.
 
 Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices).
 
