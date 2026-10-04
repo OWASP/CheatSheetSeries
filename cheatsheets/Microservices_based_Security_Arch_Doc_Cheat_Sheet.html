@@ -5769,7 +5769,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h4 id="applications-trust-boundaries-components-and-significant-data-flows-justification">Application's trust boundaries, components, and significant data flows justification<a class="headerlink" href="#applications-trust-boundaries-components-and-significant-data-flows-justification" title="Permanent link">&para;</a></h4>
 <h5 id="implementation-tips_2">Implementation tips<a class="headerlink" href="#implementation-tips_2" title="Permanent link">&para;</a></h5>
-<p>To verify documentation and justification of all the application's trust boundaries, components, and significant data flows analyze data collected under the following sections:</p>
+<p>Start the review of the application's trust boundaries, components, and significant data flows with the inventories from these sections:</p>
 <ul>
 <li>Identify and describe application-functionality services</li>
 <li>Identify and describe infrastructure services</li>
@@ -5779,6 +5779,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 <li>Identify "service-to-service" synchronous communications</li>
 <li>Identify "service-to-service" asynchronous communications</li>
 </ul>
+<p>Use these inventories as inputs to a <a href="Threat_Modeling_Cheat_Sheet.html#system-modeling">system model</a>. Mark the trust boundaries and the flows that cross them, and justify each crossing. Record the endpoint identities, authentication and authorization enforcement points, and protections for data in transit (see <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204.pdf">NIST SP 800-204, sections 4.1 and 4.3</a>). Check these controls against the deployed configuration and behavior; the inventories alone do not verify enforcement.</p>
 <h5 id="mapping-to-owasp-projects_2">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_2" title="Permanent link">&para;</a></h5>
 <ul>
 <li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.4</a></li>
@@ -5814,7 +5815,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h5 id="mapping-to-owasp-projects_5">Mapping to OWASP projects<a class="headerlink" href="#mapping-to-owasp-projects_5" title="Permanent link">&para;</a></h5>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling">OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.4.3</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/v4.0.3_release/4.0/en/0x12-V4-Access-Control.md#v41-general-access-control-design">OWASP ASVS 4.0.3, V4 "Access Control", #4.1.3</a></li>
 </ul>
 <h4 id="sensitive-data-identification-and-classification">Sensitive data identification and classification<a class="headerlink" href="#sensitive-data-identification-and-classification" title="Permanent link">&para;</a></h4>
 <h5 id="implementation-tips_6">Implementation tips<a class="headerlink" href="#implementation-tips_6" title="Permanent link">&para;</a></h5>

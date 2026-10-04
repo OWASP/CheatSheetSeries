@@ -5048,7 +5048,7 @@
 </ul>
 <h3 id="validate-request-content-types">Validate request content types<a class="headerlink" href="#validate-request-content-types" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Reject requests containing unexpected or missing content type headers with HTTP response status <code>406 Unacceptable</code> or <code>415 Unsupported Media Type</code>. For requests with <code>Content-Length: 0</code> however, a <code>Content-type</code> header is optional.</li>
+<li>For requests with a body, require a supported <code>Content-Type</code> according to the endpoint contract and reject unsupported media types with <a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.16"><code>415 Unsupported Media Type</code></a>. Do not require <code>Content-Type</code> solely for requests without a body. Reserve <code>406 Not Acceptable</code> for response content negotiation.</li>
 <li>For XML content types ensure appropriate XML parser hardening, see the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a>.</li>
 <li>Avoid accidentally exposing unintended content types by explicitly defining content types e.g. <a href="https://jersey.github.io/">Jersey</a> (Java) <code>@consumes("application/json"); @produces("application/json")</code>. This avoids <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">XXE-attack</a> vectors for example.</li>
 </ul>
@@ -5056,7 +5056,7 @@
 <p>It is common for REST services to allow multiple response types (e.g. <code>application/xml</code> or <code>application/json</code>, and the client specifies the preferred order of response types by the Accept header in the request.</p>
 <ul>
 <li><strong>Do NOT</strong> simply copy the <code>Accept</code> header to the <code>Content-type</code> header of the response.</li>
-<li>Reject the request (ideally with a <code>406 Not Acceptable</code> response) if the <code>Accept</code> header does not specifically contain one of the allowable types.</li>
+<li>Select a supported response type that matches the client's <code>Accept</code> preferences, including media ranges and quality values. If none is acceptable and no default response will be supplied, return <a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.7"><code>406 Not Acceptable</code></a>.</li>
 </ul>
 <p>Services including script code (e.g. JavaScript) in their responses must be especially careful to defend against header injection attack.</p>
 <ul>
@@ -5105,7 +5105,7 @@
 </tr>
 <tr>
 <td><code>Strict-Transport-Security</code></td>
-<td>Header to instruct a browser that the domain should only be accessed using HTTPS, and that any future attempts to access it using HTTP should automatically be converted to HTTPS. This header ensures that API calls are made over HTTPS and protects against spoofed certificates.</td>
+<td>For hosts covered by an active HSTS policy, instructs browsers to use HTTPS and <a href="https://www.rfc-editor.org/rfc/rfc6797.html#section-8.4">terminate connections with TLS errors</a>. Initial HTTP access remains exposed unless policy is already known, such as through preloading. HSTS does not protect against an attacker certificate that the client trusts; see the <a href="https://www.rfc-editor.org/rfc/rfc6797.html#section-14.8">HSTS threat limitations</a>.</td>
 </tr>
 <tr>
 <td><code>X-Content-Type-Options: nosniff</code></td>
@@ -5230,8 +5230,8 @@
 </tr>
 <tr>
 <td>406</td>
-<td>Unacceptable</td>
-<td>The client presented a content type in the Accept header which is not supported by the server API.</td>
+<td>Not Acceptable</td>
+<td>No supported response representation satisfies the client's content negotiation preferences and the server will not send a default representation.</td>
 </tr>
 <tr>
 <td>413</td>
@@ -5241,7 +5241,7 @@
 <tr>
 <td>415</td>
 <td>Unsupported Media Type</td>
-<td>The requested content type is not supported by the REST service.</td>
+<td>The request content has a format that the target method does not support.</td>
 </tr>
 <tr>
 <td>429</td>
