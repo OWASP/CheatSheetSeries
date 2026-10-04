@@ -139,7 +139,7 @@ To secure the implementation with the `issue_comment` trigger:
 Alternatively, consider replacing the `issue_comment` trigger with label-based triggers.
 When using the `pull_request` trigger with the labeled event, `github.event.pull_request.head.sha` contains the latest commit SHA for the pull request.
 Labels can only be applied by authorized users (i.e., GitHub accounts with write permissions), so the workflow does not need to implement additional authorization checks.
-Additionally, since the event is triggered by a user with write permissions, the workflow can consume `GITHUB_TOKEN` with `write` permissions and required GitHub secrets.
+Applying a label does not elevate workflow permissions. For pull requests from forks of public repositories, `pull_request` workflows still receive a read-only `GITHUB_TOKEN` and no other secrets, as described in [GitHub's fork workflow restrictions](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflows-in-forked-repositories).
 The workflow should check out the code using the trusted commit SHA available via `github.event.pull_request.head.sha`, which reflects the state of the pull request at the time the label was applied.
 
 > [!IMPORTANT]
