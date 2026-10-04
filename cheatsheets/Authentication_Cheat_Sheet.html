@@ -5681,8 +5681,8 @@ Re-authentication is critical when an account has experienced high-risk activity
   Use risk-based authentication models that adapt to the user's behavior and context</li>
 <li><strong>Multi-Factor Authentication (MFA)</strong>
   Require an additional layer of verification for sensitive actions or events</li>
-<li><strong>Challenge-Based Verification</strong>
-  Prompt users to confirm their identity with a challenge question or secondary method</li>
+<li><strong>Bound Authenticators</strong>
+  Require an authenticator already bound to the account, such as the current password or a passkey. Do not substitute security questions, which are excluded by <a href="https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v64-authentication-factor-lifecycle-and-recovery">ASVS 6.4.2</a>.</li>
 </ul>
 <h4 id="implementation-recommendations">Implementation Recommendations<a class="headerlink" href="#implementation-recommendations" title="Permanent link">&para;</a></h4>
 <ul>
@@ -5833,7 +5833,7 @@ ENDIF
 <p>The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services that can solve them. As such, the use of CAPTCHA should be viewed as a defense-in-depth control to make brute-force attacks more time-consuming and expensive, rather than as a preventative.</p>
 <p>It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.</p>
 <h4 id="security-questions-and-memorable-words">Security Questions and Memorable Words<a class="headerlink" href="#security-questions-and-memorable-words" title="Permanent link">&para;</a></h4>
-<p>The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does <strong>not</strong> constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so they must be carefully chosen. The <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions cheat sheet</a> contains further guidance on this.</p>
+<p>Do not use security questions for authentication or re-authentication; <a href="https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v64-authentication-factor-lifecycle-and-recovery">ASVS 6.4.2</a> excludes knowledge-based authentication. When verifying a password or memorable word, request and verify the full secret rather than selected characters, as required by <a href="https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver">NIST SP 800-63B-4</a>. See the <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions Cheat Sheet</a> for guidance limited to legacy systems.</p>
 <h2 id="logging-and-monitoring">Logging and Monitoring<a class="headerlink" href="#logging-and-monitoring" title="Permanent link">&para;</a></h2>
 <p>Enable logging and monitoring of authentication functions to detect attacks/failures on a real-time basis</p>
 <ul>
