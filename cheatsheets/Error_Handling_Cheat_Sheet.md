@@ -131,7 +131,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
-    public ProblemDetail handleGlobalError(RuntimeException exception, WebRequest request) {
+    public ProblemDetail handleGlobalError(Exception exception, WebRequest request) {
         //Log the exception via the content of the parameter named "exception"
         //...
         //Note that we're using an internal server error response
