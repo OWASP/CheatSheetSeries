@@ -98,40 +98,10 @@ Prefer the following alternatives or layer them:
 - **Cryptographic attestation tokens** — [Privacy Pass](https://www.rfc-editor.org/rfc/rfc9576.html#section-3.5.1) lets an origin verify that a client satisfied an issuer's attestation policy, such as a CAPTCHA, a device check, or account validation. Select trusted issuers whose policies match your use case; a valid token is not a general proof that the requester is human. [Privacy guarantees](https://www.rfc-editor.org/rfc/rfc9576.html#section-3.3) depend on the deployment and its trust assumptions.
 - **Managed challenges** — Cloudflare Turnstile returns a validation result, not a risk score. [Validate each token server-side with Siteverify](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/), require `success: true`, and check the expected hostname and configured action. Tokens expire after five minutes and are single-use.
 - **Invisible risk scoring** — reCAPTCHA v3 and hCaptcha Enterprise return scores for application-defined thresholds.
-- **Proof of Work (PoW)** — the client must compute a hash that costs single-digit milliseconds for a human but accumulates significantly across thousands of bot requests. Useful for unauthenticated, expensive endpoints.
+- **Proof of work (PoW)** — require computation before serving selected expensive requests. This can increase automation cost but does not establish that the client is human. Benchmark supported clients: [overly hard puzzles](https://www.rfc-editor.org/rfc/rfc8019.html#section-10) can themselves deny service to legitimate users.
 - **WebAuthn / Passkeys** — for high-value flows, possession of a registered authenticator is a far stronger bot signal than any CAPTCHA.
 
-Example Proof of Work challenge (server side):
-
-```javascript
-import { randomBytes, createHash } from 'crypto';
-
-// Issue: client receives `challenge` and must find a `nonce`
-// such that sha256(challenge || nonce) starts with N zero bits.
-function issuePoW(difficultyBits = 18) {
-  return {
-    challenge: randomBytes(16).toString('hex'),
-    difficulty: difficultyBits,
-    expiresAt: Date.now() + 60_000,
-  };
-}
-
-function verifyPoW(challenge, nonce, difficultyBits) {
-  const hash = createHash('sha256')
-    .update(challenge + nonce)
-    .digest();
-  // Count leading zero bits.
-  let bits = 0;
-  for (const byte of hash) {
-    if (byte === 0) { bits += 8; continue; }
-    bits += Math.clz32(byte) - 24;
-    break;
-  }
-  return bits >= difficultyBits;
-}
-```
-
-Tune `difficultyBits` so a real client spends a few hundred milliseconds; raise it under attack.
+Use a maintained challenge implementation rather than a standalone hash check. Keep the challenge, difficulty and expiry under server control; reject unknown, expired or spent challenges, and prevent concurrent reuse. Bind the accepted work to the intended policy. The [Anubis challenge lifecycle](https://github.com/TecharoHQ/anubis/blob/d60d8a833e4d7f8dd5b4468a7ed5940d202ca176/lib/anubis.go#L637-L719) illustrates validation and reuse checks beyond the hash itself. Retain rate limits after a challenge is passed.
 
 ## Honeypots and Tarpits
 
