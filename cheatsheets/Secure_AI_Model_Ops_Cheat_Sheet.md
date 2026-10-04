@@ -11,7 +11,9 @@ For prompt-specific defenses, see the [LLM Prompt Injection Prevention Cheat She
 
 Data Poisoning – A threat where attackers inject malicious data into training datasets to manipulate model behavior.
 
-Model Inversion & Extraction – Techniques that allow attackers to reconstruct training data or extract model parameters via inference queries.
+Model Inversion & Extraction – Attacks that infer information about training data or recreate a model's behavior or parameters, respectively. [NIST distinguishes these attack goals](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf#page=41).
+
+Membership Inference – Determining whether a particular data sample was used to train a model; see [NIST's membership-inference definition](https://csrc.nist.gov/glossary/term/membership_inference_attack).
 
 Adversarial Examples – Slightly modified inputs crafted to mislead model predictions without obvious changes to human observers.
 
@@ -34,7 +36,7 @@ Weak Runtime Isolation - Shared training or inference infrastructure allows cros
 ## Real-World Examples
 
 - Data Poisoning via Public Dataset Manipulation: Attackers inject mislabeled samples into open-source datasets. These poisoned samples, when used during training, degrade model accuracy or introduce bias.
-- Model Inversion in Healthcare ML: An attacker infers whether a specific individual’s data was part of a medical model’s training dataset.
+- Membership Inference in Healthcare ML: An attacker infers whether a specific individual’s data was part of a medical model’s training dataset.
 - Malicious Model Files: A `.pt` or `.pkl` file embedded with malware is uploaded to a pipeline and executed during deserialization.
 - Insecure LLM Prompt Injection: Inputs like `"Ignore all previous instructions..."` manipulate chatbot behavior and may leak internal system prompts.
 - Leaked API Keys on GitHub: OpenAI or Hugging Face API keys accidentally committed and exploited for free access or abuse.
