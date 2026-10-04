@@ -239,7 +239,7 @@ Users or agents can craft queries designed to surface specific sensitive documen
 - Normalize and inspect queries for abuse patterns before retrieval. Do not rely on sanitization alone; enforce access control and retrieval boundaries independently.
 - Rate limit queries per user or agent identity to prevent systematic probing of the corpus.
 - Monitor query patterns for reconnaissance behavior (e.g. an agent systematically varying query terms to map the contents of the vector store).
-- Log all queries with the querying entity's identity for audit purposes.
+- Log query identifiers and the querying entity's identity for audit purposes. Exclude sensitive query content according to the [Logging Cheat Sheet](Logging_Cheat_Sheet.md#data-to-exclude).
 
 ### Don't
 
@@ -311,8 +311,8 @@ RAG pipelines must not be treated as black boxes. Full observability across ever
 
 ### Do
 
-- Log the full pipeline for every request: query received, chunks retrieved (with document IDs and access control metadata), model input assembled, model output generated, and any tool calls triggered.
-- Store replayable traces that allow security teams to reconstruct exactly what happened during an incident -- which query retrieved which chunks, which chunks influenced which output.
+- Trace each request using correlation IDs, retrieved document IDs, authorization decisions, model versions, and tool invocation outcomes. Do not log raw queries, retrieved content, model inputs, outputs, or tool arguments by default; these may contain secrets or sensitive personal data. Apply the [Logging Cheat Sheet's data-exclusion guidance](Logging_Cheat_Sheet.md#data-to-exclude).
+- If incident investigation requires content capture, collect only the necessary redacted fields in a restricted evidence store. Apply [log access controls](Logging_Cheat_Sheet.md#protection) and [retention limits](Logging_Cheat_Sheet.md#disposal-of-logs), and ensure investigators are authorized to access the underlying documents.
 - Alert on anomalous patterns:
     - Unusual retrieval patterns (a user suddenly retrieving from document collections they have never accessed)
     - Repeated prompt injection attempts
