@@ -110,7 +110,7 @@ As mentioned in the [Public File Retrieval](#public-file-retrieval) section, fil
 
 Based on the expected type, special file content validation can be applied:
 
-- For **images**, applying image rewriting techniques destroys any kind of malicious content injected in an image; this could be done through [randomization](https://security.stackexchange.com/a/8625/118367).
+- For **images**, decode and re-encode to an allowed image format, explicitly [removing unnecessary metadata](https://imagemagick.org/command-line-options/#strip). Rewriting does not guarantee that all malicious content is removed, and the image processor itself handles untrusted input. Use an up-to-date library with [restricted formats, resource limits, and sandboxing](https://imagemagick.org/security-policy/#other).
 - For **Microsoft documents**, the usage of [Apache POI](https://poi.apache.org/) helps validating the uploaded documents.
 - **ZIP files** are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.
 
