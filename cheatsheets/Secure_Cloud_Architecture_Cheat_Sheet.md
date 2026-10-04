@@ -34,12 +34,12 @@ Object storage usually has the following options for accessing data:
 
 #### IAM Access
 
-This method involves indirect access on tooling such as a managed or self-managed service running on ephemeral or persistent infrastructure. This infrastructure contains a persistent control plane IAM credential, which interacts with the object storage on the user's behalf. The method is best used when the application has other user interfaces or data systems available, when it is important to hide as much of the storage system as possible, or when the information shouldn't/won't be seen by an end user (metadata). It can be used in combination with web authentication and logging to better track and control access to resources. The key security concern for this approach is relying on developed code or policies which could contain weaknesses.
+This method involves indirect access on tooling such as a managed or self-managed service running on ephemeral or persistent infrastructure. Authenticate the service with a workload identity or federated role that obtains short-lived credentials, instead of embedding a persistent access key. For example, [AWS recommends temporary credentials from IAM roles or federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-creds.html) for application access. Limit the service's permissions to the required storage operations and resources. The method is best used when the application has other user interfaces or data systems available, when it is important to hide as much of the storage system as possible, or when the information shouldn't/won't be seen by an end user (metadata). It can be used in combination with web authentication and logging to better track and control access to resources. The key security concern for this approach is relying on developed code or policies which could contain weaknesses.
 
 |                 Pros                 |                       Cons                         |
 |:------------------------------------:|:--------------------------------------------------:|
 |       No direct access to data       |          Potential use of broad IAM policy         |
-| No user visibility to object storage | Credential loss gives access to control plane APIs |
+| No user visibility to object storage | Stolen credentials expose permitted resources |
 |   Identifiable and loggable access   |           Credentials could be hardcoded           |
 
 This approach is acceptable for sensitive user data, but must follow rigorous coding and cloud best practices, in order to properly secure data.
