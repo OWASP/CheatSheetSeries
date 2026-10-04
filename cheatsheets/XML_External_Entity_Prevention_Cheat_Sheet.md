@@ -59,11 +59,11 @@ SAXParser* parser = new SAXParser;
 parser->setDisableDefaultEntityResolution(true);
 ```
 
-Use of SAX2XMLReader, do this to prevent XXE:
+For `SAX2XMLReader`, configure the reader that will parse the document. The [Xerces-C++ feature documentation](https://xerces.apache.org/xerces-c/program-sax2-3.html) describes `fgXercesDisableDefaultEntityResolution`: it prevents fallback resolution when `resolveEntity` returns `NULL`. A custom resolver must also reject unapproved resources.
 
 ``` cpp
 SAX2XMLReader* reader = XMLReaderFactory::createXMLReader();
-parser->setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, true);
+reader->setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, true);
 ```
 
 ## ColdFusion
