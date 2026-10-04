@@ -143,7 +143,7 @@ The previously described mechanisms are difficult to make secure because you can
 
 The tag manager developer user interface can be used to create JavaScript that can get data from anywhere in the browser DOM and store it anywhere on the page. This can allow vulnerabilities because the interface can be used to generate code to get unvalidated data from the DOM (e.g. URL parameters) and store it in some page location that would execute JavaScript.
 
-The best way to make the generated code secure is to confine it to getting DOM data from a host defined data layer.
+Use a host-defined data layer to limit the data intended for collection. This agreement does not restrict the privileges of JavaScript executing in the page.
 
 The data layer is either:
 
@@ -152,7 +152,7 @@ The data layer is either:
 
 When specific events happen that the business has defined, a JavaScript handler for that event sends values from the data layer directly to the tag manager server. The tag manager server then sends the data to whatever third party or parties is supposed to get it. The event handler code is created by the host developers using the tag manager developer user interface. The event handler code is loaded from the tag manager servers on every page load.
 
-**This is a secure technique** because only your JavaScript executes on your users browser, and only the data you decide on is sent to the vendor.
+A data layer is not a sandbox. [Web tag-manager containers can execute custom JavaScript and HTML tags in the browser](https://developers.google.com/tag-platform/learn/sst-fundamentals/2-what-is-sst), so remotely managed event handlers remain part of the page's code trust boundary. Restrict tag-manager publishing access and review changes as application code.
 
 This requires cooperation between the host, the aggregator or tag manager and the vendors.
 
@@ -166,7 +166,7 @@ The tag manager or aggregator has to work with the vendor to agree on the protoc
 
 ### Server Direct Data Layer
 
-The server direct mechanism is a good security standard for third party JavaScript management, deployment and execution. A good practice for the host page is to create a data layer of DOM objects.
+A server-side collector can filter the data sent to vendors and move eligible tags out of the browser. It does not isolate any scripts that still run in the page.
 
 The data layer can perform any validation of the values, especially values from DOM objects exposed to the user like URL parameters and input fields, if these are required for the marketing analysis.
 
@@ -176,7 +176,7 @@ You the host page developer have to agree with the third-party vendors or the ta
 
 User interface tags cannot be made secure using the data layer architecture because their function (or one of their functions) is to change the user interface on the client, not to send data about the user actions.
 
-Analytics tags can be made secure using the data layer architecture because the only action needed is to send data from the data layer to the third party. Only first party code is executed; first to populate the data layer (generally on page load); then event handler JavaScript sends whatever data is needed from that page to the third party database or tag manager.
+For analytics that do not need browser execution, send a fixed event schema through a collector you control and run vendor integrations server-side. [Server-side tagging complements rather than replaces client-side collection](https://developers.google.com/tag-platform/learn/sst-fundamentals/2-what-is-sst). Audit the scripts actually loaded before claiming that only first-party code executes.
 
 This is also a very scalable solution. Large ecommerce sites can easily have hundreds of thousands of URL and parameter combinations, with different sets of URLs and parameters being included in different marketing analysis campaigns. The marketing logic could have 30 or 40 different vendor tags on a single page.
 
@@ -294,7 +294,7 @@ This refers to the operational requirements to maintain some of the technical co
 
 The most complete and preventive controls for any site containing non-trivial marketing tags are -
 
-1. A data layer that calls the marketing server or tag manager APIs , so that only your code executes on your page (inversion of control).
+1. A controlled collector and server-side vendor integrations to reduce third-party browser code; a data layer alone does not enforce code isolation.
 
 2. [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
 
