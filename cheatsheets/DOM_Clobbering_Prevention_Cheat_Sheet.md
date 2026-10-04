@@ -108,17 +108,16 @@ This would isolate the namespace of named properties and JavaScript variables by
 
 #### Sanitizer API
 
-The new browser-built-in [Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API) does not prevent DOM Clobbering it its [default setting](https://wicg.github.io/sanitizer-api/#dom-clobbering), but can be configured to remove named properties:
+Use the browser's [Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/Sanitizer/Sanitizer) only where the required methods are supported. Start with its default configuration and explicitly disallow `id` and `name` using [`removeAttribute()`](https://developer.mozilla.org/en-US/docs/Web/API/Sanitizer/removeAttribute), which removes the attribute from all elements:
 
 ```js
-const sanitizerInstance = new Sanitizer({
-  blockAttributes: [
-    {'name': 'id', elements: '*'},
-    {'name': 'name', elements: '*'}
-  ]
-});
+const sanitizerInstance = new Sanitizer();
+sanitizerInstance.removeAttribute('id');
+sanitizerInstance.removeAttribute('name');
 containerDOMElement.setHTML(input, {sanitizer: sanitizerInstance});
 ```
+
+This example assumes the application does not need `id` or `name` attributes in the untrusted markup. In unsupported browsers, use the DOMPurify configuration above; do not fall back to inserting unsanitized HTML.
 
 ### \#2: Content-Security Policy
 
