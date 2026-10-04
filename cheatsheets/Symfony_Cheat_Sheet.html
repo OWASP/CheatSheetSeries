@@ -5205,21 +5205,15 @@ To address this concern, Symfony comes with <a href="https://symfony.com/doc/cur
 <span class="x">$response-&gt;headers-&gt;set('X-Frame-Options', 'SAMEORIGIN');</span>
 </code></pre></div>
 <h3 id="session-cookies-management">Session &amp; Cookies Management<a class="headerlink" href="#session-cookies-management" title="Permanent link">&para;</a></h3>
-<p>By default, sessions are securely configured and enabled. However, they can be controlled manually in <code>config/packages/framework.yaml</code> under the <code>framework.session</code> key. Make sure to set the following in your session configuration to make your application more aware.</p>
-<p>Ensure <code>cookie_secure</code> is not explicitly set to <code>false</code>(it is set to <code>true</code> by default). Setting http only to <code>true</code> means that the cookie won't be accessible by JavaScript.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">cookie_httponly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<p>Configure session cookies under <code>framework.session</code> in <code>config/packages/framework.yaml</code>. For an HTTPS application, explicitly set <a href="https://symfony.com/doc/current/reference/configuration/framework.html#cookie-secure"><code>cookie_secure: true</code></a>; <code>auto</code> sets it to <code>false</code> for HTTP requests and does not guarantee secure cookies. Keep <a href="https://symfony.com/doc/current/reference/configuration/framework.html#cookie-httponly"><code>cookie_httponly: true</code></a> to prevent JavaScript from reading the cookie.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">framework</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">session</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cookie_secure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">cookie_httponly</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">        </span><span class="nt">cookie_samesite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lax</span>
 </code></pre></div>
-<p>Make sure to set a short session TTL duration. According to <a href="Session_Management_Cheat_Sheet.html">OWASP's recommendations</a>, aim for a session TTL of 2-5 minutes for high-value applications and 15-30 minutes for lower-risk applications.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">cookie_lifetime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-</code></pre></div>
-<p>It is recommended to set <code>cookie_samesite</code> to either <code>lax</code> or <code>strict</code> to prevent cookies from being sent from cross-origin requests. <code>lax</code> allows the cookie to be sent along with "safe" top-level navigations and same-site requests. With <code>strict</code>  it would not be possible to send any cookie when the HTTP request is not from the same domain.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">cookie_samesite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lax|strict</span>
-</code></pre></div>
-<p>Setting <code>cookie_secure</code> to <code>auto</code> assures us that cookies are only sent over secure connections, meaning <code>true</code> for HTTPS and <code>false</code> for HTTP protocol.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">cookie_secure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">auto</span>
-</code></pre></div>
-<p>OWASP provides more general information about sessions in <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>.
-You may also refer to the <a href="https://owasp.org/www-chapter-london/assets/slides/OWASPLondon20171130_Cookie_Security_Myths_Misconceptions_David_Johansson.pdf">Cookie Security Guide</a>.</p>
+<p>Use <code>cookie_samesite: lax</code>, or <code>strict</code> where the application's navigation flows permit it. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value">SameSite restricts cross-site cookie sending</a>; it does not isolate all origins. For example, sibling subdomains with the same scheme can be <a href="https://developer.mozilla.org/en-US/docs/Glossary/Site">same-site</a>. Retain CSRF protection for state-changing requests.</p>
+<p><a href="https://symfony.com/doc/current/reference/configuration/framework.html#cookie-lifetime"><code>cookie_lifetime</code></a> is measured in seconds: <code>5</code> means five seconds, not five minutes. Cookie expiration does not enforce a server-side session timeout. Implement server-side idle and absolute expiration as described in the <a href="Session_Management_Cheat_Sheet.html#automatic-session-expiration">Session Management Cheat Sheet</a>.</p>
 <hr />
 <p>In Symfony, sessions are managed by the framework itself and rely on Symfony's session handling mechanisms rather than PHP's default session handling via the <code>session.auto_start = 1</code> directive in the php.ini file.
 The <code>session.auto_start = 1</code> directive in PHP is used to automatically start a session on each request, bypassing explicit calls to <code>session_start()</code>. However, when using Symfony for session management, it's recommended to disable <code>session.auto_start</code> to prevent conflicts and unexpected behavior.</p>

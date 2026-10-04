@@ -5399,6 +5399,7 @@
 <li>When the logs come from a component you did not build, see the <a href="Verifying_Third_Party_Agent_Execution_Evidence_Cheat_Sheet.html">Verifying Third-Party Agent Execution Evidence Cheat Sheet</a> for how to judge what such a record establishes.</li>
 </ul>
 <h4 id="agent-monitoring">Agent Monitoring<a class="headerlink" href="#agent-monitoring" title="Permanent link">&para;</a></h4>
+<p>For elapsed-time windows, use <a href="https://docs.python.org/3/library/datetime.html#datetime.timedelta.total_seconds">Python's <code>timedelta.total_seconds()</code></a>; the <code>seconds</code> attribute excludes whole days.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">structlog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
@@ -5479,11 +5480,12 @@
             <span class="s2">"total_cost"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
         <span class="p">})</span>
 
-        <span class="n">metrics</span><span class="p">[</span><span class="s2">"tool_calls"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">())</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">"tool_calls"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
 
         <span class="c1"># Check tool call rate</span>
         <span class="n">recent_calls</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">"tool_calls"</span><span class="p">]</span> 
-                       <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">seconds</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">]</span>
+                       <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_calls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANOMALY_THRESHOLDS</span><span class="p">[</span><span class="s2">"tool_calls_per_minute"</span><span class="p">]:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_security_event</span><span class="p">(</span>
                 <span class="n">session_id</span><span class="p">,</span> <span class="s2">"anomaly_detected"</span><span class="p">,</span> <span class="s2">"WARNING"</span><span class="p">,</span>

@@ -4862,7 +4862,7 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p>Most attacks require <strong>physical access</strong> to exploit CAN. It works on a differential signal and hardware hacking may be possible by tapping into them.</p>
 </li>
 <li>
-<p>There exist tools like <strong>DroneCAN</strong> which make using secure CAN communications easy.</p>
+<p>Do not rely on DroneCAN alone to authenticate CAN senders. Its <a href="https://dronecan.github.io/Specification/4.1_CAN_bus_transport_layer/#transfer-crc">multi-frame cyclic redundancy check (CRC)</a> is an unkeyed checksum, not a message authentication code. Protect physical bus access and isolate the bus from untrusted components.</p>
 </li>
 </ul>
 <ol start="3">
@@ -4901,7 +4901,7 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p>Use <strong>802.11w Management Frame Protection (MFP)</strong> to mitigate deauthentication attacks (these are crafted packets that emulate a server and cause deauthentication).</p>
 </li>
 <li>
-<p>Disable <strong>SSID broadcasting</strong> and use <strong>MAC filtering</strong> where feasible. This is advisable because it essentially hides your drone's Wi-Fi adapters from simple scans.</p>
+<p>Do not rely on hiding the Wi-Fi network name or filtering media access control (MAC) addresses to prevent unauthorized access: <a href="https://support.apple.com/en-ca/102766#hiddennetwork">hidden networks remain discoverable and MAC addresses can be spoofed</a>. Use Wi-Fi authentication and encryption as described above.</p>
 </li>
 </ul>
 <p>By implementing these security measures, drone operators can significantly reduce the risks of cyberattacks and unauthorized access to UAV communication systems.</p>
