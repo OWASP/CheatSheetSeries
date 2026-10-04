@@ -442,13 +442,17 @@ Per the 'NSXMLDocument External Entity Restriction API' section of this [page](h
 
 ## PHP
 
-**When using the default XML parser (based on libxml2), PHP 8.0 and newer [prevent XXE by default](https://www.php.net/manual/en/function.libxml-disable-entity-loader.php).**
+With libxml 2.9.0 or later, entity substitution is disabled by default. Do not enable `LIBXML_NOENT`, `LIBXML_DTDLOAD`, or `LIBXML_DTDVALID` for untrusted XML without explicitly blocking external resources; these options can require [additional protection against external entity loading](https://www.php.net/manual/en/function.libxml-disable-entity-loader.php).
 
-**For PHP versions prior to 8.0, per [the PHP documentation](https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:**
+To reject external entity resolution, install a [resolver callback that returns `null`](https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php) before processing untrusted XML and keep it installed for that operation:
 
 ``` php
-libxml_set_external_entity_loader(null);
+libxml_set_external_entity_loader(function () {
+    return null;
+});
 ```
+
+Passing `null` directly to `libxml_set_external_entity_loader()` is not equivalent to returning `null` from the callback and does not block external entity loading, as the [PHP security advisory's mitigation](https://github.com/php/php-src/security/advisories/GHSA-3qrf-m4j2-pcrr) demonstrates.
 
 A description of how to abuse this in PHP is presented in a good [SensePost article](https://sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/) describing a cool PHP based XXE vulnerability that was fixed in Facebook.
 
