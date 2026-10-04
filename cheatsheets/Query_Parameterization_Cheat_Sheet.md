@@ -63,7 +63,7 @@ Inventory inv = (Inventory) session.createCriteria(Inventory.class).add
 String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
 try {
    OleDbCommand command = new OleDbCommand(query, connection);
-   command.Parameters.Add(new OleDbParameter("customerName", CustomerName Name.Text));
+   command.Parameters.Add(new OleDbParameter("customerName", CustomerName.Text));
    OleDbDataReader reader = command.ExecuteReader();
    // …
 } catch (OleDbException se) {
