@@ -18,7 +18,7 @@ One advantage of this approach is that the validation constraints and the corres
 
 ## Setup
 
-The examples in this guide use Hibernate Validator.
+The illustrative examples below use the legacy `javax.validation` API, including its [built-in constraint package](https://docs.hibernate.org/beanvalidation/spec/1.1/api/javax/validation/constraints/package-summary.html), with Hibernate Validator. [Jakarta Validation 3.0](https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html) uses `jakarta.validation`; use API and provider versions compatible with your application.
 
 Add Hibernate Validator to your **pom.xml**:
 
@@ -68,7 +68,7 @@ When it comes to error handling, the Hibernate Validator returns a `BindingResul
 
 **Annotation**:
 
-`@Pattern(regex=,flag=)`
+`@Pattern(regexp=,flags=)`
 
 **Data Type**:
 
@@ -85,11 +85,11 @@ Checks if the annotated string matches the regular expression regex considering 
 **Model**:
 
 ```java
-import org.hibernate.validator.constraints.Pattern;
+import javax.validation.constraints.Pattern;
 
 public class Article  {
- //Constraint: Alpha Numeric article titles only using a regular expression
- @Pattern(regexp = "[a-zA-Z0-9 ]")
+ //Constraint: One or more ASCII letters, digits, or spaces
+ @Pattern(regexp = "[a-zA-Z0-9 ]+")
  private String articleTitle;
  public String getArticleTitle()  {
   return  articleTitle;
@@ -153,19 +153,19 @@ Checks whether the annotated value is a number having up to integer digits and f
 **Model**:
 
 ```java
-import org.hibernate.validator.constraints.Digits;
+import javax.validation.constraints.Digits;
 
-public class Customer {
-  //Constraint: Age can only be 3 digits long or less
+public class Customer {
+  //Constraint: Age can only be 3 digits long or less
   @Digits(integer = 3, fraction = 0)
   private int age;
 
-  public String getAge()  {
-    return age;
+  public int getAge()  {
+    return age;
   }
 
-  public void setAge(String age)  {
-      this.age = age;
+  public void setAge(int age)  {
+      this.age = age;
     }
 
     ...
@@ -224,20 +224,20 @@ Checks if the annotated element's size is between min and max (inclusive)
 **Model**:
 
 ```java
-import org.hibernate.validator.constraints.Size;
+import javax.validation.constraints.Size;
 
-public class Message {
+public class Message {
 
-   //Constraint: Message must be at least 10 characters long, but less than 500
-   @Size(min = 10, max = 500)
-   private String message;
+   //Constraint: Message must contain 10 to 500 characters, inclusive
+   @Size(min = 10, max = 500)
+   private String message;
 
-   public String getMessage() {
-      return message;
+   public String getMessage() {
+      return message;
    }
 
-   public void setMessage(String message) {
-      this.message = message;
+   public void setMessage(String message) {
+      this.message = message;
    }
 
 ...
@@ -287,7 +287,7 @@ HttpServletResponse response){
 
 **Use**:
 
-Checks whether the annotated date is in the past / future
+Checks whether the annotated date is in the past / future. Use a supported date type, such as `java.util.Date`; [`@Future` does not validate date strings](https://docs.hibernate.org/beanvalidation/spec/1.1/api/javax/validation/constraints/Future.html).
 
 **Reference**:
 
@@ -296,33 +296,34 @@ Checks whether the annotated date is in the past / future
 **Model**:
 
 ```java
-import org.hibernate.validator.constraints.Past;
-import org.hibernate.validator.constraints.Future;
+import java.util.Date;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Future;
 
-public class DoctorVisit {
+public class DoctorVisit {
 
-   //Constraint: Birthdate must be in the past
+   //Constraint: Birthdate must be in the past
    @Past
-   private Date birthDate;
+   private Date birthDate;
 
-   public Date getBirthDate() {
-      return birthDate;
+   public Date getBirthDate() {
+      return birthDate;
    }
 
-   public void setBirthDate(Date birthDate) {
-      this.birthDate = birthDate;
+   public void setBirthDate(Date birthDate) {
+      this.birthDate = birthDate;
    }
 
-   //Constraint: Schedule visit date must be in the future
+   //Constraint: Schedule visit date must be in the future
    @Future
-   private String scheduledVisitDate;
+   private Date scheduledVisitDate;
 
-   public String getScheduledVisitDate() {
-      return scheduledVisitDate;
+   public Date getScheduledVisitDate() {
+      return scheduledVisitDate;
    }
 
-   public void setScheduledVisitDate(String scheduledVisitDate) {
-      this.scheduledVisitDate = scheduledVisitDate;
+   public void setScheduledVisitDate(Date scheduledVisitDate) {
+      this.scheduledVisitDate = scheduledVisitDate;
    }
 
 ...
@@ -383,24 +384,24 @@ Checks whether the annotated value is higher/lower than or equal to the specifie
 **Model**:
 
 ```java
-import org.hibernate.validator.constraints.Min;
-import org.hibernate.validator.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
 
-public class Review {
+public class Review {
 
- //Constraint: Review rating must be between 1 and 5
- @Min(1)
- @Max(5)
- private int reviewRating;
+ //Constraint: Review rating must be between 1 and 5
+ @Min(1)
+ @Max(5)
+ private int reviewRating;
 
- public int getReviewRating() {
-   return reviewRating;
- }
+ public int getReviewRating() {
+   return reviewRating;
+ }
 
- public void setReviewRating(int reviewRating) {
-   this.reviewRating = reviewRating;
+ public void setReviewRating(int reviewRating) {
+   this.reviewRating = reviewRating;
 }
- ...
+ ...
 }
 ```
 
@@ -466,8 +467,8 @@ Creating custom constraints is beyond the scope of this guide. Please see this [
 It is possible to specify a message ID with the validation annotation, so that error messages are customized :
 
 ```java
-@Pattern(regexp = "[a-zA-Z0-9 ]", message="article.title.error")
-private String articleTitle;
+@Pattern(regexp = "[a-zA-Z0-9 ]+", message="article.title.error")
+private String articleTitle;
 ```
 
 Spring MVC will then look up a message with ID *article.title.error* in a defined MessageSource. More on this [documentation](https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).
