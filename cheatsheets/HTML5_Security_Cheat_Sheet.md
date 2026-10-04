@@ -127,15 +127,15 @@ It is possible to have a [fine-grained control](https://html.spec.whatwg.org/mul
 
 ## Credential and Personally Identifiable Information (PII) Input hints
 
-- Protect the input values from being cached by the browser.
+Form attributes provide input and autofill hints; they are not a guarantee that the browser will avoid storing sensitive values.
 
-> Access a financial account from a public computer. Even though one is logged-off, the next person who uses the machine can log-in because the browser autocomplete functionality. To mitigate this, we tell the input fields not to assist in any way.
+For sensitive fields where autofill is inappropriate, `autocomplete="off"` requests that the browser not remember or prefill the value. However, [browsers may still offer to save and autofill login credentials](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete#description). Do not treat this attribute as protection against credential reuse on a shared computer.
 
 ```html
-<input type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></input>
+<input type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
 ```
 
-Text areas and input fields for PII (name, email, address, phone number) and login credentials (username, password) should be prevented from being stored in the browser. Use these HTML5 attributes to prevent the browser from storing PII from your form:
+These attributes can adjust input assistance, but do not enforce a no-storage policy:
 
 - `spellcheck="false"`
 - `autocomplete="off"`
