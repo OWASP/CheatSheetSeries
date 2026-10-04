@@ -109,7 +109,7 @@ During regular operation, web services require computational power such as CPU c
 
 Throughput represents the number of web service requests served during a specific amount of time.
 
-**Rule**: Configuration should be optimized for maximum message throughput to avoid running into DoS-like situations.
+**Rule**: Enforce request-rate and execution-time limits based on tested service capacity and the cost of each operation. Tune stricter limits for expensive operations, following [OWASP's resource-consumption guidance](https://api-security.owasp.org/editions/2023/en/0xa4-unrestricted-resource-consumption/#how-to-prevent). Maximizing throughput alone does not prevent resource exhaustion.
 
 ### XML Denial of Service Protection
 
