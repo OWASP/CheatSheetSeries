@@ -240,7 +240,7 @@ def log_decision(req, score, decision, rule):
 
 Anti-bot defenses collect data. Treat them like any other data-processing activity.
 
-- Document the lawful basis (legitimate interest is typical) and the categories of data collected.
+- Document the applicable lawful basis and the categories of data collected. Assess any consent requirements or exemptions for device storage and access, including fingerprinting; [UK ICO guidance](https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2025/09/fact-vs-fiction-ico-debunks-myths-on-storage-and-access-technologies/) explains that legitimate interests cannot replace consent when consent is required.
 - Apply **data minimization**: collect what you need to score the request and discard the rest.
 - Set a short retention period for raw signals; aggregate for longer-term analytics.
 - If you use a third-party anti-bot vendor, list them as a sub-processor and review their DPIA.
