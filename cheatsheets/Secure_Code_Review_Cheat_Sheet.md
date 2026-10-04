@@ -217,7 +217,7 @@ Analyze application workflows for:
 - [ ] **Certificate validation**: Proper validation including hostname verification
 - [ ] **Random generation**: Cryptographically secure random number generation
 - [ ] **Data protection**: Encryption at rest and in transit
-- [ ] **IV/Nonce handling**: Unique and unpredictable initialization vectors
+- [ ] **IV/Nonce handling**: Follow the selected mode's requirements for initialization vectors (IVs) and nonces. For example, [cipher block chaining (CBC) requires unpredictable IVs](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf#page=27), while [Galois/Counter Mode (GCM) requires IV uniqueness under each key](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf#page=26) and permits deterministic generation
 - [ ] **Library maintenance**: Up-to-date cryptographic libraries
 - [ ] **Side-channel protection**: Consideration of timing and other side-channel attacks
 
