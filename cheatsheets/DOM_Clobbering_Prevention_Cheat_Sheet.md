@@ -70,7 +70,7 @@ For quick reference, below is the summary of guidelines discussed next.
 |----|---------------------------------------------------------------|---------------------------------------------------------------------------|
 | \# 1  | Use HTML Sanitizers                                           | [link](#1-html-sanitization)                                              |
 | \# 2  | Use Content-Security Policy                                   | [link](#2-content-security-policy)                                        |
-| \# 3  | Freeze Sensitive DOM Objects                                  | [link](#3-freezing-sensitive-dom-objects)                                 |
+| \# 3  | Freeze Application Configuration Objects                                  | [link](#3-freezing-application-configuration-objects)                                 |
 | \# 4  | Validate All Inputs to DOM Tree                               | [link](#4-validate-all-inputs-to-dom-tree)                                |
 | \# 5  | Use Explicit Variable Declarations                            | [link](#5-use-explicit-variable-declarations)                             |
 | \# 6  | Do Not Use Document and Window for Global Variables           | [link](#6-do-not-use-document-and-window-for-global-variables)            |
@@ -125,11 +125,11 @@ This example assumes the application does not need `id` or `name` attributes in 
 
 **Note:** CSP can only mitigate **some variants** of DOM clobbering attacks, such as when attackers attempt to load new scripts by clobbering script sources, but not when already-present code can be abused for code execution, e.g., clobbering the parameters of code evaluation constructs like `eval()`.
 
-### \#3: Freezing Sensitive DOM Objects
+### \#3: Freezing Application Configuration Objects
 
-A simple way to mitigate DOM Clobbering against individual objects could be to freeze sensitive DOM objects and their properties, e.g., via [Object.freeze()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) method.
+Use [Object.freeze()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze#description) only as an additional control for application-owned configuration objects initialized with trusted values and retained in local scope. It prevents replacement of their own data properties, but is shallow: nested objects and values returned by getters can still change.
 
-**Note:** Freezing object properties prevents them from being overwritten by named DOM elements. But, determining all objects and object properties that need to be frozen may be not be easy, limiting the usefulness of this approach.
+Do not rely on freezing `window`, `document`, or DOM elements to prevent named-property clobbering. For example, [`window` rejects attempts to prevent extensions](https://html.spec.whatwg.org/multipage/nav-history-apis.html#windowproxy-preventextensions), so `Object.freeze(window)` throws. Use [HTML sanitization](#1-html-sanitization) and [local variables](#11-limit-variables-to-local-scope) to avoid attacker-controlled named-property lookups.
 
 ## Secure Coding Guidelines
 
