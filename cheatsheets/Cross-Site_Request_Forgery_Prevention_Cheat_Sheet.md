@@ -457,7 +457,7 @@ At server-side, we verify if both of them match. If they do, we accept the reque
 
 ##### Checking the Origin Header
 
-If the Origin header is present, verify that its value matches the target origin. Unlike the referer, the Origin header will be present in HTTP requests that originate from an HTTPS URL.
+If the Origin header is present, verify that its value matches the target origin. HTTPS alone does not guarantee that the header is present; the [Fetch Standard conditions its inclusion on the request context and method](https://fetch.spec.whatwg.org/#append-a-request-origin-header).
 
 ##### Checking the Referer Header if Origin Header Is Not Present
 
@@ -475,9 +475,9 @@ If you are behind a proxy, there are a number of options to consider.
 
 - **Configure your application to simply know its target origin:** Since it is your application, you can find its target origin and set that value in some server configuration entry. This would be the most secure approach as its defined server side, so it is a trusted value. However, this might be problematic to maintain if your application is deployed in many places, e.g., dev, test, QA, production, and possibly multiple production instances. Setting the correct value for each of these situations might be difficult, but if you can do it via some central configuration and provide your instances the ability to grab the value from it, that's great! (**Note:** Make sure the centralized configuration store is maintained securely because major part of your CSRF defense depends on it.)
 - **Use the Host header value:** If you want your application to find its own target so it doesn't have to be configured for each deployed instance, we recommend using the Host family of headers. The Host header is meant to contain the target origin of the request. But, if your app server is sitting behind a proxy, the Host header value is most likely changed by the proxy to the target origin of the URL behind the proxy, which is different than the original URL. This modified Host header origin won't match the source origin in the original Origin or Referer headers.
-- **Use the X-Forwarded-Host header value:** To avoid the possibility that the proxy will alter the host header, you can use another header called X-Forwarded-Host to contain the original Host header value the proxy received. Most proxies will pass along the original Host header value in the X-Forwarded-Host header. So the value in X-Forwarded-Host is likely to be the target origin value that you need to compare to the source origin in the Origin or Referer header.
+- **Use the X-Forwarded-Host header value only from trusted proxies:** A reverse proxy can preserve the original host in this header. Configure the application to trust only known proxy connections, and ensure the trusted proxy removes or overwrites client-supplied forwarded headers, as described in the [Express proxy guidance](https://expressjs.com/en/guide/behind-proxies/). Do not trust the header merely because it is present. Validate this configuration on every ingress path, including any direct access to the application server.
 
-Using this header value for mitigation will work properly when origin or referrer headers are present in the requests. Though these headers are included the **majority** of the time, there are few use cases where they are not included (most of them are for legitimate reasons to safeguard users privacy/to tune to browsers ecosystem).
+A target origin derived from proxy headers is trustworthy only when these proxy requirements are met; source-origin validation still requires the Origin or Referer header. Though these headers are included the **majority** of the time, there are few use cases where they are not included (most of them are for legitimate reasons to safeguard users privacy/to tune to browsers ecosystem).
 
 **Use cases where X-Forward-Host is not employed:**
 
