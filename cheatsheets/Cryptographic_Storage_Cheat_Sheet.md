@@ -71,9 +71,7 @@ If GCM or CCM are not available, then [CTR](https://en.wikipedia.org/wiki/Block_
 
 ### Random Padding
 
-For RSA, it is essential to enable Random Padding. Random Padding is also known as OAEP or Optimal Asymmetric Encryption Padding. This class of defense protects against Known Plain Text Attacks by adding randomness at the beginning of the payload.
-
-The Padding Schema of [PKCS#1](https://wikipedia.org/wiki/RSA_(cryptosystem)#Padding_schemes) is typically used in this case.
+For RSA encryption, use a maintained library's RSAES-OAEP (Optimal Asymmetric Encryption Padding) implementation, as specified in [RFC 8017, Section 7.1](https://www.rfc-editor.org/rfc/rfc8017.html#section-7.1). OAEP uses randomized encoding and mask generation functions; simply prepending random bytes to the message is not a substitute. Do not use RSA without an encryption padding scheme.
 
 ### Secure Random Number Generation
 
