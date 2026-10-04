@@ -112,7 +112,11 @@ The most broadly available fix is a database transaction with the right isolatio
 
 ### Use Idempotency Keys for External Actions
 
-For operations that talk to external systems (charge a card, send money, issue a voucher), a retry from the client should not result in a duplicate action. Accept a client-supplied idempotency key, store it with the result, and return the cached result on retry. Stripe and other payment providers implement this pattern, and the same idea applies to any non-idempotent operation your own service exposes.
+For external actions such as charging a card, use the provider's idempotency mechanism and reuse the same key when retrying the same operation. Follow its key-generation, parameter-matching, and retention rules; for example, [Stripe rejects changed parameters and can treat a key as new after its stored record expires](https://docs.stripe.com/api/idempotent_requests).
+
+For your own API, scope stored keys to the authenticated caller and operation, bind them to the original request parameters, and reject reuse with different parameters. Authorize the request before returning a cached result; possession of a key is not authorization. Coordinate concurrent requests atomically so only one starts the action, and record its state and result durably. [AWS describes caller-scoped identifiers, atomic processing, and parameter-mismatch checks](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/).
+
+Define the retry and retention window, including recovery when the [external result is unknown](https://docs.stripe.com/error-low-level.md). A local database transaction alone cannot make an external side effect atomic with saving its result. After the retry window expires, reconcile the external outcome before resubmitting.
 
 ### Don't Assume "Fast Enough"
 
@@ -125,7 +129,7 @@ A common rationalization is "the window between the check and the update is micr
 | Read-modify-write on a single row | `SELECT ... FOR UPDATE` then `UPDATE`, inside a transaction |
 | Conditional decrement on a counter | `UPDATE ... SET value = value - 1 WHERE value > 0`, check affected rows |
 | One-per-user bonus | Unique constraint on (user_id, bonus_type) and let the database reject duplicates |
-| External non-idempotent call | Idempotency key table plus a transactional write of the result |
+| External non-idempotent call | Provider-supported idempotency, with durable state for retries and recovery |
 | Cross-row consistency | Serializable transaction with explicit retry logic |
 
 ## Protect Abuse-friendly Features
@@ -333,7 +337,7 @@ Before shipping any feature that handles money, permissions, or state, walkthrou
 - Are all security-relevant values (prices, permissions, identity, ownership) derived server-side, not accepted from the client?
 - Is every multi-step workflow represented as an explicit state machine in server-side storage, with each transition validated?
 - Is every check-then-act operation atomic (transaction, row lock, or conditional update)?
-- Do external non-idempotent calls accept an idempotency key?
+- Do retries of external actions reuse the same idempotency key within the provider's documented retry window?
 - Does every value-dispensing feature have a per-action cap, a per-account cap, and a rate limit?
 - Are all invariants written down and tested?
 - Is every entry point for a sensitive operation subject to the same business rules?
