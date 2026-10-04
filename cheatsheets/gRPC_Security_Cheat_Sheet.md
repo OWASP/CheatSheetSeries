@@ -180,7 +180,7 @@ Limit streaming sessions and message counts to prevent resource exhaustion. Moni
 Protect services from request flooding and resource exhaustion.
 
 ```go
-// Go - Rate limiting with memory management
+// Go - Illustrative unary rate limiting with bounded entry count
 import (
     "golang.org/x/time/rate"
     "sync"
@@ -207,6 +207,10 @@ func rateLimitInterceptor(ctx context.Context, req interface{}, info *grpc.Unary
     store.mu.Lock()
     entry, exists := store.limiters[clientIP]
     if !exists {
+        if len(store.limiters) >= maxLimiterEntries {
+            store.mu.Unlock()
+            return nil, status.Error(codes.ResourceExhausted, "limiter capacity reached")
+        }
         entry = &rateLimiterEntry{
             limiter:  rate.NewLimiter(rate.Limit(10), 20), // 10 req/sec, burst 20
             lastSeen: time.Now(),
@@ -237,7 +241,9 @@ func cleanupOldLimiters() {
 }
 ```
 
-For production environments, use external rate limiting solutions like Redis or dedicated services.
+Configure `maxLimiterEntries` as a positive cap based on the process memory budget. Schedule `cleanupOldLimiters` as part of the service lifecycle; defining it does not run it. At capacity, this illustration rejects new client keys while retaining existing limits, so monitor saturation and its effect on legitimate clients. Derive client keys from a trusted connection or authenticated identity, not arbitrary forwarded headers.
+
+Each [`rate.Limiter`](https://pkg.go.dev/golang.org/x/time/rate#Limiter) limits events for one key; it does not bound the number of keys in the map. This store is local to one process. Use a maintained shared rate-limiting service when limits must apply across replicas.
 
 ### Set Appropriate Timeouts
 
