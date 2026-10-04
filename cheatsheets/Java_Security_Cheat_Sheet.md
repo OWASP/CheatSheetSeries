@@ -491,7 +491,7 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
   </appender>
 
   <root level="DEBUG">
-    <appender-ref ref="SOCKET"/>
+    <appender-ref ref="RollingFile"/>
   </root>
 </configuration>
 ```
