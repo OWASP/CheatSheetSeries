@@ -6010,7 +6010,7 @@
 <li>Normalize and inspect queries for abuse patterns before retrieval. Do not rely on sanitization alone; enforce access control and retrieval boundaries independently.</li>
 <li>Rate limit queries per user or agent identity to prevent systematic probing of the corpus.</li>
 <li>Monitor query patterns for reconnaissance behavior (e.g. an agent systematically varying query terms to map the contents of the vector store).</li>
-<li>Log all queries with the querying entity's identity for audit purposes.</li>
+<li>Log query identifiers and the querying entity's identity for audit purposes. Exclude sensitive query content according to the <a href="Logging_Cheat_Sheet.html#data-to-exclude">Logging Cheat Sheet</a>.</li>
 </ul>
 <h3 id="dont_9">Don't<a class="headerlink" href="#dont_9" title="Permanent link">&para;</a></h3>
 <ul>
@@ -6073,8 +6073,8 @@
 <p>RAG pipelines must not be treated as black boxes. Full observability across every stage is essential for detecting attacks, investigating incidents, and demonstrating compliance.</p>
 <h3 id="do_13">Do<a class="headerlink" href="#do_13" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Log the full pipeline for every request: query received, chunks retrieved (with document IDs and access control metadata), model input assembled, model output generated, and any tool calls triggered.</li>
-<li>Store replayable traces that allow security teams to reconstruct exactly what happened during an incident -- which query retrieved which chunks, which chunks influenced which output.</li>
+<li>Trace each request using correlation IDs, retrieved document IDs, authorization decisions, model versions, and tool invocation outcomes. Do not log raw queries, retrieved content, model inputs, outputs, or tool arguments by default; these may contain secrets or sensitive personal data. Apply the <a href="Logging_Cheat_Sheet.html#data-to-exclude">Logging Cheat Sheet's data-exclusion guidance</a>.</li>
+<li>If incident investigation requires content capture, collect only the necessary redacted fields in a restricted evidence store. Apply <a href="Logging_Cheat_Sheet.html#protection">log access controls</a> and <a href="Logging_Cheat_Sheet.html#disposal-of-logs">retention limits</a>, and ensure investigators are authorized to access the underlying documents.</li>
 <li>Alert on anomalous patterns:<ul>
 <li>Unusual retrieval patterns (a user suddenly retrieving from document collections they have never accessed)</li>
 <li>Repeated prompt injection attempts</li>
