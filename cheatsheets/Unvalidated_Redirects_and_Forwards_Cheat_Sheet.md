@@ -182,13 +182,13 @@ Safe use of redirects and forwards can be done in a number of ways:
     - This provides the highest degree of protection against the attack tampering with the URL.
     - Be careful that this doesn't introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets
 - If user input can’t be avoided, ensure that the supplied **value** is valid, appropriate for the application, and is **authorized** for the user.
-- Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).
-    - This should be based on an allow-list approach, rather than a denylist.
+- For local return URLs, use a framework helper that rejects non-local destinations, such as [ASP.NET Core LocalRedirect or IsLocalUrl](https://learn.microsoft.com/en-us/aspnet/core/security/preventing-open-redirects?view=aspnetcore-10.0).
+- If external destinations are required, allow-list explicitly approved destinations using the parsed URL components, as described below.
 - Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.
 
 ### Validating URLs
 
-Validating and sanitizing user-input to determine whether the URL is safe is not a trivial task. Detailed instructions how to implement URL validation is described [in Server Side Request Forgery Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer)
+Use a maintained URL parser compatible with the redirect API and browser URL interpretation. Compare the parsed scheme, canonical host, and effective port against an explicit allowlist; constrain the path when only specific endpoints are permitted. Reject userinfo and ambiguous input, and redirect using the validated URL rather than transforming it afterward. Do not use raw prefix or suffix matching: [GitLab demonstrates how userinfo and misleading hostnames bypass such checks](https://docs.gitlab.com/development/secure_coding_guidelines/ruby/#feature-specific-mitigations). A server-side mapping from an approved destination ID remains preferable to accepting arbitrary URLs.
 
 ## References
 
