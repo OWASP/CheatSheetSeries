@@ -319,7 +319,7 @@ Setting an appropriate log level, configures the Docker daemon to log events tha
 
 ### Rule \#11 - Run Docker in rootless mode
 
-Rootless mode ensures that the Docker daemon and containers are running as an unprivileged user, which means that even if an attacker breaks out of the container, they will not have root privileges on the host, which in turn substantially limits the attack surface. This is different to [userns-remap](#rule-2---set-a-user) mode, where the daemon still operates with root privileges.
+[Rootless mode](https://docs.docker.com/engine/security/rootless/#how-it-works) runs the Docker daemon and containers without host-root privileges, reducing the impact of daemon or runtime compromise. It does not guarantee protection against host privilege escalation through kernel vulnerabilities; the shared kernel remains part of the security boundary. Unlike rootless mode, `userns-remap` leaves the daemon running with root privileges.
 
 Evaluate the [specific requirements](Attack_Surface_Analysis_Cheat_Sheet.md) and [security posture](Threat_Modeling_Cheat_Sheet.md) of your environment to determine if rootless mode is the best choice for you. For environments where security is a paramount concern and the [limitations of rootless mode](https://docs.docker.com/engine/security/rootless/#known-limitations) do not interfere with operational requirements, it is a strongly recommended configuration. Alternatively consider using [Podman](#podman-as-an-alternative-to-docker) as an alternative to Docker.
 
