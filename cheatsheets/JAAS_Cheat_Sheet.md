@@ -6,13 +6,13 @@ The process of verifying the identity of a user or another system is authenticat
 
 [JAAS](https://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html), as an authentication framework manages the authenticated user's identity and credentials from login to logout.
 
-The JAAS authentication lifecycle:
+The [JAAS authentication lifecycle](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/security/auth/spi/LoginModule.html):
 
-1. Create `LoginContext`.
-2. Read the configuration file for one or more `LoginModules` to initialize.
-3. Call `LoginContext.initialize()` for each LoginModule to initialize.
-4. Call `LoginContext.login()` for each LoginModule.
-5. If login successful then call `LoginContext.commit()` else call `LoginContext.abort()`
+1. The application creates a `LoginContext` using the configured login name and a callback handler.
+2. The `LoginContext` reads the configuration and instantiates the configured `LoginModule`s.
+3. The `LoginContext` calls each module's `initialize()` with the shared `Subject` and other context.
+4. The application calls `LoginContext.login()`, which invokes the configured modules' `login()` methods according to their control flags.
+5. If overall authentication succeeds, the `LoginContext` invokes the modules' `commit()` methods; otherwise, it invokes their `abort()` methods.
 
 ## Configuration file
 
@@ -55,8 +55,8 @@ Where:
     - `loginContext = new LoginContext (args[0], new AppCallbackHandler());`
 - Call the LoginContext.Login Module:
     - `loginContext.login();`
-- The value in succeeded Option is returned from `loginContext.login()`.
-- If the login was successful, a subject was created.
+- `LoginContext.login()` returns without a value when authentication succeeds and throws a `LoginException` when it fails.
+- Retrieve the authenticated `Subject` using `loginContext.getSubject()` after successful login.
 
 ## LoginModule.java
 
@@ -73,14 +73,14 @@ A `LoginModule` must have the following authentication methods:
 In `Main()`, after the `LoginContext` reads the correct stanza from the config file, the `LoginContext` instantiates the `LoginModule` specified in the stanza.
 
 - `initialize()` methods signature:
-    - `Public void initialize (Subject subject, CallbackHandler callbackHandler, Map sharedState, Map options)`
+    - `public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options)`
 - The arguments above should be saved as follows:
     - `this.subject = subject;`
     - `this.callbackHandler = callbackHandler;`
     - `this.sharedState = sharedState;`
     - `this.options = options;`
 - What the `initialize()` method does:
-    - Builds a subject object of the `Subject` class contingent on a successful `login()`.
+    - Stores the supplied shared `Subject`; successful `commit()` associates authenticated principals and credentials with that object.
     - Sets the `CallbackHandler` which interacts with the user to gather login information.
     - If a `LoginContext` specifies 2 or more LoginModules, which is legal, they can share information via a `sharedState` map.
     - Saves state information such as debug and succeeded in an options Map.
@@ -114,24 +114,7 @@ There are two types of credentials, **Public** and **Private**:
 
 Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject.
 
-Below, is an example `commit()` method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject's username is then added to their public credentials.
-
-Code snippet setting then adding any principals and a public credentials to a subject:
-
-```java
-public boolean commit() {
-    If (userAuthenticated) {
-        Set groups = UserService.findGroups (username);
-        for (Iterator itr = groups.iterator (); itr.hasNext (); {
-            String groupName = (String) itr.next ();
-            UserGroupPrincipal group = new UserGroupPrincipal (GroupName);
-            subject.getPrincipals ().add (group);
-        }
-        UsernameCredential cred = new UsernameCredential (username);
-        subject.getPublicCredentials().add (cred);
-    }
-}
-```
+Implement [`commit()`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/security/auth/spi/LoginModule.html#commit()) using the authentication state saved by `login()`. Associate principals and credentials with the shared `Subject` only when this module's authentication succeeded; otherwise, clean up its saved state. Return `true` on success, `false` when the module is ignored, or throw `LoginException` on failure.
 
 ### abort()
 
