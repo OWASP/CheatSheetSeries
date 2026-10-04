@@ -46,13 +46,9 @@ Finally, when administration of different defenses is performed by multiple team
 
 ### Secondary Passwords, PINs and Security Questions
 
-As well as requiring a user to enter their password when authenticating, users can also be prompted to provide additional security information such as:
+Do not use security questions as an additional authentication challenge. [OWASP ASVS 5.0 requirement 6.4.2](https://github.com/OWASP/ASVS/blob/v5.0.0_release/5.0/en/0x15-V6-Authentication.md#v64-authentication-factor-lifecycle-and-recovery) excludes knowledge-based security questions. The [Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) discusses limitations in legacy systems.
 
-- A PIN
-- Specific characters from a secondary passwords or memorable word
-- Answers to [security questions](Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
-
-It must be emphasised that this **does not** constitute multi-factor authentication (as both factors are the same - something you know). However, it can still provide a useful layer of protection against both credential stuffing and password spraying where proper MFA can't be implemented.
+If a secondary password, PIN, or memorable word is used, request and verify the entire secret rather than selected characters, as required by [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver). Adding another knowledge factor does not constitute [MFA](Multifactor_Authentication_Cheat_Sheet.md); prefer an independent factor instead.
 
 ### CAPTCHA
 
