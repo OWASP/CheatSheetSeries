@@ -458,19 +458,11 @@ A description of how to abuse this in PHP is presented in a good [SensePost arti
 
 ## Python
 
-The Python 3 official documentation contains a section on [xml vulnerabilities](https://docs.python.org/3/library/xml.html#xml-vulnerabilities). As of the 1st January 2020 Python 2 is no longer supported, however the Python website still contains [some legacy documentation](https://docs.python.org/2/library/xml.html#xml-vulnerabilities).
+Follow Python's current [XML security guidance](https://docs.python.org/3/library/xml.html#xml-security). The built-in parsers rely on Expat, which may be bundled with Python or supplied by the operating system. Check `pyexpat.EXPAT_VERSION` in the deployed interpreter and keep both Python and Expat updated. Expat versions below 2.7.2 may be affected by entity-expansion, large-token, or dynamic-memory denial-of-service vulnerabilities; a Python version alone does not establish the linked Expat version.
 
-The table below shows you which various XML parsing modules in Python 3 are vulnerable to certain XXE attacks.
+Expat itself does not access files or the network by default. Higher-level APIs and custom handlers still need an external-resource policy. Independently bound input size and decompressed data: the standard-library `xmlrpc` module is vulnerable to decompression bombs.
 
-| Attack Type               | sax        | etree      | minidom    | pulldom    | xmlrpc     |
-|---------------------------|------------|------------|------------|------------|------------|
-| Billion Laughs            | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
-| Quadratic Blowup          | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
-| External Entity Expansion | Safe       | Safe       | Safe       | Safe       | Safe       |
-| DTD Retrieval             | Safe       | Safe       | Safe       | Safe       | Safe       |
-| Decompression Bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
-
-To protect your application from the applicable attacks, the [defusedxml](https://github.com/tiran/defusedxml) package exists to help you sanitize your input and protect your application against DDoS and remote attacks.
+For untrusted XML, use the [defusedxml parsing interfaces](https://github.com/tiran/defusedxml#defusedxml) in place of the corresponding standard-library parsing functions. Keep entity and external-resource rejection enabled, and set `forbid_dtd=True` on APIs that offer it when DTDs are unnecessary. These interfaces reject prohibited constructs; they do not sanitize XML or replace application resource limits.
 
 ## Semgrep Rules
 
