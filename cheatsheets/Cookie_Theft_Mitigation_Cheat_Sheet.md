@@ -93,7 +93,7 @@ A CAPTCHA may help limit automated abuse, but it does not establish that the req
 function cookieTheftDetectionMiddleware(req, res) {
   const currentIP = req.clientIP
   const expectedIP = req.session.ip
-  if (checkGeoIPRange(currentIP, expected) === false) {
+  if (checkGeoIPRange(currentIP, expectedIP) === false) {
      // Validation
   }
   const currentUA = req.userAgent
