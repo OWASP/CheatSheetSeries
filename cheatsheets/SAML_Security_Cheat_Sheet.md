@@ -168,7 +168,7 @@ No IdP should use SHA-1 as the certificate signing hash. SHA-256 is the minimum 
 
 ##### Certificate Lifetime
 
-X.509 certificates contain [`notBefore` and `notAfter` validity dates](https://www.rfc-editor.org/rfc/rfc5280.html#section-4.1.2.5). Plan certificate replacement before expiry rather than ignoring the validity period. Choose the signing key's usage period based on its protection, use, and threat model; see [Cryptoperiods and Rotation](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation). [NIST SP 800-57 Part 1 Rev. 5, Section 5.3.4](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf#page=49) distinguishes certificate validity from key usage periods: renewing a certificate with the same public key does not rotate the private key or restart its usage period.
+X.509 certificates contain [`notBefore` and `notAfter` validity dates](https://www.rfc-editor.org/rfc/rfc5280.html#section-4.1.2.5). Plan certificate replacement before expiry rather than ignoring the validity period. Choose the signing key's usage period based on its protection, use, and threat model; see [Cryptoperiods and Rotation](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation). [NIST SP 800-57 Part 1 Rev. 5, Section 5.3.4](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf#page=50) distinguishes certificate validity from key usage periods: renewing a certificate with the same public key does not rotate the private key or restart its usage period.
 
 ##### Extended Key Usage (EKU) and Key Usage (KU)
 
