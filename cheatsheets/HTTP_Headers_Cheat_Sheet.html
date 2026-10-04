@@ -6059,12 +6059,12 @@
 <p>The <code>Cache-Control</code> header defines how responses are cached by browsers and intermediate caches.</p>
 <h4 id="recommendation_5">Recommendation<a class="headerlink" href="#recommendation_5" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Use <code>no-store</code> for sensitive data to prevent any form of caching.</li>
+<li>Use <a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.5"><code>no-store</code></a> for sensitive responses to prohibit storage in compliant HTTP caches.</li>
 <li>Use <code>private</code> to allow caching only in non-shared (user-specific) caches and to prevent storage in shared caches (note that private caches may still persist the response).</li>
 <li>Avoid relying on default caching behavior for sensitive or protected content.</li>
 <li>Be aware that <code>no-cache</code> does not prevent caching; it allows caches to store responses. It requires revalidation with the origin server before reuse.</li>
 </ul>
-<p>These directives help reduce the risk of sensitive data being stored or exposed through caching, but use <code>no-store</code> when storage of sensitive data must be strictly prevented.</p>
+<p><code>no-store</code> does not control every storage mechanism: the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache">Cache API does not honor HTTP caching headers</a>. Explicitly exclude sensitive responses from application-managed caches and remove existing sensitive entries; see <a href="HTML5_Security_Cheat_Sheet.html#offline-applications">Offline Applications</a>.</p>
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">MDN - Cache-Control</a></li>
