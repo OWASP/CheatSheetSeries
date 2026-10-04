@@ -66,15 +66,15 @@ The following [`Sec-CH-*` Client Hint headers](https://developer.mozilla.org/en-
 - sec-ch-ua-platform-version
 - sec-ch-ua-wow64
 
-When a session is established on the server, this information is collected and saved in association with the session like below.
+The following illustrative Express sketch assumes a server-side session store and trusted middleware that populates `req.clientIP` and `req.session`. Read request headers with [Express's `req.get()`](https://expressjs.com/en/5x/api/request/#req.get), and use a server timestamp when establishing the session:
 
 ```js
 const session = SessionStorage.create()
 session.save({
   ip: req.clientIP,
-  user_agent: req.headers.userAgent,
-  date: req.headers.date,
-  accept_language: req.headers.acceptLanguage,
+  user_agent: req.get("User-Agent"),
+  date: Date.now(),
+  accept_language: req.get("Accept-Language"),
   // ...
 })
 ```
@@ -89,20 +89,22 @@ However, as mentioned earlier, monitoring sessions has the potential for false p
 
 A CAPTCHA may help limit automated abuse, but it does not establish that the requester controls an authenticator bound to the account, which is the basis of [authentication](https://pages.nist.gov/800-63-4/sp800-63b/introduction/). Do not treat a solved CAPTCHA as validation of a suspected stolen session. Use [reauthentication with an account-bound authenticator](Authentication_Cheat_Sheet.md#re-authentication-after-risk-events) before restoring access that depends on trusting the session.
 
+In this sketch, comparison helpers return `false` when a signal requires reauthentication. They must account for missing headers and legitimate changes. [Express middleware must end the response or call `next()`](https://expressjs.com/en/guide/using-middleware/). The error response below blocks this request; the application must also restrict or invalidate the suspect session and complete account-bound reauthentication before restoring access. This sketch does not implement session storage, authorization, or CSRF protection.
+
 ```js
-function cookieTheftDetectionMiddleware(req, res) {
+function cookieTheftDetectionMiddleware(req, res, next) {
   const currentIP = req.clientIP
   const expectedIP = req.session.ip
   if (checkGeoIPRange(currentIP, expectedIP) === false) {
-     // Validation
+    return res.status(401).send("Reauthentication required")
   }
-  const currentUA = req.userAgent
-  const expectedUA = req.session.ua
-  if (checkUserAgent(currentUA, expectedUA)) {
-    // Validation
+  const currentUA = req.get("User-Agent")
+  const expectedUA = req.session.user_agent
+  if (checkUserAgent(currentUA, expectedUA) === false) {
+    return res.status(401).send("Reauthentication required")
   }
 
-  // ...
+  next()
 }
 
 app.post("/users/delete", cookieTheftDetectionMiddleware, (req, res) => {
