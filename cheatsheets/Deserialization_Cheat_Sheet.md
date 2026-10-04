@@ -32,23 +32,11 @@ If the traffic data contains the symbol dot `.` at the end, it's very likely tha
 
 #### Clear-box Review
 
-The following API in Python will be vulnerable to serialization attack. Search code for the pattern below.
+Review the following APIs for untrusted input:
 
-1. The uses of `pickle/c_pickle/_pickle` with `load/loads`:
+1. Uses of [`pickle.load()` or `pickle.loads()`](https://docs.python.org/3/library/pickle.html#pickle.loads). Unpickling can execute arbitrary code; never unpickle untrusted data. `pickle.loads()` expects bytes-like input, not a Python 3 string.
 
-```python
-import pickle
-data = """ cos.system(S'dir')tR. """
-pickle.loads(data)
-```
-
-2. Uses of `PyYAML` with `load`:
-
-```python
-import yaml
-document = "!!python/object/apply:os.system ['ipconfig']"
-print(yaml.load(document))
-```
+2. Uses of [PyYAML's unsafe loaders](https://github.com/yaml/pyyaml/blob/6.0.3/lib/yaml/__init__.py#L74-L156), such as `yaml.unsafe_load()` or `yaml.load()` with `Loader=yaml.Loader` or `Loader=yaml.UnsafeLoader`. For untrusted YAML, use [`yaml.safe_load()`](https://pyyaml.org/wiki/PyYAMLDocumentation#the-yaml-package), and do not register custom constructors that allow arbitrary object creation. Current PyYAML requires an explicit `Loader` argument for `yaml.load()`.
 
 3. Uses of [`jsonpickle.decode()`](https://jsonpickle.readthedocs.io/en/latest/api.html#jsonpickle.decode) with untrusted input.
 
