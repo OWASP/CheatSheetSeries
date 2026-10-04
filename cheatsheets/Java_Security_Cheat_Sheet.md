@@ -293,65 +293,21 @@ Injection of this type occur when the application uses untrusted user input to b
 
 #### How to prevent
 
-As there many NoSQL database system and each one use an API for call, it's important to ensure that user input received and used to build the API call expression does not contain any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.
+Validate the expected input type, length, and business format, then use the driver's structured query API. Do not concatenate untrusted values into query strings or accept client-supplied query/operator objects. [MongoDB's driver guidance](https://www.mongodb.com/docs/drivers/client-libraries-best-practices/) distinguishes literal values built through typed APIs from JSON or JavaScript that is parsed as query syntax. A blacklist of punctuation is not needed for the string equality query below. See the [NoSQL Security Cheat Sheet](NoSQL_Security_Cheat_Sheet.md#prevent-nosql-injection) for broader controls.
 
 #### Example - MongoDB
 
-``` java
- /* Here use MongoDB as target NoSQL DB */
+Assume `collection` is an application-configured `MongoCollection<Document>`. This example uses the Java driver's [equality filter builder](https://www.mongodb.com/docs/drivers/java/sync/current/builders/filters/) with a string value; the 50-character limit is an illustrative business rule, not the injection defense.
+
+```java
 String userInput = "Brooklyn";
-
-/* First ensure that the input do no contains any special characters
-for the current NoSQL DB call API,
-here they are: ' " \ ; { } $
-*/
-//Avoid regexp this time in order to made validation code
-//more easy to read and understand...
-ArrayList < String > specialCharsList = new ArrayList < String > () {
-    {
-        add("'");
-        add("\"");
-        add("\\");
-        add(";");
-        add("{");
-        add("}");
-        add("$");
-    }
-};
-
-for (String specChar: specialCharsList) {
-    if (userInput.contains(specChar)) {
-        return false;
-    }
+if (userInput == null || userInput.length() > 50) {
+    throw new IllegalArgumentException("Invalid borough");
 }
 
-//Add also a check on input max size
-if (!userInput.length() <= 50)
-{
-    return false;
-}
-
-/* Then perform query on database using API to build expression */
-//Connect to the local MongoDB instance
-try(MongoClient mongoClient = new MongoClient()){
-    MongoDatabase db = mongoClient.getDatabase("test");
-    //Use API query builder to create call expression
-    //Create expression
-    Bson expression = eq("borough", userInput);
-    //Perform call
-    FindIterable<org.bson.Document> restaurants = db.getCollection("restaurants").find(expression);
-    //Verify result consistency
-    restaurants.forEach(new Block<org.bson.Document>() {
-        @Override
-        public void apply(final org.bson.Document doc) {
-            String restBorough = (String)doc.get("borough");
-            if (!"Brooklyn".equals(restBorough))
-            {
-                return false;
-            }
-        }
-    });
-}
+// Keep the field name fixed and the input as a string value.
+Bson expression = Filters.eq("borough", userInput);
+FindIterable<Document> restaurants = collection.find(expression);
 ```
 
 #### References
