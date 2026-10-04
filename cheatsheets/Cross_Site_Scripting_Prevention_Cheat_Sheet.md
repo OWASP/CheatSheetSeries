@@ -58,7 +58,7 @@ In order to add a variable to a HTML context safely to a web template, use HTML 
 
 Here are some examples of encoded values for specific characters:
 
-If you're using JavaScript for writing to HTML, look at the `.textContent` attribute. It is a **Safe Sink** and will automatically HTML Entity Encode.
+When displaying text with JavaScript, assign it to the [`textContent` property](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) of an ordinary element such as a `<div>`. This creates a text node without parsing HTML; it does not HTML-encode the value. Pass the original text without pre-encoding it. Do not use it for untrusted script or style content; [`HTMLScriptElement.textContent`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLScriptElement/textContent) sets executable code.
 
 ```HTML
 &    &amp;
@@ -108,11 +108,7 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 <span style="property : $varUnsafe">Oh no</span>
 ```
 
-If you're using JavaScript to change a CSS property, look into using
-`style.property = x`.
-This is a **Safe Sink** and will automatically CSS encode data in it.
-
-When inserting variables into CSS properties, ensure the data is properly encoded and sanitized to prevent injection attacks. Avoid placing variables directly into selectors or other CSS contexts.
+When changing styles with JavaScript, use a fixed property such as `element.style.color` with a value from an application-defined allowlist. [CSS property assignment](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty) sets a CSS value; it does not automatically CSS-encode it. Do not let untrusted input choose the property or supply an entire declaration block. Properties that accept URLs require URL validation as well.
 
 ### Output Encoding for “URL Contexts”
 
@@ -182,7 +178,7 @@ Thankfully, many sinks where variables can be placed are safe. This is because t
 
 ```js
 elem.textContent = dangerVariable;
-elem.insertAdjacentText(dangerVariable);
+elem.insertAdjacentText("beforeend", dangerVariable);
 elem.className = dangerVariable;
 elem.setAttribute(safeName, dangerVariable);
 formfield.value = dangerVariable;
@@ -190,6 +186,8 @@ document.createTextNode(dangerVariable);
 document.createElement(dangerVariable);
 elem.innerHTML = DOMPurify.sanitize(dangerVar);
 ```
+
+[`insertAdjacentText()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentText) requires a position and a text value. In the example, `"beforeend"` appends a text node inside the element. Use text sinks on ordinary elements, not script or style elements.
 
 **Safe HTML Attributes include:** `align`, `alink`, `alt`, `bgcolor`, `border`, `cellpadding`, `cellspacing`, `class`, `color`, `cols`, `colspan`, `coords`, `dir`, `face`, `height`, `hspace`, `ismap`, `lang`, `marginheight`, `marginwidth`, `multiple`, `nohref`, `noresize`, `noshade`, `nowrap`, `ref`, `rel`, `rev`, `rows`, `rowspan`, `scrolling`, `shape`, `span`, `summary`, `tabindex`, `title`, `usemap`, `valign`, `value`, `vlink`, `vspace`, `width`.
 
