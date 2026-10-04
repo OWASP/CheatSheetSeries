@@ -161,13 +161,13 @@ Always use prepared statements for database operations to prevent [SQL injection
 
 ### Implement Message Size Limits
 
-gRPC's streaming capabilities allow clients to send arbitrarily large messages, potentially exhausting server memory and triggering denial-of-service conditions. Set clear limits on message sizes.
+Set application-appropriate limits on individual messages in both directions. In grpc-go, the server's [`MaxRecvMsgSize`](https://pkg.go.dev/google.golang.org/grpc#MaxRecvMsgSize) already defaults to 4 MiB. A stream can still carry many individually valid messages, so a per-message limit does not bound the total data or processing work for the stream.
 
 ```go
 // Go - Set message size limits
 s := grpc.NewServer(
-    grpc.MaxRecvMsgSize(4*1024*1024), // 4MB max receive
-    grpc.MaxSendMsgSize(4*1024*1024), // 4MB max send
+    grpc.MaxRecvMsgSize(4*1024*1024), // 4 MiB max receive
+    grpc.MaxSendMsgSize(4*1024*1024), // 4 MiB max send
 )
 ```
 
