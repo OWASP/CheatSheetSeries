@@ -6,7 +6,7 @@ AI agents are initiating regulated financial transactions in production. Masterc
 
 This cheat sheet provides practical controls for fintechs, banks, and payment processors when autonomous AI agents -- rather than human users in browser sessions -- initiate or facilitate regulated payments. It covers agent identity verification, entity screening, audit trail requirements, and fail-closed enforcement.
 
-The controls described here are complementary to the [OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html) and build on the cryptographic identity and signing controls defined in Section 7 of that document.
+Use the [MCP authentication and authorization guidance](MCP_Security_Cheat_Sheet.md#6-authentication-authorization-transport-security) when exposing screening tools through MCP. Message-level signing is an [optional additional control](MCP_Security_Cheat_Sheet.md#7-optional-message-level-integrity), not a core MCP requirement. The signed-audit and receipt design in Sections 4 and 8-10 is one option for systems that need verification beyond a transport connection.
 
 ## Regulatory Context
 
@@ -25,7 +25,7 @@ Regulators do not care whether a transaction was initiated by a human clicking a
 
 ## Section 1: Agent Identity Before Screening
 
-Before an agent is permitted to access sanctions screening services or initiate a payment, its identity must be cryptographically verified. Self-declared identity headers (e.g. `X-Agent-ID`, `X-Agent-Role`) without cryptographic proof MUST be rejected. The message-level identity primitives in [Section 7 of the OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence) apply directly to the agent-payment context.
+Before an agent is permitted to access sanctions screening services or initiate a payment, its identity must be cryptographically verified. Self-declared identity headers (e.g. `X-Agent-ID`, `X-Agent-Role`) without cryptographic proof MUST be rejected. For protected MCP endpoints, follow the [MCP authorization profile](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) and validate authorization on every request.
 
 ### Do
 
@@ -38,7 +38,7 @@ Before an agent is permitted to access sanctions screening services or initiate 
 
 - Accept self-declared identity claims without cryptographic verification.
 - Allow agents to access screening endpoints without authentication.
-- Trust transport-layer identity (TLS client certificates at a load balancer) as the sole proof of agent identity. Message-level identity binding is required.
+- Trust caller-supplied identity headers merely because TLS terminates at a proxy. If forwarding a validated client-certificate identity, [accept it only over a trusted proxy path and remove caller-supplied certificate headers](https://www.rfc-editor.org/rfc/rfc9440.html#section-4).
 - Allow agents to escalate their own trust level or modify their own permissions.
 
 ## Section 2: Entity Screening
@@ -56,7 +56,7 @@ Entity screening against global sanctions lists (OFAC SDN, UK Sanctions List, EU
 ### Don't
 
 - Allow agents to bypass screening by calling payment endpoints directly without a prior screening step.
-- Return screening results without signing them. Unsigned results can be tampered with in transit, allowing a compromised intermediary to change a "match" to "no match."
+- Accept unsigned or invalidly signed results when the chosen message-signing profile requires signatures. TLS protects the connection, but does not prevent a compromised component from changing data after termination.
 - Allow agents to cache screening results beyond a configurable time window. Sanctions lists are updated frequently and stale results create compliance gaps.
 - Expose raw sanctions list data to agents. Agents should call a screening API, not download the full list.
 
@@ -79,7 +79,7 @@ The agent itself is software. But the agent has an operator -- the developer, co
 
 ## Section 4: Signed Audit Trail
 
-Every screening interaction must produce a tamper-evident audit record that a compliance officer or regulator can verify. When agents perform screening, the audit trail must cryptographically bind the agent's identity to the screening request and result. The hash-chained, ECDSA-signed audit-entry pattern used in this section is specified in detail in the [IETF Internet-Draft draft-sharif-mcps-secure-mcp](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/).
+Keep tamper-evident audit records that associate the authenticated agent with the screening request and result. The following bullets describe an optional signed, hash-chained audit design. The [MCPS Internet-Draft](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/) separately proposes a message-signing and replay-protection layer; it is an individual work in progress, not an adopted MCP standard. Select a reviewed, interoperable profile when this protection is needed, and apply the [log-protection controls](Logging_Cheat_Sheet.md#protection) regardless of the chosen design.
 
 ### Do
 
@@ -154,13 +154,13 @@ Institutions must decide whether to run their own screening engine or use a host
 ### Do
 
 - Encrypt all screening requests in transit (TLS 1.2 minimum) regardless of architecture.
-- Sign screening requests at the message level (not just transport level) to ensure integrity through intermediaries, CDNs, or proxies.
-- Verify the screening provider's response signatures if using a hosted service.
+- If the threat model requires verification across untrusted intermediaries, use a reviewed message-signing profile supported by both endpoints; define trusted keys, signed fields, replay handling, and verification failures.
+- Verify the screening provider's response signatures when the agreed profile requires them.
 
 ### Don't
 
 - Send agent private keys or full identity credentials to a third-party screening provider. Send only the minimum identity attributes needed.
-- Assume that TLS alone provides sufficient integrity. After TLS termination at a load balancer or CDN, the plaintext request is visible to downstream components.
+- Assume TLS protects data after the connection terminates. Protect each subsequent connection and decide which intermediaries are trusted to read or modify requests.
 
 ## Section 8: Receipt Canonicalization (RFC 8785 / JCS)
 
@@ -183,7 +183,7 @@ When systems independently serialize the same JSON object for hashing or signatu
 
 Agent payments can traverse multiple agents. When downstream services rely on a signed screening receipt, they must verify it using a key bound to a trusted screening issuer. [Digital signatures provide data-origin and integrity assurance](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf#page=18); they do not prove that the issuer performed screening correctly. The receipt records the issuer's assertions about the entities, lists, and decision, so the verifier still needs a policy for which screening issuers it trusts.
 
-Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defense for such receipts is covered in [Section 7 of the OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence).
+Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. See [Optional Message-Level Integrity](MCP_Security_Cheat_Sheet.md#7-optional-message-level-integrity) for the additional threat model and profile requirements.
 
 ### Do
 
@@ -240,9 +240,9 @@ The consolidated controls below align with the AI-system-specific verification r
 ### Do
 
 - Verify agent identity cryptographically before every screening request.
-- Sign every screening request and response with unique nonces and timestamps.
+- When using a message-signing profile, sign and verify screening requests and responses and enforce its replay controls.
 - Screen both the counterparty entity and the agent's operator against sanctions lists.
-- Maintain a hash-chained, tamper-evident audit trail of every screening interaction.
+- Protect screening audit records against unauthorized changes and deletion; use hash chaining when the chosen audit design requires it.
 - Withhold transaction execution on a screening error, timeout, or ambiguous result until the required assessment permits proceeding.
 - Rate limit based on cryptographic agent identity, not IP address.
 - Apply graduated trust levels with different access rights and rate limits.
@@ -256,7 +256,7 @@ The consolidated controls below align with the AI-system-specific verification r
 - Store audit records in agent-controlled infrastructure.
 - Cache screening results beyond a configurable time window.
 - Allow agents to lower match thresholds or override screening results.
-- Rely on transport-layer security (TLS) alone for message integrity.
+- Treat transport protection as protection from a compromised component after TLS termination.
 - Allow anonymous agents to access screening services.
 - Assume that a one-time identity check is sufficient for ongoing access.
 
