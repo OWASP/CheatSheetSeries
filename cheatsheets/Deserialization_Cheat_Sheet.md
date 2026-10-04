@@ -50,7 +50,7 @@ document = "!!python/object/apply:os.system ['ipconfig']"
 print(yaml.load(document))
 ```
 
-3. Uses of `jsonpickle` with `encode` or `store` methods.
+3. Uses of [`jsonpickle.decode()`](https://jsonpickle.readthedocs.io/en/latest/api.html#jsonpickle.decode) with untrusted input.
 
 ### Java
 
