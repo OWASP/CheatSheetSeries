@@ -835,7 +835,7 @@ class HybridSimple {
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
 
-The following code snippet shows an example of using Elliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+This Java 25+ example illustrates Elliptic Curve Diffie-Hellman (ECDH) followed by HKDF-SHA-256 and AES-GCM. Do not use raw ECDH output directly as an AES key: [RFC 5869](https://www.rfc-editor.org/rfc/rfc5869.html#section-3.3) explains why Diffie-Hellman values need extraction. The [Java KDF API](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/javax/crypto/KDF.html) performs both extraction and expansion here. This is a primitive demonstration, not an authenticated communication protocol.
 
 Note that this code sample relies on the AesGcmSimple class from the [previous section](#symmetric-example-using-built-in-jcajce-classes).
 
@@ -845,7 +845,7 @@ A few constraints/pitfalls with this code:
 - The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.
 - The private keys will need to be stored securely.
 - The code does not consider the validation of public keys before use.
-- Overall, there is no verification of authenticity between the two sides.
+- Public keys must be authenticated independently before use. HKDF does not authenticate the peer; this example omits that protocol and its identity/context binding.
 
 <details>
   <summary>Click here to view the "JCA/JCE hybrid encryption" code snippet.</summary>
@@ -954,9 +954,12 @@ class ECDHSimple {
 
         AesKeyNonce aesKeyNonce = new AesKeyNonce();
 
-        // Copy first 32 bytes as the key
-        byte[] key = Arrays.copyOfRange(secret, 0, (AesGcmSimple.KEY_SIZE / 8));
-        aesKeyNonce.Key = new SecretKeySpec(key, 0, key.length, "AES");
+        // Illustrative domain label; a real protocol defines its full context binding.
+        byte[] info = "OWASP Java ECDH example: AES-256-GCM v1".getBytes(StandardCharsets.UTF_8);
+        var derivation = HKDFParameterSpec.ofExtract().addIKM(secret)
+                .thenExpand(info, AesGcmSimple.KEY_SIZE / 8);
+        aesKeyNonce.Key = KDF.getInstance("HKDF-SHA256").deriveKey("AES", derivation);
+        Arrays.fill(secret, (byte) 0);
 
         // Passed in nonce will be used.
         aesKeyNonce.Nonce = nonce;
