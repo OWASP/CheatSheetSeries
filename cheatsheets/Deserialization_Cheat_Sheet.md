@@ -56,12 +56,12 @@ print(yaml.load(document))
 
 For historical research on Java deserialization and defensive allowlisting, see [Java Deserialization Attacks — German OWASP Day 2016](../assets/Deserialization_Cheat_Sheet_GOD16Deserialization.pdf).
 
-The following techniques are all good for preventing attacks against deserialization against [Java's Serializable format](https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html).
+The following techniques can reduce risks when using [Java's Serializable format](https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html).
 
 Implementation advice:
 
-- In your code, override the `ObjectInputStream#resolveClass()` method to prevent arbitrary classes from being deserialized. This safe behavior can be wrapped in a library like [SerialKiller](https://github.com/ikkisoft/SerialKiller).
-- Use a safe replacement for the generic `readObject()` method as seen here. Note that this addresses "[billion laughs](https://en.wikipedia.org/wiki/Billion_laughs_attack)" type attacks by checking input length and number of objects deserialized.
+- Configure [serialization filters](https://docs.oracle.com/en/java/javase/17/core/serialization-filtering1.html) with an application-specific class allowlist and resource limits before reading objects.
+- If maintaining a `resolveClass()` override, account for its [limitations below](#harden-your-own-javaioobjectinputstream); class checks alone do not bound resource consumption.
 
 #### Clear-box Review
 
@@ -116,16 +116,16 @@ private final void readObject(ObjectInputStream in) throws java.io.IOException {
 
 #### Harden Your Own java.io.ObjectInputStream
 
-The `java.io.ObjectInputStream` class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:
+The `java.io.ObjectInputStream` class is used to deserialize objects. A custom class-resolution allowlist may be useful if:
 
 - you can change the code that does the deserialization;
 - you know what classes you expect to deserialize.
 
-The general idea is to override [`ObjectInputStream.html#resolveClass()`](http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)) in order to restrict which classes are allowed to be deserialized.
+The general idea is to override `ObjectInputStream.resolveClass()` to restrict ordinary class resolution during deserialization.
 
-Because this call happens before a `readObject()` is called, you can be sure that no deserialization activity will occur unless the type is one that you allow.
+This does not check every object: the [serialization specification](https://docs.oracle.com/en/java/javase/17/docs/specs/serialization/input.html#the-objectinputstream-class) handles strings separately and resolves dynamic proxy class descriptors through `resolveProxyClass()`.
 
-A simple example is shown here, where the `LookAheadObjectInputStream` class is guaranteed to **not** deserialize any other type besides the `Bicycle` class:
+The following example allows only `Bicycle` through `resolveClass()`. It is an illustrative class check, not a complete deserialization defense:
 
 ```java
 public class LookAheadObjectInputStream extends ObjectInputStream {
@@ -135,7 +135,7 @@ public class LookAheadObjectInputStream extends ObjectInputStream {
     }
 
     /**
-    * Only deserialize instances of our expected Bicycle class
+    * Restrict ordinary class resolution to our expected Bicycle class
     */
     @Override
     protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {
@@ -146,6 +146,8 @@ public class LookAheadObjectInputStream extends ObjectInputStream {
     }
 }
 ```
+
+Use [serialization filtering](https://docs.oracle.com/en/java/javase/17/core/serialization-filtering1.html) to combine a class allowlist with limits on graph depth, references, array lengths, and stream bytes. Also bound the serialized input size separately: filters are not called for concretely encoded strings or primitives. Filtering does not make arbitrary untrusted deserialization safe.
 
 More complete implementations of this approach have been proposed by various community members:
 
