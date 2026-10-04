@@ -21,7 +21,7 @@ Docker socket _/var/run/docker.sock_ is the UNIX socket that Docker is listening
 **Do not enable _tcp_ Docker daemon socket.** If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing unencrypted and unauthenticated direct access to the Docker daemon, if the host is internet connected this means the docker daemon on your computer can be used by anyone from the public internet.
 If you really, **really** have to do this, you should secure it. Check how to do this following [Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option).
 
-**Do not expose _/var/run/docker.sock_ to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker compose file is something like this:
+**Do not expose _/var/run/docker.sock_ to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Mounting the socket read-only does not make the Docker API read-only: a process that can connect to the socket can still send requests that modify containers or the host. Docker grants access to all daemon commands by default; filesystem mount flags do not replace [API authorization](https://docs.docker.com/engine/extend/plugins_authorization/). Equivalent in the docker compose file is something like this:
 
 ```yaml
 volumes:
