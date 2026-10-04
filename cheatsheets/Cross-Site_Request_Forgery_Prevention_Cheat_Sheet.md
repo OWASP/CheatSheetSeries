@@ -550,513 +550,55 @@ Full source is located [here](https://github.com/righettod/poc-csrf) and provide
 
 ## JavaScript: Automatically Including CSRF Tokens as an AJAX Request Header
 
-The following guidance for JavaScript by default considers **GET**, **HEAD** and **OPTIONS** methods as safe operations. Therefore **GET**, **HEAD**, and **OPTIONS** method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header (although this is a bad practice, and should be avoided).
+Prefer your HTTP client's maintained CSRF integration over global request overrides. For example, [Angular limits its built-in XSRF header to mutating requests to relative and same-origin URLs](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security). Attach tokens only to the application endpoints that validate them; sending a token to an unrelated origin can disclose it to that server if its CORS policy permits the request.
 
-The **POST**, **PUT**, **PATCH**, and **DELETE** methods, being state changing verbs, should have a CSRF token attached to the request. The following guidance will demonstrate how to create overrides in JavaScript libraries to have CSRF tokens included automatically with every AJAX request for the state changing methods mentioned above.
+Keep `GET`, `HEAD`, and `OPTIONS` free of state changes. The server must validate the token on every protected state-changing request; adding a client header alone does not enforce CSRF protection.
 
 ### Storing the CSRF Token Value in the DOM
 
-A CSRF token can be included in the `<meta>` tag as shown below. All subsequent calls in the page can extract the CSRF token from this `<meta>` tag. It can also be stored in a JavaScript variable or anywhere on the DOM. However, it is not recommended to store the CSRF token in cookies or browser local storage.
+For the [synchronizer token pattern](#synchronizer-token-pattern), the server can include the token in the page, such as a `<meta>` element, and the client can read it when constructing protected requests. Use your template's attribute encoder when rendering the value. Do not put tokens in URLs or logs.
 
-The following code snippet can be used to include a CSRF token as a `<meta>` tag:
-
-```html
-<meta name="csrf-token" content="{{ csrf_token() }}">
-```
-
-The exact syntax of populating the content attribute would depend on your web application's backend programming language.
+For a cookie-to-header integration, configure the server to issue and validate the token according to the [Signed Double-Submit Cookie pattern](#signed-double-submit-cookie-recommended). The token cookie must be readable by the client, while the authentication cookie should remain `HttpOnly`.
 
 ### Overriding Defaults to Set Custom Header
 
-Several JavaScript libraries allow you to override default settings to have a header added automatically to all AJAX requests.
+Restrict token attachment by the origin of the resolved request URL, not just its HTTP method or a presumed `baseURL`. Cross-origin API integrations need an explicit list of trusted destinations and a matching server-side CSRF policy. [CORS preflight does not keep a manually attached token secret from a destination that allows the request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#preflighted_requests).
 
 #### XMLHttpRequest (Native JavaScript)
 
-XMLHttpRequest's open() method can be overridden to set the `X-CSRF-Token` header whenever the `open()` method is invoked next. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
-
-This can be done as demonstrated in the following code snippet:
-
-```html
-<script type="text/javascript">
-    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-
-    const csrfSafeMethod = (method) => {
-        // these HTTP methods do not require CSRF protection
-        return /^(GET|HEAD|OPTIONS)$/.test(method);
-    };
-
-    const originalOpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(...args) {
-        const result = originalOpen.apply(this, args);
-
-        if (!csrfSafeMethod(args[0])) {
-            this.setRequestHeader('X-CSRF-Token', csrf_token);
-        }
-
-        return result;
-    };
-</script>
-```
+Set the CSRF header when constructing a request to a protected application endpoint. Avoid replacing `XMLHttpRequest.prototype.open` globally: unrelated requests also use it and could receive the token.
 
 #### CSRF Prevention in modern Frameworks
 
-Modern Single Page Application (SPA) frameworks like Angular, React, and Vue typically rely on the cookie-to-header pattern to mitigate Cross-Site Request Forgery (CSRF) attacks. This approach leverages the fact that browsers automatically attach cookies to cross-origin requests, but only JavaScript running on the same origin can read values and set custom headers—making it possible to detect and block forged requests. The cookie-to-header pattern works as follows:
-
-1. Server generates a CSRF token: When a user authenticates or loads the app, the server sets a CSRF token in a cookie (e.g., `XSRF-TOKEN`). This cookie is accessible via JavaScript (i.e., not `HttpOnly`) and typically has `SameSite=Lax` or `Strict`.
-2. Client reads the token: The SPA (often using a library like Angular's HttpClient or axios in React/Vue) reads the CSRF token from the cookie.
-3. Client attaches the token to a custom header: For each state-changing request (`POST`, `PUT`, `DELETE`, etc.), the client sets the token as a custom HTTP header (commonly `X-XSRF-TOKEN` or `X-CSRF-TOKEN`).
-4. Server validates the token: The server checks whether the token from the header matches the one from the cookie. If they match, the request is accepted; if not, it is rejected as potentially forged.
-
-Angular provides this pattern out of the box, automatically handling steps 2 and 3 via its HttpClient.
-In contrast, frameworks like React and Vue require developers to implement this logic manually or with helper libraries such as axios interceptors. This pattern ensures that even if a browser includes cookies with a forged request, the attacker cannot set the matching custom header from another origin.
+Client frameworks do not replace server-side CSRF validation. Use a maintained HTTP client integration and verify which request destinations receive the token.
 
 #### Angular
 
-Angular's HttpClient supports the Cookie-to-Header Pattern used to prevent XSRF attacks. When performing HTTP requests, an interceptor reads a token from a cookie, by default `XSRF-TOKEN`, and sets it as an HTTP header, `X-XSRF-TOKEN`. Further documentation can be found at Angular's documentation for [HttpClient XSRF/CSRF security](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security).
-
-```typescript
-// app.config.ts
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(withXsrfConfiguration({})),
-    provideRouter(routes, withComponentInputBinding()),
-  ],
-};
-```
-
-This code snippet has been tested with Angular version 19.2.11.
+Use [Angular's `HttpClient` XSRF integration](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security), and configure the backend to issue the token cookie and validate the matching header. Keep its restriction to relative and same-origin destinations. Use `withXsrfConfiguration` when the server uses different cookie or header names.
 
 #### React
 
-For React applications, you can use axios interceptors to implement the cookie-to-header pattern:
-
-```jsx
-// csrf-protection.js
-import axios from 'axios';
-
-// Function to get the CSRF token from cookies
-const getCsrfToken = () => {
-  const tokenCookie = document.cookie
-    .split('; ')
-    .find(cookie => cookie.startsWith('XSRF-TOKEN='));
-  
-  return tokenCookie ? tokenCookie.split('=')[1] : '';
-};
-
-// Create an axios instance with interceptors
-const api = axios.create();
-
-// Add a request interceptor to include the CSRF token in headers
-api.interceptors.request.use(config => {
-  // Only add for state-changing methods
-  if (!/^(GET|HEAD|OPTIONS)$/i.test(config.method)) {
-    config.headers['X-CSRF-Token'] = getCsrfToken();
-  }
-  return config;
-});
-
-export default api;
-```
+React applications need an HTTP client and matching server-side CSRF protection. For Axios clients, use the configuration described below rather than an interceptor that adds the token to every mutating request.
 
 #### Axios
 
-[Axios](https://github.com/axios/axios) allows us to set default headers for the POST, PUT, DELETE and PATCH actions.
-
-```html
-<script type="text/javascript">
-    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-
-    // Set CSRF token for state-changing methods
-    axios.defaults.headers.post['X-CSRF-Token'] = csrf_token;
-    axios.defaults.headers.put['X-CSRF-Token'] = csrf_token;
-    axios.defaults.headers.delete['X-CSRF-Token'] = csrf_token;
-    axios.defaults.headers.patch['X-CSRF-Token'] = csrf_token;
-
-    // For TRACE method
-    axios.defaults.headers.trace = {
-        'X-CSRF-Token': csrf_token
-    };
-
-    // Alternative: Using interceptors for all requests
-    axios.interceptors.request.use(config => {
-        // Only add for state-changing methods
-        if (!/^(GET|HEAD|OPTIONS)$/i.test(config.method)) {
-            config.headers['X-CSRF-Token'] = csrf_token;
-        }
-        return config;
-    });
-</script>
-```
-
-This code snippet has been tested with Axios version 1.9.0.
+Use Axios's maintained XSRF cookie-to-header support with cookie and header names that match the backend. Its [`withXSRFToken` default attaches the header only to same-origin requests](https://axios.rest/pages/advanced/request-config#withxsrftoken). Do not enable token attachment to every cross-origin destination or put the token in global method defaults.
 
 #### jQuery
 
-JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `X-CSRF-Token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
-
-You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
-
-```html
-<script type="text/javascript">
-    const csrf_token = $('meta[name="csrf-token"]').attr('content');
-
-    const csrfSafeMethod = method => {
-        // these HTTP methods do not require CSRF protection
-        return /^(GET|HEAD|OPTIONS)$/i.test(method);
-    };
-
-    $.ajaxSetup({
-        beforeSend: (xhr, settings) => {
-            if (!csrfSafeMethod(settings.type) && !settings.crossDomain) {
-                xhr.setRequestHeader("X-CSRF-Token", csrf_token);
-            }
-        }
-    });
-</script>
-```
-
-This code snippet has been tested with jQuery version 3.7.1.
+If using `beforeSend` to attach the token, limit it to protected state-changing requests to the same origin. Keep the destination check as well as the method check.
 
 ### TypeScript Utilities for CSRF Protection
 
-TypeScript allows you to create strongly typed utilities for CSRF protection. Here's a reusable utility module for CSRF token management:
-
-```typescript
-// csrf-protection.ts
-
-/**
- * Configuration options for CSRF protection
- */
-interface CSRFOptions {
-  /** Cookie name where the CSRF token is stored */
-  cookieName: string;
-  /** HTTP header name to use when sending the token */
-  headerName: string;
-  /** HTTP methods that require CSRF protection */
-  unsafeMethods: string[];
-}
-
-/**
- * Default configuration for CSRF protection
- */
-const DEFAULT_CSRF_OPTIONS: CSRFOptions = {
-  cookieName: 'XSRF-TOKEN',
-  headerName: 'X-CSRF-Token',
-  unsafeMethods: ['POST', 'PUT', 'PATCH', 'DELETE']
-};
-
-/**
- * CSRF Protection utility class
- */
-export class CSRFProtection {
-  private options: CSRFOptions;
-
-  constructor(options: Partial<CSRFOptions> = {}) {
-    this.options = { ...DEFAULT_CSRF_OPTIONS, ...options };
-  }
-
-  /**
-   * Extract CSRF token from cookies
-   * @returns The CSRF token or empty string if not found
-   */
-  public getToken(): string {
-    const cookieValue = document.cookie
-      .split('; ')
-      .find(cookie => cookie.startsWith(`${this.options.cookieName}=`));
-
-    return cookieValue ? cookieValue.split('=')[1] : '';
-  }
-
-  /**
-   * Check if the given HTTP method requires CSRF protection
-   */
-  public requiresProtection(method: string): boolean {
-    return this.options.unsafeMethods.includes(method.toUpperCase());
-  }
-
-  /**
-   * Add CSRF token to the provided headers object if needed
-   */
-  public addTokenToHeaders(method: string, headers: Record<string, string>): Record<string, string> {
-    if (this.requiresProtection(method)) {
-      const token = this.getToken();
-      if (token) {
-        headers[this.options.headerName] = token;
-      }
-    }
-    return headers;
-  }
-}
-
-// Usage example:
-// const csrfProtection = new CSRFProtection();
-// const headers = csrfProtection.addTokenToHeaders('POST', {});
-```
+TypeScript types do not enforce a CSRF trust boundary. Use the same destination restrictions and server validation as other JavaScript clients; avoid maintaining separate generic token parsers and request wrappers solely for each framework.
 
 #### Angular with TypeScript
 
-Angular is built with TypeScript, making it a natural fit for strongly-typed CSRF protection. The example below shows how to configure Angular's CSRF protection with TypeScript:
-
-```typescript
-// app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withXsrfConfiguration } from '@angular/common/http';
-
-import { routes } from './app.routes';
-
-// Configure CSRF protection with custom options
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(
-      withXsrfConfiguration({
-        cookieName: 'XSRF-TOKEN', // Name of cookie containing token
-        headerName: 'X-XSRF-TOKEN' // Header name for token submission
-      })
-    ),
-    provideRouter(routes)
-  ]
-};
-```
-
-For a custom HTTP interceptor that handles CSRF tokens:
-
-```typescript
-// csrf.interceptor.ts
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-@Injectable()
-export class CsrfInterceptor implements HttpInterceptor {
-  private readonly TOKEN_HEADER_NAME = 'X-CSRF-Token';
-  private readonly SAFE_METHODS = ['GET', 'HEAD', 'OPTIONS'];
-
-  constructor() {}
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // Skip CSRF protection for safe methods
-    if (this.SAFE_METHODS.includes(request.method)) {
-      return next.handle(request);
-    }
-
-    // Get token from cookie
-    const token = this.getTokenFromCookie();
-
-    if (token) {
-      // Clone the request and add the CSRF token header
-      const modifiedRequest = request.clone({
-        headers: request.headers.set(this.TOKEN_HEADER_NAME, token)
-      });
-      return next.handle(modifiedRequest);
-    }
-
-    return next.handle(request);
-  }
-
-  private getTokenFromCookie(): string {
-    const tokenCookie = document.cookie
-      .split('; ')
-      .find(cookie => cookie.startsWith('XSRF-TOKEN='));
-
-    return tokenCookie ? tokenCookie.split('=')[1] : '';
-  }
-}
-```
+Use Angular's built-in integration described above instead of a custom interceptor that sends a token to every destination.
 
 #### React with TypeScript
 
-Here's a TypeScript implementation for React applications using axios:
-
-```typescript
-// csrf-axios.ts
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-
-/**
- * Create an axios instance with CSRF protection
- */
-export function createCSRFProtectedAxios(
-  options: {
-    baseURL?: string;
-    csrfHeaderName?: string;
-    csrfCookieName?: string;
-  } = {}
-): AxiosInstance {
-  const {
-    baseURL = '',
-    csrfHeaderName = 'X-CSRF-Token',
-    csrfCookieName = 'XSRF-TOKEN'
-  } = options;
-
-  // Create axios instance
-  const instance = axios.create({ baseURL });
-
-  // Add CSRF token interceptor
-  instance.interceptors.request.use((config: AxiosRequestConfig) => {
-    // Only add for non-GET requests
-    if (config.method && !['get', 'head', 'options'].includes(config.method.toLowerCase())) {
-      const token = getCsrfToken(csrfCookieName);
-
-      if (token && config.headers) {
-        config.headers[csrfHeaderName] = token;
-      }
-    }
-    return config;
-  });
-
-  return instance;
-}
-
-/**
- * Extract CSRF token from cookies
- */
-function getCsrfToken(cookieName: string): string {
-  const tokenCookie = document.cookie
-    .split('; ')
-    .find(cookie => cookie.startsWith(`${cookieName}=`));
-  
-  return tokenCookie ? tokenCookie.split('=')[1] : '';
-}
-
-// USAGE EXAMPLE
-
-// Define api.ts
-// import { createCSRFProtectedAxios } from './csrf-axios';
-// export const api = createCSRFProtectedAxios({
-//   baseURL: '/api',
-//   csrfHeaderName: 'X-CSRF-Token'
-// });
-
-// In a React component:
-// import { api } from './api';
-// 
-// function UserProfile() {
-//   const updateUser = async (userData: UserData) => {
-//     try {
-//       // CSRF token is automatically added
-//       const response = await api.post('/users/profile', userData);
-//       return response.data;
-//     } catch (error) {
-//       console.error('Failed to update profile', error);
-//     }
-//   };
-//   
-//   // Rest of component...
-// }
-```
-
-For React applications using fetch API with TypeScript:
-
-```typescript
-// csrf-fetch.ts
-
-/**
- * Interface for CSRF protection options
- */
-interface CSRFFetchOptions {
-  csrfHeaderName: string;
-  csrfCookieName: string;
-  baseUrl: string;
-}
-
-/**
- * A wrapper around fetch API with CSRF protection
- */
-export class CSRFProtectedFetch {
-  private options: CSRFFetchOptions;
-
-  constructor(options: Partial<CSRFFetchOptions> = {}) {
-    this.options = {
-      csrfHeaderName: 'X-CSRF-Token',
-      csrfCookieName: 'XSRF-TOKEN',
-      baseUrl: '',
-      ...options
-    };
-  }
-
-  /**
-   * Performs a fetch request with CSRF protection
-   */
-  public async fetch<T>(
-    url: string, 
-    options: RequestInit = {}
-  ): Promise<T> {
-    const { method = 'GET' } = options;
-    const fullUrl = `${this.options.baseUrl}${url}`;
-
-    // Create headers with CSRF token for unsafe methods
-    const headers = new Headers(options.headers);
-
-    if (!['GET', 'HEAD', 'OPTIONS'].includes(method.toUpperCase())) {
-      const token = this.getCsrfToken();
-      if (token) {
-        headers.append(this.options.csrfHeaderName, token);
-      }
-    }
-
-    // Perform request
-    const response = await fetch(fullUrl, {
-      ...options,
-      headers
-    });
-
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
-
-    return response.json();
-  }
-
-  /**
-   * Shorthand for POST requests
-   */
-  public async post<T>(url: string, data: any, options: RequestInit = {}): Promise<T> {
-    return this.fetch<T>(url, {
-      ...options,
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        ...options.headers,
-        'Content-Type': 'application/json'
-      }
-    });
-  }
-
-  /**
-   * Extract CSRF token from cookies
-   */
-  private getCsrfToken(): string {
-    const tokenCookie = document.cookie
-      .split('; ')
-      .find(cookie => cookie.startsWith(`${this.options.csrfCookieName}=`));
-
-    return tokenCookie ? tokenCookie.split('=')[1] : '';
-  }
-}
-
-// USAGE EXAMPLE
-
-// Create an instance
-// const api = new CSRFProtectedFetch({
-//   baseUrl: '/api',
-//   csrfHeaderName: 'X-CSRF-Token'
-// });
-// 
-// // In React component
-// const updateUser = async (userData: UserData) => {
-//   try {
-//     // CSRF token is automatically added
-//     return await api.post('/users/profile', userData);
-//   } catch (error) {
-//     console.error('Failed to update profile', error);
-//   }
-// };
-```
+Use a maintained HTTP client integration as described above. If the application uses `fetch` directly, attach the token only after validating that the resolved URL targets an explicitly trusted application endpoint. Test relative URLs, absolute URLs, and rejected external destinations.
 
 ## References
 
