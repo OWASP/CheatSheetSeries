@@ -3805,6 +3805,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Server_Side_Template_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server Side Template Injection Prevention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Serverless_FaaS_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -5099,7 +5127,7 @@
 </code></pre></div>
 <p>In order to add a variable to a HTML context safely to a web template, use HTML entity encoding for that variable.</p>
 <p>Here are some examples of encoded values for specific characters:</p>
-<p>If you're using JavaScript for writing to HTML, look at the <code>.textContent</code> attribute. It is a <strong>Safe Sink</strong> and will automatically HTML Entity Encode.</p>
+<p>When displaying text with JavaScript, assign it to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent"><code>textContent</code> property</a> of an ordinary element such as a <code>&lt;div&gt;</code>. This creates a text node without parsing HTML; it does not HTML-encode the value. Pass the original text without pre-encoding it. Do not use it for untrusted script or style content; <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLScriptElement/textContent"><code>HTMLScriptElement.textContent</code></a> sets executable code.</p>
 <div class="highlight"><pre><span></span><code><span class="err">&amp;</span>    <span class="ni">&amp;amp;</span>
 <span class="err">&lt;</span>    <span class="ni">&amp;lt;</span>
 &gt;    <span class="ni">&amp;gt;</span>
@@ -5127,10 +5155,7 @@
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"$varUnsafe"</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">"property : $varUnsafe"</span><span class="p">&gt;</span>Oh no<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>If you're using JavaScript to change a CSS property, look into using
-<code>style.property = x</code>.
-This is a <strong>Safe Sink</strong> and will automatically CSS encode data in it.</p>
-<p>When inserting variables into CSS properties, ensure the data is properly encoded and sanitized to prevent injection attacks. Avoid placing variables directly into selectors or other CSS contexts.</p>
+<p>When changing styles with JavaScript, use a fixed property such as <code>element.style.color</code> with a value from an application-defined allowlist. <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty">CSS property assignment</a> sets a CSS value; it does not automatically CSS-encode it. Do not let untrusted input choose the property or supply an entire declaration block. Properties that accept URLs require URL validation as well.</p>
 <h3 id="output-encoding-for-url-contexts">Output Encoding for “URL Contexts”<a class="headerlink" href="#output-encoding-for-url-contexts" title="Permanent link">&para;</a></h3>
 <p>“URL Contexts” refer to variables placed into a URL. Most commonly, a developer will add a parameter or URL fragment to a URL base that is then displayed or used in some operation. Use URL Encoding for these scenarios.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"http://www.owasp.org?test=$varUnsafe"</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
@@ -5174,7 +5199,7 @@ This is a <strong>Safe Sink</strong> and will automatically CSS encode data in i
 <p>Security professionals often talk in terms of sources and sinks. If you pollute a river, it'll flow downstream somewhere. It’s the same with computer security. XSS sinks are places where variables are placed into your webpage.</p>
 <p>Thankfully, many sinks where variables can be placed are safe. This is because these sinks treat the variable as text and will never execute it. Try to refactor your code to remove references to unsafe sinks like innerHTML, and instead use textContent or value.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">elem</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">insertAdjacentText</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">insertAdjacentText</span><span class="p">(</span><span class="s2">"beforeend"</span><span class="p">,</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">);</span>
 <span class="nx">elem</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span>
 <span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">safeName</span><span class="p">,</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">);</span>
 <span class="nx">formfield</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span>
@@ -5182,6 +5207,7 @@ This is a <strong>Safe Sink</strong> and will automatically CSS encode data in i
 <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
 <span class="nx">elem</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dangerVar</span><span class="p">);</span>
 </code></pre></div>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentText"><code>insertAdjacentText()</code></a> requires a position and a text value. In the example, <code>"beforeend"</code> appends a text node inside the element. Use text sinks on ordinary elements, not script or style elements.</p>
 <p><strong>Safe HTML Attributes include:</strong> <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
 <p>For attributes not reported above, ensure that if JavaScript code is provided as a value, it cannot be executed.</p>
 <h2 id="other-controls">Other Controls<a class="headerlink" href="#other-controls" title="Permanent link">&para;</a></h2>

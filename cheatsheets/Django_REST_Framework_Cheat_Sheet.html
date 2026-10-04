@@ -3771,6 +3771,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Server_Side_Template_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server Side Template Injection Prevention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Serverless_FaaS_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -5028,8 +5056,8 @@
 <h3 id="api32019-excessive-data-exposure">API3:2019 Excessive Data Exposure<a class="headerlink" href="#api32019-excessive-data-exposure" title="Permanent link">&para;</a></h3>
 <p>To prevent this problem, only display the minimum amount of required information. Make sure you review the serializer and the information you are displaying. If the serializer is inheriting from ModelSerializer, DO NOT use the exclude Meta property.</p>
 <h3 id="api42019-lack-of-resources-rate-limiting">API4:2019 Lack of Resources &amp; Rate Limiting<a class="headerlink" href="#api42019-lack-of-resources-rate-limiting" title="Permanent link">&para;</a></h3>
-<p>To prevent this problem, configure the setting DEFAULT_THROTTLE_CLASSES and DO NOT overwrite the throttle class on a class-based (variable <code>throttle_classes</code>) or function-based (decorator <code>throttle_classes</code>) view, unless you are confident about the change and understand the impact.</p>
-<p>EXTRA: If possible, do rate limiting with a WAF or similar. DRF should be the last layer of rate limiting.</p>
+<p>Configure <code>DEFAULT_THROTTLE_CLASSES</code> and <code>DEFAULT_THROTTLE_RATES</code> for application usage policies, and review any per-view overrides. DRF explicitly warns that its <a href="https://www.django-rest-framework.org/api-guide/throttling/">built-in throttling is not a security defense against brute force or denial-of-service attacks</a>. Its cache operations are non-atomic, so concurrent requests can exceed the configured limit.</p>
+<p>Enforce abuse controls at the reverse proxy or API gateway as well as in the application. Apply request-size and resource limits; see the <a href="Denial_of_Service_Cheat_Sheet.html">Denial of Service Cheat Sheet</a> for layered defenses.</p>
 <h3 id="api52019-broken-function-level-authorization">API5:2019 Broken Function Level Authorization<a class="headerlink" href="#api52019-broken-function-level-authorization" title="Permanent link">&para;</a></h3>
 <p>To stop this problem, change the default value (<code>'rest_framework.permissions.AllowAny'</code>) of DEFAULT_PERMISSION_CLASSES. Use the setting value DEFAULT_PERMISSION_CLASSES with the correct classes for your project.</p>
 <p>DO NOT use <code>rest_framework.permissions.AllowAny</code> except for public API endpoints and DO NOT overwrite the authorization class on a class-based (variable <code>permission_classes</code>) or function-based (decorator <code>permission_classes</code>) view unless you are confident about the change and understand the impact.</p>

@@ -4173,6 +4173,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Server_Side_Template_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server Side Template Injection Prevention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Serverless_FaaS_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -5809,7 +5837,7 @@
 <p>Not all controls need to be implemented at once. The following priority guide helps organizations focus on the highest-impact controls first:</p>
 <p><strong>Implement immediately (foundational):</strong></p>
 <ul>
-<li>Document hashing and integrity verification at ingestion (Section 1)</li>
+<li>Document provenance and integrity verification against a protected baseline (Section 1)</li>
 <li>Context window protection with delimiters and chunk limits (Section 3)</li>
 <li>Access control metadata on every vector chunk (Section 4)</li>
 <li>Tenant and classification isolation in vector stores (Section 6)</li>
@@ -5844,8 +5872,9 @@
 </ul>
 <h3 id="do">Do<a class="headerlink" href="#do" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Hash every document at ingestion time (SHA-256 minimum) and store the hash alongside the document metadata.</li>
-<li>Verify document hashes before retrieval. If the hash does not match, reject the document and alert the security team.</li>
+<li>Record a SHA-256 digest of each approved document in a separately controlled manifest. An attacker who can replace both a document and its stored digest can make a modified document pass the hash check.</li>
+<li>Protect the manifest with a digital signature or a <a href="https://csrc.nist.gov/Projects/message-authentication-codes">message authentication code (MAC)</a>, keeping signing or MAC keys outside the document store's write permissions. Verify the manifest's authenticity and the document's digest before retrieval; reject failures and alert the security team.</li>
+<li>A matching digest establishes consistency with the approved baseline, not that the content is safe or free of prompt injection. Review and authorize baseline updates separately from ordinary document writes.</li>
 <li>Implement document provenance tracking -- record who uploaded the document, when, from what source, and with what approval.</li>
 <li>Scan ingested documents for known adversarial patterns (prompt injection markers, hidden instructions, invisible Unicode characters, zero-width spaces).</li>
 <li>Maintain an allowlist of trusted document sources and reject documents from unknown or unapproved sources.</li>
