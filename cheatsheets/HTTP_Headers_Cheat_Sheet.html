@@ -6130,7 +6130,7 @@
 <p><code>Cross-Origin-Embedder-Policy: require-corp</code></p>
 </blockquote>
 <ul>
-<li><em>NOTE</em>: you can bypass it for specific resources by adding the <code>crossorigin</code> attribute:</li>
+<li><em>NOTE</em>: The <code>crossorigin</code> attribute requests the resource in CORS mode. The resource server must <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy#require-corp">permit the request through CORS</a>; the attribute alone does not grant permission:</li>
 <li><code>&lt;img src="https://thirdparty.com/img.png" crossorigin&gt;</code></li>
 </ul>
 <h3 id="cross-origin-resource-policy-corp">Cross-Origin-Resource-Policy (CORP)<a class="headerlink" href="#cross-origin-resource-policy-corp" title="Permanent link">&para;</a></h3>

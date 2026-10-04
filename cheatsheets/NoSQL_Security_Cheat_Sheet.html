@@ -4843,10 +4843,11 @@ This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p
 <span class="kd">const</span><span class="w"> </span><span class="nx">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="p">};</span>
 <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">'users'</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="nx">filter</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Safe (whitelisting for operators):</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Reject operator injection by disallowing $ in keys or operator values</span>
+<p><strong>Additional pattern rejection:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Reject a pattern in the serialized request body.</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">includes</span><span class="p">(</span><span class="s1">'"$'</span><span class="p">))</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">"Invalid input"</span><span class="p">);</span>
 </code></pre></div>
+<p>This <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#description"><code>JSON.stringify()</code></a> check is a denylist, not an operator allowlist. It also rejects ordinary string values that begin with <code>$</code>, and it does not validate allowed fields or their types. Use <a href="Input_Validation_Cheat_Sheet.html#input-validation-strategies">field-specific validation</a> before building queries.</p>
 <p>Notes:</p>
 <ul>
 <li>Do <strong>not</strong> accept raw JSON fragments from the client to execute as queries.</li>
@@ -4887,7 +4888,7 @@ This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p
 <h3 id="configuration-hardening">Configuration Hardening<a class="headerlink" href="#configuration-hardening" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Change default ports and disable sample/demo users.</li>
-<li>Turn off or restrict features that execute code on the server (e.g., MongoDB <code>db.eval</code>, server-side scripting).</li>
+<li>Turn off or restrict features that execute code on the server, such as <a href="https://www.mongodb.com/docs/drivers/client-libraries-best-practices/#restrict-server-side-javascript-execution">MongoDB server-side JavaScript</a>.</li>
 <li>Require TLS for internal replication links where supported.</li>
 </ul>
 <h3 id="secrets-management">Secrets Management<a class="headerlink" href="#secrets-management" title="Permanent link">&para;</a></h3>

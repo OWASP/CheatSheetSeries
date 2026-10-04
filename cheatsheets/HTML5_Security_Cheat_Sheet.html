@@ -4858,7 +4858,7 @@
 </ul>
 <h3 id="server-sent-events">Server-Sent Events<a class="headerlink" href="#server-sent-events" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Validate URLs passed to the <code>EventSource</code> constructor, even though only same-origin URLs are allowed.</li>
+<li>Validate URLs passed to the <code>EventSource</code> constructor. <a href="https://html.spec.whatwg.org/multipage/server-sent-events.html#dom-eventsource">Cross-origin connections use CORS</a> and require permission from the event-stream server.</li>
 <li>As mentioned before, process the messages (<code>event.data</code>) as data and never evaluate the content as HTML or script code.</li>
 <li>Always check the origin attribute of the message (<code>event.origin</code>) to ensure the message is coming from a trusted domain. Use an allow-list approach.</li>
 </ul>

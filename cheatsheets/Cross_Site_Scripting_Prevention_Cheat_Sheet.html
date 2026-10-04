@@ -5101,7 +5101,7 @@
 <ul>
 <li><em>escape hatches</em> that frameworks use to directly manipulate the DOM</li>
 <li>React’s <code>dangerouslySetInnerHTML</code> without sanitizing the HTML</li>
-<li>React cannot handle <code>javascript:</code> or <code>data:</code> URLs without specialized validation</li>
+<li>Unvalidated URL values: <a href="https://react.dev/blog/2024/04/25/react-19-upgrade-guide#other-breaking-changes">React 19 blocks <code>javascript:</code> URLs in <code>src</code> and <code>href</code></a>, but this does not replace application-specific <a href="#xss-prevention-rules-summary">URL validation</a></li>
 <li>Angular’s <code>bypassSecurityTrustAs*</code> functions</li>
 <li>Lit's <code>unsafeHTML</code> function</li>
 <li>Polymer's <code>inner-h-t-m-l</code> attribute and <code>htmlLiteral</code> function</li>

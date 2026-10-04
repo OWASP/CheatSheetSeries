@@ -4832,8 +4832,7 @@ Java Naming and Directory Interface (JNDI) metacharacters and LDAP special chara
 </code></pre></div>
 <p>For more information on search filter escaping visit <a href="https://datatracker.ietf.org/doc/html/rfc4515#section-3">RFC4515</a>.</p>
 <h4 id="safe-java-escaping-example">Safe Java Escaping Example<a class="headerlink" href="#safe-java-escaping-example" title="Permanent link">&para;</a></h4>
-<p>The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
-only letters and spaces.</p>
+<p>The following example validates <code>userSN</code> with an allowlist. With Java's default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#predef">predefined character classes</a>, it accepts ASCII letters, digits, underscores, and whitespace (including tabs and line breaks); <code>*</code> also permits an empty string. This illustrative rule is not a general validation policy for personal names. Choose an allowlist that matches the application's requirements and apply the appropriate LDAP escaping for values outside that restricted set.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// String userSN = "Sherlock Holmes"; // Valid</span>
 <span class="c1">// ... beginning of LDAPInjection.searchRecord()...</span>
 <span class="n">sc</span><span class="p">.</span><span class="na">setSearchScope</span><span class="p">(</span><span class="n">SearchControls</span><span class="p">.</span><span class="na">SUBTREE_SCOPE</span><span class="p">);</span>

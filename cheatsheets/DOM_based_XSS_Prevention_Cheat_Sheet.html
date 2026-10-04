@@ -5259,16 +5259,14 @@
 
 <h1 id="dom-based-xss-prevention-cheat-sheet">DOM based XSS Prevention Cheat Sheet<a class="headerlink" href="#dom-based-xss-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>When looking at XSS (Cross-Site Scripting), there are three generally recognized forms of <a href="https://owasp.org/www-community/attacks/xss/">XSS</a>:</p>
+<p>Commonly discussed, overlapping categories of <a href="https://owasp.org/www-community/attacks/xss/">XSS (Cross-Site Scripting)</a> include:</p>
 <ul>
 <li><a href="https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks">Reflected or Stored</a></li>
 <li><a href="https://owasp.org/www-community/attacks/DOM_Based_XSS">DOM Based XSS</a>.</li>
 </ul>
 <p>The <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheatsheet</a> does an excellent job of addressing Reflected and Stored XSS. This cheatsheet addresses DOM (Document Object Model) based XSS and is an extension (and assumes comprehension) of the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheatsheet</a>.</p>
-<p>In order to understand DOM based XSS, one needs to see the fundamental difference between Reflected and Stored XSS when compared to DOM based XSS. The primary difference is where the attack is injected into the application.</p>
-<p>Reflected and Stored XSS are server side injection issues while DOM based XSS is a client (browser) side injection issue.</p>
-<p>All of this code originates on the server, which means it is the application owner's responsibility to make it safe from XSS, regardless of the type of XSS flaw it is. Also, XSS attacks always <strong>execute</strong> in the browser.</p>
-<p>The difference between Reflected/Stored XSS is where the attack is added or injected into the application. With Reflected/Stored the attack is injected into the application during server-side processing of requests where untrusted input is dynamically added to HTML. For DOM XSS, the attack is injected into the application during runtime in the client directly.</p>
+<p>Stored and reflected describe how an attack payload reaches a victim; server-side and client-side describe where untrusted data is handled unsafely. <a href="https://community.owasp.org/Types_of_Cross-Site_Scripting#types-of-cross-site-scripting">Both stored and reflected XSS can occur on the client or server</a>, including stored and reflected DOM-based XSS.</p>
+<p>For server-side XSS, the server inserts untrusted data into a response without making it safe for its output context. DOM-based XSS arises from unsafe client-side processing. In either case, the injected script executes in the browser; choose controls for the actual data flow and output context.</p>
 <p>When a browser is rendering HTML and any other associated content like CSS or JavaScript, it identifies various rendering contexts for the different kinds of input and follows different rules for each context. A rendering context is associated with the parsing of HTML tags and their attributes.</p>
 <ul>
 <li>The HTML parser of the rendering context dictates how data is presented and laid out on the page and can be further broken down into the standard contexts of HTML, HTML attribute, URL, and CSS.</li>
