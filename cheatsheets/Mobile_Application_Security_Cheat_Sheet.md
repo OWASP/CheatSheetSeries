@@ -79,7 +79,11 @@ secure, revocable access tokens.
 
 ### 3. Passwords and PIN Policy
 
-- Require password complexity.
+- For account passwords, allow long passphrases without character-composition
+requirements and block common or compromised passwords, following
+[NIST's password guidance](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/).
+See [password strength controls](Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls)
+for length and other policy requirements.
 - Do not allow short PINs such as 4 digits.
 - Use platform specific secure storage mechanisms, such as
 Keychain (iOS) or Keystore (Android).
