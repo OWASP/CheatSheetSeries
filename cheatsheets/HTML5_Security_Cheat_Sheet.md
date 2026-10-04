@@ -36,7 +36,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 ### Server-Sent Events
 
-- Validate URLs passed to the `EventSource` constructor, even though only same-origin URLs are allowed.
+- Validate URLs passed to the `EventSource` constructor. [Cross-origin connections use CORS](https://html.spec.whatwg.org/multipage/server-sent-events.html#dom-eventsource) and require permission from the event-stream server.
 - As mentioned before, process the messages (`event.data`) as data and never evaluate the content as HTML or script code.
 - Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use an allow-list approach.
 
