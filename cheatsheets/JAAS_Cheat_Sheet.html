@@ -4802,10 +4802,10 @@ Where:
 </ul>
 <h3 id="commit">commit()<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h3>
 <p>Once the users credentials are successfully verified during <code>login()</code>, the JAAS authentication framework associates the credentials, as needed, with the subject.</p>
-<p>There are two types of credentials, <strong>Public</strong> and <strong>Private</strong>:</p>
+<p>A <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/security/auth/Subject.html"><code>Subject</code> separates credentials by their protection and sharing requirements</a>:</p>
 <ul>
-<li>Public credentials include public keys.</li>
-<li>Private credentials include passwords and public keys.</li>
+<li>Public credentials are intended to be shared, such as public key certificates.</li>
+<li>Private credentials require special protection, such as passwords and private cryptographic keys.</li>
 </ul>
 <p>Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject.</p>
 <p>Implement <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/security/auth/spi/LoginModule.html#commit()"><code>commit()</code></a> using the authentication state saved by <code>login()</code>. Associate principals and credentials with the shared <code>Subject</code> only when this module's authentication succeeded; otherwise, clean up its saved state. Return <code>true</code> on success, <code>false</code> when the module is ignored, or throw <code>LoginException</code> on failure.</p>

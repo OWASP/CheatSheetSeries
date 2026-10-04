@@ -5241,9 +5241,10 @@ If your API is publicly consumed, you might want to consider disabling it for no
 <span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p><em><strong>Disable Introspection &amp; GraphiQL - JavaScript</strong></em></p>
+<p>For existing applications using the <a href="https://github.com/graphql/express-graphql#this-library-is-deprecated">deprecated <code>express-graphql</code> middleware</a>, this illustration assumes <code>NoIntrospection</code> is an imported introspection-denying validation rule. Use a maintained server implementation for new applications.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">'/graphql'</span><span class="p">,</span><span class="w"> </span><span class="nx">graphqlHTTP</span><span class="p">({</span>
 <span class="w">  </span><span class="nx">schema</span><span class="o">:</span><span class="w"> </span><span class="nx">MySessionAwareGraphQLSchema</span><span class="p">,</span>
-<span class="o">+</span><span class="w"> </span><span class="nx">validationRules</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">NoIntrospection</span><span class="p">]</span>
+<span class="w">  </span><span class="nx">validationRules</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">NoIntrospection</span><span class="p">],</span>
 <span class="w">  </span><span class="nx">graphiql</span><span class="o">:</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'development'</span><span class="p">,</span>
 <span class="p">}));</span>
 </code></pre></div>

@@ -6794,7 +6794,7 @@ Kubernetes deprecated Pod Security Policies in favor of Pod Security Standards a
 <li>Privilege escalation is not allowed.</li>
 <li>The root filesystem is read-only.</li>
 <li>The default (masked) /proc filesystem mount is used.</li>
-<li>The host network or process space should NOT be used - using <code>hostNetwork: true</code> will cause NetworkPolicies to be ignored since the Pod will use its host network.</li>
+<li>Avoid sharing the host network or process namespace. <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/#networkpolicy-and-hostnetwork-pods">NetworkPolicy behavior for <code>hostNetwork</code> Pods depends on the network plugin</a>; verify enforcement rather than assuming these Pods receive the same isolation as other Pods.</li>
 <li>Unused and unnecessary Linux capabilities are eliminated.</li>
 <li>Use SELinux options for more fine-grained process controls.</li>
 <li>Give each application its own Kubernetes Service Account.</li>
