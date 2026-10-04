@@ -87,9 +87,7 @@ If there is a possibility that a session has been hijacked, the most reliable ve
 
 However, as mentioned earlier, monitoring sessions has the potential for false positives, so if you have to re-authenticate too often, it will be a poor experience for the user.
 
-An alternative would be to use a CAPTCHA or similar to make a decision. This is particularly useful when a stolen session cookie is being used by a bot or other malicious program.
-
-As a compromise, if there is a suspicion of session hijacking, it could be good practice to display a CAPTCHA for normal browsing, and to use re-authentication to provide reliable protection before accessing confidential information or performing actions with side effects.
+A CAPTCHA may help limit automated abuse, but it does not establish that the requester controls an authenticator bound to the account, which is the basis of [authentication](https://pages.nist.gov/800-63-4/sp800-63b/introduction/). Do not treat a solved CAPTCHA as validation of a suspected stolen session. Use [reauthentication with an account-bound authenticator](Authentication_Cheat_Sheet.md#re-authentication-after-risk-events) before restoring access that depends on trusting the session.
 
 ```js
 function cookieTheftDetectionMiddleware(req, res) {
