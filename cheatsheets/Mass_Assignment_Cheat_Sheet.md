@@ -82,9 +82,11 @@ In 2012, GitHub was hacked using mass assignment. A user was able to upload his 
 
 ### Solutions
 
-- Prefer [Data Transfer Objects](https://martinfowler.com/eaaCatalog/dataTransferObject.html) (DTOs) containing only fields the caller may edit.
+- Prefer dedicated input objects, such as Data Transfer Objects (DTOs), containing only fields the caller may edit; see [Spring's model design guidance](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html).
 - Explicitly allow-list fields when binding to an object with additional properties.
 - Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable. [CWE-915 recommends allowlists over denylists](https://cwe.mitre.org/data/definitions/915.html). The block-list examples below illustrate mechanisms encountered in existing applications, not the recommended design.
+
+DTOs and field allowlists restrict writable properties; they do not replace [authorization for the requested object and operation](Authorization_Cheat_Sheet.md#validate-the-permissions-on-every-request).
 
 ## General Solutions
 
@@ -167,8 +169,6 @@ var user = new User(_.pick(req.body, User.userCreateSafeFields));
 Take a look [here](http://underscorejs.org/#pick) for the documentation.
 
 #### Block-listing
-
-Spring describes `disallowedFields` as fragile because fields can be missed or added later. Prefer the allow-list above; this example only excludes the named property.
 
 ```javascript
 var massAssign = require('mongoose-mass-assign');
