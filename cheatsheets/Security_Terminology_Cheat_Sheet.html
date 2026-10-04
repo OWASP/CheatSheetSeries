@@ -4854,8 +4854,8 @@
 <p><strong>Definition:</strong> Using asymmetric cryptography to provide proof of the origin and integrity of a message.</p>
 <ul>
 <li><strong>Purpose:</strong> <strong>Authenticity</strong> and <strong>Non-repudiation</strong>. Proves who sent the message and that it wasn't altered.</li>
-<li><strong>Mechanism:</strong> The sender signs a hash of the message with their <em>private key</em>; the receiver verifies it with the sender's <em>public key</em>.</li>
-<li><strong>Example:</strong> JWT signatures, GPG signatures.</li>
+<li><strong>Mechanism:</strong> The signing algorithm uses the signer's private key; verification uses a trusted public key bound to that signer. Follow the algorithm's <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf#page=18">message-processing rules</a>; do not add a separate prehash unless the chosen algorithm and API require it.</li>
+<li><strong>Examples:</strong> Asymmetrically signed JWTs and GPG signatures. <a href="https://www.rfc-editor.org/info/rfc7519/">JWTs can also use shared-key message authentication codes or encryption</a>; the JWT format does not imply a digital signature.</li>
 </ul>
 <hr />
 <h2 id="identity-authentication-and-authorization">Identity: Authentication and Authorization<a class="headerlink" href="#identity-authentication-and-authorization" title="Permanent link">&para;</a></h2>
