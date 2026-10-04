@@ -486,7 +486,7 @@ If risk is detected, the system may:
 - Enforce re-authentication
 - Deny access and trigger alerting or account protection flows
 
-For more details on when to trigger reauthentication after high-risk events—such as account recovery or suspicious activity—see the [Reauthentication After Risk Events](Authentication_Cheat_Sheet.md#reauthentication-after-risk-events) section in the Authentication Cheat Sheet
+For more details on when to trigger reauthentication after high-risk events—such as account recovery or suspicious activity—see the [Reauthentication After Risk Events](Authentication_Cheat_Sheet.md#re-authentication-after-risk-events) section in the Authentication Cheat Sheet
 
 This method is widely used in modern authentication systems to balance usability and security. However, developers must ensure that risk signals cannot be spoofed and that fallback mechanisms are not weaker than the primary MFA methods.
 
