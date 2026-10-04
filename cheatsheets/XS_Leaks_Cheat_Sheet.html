@@ -5348,15 +5348,16 @@
 <p>The principle is simple, a resource loaded from cache memory will load incomparably faster than from the server.</p>
 <p><img alt="XS Leaks Cache Attack" src="../assets/XS_Leaks_Cache_Attack.png" /></p>
 <p>An attacker can embed a resource on their site that is only accessible to a user with the admin role. Then, using JavaScript, read the load time of a particular resource and, based on this information, deduce whether the resource is in cache or not.</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c1">// Threshold above which we consider a resource to have loaded from the server</span>
+<p>The example selects the first matching <a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType#return_value">resource timing entry</a> already recorded in the timeline. Set <code>THRESHOLD</code> for the measurement context; a short duration alone does not prove a cache hit.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c1">// Illustrative timing threshold for this measurement context</span>
 <span class="w">    </span><span class="c1">// const THRESHOLD = ...</span>
 
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">adminImagePerfEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">performance</span>
-<span class="w">        </span><span class="p">.</span><span class="nx">getEntries</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">'admin.svg'</span><span class="p">));</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">getEntriesByType</span><span class="p">(</span><span class="s1">'resource'</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">'admin.svg'</span><span class="p">));</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">adminImagePerfEntry</span><span class="p">.</span><span class="nx">duration</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">THRESHOLD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Image loaded from cache!'</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">adminImagePerfEntry</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">adminImagePerfEntry</span><span class="p">.</span><span class="nx">duration</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">THRESHOLD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Possible cache hit (timing heuristic)'</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 </code></pre></div>
 <h3 id="defense_4">Defense<a class="headerlink" href="#defense_4" title="Permanent link">&para;</a></h3>
