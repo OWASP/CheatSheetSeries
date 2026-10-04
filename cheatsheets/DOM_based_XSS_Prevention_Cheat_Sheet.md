@@ -135,46 +135,28 @@ The `setAttribute(name_string,value_string)` method is dangerous because it impl
 
 In the case above, the attribute name is an JavaScript event handler, so the attribute value is implicitly converted to JavaScript code and evaluated. In the case above, JavaScript encoding does not mitigate against DOM based XSS.
 
-Other JavaScript methods which take code as a string types will have a similar problem as outline above (`setTimeout`, `setInterval`, new Function, etc.). This is in stark contrast to JavaScript encoding in the event handler attribute of a HTML tag (HTML parser) where JavaScript encoding mitigates against XSS.
+Other JavaScript methods that interpret strings as code, such as `setTimeout`, `setInterval`, and `Function`, have the same risk. HTML event-handler attributes also contain [JavaScript function bodies](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-content-attributes). Escaping every character in one payload may produce a syntax error, but JavaScript encoding is not a defense for this context: escaped identifiers remain executable when the surrounding syntax is valid.
 
 ```html
-<!-- Does NOT work  -->
-<a id="bb" href="#" onclick="\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029"> Test Me</a>
+<!-- Executes alert(1) when clicked; encoding the identifier does not make it safe. -->
+<a id="bb" href="#" onclick="\u0061\u006c\u0065\u0072\u0074(1)">Test Me</a>
 ```
 
-An alternative to using `Element.setAttribute(...)` to set DOM attributes is to set the attribute directly. Directly setting event handler attributes will allow JavaScript encoding to mitigate against DOM based XSS. Please note, it is always dangerous design to put untrusted data directly into a command execution context.
+Setting the JavaScript `onclick` property is different from setting an HTML attribute. It expects a callback; assigning a primitive string [sets it to null](https://webidl.spec.whatwg.org/#LegacyTreatNonObjectAsNull), whether or not the string is encoded. This is type conversion, not a benefit of JavaScript encoding. Assign a trusted function, and keep untrusted values as data inside that function rather than compiling them as code.
 
-``` html
-<a id="bb" href="#"> Test Me</a>
+```html
+<a id="bb" href="#">Test Me</a>
 ```
 
-``` javascript
-//The following does NOT work because the event handler is being set to a string.
-//"alert(7)" is JavaScript encoded.
+```javascript
+// Neither string becomes a handler.
+document.getElementById("bb").onclick = "alert(7)";
 document.getElementById("bb").onclick = "\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0029";
 
-//The following does NOT work because the event handler is being set to a string.
-document.getElementById("bb").onmouseover = "testIt";
-
-//The following does NOT work because of the encoded "(" and ")".
-//"alert(77)" is JavaScript encoded.
-document.getElementById("bb").onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029;
-
-//The following example is tricky
-// first testIt will be assigned as an onmousehover event handler, The second testIt will fire while parsing.
-// because second testIt is a separate js statement
-// this happen because of ; separator
-//"testIt;testIt" is JavaScript encoded.
-document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
-                                            \u0074\u0049\u0074;
-
-//The following DOES WORK because the encoded value is a valid variable name or function reference.
-//"testIt" is JavaScript encoded
-document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074;
-
-function testIt() {
-   alert("I was called.");
-}
+// A trusted function is a handler.
+document.getElementById("bb").onclick = function () {
+    alert("I was called.");
+};
 ```
 
 There are other places in JavaScript where JavaScript encoding is accepted as valid executable code.
