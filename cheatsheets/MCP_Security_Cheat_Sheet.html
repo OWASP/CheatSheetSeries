@@ -4931,11 +4931,11 @@
 </ul>
 <h3 id="12-prompt-injection-via-tool-return-values">12. Prompt Injection via Tool Return Values<a class="headerlink" href="#12-prompt-injection-via-tool-return-values" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Treat every tool response as <strong>untrusted user input</strong> — sanitize before feeding back into the LLM context.</li>
-<li>Instruct the model explicitly (in system prompt) that tool return values are data, not instructions.</li>
-<li>Strip or escape HTML-like tags (<code>&lt;IMPORTANT&gt;</code>, <code>&lt;system&gt;</code>, <code>&lt;instructions&gt;</code>) from tool outputs before context injection.</li>
-<li>Log and alert on tool responses that contain instruction-like patterns (imperative verbs, "ignore", "forget", "send to", etc.).</li>
-<li>For web-scraping / retrieval tools, use a content extraction layer that returns structured data (title, body text) rather than raw HTML.</li>
+<li>Treat every tool response as <strong>untrusted data</strong>, including responses from approved servers.</li>
+<li>Separate and clearly label tool data in the model context, and instruct the model to treat it as data rather than instructions.</li>
+<li>Use tag stripping and instruction-pattern detection only as additional filtering or alerting measures. They cannot establish that the remaining text is safe; <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP describes encoded and multilingual prompt injections that evade filters</a>.</li>
+<li>Enforce authorization and validate subsequent tool calls in trusted application code, independently of the model's interpretation. Apply <a href="#1-principle-of-least-privilege">least privilege</a> and <a href="#4-human-in-the-loop-for-sensitive-actions">human approval for sensitive actions</a>.</li>
+<li>For web-scraping and retrieval tools, extract the required structured data instead of passing raw HTML. Text inside structured fields remains untrusted.</li>
 </ul>
 <h2 id="dos-and-donts">Do's and Don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
 <p><strong>Do</strong>:</p>
