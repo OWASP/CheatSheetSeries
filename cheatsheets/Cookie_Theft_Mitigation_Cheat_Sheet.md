@@ -66,7 +66,7 @@ The following [`Sec-CH-*` Client Hint headers](https://developer.mozilla.org/en-
 - sec-ch-ua-platform-version
 - sec-ch-ua-wow64
 
-The following illustrative Express sketch assumes a server-side session store and trusted middleware that populates `req.clientIP` and `req.session`. Read request headers with [Express's `req.get()`](https://expressjs.com/en/5x/api/request/#req.get), and use a server timestamp when establishing the session:
+The following illustrative Express sketch assumes a server-side session store and trusted middleware that populates `req.clientIP` and `req.session`. Read request headers with [Express's `req.get()`](https://expressjs.com/en/5x/api/request/#reqget), and use a server timestamp when establishing the session:
 
 ```js
 const session = SessionStorage.create()
