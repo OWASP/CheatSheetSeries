@@ -80,7 +80,8 @@ Even with proper validation and logic, monitoring is crucial for detecting abuse
     - Unexpected order statuses (e.g., "Paid" without any gateway confirmation).
     - Excessive callback attempts for the same order.
     - Payment failures followed by repeated attempts with identical data.
-- Store raw request data for callbacks to aid investigation.
+- Log callback identifiers, validation outcomes, and order correlation data instead of raw headers and bodies. Exclude credentials and unnecessary personal or payment data; apply the [Logging Cheat Sheet's data-exclusion guidance](Logging_Cheat_Sheet.md#data-to-exclude).
+- Do not retain sensitive authentication data, such as card verification codes or PIN data, after authorization, [even if encrypted](https://www.pcisecuritystandards.org/faqs/1154/). Restrict access to permitted investigation records and define their retention period.
 - Incorporate fraud and risk scoring mechanisms to detect carding attacks and other suspicious activities during payment execution.
 
 ---

@@ -181,7 +181,7 @@ Cookies are vulnerable to DNS spoofing/hijacking/poisoning attacks, where an att
 
 Session management mechanisms based on cookies can make use of two types of cookies, non-persistent (or session) cookies, and persistent cookies. If a cookie presents the [`Max-Age`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) (that has preference over `Expires`) or [`Expires`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) attributes, it will be considered a persistent cookie and will be stored on disk by the web browser based until the expiration time.
 
-Typically, session management capabilities to track users after authentication make use of non-persistent cookies. This forces the session to disappear from the client if the current web browser instance is closed. Therefore, it is highly recommended to use non-persistent cookies for session management purposes, so that the session ID does not remain on the web client cache for long periods of time, from where an attacker can obtain it.
+Use non-persistent cookies when authentication does not need to persist across browser sessions, but do not rely on browser closure to end an authenticated session. Browsers with [session restore can retain session cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) after they close. Enforce [session expiration](#session-expiration) on the server and invalidate the session when the user logs out; deleting a cookie alone does not invalidate a stolen copy of the session ID.
 
 - Ensure that sensitive information is not compromised by ensuring that it is not persistent, encrypting it, and storing it only for the duration of the need
 - Ensure that unauthorized activities cannot take place via cookie manipulation
@@ -388,9 +388,9 @@ Web applications can use JavaScript code in the login page to evaluate and measu
 
 This extra protection mechanism tries to force the renewal of the session ID pre-authentication, avoiding scenarios where a previously used (or manually set) session ID is reused by the next victim using the same computer, for example, in session fixation attacks.
 
-### Force Session Logout On Web Browser Window Close Events
+### Limits of Logout on Browser Close
 
-Web applications can use JavaScript code to capture all the web browser tab or window close (or even back) events and take the appropriate actions to close the current session before closing the web browser, emulating that the user has manually closed the session via the logout button.
+Browser close events cannot reliably enforce logout. For example, [`beforeunload` may not fire when a mobile browser is closed from the app manager](https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event). Use [server-side idle and absolute timeouts](#automatic-session-expiration) and an explicit [logout action](#logout-button) to invalidate sessions. Client-side close handlers can supplement these controls but must not replace them.
 
 ### Disable Web Browser Cross-Tab Sessions
 

@@ -135,8 +135,8 @@ Encryption keys should be changed (or rotated) based on a number of different cr
     - This could also be caused by a someone who had access to the key leaving the organization.
 - After a specified period of time has elapsed (known as the cryptoperiod).
     - There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57 Part 1 Rev. 5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) for further guidance.
-- After the key has been used to encrypt a specific amount of data.
-    - This would typically be `2^35` bytes (~34GB) for 64-bit keys and `2^68` bytes (~295 exabytes) for 128-bit block size.
+- Before reaching the usage limits of the selected encryption mode.
+    - Enforce the mode's limits on message size, encryption operations, and initialization vector (IV) uniqueness across all instances sharing the key. Block size alone does not determine a safe data-volume limit. For example, AES-GCM has separate requirements for input lengths and IV construction in [NIST SP 800-38D, Sections 5.2.1.1 and 8](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf). See [Key Management: Cryptoperiods and Rotation](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation) for usage-based rotation guidance.
 - If there is a significant change to the security provided by the algorithm (such as a new attack being announced).
 
 Once one of these criteria have been met, a new key should be generated and used for encrypting any new data. There are two main approaches for how existing data that was encrypted with the old key(s) should be handled:

@@ -32,36 +32,32 @@ A template can read everything in its render context and, depending on the engin
 
 Choose an engine that [limits the power of its expressions, function calls, or commands](https://cwe.mitre.org/data/definitions/1336.html#Potential_Mitigations), such as a logic-less engine like Mustache, unless you need more. Custom helpers and lambdas you register still run as application code.
 
-### Return generic errors
-
-Template error messages often reveal the engine and its version, which helps attackers choose payloads. Log the details on the server and show users a generic message.
-
 ### Keep output escaping on
 
 Auto-escaping helps prevent [cross-site scripting](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) in HTML output. It does not prevent SSTI, because escaping applies to the values a template prints, not to template code the engine has already parsed. Keep it enabled and never mark untrusted values as safe.
 
 ### Find vulnerable template code
 
-- Inventory every place the application renders templates, including email and notification bodies, PDF and report generation, prompts for large language models, and every feature that lets users create or edit templates. In CVE-2024-34359, a library rendered a chat template from a downloaded model file in a non-sandboxed Jinja2 environment, which allowed code execution. Treat templates that ship in third-party files as templates you did not write.
+- Inventory every place the application renders templates, including email and notification bodies, PDF and report generation, prompts for large language models, and every feature that lets users create or edit templates. Treat templates that ship in third-party files as templates you did not write.
 - Search for string-to-template APIs and features, such as Jinja2's `from_string()`, Flask's `render_template_string()`, Twig's `createTemplate()` and `template_from_string()`, and FreeMarker's `Template` constructor and `?interpret` and `?eval` built-ins. Also search for code that builds template source or template names from input.
 - For each call site, confirm that untrusted data reaches only render variables and that no template passes it to a feature that evaluates strings as code.
 
 ## Engine Configuration
 
-Frameworks can change engine defaults, so check the effective settings in your application. For other engines, such as Thymeleaf, Velocity, Pebble, Handlebars, or ERB, check the same two things: the escaping default and the restricted mode.
+Frameworks can change engine defaults, so check the effective settings in your application. For other engines, consult their documentation for restrictions on untrusted templates.
 
-| Engine | All templates | Templates you did not write |
-| --- | --- | --- |
-| Jinja2 | Auto-escaping is off by default. Enable it with `select_autoescape()`, which by default covers only `.html`, `.htm`, and `.xml` files and string templates; pass `default=True` if you use other extensions such as `.j2`. Do not mark untrusted values with the `safe` filter or print them inside `{% autoescape false %}`. | Use [`SandboxedEnvironment`](https://jinja.palletsprojects.com/en/stable/sandbox/), or `ImmutableSandboxedEnvironment` to also block changes to lists, sets, and dictionaries. Restrict attributes further by overriding `is_safe_attribute()`, and decorate dangerous methods with `unsafe()`. |
-| Twig | Auto-escaping is on by default with the `html` strategy. For other contexts, use the `escape` filter with the `js`, `css`, `url`, or `html_attr` strategy. Do not apply the `raw` filter to untrusted values. | Twig treats templates as trusted code, so its [sandbox](https://twig.symfony.com/doc/3.x/sandbox.html) is the only boundary for untrusted authors. Give the sandbox its own environment and a strict `SecurityPolicy` that allowlists the tags, filters, functions, tests, methods, and properties templates may use. The `Sandbox` class requires Twig 3.29 or later. Never allow `template_from_string()` in sandboxed templates. |
-| FreeMarker | Escaping happens only with a markup output format such as HTML or XML. Name templates `.ftlh` or `.ftlx` and keep `recognize_standard_file_extensions` on, which is the default from `incompatible_improvements` 2.3.24. Do not apply `?no_esc` to untrusted values. Set the `?new` class resolver to `ALLOWS_NOTHING_RESOLVER`, not `SAFER_RESOLVER`: normal templates do not need `?new`, and the 2.3.x default allows any class. | Follow the [FAQ on uploaded templates](https://freemarker.apache.org/docs/app_faq.html#faq_template_uploading_security): keep `?api` disabled (the default), restrict member access with `SimpleObjectWrapper` or a `WhitelistMemberAccessPolicy`, disable DOM node wrapping, and use a template loader that only loads approved files. |
+| Engine | Restrictions for untrusted templates |
+| --- | --- |
+| Jinja2 | Use [`SandboxedEnvironment`](https://jinja.palletsprojects.com/en/stable/sandbox/), or `ImmutableSandboxedEnvironment` to also block changes to lists, sets, and dictionaries. Restrict attributes further by overriding `is_safe_attribute()`, and decorate dangerous methods with `unsafe()`. |
+| Twig | Twig treats templates as trusted code, so its [sandbox](https://twig.symfony.com/doc/3.x/sandbox.html) is the only boundary for untrusted authors. Give the sandbox its own environment and a strict `SecurityPolicy` that allowlists the tags, filters, functions, tests, methods, and properties templates may use. The `Sandbox` class requires Twig 3.29 or later. Never allow [`template_from_string()`](https://twig.symfony.com/doc/3.x/functions/template_from_string.html) in sandboxed templates. |
+| FreeMarker | Follow the [FAQ on uploaded templates](https://freemarker.apache.org/docs/app_faq.html#faq_template_uploading_security): set the `?new` class resolver to `ALLOWS_NOTHING_RESOLVER`, not `SAFER_RESOLVER`; keep `?api` disabled (the default), restrict member access with `SimpleObjectWrapper` or a `WhitelistMemberAccessPolicy`, disable DOM node wrapping, and use a template loader that only loads approved files. |
 
 ## User-Supplied Templates
 
 Some products let users write templates by design, such as email builders, content management system themes, and report designers. Treat this as a privileged feature that runs user-written code:
 
 - Limit template editing to authorized roles and log template changes for audit.
-- Render with the engine's sandbox or restricted configuration from the table above, keep the engine up to date, and assume the sandbox can be bypassed.
+- Render with the engine's sandbox or restricted configuration from the table above and keep the engine up to date.
 - Register only filters, functions, and globals that are safe to call with any arguments a template author chooses. The sandbox does not limit what your own code does once it is called.
 - Contain what the sandbox does not. As [Twig's documentation explains](https://twig.symfony.com/doc/3.x/sandbox.html#what-the-sandbox-does-not-protect-against), a sandbox does not limit CPU or memory use or make the rendered output safe, and Jinja2 and FreeMarker give the same warning about resources. Treat the output as untrusted, and render in an isolated process or container with time and memory limits, no secrets, and restricted network access.
 

@@ -133,9 +133,11 @@ You need [MFA](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authen
 
 **Most Secure (Highly Phishing-Resistant):**
 
-- **FIDO2 hardware security keys**: Physical devices that use public key cryptography
-- **WebAuthn-based platform authenticators**: Passkeys using fingerprints or face recognition
+- **FIDO2 hardware security keys**: Use with a PIN, biometric activation, or a separate password to provide MFA
+- **WebAuthn-based platform authenticators**: Passkeys with required user verification using a device PIN or biometrics
 - **Smart cards or PIV cards**: PKI-based authentication
+
+Biometrics alone do not provide MFA. They can activate a physical cryptographic authenticator, combining possession of that authenticator with a biometric match. See [NIST SP 800-63B-4, Section 3.2.3](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/) and the [Passkey Security Cheat Sheet](Passkey_Security_Cheat_Sheet.md#verify-the-authentication-response).
 
 **Good Options:**
 
@@ -257,7 +259,7 @@ Before you invest in new Zero Trust technologies, you need to know what you're p
 
 **Figure out what you have** - Make a list of all users, devices, applications, and how data moves around. This sounds easy but takes longer than you think. You'll find forgotten systems, shadow IT, and connections nobody documented.
 
-**Set up strong MFA everywhere** - This provides significant security improvement. Use FIDO2 hardware keys or biometric authentication. Don't use SMS codes - they're too easy to hack. Plan for user training since this changes how people log in.
+**Set up strong MFA everywhere** - Use phishing-resistant MFA as described in [Multi-Factor Authentication](#multi-factor-authentication-mfa), rather than treating a biometric match alone as MFA. Plan for user training since this changes how people log in.
 
 **Replace your VPN** - Regular VPNs give too much access once someone logs in. Switch to Zero Trust Network Access (ZTNA) that only gives access to specific applications. This is usually a significant change users notice.
 

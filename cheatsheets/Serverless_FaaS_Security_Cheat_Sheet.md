@@ -208,13 +208,9 @@ def log_event(event):
 
 - Scan dependencies (`npm audit`, `pip-audit`, `safety`).
 - Use minimal deployment packages.
-- Sign packages with checksums.
+- Sign deployment packages and verify signatures against an approved publisher before deployment. A checksum alone does not authenticate the publisher.
 
-**AWS Lambda Layer Hash Validation:**
-
-```bash
-shasum -a 256 layer.zip
-```
+For AWS Lambda, use [code signing configurations](https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html) with allowed signing profiles and `UntrustedArtifactOnDeployment` set to `Enforce`; the default `Warn` setting allows deployments that fail expiry, publisher, or revocation checks. Layers added to functions with code signing enabled must also be signed by an allowed profile.
 
 ## Do’s and Don’ts
 

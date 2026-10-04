@@ -258,7 +258,7 @@
 
 [Server Side Template Injection Prevention Cheat Sheet](cheatsheets/Server_Side_Template_Injection_Prevention_Cheat_Sheet.md)
 
-[Serverless FaaS Security Cheat Sheet](cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg) ![Json](assets/Index_Json.svg) ![Bash](assets/Index_Bash.svg)
+[Serverless FaaS Security Cheat Sheet](cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg) ![Json](assets/Index_Json.svg)
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
 
