@@ -147,7 +147,7 @@ A REST request or response body should match the intended content type in the he
 
 ### Validate request content types
 
-- Reject requests containing unexpected or missing content type headers with HTTP response status `406 Unacceptable` or `415 Unsupported Media Type`. For requests with `Content-Length: 0` however, a `Content-type` header is optional.
+- For requests with a body, require a supported `Content-Type` according to the endpoint contract and reject unsupported media types with [`415 Unsupported Media Type`](https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.16). Do not require `Content-Type` solely for requests without a body. Reserve `406 Not Acceptable` for response content negotiation.
 - For XML content types ensure appropriate XML parser hardening, see the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md).
 - Avoid accidentally exposing unintended content types by explicitly defining content types e.g. [Jersey](https://jersey.github.io/) (Java) `@consumes("application/json"); @produces("application/json")`. This avoids [XXE-attack](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing) vectors for example.
 
@@ -156,7 +156,7 @@ A REST request or response body should match the intended content type in the he
 It is common for REST services to allow multiple response types (e.g. `application/xml` or `application/json`, and the client specifies the preferred order of response types by the Accept header in the request.
 
 - **Do NOT** simply copy the `Accept` header to the `Content-type` header of the response.
-- Reject the request (ideally with a `406 Not Acceptable` response) if the `Accept` header does not specifically contain one of the allowable types.
+- Select a supported response type that matches the client's `Accept` preferences, including media ranges and quality values. If none is acceptable and no default response will be supplied, return [`406 Not Acceptable`](https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.7).
 
 Services including script code (e.g. JavaScript) in their responses must be especially careful to defend against header injection attack.
 
@@ -246,9 +246,9 @@ Here is a non-exhaustive selection of security related REST API **status codes**
 | 403         | Forbidden              |  It's used when the authentication succeeded but authenticated user doesn't have permission to the request resource.                                                                                                |
 | 404         | Not Found              | When a non-existent resource is requested.                                                                                                                                                                            |
 | 405         | Method Not Acceptable  |  The error for an unexpected HTTP method. For example, the REST API is expecting HTTP GET, but HTTP PUT is used.                                                                                                    |
-| 406         | Unacceptable           | The client presented a content type in the Accept header which is not supported by the server API.                                                                                                                    |
+| 406         | Not Acceptable         | No supported response representation satisfies the client's content negotiation preferences and the server will not send a default representation.                                                                                                                    |
 | 413         | Payload too large      | Use it to signal that the request size exceeded the given limit e.g. regarding file uploads.                                                                                                                          |
-| 415         | Unsupported Media Type | The requested content type is not supported by the REST service.                                                                                                                                                      |
+| 415         | Unsupported Media Type | The request content has a format that the target method does not support.                                                                                                                                                      |
 | 429         | Too Many Requests      |  The error is used when there may be DOS attack detected or the request is rejected due to rate limiting.                                                                                                           |
 | 500         | Internal Server Error  | An unexpected condition prevented the server from fulfilling the request. Be aware that the response should not reveal internal  information that helps an attacker, e.g. detailed error messages or  stack traces. |
 | 501         | Not Implemented        | The REST service does not implement the requested operation yet.                                                                                                                                                      |
