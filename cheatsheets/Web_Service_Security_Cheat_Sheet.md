@@ -127,7 +127,7 @@ This protection should be provided by your XML parser/schema validator. To verif
 
 ## Endpoint Security Profile
 
-**Rule**: Web services must be compliant with [Web Services-Interoperability (WS-I)](https://en.wikipedia.org/wiki/Web_Services_Interoperability) Basic Profile at minimum.
+**Rule**: Treat Web Services Interoperability (WS-I) Basic Profile conformance as an interoperability requirement, not a security baseline. Its [security section](https://docs.oasis-open.org/ws-brsp/BasicProfile/v1.2/BasicProfile-v1.2.html#_Toc392058316) permits conformant services without security countermeasures. Independently enforce the transport security, authentication, authorization, and resource limits described above.
 
 ## References
 
