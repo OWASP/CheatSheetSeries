@@ -381,8 +381,9 @@ The recommended logging policy for a production environment is sending logs to a
 [JSON Template Layout](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html)
 introduced in
 [Log4j 2.14.0](https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0)
-and limit the size of strings to 500 bytes using the
-[`maxStringLength` configuration attribute](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength):
+and truncate string values longer than 500 characters using the
+[`maxStringLength` configuration attribute](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength).
+The truncation suffix is appended after this limit; this does not cap the encoded byte size or the total JSON document size:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -395,7 +396,7 @@ and limit the size of strings to 500 bytes using the
     <Socket name="SOCKET"
             host="localhost"
             port="12345">
-      <!-- Limit the size of any string field in the produced JSON document to 500 bytes -->
+      <!-- Truncate strings longer than 500 characters, then append the truncation suffix -->
       <JsonTemplateLayout maxStringLength="500"
                           nullEventDelimiterEnabled="true"/>
     </Socket>
@@ -421,7 +422,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 ...
 // Most common way to declare a logger
-private static final LOGGER = LogManager.getLogger();
+private static final Logger logger = LogManager.getLogger();
 // GOOD!
 //
 // Use parameterized logging to add user data to a message
