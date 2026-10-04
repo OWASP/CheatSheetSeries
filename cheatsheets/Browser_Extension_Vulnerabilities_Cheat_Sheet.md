@@ -14,16 +14,18 @@ Browser extensions sometimes request more permissions than they actually need. T
   "name": "My Extension",
   "permissions": [
     "tabs",
-    "http://*/*",
-    "https://*/*",
     "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
   ]
 }
 ```
 
 ### Mitigation: Permissions Overreach
 
-Follow the Principle of Least Privilege (PoLP) and request only the permissions that are absolutely necessary. Use optional permissions whenever possible instead of granting full access upfront. Regularly audit and remove any permissions that are no longer needed.
+Follow the Principle of Least Privilege (PoLP) and request only the permissions that are absolutely necessary. Use optional permissions whenever possible instead of granting full access upfront. Regularly audit and remove any permissions that are no longer needed. In Manifest V3, declare URL access separately in [`host_permissions` or `optional_host_permissions`](https://developer.chrome.com/docs/extensions/develop/migrate/manifest#update-host-permissions).
 
 ## 2. Data Leakage
 
@@ -145,21 +147,23 @@ Regularly audit third-party dependencies for security vulnerabilities. Use tools
 
 ### Vulnerability: Lack of Content Security Policy (CSP)
 
-Without a strict CSP, attackers can inject scripts into an extension’s web pages, increasing the risk of cross-site scripting (XSS) attacks.
+Weakening an extension’s Content Security Policy (CSP) can increase the impact of script injection. [Chrome enforces a default and minimum CSP for Manifest V3 extension pages](https://developer.chrome.com/docs/extensions/reference/manifest/content-security-policy), even when the manifest omits a custom policy.
 
-### Example: Lack of Content Security Policy (CSP)
+### Example: Restrictive Manifest V3 Policy
 
 ```json
 {
   "manifest_version": 3,
   "name": "My Extension",
-  "content_security_policy": "default-src 'self'"
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; object-src 'none';"
+  }
 }
 ```
 
 ### Mitigation: Lack of Content Security Policy (CSP)
 
-Define a strict CSP in the extension’s manifest.json file. Use nonce-based or hash-based policies to allow only trusted scripts. Block execution of inline scripts and restrict third-party content sources.
+Configure `content_security_policy.extension_pages` in `manifest.json` and load scripts from the extension package. Do not apply ordinary webpage nonce or hash recommendations to Chrome Manifest V3 extension pages: their [allowed script sources are restricted](https://developer.chrome.com/docs/extensions/develop/migrate/improve-security#remove-unsupported-csv). Keep inline script execution blocked and restrict other resource types to those the extension needs.
 
 ## 9. Insecure Storage
 
@@ -175,8 +179,7 @@ localStorage.setItem('token', 'my-secret-token'); // No encryption
 
 ### Mitigation: Insecure Storage
 
-Store sensitive data in Chrome Storage API, which provides better security than localStorage.
-Encrypt stored data before saving it locally.
+Avoid persisting sensitive user data in the extension: [extension storage is not encrypted](https://developer.chrome.com/docs/extensions/develop/security-privacy/user-privacy#data_collection). For sensitive data needed only while the browser is running, use [`chrome.storage.session`](https://developer.chrome.com/docs/extensions/reference/api/storage#storage_areas), which stores data in memory and is not exposed to content scripts by default. Keep that access restriction and clear data when it is no longer needed. This reduces persistence and content-script exposure; it does not protect secrets from a compromised extension or device.
 Never hardcode API keys or credentials within the extension code.
 
 ## 10. Insufficient Privacy Controls
