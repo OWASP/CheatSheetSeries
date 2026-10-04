@@ -77,12 +77,7 @@ Here are a few critical items that should be addressed during the preparation ph
 - **Virtual Patching Pre-Authorization** – Establish an expedited review and rollout process before an incident. Test both exploit attempts and legitimate application workflows: [false positives can block valid transactions](https://coreruleset.org/docs/2-how-crs-works/2-3-false-positives-and-tuning/#poor-user-experience) even though application code is unchanged. Define monitoring and rollback criteria before enabling blocking.
 <!-- textlint-enable -->
 - **Deploy Virtual Patching Tool In Advance** - As time is critical during incident response, it would be a poor time to have to get approvals to install new software. For instance, you can install ModSecurity WAF in embedded mode on your Apache servers, or an Apache reverse proxy server. The advantage with this deployment is that you can create fixes for non-Apache back-end servers. Even if you do not use ModSecurity under normal circumstances, it is best to have it "on deck" ready to be enabled if need be.
-- **Increase HTTP Audit Logging** – The standard Common Log Format (CLF) utilized by most web servers does not provide adequate data for conducting proper incident response. You need to have access to the following HTTP data:
-    - Request URI (including QUERY_STRING)
-    - Full Request Headers (including Cookies)
-    - Full Request Body (POST payload)
-    - Full Response Headers
-    - Full Response Body
+- **Configure HTTP Audit Logging** – Record the rule ID, timestamp, affected endpoint, enforcement outcome, and a correlation identifier for investigation. Avoid indiscriminate capture of query strings, headers, cookies, and request or response bodies: [WAF alerts can expose passwords and payment data](https://coreruleset.org/docs/2-how-crs-works/2-3-false-positives-and-tuning/#sensitive-information-and-regulatory-compliance). Exclude or redact sensitive fields before logging, following the [Logging Cheat Sheet](Logging_Cheat_Sheet.md#data-to-exclude).
 
 ## Identification Phase
 
