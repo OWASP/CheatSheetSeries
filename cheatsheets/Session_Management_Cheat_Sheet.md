@@ -426,7 +426,7 @@ Although these properties cannot be used by web applications to trustingly defen
 
 Web applications should increase their logging capabilities by including information regarding the full life cycle of sessions. In particular, it is recommended to record session related events, such as the creation, renewal, and destruction of session IDs, as well as details about its usage within login and logout operations, privilege level changes within the session, timeout expiration, invalid session activities (when detected), and critical business operations during the session.
 
-The log details might include a timestamp, source IP address, web target resource requested (and involved in a session operation), HTTP headers (including the User-Agent and Referer), GET and POST parameters, error codes and messages, username (or user ID), plus the session ID (cookies, URL, GET, POST…).
+Log the timestamp, source IP address, requested resource, event type, result or error code, and user ID when needed for session monitoring. Record only selected header and parameter fields after excluding credentials and sensitive values, following the [Logging Cheat Sheet](Logging_Cheat_Sheet.md#data-to-exclude). Do not log raw session IDs; use the session correlation approach described below.
 
 Sensitive data like the session ID should not be included in the logs in order to protect the session logs against session ID local or remote disclosure or unauthorized access. However, some kind of session-specific information must be logged in order to correlate log entries to specific sessions. It is recommended to log a salted-hash of the session ID instead of the session ID itself in order to allow for session-specific log correlation without exposing the session ID.
 
