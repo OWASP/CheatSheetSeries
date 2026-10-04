@@ -380,7 +380,7 @@ With [AWS Nitro Enclaves](https://aws.amazon.com/ec2/nitro/nitro-enclaves/), you
 
 ##### 4.1.1.2 AWS CloudHSM
 
-For secrets being used in highly confidential applications, it may be needed to have more control over the encryption and storage of these keys. AWS offers [CloudHSM](https://aws.amazon.com/cloudhsm/), which lets you bring your own key (BYOK) for AWS services. Thus, you will have more control over keys' creation, lifecycle, and durability. CloudHSM allows automatic scaling and backup of your data. The cloud service provider, Amazon, will not have any access to the key material stored in **AWS CloudHSM**.
+For secrets being used in highly confidential applications, it may be needed to have more control over the encryption and storage of these keys. AWS offers [CloudHSM](https://aws.amazon.com/cloudhsm/), which lets you bring your own key (BYOK) for AWS services. Thus, you will have more control over keys' creation, lifecycle, and durability. Scale a CloudHSM cluster by [adding or removing HSMs](https://docs.aws.amazon.com/cloudhsm/latest/userguide/add-remove-hsm.html); the service makes [periodic encrypted backups of cluster users, keys, and configuration](https://docs.aws.amazon.com/cloudhsm/latest/userguide/manage-backups.html). The cloud service provider, Amazon, will not have any access to the key material stored in **AWS CloudHSM**.
 
 #### 4.1.2 GCP
 
