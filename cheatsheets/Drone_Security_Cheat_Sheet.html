@@ -4699,7 +4699,7 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p><strong>Insecure Communication Links</strong> – Data transmitted between the drone and GCS can be intercepted if not properly encrypted. Use standard protocols for encryption of any data being sent over.</p>
 </li>
 <li>
-<p><strong>Spoofing and Replay Attacks</strong> – If the drone uses a GPS module then data spoofing and command replay attacks can also become a reality. Again encrypted data transfer is the best way to go forward. There are many more methods, which have been discussed <a href="https://www.okta.com/identity-101/gps-spoofing/">here</a></p>
+<p><strong>Command Spoofing and Replay Attacks</strong> – Authenticate command messages and reject replayed messages using the protocol's freshness checks. For MAVLink, use <a href="https://mavlink.io/en/guide/message_signing.html#accept_signed_packets">message signing and timestamp validation</a>; encryption alone does not provide these controls.</p>
 </li>
 <li>
 <p><strong>Wi-Fi Weaknesses</strong> – Weak authentication or unprotected channels can allow unauthorized access. This is even possible through simple <a href="https://github.com/SpacehuhnTech/esp8266_deauther">microcontrollers like ESP8266</a>!</p>
@@ -4787,10 +4787,10 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 </ol>
 <ul>
 <li>
-<p>Implement <strong>message signing</strong> to prevent spoofing and replay attacks.</p>
+<p>Require valid <a href="https://mavlink.io/en/guide/message_signing.html#accepting_unsigned_packets">MAVLink 2 message signatures</a> for commands received over untrusted links. Reject unsigned or incorrectly signed commands. Protect the shared signing key and <a href="https://mavlink.io/en/mavgen_c/message_signing_c.html#handling-timestamps">persist signing timestamps across restarts</a> so replay checks remain effective.</p>
 </li>
 <li>
-<p>You must secure <strong>heartbeat messages</strong> to avoid <a href="https://owasp.org/www-community/attacks/Command_Injection">command injection vulnerabilities</a>. A heartbeat message is usually a single byte that is sent at a certain frequency to all other nodes, informing of the device's existence. The frequency is important here!</p>
+<p><a href="https://mavlink.io/en/services/heartbeat.html">Heartbeat messages</a> advertise a component's presence, type, and state. Treat heartbeat receipt as a liveness signal, not authorization to execute commands.</p>
 </li>
 <li>
 <p>Tools like <strong>ArduPilot</strong> and <strong>PX4</strong> support MAVLink 2.0 security enhancements. They have been thoroughly tested and are therefore recommended.</p>
@@ -4817,7 +4817,7 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p>Defense-in-depth beyond message signing. Because signing is frequently disabled in the field and any software mitigation runs in the same trust domain an attacker may have compromised, consider enforcing protocol integrity out-of-band:</p>
 <ul>
 <li>
-<p>Header validation — system-ID allowlisting and sequence-continuity checks to reject spoofed or replayed frames.</p>
+<p>Header validation — use system-ID allowlists and <a href="https://mavlink.io/en/guide/serialization.html#mavlink2_packet_format">packet sequence numbers</a> to detect unexpected senders and packet loss. These fields do not authenticate unsigned messages; they cannot replace signature and timestamp validation.</p>
 </li>
 <li>
 <p>Typed-payload validation — reject non-finite parameter values (PARAM_SET) and bound FTP path lengths to defeat malformed-value and buffer-overflow classes.</p>
@@ -5083,14 +5083,14 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 </tr>
 <tr>
 <td>Replay</td>
-<td>Jamming</td>
+<td>Message reuse</td>
 <td>x</td>
 <td>x</td>
 <td>x</td>
 <td>x</td>
 <td>-</td>
-<td>N/A</td>
-<td>Frequency hopping, timestamps</td>
+<td>Message authentication and validated freshness</td>
+<td>Replay-state tracking</td>
 </tr>
 <tr>
 <td>Buffer Overflow</td>

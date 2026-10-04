@@ -4822,16 +4822,16 @@
 <ul>
 <li>Inspect all tool descriptions, parameter names, types, and return schemas before approval.</li>
 <li>Treat the <em>entire</em> tool schema as a potential injection surface — not just the <code>description</code> field.</li>
-<li>Pin tool definitions using cryptographic hashes and alert on any changes (prevents rug pulls).</li>
+<li>Pin reviewed tool definitions using cryptographic hashes and require review when they change. This detects metadata changes, not changes to server code or behavior behind an unchanged definition; <a href="https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/#what-annotations-cant-do">tool annotations are hints, not enforcement</a>.</li>
 <li>Use tools like <code>mcp-scan</code> to automatically detect poisoned descriptions and cross-server shadowing.</li>
 <li>Use strict JSON Schema for tool parameters: set <code>additionalProperties: false</code> and use <code>pattern</code> (or similar) on string fields so only declared parameters and valid formats are accepted.</li>
 </ul>
 <h3 id="3-sandbox-and-isolate-mcp-servers">3. Sandbox and Isolate MCP Servers<a class="headerlink" href="#3-sandbox-and-isolate-mcp-servers" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Run local MCP servers in sandboxed environments (containers, chroot, application sandboxes).</li>
+<li>Run local MCP servers in a sandbox that enforces minimal privileges and access to host resources, following the <a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices#local-mcp-server-compromise">MCP local-server guidance</a>. A bare <a href="https://man7.org/linux/man-pages/man2/chroot.2.html"><code>chroot</code></a> is not a process sandbox.</li>
 <li>Restrict file system access to only required directories.</li>
 <li>Disable network access unless explicitly needed.</li>
-<li>Use <code>stdio</code> transport for local servers to limit access to only the MCP client.</li>
+<li>Use <a href="https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/stdio"><code>stdio</code></a> for local MCP communication through the launched process's standard streams. This avoids a listening MCP endpoint; it does not restrict the server process's file system, network, or credential access.</li>
 <li>Separate sensitive servers (payment, auth, PII) from general-purpose ones.</li>
 </ul>
 <h3 id="4-human-in-the-loop-for-sensitive-actions">4. Human-in-the-Loop for Sensitive Actions<a class="headerlink" href="#4-human-in-the-loop-for-sensitive-actions" title="Permanent link">&para;</a></h3>

@@ -5563,7 +5563,7 @@
 <li>Token Status List is a scalable solution for revocation of the JWT by the issuer.</li>
 <li>Freshness and replay protection can often by implementing by using a <code>nonce</code> bound to the session in the JWT claims. This approach is <a href="https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes">used in OpenID Connect</a>.</li>
 <li>Token reuse can be mitigated by using short expiration time in the JWT.</li>
-<li>The risk of token exfiltration can be mitigated by using sender constrained JWT (such a <a href="https://datatracker.ietf.org/doc/html/rfc9449">DPoP</a> or <a href="https://www.rfc-editor.org/info/rfc8705/#section-3">TLS-bound JWT</a>).</li>
+<li>Sender-constrained access tokens, such as <a href="https://datatracker.ietf.org/doc/html/rfc9449#section-2">DPoP-bound tokens</a> or <a href="https://www.rfc-editor.org/rfc/rfc8705.html#section-3">mutual-TLS certificate-bound tokens</a>, limit an attacker's ability to use a stolen token without its associated private key. They do not prevent token disclosure. Protect tokens and keys, use HTTPS, and prevent <a href="https://datatracker.ietf.org/doc/html/rfc9449#section-11.4">untrusted code from using the client's signing key</a>.</li>
 </ul>
 <h2 id="token-confidentiality-and-jwe">Token Confidentiality and JWE<a class="headerlink" href="#token-confidentiality-and-jwe" title="Permanent link">&para;</a></h2>
 <h3 id="signed-jwts-are-not-confidential">Signed JWTs are not confidential<a class="headerlink" href="#signed-jwts-are-not-confidential" title="Permanent link">&para;</a></h3>
