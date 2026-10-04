@@ -4911,11 +4911,11 @@
 <li>For <a href="https://www.scaler.com/topics/html/html-links/">HTML links</a>, add the attribute <code>rel="noopener noreferrer"</code> to every link.</li>
 <li>For JavaScript, use this function to open a window (or tab):</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">openPopup</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">windowFeatures</span><span class="p">){</span>
-<span class="w">  </span><span class="c1">//Open the popup and set the opener and referrer policy instruction</span>
-<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">newWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="s1">'noopener,noreferrer,'</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">windowFeatures</span><span class="p">);</span>
-<span class="w">  </span><span class="c1">//Reset the opener link</span>
-<span class="w">  </span><span class="nx">newWindow</span><span class="p">.</span><span class="nx">opener</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">openPopup</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">windowFeatures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"noopener"</span><span class="p">,</span><span class="w"> </span><span class="s2">"noreferrer"</span><span class="p">,</span><span class="w"> </span><span class="nx">windowFeatures</span><span class="p">]</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nb">Boolean</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">","</span><span class="p">);</span>
+<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">features</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
 <ul>
