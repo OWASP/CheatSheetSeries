@@ -121,7 +121,7 @@ XML Denial of Service is probably the most serious attack against web services. 
 
 **Rule**: Protection against [XML entity expansion](https://www.ws-attacks.org/XML_Entity_Expansion).
 
-**Rule**: Validating against overlong element names. If you are working with [SOAP](https://en.wikipedia.org/wiki/SOAP)-based Web Services, the element names are those [SOAP](https://en.wikipedia.org/wiki/SOAP) Actions.
+**Rule**: Reject XML element names that exceed configured length limits. SOAP action identifiers are separate from XML element names; for example, the [SOAP 1.2 Action feature](https://www.w3.org/TR/soap12-part2/#ActionFeature) uses a URI value that can guide message dispatch or routing.
 
 This protection should be provided by your XML parser/schema validator. To verify, build test cases to make sure your parser to resistant to these types of attacks.
 
