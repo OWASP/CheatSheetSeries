@@ -33,7 +33,9 @@ The best way to protect sensitive information is to not store it in the first pl
 
 For symmetric encryption **AES** with a key that's at least **128 bits** (ideally **256 bits**) and a secure [mode](#cipher-modes) should be used as the preferred algorithm.
 
-For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **Curve25519** as a preferred algorithm. If ECC is not available and  **RSA** must be used, then ensure that the key is at least **2048 bits**.
+For public-key encryption, use a maintained library implementing an established hybrid encryption scheme, such as [Hybrid Public Key Encryption (HPKE)](https://www.rfc-editor.org/rfc/rfc9180.html#section-4), which combines key establishment, key derivation, and authenticated symmetric encryption. **[X25519 on Curve25519](https://www.rfc-editor.org/rfc/rfc7748.html#section-6.1)** is a key-agreement primitive; it does not encrypt stored data by itself. Select an appropriate [HPKE authentication mode](https://www.rfc-editor.org/rfc/rfc9180.html#section-5) if sender authentication is required; the base mode does not authenticate the sender.
+
+If **RSA** must be used, ensure that the key is at least **2048 bits**.
 
 ### Post-Quantum Consideration
 
@@ -43,7 +45,7 @@ Where post-quantum key establishment is required, use a supported protocol or li
 
 For migration guidance, see the [Post-Quantum Cryptography Cheat Sheet](Post_Quantum_Cryptography_Cheat_Sheet.md).
 
-Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:
+When selecting cryptographic algorithms for a specific use case, consider:
 
 - Key size.
 - Known attacks and weaknesses of the algorithm.
