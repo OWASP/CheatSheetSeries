@@ -96,12 +96,12 @@ function cookieTheftDetectionMiddleware(req, res, next) {
   const currentIP = req.clientIP
   const expectedIP = req.session.ip
   if (checkGeoIPRange(currentIP, expectedIP) === false) {
-    return res.status(401).send("Reauthentication required")
+    return res.status(403).send("Reauthentication required")
   }
   const currentUA = req.get("User-Agent")
   const expectedUA = req.session.user_agent
   if (checkUserAgent(currentUA, expectedUA) === false) {
-    return res.status(401).send("Reauthentication required")
+    return res.status(403).send("Reauthentication required")
   }
 
   next()
