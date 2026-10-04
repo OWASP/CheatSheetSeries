@@ -192,8 +192,8 @@ Logging and monitoring is required for a truly secure application. Developers sh
 
 For proper logging, consider:
 
-- Logging all [layer 7](https://en.wikipedia.org/wiki/OSI_model) HTTP calls with headers, caller metadata, and responses
-    - Payloads may not be logged depending on where logging occurs (before TLS termination) and the sensitivity of data
+- Logging HTTP request outcomes using an allow-listed event schema, such as method, route template, status, correlation ID, and a non-secret actor identifier
+    - Exclude credentials, session cookies, access tokens, and sensitive request or response content before collection. [HTTP authentication fields contain credentials](https://www.rfc-editor.org/rfc/rfc9110.html#section-11.4); do not capture all headers or bodies by default. Follow the [Logging Cheat Sheet data exclusions](Logging_Cheat_Sheet.md#data-to-exclude).
 - Logging internal actions with actor and permission information
 - Sending trace IDs through the entire request lifecycle to track errors or malicious actions
 - Masking or removing sensitive data
