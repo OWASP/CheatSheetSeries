@@ -1383,10 +1383,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#example-restrictive-manifest-v3-policy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: Lack of Content Security Policy (CSP)
+        Example: Restrictive Manifest V3 Policy
       
     </span>
   </a>
@@ -5390,10 +5390,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#example-restrictive-manifest-v3-policy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example: Lack of Content Security Policy (CSP)
+        Example: Restrictive Manifest V3 Policy
       
     </span>
   </a>
@@ -5707,14 +5707,16 @@
 <span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Extension"</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">"permissions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="s2">"tabs"</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">"http://*/*"</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">"https://*/*"</span><span class="p">,</span>
 <span class="w">    </span><span class="s2">"storage"</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"host_permissions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">"http://*/*"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"https://*/*"</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
 <h3 id="mitigation-permissions-overreach">Mitigation: Permissions Overreach<a class="headerlink" href="#mitigation-permissions-overreach" title="Permanent link">&para;</a></h3>
-<p>Follow the Principle of Least Privilege (PoLP) and request only the permissions that are absolutely necessary. Use optional permissions whenever possible instead of granting full access upfront. Regularly audit and remove any permissions that are no longer needed.</p>
+<p>Follow the Principle of Least Privilege (PoLP) and request only the permissions that are absolutely necessary. Use optional permissions whenever possible instead of granting full access upfront. Regularly audit and remove any permissions that are no longer needed. In Manifest V3, declare URL access separately in <a href="https://developer.chrome.com/docs/extensions/develop/migrate/manifest#update-host-permissions"><code>host_permissions</code> or <code>optional_host_permissions</code></a>.</p>
 <h2 id="2-data-leakage">2. Data Leakage<a class="headerlink" href="#2-data-leakage" title="Permanent link">&para;</a></h2>
 <h3 id="vulnerability-data-leakage">Vulnerability: Data Leakage<a class="headerlink" href="#vulnerability-data-leakage" title="Permanent link">&para;</a></h3>
 <p>Some extensions unintentionally expose user data by sending browsing activity or personal details to external servers without proper security measures.</p>
@@ -5785,16 +5787,18 @@ Implement integrity checks before executing any fetched code.</p>
 <p>Regularly audit third-party dependencies for security vulnerabilities. Use tools like npm audit or OWASP Dependency-Check to detect risks.Prefer actively maintained libraries with frequent security updates.</p>
 <h2 id="8-lack-of-content-security-policy-csp">8. Lack of Content Security Policy (CSP)<a class="headerlink" href="#8-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h2>
 <h3 id="vulnerability-lack-of-content-security-policy-csp">Vulnerability: Lack of Content Security Policy (CSP)<a class="headerlink" href="#vulnerability-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h3>
-<p>Without a strict CSP, attackers can inject scripts into an extension’s web pages, increasing the risk of cross-site scripting (XSS) attacks.</p>
-<h3 id="example-lack-of-content-security-policy-csp">Example: Lack of Content Security Policy (CSP)<a class="headerlink" href="#example-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h3>
+<p>Weakening an extension’s Content Security Policy (CSP) can increase the impact of script injection. <a href="https://developer.chrome.com/docs/extensions/reference/manifest/content-security-policy">Chrome enforces a default and minimum CSP for Manifest V3 extension pages</a>, even when the manifest omits a custom policy.</p>
+<h3 id="example-restrictive-manifest-v3-policy">Example: Restrictive Manifest V3 Policy<a class="headerlink" href="#example-restrictive-manifest-v3-policy" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"manifest_version"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Extension"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"content_security_policy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default-src 'self'"</span>
+<span class="w">  </span><span class="nt">"content_security_policy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"extension_pages"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default-src 'self'; script-src 'self'; object-src 'none';"</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <h3 id="mitigation-lack-of-content-security-policy-csp">Mitigation: Lack of Content Security Policy (CSP)<a class="headerlink" href="#mitigation-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h3>
-<p>Define a strict CSP in the extension’s manifest.json file. Use nonce-based or hash-based policies to allow only trusted scripts. Block execution of inline scripts and restrict third-party content sources.</p>
+<p>Configure <code>content_security_policy.extension_pages</code> in <code>manifest.json</code> and load scripts from the extension package. Do not apply ordinary webpage nonce or hash recommendations to Chrome Manifest V3 extension pages: their <a href="https://developer.chrome.com/docs/extensions/develop/migrate/improve-security#remove-unsupported-csv">allowed script sources are restricted</a>. Keep inline script execution blocked and restrict other resource types to those the extension needs.</p>
 <h2 id="9-insecure-storage">9. Insecure Storage<a class="headerlink" href="#9-insecure-storage" title="Permanent link">&para;</a></h2>
 <h3 id="vulnerability-insecure-storage">Vulnerability: Insecure Storage<a class="headerlink" href="#vulnerability-insecure-storage" title="Permanent link">&para;</a></h3>
 <p>Storing sensitive data like authentication tokens in localStorage or other unsecured locations makes it easy for attackers to access.</p>
@@ -5802,8 +5806,7 @@ Implement integrity checks before executing any fetched code.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">'token'</span><span class="p">,</span><span class="w"> </span><span class="s1">'my-secret-token'</span><span class="p">);</span><span class="w"> </span><span class="c1">// No encryption</span>
 </code></pre></div>
 <h3 id="mitigation-insecure-storage">Mitigation: Insecure Storage<a class="headerlink" href="#mitigation-insecure-storage" title="Permanent link">&para;</a></h3>
-<p>Store sensitive data in Chrome Storage API, which provides better security than localStorage.
-Encrypt stored data before saving it locally.
+<p>Avoid persisting sensitive user data in the extension: <a href="https://developer.chrome.com/docs/extensions/develop/security-privacy/user-privacy#data_collection">extension storage is not encrypted</a>. For sensitive data needed only while the browser is running, use <a href="https://developer.chrome.com/docs/extensions/reference/api/storage#storage_areas"><code>chrome.storage.session</code></a>, which stores data in memory and is not exposed to content scripts by default. Keep that access restriction and clear data when it is no longer needed. This reduces persistence and content-script exposure; it does not protect secrets from a compromised extension or device.
 Never hardcode API keys or credentials within the extension code.</p>
 <h2 id="10-insufficient-privacy-controls">10. Insufficient Privacy Controls<a class="headerlink" href="#10-insufficient-privacy-controls" title="Permanent link">&para;</a></h2>
 <h3 id="vulnerability-insufficient-privacy-controls">Vulnerability: Insufficient Privacy Controls<a class="headerlink" href="#vulnerability-insufficient-privacy-controls" title="Permanent link">&para;</a></h3>
