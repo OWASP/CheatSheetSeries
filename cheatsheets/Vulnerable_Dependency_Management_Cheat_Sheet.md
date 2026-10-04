@@ -180,9 +180,7 @@ As we know the vulnerable dependency, we know where it is used in the applicatio
 
 Identifying calls to this dependency is fine but it is the first step. The team still lacks information on what kind of patching needs to be performed.
 
-To obtain these information, the team uses the CVE content to know which kind of vulnerability affects the dependency. The `description` property provides the answer: SQL injection, Remote Code Execution, Cross-Site Scripting, Cross-Site Request Forgery, etc.
-
-After identifying the above 2 points, the team is aware of the type of patching that needs to be taken ([Case 2](#case-2) with the protective code) and where to add it.
+Use the CVE description to identify the reported weakness, then consult the upstream advisory, issue, and fix to determine the affected behavior and required change. A vulnerability category alone does not establish which checks or configuration changes will prevent exploitation. If the root cause is still unclear, do not assume that a wrapper from [Case 2](#case-2) fixes it.
 
 _Example:_
 
@@ -195,7 +193,7 @@ XML external entity (XXE) vulnerability in XmlMapper in the Data format extensio
 (aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.
 ```
 
-Based on these information, the team determines that the necessary patching will be to add a [pre-validation of any XML data](XML_External_Entity_Prevention_Cheat_Sheet.md) passed to the Jakson API to prevent [XML external entity (XXE)](https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/) vulnerability.
+The [upstream issue](https://github.com/FasterXML/jackson-dataformat-xml/issues/190) and [fix](https://github.com/FasterXML/jackson-dataformat-xml/commit/f0f19a4c924d9db9a1e2830434061c8640092cc0) disable `XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES` for input factories created by Jackson. This is a parser configuration change, not generic XML pre-validation. Use a maintained release containing the fix. If an upgrade is blocked, evaluate that specific fix through [Case 5](#case-5); also harden any application-supplied parser using the [XXE prevention guidance](XML_External_Entity_Prevention_Cheat_Sheet.md#xmlinputfactory-stax).
 
 **Step 3:**
 
