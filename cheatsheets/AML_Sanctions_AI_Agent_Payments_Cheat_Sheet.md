@@ -181,7 +181,7 @@ When systems independently serialize the same JSON object for hashing or signatu
 
 ## Section 9: Cross-Agent Payment Accountability
 
-Agent payments often traverse multiple agents (orchestrator to sub-agent to service). If the compliance receipt stays only with the issuing system, accountability is lost at the first hop. The signed receipt MUST **travel with the transaction** so every downstream party can independently verify who was screened, against which lists, and what was decided, without trusting an upstream agent's word.
+Agent payments can traverse multiple agents. When downstream services rely on a signed screening receipt, they must verify it using a key bound to a trusted screening issuer. [Digital signatures provide data-origin and integrity assurance](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf#page=18); they do not prove that the issuer performed screening correctly. The receipt records the issuer's assertions about the entities, lists, and decision, so the verifier still needs a policy for which screening issuers it trusts.
 
 Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defense for such receipts is covered in [Section 7 of the OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence).
 
@@ -189,7 +189,7 @@ Bind each receipt to the specific transaction (include the transaction or intent
 
 - Attach the signed compliance receipt to the transaction and propagate it across every agent hop.
 - Bind each receipt to the transaction by signing over the transaction or intent hash.
-- At each hop, verify the inbound receipt before acting, and append a new signed receipt for any action taken.
+- At each hop, verify the signature, trusted issuer, transaction binding, and acceptable screening freshness before relying on the receipt; append a new signed receipt for any action taken.
 
 ### Don't
 
@@ -204,8 +204,8 @@ A receipt stating "screened, no match" is meaningless without which version of t
 
 - Include the sanctions-list source(s), version or publication date, and screening timestamp **inside the signed receipt**.
 - Bind each screening result and list version to the specific transaction or payment intent in the signed data, so a later verifier can distinguish it from another transaction.
-- Define a maximum acceptable list age, record it in the receipt, and fail-closed if it is exceeded.
-- Make list freshness auditable after the fact from the receipt alone.
+- Enforce the verifier's maximum acceptable list age and screening age; do not let an issuer-supplied age limit override that policy.
+- Retain evidence of the list version used and the screening service's update history. A signed timestamp or version protects the recorded assertion from alteration; it does not independently establish that the list was current or actually used.
 
 ### Don't
 
