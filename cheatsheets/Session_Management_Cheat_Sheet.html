@@ -4119,10 +4119,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#force-session-logout-on-web-browser-window-close-events" class="md-nav__link">
+  <a href="#limits-of-logout-on-browser-close" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Force Session Logout On Web Browser Window Close Events
+        Limits of Logout on Browser Close
       
     </span>
   </a>
@@ -5722,10 +5722,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#force-session-logout-on-web-browser-window-close-events" class="md-nav__link">
+  <a href="#limits-of-logout-on-browser-close" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Force Session Logout On Web Browser Window Close Events
+        Limits of Logout on Browser Close
       
     </span>
   </a>
@@ -5981,7 +5981,7 @@
 <p>Cookies are vulnerable to DNS spoofing/hijacking/poisoning attacks, where an attacker can manipulate the DNS resolution to force the web browser to disclose the session ID for a given host or domain.</p>
 <h3 id="expire-and-max-age-attributes">Expire and Max-Age Attributes<a class="headerlink" href="#expire-and-max-age-attributes" title="Permanent link">&para;</a></h3>
 <p>Session management mechanisms based on cookies can make use of two types of cookies, non-persistent (or session) cookies, and persistent cookies. If a cookie presents the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives"><code>Max-Age</code></a> (that has preference over <code>Expires</code>) or <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives"><code>Expires</code></a> attributes, it will be considered a persistent cookie and will be stored on disk by the web browser based until the expiration time.</p>
-<p>Typically, session management capabilities to track users after authentication make use of non-persistent cookies. This forces the session to disappear from the client if the current web browser instance is closed. Therefore, it is highly recommended to use non-persistent cookies for session management purposes, so that the session ID does not remain on the web client cache for long periods of time, from where an attacker can obtain it.</p>
+<p>Use non-persistent cookies when authentication does not need to persist across browser sessions, but do not rely on browser closure to end an authenticated session. Browsers with <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie">session restore can retain session cookies</a> after they close. Enforce <a href="#session-expiration">session expiration</a> on the server and invalidate the session when the user logs out; deleting a cookie alone does not invalidate a stolen copy of the session ID.</p>
 <ul>
 <li>Ensure that sensitive information is not compromised by ensuring that it is not persistent, encrypting it, and storing it only for the duration of the need</li>
 <li>Ensure that unauthorized activities cannot take place via cookie manipulation</li>
@@ -6110,8 +6110,8 @@ This provides similar access to this data as would be achieved by using the <cod
 <h3 id="initial-login-timeout">Initial Login Timeout<a class="headerlink" href="#initial-login-timeout" title="Permanent link">&para;</a></h3>
 <p>Web applications can use JavaScript code in the login page to evaluate and measure the amount of time since the page was loaded and a session ID was granted. If a login attempt is tried after a specific amount of time, the client code can notify the user that the maximum amount of time to log in has passed and reload the login page, hence retrieving a new session ID.</p>
 <p>This extra protection mechanism tries to force the renewal of the session ID pre-authentication, avoiding scenarios where a previously used (or manually set) session ID is reused by the next victim using the same computer, for example, in session fixation attacks.</p>
-<h3 id="force-session-logout-on-web-browser-window-close-events">Force Session Logout On Web Browser Window Close Events<a class="headerlink" href="#force-session-logout-on-web-browser-window-close-events" title="Permanent link">&para;</a></h3>
-<p>Web applications can use JavaScript code to capture all the web browser tab or window close (or even back) events and take the appropriate actions to close the current session before closing the web browser, emulating that the user has manually closed the session via the logout button.</p>
+<h3 id="limits-of-logout-on-browser-close">Limits of Logout on Browser Close<a class="headerlink" href="#limits-of-logout-on-browser-close" title="Permanent link">&para;</a></h3>
+<p>Browser close events cannot reliably enforce logout. For example, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event"><code>beforeunload</code> may not fire when a mobile browser is closed from the app manager</a>. Use <a href="#automatic-session-expiration">server-side idle and absolute timeouts</a> and an explicit <a href="#logout-button">logout action</a> to invalidate sessions. Client-side close handlers can supplement these controls but must not replace them.</p>
 <h3 id="disable-web-browser-cross-tab-sessions">Disable Web Browser Cross-Tab Sessions<a class="headerlink" href="#disable-web-browser-cross-tab-sessions" title="Permanent link">&para;</a></h3>
 <p>Web applications can use JavaScript code once the user has logged in and a session has been established to force the user to re-authenticate if a new web browser tab or window is opened against the same web application. The web application does not want to allow multiple web browser tabs or windows to share the same session. Therefore, the application tries to force the web browser to not share the same session ID simultaneously between them.</p>
 <p><strong>NOTE</strong>: This mechanism cannot be implemented if the session ID is exchanged through cookies, as cookies are shared by all web browser tabs/windows.</p>

@@ -5098,7 +5098,7 @@ Also, consider limiting the size of uploaded files to prevent denial-of-service 
 For more details refer to <a href="https://owasp.org/www-community/attacks/Path_Traversal">OWASP Path Traversal</a>.</p>
 <p>You can protect your application from a directory traversal attack by validating whether the absolute path of the requested file location is correct or strip out the directory information from filename input.</p>
 <ul>
-<li>Check if the path exists using the PHP <em>realpath</em> function and check that it leads to the storage directory</li>
+<li>Resolve the base directory and requested path with <a href="https://www.php.net/manual/en/function.realpath.php"><code>realpath()</code></a>, rejecting failures. Include the directory separator in the containment check so a sibling such as <code>/storage-private</code> cannot match <code>/storage</code>.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="x">use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;</span>
 <span class="x">use Symfony\Component\HttpFoundation\Response;</span>
@@ -5117,16 +5117,18 @@ For more details refer to <a href="https://owasp.org/www-community/attacks/Path_
 <span class="x">        $realBase = realpath($storagePath);</span>
 <span class="x">        $realPath = realpath($filePath);</span>
 
-<span class="x">        if ($realPath === false || !str_starts_with($realPath, $realBase))</span>
+<span class="x">        if ($realBase === false || $realPath === false</span>
+<span class="x">            || !str_starts_with($realPath, $realBase . DIRECTORY_SEPARATOR))</span>
 <span class="x">        {</span>
-<span class="x">            //Directory Traversal!</span>
+<span class="x">            throw $this-&gt;createNotFoundException();</span>
 <span class="x">        }</span>
 
-<span class="x">        // ...</span>
+<span class="x">        // Use $realPath for the authorized file operation.</span>
 
 <span class="x">    }</span>
 <span class="x">}</span>
 </code></pre></div>
+<p>This illustrative check assumes untrusted users cannot change the directories or symbolic links between validation and file access. Check the caller's permission to access the resolved file separately.</p>
 <ul>
 <li>Strip out directory information with PHP <em>basename</em> function</li>
 </ul>

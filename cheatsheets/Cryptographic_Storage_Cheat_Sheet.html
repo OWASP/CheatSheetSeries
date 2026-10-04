@@ -5017,8 +5017,8 @@
 <li>There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final">NIST SP 800-57 Part 1 Rev. 5</a> for further guidance.</li>
 </ul>
 </li>
-<li>After the key has been used to encrypt a specific amount of data.<ul>
-<li>This would typically be <code>2^35</code> bytes (~34GB) for 64-bit keys and <code>2^68</code> bytes (~295 exabytes) for 128-bit block size.</li>
+<li>Before reaching the usage limits of the selected encryption mode.<ul>
+<li>Enforce the mode's limits on message size, encryption operations, and initialization vector (IV) uniqueness across all instances sharing the key. Block size alone does not determine a safe data-volume limit. For example, AES-GCM has separate requirements for input lengths and IV construction in <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf">NIST SP 800-38D, Sections 5.2.1.1 and 8</a>. See <a href="Key_Management_Cheat_Sheet.html#cryptoperiods-and-rotation">Key Management: Cryptoperiods and Rotation</a> for usage-based rotation guidance.</li>
 </ul>
 </li>
 <li>If there is a significant change to the security provided by the algorithm (such as a new attack being announced).</li>

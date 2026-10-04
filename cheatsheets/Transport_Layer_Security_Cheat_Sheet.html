@@ -5019,8 +5019,9 @@
 <li>Null ciphers;</li>
 <li>Anonymous ciphers (<code>TLS_*_anon_*</code>);</li>
 <li>EXPORT ciphers (<code>TLS_*_EXPORT_*</code>);</li>
-<li>RSA transport (<code>TLS_RSA_*</code>) and ephemeral/static Diffie-Hellman key agreement (<code>TLS_DH_*</code>, <code>TLS_ECDH_*</code>) which do not provide forward secrecy.</li>
+<li>RSA key transport (<code>TLS_RSA_*</code>) and static Diffie-Hellman key agreement (<code>TLS_DH_*</code>, <code>TLS_ECDH_*</code>), which <a href="https://www.rfc-editor.org/rfc/rfc9325.html#section-4.1">do not provide forward secrecy</a>.</li>
 </ul>
+<p>For TLS 1.2, prefer <a href="https://www.rfc-editor.org/rfc/rfc9325.html#section-4.2">ECDHE cipher suites with authenticated encryption</a>. Ephemeral Diffie-Hellman provides forward secrecy; finite-field DHE suites (<code>TLS_DHE_*</code>) are nevertheless discouraged in TLS 1.2 because of construction and parameter-negotiation weaknesses, as explained in <a href="https://www.rfc-editor.org/rfc/rfc9325.html#section-4.1">RFC 9325 Section 4.1</a>.</p>
 <p>The Mozilla Foundation provides an <a href="https://ssl-config.mozilla.org/">easy-to-use secure configuration generator</a> for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.</p>
 <h3 id="set-the-appropriate-diffie-hellman-groups">Set the appropriate Diffie-Hellman groups<a class="headerlink" href="#set-the-appropriate-diffie-hellman-groups" title="Permanent link">&para;</a></h3>
 <p>The practice of earlier than TLS 1.3 protocol versions of Diffie-Hellman parameter generation for use by the ephemeral Diffie-Hellman key exchange (signified by the "DHE" or "EDH" strings in the cipher suite name) had practical issues. For example, the client had no say in the selection of server parameters, meaning it could only unconditionally accept or drop, and the random parameter generation often resulted to denial of service attacks (CVE-2022-40735, CVE-2002-20001).</p>

@@ -4545,7 +4545,7 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>With the spread of 2FA and Passkey, the login process has become more robust, and even if an attacker steals only the password, it has become difficult to do a spoofing attack.</p>
 <p>However, if attacker can steal a valid session cookie instead, it is possible to hijack the user session for the duration of the session lifetime period. In other words, stealing a session cookie has the same impact as stealing authentication credentials until it expires. No matter how robust your authentication process is, it will not be a sufficient countermeasure for Cookie Theft.</p>
-<p>Generally, cookie theft is carried out directly against users through malware or phishing attacks. Therefore, the only thing a service can do is to <em>detect as quickly as possible when a stolen cookie is used</em>.</p>
+<p>Cookie theft can occur through malware, phishing, or application vulnerabilities. Apply the preventive controls in the <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>, and monitor for misuse of stolen cookies. Detection complements these controls; it does not replace them.</p>
 <h2 id="cookie-theft-mitigation">Cookie Theft Mitigation<a class="headerlink" href="#cookie-theft-mitigation" title="Permanent link">&para;</a></h2>
 <p>Session Cookies are given to users when they log in. If these are stolen by an attacker and used to hijack the session from the attacker's device, certain environment information used in the connection for session will change.</p>
 <p>For example, if stolen cookies are used by an attacker from another country, you can detect this by detecting a significant change in the IP address.</p>
@@ -4630,11 +4630,10 @@
 <p>Usually, such functions are provided as middleware, or they are provided by WAF (Web Application Firewall) installed in front of the web server.</p>
 <p>If this comparison has a significant impact on performance, it may be possible to tune it so that the priority is set for each path and only the endpoints that view or modify important information are checked intensively.</p>
 <h2 id="device-bound-session-credentials">Device Bound Session Credentials<a class="headerlink" href="#device-bound-session-credentials" title="Permanent link">&para;</a></h2>
-<p>The fundamental problem that leads to Cookie Theft attack is that the session cookies are accepted without checking who sent them. Servers only check whether the values are valid. Such values are generally referred to as "Bearer Token".</p>
-<p>To solve this problem, it is effective to make the Session Cookie itself as "Sender Constrained Token". The Device Bound Session Credentials API was proposed for this purpose.</p>
-<p><a href="https://github.com/WICG/dbsc/blob/main/README.md">Device Bound Session Credentials explainer</a></p>
-<p>This API combines the Public Key Encryption with the owner verification of Session Cookies. By verifying the owner using the private key generated internally by the browser, even if an attacker succeeded to steal the session cookie, they will not be able to impersonate the user unless they also steal the private key that the browser keeping secret internally.</p>
-<p>This specification is still in the drafting stages, but it's considered that it will be possible to solve the Cookie Theft Attack in the future.</p>
+<p>Ordinary session cookies are bearer credentials: anyone possessing a valid cookie can use it until it expires or the server invalidates it.</p>
+<p>Device Bound Session Credentials (DBSC) uses a device-bound signing key to prove possession when refreshing short-lived cookies, as described in the <a href="https://github.com/w3c/webappsec-dbsc/blob/main/README.md#browser-initiated-refreshes">DBSC refresh design</a>. Ordinary application requests still use those cookies as bearer credentials; DBSC does not bind every request to the key.</p>
+<p>An attacker can replay a stolen cookie during its remaining lifetime. Protecting the key limits the attacker's ability to refresh the session from another device; it does not make a stolen cookie immediately unusable.</p>
+<p>DBSC also does not prevent abuse while an attacker retains access to the compromised browser or device. Such an attacker may obtain fresh cookies or use the protected key through the compromised environment. Account for these <a href="https://github.com/w3c/webappsec-dbsc/blob/main/README.md#non-goals">documented threat-model limits</a> when choosing session lifetimes and incident-response controls.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html">NIST SP 800-63B-4: Authentication and Authenticator Management</a></li>

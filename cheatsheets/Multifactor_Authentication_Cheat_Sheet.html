@@ -6597,7 +6597,7 @@
 
 <h1 id="multifactor-authentication-cheat-sheet">Multifactor Authentication Cheat Sheet<a class="headerlink" href="#multifactor-authentication-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Multifactor Authentication (MFA) or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are five different types of evidence (or factors) and any combination of these can be used, however in practice only the first three are common in web applications. The five types are as follows:</p>
+<p>Multifactor Authentication (MFA) requires evidence from at least two distinct authentication factors: something you know, something you have, and something you are. Location and other risk signals can inform authentication decisions, but do not substitute for an authentication factor, as explained in <a href="https://pages.nist.gov/800-63-4/sp800-63b/aal/">NIST SP 800-63B-4</a>.</p>
 <table>
 <thead>
 <tr>
@@ -6608,23 +6608,15 @@
 <tbody>
 <tr>
 <td><a href="#something-you-know">Something You Know</a></td>
-<td><a href="#passwords-and-pins">Passwords and PINs</a>, <a href="#security-questions">Security Questions</a></td>
+<td><a href="#passwords-and-pins">Passwords and PINs</a></td>
 </tr>
 <tr>
 <td><a href="#something-you-have">Something You Have</a></td>
-<td><a href="#one-time-password-tokens">OTP Tokens</a>, <a href="#universal-second-factor">U2F Tokens</a>, <a href="#certificates">Certificates</a>,<a href="#smart-cards">Smart Cards</a>, <a href="#email">Email</a>, <a href="#sms-messages-and-phone-calls">SMS and Phone Calls</a></td>
+<td><a href="#one-time-password-tokens">OTP Tokens</a>, <a href="#universal-second-factor">U2F Tokens</a>, <a href="#certificates">Certificates</a>, <a href="#smart-cards">Smart Cards</a>, <a href="#sms-messages-and-phone-calls">SMS and Phone Calls (restricted)</a></td>
 </tr>
 <tr>
 <td><a href="#something-you-are">Something You Are</a></td>
-<td><a href="#biometrics">Fingerprints, Facial Recognition, Iris Scans</a></td>
-</tr>
-<tr>
-<td><a href="#somewhere-you-are">Somewhere You Are</a></td>
-<td><a href="#source-ip-address">Source IP Address</a>, <a href="#geolocation">Geolocation</a>, <a href="#geofencing">Geofencing</a></td>
-</tr>
-<tr>
-<td><a href="#something-you-do">Something You Do</a></td>
-<td><a href="#behavioral-profiling">Behavioral Profiling</a>, <a href="#keystroke--mouse-dynamics">Keystroke &amp; Mouse Dynamics</a>, <a href="#gait-analysis">Gait Analysis</a></td>
+<td><a href="#biometrics">Fingerprints, Facial Recognition, Iris Scans</a>, <a href="#something-you-do">Behavioral Biometrics</a></td>
 </tr>
 </tbody>
 </table>
@@ -6701,7 +6693,7 @@
 <ul>
 <li>Requiring MFA when the user logs in from a new device or location.</li>
 <li>Requiring MFA when the user logs in from a location that is considered to be high risk.</li>
-<li>Allowing corporate IP ranges (or using <a href="#geolocation">geolocation</a> as an additional factor).</li>
+<li>Using corporate IP ranges or <a href="#geolocation">geolocation</a> as risk signals when deciding whether to require additional authentication.</li>
 </ul>
 <h4 id="passkeys">Passkeys<a class="headerlink" href="#passkeys" title="Permanent link">&para;</a></h4>
 <p><a href="https://passkeys.dev/">Passkeys</a> based on the FIDO2 standard are a new form of MFA that combines characteristics of <a href="#something-you-have">possession-based</a> and either <a href="#something-you-know">knowledge-based</a> or <a href="#something-you-are">inherence-based</a> authentication. The user is required to have a physical device (such as a mobile phone) and to enter a <a href="#passwords-and-pins">PIN</a> or use <a href="#biometrics">biometric authentication</a> in order to authenticate. The user's device then generates a cryptographic key that is used to authenticate with the server. This is a very secure form of MFA and is resistant to phishing attacks while also being frictionless for the user.</p>
@@ -6928,9 +6920,9 @@ NIST SP 800-63B-4 designates SMS and PSTN-delivered codes as a <em>restricted</e
 <li>Hardware may be vulnerable to additional attack vectors.</li>
 </ul>
 <h2 id="somewhere-you-are">Somewhere You Are<a class="headerlink" href="#somewhere-you-are" title="Permanent link">&para;</a></h2>
-<p>Location-based authentication is based on the user's physical location. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed <a href="#when-to-require-mfa">above</a>) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the <a href="https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview">Conditional Access Policies</a> available in Microsoft Azure, and the <a href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock">Network Unlock</a> functionality in BitLocker.</p>
+<p>Location can inform access restrictions and risk-based authentication decisions. It is not an independent authentication factor: a password combined with a trusted IP address or location does not constitute MFA. <a href="https://pages.nist.gov/800-63-4/sp800-63b/aal/">NIST SP 800-63B-4</a> explicitly distinguishes these risk signals from authentication factors.</p>
 <h3 id="source-ip-address">Source IP Address<a class="headerlink" href="#source-ip-address" title="Permanent link">&para;</a></h3>
-<p>The source IP address the user is connecting from can be used as a factor, typically in an allow-list based approach. This could either be based on a static list (such as corporate office ranges) or a dynamic list (such as previous IP addresses the user has authenticated from).</p>
+<p>The source IP address the user is connecting from can be used as a risk signal or access restriction, typically in an allow-list based approach. This could either be based on a static list (such as corporate office ranges) or a dynamic list (such as previous IP addresses the user has authenticated from).</p>
 <h4 id="pros_10">Pros<a class="headerlink" href="#pros_10" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Very easy for users.</li>
@@ -6969,7 +6961,7 @@ NIST SP 800-63B-4 designates SMS and PSTN-delivered codes as a <em>restricted</e
 <li>Doesn't provide any protection against attackers who are physically close to the trusted location.</li>
 </ul>
 <h2 id="something-you-do">Something You Do<a class="headerlink" href="#something-you-do" title="Permanent link">&para;</a></h2>
-<p>Behavior-based authentication is based on the user's behavior, such as the way they type, move their mouse, or use their mobile device. This is the least common form of MFA and is combined with other factors to increase the level of assurance in the user's identity. It is also the most difficult to implement and may require specific hardware along with a significant amount of data and processing power to analyze the user's behavior.</p>
+<p>Behavioral biometrics, such as keystroke patterns or gait, are a form of "something you are," not a separate authentication factor. Under <a href="https://pages.nist.gov/800-63-4/sp800-63b.html#biometric_use">NIST's biometric requirements</a>, biometric comparison must be combined with an authenticated physical authenticator. General activity signals, such as login times or navigation patterns, can inform risk decisions but do not by themselves constitute MFA.</p>
 <h3 id="behavioral-profiling">Behavioral Profiling<a class="headerlink" href="#behavioral-profiling" title="Permanent link">&para;</a></h3>
 <p>Behavioral profiling is based on the way the user interacts with the application, such as the time of day they log in, the devices they use, and the way they navigate the application. This is rapidly becoming more common in web applications when combined with <a href="#risk-based-authentication">Risk Based Authentication</a> and <a href="https://learn.microsoft.com/en-us/azure/sentinel/identify-threats-with-entity-behavior-analytics">User and Entity Behavior Analytics</a> (UEBA) systems.</p>
 <h4 id="pros_13">Pros<a class="headerlink" href="#pros_13" title="Permanent link">&para;</a></h4>
