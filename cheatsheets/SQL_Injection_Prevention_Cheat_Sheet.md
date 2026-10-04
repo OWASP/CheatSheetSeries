@@ -68,7 +68,7 @@ In .NET, the creation and execution of the query doesn't change. Just pass the p
 String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
 try {
   OleDbCommand command = new OleDbCommand(query, connection);
-  command.Parameters.Add(new OleDbParameter("customerName", CustomerName Name.Text));
+  command.Parameters.Add(new OleDbParameter("customerName", CustomerName.Text));
   OleDbDataReader reader = command.ExecuteReader();
   // …
 } catch (OleDbException se) {
