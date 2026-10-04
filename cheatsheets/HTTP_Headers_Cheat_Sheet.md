@@ -173,7 +173,7 @@ The HTTP [`Cross-Origin-Embedder-Policy`](https://developer.mozilla.org/en-US/do
 A document can only load resources from the same origin, or resources explicitly marked as loadable from another origin.
 > `Cross-Origin-Embedder-Policy: require-corp`
 
-- *NOTE*: you can bypass it for specific resources by adding the `crossorigin` attribute:
+- *NOTE*: The `crossorigin` attribute requests the resource in CORS mode. The resource server must [permit the request through CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy#require-corp); the attribute alone does not grant permission:
 - `<img src="https://thirdparty.com/img.png" crossorigin>`
 
 ### Cross-Origin-Resource-Policy (CORP)
