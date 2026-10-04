@@ -20,26 +20,26 @@ These terms relate to how data is transformed for transport, storage, or display
 
 **Definition:** Transforming data into a different format using a publicly available scheme, so that it can be safely consumed by a different system.
 
-- **Purpose:** Not for security, but for data usability and compatibility.
+- **Purpose:** Represent data for a particular transport, storage, or output context.
 - **Reversibility:** Always reversible.
 - **Examples:** Base64, URL Encoding, HTML Entity Encoding.
-- **Security Context:** Using the wrong encoding can lead to vulnerabilities, but encoding itself is not a security control.
+- **Security Context:** Base64 does not provide confidentiality. Context-appropriate [output encoding is an XSS defense](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XSS#output_encoding); using the wrong encoding for the destination context can leave an injection vulnerability.
 
 ### Escaping
 
-**Definition:** A sub-type of encoding where specific characters are prefixed with a "signal" character (like a backslash) to prevent them from being misinterpreted by a parser as control characters.
+**Definition:** Representing characters with parser-specific escape sequences so they are interpreted literally in a particular context.
 
 - **Purpose:** To ensure the interpreter treats the data as text rather than code/commands.
-- **Examples:** `\'` in SQL, `\n` in strings, `&lt;` in HTML.
-- **Security Context:** Essential for preventing Injection attacks (XSS, SQLi).
+- **Examples:** `\"` inside a JSON string, `&lt;` in HTML text.
+- **Security Context:** Escaping rules depend on the parser and context. For SQL values, use [parameterized queries](SQL_Injection_Prevention_Cheat_Sheet.md#primary-defenses) instead of constructing SQL with escaped strings.
 
 ### Sanitization
 
 **Definition:** The process of cleaning or filtering input by removing, replacing, or modifying potentially dangerous characters or content.
 
 - **Purpose:** To make "dirty" input "clean" according to a security policy.
-- **Examples:** Stripping `<script>` tags from HTML input, removing special characters from a filename.
-- **Security Context:** Use as a secondary defense; prefer parameterized queries or output escaping where possible.
+- **Examples:** Using a maintained HTML sanitizer to allow approved elements and attributes in user-authored HTML.
+- **Security Context:** Use [HTML sanitization](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#html-sanitization) when untrusted input must be rendered as HTML. Removing `<script>` tags alone is insufficient; other elements and attributes can execute scripts. Use output encoding when the value should be displayed as text.
 
 ### Serialization
 
