@@ -61,8 +61,12 @@ from the OWASP Mobile Top 10.
 
 - Perform authentication/authorization server-side and only load data on
 the device after successful authentication.
-- If storing data locally, encrypt it using a key derived from the user's
-login credentials.
+- For sensitive local data, encrypt it and protect encryption keys using
+[platform key storage](https://mas.owasp.org/MASWE/MASVS-STORAGE/MASWE-0003/).
+If the design requires password-derived keys, use a
+[dedicated password-based key derivation function](https://mas.owasp.org/MASWE/MASVS-CRYPTO/MASWE-0014/)
+with a unique random salt and an appropriate work factor; a password or a fast
+hash of it is not a suitable encryption key.
 - Do not store user passwords on the device; use device-specific tokens
 that can be revoked.
 - Avoid using spoofable values like device identifiers for authentication.
