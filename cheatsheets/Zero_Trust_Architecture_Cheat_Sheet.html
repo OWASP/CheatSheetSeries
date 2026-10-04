@@ -5914,10 +5914,11 @@
 <p>You need <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html">MFA</a> for everyone - employees, contractors, and partners. Here's what works best:</p>
 <p><strong>Most Secure (Highly Phishing-Resistant):</strong></p>
 <ul>
-<li><strong>FIDO2 hardware security keys</strong>: Physical devices that use public key cryptography</li>
-<li><strong>WebAuthn-based platform authenticators</strong>: Passkeys using fingerprints or face recognition</li>
+<li><strong>FIDO2 hardware security keys</strong>: Use with a PIN, biometric activation, or a separate password to provide MFA</li>
+<li><strong>WebAuthn-based platform authenticators</strong>: Passkeys with required user verification using a device PIN or biometrics</li>
 <li><strong>Smart cards or PIV cards</strong>: PKI-based authentication</li>
 </ul>
+<p>Biometrics alone do not provide MFA. They can activate a physical cryptographic authenticator, combining possession of that authenticator with a biometric match. See <a href="https://pages.nist.gov/800-63-4/sp800-63b/authenticators/">NIST SP 800-63B-4, Section 3.2.3</a> and the <a href="Passkey_Security_Cheat_Sheet.html#verify-the-authentication-response">Passkey Security Cheat Sheet</a>.</p>
 <p><strong>Good Options:</strong></p>
 <ul>
 <li><strong>Mobile apps</strong>: TOTP-based authenticator applications</li>
@@ -6018,7 +6019,7 @@
 <h3 id="phase-1-get-the-basics-right-months-1-6">Phase 1: Get the Basics Right (Months 1-6)<a class="headerlink" href="#phase-1-get-the-basics-right-months-1-6" title="Permanent link">&para;</a></h3>
 <p>Before you invest in new Zero Trust technologies, you need to know what you're protecting:</p>
 <p><strong>Figure out what you have</strong> - Make a list of all users, devices, applications, and how data moves around. This sounds easy but takes longer than you think. You'll find forgotten systems, shadow IT, and connections nobody documented.</p>
-<p><strong>Set up strong MFA everywhere</strong> - This provides significant security improvement. Use FIDO2 hardware keys or biometric authentication. Don't use SMS codes - they're too easy to hack. Plan for user training since this changes how people log in.</p>
+<p><strong>Set up strong MFA everywhere</strong> - Use phishing-resistant MFA as described in <a href="#multi-factor-authentication-mfa">Multi-Factor Authentication</a>, rather than treating a biometric match alone as MFA. Plan for user training since this changes how people log in.</p>
 <p><strong>Replace your VPN</strong> - Regular VPNs give too much access once someone logs in. Switch to Zero Trust Network Access (ZTNA) that only gives access to specific applications. This is usually a significant change users notice.</p>
 <p><strong>Control admin access</strong> - Set up privileged access management (PAM) for administrative accounts. Remove permanent admin rights and switch to temporary access. This may slow some processes initially.</p>
 <h3 id="phase-2-add-real-zero-trust-controls-months-6-18">Phase 2: Add Real Zero Trust Controls (Months 6-18)<a class="headerlink" href="#phase-2-add-real-zero-trust-controls-months-6-18" title="Permanent link">&para;</a></h3>
