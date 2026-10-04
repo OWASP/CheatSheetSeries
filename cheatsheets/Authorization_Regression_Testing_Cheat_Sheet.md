@@ -78,7 +78,7 @@ In multi-tenant SaaS applications, logic changes (like caching or query modifica
 
 When building APIs, the authorization schema should be explicitly defined in the API contract. The [OpenAPI Specification](https://spec.openapis.org/oas/v3.1.0#security-scheme-object) provides `securitySchemes` and `security` fields to formally declare authorization requirements at both the global and per-operation level.
 
-- **Schema-Aware Testing:** Use the OpenAPI definition as the source of truth for authorization requirements. If the specification states an endpoint requires an [OAuth2](https://www.rfc-editor.org/rfc/rfc6749) scope of `read:invoices`, the testing framework should automatically verify that tokens lacking this scope receive a [`401 Unauthorized`](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2) or `403 Forbidden` response. Tools such as [Schemathesis](https://schemathesis.readthedocs.io/en/stable/) can read the OpenAPI document and auto-generate these negative test cases.
+- **Schema-Aware Testing:** Use the OpenAPI definition to identify declared authentication schemes and required scopes, then test them against the application's access policy. [Schemathesis's `ignored_auth` check](https://schemathesis.readthedocs.io/en/stable/reference/checks/#ignored_auth) probes missing and invalid credentials. Add explicit tests using otherwise-valid tokens that lack required scopes; rejecting missing credentials does not establish that scope enforcement works.
 - **Middleware Enforcement:** Configure API gateways or web frameworks to automatically enforce the security definitions present in the OpenAPI contract. Regression tests should validate that this middleware has not been bypassed or disabled following a refactor.
 
 ## Automated Testing Framework Integration
@@ -86,7 +86,7 @@ When building APIs, the authorization schema should be explicitly defined in the
 Authorization tests must live alongside functional tests in the developer's standard toolkit, following the guidance in [OWASP SAMM: Security Testing](https://owaspsamm.org/model/verification/security-testing/).
 
 - **Test Frameworks:** Use standard test runners (e.g., [`pytest`](https://docs.pytest.org/) for Python, [`Jest`](https://jestjs.io/) for JavaScript, [`JUnit`](https://junit.org/junit5/) for Java) to build authorization suites. This keeps the barrier to entry low and ensures the tests run in the same CI pipeline as functional tests.
-- **Property-Based Testing:** Tools like [Schemathesis](https://schemathesis.readthedocs.io/en/stable/) or [Dredd](https://dredd.org/en/latest/) can read an OpenAPI specification and automatically generate negative test cases (e.g., sending requests without tokens, with expired tokens, or with tokens missing required scopes) to ensure the API fails securely.
+- **Generated and Custom Tests:** Use schema-driven testing to supplement the authorization matrix. Create explicit expired-token and missing-scope fixtures with expected denial responses instead of assuming the OpenAPI contract generates these credentials. If using Dredd, its [hooks](https://dredd.org/en/latest/hooks/) let you modify requests and set custom expectations for these cases.
 - **Session Switching:** Design the test suite to quickly and cheaply swap authentication context (e.g., swapping JWTs in the `Authorization` header as defined in [RFC 6750](https://www.rfc-editor.org/rfc/rfc6750)) without requiring a full login flow for every test.
 
 ## CI/CD Gating and SDLC Integration
