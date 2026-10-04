@@ -206,7 +206,7 @@ Implement these network protections:
 
 - **DNS filtering**: Block access to malicious websites
 - **Web filtering**: Control what websites users can visit
-- **Replace VPNs**: Use Zero Trust Network Access (ZTNA) instead
+- **Limit remote access**: Prefer access to specific resources over broad network access. During migration, restrict and monitor any VPN access that remains necessary; a VPN connection alone must not authorize access to other resources.
 - **Monitor traffic**: Analyze all network connections
 
 ## Application and Data Protection
@@ -251,9 +251,9 @@ Monitor these important numbers:
 
 ## Implementation Steps
 
-Zero Trust implementation requires a structured approach. It's not like installing one security tool - it's more like updating your entire security approach while keeping everything running. Here's what actually works:
+Plan migration around your resources, risks, and dependencies. [NIST SP 800-207, Section 7](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf) recommends incremental migration and allows existing and Zero Trust workflows to coexist. The phases below are illustrative activities, not a fixed schedule.
 
-### Phase 1: Get the Basics Right (Months 1-6)
+### Phase 1: Get the Basics Right
 
 Before you invest in new Zero Trust technologies, you need to know what you're protecting:
 
@@ -261,11 +261,11 @@ Before you invest in new Zero Trust technologies, you need to know what you're p
 
 **Set up strong MFA everywhere** - Use phishing-resistant MFA as described in [Multi-Factor Authentication](#multi-factor-authentication-mfa), rather than treating a biometric match alone as MFA. Plan for user training since this changes how people log in.
 
-**Replace your VPN** - Regular VPNs give too much access once someone logs in. Switch to Zero Trust Network Access (ZTNA) that only gives access to specific applications. This is usually a significant change users notice.
+**Narrow remote access** - Move suitable workflows to application-specific access, such as Zero Trust Network Access (ZTNA). Test authentication and resource authorization before retiring existing access paths. Restrict and monitor legacy VPN paths during the transition rather than treating network admission as authorization.
 
 **Control admin access** - Set up privileged access management (PAM) for administrative accounts. Remove permanent admin rights and switch to temporary access. This may slow some processes initially.
 
-### Phase 2: Add Real Zero Trust Controls (Months 6-18)
+### Phase 2: Add Zero Trust Controls
 
 Now you start building actual Zero Trust capabilities:
 
@@ -275,7 +275,7 @@ Now you start building actual Zero Trust capabilities:
 
 **Secure applications properly** - Add identity-aware proxies and web application firewalls (WAFs) that make security decisions based on who's trying to access what, not just where they're connecting from.
 
-### Phase 3: Advanced Capabilities (Months 18-36)
+### Phase 3: Advanced Capabilities
 
 Build advanced capabilities:
 
@@ -295,9 +295,7 @@ Zero Trust is never done:
 
 **Measure what matters** - Track how fast you detect threats, how fast you respond, how many policy violations happen, and whether users are happy. Use this data to keep improving.
 
-**Reality check:** Most organizations take 3-5 years to fully implement Zero Trust, and that's with dedicated teams and management support. Don't expect quick results - this takes time.
-
-These phases line up with the [CISA Zero Trust Maturity Model v2.0](https://www.cisa.gov/zero-trust-maturity-model), but your timeline will depend on your organization's size and resources.
+Use the [CISA Zero Trust Maturity Model v2.0](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf) to assess progress across identity, devices, networks, applications and workloads, and data. Its Traditional, Initial, Advanced, and Optimal stages describe capabilities, not calendar deadlines; pillars may progress at different rates.
 
 ## Legacy System Challenges
 
@@ -363,7 +361,7 @@ For containerized applications:
 
 **Skipping user training** - Zero Trust changes how people authenticate, access applications, and handle security alerts. If you don't invest in educating your staff about why these changes are necessary and how to work with them, you'll face constant resistance and support tickets. Plan for comprehensive training programs, not just email announcements.
 
-**Moving too fast** - Some organizations try to implement Zero Trust in a few months, which usually leads to broken workflows, user frustration, and incomplete security coverage. Zero Trust is a multi-year journey that requires careful planning and phased implementation. Rushing the process often means having to redo work later when problems surface.
+**Skipping migration validation** - Pilot changes on selected workflows, verify that legitimate access still works, and monitor policy decisions before expanding deployment. Choose the next workflow based on risk and dependencies, as described in [NIST SP 800-207, Section 7.3](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf).
 
 **Vendor lock-in** - Zero Trust involves many different technologies, and some vendors will try to sell you a complete "Zero Trust platform" that locks you into their ecosystem. Keep your options open by choosing solutions that support open standards and can integrate with multiple vendors. Your security architecture should be flexible enough to adapt as threats and technologies evolve.
 
@@ -387,7 +385,7 @@ Zero Trust architecture helps organizations meet various compliance requirements
 Zero Trust requires several technology categories working together:
 
 - **Identity and Access Management**: Strong authentication (MFA) and risk-based access decisions
-- **Zero Trust Network Access (ZTNA)**: Application-level access instead of network-level VPNs
+- **Zero Trust Network Access (ZTNA)**: Resource-specific access controls, with restricted legacy access paths during migration
 - **Web Application Security**: Protect applications and APIs from OWASP Top 10 attacks
 - **Security Monitoring**: Real-time visibility and automated response to threats
 
