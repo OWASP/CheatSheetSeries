@@ -298,6 +298,8 @@ class OutputGuardrails:
 
 #### Agent Monitoring
 
+For elapsed-time windows, use [Python's `timedelta.total_seconds()`](https://docs.python.org/3/library/datetime.html#datetime.timedelta.total_seconds); the `seconds` attribute excludes whole days.
+
 ```python
 import structlog
 from dataclasses import dataclass, field
@@ -379,11 +381,12 @@ class AgentMonitor:
             "total_cost": 0.0,
         })
         
-        metrics["tool_calls"].append(datetime.utcnow())
+        now = datetime.utcnow()
+        metrics["tool_calls"].append(now)
         
         # Check tool call rate
         recent_calls = [t for t in metrics["tool_calls"] 
-                       if (datetime.utcnow() - t).seconds < 60]
+                       if 0 <= (now - t).total_seconds() < 60]
         if len(recent_calls) > self.ANOMALY_THRESHOLDS["tool_calls_per_minute"]:
             await self.log_security_event(
                 session_id, "anomaly_detected", "WARNING",
