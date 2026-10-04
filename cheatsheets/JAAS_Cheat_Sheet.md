@@ -107,10 +107,10 @@ callbackHandler.handle (callbacks);
 
 Once the users credentials are successfully verified during `login()`, the JAAS authentication framework associates the credentials, as needed, with the subject.
 
-There are two types of credentials, **Public** and **Private**:
+A [`Subject` separates credentials by their protection and sharing requirements](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/security/auth/Subject.html):
 
-- Public credentials include public keys.
-- Private credentials include passwords and public keys.
+- Public credentials are intended to be shared, such as public key certificates.
+- Private credentials require special protection, such as passwords and private cryptographic keys.
 
 Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject.
 
