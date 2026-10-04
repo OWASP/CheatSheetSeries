@@ -131,11 +131,11 @@ Supply-chain attacks increasingly target build artifacts, registries and CI cred
 
 - Sign artifacts and build provenance (for example, use Sigstore / cosign or similar signing tools) so consumers can verify integrity before installing.
 
-  Sigstore Example:
+  Illustrative [Sigstore 5 verification example](https://github.com/sigstore/sigstore-js/tree/main/packages/client#verifybundle-payload-options), assuming a [GitHub Actions signing workflow](https://docs.sigstore.dev/quickstart/verification-cheat-sheet/#verifying-a-signature-created-by-a-workflow). Replace the placeholder repository and workflow with your trusted release policy. Verify both the expected issuer and certificate identity; identity patterns are regular expressions, so anchor them and escape literal dots. Never derive this policy from the untrusted bundle.
 
   ```javascript
-  // sign-and-verify.js
-  // npm install sigstore fs
+  // sign-and-verify.mjs
+  // npm install sigstore@5
 
   import * as fs from 'fs';
   import * as sigstore from 'sigstore';
@@ -150,7 +150,11 @@ Supply-chain attacks increasingly target build artifacts, registries and CI cred
   console.log('Signed:', artifact);
 
   // --- Verify ---
-  await sigstore.verify(payload, bundle);
+  await sigstore.verify(bundle, payload, {
+    certificateIssuer: 'https://token.actions.githubusercontent.com',
+    certificateIdentityURI:
+      '^https://github\\.com/OWNER/REPOSITORY/\\.github/workflows/release\\.yml@refs/heads/main$',
+  });
   console.log('Verified OK!');
   ```
 
