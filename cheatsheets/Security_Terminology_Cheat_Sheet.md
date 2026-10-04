@@ -76,8 +76,8 @@ These terms relate to protecting the confidentiality, integrity, and authenticit
 **Definition:** Using asymmetric cryptography to provide proof of the origin and integrity of a message.
 
 - **Purpose:** **Authenticity** and **Non-repudiation**. Proves who sent the message and that it wasn't altered.
-- **Mechanism:** The sender signs a hash of the message with their *private key*; the receiver verifies it with the sender's *public key*.
-- **Example:** JWT signatures, GPG signatures.
+- **Mechanism:** The signing algorithm uses the signer's private key; verification uses a trusted public key bound to that signer. Follow the algorithm's [message-processing rules](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf#page=18); do not add a separate prehash unless the chosen algorithm and API require it.
+- **Examples:** Asymmetrically signed JWTs and GPG signatures. [JWTs can also use shared-key message authentication codes or encryption](https://www.rfc-editor.org/info/rfc7519/); the JWT format does not imply a digital signature.
 
 ---
 
