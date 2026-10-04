@@ -46,16 +46,16 @@ The LLM sees all tool descriptions from all connected servers in its context —
 
 - Inspect all tool descriptions, parameter names, types, and return schemas before approval.
 - Treat the *entire* tool schema as a potential injection surface — not just the `description` field.
-- Pin tool definitions using cryptographic hashes and alert on any changes (prevents rug pulls).
+- Pin reviewed tool definitions using cryptographic hashes and require review when they change. This detects metadata changes, not changes to server code or behavior behind an unchanged definition; [tool annotations are hints, not enforcement](https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/#what-annotations-cant-do).
 - Use tools like `mcp-scan` to automatically detect poisoned descriptions and cross-server shadowing.
 - Use strict JSON Schema for tool parameters: set `additionalProperties: false` and use `pattern` (or similar) on string fields so only declared parameters and valid formats are accepted.
 
 ### 3. Sandbox and Isolate MCP Servers
 
-- Run local MCP servers in sandboxed environments (containers, chroot, application sandboxes).
+- Run local MCP servers in a sandbox that enforces minimal privileges and access to host resources, following the [MCP local-server guidance](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices#local-mcp-server-compromise). A bare [`chroot`](https://man7.org/linux/man-pages/man2/chroot.2.html) is not a process sandbox.
 - Restrict file system access to only required directories.
 - Disable network access unless explicitly needed.
-- Use `stdio` transport for local servers to limit access to only the MCP client.
+- Use [`stdio`](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/stdio) for local MCP communication through the launched process's standard streams. This avoids a listening MCP endpoint; it does not restrict the server process's file system, network, or credential access.
 - Separate sensitive servers (payment, auth, PII) from general-purpose ones.
 
 ### 4. Human-in-the-Loop for Sensitive Actions
