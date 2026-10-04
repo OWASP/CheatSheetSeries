@@ -138,9 +138,9 @@ To secure the implementation with the `issue_comment` trigger:
 
 Alternatively, consider replacing the `issue_comment` trigger with label-based triggers.
 When using the `pull_request` trigger with the labeled event, `github.event.pull_request.head.sha` contains the latest commit SHA for the pull request.
-Labels can only be applied by authorized users (i.e., GitHub accounts with write permissions), so the workflow does not need to implement additional authorization checks.
+Users with [triage access can apply labels](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels#applying-a-label). Verify that the actor applying a workflow-triggering label is authorized for that operation; permission to label does not establish that the commit has been reviewed.
 Applying a label does not elevate workflow permissions. For pull requests from forks of public repositories, `pull_request` workflows still receive a read-only `GITHUB_TOKEN` and no other secrets, as described in [GitHub's fork workflow restrictions](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflows-in-forked-repositories).
-The workflow should check out the code using the trusted commit SHA available via `github.event.pull_request.head.sha`, which reflects the state of the pull request at the time the label was applied.
+After reviewing the proposed code, check out the exact commit SHA available via `github.event.pull_request.head.sha`, which reflects the state of the pull request at the time the label was applied. Do not treat the label as approval for later commits.
 
 > [!IMPORTANT]
 > In general, never check out code using mutable references (e.g., pull request numbers or branch names) - always use immutable references such as a full commit SHA.
