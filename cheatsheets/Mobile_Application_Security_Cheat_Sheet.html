@@ -5701,8 +5701,12 @@ from the OWASP Mobile Top 10.</p>
 <ul>
 <li>Perform authentication/authorization server-side and only load data on
 the device after successful authentication.</li>
-<li>If storing data locally, encrypt it using a key derived from the user's
-login credentials.</li>
+<li>For sensitive local data, encrypt it and protect encryption keys using
+<a href="https://mas.owasp.org/MASWE/MASVS-STORAGE/MASWE-0003/">platform key storage</a>.
+If the design requires password-derived keys, use a
+<a href="https://mas.owasp.org/MASWE/MASVS-CRYPTO/MASWE-0014/">dedicated password-based key derivation function</a>
+with a unique random salt and an appropriate work factor; a password or a fast
+hash of it is not a suitable encryption key.</li>
 <li>Do not store user passwords on the device; use device-specific tokens
 that can be revoked.</li>
 <li>Avoid using spoofable values like device identifiers for authentication.</li>
@@ -5719,7 +5723,11 @@ secure, revocable access tokens.</li>
 </ul>
 <h3 id="3-passwords-and-pin-policy">3. Passwords and PIN Policy<a class="headerlink" href="#3-passwords-and-pin-policy" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Require password complexity.</li>
+<li>For account passwords, allow long passphrases without character-composition
+requirements and block common or compromised passwords, following
+<a href="https://pages.nist.gov/800-63-4/sp800-63b/authenticators/">NIST's password guidance</a>.
+See <a href="Authentication_Cheat_Sheet.html#implement-proper-password-strength-controls">password strength controls</a>
+for length and other policy requirements.</li>
 <li>Do not allow short PINs such as 4 digits.</li>
 <li>Use platform specific secure storage mechanisms, such as
 Keychain (iOS) or Keystore (Android).</li>
