@@ -153,9 +153,9 @@ To minimize the potential damage of a successful LDAP injection attack, you shou
 
 ### Enabling Bind Authentication
 
-If LDAP protocol is configured with bind Authentication, attackers would not be able to perform LDAP injection attacks because of verification
-and authorization checks that are performed against valid credentials passed by the user.
-An attacker can still bypass bind authentication through an anonymous connection or by exploiting the use of unauthenticated bind: Anonymous Bind (LDAP) and Unauthenticated Bind (LDAP).
+Authenticated LDAP bind establishes an [authenticated authorization state](https://datatracker.ietf.org/doc/html/rfc4513#section-5.1.3); it does not prevent user input from changing a search filter constructed by the application. Continue to apply the [primary injection defenses](#primary-defenses), including [search-filter escaping](https://datatracker.ietf.org/doc/html/rfc4515#section-3), even when the application binds with valid credentials.
+
+When using name/password authentication, reject empty passwords before binding. A nonempty name with an empty password can perform an [unauthenticated bind](https://datatracker.ietf.org/doc/html/rfc4513#section-5.1.2) that establishes anonymous authorization; a successful result in that case does not prove the user's identity. Require authenticated access to protected directory data and use a least-privileged binding account.
 
 ### Allow-List Input Validation
 
