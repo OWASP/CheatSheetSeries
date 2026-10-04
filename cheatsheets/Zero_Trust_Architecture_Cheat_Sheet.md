@@ -216,7 +216,7 @@ Implement these network protections:
 Protect your applications with these controls:
 
 - **Identity-aware proxy**: Check user identity before allowing app access
-- **Web Application Firewalls (WAFs)**: Block OWASP Top 10 attacks at the application layer. Deploy at network edge, internal segments, or as part of API gateways
+- **Web Application Firewalls (WAFs)**: Use request filtering as defense in depth for common attack patterns, such as those covered by [OWASP CRS](https://devguide.owasp.org/en/09-operations/04-crs/). A WAF does not replace application authorization or business-rule enforcement; enforce [access control in trusted server-side code](https://top10.owasp.org/2025/A01_2025-Broken_Access_Control/#how-to-prevent).
 - **API security gateways**: Authenticate every API call, validate request schemas, and enforce rate limits for microservices communication using [REST security best practices](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html)
 - **Secure development**: Build security into your development process
 
@@ -273,7 +273,7 @@ Now you start building actual Zero Trust capabilities:
 
 **Monitor devices constantly** - Set up systems that continuously check device health, updates, and security. Devices that aren't secure automatically lose access or get limited access. This creates pressure for people to keep their devices updated.
 
-**Secure applications properly** - Add identity-aware proxies and web application firewalls (WAFs) that make security decisions based on who's trying to access what, not just where they're connecting from.
+**Secure applications properly** - Enforce identity-aware access at application entry points and [resource-level authorization](Authorization_Cheat_Sheet.md#validate-the-permissions-on-every-request) within the application. WAF filtering complements these checks; it does not establish the user's right to access an object or perform a business action.
 
 ### Phase 3: Advanced Capabilities (Months 18-36)
 
