@@ -79,8 +79,7 @@ For more information on search filter escaping visit [RFC4515](https://datatrack
 
 #### Safe Java Escaping Example
 
-The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
-only letters and spaces.
+The following example validates `userSN` with an allowlist. With Java's default [predefined character classes](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#predef), it accepts ASCII letters, digits, underscores, and whitespace (including tabs and line breaks); `*` also permits an empty string. This illustrative rule is not a general validation policy for personal names. Choose an allowlist that matches the application's requirements and apply the appropriate LDAP escaping for values outside that restricted set.
 
 ```java
 // String userSN = "Sherlock Holmes"; // Valid
