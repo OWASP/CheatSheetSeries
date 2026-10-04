@@ -156,7 +156,7 @@ This way, everything can be in the document HEAD and you only need one method/ta
 
 The use of X-Frame-Options or a frame-breaking script is a more fail-safe method of clickjacking protection. However, in scenarios where content must be frameable, then a `window.confirm()` can be used to help mitigate Clickjacking by informing the user of the action they are about to perform.
 
-Invoking `window.confirm()` will display a popup that cannot be framed. If the `window.confirm()` originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the `window.confirm()` originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. For example:
+Treat `window.confirm()` as supplementary confirmation, not a guarantee that users will see a dialog or an origin label. Browsers can [suppress simple dialogs](https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#cannot-show-simple-dialogs), for example in a sandboxed frame without `allow-modals`; `confirm()` then returns `false`. Only perform the action after a `true` result, as below:
 
 ```html
 <script type="text/javascript">
