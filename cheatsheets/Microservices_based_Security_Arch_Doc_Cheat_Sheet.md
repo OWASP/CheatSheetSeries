@@ -221,7 +221,7 @@ To define minimally needed microservice permissions analyze data collected under
 
 ##### Mapping to OWASP projects
 
-- [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.4.3](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling)
+- [OWASP ASVS 4.0.3, V4 "Access Control", #4.1.3](https://github.com/OWASP/ASVS/blob/v4.0.3_release/4.0/en/0x12-V4-Access-Control.md#v41-general-access-control-design)
 
 #### Sensitive data identification and classification
 
