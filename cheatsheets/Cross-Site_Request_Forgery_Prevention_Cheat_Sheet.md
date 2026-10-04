@@ -366,7 +366,7 @@ The following code snippet demonstrates a simple example of a client-side CSRF v
 
             if (params && params.length) {
                 const requestMethod = params[1];
-                const requestEndpoint = params[3];
+                const requestEndpoint = params[2];
 
                 fetch(requestEndpoint, {
                     method: requestMethod,
