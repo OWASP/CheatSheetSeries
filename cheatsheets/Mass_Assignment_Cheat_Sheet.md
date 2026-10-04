@@ -72,11 +72,9 @@ userid=bobbytables&password=hashedpass&email=bobby@tables.com&isAdmin=true
 
 ### Exploitability
 
-This functionality becomes exploitable when:
+Mass assignment is exploitable when attacker-controlled input can initialize or update fields that the caller is not authorized to change, such as a role or account owner. Field names may be guessed or discovered; source-code access is not required. [CWE-915](https://cwe.mitre.org/data/definitions/915.html) defines the weakness in terms of insufficient control over writable attributes.
 
-- Attacker can guess common sensitive fields.
-- Attacker has access to source code and can review the models for sensitive fields.
-- AND the object with sensitive fields has an empty constructor.
+An empty constructor is not a general prerequisite. For example, [Spring supports both constructor and setter binding](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html). Review which inputs the binding mechanism exposes, including nested objects.
 
 ### GitHub case study
 
@@ -84,9 +82,9 @@ In 2012, GitHub was hacked using mass assignment. A user was able to upload his 
 
 ### Solutions
 
-- Allow-list the bindable, non-sensitive fields.
-- Block-list the non-bindable, sensitive fields.
-- Use [Data Transfer Objects](https://martinfowler.com/eaaCatalog/dataTransferObject.html) (DTOs).
+- Prefer [Data Transfer Objects](https://martinfowler.com/eaaCatalog/dataTransferObject.html) (DTOs) containing only fields the caller may edit.
+- Explicitly allow-list fields when binding to an object with additional properties.
+- Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable. [CWE-915 recommends allowlists over denylists](https://cwe.mitre.org/data/definitions/915.html). The block-list examples below illustrate mechanisms encountered in existing applications, not the recommended design.
 
 ## General Solutions
 
@@ -117,15 +115,17 @@ public class UserController
     @InitBinder
     public void initBinder(WebDataBinder binder, WebRequest request)
     {
-        binder.setAllowedFields(["userid","password","email"]);
+        binder.setAllowedFields("userid", "password", "email");
     }
 ...
 }
 ```
 
-Take a look [here](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-) for the documentation.
+See [Spring's model design guidance](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html) for dedicated input objects and allowed fields.
 
 #### Block-listing
+
+Spring describes `disallowedFields` as fragile because fields can be missed or added later. Prefer the allow-list above; this example only excludes the named property.
 
 ```java
 @Controller
@@ -134,13 +134,13 @@ public class UserController
    @InitBinder
    public void initBinder(WebDataBinder binder, WebRequest request)
    {
-      binder.setDisallowedFields(["isAdmin"]);
+      binder.setDisallowedFields("isAdmin");
    }
 ...
 }
 ```
 
-Take a look [here](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-) for the documentation.
+See the [Spring data binding limitations](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-data-binding.html).
 
 ### NodeJS + Mongoose
 
@@ -167,6 +167,8 @@ var user = new User(_.pick(req.body, User.userCreateSafeFields));
 Take a look [here](http://underscorejs.org/#pick) for the documentation.
 
 #### Block-listing
+
+Spring describes `disallowedFields` as fragile because fields can be missed or added later. Prefer the allow-list above; this example only excludes the named property.
 
 ```javascript
 var massAssign = require('mongoose-mass-assign');
