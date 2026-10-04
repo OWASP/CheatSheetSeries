@@ -28,7 +28,7 @@ The communication between the drone and the GCS is vulnerable to interception an
 
 - **Insecure Communication Links** – Data transmitted between the drone and GCS can be intercepted if not properly encrypted. Use standard protocols for encryption of any data being sent over.
 
-- **Spoofing and Replay Attacks** – If the drone uses a GPS module then data spoofing and command replay attacks can also become a reality. Again encrypted data transfer is the best way to go forward. There are many more methods, which have been discussed [here](https://www.okta.com/identity-101/gps-spoofing/)
+- **Command Spoofing and Replay Attacks** – Authenticate command messages and reject replayed messages using the protocol's freshness checks. For MAVLink, use [message signing and timestamp validation](https://mavlink.io/en/guide/message_signing.html#accept_signed_packets); encryption alone does not provide these controls.
 
 - **Wi-Fi Weaknesses** – Weak authentication or unprotected channels can allow unauthorized access. This is even possible through simple [microcontrollers like ESP8266](https://github.com/SpacehuhnTech/esp8266_deauther)!
 
@@ -104,9 +104,9 @@ Below are some protocols used by drone systems to communicate. This can be eithe
 
 1. **MAVLink 2.0** – A widely used protocol for communication between drones and ground control stations (GCS).
 
-   - Implement **message signing** to prevent spoofing and replay attacks.
+   - Require valid [MAVLink 2 message signatures](https://mavlink.io/en/guide/message_signing.html#accepting_unsigned_packets) for commands received over untrusted links. Reject unsigned or incorrectly signed commands. Protect the shared signing key and [persist signing timestamps across restarts](https://mavlink.io/en/mavgen_c/message_signing_c.html#handling-timestamps) so replay checks remain effective.
 
-   - You must secure **heartbeat messages** to avoid [command injection vulnerabilities](https://owasp.org/www-community/attacks/Command_Injection). A heartbeat message is usually a single byte that is sent at a certain frequency to all other nodes, informing of the device's existence. The frequency is important here!
+   - [Heartbeat messages](https://mavlink.io/en/services/heartbeat.html) advertise a component's presence, type, and state. Treat heartbeat receipt as a liveness signal, not authorization to execute commands.
 
    - Tools like **ArduPilot** and **PX4** support MAVLink 2.0 security enhancements. They have been thoroughly tested and are therefore recommended.
 
@@ -124,7 +124,7 @@ Recent CVEs underscore the risk of unauthenticated MAVLink. The absence of defau
 
 Defense-in-depth beyond message signing. Because signing is frequently disabled in the field and any software mitigation runs in the same trust domain an attacker may have compromised, consider enforcing protocol integrity out-of-band:
 
-- Header validation — system-ID allowlisting and sequence-continuity checks to reject spoofed or replayed frames.
+- Header validation — use system-ID allowlists and [packet sequence numbers](https://mavlink.io/en/guide/serialization.html#mavlink2_packet_format) to detect unexpected senders and packet loss. These fields do not authenticate unsigned messages; they cannot replace signature and timestamp validation.
 
 - Typed-payload validation — reject non-finite parameter values (PARAM_SET) and bound FTP path lengths to defeat malformed-value and buffer-overflow classes.
 
@@ -183,7 +183,7 @@ The following table summaries the different attack vectors for a drone system.
 | Wi-Fi Aircrack | Cracking | x|x |x |x |- | Strong & periodic passwords, strong encryption algorithm | Lightweight Intrusion Detection System at the physical layer |
 | Wi-Fi Jamming | Jamming | x| x| x| x|- | N/A | Frequency hopping, frequency range variation |
 | De-Authentication | Jamming | x| x| x| x| -| N/A | Frequency hopping, frequency range variation |
-| Replay | Jamming | x| x| x| x| -| N/A | Frequency hopping, timestamps |
+| Replay | Message reuse | x| x| x| x| -| Message authentication and validated freshness | Replay-state tracking |
 | Buffer Overflow | Jamming |x |x | x| x|- | N/A | Frequency hopping, frequency range variation |
 | Denial of Service | Jamming |x |x |x |x |- | N/A | Frequency hopping, frequency range variation |
 | ARP Cache Poison | Jamming |x |x | x| x|- | N/A | Frequency hopping, frequency range variation |
