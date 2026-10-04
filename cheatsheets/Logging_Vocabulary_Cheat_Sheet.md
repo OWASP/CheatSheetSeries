@@ -747,7 +747,7 @@ CRITICAL
 ### malicious_sqli:[userid|IP,parameter,ruleid,useragent]
 
 **Description**
-When request input matches a SQL injection (SQLi) signature or heuristic (e.g., comment delimiters, tautologies like `' OR 1=1 --`, stacked queries, `UNION SELECT`, etc.), block the request and log the attempt.
+When request input matches a SQL injection (SQLi) signature or heuristic, log the suspected attempt. Configure blocking under a tested policy and [tune false positives for the application](https://github.com/coreruleset/coreruleset/blob/main/crs-setup.conf.example); a detection match is not proof of exploitation. Use [parameterized queries and the other primary SQL injection defenses](SQL_Injection_Prevention_Cheat_Sheet.md#primary-defenses) regardless of detection rules.
 
 _NOTE: Logging the payload is dangerous and may result in log injection. Prefer recording a detection rule ID / category and the parameter name over logging the full payload._
 
