@@ -148,8 +148,8 @@ Text areas and input fields for PII (name, email, address, phone number) and log
 - Service Workers run on a separate, scriptable thread and intercept network requests for the registered scope. Because they can transparently serve cached responses, they have a significant security impact:
     - Only register Service Workers from your own origin and **only serve the worker script over HTTPS** with a long-cache-busting filename (e.g. `sw.<hash>.js`).
     - Validate that the scope of the Service Worker is restricted (use the `scope` option or the `Service-Worker-Allowed` response header) so a compromised worker cannot intercept unrelated paths.
-    - A malicious or compromised Service Worker can intercept *every* request from its scope until it is unregistered or the cache TTL expires; have a documented kill-switch (e.g. an unregister flow you can ship in a hotfix).
-    - Do not cache responses that contain sensitive data. Send `Cache-Control: no-store` on those responses so the Cache API will not retain them.
+    - A malicious or compromised Service Worker can intercept requests from the pages it controls. Have a documented recovery process that [updates or unregisters the worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) and removes affected caches. Expiring cached data does not unregister a worker.
+    - Do not put responses containing sensitive data into the Cache API. [`Cache` does not honor HTTP caching headers, and entries do not expire automatically](https://developer.mozilla.org/en-US/docs/Web/API/Cache); service-worker code must explicitly exclude these responses and delete any sensitive entries already stored. Continue sending `Cache-Control: no-store` to control HTTP caches.
 
 ## Progressive Enhancements and Graceful Degradation Risks
 
