@@ -4605,7 +4605,7 @@
 <li>Accept</li>
 <li>Accept-Encoding</li>
 </ul>
-<p>Also, recent browsers sends request headers called <code>Sec-Fetch-*</code> that provides information about the browsing contexts, so these values can also be used as a reference. It's not sent by every browser, and it's not always sent even if browser supported, so it should not be relied upon.</p>
+<p>The following <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Client_hints#hint_types"><code>Sec-CH-*</code> Client Hint headers</a> provide information about the browser, device, or user preferences. These differ from <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site"><code>Sec-Fetch-*</code> Fetch Metadata headers</a>, which describe request context. Client Hints may be omitted depending on browser support, server requests, and client permissions, so treat them as optional signals.</p>
 <ul>
 <li>sec-ch-prefers-color-scheme</li>
 <li>sec-ch-ua</li>

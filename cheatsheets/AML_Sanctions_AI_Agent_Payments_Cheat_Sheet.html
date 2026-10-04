@@ -5640,13 +5640,13 @@
 <li>Don't assume two services emit identical JSON for the same object; they usually will not.</li>
 </ul>
 <h2 id="section-9-cross-agent-payment-accountability">Section 9: Cross-Agent Payment Accountability<a class="headerlink" href="#section-9-cross-agent-payment-accountability" title="Permanent link">&para;</a></h2>
-<p>Agent payments often traverse multiple agents (orchestrator to sub-agent to service). If the compliance receipt stays only with the issuing system, accountability is lost at the first hop. The signed receipt MUST <strong>travel with the transaction</strong> so every downstream party can independently verify who was screened, against which lists, and what was decided, without trusting an upstream agent's word.</p>
+<p>Agent payments can traverse multiple agents. When downstream services rely on a signed screening receipt, they must verify it using a key bound to a trusted screening issuer. <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf#page=18">Digital signatures provide data-origin and integrity assurance</a>; they do not prove that the issuer performed screening correctly. The receipt records the issuer's assertions about the entities, lists, and decision, so the verifier still needs a policy for which screening issuers it trusts.</p>
 <p>Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defense for such receipts is covered in <a href="https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence">Section 7 of the OWASP MCP Security Cheat Sheet</a>.</p>
 <h3 id="do_8">Do<a class="headerlink" href="#do_8" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Attach the signed compliance receipt to the transaction and propagate it across every agent hop.</li>
 <li>Bind each receipt to the transaction by signing over the transaction or intent hash.</li>
-<li>At each hop, verify the inbound receipt before acting, and append a new signed receipt for any action taken.</li>
+<li>At each hop, verify the signature, trusted issuer, transaction binding, and acceptable screening freshness before relying on the receipt; append a new signed receipt for any action taken.</li>
 </ul>
 <h3 id="dont_8">Don't<a class="headerlink" href="#dont_8" title="Permanent link">&para;</a></h3>
 <ul>
@@ -5659,8 +5659,8 @@
 <ul>
 <li>Include the sanctions-list source(s), version or publication date, and screening timestamp <strong>inside the signed receipt</strong>.</li>
 <li>Bind each screening result and list version to the specific transaction or payment intent in the signed data, so a later verifier can distinguish it from another transaction.</li>
-<li>Define a maximum acceptable list age, record it in the receipt, and fail-closed if it is exceeded.</li>
-<li>Make list freshness auditable after the fact from the receipt alone.</li>
+<li>Enforce the verifier's maximum acceptable list age and screening age; do not let an issuer-supplied age limit override that policy.</li>
+<li>Retain evidence of the list version used and the screening service's update history. A signed timestamp or version protects the recorded assertion from alteration; it does not independently establish that the list was current or actually used.</li>
 </ul>
 <h3 id="dont_9">Don't<a class="headerlink" href="#dont_9" title="Permanent link">&para;</a></h3>
 <ul>

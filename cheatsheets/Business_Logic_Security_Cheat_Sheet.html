@@ -5604,7 +5604,7 @@
 <h1 id="business-logic-security-cheat-sheet">Business Logic Security Cheat Sheet<a class="headerlink" href="#business-logic-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Business logic vulnerabilities are flaws in the way an application implements its intended workflow. They aren't missing input sanitization or unescaped output. The code does what the developer told it to do, but what the developer told it to do doesn't match what the business actually needs. A user skips a required step, submits a request out of order, pays a negative price, stacks coupons in a way nobody planned for, or wins a race against the server's own bookkeeping.</p>
-<p>No scanner will find these bugs for you. They don't have a signature to match on. They show up in code that looks perfectly fine in isolation because the bug isn't in any single function. It's in the gap between what the developer assumed and what a user can actually do.</p>
+<p>Generic scanners often miss business logic flaws because they lack the application's business rules. Automated analysis can still detect some patterns, including <a href="https://cwe.mitre.org/data/definitions/841.html">workflow enforcement weaknesses</a>. Combine tools with review and testing that checks the intended business process.</p>
 <p>This cheat sheet covers practical patterns for preventing business logic abuse. It's aimed at developers building features, not at penetration testers looking for them. For testing guidance, see the <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/">OWASP Web Security Testing Guide, Business Logic Testing section</a>.</p>
 <p>Key takeaways:</p>
 <ul>
@@ -5615,7 +5615,7 @@
 <li>Threat model from the business process, not just the technical architecture. Ask what happens if a user acts dishonestly, not just what happens if an attacker sends a malicious payload.</li>
 </ul>
 <h2 id="why-business-logic-flaws-are-different">Why Business Logic Flaws Are Different<a class="headerlink" href="#why-business-logic-flaws-are-different" title="Permanent link">&para;</a></h2>
-<p>Most well-known web vulnerabilities (SQL injection, XSS, CSRF, path traversal) have a clear technical signature. A security scanner can fuzz parameters, look for reflected payloads, and produce a reasonable report. Business logic bugs don't work that way.</p>
+<p>Most well-known web vulnerabilities (SQL injection, XSS, CSRF, path traversal) have a clear technical signature. A security scanner can fuzz parameters, look for reflected payloads, and produce a reasonable report. Business logic flaws often require additional knowledge of the intended workflow.</p>
 <p>Consider an e-commerce checkout. The server accepts a request containing a product ID, quantity, and coupon code. Every input is validated: the product ID exists, the quantity is a positive integer, the coupon code matches a known pattern. No technical rule is broken. But the application recalculates the total from the client-submitted price instead of looking it up server-side, so a user can pay one cent for a television. That's a business logic bug, and no amount of input validation helps, because the input is syntactically perfect.</p>
 <p>The patterns repeat across industries:</p>
 <ul>
@@ -5624,7 +5624,7 @@
 <li>An endpoint performs two operations (check balance, then debit) without a lock, so two concurrent requests both pass the balance check and both debit.</li>
 <li>A feature intended to reward legitimate use (referrals, points, promo credits) has no controls against one user creating many accounts.</li>
 </ul>
-<p>None of these are subtle once you see them. They're just invisible to tools that don't understand the business process.</p>
+<p>Review these patterns against the application's business rules; a clean scanner report does not show that those rules are enforced.</p>
 <h2 id="always-re-derive-security-relevant-values-server-side">Always Re-derive Security-relevant Values Server-side<a class="headerlink" href="#always-re-derive-security-relevant-values-server-side" title="Permanent link">&para;</a></h2>
 <p>The single most effective defensive habit is this: if a value in the request influences price, access, ownership, or state, assume the client made it up and recompute it from trusted data.</p>
 <h3 id="prices-and-totals">Prices and Totals<a class="headerlink" href="#prices-and-totals" title="Permanent link">&para;</a></h3>
@@ -5704,7 +5704,9 @@
 <li>A conditional update (<code>UPDATE ... WHERE balance &gt;= amount</code>) that succeeds only if the predicate still holds at write time. Check the number of affected rows. If zero, the check failed and the caller should see an error.</li>
 </ul>
 <h3 id="use-idempotency-keys-for-external-actions">Use Idempotency Keys for External Actions<a class="headerlink" href="#use-idempotency-keys-for-external-actions" title="Permanent link">&para;</a></h3>
-<p>For operations that talk to external systems (charge a card, send money, issue a voucher), a retry from the client should not result in a duplicate action. Accept a client-supplied idempotency key, store it with the result, and return the cached result on retry. Stripe and other payment providers implement this pattern, and the same idea applies to any non-idempotent operation your own service exposes.</p>
+<p>For external actions such as charging a card, use the provider's idempotency mechanism and reuse the same key when retrying the same operation. Follow its key-generation, parameter-matching, and retention rules; for example, <a href="https://docs.stripe.com/api/idempotent_requests">Stripe rejects changed parameters and can treat a key as new after its stored record expires</a>.</p>
+<p>For your own API, scope stored keys to the authenticated caller and operation, bind them to the original request parameters, and reject reuse with different parameters. Authorize the request before returning a cached result; possession of a key is not authorization. Coordinate concurrent requests atomically so only one starts the action, and record its state and result durably. <a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">AWS describes caller-scoped identifiers, atomic processing, and parameter-mismatch checks</a>.</p>
+<p>Define the retry and retention window, including recovery when the <a href="https://docs.stripe.com/error-low-level.md">external result is unknown</a>. A local database transaction alone cannot make an external side effect atomic with saving its result. After the retry window expires, reconcile the external outcome before resubmitting.</p>
 <h3 id="dont-assume-fast-enough">Don't Assume "Fast Enough"<a class="headerlink" href="#dont-assume-fast-enough" title="Permanent link">&para;</a></h3>
 <p>A common rationalization is "the window between the check and the update is microseconds, no attacker can exploit it". Concurrent request tools can trivially send dozens of requests to arrive within a millisecond of each other. Modern bug bounty tooling sends them as a single multiplexed HTTP/2 request so they land at the server effectively simultaneously. If the window exists at all, assume it's exploitable.</p>
 <h3 id="pattern-reference">Pattern Reference<a class="headerlink" href="#pattern-reference" title="Permanent link">&para;</a></h3>
@@ -5730,7 +5732,7 @@
 </tr>
 <tr>
 <td>External non-idempotent call</td>
-<td>Idempotency key table plus a transactional write of the result</td>
+<td>Provider-supported idempotency, with durable state for retries and recovery</td>
 </tr>
 <tr>
 <td>Cross-row consistency</td>
@@ -5894,7 +5896,7 @@
 <li>Are all security-relevant values (prices, permissions, identity, ownership) derived server-side, not accepted from the client?</li>
 <li>Is every multi-step workflow represented as an explicit state machine in server-side storage, with each transition validated?</li>
 <li>Is every check-then-act operation atomic (transaction, row lock, or conditional update)?</li>
-<li>Do external non-idempotent calls accept an idempotency key?</li>
+<li>Do retries of external actions reuse the same idempotency key within the provider's documented retry window?</li>
 <li>Does every value-dispensing feature have a per-action cap, a per-account cap, and a rate limit?</li>
 <li>Are all invariants written down and tested?</li>
 <li>Is every entry point for a sensitive operation subject to the same business rules?</li>
