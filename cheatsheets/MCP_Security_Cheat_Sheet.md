@@ -130,11 +130,11 @@ If the threat model calls for integrity after TLS termination, choose a reviewed
 
 ### 12. Prompt Injection via Tool Return Values
 
-- Treat every tool response as **untrusted user input** — sanitize before feeding back into the LLM context.
-- Instruct the model explicitly (in system prompt) that tool return values are data, not instructions.
-- Strip or escape HTML-like tags (`<IMPORTANT>`, `<system>`, `<instructions>`) from tool outputs before context injection.
-- Log and alert on tool responses that contain instruction-like patterns (imperative verbs, "ignore", "forget", "send to", etc.).
-- For web-scraping / retrieval tools, use a content extraction layer that returns structured data (title, body text) rather than raw HTML.
+- Treat every tool response as **untrusted data**, including responses from approved servers.
+- Separate and clearly label tool data in the model context, and instruct the model to treat it as data rather than instructions.
+- Use tag stripping and instruction-pattern detection only as additional filtering or alerting measures. They cannot establish that the remaining text is safe; [OWASP describes encoded and multilingual prompt injections that evade filters](https://genai.owasp.org/llmrisk/llm01-prompt-injection/).
+- Enforce authorization and validate subsequent tool calls in trusted application code, independently of the model's interpretation. Apply [least privilege](#1-principle-of-least-privilege) and [human approval for sensitive actions](#4-human-in-the-loop-for-sensitive-actions).
+- For web-scraping and retrieval tools, extract the required structured data instead of passing raw HTML. Text inside structured fields remains untrusted.
 
 ## Do's and Don'ts
 
