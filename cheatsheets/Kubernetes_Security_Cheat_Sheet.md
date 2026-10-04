@@ -616,7 +616,7 @@ It is best for secrets to be mounted into read-only volumes in your containers, 
 
 Always encrypt your backups using a well reviewed backup and encryption solution and consider using full disk encryption where possible, because the etcd database contains any information accessible via the Kubernetes API. Access to this database could provide an attacker with significant visibility into the state of your cluster.
 
-Kubernetes supports encryption at rest, a feature introduced in 1.7, and v1 beta since 1.13, which will encrypt Secret resources in etcd and prevent parties with access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.
+Kubernetes [supports encryption at rest](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/) for Secret resources in etcd, but the API server stores resources without at-rest encryption by default. Configure a non-`identity` encryption provider as the first provider for Secrets and [rewrite existing Secrets](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#ensure-all-secrets-are-encrypted) to encrypt previously stored data. This helps protect secrets against read access to etcd or backups, but does not protect them if an attacker also obtains the decryption keys.
 
 #### Alternatives to Kubernetes Secret resources
 
@@ -719,7 +719,7 @@ Kubernetes supplies cluster-based logging, which allows you to log container act
 
 #### Enable audit logging
 
-The audit logger is a beta feature that records actions taken by the API for later analysis in the event of a compromise. It is recommended to enable audit logging and archive the audit file on a secure server
+Kubernetes [audit logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) records API activity according to the configured audit policy for later analysis. Enable audit logging and archive the audit file on a secure server.
 
 Ensure logs that are monitoring for anomalous or unwanted API calls, especially any authorization failures (these log entries will have a status message “Forbidden”). Authorization failures could mean that an attacker is trying to abuse stolen credentials.
 
@@ -729,15 +729,13 @@ Managed Kubernetes providers, including GKE, provide access to this data in thei
 
 Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.
 
-Here is an example of an audit log:
+Here is an illustrative [`audit.k8s.io/v1` audit event](https://kubernetes.io/docs/reference/config-api/apiserver-audit.v1/#audit-k8s-io-v1-Event):
 
 ```json
 {
   "kind":"Event",
-  "apiVersion":"audit.k8s.io/v1beta1",
-  "metadata":{ "creationTimestamp":"2019-08-22T12:00:00Z" },
+  "apiVersion":"audit.k8s.io/v1",
   "level":"Metadata",
-  "timestamp":"2019-08-22T12:00:00Z",
   "auditID":"23bc44ds-2452-242g-fsf2-4242fe3ggfes",
   "stage":"RequestReceived",
   "requestURI":"/api/v1/namespaces/default/persistentvolumeclaims",
