@@ -226,10 +226,7 @@ Most fetch directives have a certain [fallback list specified in w3](https://www
 Document directives instruct the browser about the properties of the document to which the policies will apply to.
 
 - `base-uri` specifies the possible URLs that the `<base>` element can use.
-- `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* `application/pdf`). 3 rules apply to the affected elements, `<embed>` and `<object>`:
-    - The element needs to explicitly declare its type.
-    - The element's type needs to match the declared type.
-    - The element's resource needs to match the declared type.
+- `plugin-types` has been [removed from the CSP specification](https://bugs.webkit.org/show_bug.cgi?id=220724). Do not rely on it to enforce content types. Use `object-src 'none'` when embedded objects are unnecessary, as in the [strict policy examples](#strict-policy).
 - `sandbox` restricts a page's actions such as submitting forms.
     - Only applies when used with the request header `Content-Security-Policy`.
     - Not specifying a value for the directive activates all of the sandbox restrictions. `Content-Security-Policy: sandbox;`
