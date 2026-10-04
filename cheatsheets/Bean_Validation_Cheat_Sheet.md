@@ -228,7 +228,7 @@ import javax.validation.constraints.Size;
 
 public class Message {
 
-   //Constraint: Message must be at least 10 characters long, but less than 500
+   //Constraint: Message must contain 10 to 500 characters, inclusive
    @Size(min = 10, max = 500)
    private String message;
 
