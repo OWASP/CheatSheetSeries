@@ -453,17 +453,9 @@ if (untrustedData === 'location') {
 }
 ```
 
-### GUIDELINE \#9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox
+### GUIDELINE \#9 - Keep HTML sanitization separate from JavaScript execution
 
-Run your JavaScript in a ECMAScript 5 [canopy](https://github.com/jcoglan/canopy) or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).
-
-Examples of some JavaScript sandbox / sanitizers:
-
-- [js-xss](https://github.com/leizongmin/js-xss)
-- [sanitize-html](https://github.com/apostrophecms/sanitize-html)
-- [DOMPurify](https://github.com/cure53/DOMPurify)
-- [MDN - HTML Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API)
-- [OWASP Summit 2011 - DOM Sandboxing](https://owasp.org/www-pdf-archive/OWASPSummit2011DOMSandboxingBrowserSecurityTrack.pdf)
+Use an HTML sanitizer such as [DOMPurify](https://github.com/cure53/DOMPurify#what-does-it-do) when the application must render untrusted markup; see the [HTML sanitization guidance](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#html-sanitization). HTML sanitizers filter markup and do not provide a sandbox for executing arbitrary JavaScript. Do not pass untrusted code to [`eval()` or `Function()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_direct_eval!).
 
 ### GUIDELINE \#10 - Don't eval() JSON to convert it to native JavaScript objects
 
