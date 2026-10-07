@@ -47,7 +47,7 @@ Any questions that do not have all of the characteristics discussed above should
 | What is the make and model of your first car? | Fairly small range of likely answers. |
 | What is your nickname? | This could be guessed by glancing through social media posts. |
 
-Additionally, the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.
+Additionally, the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was used in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.
 
 #### Good Questions
 
@@ -62,7 +62,7 @@ The following list provides some examples of good questions:
 - What was the name of your first stuffed toy?
 - What was your driving instructor's first name?
 
-Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared between sites. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, financial related questions such as "What is the first company you owned shares in?" could be used.
+Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared between sites. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, finance-related questions such as "What is the first company you owned shares in?" could be used.
 
 #### Allowing Users to Write Their Own Questions
 
@@ -86,7 +86,7 @@ If the security questions are not used as part of the main authentication proces
 
 ### System Defined Security Questions
 
-System defined security questions are based on information that is already known about the user. The users' personal details are often used, including the full name, address and date of birth. However these can easily be obtained by an attacker from social media, and as such provide a very weak level of authentication.
+System defined security questions are based on information that is already known about the user. The users' personal details are often used, including the full name, address and date of birth. However these can easily be obtained by an attacker from social media, and as such provide a very weak form of authentication.
 
 The questions that can be used will vary hugely depending on the application, and how much information is already held about the user. When deciding which bits of information may be usable for security questions, the following areas should be considered:
 
@@ -98,7 +98,7 @@ The questions that can be used will vary hugely depending on the application, an
 
 ### When to Use Security Questions
 
-Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions **does not constitute MFA**, as both factors as the same (i.e. something you know)..
+Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions **does not constitute MFA**, as both factors are the same (i.e. something you know)..
 
 **Security questions should never be relied upon as the sole mechanism to authenticate a user**. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be used include:
 
@@ -135,7 +135,7 @@ The answers to security questions may contain personal information about the use
 
 #### Comparing Answers
 
-Comparing the answers provided by the user with the stored answer in a case insensitive manner makes it much easier for the user. The simplest way to do this is to convert the answer to lowercase before hashing the answer to store it, and then lowercase the user-provided answer before comparing them.
+Comparing the answers provided by the user with the stored answer in a case-insensitive manner makes it much easier for the user. The simplest way to do this is to convert the answer to lowercase before hashing the answer to store it, and then lowercase the user-provided answer before comparing them.
 
 It is also beneficial to give the user some indication of the format that they should use to enter answers. This could be done through input validation, or simply by recommending that the user enters their details in a specific format. For example, when asking for a date, indicating that the format should be "DD/MM/YYYY" will mean that the user doesn't have to try and guess what format they entered when registering.
 
