@@ -196,6 +196,15 @@ Bind each receipt to the specific transaction (include the transaction or intent
 - Don't keep the receipt only in the issuing system's logs, because downstream agents then cannot prove screening occurred.
 - Don't let a downstream agent rely on an upstream agent's unverifiable claim that screening happened.
 
+### Human Approval Bound to the Payment Intent
+
+Sanctions screening answers *who*; this control answers *how much, to whom, and for which payment* under a specific human grant. Before an agent executes a human-approved payment or refund, bind the approval to the canonical payment fields: payment/order ID, amount in minor units, currency, and destination. This is complementary to screening and to the final pre-execution authorization gate described in the [OWASP Transaction Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html).
+
+- At execute time, recompute a collision-resistant digest over exactly those fields -- [JSON Canonicalization Scheme (JCS), RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) is one deterministic serialization for computing it -- and **fail closed** if any bound field is missing or differs from the approved values.
+- Require new human authorization for any parameter change; an existing grant only covers the fields it was issued for.
+- Consume each approval grant atomically and only once, so replay or duplicate execution is rejected.
+- Keep provider settlement and outcome evidence separate: approval-bound execution proves what was authorized, not that the provider settled the transaction.
+
 ## Section 10: Binding Sanctions-List Freshness to the Receipt
 
 A receipt stating "screened, no match" is meaningless without which version of the list, and as of when. Sanctions lists change frequently; a clean screen against a stale list is a compliance gap. Bind the **list version and timestamp** into the signed receipt so screening freshness is itself non-tamperable and auditable. Public sanctions sources such as the [OFAC Sanctions List Search](https://sanctionssearch.ofac.treas.gov/) and the [EU Consolidated Sanctions List](https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions) change frequently, so the version screened against must be recorded.
