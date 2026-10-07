@@ -266,8 +266,27 @@ app.use(function(req, res, next) {
 
 #### Take precautions against brute-forcing
 
-[Brute-forcing](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#protect-against-automated-attacks
-) is a common threat to all web applications. Attackers can use brute-forcing as a password guessing attack to obtain account passwords. Therefore, application developers should take precautions against brute-force attacks especially in login pages.  Node.js has several modules available for this purpose. [Express-bouncer](https://libraries.io/npm/express-bouncer), [express-brute](https://libraries.io/npm/express-brute) and [rate-limiter](https://libraries.io/npm/rate-limiter) are just some examples. Based on your needs and requirements, you should choose one or more of these modules and use accordingly. [Express-bouncer](https://libraries.io/npm/express-bouncer) and [express-brute](https://libraries.io/npm/express-brute) modules work similarly. They increase the delay for each failed request and can be arranged for a specific route. These modules can be used as follows:
+[Brute-forcing](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#protect-against-automated-attacks) is a common threat to web applications. Attackers can use repeated requests to guess passwords or abuse authentication and password-reset endpoints. Apply rate limiting to sensitive routes, with limits appropriate to the endpoint and authentication flow.
+
+For Express applications, [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) provides maintained rate-limiting middleware. For example:
+
+```JavaScript
+const express = require('express');
+const { rateLimit } = require('express-rate-limit');
+
+const app = express();
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false
+});
+
+app.post('/login', loginLimiter, loginHandler);
+```
+
+Choose limits based on the expected traffic and risk of the protected endpoint. For multi-instance deployments, use a shared external store when rate-limit state must be coordinated across instances.
 
 ```JavaScript
 const bouncer = require('express-bouncer');
