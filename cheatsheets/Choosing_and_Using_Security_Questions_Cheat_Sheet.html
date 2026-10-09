@@ -5007,7 +5007,7 @@
 </tr>
 </tbody>
 </table>
-<p>Additionally, the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.</p>
+<p>Additionally, the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was used in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.</p>
 <h4 id="good-questions">Good Questions<a class="headerlink" href="#good-questions" title="Permanent link">&para;</a></h4>
 <p>Many good security questions are not applicable to all users, so the best approach is to give the user a list of security questions that they can choose from. This allows you to have more specific questions (with more secure answers), while still providing every user with questions that they can answer.</p>
 <p>The following list provides some examples of good questions:</p>
@@ -5019,7 +5019,7 @@
 <li>What was the name of your first stuffed toy?</li>
 <li>What was your driving instructor's first name?</li>
 </ul>
-<p>Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared between sites. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, financial related questions such as "What is the first company you owned shares in?" could be used.</p>
+<p>Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared between sites. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, finance-related questions such as "What is the first company you owned shares in?" could be used.</p>
 <h4 id="allowing-users-to-write-their-own-questions">Allowing Users to Write Their Own Questions<a class="headerlink" href="#allowing-users-to-write-their-own-questions" title="Permanent link">&para;</a></h4>
 <p>Allowing users to write their own security questions can result in them choosing very strong and unique questions that would be very hard for an attacker to guess. However, there is also a significant risk that users will choose weak questions. In some cases, users might even set a recovery question to a reminder of what their password is - allowing anyone guessing their email address to compromise their account.</p>
 <p>As such, it is generally best not to allow users to write their own questions.</p>
@@ -5034,7 +5034,7 @@
 <h4 id="renewing-security-questions">Renewing Security Questions<a class="headerlink" href="#renewing-security-questions" title="Permanent link">&para;</a></h4>
 <p>If the security questions are not used as part of the main authentication process, then consider periodically (such as when they are changing their passwords after expiration) prompting the user to review their security questions and verify that they still know the answers. This should give them a chance to update any answers that may have changed (although ideally this shouldn't happen with good questions), and increases the likelihood that they will remember them if they ever need to recover their account.</p>
 <h3 id="system-defined-security-questions">System Defined Security Questions<a class="headerlink" href="#system-defined-security-questions" title="Permanent link">&para;</a></h3>
-<p>System defined security questions are based on information that is already known about the user. The users' personal details are often used, including the full name, address and date of birth. However these can easily be obtained by an attacker from social media, and as such provide a very weak level of authentication.</p>
+<p>System defined security questions are based on information that is already known about the user. The users' personal details are often used, including the full name, address and date of birth. However these can easily be obtained by an attacker from social media, and as such provide a very weak form of authentication.</p>
 <p>The questions that can be used will vary hugely depending on the application, and how much information is already held about the user. When deciding which bits of information may be usable for security questions, the following areas should be considered:</p>
 <ul>
 <li>Will the user be able to remember the answer to the question?</li>
@@ -5043,7 +5043,7 @@
 </ul>
 <h2 id="using-security-questions">Using Security Questions<a class="headerlink" href="#using-security-questions" title="Permanent link">&para;</a></h2>
 <h3 id="when-to-use-security-questions">When to Use Security Questions<a class="headerlink" href="#when-to-use-security-questions" title="Permanent link">&para;</a></h3>
-<p>Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions <strong>does not constitute MFA</strong>, as both factors as the same (i.e. something you know)..</p>
+<p>Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions <strong>does not constitute MFA</strong>, as both factors are the same (i.e. something you know)..</p>
 <p><strong>Security questions should never be relied upon as the sole mechanism to authenticate a user</strong>. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be used include:</p>
 <ul>
 <li>Logging in.</li>
@@ -5072,7 +5072,7 @@
 <h4 id="storing-answers">Storing Answers<a class="headerlink" href="#storing-answers" title="Permanent link">&para;</a></h4>
 <p>The answers to security questions may contain personal information about the user, and may also be re-used by the user between different applications. As such, they should be treated in the same way as passwords, and stored using a secure hashing algorithm such as Bcrypt. The <a href="Password_Storage_Cheat_Sheet.html">password storage cheat sheet</a> contains further guidance on this.</p>
 <h4 id="comparing-answers">Comparing Answers<a class="headerlink" href="#comparing-answers" title="Permanent link">&para;</a></h4>
-<p>Comparing the answers provided by the user with the stored answer in a case insensitive manner makes it much easier for the user. The simplest way to do this is to convert the answer to lowercase before hashing the answer to store it, and then lowercase the user-provided answer before comparing them.</p>
+<p>Comparing the answers provided by the user with the stored answer in a case-insensitive manner makes it much easier for the user. The simplest way to do this is to convert the answer to lowercase before hashing the answer to store it, and then lowercase the user-provided answer before comparing them.</p>
 <p>It is also beneficial to give the user some indication of the format that they should use to enter answers. This could be done through input validation, or simply by recommending that the user enters their details in a specific format. For example, when asking for a date, indicating that the format should be "DD/MM/YYYY" will mean that the user doesn't have to try and guess what format they entered when registering.</p>
 <h4 id="updating-answers">Updating Answers<a class="headerlink" href="#updating-answers" title="Permanent link">&para;</a></h4>
 <p>When the user updates the answers to their security questions, this should be treated as a sensitive operation within the application. As such, the user should be required to re-authenticate themselves by entering their password (or ideally using MFA), in order to prevent an attacker updating the questions if they gain temporary access to the user's account.</p>
