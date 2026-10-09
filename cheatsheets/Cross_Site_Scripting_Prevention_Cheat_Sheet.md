@@ -183,9 +183,22 @@ elem.className = dangerVariable;
 elem.setAttribute(safeName, dangerVariable);
 formfield.value = dangerVariable;
 document.createTextNode(dangerVariable);
-document.createElement(dangerVariable);
 elem.innerHTML = DOMPurify.sanitize(dangerVar);
 ```
+
+`document.createElement()` is not a text sink: its argument selects the element name. Use a constant or allowlist for that name; do not pass untrusted input directly. [The `createElement()` documentation](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement) describes this argument.
+
+```js
+const allowedTags = new Set(["p", "span"]);
+const tagName = allowedTags.has(input) ? input : "span";
+const element = document.createElement(tagName);
+```
+
+Creating an element does not execute its name as markup, but the selected element still has browser-defined behavior.
+For example, a dynamically created `script` element can execute when later code populates and inserts it ([HTML Standard](https://html.spec.whatwg.org/multipage/scripting.html#the-script-element)).
+Treat subsequent content and attribute assignments as separate security decisions.
+
+Validate attributes separately. Allowing a tag name does not make later DOM operations safe.
 
 [`insertAdjacentText()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentText) requires a position and a text value. In the example, `"beforeend"` appends a text node inside the element. Use text sinks on ordinary elements, not script or style elements.
 
