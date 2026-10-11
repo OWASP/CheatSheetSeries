@@ -66,8 +66,7 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - Ensure the confirmation UI cannot be bypassed by LLM-crafted responses.
 - Do not assume that an available MCP tool has the user's consent or approval for a particular invocation.
 - Assess whether tool operations require additional authorization based on their possible effects, including sensitive reads, writes, data disclosure, and irreversible actions; a tool's read/write label alone may not establish the risk.
-- Depending on that risk, consider explicit user confirmation, narrowly scoped authorization, approval bound to the tool and relevant execution arguments, and policy checks at execution time. If approved arguments change, obtain fresh authorization where argument binding is required.
-- Where an authorization is intended for one invocation, enforce single-use consumption to prevent replay.
+- Choose controls according to that risk, such as explicit user confirmation, narrowly scoped authorization, or policy checks enforced at execution time. For binding approvals to specific actions and arguments and preventing their reuse, follow the [AI Agent Security Cheat Sheet](AI_Agent_Security_Cheat_Sheet.md#tool-authorization-middleware).
 
 ### 5. Input and Output Validation
 
