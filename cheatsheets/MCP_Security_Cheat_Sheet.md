@@ -64,9 +64,10 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - Display full tool call parameters to the user — not just a summary name.
 - Never auto-approve tool calls, especially in multi-server setups.
 - Ensure the confirmation UI cannot be bypassed by LLM-crafted responses.
-- Distinguish tool availability from authority for a specific invocation. MCP permissions and allowlists determine which tools are available, but availability alone does not authorize a particular consequential call.
-- For sensitive write operations, bind the approval to the concrete tool and the normalized arguments that will execute. If any argument changes after approval, require new approval.
-- Make approvals single-use, so one approval cannot authorize a second side effect.
+- Do not assume that an available MCP tool has the user's consent or approval for a particular invocation.
+- Assess whether tool operations require additional authorization based on their possible effects, including sensitive reads, writes, data disclosure, and irreversible actions; a tool's read/write label alone may not establish the risk.
+- Depending on that risk, consider explicit user confirmation, narrowly scoped authorization, approval bound to the tool and relevant execution arguments, and policy checks at execution time. If approved arguments change, obtain fresh authorization where argument binding is required.
+- Where an authorization is intended for one invocation, enforce single-use consumption to prevent replay.
 
 ### 5. Input and Output Validation
 
@@ -147,7 +148,7 @@ If the threat model calls for integrity after TLS termination, choose a reviewed
 - Inspect and pin all tool descriptions and schemas.
 - Sandbox local MCP servers in containers or restricted environments.
 - Require human approval for sensitive or destructive tool calls.
-- Bind approval for sensitive tool calls to the exact tool and arguments, and consume it once.
+- Apply risk-appropriate authorization to sensitive tool calls and enforce its scope at execution time.
 - Validate all inputs and outputs at the MCP server layer.
 - Use `mcp-scan` or equivalent tooling to detect poisoned tools.
 - Log and monitor all tool invocations centrally.
