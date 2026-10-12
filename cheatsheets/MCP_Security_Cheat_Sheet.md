@@ -64,8 +64,8 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - Display full tool call parameters to the user — not just a summary name.
 - Never auto-approve tool calls, especially in multi-server setups.
 - Ensure the confirmation UI cannot be bypassed by LLM-crafted responses.
-- Do not assume that an available MCP tool has the user's consent or approval for a particular invocation.
-- Assess whether tool operations require additional authorization based on their possible effects, including sensitive reads, writes, data disclosure, and irreversible actions; a tool's read/write label alone may not establish the risk.
+- Do not assume that an available MCP tool has the user's consent or approval for a particular invocation. The MCP specification states that [hosts must obtain explicit user consent before invoking any tool](https://modelcontextprotocol.io/specification/2026-07-28#key-principles) and that a human should be [able to deny tool invocations](https://modelcontextprotocol.io/specification/2026-07-28/server/tools#user-interaction-model).
+- Assess whether tool operations require additional authorization based on their possible effects, including sensitive reads, writes, data disclosure, and irreversible actions; a tool's read/write label alone may not establish the risk, and clients must treat [tool annotations as untrusted unless they come from trusted servers](https://modelcontextprotocol.io/specification/2026-07-28/server/tools#tool).
 - Choose controls according to that risk, such as explicit user confirmation, narrowly scoped authorization, or policy checks enforced at execution time. For binding approvals to specific actions and arguments and preventing their reuse, follow the [AI Agent Security Cheat Sheet](AI_Agent_Security_Cheat_Sheet.md#tool-authorization-middleware).
 
 ### 5. Input and Output Validation
