@@ -307,6 +307,12 @@ To detect misconfigurations in Docker:
 - [dev-sec.io](https://dev-sec.io/baselines/docker/)
 - [Docker Bench for Security](https://github.com/docker/docker-bench-security)
 
+To detect misconfigurations in Docker Compose files before deployment:
+
+- [compose-lint](https://github.com/tmatens/compose-lint)
+- [DockSec](https://github.com/OWASP/DockSec) (with `--compose`)
+- [KICS](https://github.com/Checkmarx/kics)
+
 ### RULE \#10 - Keep the Docker daemon logging level at `info`
 
 By default, the Docker daemon is configured to have a base logging level of `info`. This can be verified by checking the daemon configuration file `/etc/docker/daemon.json` for the`log-level` key. If the key is not present, the default logging level is `info`. Additionally, if the docker daemon is started with the `--log-level` option, the value of the `log-level` key in the configuration file will be overridden. To check if the Docker daemon is running with a different log level, you can use the following command:
