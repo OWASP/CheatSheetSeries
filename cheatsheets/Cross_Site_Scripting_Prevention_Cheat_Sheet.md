@@ -102,14 +102,14 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 
 ### Output Encoding for “CSS Contexts”
 
-“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks, including CSS injection and data exfiltration.
+“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks, including [CSS injection](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/11-Client-side_Testing/05-Testing_for_CSS_Injection/) and [data exfiltration](https://portswigger.net/research/blind-css-exfiltration).
 
-Placing variables only in a CSS property value is **not** sufficient on its own: without strict constraints, an attacker can break out of a property value (for example, with `; }`) to inject arbitrary rules or declaration blocks. To safely handle dynamic CSS:
+Placing variables only in a CSS property value is **not** sufficient on its own: without strict constraints, an attacker can break out of a property value (for example, with `; }` under [CSS syntax rules](https://www.w3.org/TR/css-syntax-3/#syntax-description)) to inject arbitrary rules or declaration blocks. To safely handle dynamic CSS:
 
 - **Keep property names fixed.** Never allow untrusted data to define CSS property names or selectors.
 - **Reject arbitrary CSS input and declaration blocks.** Do not allow users to supply entire CSS rule sets, declaration blocks, or arbitrary style strings.
 - **Use strict, property-specific validation or allowlisting.** Restrict values to safe, expected formats (such as numeric values with fixed units or allowlisted color names and hex codes).
-- **Validate URLs strictly.** Any property that accepts a URL (such as `background-image`) must undergo strict URL validation to prevent `javascript:` URLs or unauthorized external resources.
+- **Validate URLs strictly.** Properties that accept a URL (such as `background-image`) load external resources rather than executing script. To prevent unauthorized external resource requests, strictly validate URLs and constrain allowed schemes (such as `https:`) and origins using an application allowlist.
 
 ```HTML
 <style> selector { property : $varValidated; } </style>
@@ -217,7 +217,7 @@ Consider adopting the following controls in addition to the above:
 
 - Cookie Attributes - These change how JavaScript and browsers can interact with cookies. Cookie attributes try to limit the impact of an XSS attack but don’t prevent the execution of malicious content or address the root cause of the vulnerability.
 - Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so it should not be your primary defense mechanism. Use a CSP as an additional layer of defense and have a look at the [cheatsheet here](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
-- Trusted Types - Supported across current major browsers (Chromium-based browsers such as Chrome and Edge from version 83, Firefox from version 148, and Safari from version 26, according to [MDN compatibility data](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility)). Enable Trusted Types by adding `Content-Security-Policy: require-trusted-types-for 'script'`. This causes DOM XSS sinks (`innerHTML`, `outerHTML`, `document.write`, `script.src`, etc.) to reject plain strings, forcing all assignments to go through a vetted policy. For older browser versions lacking native support, use a polyfill during rollout. Combine with a default policy that delegates to a sanitizer (such as DOMPurify) for legacy code paths.
+- Trusted Types - Supported across current major browsers (Chromium-based browsers such as Chrome and Edge from version 83, Firefox from version 148, and Safari from version 26, according to [MDN compatibility data](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility)). Enable Trusted Types by adding `Content-Security-Policy: require-trusted-types-for 'script'`. This causes DOM XSS sinks (`innerHTML`, `outerHTML`, `document.write`, `script.src`, etc.) to reject plain strings, forcing all assignments to go through a vetted policy. If using a polyfill during rollout on unsupported browsers, distinguish API-only builds (which define types without enforcement) from enforcement-capable implementations; even enforcement polyfills monkey-patch only common DOM sinks and cannot provide equivalent coverage to native browser enforcement. Combine with a default policy that delegates to a sanitizer (such as DOMPurify) for legacy code paths.
 
 ### Controls Not Recommended as Primary XSS Mitigation
 
@@ -288,7 +288,7 @@ Encoding Mechanism: CSS encoding supports both `\XX` and `\XXXXXX` formats. To e
 
 ## Common Anti-patterns: Ineffective Approaches to Avoid
 
-Defending against XSS is actually quite easy in most cases: modern web frameworks encode dynamic content by default, safe DOM APIs (such as `textContent`) treat untrusted input as data rather than executable code, and vetted sanitizers handle rich text. Vulnerabilities typically arise when developers bypass these defaults or seek shortcuts instead of addressing data sinks directly.
+Defending against XSS is actually quite easy in most cases: modern web frameworks encode dynamic content by default, safe DOM APIs (such as `textContent` on ordinary HTML elements, excluding `script` and `style` elements) treat untrusted input as data rather than executable code, and vetted sanitizers handle rich text. Vulnerabilities typically arise when developers bypass these defaults or seek shortcuts instead of addressing data sinks directly.
 
 Common [anti-patterns](https://en.wikipedia.org/wiki/Anti-pattern) to avoid include:
 
