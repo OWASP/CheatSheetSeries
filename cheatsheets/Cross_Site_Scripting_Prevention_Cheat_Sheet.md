@@ -26,9 +26,11 @@ When you use a modern web framework, you need to know how your framework prevent
 
 ## XSS Defense Philosophy
 
-In order for an XSS attack to be successful, an attacker must be able to insert and execute malicious content in a webpage. Thus, all variables in a web application needs to be protected. Ensuring that **all variables** go through validation and are then escaped or sanitized is known as **perfect injection resistance**. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped or sanitized.
+For an XSS attack to succeed, an attacker must insert and execute malicious content in a webpage. XSS defense follows a source-to-sink principle: untrusted dynamic data originating from any source must not be interpreted as executable content when reaching a browser sink.
 
-However, no framework is perfect and security gaps still exist in popular frameworks like React and Angular. Output encoding and HTML sanitization help address those gaps.
+Input validation alone is insufficient to prevent XSS. While input validation ensures data conforms to expected business formats, it cannot anticipate every downstream rendering context, nor can it safely permit legitimate characters (such as `<` or `&`) required by application data. Instead, context-appropriate protection—such as output encoding, URL validation, or HTML sanitization—belongs at the point of use, applied immediately before data is passed to a sink.
+
+Modern web frameworks automate many of these protections by default, but gaps remain when using framework bypasses or raw DOM APIs. Output encoding and HTML sanitization address those gaps.
 
 ## Output Encoding
 
@@ -100,12 +102,18 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 
 ### Output Encoding for “CSS Contexts”
 
-“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks. **Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.**
+“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks, including CSS injection and data exfiltration.
+
+Placing variables only in a CSS property value is **not** sufficient on its own: without strict constraints, an attacker can break out of a property value (for example, with `; }`) to inject arbitrary rules or declaration blocks. To safely handle dynamic CSS:
+
+- **Keep property names fixed.** Never allow untrusted data to define CSS property names or selectors.
+- **Reject arbitrary CSS input and declaration blocks.** Do not allow users to supply entire CSS rule sets, declaration blocks, or arbitrary style strings.
+- **Use strict, property-specific validation or allowlisting.** Restrict values to safe, expected formats (such as numeric values with fixed units or allowlisted color names and hex codes).
+- **Validate URLs strictly.** Any property that accepts a URL (such as `background-image`) must undergo strict URL validation to prevent `javascript:` URLs or unauthorized external resources.
 
 ```HTML
-<style> selector { property : $varUnsafe; } </style>
-<style> selector { property : "$varUnsafe"; } </style>
-<span style="property : $varUnsafe">Oh no</span>
+<style> selector { property : $varValidated; } </style>
+<span style="property : $varValidated">Safe text</span>
 ```
 
 When changing styles with JavaScript, use a fixed property such as `element.style.color` with a value from an application-defined allowlist. [CSS property assignment](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty) sets a CSS value; it does not automatically CSS-encode it. Do not let untrusted input choose the property or supply an entire declaration block. Properties that accept URLs require URL validation as well.
@@ -189,20 +197,31 @@ elem.innerHTML = DOMPurify.sanitize(dangerVar);
 
 [`insertAdjacentText()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentText) requires a position and a text value. In the example, `"beforeend"` appends a text node inside the element. Use text sinks on ordinary elements, not script or style elements.
 
-**Safe HTML Attributes include:** `align`, `alink`, `alt`, `bgcolor`, `border`, `cellpadding`, `cellspacing`, `class`, `color`, `cols`, `colspan`, `coords`, `dir`, `face`, `height`, `hspace`, `ismap`, `lang`, `marginheight`, `marginwidth`, `multiple`, `nohref`, `noresize`, `noshade`, `nowrap`, `ref`, `rel`, `rev`, `rows`, `rowspan`, `scrolling`, `shape`, `span`, `summary`, `tabindex`, `title`, `usemap`, `valign`, `value`, `vlink`, `vspace`, `width`.
+### HTML Attribute Safety
 
-For attributes not reported above, ensure that if JavaScript code is provided as a value, it cannot be executed.
+Ordinary text attributes (such as `title`, `alt`, `placeholder`, or `value` on form inputs) are safe to populate with untrusted data when properly quoted and HTML-attribute-encoded in markup, or when assigned directly via DOM properties (such as `element.setAttribute("title", value)` or `formfield.value = value`).
+
+However, attribute contexts vary significantly, and ordinary attribute encoding is insufficient for attributes with executable or scriptable semantics:
+
+- **URLs (`href`, `src`):** Can execute code via `javascript:` pseudoprotocols. Validate and allowlist safe protocols (such as `http:` or `https:`) before rendering.
+- **Event Handlers (`onclick`, `onload`, `onerror`, etc.):** Interpret values directly as JavaScript code. Never insert untrusted dynamic data into event handler attributes; attach trusted event listener functions using `addEventListener()` instead.
+- **Style Attributes (`style`):** Interpret values as CSS. Untrusted input can allow CSS injection or data exfiltration; use fixed property names and strictly allowlist or validate values rather than accepting arbitrary CSS.
+- **`srcdoc` Attributes:** Interpret values as complete HTML documents within an `<iframe>`. Untrusted data must be sanitized with an HTML sanitizer before insertion.
+- **Dynamic Attribute Names:** Attribute names must always be fixed and hardcoded. Allowing dynamic attribute names lets attackers inject arbitrary event handlers or dangerous attributes regardless of how the attribute value is encoded.
 
 ## Other Controls
 
 Framework Security Protections, Output Encoding, and HTML Sanitization will provide the best protection for your application. OWASP recommends these in all circumstances.
 
-Consider adopting the following controls in addition to the above.
+Consider adopting the following controls in addition to the above:
 
 - Cookie Attributes - These change how JavaScript and browsers can interact with cookies. Cookie attributes try to limit the impact of an XSS attack but don’t prevent the execution of malicious content or address the root cause of the vulnerability.
 - Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so it should not be your primary defense mechanism. Use a CSP as an additional layer of defense and have a look at the [cheatsheet here](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
-- Trusted Types - On Chromium-based browsers, enable [Trusted Types](https://web.dev/articles/trusted-types) by adding `Content-Security-Policy: require-trusted-types-for 'script'`. This causes DOM XSS sinks (`innerHTML`, `outerHTML`, `document.write`, `script.src`, etc.) to reject plain strings, forcing all assignments to go through a vetted policy. It is one of the few controls that eliminates entire classes of DOM XSS rather than mitigating them. Combine with a default policy that delegates to a sanitizer (e.g. DOMPurify) for legacy code paths.
-- Web Application Firewalls - These look for known attack strings and block them. WAF’s are unreliable and new bypass techniques are being discovered regularly. WAFs also don’t address the root cause of an XSS vulnerability. In addition, WAFs also miss a class of XSS vulnerabilities that operate exclusively client-side. WAFs are not recommended for preventing XSS, especially DOM-Based XSS.
+- Trusted Types - Supported across current major browsers (Chromium-based browsers such as Chrome and Edge from version 83, Firefox from version 148, and Safari from version 26, according to [MDN compatibility data](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility)). Enable Trusted Types by adding `Content-Security-Policy: require-trusted-types-for 'script'`. This causes DOM XSS sinks (`innerHTML`, `outerHTML`, `document.write`, `script.src`, etc.) to reject plain strings, forcing all assignments to go through a vetted policy. For older browser versions lacking native support, use a polyfill during rollout. Combine with a default policy that delegates to a sanitizer (such as DOMPurify) for legacy code paths.
+
+### Controls Not Recommended as Primary XSS Mitigation
+
+- **Web Application Firewalls (WAFs):** WAFs are **not recommended as a primary XSS mitigation**. While they can detect known attack signatures at the network perimeter, they do not fix the root cause of vulnerabilities, are regularly bypassed, and cannot reliably prevent DOM-based XSS that operates entirely within the browser.
 
 ### XSS Prevention Rules Summary
 
@@ -214,7 +233,7 @@ Code: `<span>UNTRUSTED DATA </span>`
 Sample Defense: HTML Entity Encoding (rule \#1)
 
 Data Type: String
-Context: Safe HTML Attributes
+Context: Ordinary HTML Attributes
 Code: `<input type="text" name="fname" value="UNTRUSTED DATA ">`
 Sample Defense: Quote the value and use HTML attribute encoding. Keep attribute names fixed and use ordinary text attributes; apply additional controls for URL, CSS, HTML, or JavaScript values.
 
@@ -231,7 +250,7 @@ Sample Defense: Canonicalize input, URL Validation, Safe URL verification, Allow
 Data Type: String
 Context: CSS Value
 Code: `HTML <div style="width: UNTRUSTED DATA ;">Selection</div>`
-Sample Defense: Strict structural validation (rule \#4), CSS hex encoding, Good design of CSS features.
+Sample Defense: Strict property-specific validation or allowlisting, fixed property names, CSS hex encoding.
 
 Data Type: String
 Context: JavaScript Variable
