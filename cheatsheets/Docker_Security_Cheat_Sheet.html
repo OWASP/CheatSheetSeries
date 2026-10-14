@@ -5103,6 +5103,11 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 <li><a href="https://dev-sec.io/baselines/docker/">dev-sec.io</a></li>
 <li><a href="https://github.com/docker/docker-bench-security">Docker Bench for Security</a></li>
 </ul>
+<p>To detect misconfigurations in Docker Compose files before deployment:</p>
+<ul>
+<li><a href="https://github.com/OWASP/DockSec">DockSec</a> (with <code>--compose</code>)</li>
+<li><a href="https://github.com/Checkmarx/kics">KICS</a></li>
+</ul>
 <h3 id="rule-10-keep-the-docker-daemon-logging-level-at-info">RULE #10 - Keep the Docker daemon logging level at <code>info</code><a class="headerlink" href="#rule-10-keep-the-docker-daemon-logging-level-at-info" title="Permanent link">&para;</a></h3>
 <p>By default, the Docker daemon is configured to have a base logging level of <code>info</code>. This can be verified by checking the daemon configuration file <code>/etc/docker/daemon.json</code> for the<code>log-level</code> key. If the key is not present, the default logging level is <code>info</code>. Additionally, if the docker daemon is started with the <code>--log-level</code> option, the value of the <code>log-level</code> key in the configuration file will be overridden. To check if the Docker daemon is running with a different log level, you can use the following command:</p>
 <div class="highlight"><pre><span></span><code>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'[d]ockerd.*--log-level'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{for(i=1;i&lt;=NF;i++) if ($i ~ /--log-level/) print $i}'</span>
