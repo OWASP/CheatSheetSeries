@@ -4868,6 +4868,9 @@
 <li>Display full tool call parameters to the user — not just a summary name.</li>
 <li>Never auto-approve tool calls, especially in multi-server setups.</li>
 <li>Ensure the confirmation UI cannot be bypassed by LLM-crafted responses.</li>
+<li>Do not assume that an available MCP tool has the user's consent or approval for a particular invocation. The MCP specification states that <a href="https://modelcontextprotocol.io/specification/2026-07-28#key-principles">hosts must obtain explicit user consent before invoking any tool</a> and that a human should be <a href="https://modelcontextprotocol.io/specification/2026-07-28/server/tools#user-interaction-model">able to deny tool invocations</a>.</li>
+<li>Assess whether tool operations require additional authorization based on their possible effects, including sensitive reads, writes, data disclosure, and irreversible actions; a tool's read/write label alone may not establish the risk, and clients must treat <a href="https://modelcontextprotocol.io/specification/2026-07-28/server/tools#tool">tool annotations as untrusted unless they come from trusted servers</a>.</li>
+<li>Choose controls according to that risk, such as explicit user confirmation, narrowly scoped authorization, or policy checks enforced at execution time. For binding approvals to specific actions and arguments and preventing their reuse, follow the <a href="AI_Agent_Security_Cheat_Sheet.html#tool-authorization-middleware">AI Agent Security Cheat Sheet</a>.</li>
 </ul>
 <h3 id="5-input-and-output-validation">5. Input and Output Validation<a class="headerlink" href="#5-input-and-output-validation" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4944,6 +4947,7 @@
 <li>Inspect and pin all tool descriptions and schemas.</li>
 <li>Sandbox local MCP servers in containers or restricted environments.</li>
 <li>Require human approval for sensitive or destructive tool calls.</li>
+<li>Apply risk-appropriate authorization to sensitive tool calls and enforce its scope at execution time.</li>
 <li>Validate all inputs and outputs at the MCP server layer.</li>
 <li>Use <code>mcp-scan</code> or equivalent tooling to detect poisoned tools.</li>
 <li>Log and monitor all tool invocations centrally.</li>
