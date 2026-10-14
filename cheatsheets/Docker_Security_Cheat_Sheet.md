@@ -309,7 +309,6 @@ To detect misconfigurations in Docker:
 
 To detect misconfigurations in Docker Compose files before deployment:
 
-- [compose-lint](https://github.com/tmatens/compose-lint)
 - [DockSec](https://github.com/OWASP/DockSec) (with `--compose`)
 - [KICS](https://github.com/Checkmarx/kics)
 
