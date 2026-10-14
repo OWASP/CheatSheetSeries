@@ -4955,6 +4955,7 @@
 <li>in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints</li>
 <li>user authentication should be centralised in a Identity Provider (IdP), which issues access tokens</li>
 </ul>
+<p>For guidance on preventing insecure direct object references (IDOR), see the <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">Insecure Direct Object Reference Prevention Cheat Sheet</a>.</p>
 <h2 id="jwt">JWT<a class="headerlink" href="#jwt" title="Permanent link">&para;</a></h2>
 <p>There seems to be a convergence towards using <a href="https://tools.ietf.org/html/rfc7519">JSON Web Tokens</a> (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.</p>
 <ul>
