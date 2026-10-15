@@ -4965,7 +4965,7 @@ process.on('SIGTERM', closeGracefully)
 </code></pre></div>
 <p>Admittedly, this is more of a generic web application concern than Dockerfile related, but is even more important in orchestrated environments.</p>
 <h2 id="7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image">7) Find and fix security vulnerabilities in your Node.js docker image<a class="headerlink" href="#7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image" title="Permanent link">&para;</a></h2>
-<p>See <a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-9-use-static-analysis-tools">Docker Security Cheat Sheet - Use static analysis tools</a></p>
+<p>See <a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-9-integrate-container-scanning-tools-into-your-cicd-pipeline">Docker Security Cheat Sheet - Use static analysis tools</a></p>
 <h2 id="8-use-multi-stage-builds">8) Use multi-stage builds<a class="headerlink" href="#8-use-multi-stage-builds" title="Permanent link">&para;</a></h2>
 <p>Multi-stage builds are a great way to move from a simple, yet potentially erroneous Dockerfile, into separated steps of building a Docker image, so we can avoid leaking sensitive information. Not only that, but we can also use a bigger Docker base image to install our dependencies, compile any native npm packages if needed, and then copy all these artifacts into a small production base image, like our alpine example.</p>
 <h3 id="prevent-sensitive-information-leak">Prevent sensitive information leak<a class="headerlink" href="#prevent-sensitive-information-leak" title="Permanent link">&para;</a></h3>
