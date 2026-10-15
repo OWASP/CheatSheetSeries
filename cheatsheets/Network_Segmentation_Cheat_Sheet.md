@@ -45,9 +45,9 @@ Further, the schemes do not contain firewall icons so as not to overload the sch
 
 By default, developed information systems should consist of at least three components (**security zones**):
 
-1. [FRONTEND](Network_Segmentation_Cheat_Sheet.md#FRONTEND);
-2. [MIDDLEWARE](Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE);
-3. [BACKEND](Network_Segmentation_Cheat_Sheet.md#BACKEND).
+1. [FRONTEND](Network_Segmentation_Cheat_Sheet.md#frontend);
+2. [MIDDLEWARE](Network_Segmentation_Cheat_Sheet.md#middleware);
+3. [BACKEND](Network_Segmentation_Cheat_Sheet.md#backend).
 
 ### FRONTEND
 
