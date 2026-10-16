@@ -46,7 +46,7 @@ The LLM sees all tool descriptions from all connected servers in its context —
 
 - Inspect all tool descriptions, parameter names, types, and return schemas before approval.
 - Treat the *entire* tool schema as a potential injection surface — not just the `description` field.
-- Pin reviewed tool definitions using cryptographic hashes and require review when they change. This detects metadata changes, not changes to server code or behavior behind an unchanged definition; [tool annotations are hints, not enforcement](https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/#what-annotations-cant-do).
+- Pin reviewed tool definitions using cryptographic hashes and require review when they change. Hash the complete [tool definition](https://modelcontextprotocol.io/specification/2026-07-28/server/tools#tool) (including `inputSchema`, `outputSchema`, and `annotations`), not only the description; a flipped `readOnlyHint` or `destructiveHint` can change client approval behavior without any visible description change. This detects metadata changes, not changes to server code or behavior behind an unchanged definition; [tool annotations are hints, not enforcement](https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/#what-annotations-cant-do).
 - Use tools like `mcp-scan` to automatically detect poisoned descriptions and cross-server shadowing.
 - Use strict JSON Schema for tool parameters: set `additionalProperties: false` and use `pattern` (or similar) on string fields so only declared parameters and valid formats are accepted.
 
