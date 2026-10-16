@@ -65,7 +65,7 @@ Social engineering methods [can be used despite authentication and operation aut
 
 ### 1.5 Each transaction should be authorized using unique authorization credentials
 
-If applications only ask for transaction authorization credentials once (such as a static password, code sent through SMS, or a token response), the user could authorize any transaction during the entire session or reuse the same credentials when they need to authorize a transaction. In this scenario, attackers can employ malware to sniff credentials and use them to authorize any transaction without the user's knowledge.
+If applications only ask for transaction authorization credentials once (such as a static password, code sent through SMS, or a token response), the user could authorize any transaction during the entire session or reuse the same credentials when they need to authorize a transaction. In this scenario, attackers can employ malware to sniff credentials and use them to authorize any transaction without the user's knowledge. Time-limited validity and operation-specific credentials do not, by themselves, prevent replay within the validity window; where an authorization credential is intended for one use, the server must reject subsequent attempts to redeem it after successful consumption (see also Sections 2.9 and 2.10; for an analogous replay-prevention mechanism, see [RFC 9449, Section 11.1](https://www.rfc-editor.org/rfc/rfc9449.html#section-11.1)).
 
 ## 2. Non-functional guidelines
 
@@ -144,7 +144,7 @@ The final result of the transaction entry and authorization process (as describe
 
 ### 2.9 Authorization credentials should only be valid during a limited time period
 
-In some attacks, a user's authorization credentials are passed by malware to a command-and-control server and then are used from an attacker-controlled machine. Often, this process is often performed manually by an attacker. To make sure that these are attacks are difficult, the server should only allow transaction authorization to occur in a limited time window which should occur between the generation of a challenge (or OTP) and the completion of an authorization. Additionally, such safeguards will also help stop resource exhaustion attacks. This time period should be carefully selected so it will not disrupt normal user behavior. Time-limited validity and operation-specific credentials do not, by themselves, prevent replay within the validity window; where an authorization credential is intended for one use, the server must reject subsequent attempts to redeem it after successful consumption (see also Sections 1.5 and 2.10; for an analogous replay-prevention mechanism, see [RFC 9449, Section 11.1](https://www.rfc-editor.org/rfc/rfc9449.html#section-11.1)).
+In some attacks, a user's authorization credentials are passed by malware to a command-and-control server and then are used from an attacker-controlled machine. Often, this process is often performed manually by an attacker. To make sure that these are attacks are difficult, the server should only allow transaction authorization to occur in a limited time window which should occur between the generation of a challenge (or OTP) and the completion of an authorization. Additionally, such safeguards will also help stop resource exhaustion attacks. This time period should be carefully selected so it will not disrupt normal user behavior.
 
 ### 2.10 Authorization credentials should be unique for every operation
 
