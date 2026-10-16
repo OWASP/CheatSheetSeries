@@ -4850,7 +4850,7 @@
 <ul>
 <li>Inspect all tool descriptions, parameter names, types, and return schemas before approval.</li>
 <li>Treat the <em>entire</em> tool schema as a potential injection surface — not just the <code>description</code> field.</li>
-<li>Pin reviewed tool definitions using cryptographic hashes and require review when they change. This detects metadata changes, not changes to server code or behavior behind an unchanged definition; <a href="https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/#what-annotations-cant-do">tool annotations are hints, not enforcement</a>.</li>
+<li>Pin reviewed tool definitions using cryptographic hashes and require review when they change. Hash the complete <a href="https://modelcontextprotocol.io/specification/2026-07-28/server/tools#tool">tool definition</a> (including <code>inputSchema</code>, <code>outputSchema</code>, and <code>annotations</code>), not only the description; a flipped <code>readOnlyHint</code> or <code>destructiveHint</code> can change client approval behavior without any visible description change. This detects metadata changes, not changes to server code or behavior behind an unchanged definition; <a href="https://blog.modelcontextprotocol.io/posts/2026-03-16-tool-annotations/#what-annotations-cant-do">tool annotations are hints, not enforcement</a>.</li>
 <li>Use tools like <code>mcp-scan</code> to automatically detect poisoned descriptions and cross-server shadowing.</li>
 <li>Use strict JSON Schema for tool parameters: set <code>additionalProperties: false</code> and use <code>pattern</code> (or similar) on string fields so only declared parameters and valid formats are accepted.</li>
 </ul>
