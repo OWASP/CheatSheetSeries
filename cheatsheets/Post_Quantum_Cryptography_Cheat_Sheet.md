@@ -98,3 +98,5 @@ Deploy to a small group of services or clients, then expand using the tests and 
 - [NCSC: Timelines for migration to post-quantum cryptography](https://www.ncsc.gov.uk/guidance/pqc-migration-timelines)
 - [NIST CSWP 39-upd1: Considerations for Achieving Crypto Agility](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.39-upd1.pdf)
 - [RFC 9794: Terminology for Post-Quantum Traditional Hybrid Schemes](https://www.rfc-editor.org/rfc/rfc9794.html)
+- [RFC 9794, Section 6 — Hybrid Certificates and Chains of Trust](https://www.rfc-editor.org/rfc/rfc9794.html#section-6)
+- [RFC 5280 — Internet X.509 Public Key Infrastructure Certificate and CRL Profile](https://www.rfc-editor.org/rfc/rfc5280.html)
