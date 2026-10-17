@@ -5788,45 +5788,6 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <p>DO: Have a strong TLS policy (see <a href="https://www.ssllabs.com/projects/best-practices/index.html">SSL Best Practices</a>), use TLS 1.2+ wherever possible. Then check the configuration using <a href="https://www.ssllabs.com/ssltest/">SSL Test</a> or <a href="https://testssl.sh/">TestSSL</a>.</p>
 <p>More information on Transport Layer Protection can be found in the
 <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>.</p>
-<p>DO: Ensure headers are not disclosing information about your application. See <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs">HttpHeaders.cs</a>, <a href="https://github.com/Dionach/StripHeaders/">Dionach StripHeaders</a>, disable via <code>web.config</code> or <a href="https://medium.com/bugbountywriteup/security-headers-1c770105940b">Startup.cs</a>.</p>
-<p>e.g Web.config</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;system.web&gt;</span>
-<span class="w">    </span><span class="nt">&lt;httpRuntime</span><span class="w"> </span><span class="na">enableVersionHeader=</span><span class="s">"false"</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/system.web&gt;</span>
-<span class="nt">&lt;system.webServer&gt;</span>
-<span class="w">    </span><span class="nt">&lt;security&gt;</span>
-<span class="w">        </span><span class="nt">&lt;requestFiltering</span><span class="w"> </span><span class="na">removeServerHeader=</span><span class="s">"true"</span><span class="w"> </span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/security&gt;</span>
-<span class="w">    </span><span class="nt">&lt;httpProtocol&gt;</span>
-<span class="w">        </span><span class="nt">&lt;customHeaders&gt;</span>
-<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">"X-Content-Type-Options"</span><span class="w"> </span><span class="na">value=</span><span class="s">"nosniff"</span><span class="w"> </span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">"X-Frame-Options"</span><span class="w"> </span><span class="na">value=</span><span class="s">"DENY"</span><span class="w"> </span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">"X-Permitted-Cross-Domain-Policies"</span><span class="w"> </span><span class="na">value=</span><span class="s">"master-only"</span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">"X-XSS-Protection"</span><span class="w"> </span><span class="na">value=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;remove</span><span class="w"> </span><span class="na">name=</span><span class="s">"X-Powered-By"</span><span class="nt">/&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/customHeaders&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/httpProtocol&gt;</span>
-<span class="nt">&lt;/system.webServer&gt;</span>
-</code></pre></div>
-<p>e.g Startup.cs</p>
-<div class="highlight"><pre><span></span><code><span class="n">app</span><span class="p">.</span><span class="n">UseHsts</span><span class="p">(</span><span class="n">hsts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">hsts</span><span class="p">.</span><span class="n">MaxAge</span><span class="p">(</span><span class="mi">365</span><span class="p">).</span><span class="n">IncludeSubdomains</span><span class="p">());</span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseXContentTypeOptions</span><span class="p">();</span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseReferrerPolicy</span><span class="p">(</span><span class="n">opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">opts</span><span class="p">.</span><span class="n">NoReferrer</span><span class="p">());</span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseXXssProtection</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">FilterDisabled</span><span class="p">());</span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseXfo</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Deny</span><span class="p">());</span>
-
-<span class="n">app</span><span class="p">.</span><span class="n">UseCsp</span><span class="p">(</span><span class="n">opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">opts</span>
-<span class="w"> </span><span class="p">.</span><span class="n">BlockAllMixedContent</span><span class="p">()</span>
-<span class="w"> </span><span class="p">.</span><span class="n">StyleSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
-<span class="w"> </span><span class="p">.</span><span class="n">StyleSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">UnsafeInline</span><span class="p">())</span>
-<span class="w"> </span><span class="p">.</span><span class="n">FontSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
-<span class="w"> </span><span class="p">.</span><span class="n">FormActions</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
-<span class="w"> </span><span class="p">.</span><span class="n">FrameAncestors</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
-<span class="w"> </span><span class="p">.</span><span class="n">ImageSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
-<span class="w"> </span><span class="p">.</span><span class="n">ScriptSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
-<span class="w"> </span><span class="p">);</span>
-</code></pre></div>
-<p>More information about headers can be found at the <a href="https://owasp.org/www-project-secure-headers/">OWASP Secure Headers Project</a>.</p>
 <h4 id="encryption-for-storage">Encryption for storage<a class="headerlink" href="#encryption-for-storage" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Use the <a href="https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection">Windows Data Protection API (DPAPI)</a> for secure local storage of sensitive data.</li>
@@ -5838,6 +5799,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <ul>
 <li>It does not take into account key rotation or management which is a whole topic in itself.</li>
 <li>It is important to use a different nonce for every encryption operation, even if the same key is used.</li>
+<li>Always pass the expected tag size to the <code>AesGcm</code> constructor. The <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0053">constructors without a tag size are obsolete</a> because <code>Decrypt</code> would accept a truncated tag.</li>
 <li>The key will need to be stored securely.</li>
 </ul>
 <details>
@@ -5883,7 +5845,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="nf">Encrypt</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">plaintext</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">key</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">using</span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AesGcm</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+<span class="w">        </span><span class="n">using</span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AesGcm</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">AesGcm</span><span class="p">.</span><span class="n">TagByteSizes</span><span class="p">.</span><span class="n">MaxSize</span><span class="p">))</span>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="c1">// Tag for authenticated encryption</span>
 <span class="w">            </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="n">AesGcm</span><span class="p">.</span><span class="n">TagByteSizes</span><span class="p">.</span><span class="n">MaxSize</span><span class="p">];</span>
@@ -5902,7 +5864,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Decrypt</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">ciphertext</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">key</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">using</span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AesGcm</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+<span class="w">        </span><span class="n">using</span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AesGcm</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">AesGcm</span><span class="p">.</span><span class="n">TagByteSizes</span><span class="p">.</span><span class="n">MaxSize</span><span class="p">))</span>
 <span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="c1">// Plaintext will be same length in bytes as Ciphertext</span>
 <span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">plaintextBytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="n">ciphertext</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
@@ -5919,120 +5881,10 @@ to assess for other threats or get a professionally completed Penetration Test.<
 </details>
 
 <h4 id="encryption-for-transmission">Encryption for transmission<a class="headerlink" href="#encryption-for-transmission" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Again, follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</li>
-</ul>
-<p>The following code snippet shows an example of using Elliptic Curve/Diffie-Hellman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need to transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.</p>
-<p>Again, it is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.</p>
-<p>Note that this code sample relies on the <code>AesGcmSimple</code> class from the <a href="#encryption-for-storage">previous section</a>.</p>
-<p>A few constraints/pitfalls with this code:</p>
-<ul>
-<li>It does not take into account key rotation or management which is a whole topic in itself.</li>
-<li>The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.</li>
-<li>The private keys will need to be stored securely.</li>
-<li>The code does not consider the validation of public keys before use.</li>
-<li>Overall, there is no verification of authenticity between the two sides.</li>
-</ul>
-<details>
-  <summary>Click here to view the "ECDH asymmetric encryption" code snippet.</summary>
-
-<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ECDHSimpleTest</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Generate ECC key pair for Alice</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">alice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ECDHSimple</span><span class="p">();</span>
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">alicePublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="n">PublicKey</span><span class="p">;</span>
-
-<span class="w">        </span><span class="c1">// Generate ECC key pair for Bob</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">bob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ECDHSimple</span><span class="p">();</span>
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">bobPublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="n">PublicKey</span><span class="p">;</span>
-
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">plaintext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello, Bob! How are you?"</span><span class="p">;</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">"Secret being sent from Alice to Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// Note that a new nonce is generated with every encryption operation in line with</span>
-<span class="w">        </span><span class="c1">// in line with the AES GCM security</span>
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">nonce</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">cipherText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="n">Encrypt</span><span class="p">(</span><span class="n">bobPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">tag</span><span class="p">);</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">"Ciphertext, nonce, and tag being sent from Alice to Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToBase64String</span><span class="p">(</span><span class="n">cipherText</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToBase64String</span><span class="p">(</span><span class="n">nonce</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToBase64String</span><span class="p">(</span><span class="n">tag</span><span class="p">));</span>
-
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">decrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="n">Decrypt</span><span class="p">(</span><span class="n">alicePublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">cipherText</span><span class="p">,</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">);</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">"Secret received by Bob from Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span>
-
-<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">plaintext2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Hello, Alice! I'm good, how are you?"</span><span class="p">;</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">"Secret being sent from Bob to Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">);</span>
-
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">tag2</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">nonce2</span><span class="p">;</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">cipherText2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="n">Encrypt</span><span class="p">(</span><span class="n">alicePublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">nonce2</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">tag2</span><span class="p">);</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">"Ciphertext, nonce, and tag being sent from Bob to Alice: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToBase64String</span><span class="p">(</span><span class="n">cipherText2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToBase64String</span><span class="p">(</span><span class="n">nonce2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Convert</span><span class="p">.</span><span class="n">ToBase64String</span><span class="p">(</span><span class="n">tag2</span><span class="p">));</span>
-
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">decrypted2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="n">Decrypt</span><span class="p">(</span><span class="n">bobPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">cipherText2</span><span class="p">,</span><span class="w"> </span><span class="n">nonce2</span><span class="p">,</span><span class="w"> </span><span class="n">tag2</span><span class="p">);</span>
-<span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">"Secret received by Alice from Bob: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">decrypted2</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-
-
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ECDHSimple</span>
-<span class="p">{</span>
-
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ECDiffieHellmanCng</span><span class="w"> </span><span class="n">ecdh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ECDiffieHellmanCng</span><span class="p">();</span>
-
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">PublicKey</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="k">get</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">ecdh</span><span class="p">.</span><span class="n">PublicKey</span><span class="p">.</span><span class="n">ToByteArray</span><span class="p">();</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="nf">Encrypt</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">partnerPublicKey</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Generate the AES Key and Nonce</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">aesKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerateAESKey</span><span class="p">(</span><span class="n">partnerPublicKey</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// Tag for authenticated encryption</span>
-<span class="w">        </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="n">AesGcm</span><span class="p">.</span><span class="n">TagByteSizes</span><span class="p">.</span><span class="n">MaxSize</span><span class="p">];</span>
-
-<span class="w">        </span><span class="c1">// MaxSize = 12 bytes / 96 bits and this size should always be used.</span>
-<span class="w">        </span><span class="c1">// A new nonce is generated with every encryption operation in line with</span>
-<span class="w">        </span><span class="c1">// the AES GCM security model</span>
-<span class="w">        </span><span class="n">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="n">AesGcm</span><span class="p">.</span><span class="n">NonceByteSizes</span><span class="p">.</span><span class="n">MaxSize</span><span class="p">];</span>
-<span class="w">        </span><span class="n">RandomNumberGenerator</span><span class="p">.</span><span class="n">Fill</span><span class="p">(</span><span class="n">nonce</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// return the encrypted value</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">AesGcmSimple</span><span class="p">.</span><span class="n">Encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">aesKey</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-
-<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Decrypt</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">partnerPublicKey</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">ciphertext</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">tag</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Generate the AES Key and Nonce</span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">aesKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GenerateAESKey</span><span class="p">(</span><span class="n">partnerPublicKey</span><span class="p">);</span>
-
-<span class="w">        </span><span class="c1">// return the decrypted value</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">AesGcmSimple</span><span class="p">.</span><span class="n">Decrypt</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">,</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">aesKey</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="nf">GenerateAESKey</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">partnerPublicKey</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Derive the secret based on this side's private key and the other side's public key</span>
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ecdh</span><span class="p">.</span><span class="n">DeriveKeyMaterial</span><span class="p">(</span><span class="n">CngKey</span><span class="p">.</span><span class="n">Import</span><span class="p">(</span><span class="n">partnerPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">CngKeyBlobFormat</span><span class="p">.</span><span class="n">EccPublicBlob</span><span class="p">));</span>
-
-<span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">aesKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span><span class="w"> </span><span class="c1">// 256-bit AES key</span>
-<span class="w">        </span><span class="n">Array</span><span class="p">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">aesKey</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span><span class="w"> </span><span class="c1">// Copy first 32 bytes as the key</span>
-
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">aesKey</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-</details>
-
+<p>DO: Use TLS to protect data in transit, as described above.</p>
+<p>DO NOT: Build your own protocol on top of Elliptic Curve Diffie-Hellman (ECDH). Key agreement alone is not a secure channel. A protocol also has to authenticate the public keys it relies on, <a href="https://www.rfc-editor.org/rfc/rfc5869.html#section-3.3">run the shared secret through a key derivation function</a> instead of using it as a key, and reject replayed messages where that matters. TLS handles this for you.</p>
+<p>DO: If data must stay encrypted to a specific recipient beyond the TLS connection, use a maintained library that implements an established hybrid encryption scheme such as Hybrid Public Key Encryption (HPKE). See the <a href="Cryptographic_Storage_Cheat_Sheet.html#algorithms">Cryptographic Storage Cheat Sheet</a> for algorithm guidance. Get the recipient's public key through a trusted channel. Encrypting to an attacker's key protects nothing.</p>
+<p><a href="https://www.rfc-editor.org/rfc/rfc9180.html#section-9.1">HPKE base mode does not authenticate the sender, and HPKE does not prevent replay</a>. If the recipient must know who sent the data, sign it and verify the signature with a public key bound to the expected sender. If a message must not be accepted twice, the application has to detect duplicates.</p>
 <h3 id="a03-injection">A03 Injection<a class="headerlink" href="#a03-injection" title="Permanent link">&para;</a></h3>
 <h4 id="sql-injection">SQL Injection<a class="headerlink" href="#sql-injection" title="Permanent link">&para;</a></h4>
 <p>DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.</p>
@@ -6129,6 +5981,7 @@ technology or language and is therefore out of scope for this cheat sheet. See t
 <p>E.g., Startup.cs in <code>Configure()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="n">app</span><span class="p">.</span><span class="n">UseHttpsRedirection</span><span class="p">();</span>
 </code></pre></div>
+<p>DO: Remove headers that disclose server or framework versions, and set security response headers. See the <a href="HTTP_Headers_Cheat_Sheet.html">HTTP Headers Cheat Sheet</a>.</p>
 <h4 id="cross-site-request-forgery">Cross-site request forgery<a class="headerlink" href="#cross-site-request-forgery" title="Permanent link">&para;</a></h4>
 <p>DO NOT: Send sensitive data without validating Anti-Forgery-Tokens (<a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks">.NET</a> / <a href="https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-7.0#aspnet-core-antiforgery-configuration">.NET Core</a>).</p>
 <p>DO: Send the anti-forgery token with every POST/PUT request:</p>
