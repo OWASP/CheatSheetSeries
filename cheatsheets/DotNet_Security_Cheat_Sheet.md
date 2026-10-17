@@ -175,53 +175,6 @@ DO: Have a strong TLS policy (see [SSL Best Practices](https://www.ssllabs.com/p
 More information on Transport Layer Protection can be found in the
 [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md).
 
-DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs), [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/), disable via `web.config` or [Startup.cs](https://medium.com/bugbountywriteup/security-headers-1c770105940b).
-
-e.g Web.config
-
-```xml
-<system.web>
-    <httpRuntime enableVersionHeader="false"/>
-</system.web>
-<system.webServer>
-    <security>
-        <requestFiltering removeServerHeader="true" />
-    </security>
-    <httpProtocol>
-        <customHeaders>
-            <add name="X-Content-Type-Options" value="nosniff" />
-            <add name="X-Frame-Options" value="DENY" />
-            <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
-            <add name="X-XSS-Protection" value="0"/>
-            <remove name="X-Powered-By"/>
-        </customHeaders>
-    </httpProtocol>
-</system.webServer>
-```
-
-e.g Startup.cs
-
-``` csharp
-app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
-app.UseXContentTypeOptions();
-app.UseReferrerPolicy(opts => opts.NoReferrer());
-app.UseXXssProtection(options => options.FilterDisabled());
-app.UseXfo(options => options.Deny());
-
-app.UseCsp(opts => opts
- .BlockAllMixedContent()
- .StyleSources(s => s.Self())
- .StyleSources(s => s.UnsafeInline())
- .FontSources(s => s.Self())
- .FormActions(s => s.Self())
- .FrameAncestors(s => s.Self())
- .ImageSources(s => s.Self())
- .ScriptSources(s => s.Self())
- );
-```
-
-More information about headers can be found at the [OWASP Secure Headers Project](https://owasp.org/www-project-secure-headers/).
-
 #### Encryption for storage
 
 - Use the [Windows Data Protection API (DPAPI)](https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection) for secure local storage of sensitive data.
@@ -235,6 +188,7 @@ A few constraints/pitfalls with this code:
 
 - It does not take into account key rotation or management which is a whole topic in itself.
 - It is important to use a different nonce for every encryption operation, even if the same key is used.
+- Always pass the expected tag size to the `AesGcm` constructor. The [constructors without a tag size are obsolete](https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0053) because `Decrypt` would accept a truncated tag.
 - The key will need to be stored securely.
 
 <details>
@@ -281,7 +235,7 @@ public static class AesGcmSimple
 
     public static byte[] Encrypt(string plaintext, byte[] nonce, out byte[] tag, byte[] key)
     {
-        using(var aes = new AesGcm(key))
+        using(var aes = new AesGcm(key, AesGcm.TagByteSizes.MaxSize))
         {
             // Tag for authenticated encryption
             tag = new byte[AesGcm.TagByteSizes.MaxSize];
@@ -300,7 +254,7 @@ public static class AesGcmSimple
 
     public static string Decrypt(byte[] ciphertext, byte[] nonce, byte[] tag, byte[] key)
     {
-        using(var aes = new AesGcm(key))
+        using(var aes = new AesGcm(key, AesGcm.TagByteSizes.MaxSize))
         {
             // Plaintext will be same length in bytes as Ciphertext
             var plaintextBytes = new byte[ciphertext.Length];
@@ -319,122 +273,13 @@ public static class AesGcmSimple
 
 #### Encryption for transmission
 
-- Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+DO: Use TLS to protect data in transit, as described above.
 
-The following code snippet shows an example of using Elliptic Curve/Diffie-Hellman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need to transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+DO NOT: Build your own protocol on top of Elliptic Curve Diffie-Hellman (ECDH). Key agreement alone is not a secure channel. A protocol also has to authenticate the public keys it relies on, [run the shared secret through a key derivation function](https://www.rfc-editor.org/rfc/rfc5869.html#section-3.3) instead of using it as a key, and reject replayed messages where that matters. TLS handles this for you.
 
-Again, it is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.
+DO: If data must stay encrypted to a specific recipient beyond the TLS connection, use a maintained library that implements an established hybrid encryption scheme such as Hybrid Public Key Encryption (HPKE). See the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md#algorithms) for algorithm guidance. Get the recipient's public key through a trusted channel. Encrypting to an attacker's key protects nothing.
 
-Note that this code sample relies on the `AesGcmSimple` class from the [previous section](#encryption-for-storage).
-
-A few constraints/pitfalls with this code:
-
-- It does not take into account key rotation or management which is a whole topic in itself.
-- The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.
-- The private keys will need to be stored securely.
-- The code does not consider the validation of public keys before use.
-- Overall, there is no verification of authenticity between the two sides.
-
-<details>
-  <summary>Click here to view the "ECDH asymmetric encryption" code snippet.</summary>
-
-```csharp
-public class ECDHSimpleTest
-{
-    public static void Main()
-    {
-        // Generate ECC key pair for Alice
-        var alice = new ECDHSimple();
-        byte[] alicePublicKey = alice.PublicKey;
-
-        // Generate ECC key pair for Bob
-        var bob = new ECDHSimple();
-        byte[] bobPublicKey = bob.PublicKey;
-
-        string plaintext = "Hello, Bob! How are you?";
-        Console.WriteLine("Secret being sent from Alice to Bob: " + plaintext);
-
-        // Note that a new nonce is generated with every encryption operation in line with
-        // in line with the AES GCM security
-        byte[] tag;
-        byte[] nonce;
-        var cipherText = alice.Encrypt(bobPublicKey, plaintext, out nonce, out tag);
-        Console.WriteLine("Ciphertext, nonce, and tag being sent from Alice to Bob: " + Convert.ToBase64String(cipherText) + " " + Convert.ToBase64String(nonce) + " " + Convert.ToBase64String(tag));
-
-        var decrypted = bob.Decrypt(alicePublicKey, cipherText, nonce, tag);
-        Console.WriteLine("Secret received by Bob from Alice: " + decrypted);
-
-        Console.WriteLine();
-
-        string plaintext2 = "Hello, Alice! I'm good, how are you?";
-        Console.WriteLine("Secret being sent from Bob to Alice: " + plaintext2);
-
-        byte[] tag2;
-        byte[] nonce2;
-        var cipherText2 = bob.Encrypt(alicePublicKey, plaintext2, out nonce2, out tag2);
-        Console.WriteLine("Ciphertext, nonce, and tag being sent from Bob to Alice: " + Convert.ToBase64String(cipherText2) + " " + Convert.ToBase64String(nonce2) + " " + Convert.ToBase64String(tag2));
-
-        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2, nonce2, tag2);
-        Console.WriteLine("Secret received by Alice from Bob: " + decrypted2);
-    }
-}
-
-
-public class ECDHSimple
-{
-
-    private ECDiffieHellmanCng ecdh = new ECDiffieHellmanCng();
-
-    public byte[] PublicKey
-    {
-        get
-        {
-            return ecdh.PublicKey.ToByteArray();
-        }
-    }
-
-    public byte[] Encrypt(byte[] partnerPublicKey, string message, out byte[] nonce, out byte[] tag)
-    {
-        // Generate the AES Key and Nonce
-        var aesKey = GenerateAESKey(partnerPublicKey);
-
-        // Tag for authenticated encryption
-        tag = new byte[AesGcm.TagByteSizes.MaxSize];
-
-        // MaxSize = 12 bytes / 96 bits and this size should always be used.
-        // A new nonce is generated with every encryption operation in line with
-        // the AES GCM security model
-        nonce = new byte[AesGcm.NonceByteSizes.MaxSize];
-        RandomNumberGenerator.Fill(nonce);
-
-        // return the encrypted value
-        return AesGcmSimple.Encrypt(message, nonce, out tag, aesKey);
-    }
-
-
-    public string Decrypt(byte[] partnerPublicKey, byte[] ciphertext, byte[] nonce, byte[] tag)
-    {
-        // Generate the AES Key and Nonce
-        var aesKey = GenerateAESKey(partnerPublicKey);
-
-        // return the decrypted value
-        return AesGcmSimple.Decrypt(ciphertext, nonce, tag, aesKey);
-    }
-
-    private byte[] GenerateAESKey(byte[] partnerPublicKey)
-    {
-        // Derive the secret based on this side's private key and the other side's public key
-        byte[] secret = ecdh.DeriveKeyMaterial(CngKey.Import(partnerPublicKey, CngKeyBlobFormat.EccPublicBlob));
-
-        byte[] aesKey = new byte[32]; // 256-bit AES key
-        Array.Copy(secret, 0, aesKey, 0, 32); // Copy first 32 bytes as the key
-
-        return aesKey;
-    }
-}
-```
-
-</details>
+[HPKE base mode does not authenticate the sender, and HPKE does not prevent replay](https://www.rfc-editor.org/rfc/rfc9180.html#section-9.1). If the recipient must know who sent the data, sign it and verify the signature with a public key bound to the expected sender. If a message must not be accepted twice, the application has to detect duplicates.
 
 ### A03 Injection
 
@@ -578,6 +423,8 @@ E.g., Startup.cs in `Configure()`:
 ``` csharp
   app.UseHttpsRedirection();
 ```
+
+DO: Remove headers that disclose server or framework versions, and set security response headers. See the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md).
 
 #### Cross-site request forgery
 
