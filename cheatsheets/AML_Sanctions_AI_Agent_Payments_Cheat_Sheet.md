@@ -108,6 +108,7 @@ Treat an incomplete or unavailable screening result as unresolved, never as clea
 - Log all screening failures with the same level of detail as successful screens, including the reason for failure.
 - Alert compliance teams when screening failure rates exceed a threshold, as this may indicate a denial-of-service attack designed to force fail-open behavior.
 - Implement circuit breakers that halt agent-initiated payments entirely if the screening service is unavailable for an extended period.
+- For agent-initiated payments requiring human approval, follow the [Transaction Authorization Cheat Sheet, Section 1.1](Transaction_Authorization_Cheat_Sheet.md#11-transaction-authorization-method-has-to-allow-a-user-to-identify-and-acknowledge-significant-transaction-data) to ensure the approver can identify and acknowledge the significant transaction data before execution.
 
 ### Don't
 
