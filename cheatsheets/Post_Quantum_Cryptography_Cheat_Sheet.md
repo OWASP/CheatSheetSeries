@@ -41,7 +41,7 @@ Upgrade maintained libraries and platform services to implementations of standar
 | Transport | Pilot a supported classical + PQC hybrid exchange, such as [X25519MLKEM768](https://www.rfc-editor.org/rfc/rfc10024.html), following the [Transport Layer Security (TLS) Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md#set-the-appropriate-diffie-hellman-groups). Keep certificate and hostname validation enabled. |
 | Signatures | Plan a separate migration using a supported signature format and verifier, such as an integration of the Module-Lattice-Based Digital Signature Algorithm, [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final). Coordinate signer and verifier upgrades; follow the [JSON Web Token (JWT) guidance](JSON_Web_Token_Cheat_Sheet.md#public-key-signatures) for tokens. |
 | Stored data | Use your provider's supported migration process for public-key protection of data keys, including existing wrapped keys. Follow the [key rotation and existing-data guidance](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation) and retain recovery access during migration. |
-|
+
 ## PQC Certificate Chains and Trust Paths
 
 When migrating certificate-based authentication to post-quantum or hybrid mechanisms, assess the **complete certification path**, not only the end-entity certificate.
