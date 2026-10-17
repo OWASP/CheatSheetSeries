@@ -40,7 +40,28 @@ Upgrade maintained libraries and platform services to implementations of standar
 | Key establishment | Use a supported integration of the Module-Lattice-Based Key-Encapsulation Mechanism, [ML-KEM (FIPS 203)](https://csrc.nist.gov/pubs/fips/203/final). It establishes a shared secret for symmetric cryptography; it does not directly encrypt application data or authenticate the peer. |
 | Transport | Pilot a supported classical + PQC hybrid exchange, such as [X25519MLKEM768](https://www.rfc-editor.org/rfc/rfc10024.html), following the [Transport Layer Security (TLS) Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md#set-the-appropriate-diffie-hellman-groups). Keep certificate and hostname validation enabled. |
 | Signatures | Plan a separate migration using a supported signature format and verifier, such as an integration of the Module-Lattice-Based Digital Signature Algorithm, [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final). Coordinate signer and verifier upgrades; follow the [JSON Web Token (JWT) guidance](JSON_Web_Token_Cheat_Sheet.md#public-key-signatures) for tokens. |
-| Stored data | Use your provider's supported migration process for public-key protection of data keys, including existing wrapped keys. Follow the [key rotation and existing-data guidance](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation) and retain recovery access during migration. |
+| Stored data | Use your provider's supported migration process for public-key protection of data keys, including existing wrapped keys. Follow the [key rotation and existing-data guidance](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation) and retain recovery access during migration. 
+|
+## PQC Certificate Chains and Trust Paths
+
+When migrating certificate-based authentication to post-quantum or hybrid mechanisms, assess the **complete certification path**, not only the end-entity certificate.
+
+### Components to Review
+
+- **End-entity certificates** — traditional, post-quantum, or PQ/T hybrid.
+- **Intermediate CA certificates** — including their public-key and signature algorithms.
+- **Trust anchors** — including the trust configuration used by the application.
+- **Certificate-path validation** — including support for the certificate types and algorithms used in the path.
+
+### Authentication Properties
+
+A PQ/T hybrid certificate does not necessarily provide hybrid authentication. The authentication properties depend on the **chain of trust** and the mechanisms used throughout the certification path.
+
+Possible migration approaches include post-quantum certificate chains, PQ/T hybrid certificate chains, or separate traditional and post-quantum certificate chains. Their security and interoperability properties can differ.
+
+### Testing the Certification Path
+
+Test the **complete certification path** using the actual application runtime and trust configuration. Do not assume that support for a PQC algorithm in an end-entity certificate means that the complete certification path is supported.
 
 A hybrid construction combines classical and post-quantum algorithms. Use the protocol's implementation rather than constructing your own combination. [RFC 9794, Section 5](https://www.rfc-editor.org/rfc/rfc9794.html#section-5) distinguishes hybrid confidentiality from authentication: a hybrid TLS key exchange does not make classical certificate signatures quantum-resistant.
 
