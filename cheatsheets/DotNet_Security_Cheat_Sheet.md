@@ -32,9 +32,11 @@ Configure Identity's application cookie through [`ConfigureApplicationCookie`](h
 
 ### Authorization
 
-Prefer a [fallback policy requiring authentication](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-10.0#require-global-user-authentication), and mark intentionally public endpoints with `[AllowAnonymous]` or `AllowAnonymous()`. Authentication alone does not establish permission to read or modify a particular object.
+Prefer a [fallback policy requiring authentication](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-10.0#require-global-user-authentication), and mark intentionally public endpoints with `[AllowAnonymous]` or `AllowAnonymous()`. It covers only requests that reach the authorization middleware; static files served earlier are not protected by it.
 
-For object-specific permissions, use [`IAuthorizationService.AuthorizeAsync`](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0) with the resource and requested operation before returning or changing it. An `[Authorize]` attribute alone cannot perform this resource check. See [Authorization](Authorization_Cheat_Sheet.md) and [Insecure Direct Object Reference Prevention](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md).
+Authentication alone does not grant permission. Apply role or named-policy requirements, such as `[Authorize(Policy = "...")]` or `RequireAuthorization("...")`, to privileged operations. Named policies do not inherit the fallback policy; include the authentication requirement.
+
+For object-specific permissions, use [`IAuthorizationService.AuthorizeAsync`](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0) with the resource and requested operation before returning or changing it. Neither the fallback policy nor an `[Authorize]` attribute alone performs this resource check. See [Authorization](Authorization_Cheat_Sheet.md) and [Insecure Direct Object Reference Prevention](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md).
 
 ### Redirects
 
@@ -57,7 +59,7 @@ See the [.NET guidance in the OS Command Injection Defense Cheat Sheet](OS_Comma
 When the browser sends credentials automatically, including cookies and Windows, Basic, or Digest authentication, protect state-changing operations with [ASP.NET Core antiforgery validation](https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-10.0). Do not change state in GET requests.
 
 - In MVC applications, register `AutoValidateAntiforgeryTokenAttribute` globally for unsafe HTTP methods. Razor Pages provide antiforgery protection by default. These MVC filters are not a substitute for the antiforgery configuration required by other endpoint types.
-- Pair token generation with server-side validation. For forms not covered by automatic token generation, use `@Html.AntiForgeryToken()` explicitly. JavaScript requests must send the request token in the configured header or form field, along with the cookie.
+- Pair token generation with server-side validation. For forms not covered by automatic token generation, use `@Html.AntiForgeryToken()` explicitly. JavaScript requests must send the request token in the configured header or form field, along with the antiforgery cookie.
 - Do not add `IgnoreAntiforgeryToken` merely to make a failing request succeed. Verify how the endpoint authenticates requests and why CSRF protection is unnecessary before excluding it.
 
 See [Cross-Site Request Forgery Prevention](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) for the threat model and controls beyond framework configuration.
@@ -91,7 +93,7 @@ Use TLS, not a custom key-exchange protocol. For browser applications, configure
 - Keep secrets out of source code and checked-in configuration. Use [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets) only for development; it is not encrypted storage. Obtain production credentials from a managed secret store. Follow [Secrets Management](Secrets_Management_Cheat_Sheet.md).
 - Run production applications outside the `Development` environment. Use [exception handling middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-10.0) and return generic errors; keep stack traces, credentials, and request details out of responses.
 - Apply [HTTP security headers](HTTP_Headers_Cheat_Sheet.md) in the application or reverse proxy, with one place responsible for each policy. Avoid copying a generic header configuration without testing the application's requirements.
-- Use operating-system permissions and isolation for untrusted components. [Code Access Security and partial trust are not supported security boundaries](https://learn.microsoft.com/en-us/dotnet/standard/security/secure-coding-guidelines), including for desktop applications.
+- Use operating-system permissions and isolation for untrusted components. [Code Access Security and partial trust are not supported security boundaries](https://learn.microsoft.com/en-us/dotnet/standard/security/secure-coding-guidelines).
 
 ## Legacy .NET Framework
 

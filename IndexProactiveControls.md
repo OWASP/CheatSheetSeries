@@ -146,7 +146,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet (Encryption)](cheatsheets/DotNet_Security_Cheat_Sheet.md#encryption-for-storage)
+[DotNet Security Cheat Sheet (Data Protection)](cheatsheets/DotNet_Security_Cheat_Sheet.md#data-protection)
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
 
