@@ -136,21 +136,30 @@ Injection of this type occur when the application uses untrusted user input to b
 
 #### How to prevent
 
-Use technology stack **API** in order to prevent injection.
+- Prefer a Java API over running an external program. For example, use `InetAddress.isReachable()` instead of running `ping`. Library functions cannot be manipulated into doing anything other than their intended task, as described in the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
+- If you must run an external program, hardcode the executable and use [`ProcessBuilder`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html) with the program and each argument as separate list elements, not one String. No shell is started, so characters such as `&`, `|` and `;` are passed to the program as plain text. See the Java section of the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
+- Never build the command as a single String. [`Runtime.exec(String)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html) is deprecated since Java 18 as error-prone: it splits the String into tokens on whitespace only, so injected input can add arguments. Use `ProcessBuilder` instead.
+- Validate untrusted arguments with an allowlist, and where the program supports it, put `--` before them to end option parsing. Which string lists form a valid command is system-dependent (some systems expect the program to tokenize the command string itself), and a value that starts with `-` can be read by the program as an option (argument injection). See [Argument Injection](OS_Command_Injection_Defense_Cheat_Sheet.md#argument-injection) in the same cheat sheet.
 
 #### Example
 
 ``` java
-/* The context taken is, for example, to perform a PING against a computer.
-* The prevention is to use the feature provided by the Java API instead of building
-* a system command as String and execute it */
-InetAddress host = InetAddress.getByName("localhost");
-var reachable = host.isReachable(5000);
+// Allow only a plain host name; this also rejects values that start with "-"
+if (!Pattern.matches("[a-zA-Z0-9][a-zA-Z0-9.-]{0,252}", host)) {
+    throw new IllegalArgumentException("Invalid host");
+}
+
+// Hardcoded executable; the command and each argument are passed separately
+ProcessBuilder processBuilder = new ProcessBuilder("ping", "-c", "1", host);
+Process process = processBuilder.start();
 ```
 
 #### References
 
+- [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md)
 - [Command Injection](https://owasp.org/www-community/attacks/Command_Injection)
+- [ProcessBuilder (Java SE API)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html)
+- [Runtime.exec(String) (Java SE API)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html)
 
 ### XML: XPath Injection
 
