@@ -90,7 +90,7 @@
 
 [Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md) ![Bash](assets/Index_Bash.svg)
 
-[DotNet Security Cheat Sheet](cheatsheets/DotNet_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Csharp](assets/Index_Csharp.svg) ![Html](assets/Index_Html.svg) ![Xml](assets/Index_Xml.svg)
+[DotNet Security Cheat Sheet](cheatsheets/DotNet_Security_Cheat_Sheet.md)
 
 [Drone Security Cheat Sheet](cheatsheets/Drone_Security_Cheat_Sheet.md)
 
