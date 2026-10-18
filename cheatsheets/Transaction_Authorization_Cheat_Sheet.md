@@ -67,6 +67,8 @@ Social engineering methods [can be used despite authentication and operation aut
 
 If applications only ask for transaction authorization credentials once (such as a static password, code sent through SMS, or a token response), the user could authorize any transaction during the entire session or reuse the same credentials when they need to authorize a transaction. In this scenario, attackers can employ malware to sniff credentials and use them to authorize any transaction without the user's knowledge.
 
+Expiration (Section 2.9) and per-operation uniqueness (Section 2.10) do not prevent replay of the same transaction. Accept each authorization credential only once, as [NIST SP 800-63B requires for one-time passwords](https://pages.nist.gov/800-63-4/sp800-63b/authenticators/#single-factor-otp-verifiers). Before execution, atomically check that the credential is unused and mark it used, using state shared by all accepting servers.
+
 ## 2. Non-functional guidelines
 
 ### 2.1 Authorization should be performed and enforced server-side
