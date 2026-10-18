@@ -6781,7 +6781,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <span class="w">    </span><span class="nt">pod-security.kubernetes.io/audit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restricted</span>
 <span class="w">    </span><span class="nt">pod-security.kubernetes.io/warn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restricted</span>
 </code></pre></div>
-<p>Cluster administrators should properly organize and and enforce policy on cluster namespaces, only permitting the privileged policy on namespaces where it is absolutely required, such as for critical cluster services that require access to the underlying host. Namespaces should be set to the lowest Pod Security Policy that can be enforced and supports their risk level.</p>
+<p>Cluster administrators should properly organize and enforce policy on cluster namespaces, only permitting the privileged policy on namespaces where it is absolutely required, such as for critical cluster services that require access to the underlying host. Namespaces should be set to the lowest Pod Security Policy that can be enforced and supports their risk level.</p>
 <p>If more granular policy enforcement is required beyond the three profiles (Privileged, Baseline, Restricted), Third party admission controllers like OPA Gatekeeper or Kyverno, or built-in Validating Admission Policy can be utilized.</p>
 <h4 id="use-pod-security-policies-to-control-the-security-related-attributes-of-pods-which-includes-container-privilege-levels">Use Pod security policies to control the security-related attributes of pods, which includes container privilege levels<a class="headerlink" href="#use-pod-security-policies-to-control-the-security-related-attributes-of-pods-which-includes-container-privilege-levels" title="Permanent link">&para;</a></h4>
 <blockquote>
@@ -7042,10 +7042,10 @@ blacklist sctp
 <p>To apply the manifest, run:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>example.yaml
 </code></pre></div>
-<p>To take a look the logs for this container, run:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>log<span class="w"> </span>&lt;container-name&gt;<span class="w"> </span>command.
+<p>To look at the logs for this container, run:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>example
 </code></pre></div>
-<p>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</p>
+<p>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown in the pod configuration below, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</p>
 <p>An example of a Pod Manifest is seen below:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
@@ -7083,7 +7083,7 @@ blacklist sctp
 <p>Once a container is terminated or restarted, kubelet stores logs on the node. To prevent these files from consuming all of the host’s storage, the Kubernetes node implements a log rotation mechanism. When a container is evicted from the node, all containers with corresponding log files are evicted.</p>
 <p>Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.</p>
 <p>For example, systemd logs can be retrieved using the following command:</p>
-<div class="highlight"><pre><span></span><code>journalctl<span class="w"> </span>-u
+<div class="highlight"><pre><span></span><code>journalctl<span class="w"> </span>-u<span class="w"> </span>kubelet
 </code></pre></div>
 <h5 id="cluster-logging">Cluster logging<a class="headerlink" href="#cluster-logging" title="Permanent link">&para;</a></h5>
 <p>In the Kubernetes cluster itself, there is a long list of cluster components that can be logged as well as additional data types that can be used (events, audit logs). Together, these different types of data can give you visibility into how Kubernetes is performing as a system.</p>
