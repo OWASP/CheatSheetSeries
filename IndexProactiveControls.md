@@ -18,7 +18,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet (Cross-Site Scripting)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a072017-cross-site-scripting-xss)
+[DotNet Security Cheat Sheet (Cross-Site Scripting)](cheatsheets/DotNet_Security_Cheat_Sheet.md#cross-site-scripting-xss)
 
 [FastAPI Security Cheat Sheet](cheatsheets/FastAPI_Security_Cheat_Sheet.md)
 
@@ -31,8 +31,6 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 [Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md)
 
 ## [C3. Secure Database Access](https://top10proactive.owasp.org/archive/2018/c3-secure-database/)
-
-[DotNet Security Cheat Sheet (Data Access)](cheatsheets/DotNet_Security_Cheat_Sheet.md#data-access)
 
 [DotNet Security Cheat Sheet (SQL Injection)](cheatsheets/DotNet_Security_Cheat_Sheet.md#sql-injection)
 
@@ -50,6 +48,8 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
 
+[DotNet Security Cheat Sheet (Output Encoding)](cheatsheets/DotNet_Security_Cheat_Sheet.md#cross-site-scripting-xss)
+
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
@@ -62,11 +62,9 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet (HTTP Validation and Encoding)](cheatsheets/DotNet_Security_Cheat_Sheet.md#http-validation-and-encoding)
-
 [DotNet Security Cheat Sheet (Cross-Site Request Forgery)](cheatsheets/DotNet_Security_Cheat_Sheet.md#cross-site-request-forgery)
 
-[DotNet Security Cheat Sheet (Unvalidated Redirects and Forwards)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a102013-unvalidated-redirects-and-forwards)
+[DotNet Security Cheat Sheet (Unvalidated Redirects and Forwards)](cheatsheets/DotNet_Security_Cheat_Sheet.md#redirects)
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
 
@@ -98,7 +96,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DotNet Security Cheat Sheet (Forms authentication)](cheatsheets/DotNet_Security_Cheat_Sheet.md#forms-authentication)
 
-[DotNet Security Cheat Sheet (Weak Account Management)](cheatsheets/DotNet_Security_Cheat_Sheet.md#weak-account-management)
+[DotNet Security Cheat Sheet (Account Protection)](cheatsheets/DotNet_Security_Cheat_Sheet.md#account-protection)
 
 [Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
 
@@ -130,9 +128,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Cross-Site_Request_Forgery_Prevention_Cheat_Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet (Insecure Direct Object References)](cheatsheets/DotNet_Security_Cheat_Sheet.md#insecure-direct-object-references)
-
-[DotNet Security Cheat Sheet (Missing Function-Level Access Control)](cheatsheets/DotNet_Security_Cheat_Sheet.md#missing-function-level-access-control)
+[DotNet Security Cheat Sheet (Authorization)](cheatsheets/DotNet_Security_Cheat_Sheet.md#authorization)
 
 [REST Security Cheat Sheet (Access Control)](cheatsheets/REST_Security_Cheat_Sheet.md#access-control)
 
@@ -150,9 +146,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet (Encryption)](cheatsheets/DotNet_Security_Cheat_Sheet.md#encryption)
-
-[DotNet Security Cheat Sheet (Cryptographic Failures)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a02-cryptographic-failures)
+[DotNet Security Cheat Sheet (Data Protection)](cheatsheets/DotNet_Security_Cheat_Sheet.md#data-protection)
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
 
