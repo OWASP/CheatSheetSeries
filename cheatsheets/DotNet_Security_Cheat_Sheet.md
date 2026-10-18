@@ -313,61 +313,19 @@ context.Database.ExecuteSqlCommand(sql); // SQL Injection vulnerability!
 DO: Practice Least Privilege - connect to the database using an account with a minimum set of permissions required
 to do its job, not the database administrator account.
 
-#### OS Injection
+#### OS Command Injection
 
-General guidance about OS Injection can be found in the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
+See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
 
-DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
+Do:
 
-e.g
+- Use [`ProcessStartInfo.ArgumentList`](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) instead of `ProcessStartInfo.Arguments`. The former automatically handles arguments without having to manually escape special characters.
+- Validate any dynamic value to make sure it cannot be interpreted as unexpected options by the called program.
 
-``` csharp
-var process = new System.Diagnostics.Process();
-var startInfo = new System.Diagnostics.ProcessStartInfo();
-startInfo.FileName = "validatedCommand";
-startInfo.Arguments = "validatedArg1 validatedArg2 validatedArg3";
-process.StartInfo = startInfo;
-process.Start();
-```
+Do not:
 
-DO NOT: Assume that this mechanism will protect against malicious input designed to break out of one argument and then tamper with another argument to the process. This will still be possible.
-
-DO: Use allowlist validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
-
-e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
-
-``` csharp
-//User input
-string ipAddress = "127.0.0.1";
-
-//check to make sure an ip address was provided
-if (!string.IsNullOrEmpty(ipAddress))
-{
- // Create an instance of IPAddress for the specified address string (in
- // dotted-quad, or colon-hexadecimal notation).
- if (IPAddress.TryParse(ipAddress, out var address))
- {
-  // Display the address in standard notation.
-  return address.ToString();
- }
- else
- {
-  //ipAddress is not of type IPAddress
-  ...
- }
-    ...
-}
-```
-
-DO: Try to only accept characters which are simple alphanumeric.
-
-DO NOT: Assume you can sanitize special characters without actually removing them. Various combinations of ```\```, ```'``` and ```@``` may have an unexpected impact on sanitization attempts.
-
-DO NOT: Rely on methods without a security guarantee.
-
-e.g. .NET Core 2.2 and greater and .NET 5 and greater support [ProcessStartInfo.ArgumentList](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) which performs some character escaping but the object includes [a disclaimer that it is not safe with untrusted input](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist#remarks).
-
-DO: Look at alternatives to passing raw untrusted arguments via command-line parameters such as encoding using Base64 (which would safely encode any special characters as well) and then decode the parameters in the receiving application.
+- Start programs using `ProcessStartInfo.Arguments` with dynamic input. This requires argument escaping which is error-prone and depends on the operating system.
+- Call command interpreters (such as `cmd.exe` or `powershell.exe`). While it is possible to do it safely, it is very easy to trigger OS command injection vulnerability this way.
 
 #### LDAP injection
 
