@@ -42,28 +42,9 @@ Upgrade maintained libraries and platform services to implementations of standar
 | Signatures | Plan a separate migration using a supported signature format and verifier, such as an integration of the Module-Lattice-Based Digital Signature Algorithm, [ML-DSA (FIPS 204)](https://csrc.nist.gov/pubs/fips/204/final). Coordinate signer and verifier upgrades; follow the [JSON Web Token (JWT) guidance](JSON_Web_Token_Cheat_Sheet.md#public-key-signatures) for tokens. |
 | Stored data | Use your provider's supported migration process for public-key protection of data keys, including existing wrapped keys. Follow the [key rotation and existing-data guidance](Key_Management_Cheat_Sheet.md#cryptoperiods-and-rotation) and retain recovery access during migration. |
 
-## PQC Certificate Chains and Trust Paths
-
-When migrating certificate-based authentication to post-quantum or hybrid mechanisms, assess the **complete certification path**, not only the end-entity certificate.
-
-### Components to Review
-
-- **End-entity certificates** — traditional, post-quantum, or PQ/T hybrid.
-- **Intermediate CA certificates** — including their public-key and signature algorithms.
-- **Trust anchors** — including the trust configuration used by the application.
-- **Certificate-path validation** — including support for the certificate types and algorithms used in the path.
-
-### Authentication Properties
-
-A PQ/T hybrid certificate does not necessarily provide hybrid authentication. The authentication properties depend on the **chain of trust** and the mechanisms used throughout the certification path.
-
-Possible migration approaches include post-quantum certificate chains, PQ/T hybrid certificate chains, or separate traditional and post-quantum certificate chains. Their security and interoperability properties can differ.
-
-### Testing the Certification Path
-
-Test the **complete certification path** using the actual application runtime and trust configuration. Do not assume that support for a PQC algorithm in an end-entity certificate means that the complete certification path is supported.
-
 A hybrid construction combines classical and post-quantum algorithms. Use the protocol's implementation rather than constructing your own combination. [RFC 9794, Section 5](https://www.rfc-editor.org/rfc/rfc9794.html#section-5) distinguishes hybrid confidentiality from authentication: a hybrid TLS key exchange does not make classical certificate signatures quantum-resistant.
+
+For certificate-based authentication, check the public-key and signature algorithms in the end-entity (leaf) and intermediate certificates, the configured [trust anchor's public-key algorithm](https://www.rfc-editor.org/rfc/rfc5280.html#section-6.1.1), and the runtime's certificate-validation support. [A hybrid leaf certificate alone does not guarantee hybrid authentication of the sender's identity](https://www.rfc-editor.org/rfc/rfc9794.html#section-6).
 
 Where a supported dual-signature scheme requires both signatures, enforce both verifications. Accepting either one permits classical-only acceptance; [NIST describes dual-signature verification](https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs) as requiring all component signatures to succeed. Do not append a custom signature field to an existing token or certificate format.
 
@@ -77,7 +58,7 @@ Test with the actual algorithms and parameter sets you will deploy. [NIST's cryp
 
 - Exercise real clients, proxies, gateways, and backend connections. Verify the negotiated key exchange for new connections. For [resumed TLS sessions](https://datatracker.ietf.org/doc/html/rfc9846#section-4.3.9), check the resumption mode and how the original connection and resumption secrets were protected.
 - Measure handshake and verification costs under expected load. Check certificate, signature, message, and database field limits. Keep size limits explicit when increasing them.
-- Test rejection of invalid signatures, untrusted certificates, and disallowed algorithms. If both signatures are required, either missing or invalid signature must cause rejection.
+- Validate complete certificate paths using the deployed runtime and trust configuration. Test rejection of invalid signatures, untrusted certificates, and disallowed algorithms. If both signatures are required, either missing or invalid signature must cause rejection.
 - Decide where classical fallback is temporarily allowed. For paths requiring PQC, verify that failures cannot silently trigger a classical-only retry.
 - Test existing data, older signed artifacts, backup restoration, and key recovery before retiring old keys or formats.
 
@@ -98,5 +79,3 @@ Deploy to a small group of services or clients, then expand using the tests and 
 - [NCSC: Timelines for migration to post-quantum cryptography](https://www.ncsc.gov.uk/guidance/pqc-migration-timelines)
 - [NIST CSWP 39-upd1: Considerations for Achieving Crypto Agility](https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.39-upd1.pdf)
 - [RFC 9794: Terminology for Post-Quantum Traditional Hybrid Schemes](https://www.rfc-editor.org/rfc/rfc9794.html)
-- [RFC 9794, Section 6 — Hybrid Certificates and Chains of Trust](https://www.rfc-editor.org/rfc/rfc9794.html#section-6)
-- [RFC 5280 — Internet X.509 Public Key Infrastructure Certificate and CRL Profile](https://www.rfc-editor.org/rfc/rfc5280.html)
