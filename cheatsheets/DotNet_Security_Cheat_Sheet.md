@@ -315,17 +315,7 @@ to do its job, not the database administrator account.
 
 #### OS Command Injection
 
-See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
-
-Do:
-
-- On modern .NET, use [`ProcessStartInfo.ArgumentList`](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist#remarks) instead of `ProcessStartInfo.Arguments`. It handles argument escaping automatically but does not validate the arguments. This API is unavailable in .NET Framework.
-- Validate any dynamic value to make sure it cannot be interpreted as unexpected options by the called program.
-
-Do not:
-
-- Start programs using `ProcessStartInfo.Arguments` with dynamic input. This requires argument escaping which is error-prone and depends on the operating system.
-- Call command interpreters (such as `cmd.exe` or `powershell.exe`). Doing so can introduce OS command injection vulnerabilities.
+See the [.NET guidance in the OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md#net).
 
 #### LDAP injection
 
