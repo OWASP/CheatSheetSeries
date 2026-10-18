@@ -425,7 +425,7 @@ metadata:
     pod-security.kubernetes.io/warn: restricted
 ```
 
-Cluster administrators should properly organize and and enforce policy on cluster namespaces, only permitting the privileged policy on namespaces where it is absolutely required, such as for critical cluster services that require access to the underlying host. Namespaces should be set to the lowest Pod Security Policy that can be enforced and supports their risk level.
+Cluster administrators should properly organize and enforce policy on cluster namespaces, only permitting the privileged policy on namespaces where it is absolutely required, such as for critical cluster services that require access to the underlying host. Namespaces should be set to the lowest Pod Security Policy that can be enforced and supports their risk level.
 
 If more granular policy enforcement is required beyond the three profiles (Privileged, Baseline, Restricted), Third party admission controllers like OPA Gatekeeper or Kyverno, or built-in Validating Admission Policy can be utilized.
 
@@ -796,13 +796,13 @@ To apply the manifest, run:
 kubectl apply -f example.yaml
 ```
 
-To take a look the logs for this container, run:
+To look at the logs for this container, run:
 
 ```bash
-kubectl log <container-name> command.
+kubectl logs example
 ```
 
-For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
+For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown in the pod configuration below, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
 
 An example of a Pod Manifest is seen below:
 
@@ -851,7 +851,7 @@ Depending on what operating system and additional services you’re running on y
 For example, systemd logs can be retrieved using the following command:
 
 ```bash
-journalctl -u
+journalctl -u kubelet
 ```
 
 ##### Cluster logging
