@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This sheet focuses on security decisions for modern .NET and ASP.NET Core. Guidance for existing .NET Framework applications is separated at the end.
+This cheat sheet focuses on security decisions for modern .NET and ASP.NET Core. Guidance for existing .NET Framework applications is separated at the end.
 
-Keep the runtime and packages supported and patched. Follow the [.NET](https://github.com/dotnet/announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity) and [ASP.NET Core](https://github.com/aspnet/Announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity) security announcements.
+Keep the runtime and packages supported and patched. Follow the [.NET security announcements](https://github.com/dotnet/announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity), which include ASP.NET Core advisories.
 
 ## Authentication and authorization
 
@@ -12,7 +12,7 @@ Use [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/securi
 
 ### Account protection
 
-- Configure `IdentityOptions.Lockout` and pass `lockoutOnFailure: true` to `PasswordSignInAsync` so failed password attempts count toward lockout. The [Identity configuration documentation](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0#lockout) shows both settings.
+- Use a store that supports lockout and enable it for the affected users (`LockoutEnabled`). Configure `IdentityOptions.Lockout` and pass `lockoutOnFailure: true` to `PasswordSignInAsync` so failed password attempts count toward lockout. See [Identity lockout configuration](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0#lockout).
 - Apply [login throttling](Authentication_Cheat_Sheet.md#login-throttling) and [multifactor authentication](Multifactor_Authentication_Cheat_Sheet.md). Protect registration and password recovery too; login lockout does not cover those flows.
 - Return consistent [authentication responses](Authentication_Cheat_Sheet.md#authentication-responses), including comparable timing, so login, registration, and recovery do not disclose whether an account exists.
 
@@ -20,7 +20,7 @@ Use [ASP.NET Core Identity](https://learn.microsoft.com/en-us/aspnet/core/securi
 
 - Use Identity's [`PasswordHasher<TUser>`](https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-10.0); do not call `KeyDerivation.Pbkdf2` directly to store passwords.
 - Configure [`PasswordHasherOptions.IterationCount`](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0#password-hasher-options) for the hash algorithm used by your Identity version to meet the [Password Storage Cheat Sheet's PBKDF2 guidance](Password_Storage_Cheat_Sheet.md#pbkdf2). Benchmark the work factor on the deployment hardware; do not assume the framework default meets current guidance.
-- Set `IdentityOptions.Password.RequiredLength` according to the [password strength guidance](Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls). Disable the `RequireDigit`, `RequireLowercase`, `RequireUppercase`, and `RequireNonAlphanumeric` composition rules. Update scaffolded registration and password-reset validation to match; see [Identity password configuration](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0#password).
+- Set `IdentityOptions.Password.RequiredLength` according to the [password strength guidance](Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls). Disable the `RequireDigit`, `RequireLowercase`, `RequireUppercase`, and `RequireNonAlphanumeric` composition rules. Update scaffolded registration and password-reset validation to match; see [Identity password configuration](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0#password). Also screen for common and breached passwords; length and composition settings do not provide that check.
 
 ### Authentication cookies
 
@@ -28,11 +28,11 @@ Configure Identity's application cookie through [`ConfigureApplicationCookie`](h
 
 - Set `Cookie.HttpOnly = true` and `Cookie.SecurePolicy = CookieSecurePolicy.Always`. Choose `Cookie.SameSite` to fit the authentication flow; test federated sign-in before tightening it. `HttpOnly` prevents script access to the cookie, but does not stop injected scripts from making authenticated requests.
 - Set an appropriate `ExpireTimeSpan`. With `SlidingExpiration = true`, activity renews the authentication ticket; it is not an absolute session limit. See [cookie authentication options](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.cookies.cookieauthenticationoptions) and [session expiration](Session_Management_Cheat_Sheet.md#automatic-session-expiration).
-- Use Identity's [security stamp validation](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0#isecuritystampvalidator-and-signout-everywhere) to invalidate existing authentication after security-sensitive changes. Revocation takes effect when the cookie is next validated, not necessarily immediately.
+- Ensure security-sensitive changes update the user's security stamp, calling `UserManager.UpdateSecurityStampAsync(user)` when the operation does not already do so. Keep Identity's [security stamp validation](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-10.0#isecuritystampvalidator-and-signout-everywhere) enabled. Existing cookies are rejected at the next stamp validation, subject to `SecurityStampValidatorOptions.ValidationInterval`; revocation is not necessarily immediate.
 
 ### Authorization
 
-Require authorization on protected endpoints with `[Authorize]` or the equivalent endpoint policy. Authentication alone does not establish permission to read or modify a particular object.
+Prefer a [fallback policy requiring authentication](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-10.0#require-global-user-authentication), and mark intentionally public endpoints with `[AllowAnonymous]` or `AllowAnonymous()`. Authentication alone does not establish permission to read or modify a particular object.
 
 For object-specific permissions, use [`IAuthorizationService.AuthorizeAsync`](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/resource-based?view=aspnetcore-10.0) with the resource and requested operation before returning or changing it. An `[Authorize]` attribute alone cannot perform this resource check. See [Authorization](Authorization_Cheat_Sheet.md) and [Insecure Direct Object Reference Prevention](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md).
 
@@ -54,7 +54,7 @@ See the [.NET guidance in the OS Command Injection Defense Cheat Sheet](OS_Comma
 
 ### Cross-site request forgery
 
-For requests authenticated by cookies, protect state-changing operations with [ASP.NET Core antiforgery validation](https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-10.0). Do not change state in GET requests.
+When the browser sends credentials automatically, including cookies and Windows, Basic, or Digest authentication, protect state-changing operations with [ASP.NET Core antiforgery validation](https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-10.0). Do not change state in GET requests.
 
 - In MVC applications, register `AutoValidateAntiforgeryTokenAttribute` globally for unsafe HTTP methods. Razor Pages provide antiforgery protection by default. These MVC filters are not a substitute for the antiforgery configuration required by other endpoint types.
 - Pair token generation with server-side validation. For forms not covered by automatic token generation, use `@Html.AntiForgeryToken()` explicitly. JavaScript requests must send the request token in the configured header or form field, along with the cookie.
@@ -64,9 +64,9 @@ See [Cross-Site Request Forgery Prevention](Cross-Site_Request_Forgery_Preventio
 
 ### Cross-site scripting (XSS)
 
-Razor encodes ordinary variable output in HTML contexts. Do not bypass it with `Html.Raw` or `HtmlString` for untrusted content. HTML encoding does not make a value safe inside JavaScript, CSS, or a URL; use the appropriate context-specific handling described in [Microsoft's XSS guidance](https://learn.microsoft.com/en-us/aspnet/core/security/cross-site-scripting?view=aspnetcore-10.0).
+Razor [encodes ordinary variable output in HTML contexts](https://learn.microsoft.com/en-us/aspnet/core/security/cross-site-scripting?view=aspnetcore-10.0). Do not bypass it with `Html.Raw` or `HtmlString` for untrusted content. HTML encoding does not make a value safe inside JavaScript, CSS, or a URL; follow the context-specific guidance in [Cross-Site Scripting Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
-Input validation is not a replacement for output encoding. If users must submit HTML, sanitize it with a maintained HTML sanitizer. See [Cross-Site Scripting Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) and use [Content Security Policy](Content_Security_Policy_Cheat_Sheet.md) as an additional defense.
+Input validation is not a replacement for output encoding. If users must submit HTML, sanitize it with a maintained HTML sanitizer. Use [Content Security Policy](Content_Security_Policy_Cheat_Sheet.md) as an additional defense.
 
 ### Serialization and XML
 
@@ -80,7 +80,7 @@ Input validation is not a replacement for output encoding. If users must submit 
 
 - For Windows-local secrets, [`ProtectedData` uses the Windows Data Protection API (DPAPI)](https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection). Choose the scope deliberately: user scope binds decryption to that account, while machine scope permits other accounts on that computer to decrypt. This does not protect against code running with the decrypting account's privileges.
 - Protect ASP.NET Core's Data Protection keys as well as the data they protect. When [overriding key persistence](https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/implementation/key-storage-providers?view=aspnetcore-10.0), configure encryption at rest explicitly and restrict access to the key repository.
-- For other stored data, follow [Cryptographic Storage](Cryptographic_Storage_Cheat_Sheet.md). If using `AesGcm` directly, use the [constructor with an explicit tag size](https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0053) and [never reuse a nonce with the same key](https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesgcm.encrypt?view=net-10.0). Keep key and nonce management out of ad hoc encryption helpers.
+- For other stored data, follow [Cryptographic Storage](Cryptographic_Storage_Cheat_Sheet.md). If using `AesGcm` directly, use the [constructor with an explicit tag size](https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0053) and [never reuse a nonce with the same key](https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.aesgcm.encrypt?view=net-10.0).
 
 ### Encryption for transmission
 
@@ -95,7 +95,7 @@ Use TLS, not a custom key-exchange protocol. For browser applications, configure
 
 ## Legacy .NET Framework
 
-Keep Framework-specific configuration separate from ASP.NET Core. For secrets, .NET Framework 4.7.1 and later can use [Configuration Builders](https://learn.microsoft.com/en-us/aspnet/config-builder) to load values from external sources instead of embedding them in `web.config`.
+For secrets, .NET Framework 4.7.1 and later can use [Configuration Builders](https://learn.microsoft.com/en-us/aspnet/config-builder) to load values from external sources instead of embedding them in `web.config`.
 
 ### ASP.NET MVC and Web Forms
 
@@ -105,7 +105,7 @@ Keep Framework-specific configuration separate from ASP.NET Core. For secrets, .
 
 ### Forms authentication
 
-Use cookies rather than URL-based authentication tickets. Configure HTTPS-only and `HttpOnly` cookies and set an appropriate authentication timeout. Review [Forms Authentication settings](https://learn.microsoft.com/en-us/dotnet/api/system.web.configuration.formsauthenticationconfiguration?view=netframework-4.8.1) rather than copying ASP.NET Core options into `web.config`.
+In [Forms Authentication settings](https://learn.microsoft.com/en-us/dotnet/api/system.web.configuration.formsauthenticationconfiguration?view=netframework-4.8.1), set `cookieless="UseCookies"`, `requireSSL="true"`, and an appropriate `timeout`. This keeps authentication tickets out of URLs and restricts their cookies to HTTPS.
 
 ### Windows Communication Foundation (WCF)
 

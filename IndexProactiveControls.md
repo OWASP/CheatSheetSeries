@@ -48,6 +48,8 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
 
+[DotNet Security Cheat Sheet (Output Encoding)](cheatsheets/DotNet_Security_Cheat_Sheet.md#cross-site-scripting-xss)
+
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
@@ -59,8 +61,6 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md)
 
 [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
-
-[DotNet Security Cheat Sheet (Output Encoding)](cheatsheets/DotNet_Security_Cheat_Sheet.md#cross-site-scripting-xss)
 
 [DotNet Security Cheat Sheet (Cross-Site Request Forgery)](cheatsheets/DotNet_Security_Cheat_Sheet.md#cross-site-request-forgery)
 
