@@ -802,7 +802,7 @@ To look at the logs for this container, run:
 kubectl logs example
 ```
 
-For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration below, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
+For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown in the pod configuration below, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
 
 An example of a Pod Manifest is seen below:
 
