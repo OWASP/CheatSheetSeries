@@ -208,9 +208,12 @@ pb.directory(new File("TrustedDir"));
 Process p = pb.start();
 ```
 
-### .Net
+### .NET
 
-See relevant details in the [DotNet Security Cheat Sheet](DotNet_Security_Cheat_Sheet.md#os-injection)
+- If starting a process is necessary, use a fixed, fully qualified executable path in `FileName` and set [`UseShellExecute = false`](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.useshellexecute#remarks). This starts the executable directly; it does not validate its arguments.
+- On modern .NET, add each argument separately with [`ProcessStartInfo.ArgumentList`](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist#remarks). It handles escaping, but untrusted input remains a security risk. Validate each value against the called program's allowed options and operands, such as permitted paths or destinations.
+- Do not pass untrusted input to command interpreters such as `cmd.exe`, `powershell.exe`, or `sh -c`.
+- .NET Framework has no `ArgumentList`. Avoid constructing `Arguments` from untrusted input; if necessary, restrict values to a command-specific allowlist that needs no quoting. [`Arguments` parsing](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.arguments#remarks) depends on the target program and platform.
 
 ### PHP
 
