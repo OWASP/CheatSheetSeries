@@ -340,6 +340,40 @@ Legal, regulatory and contractual obligations may impact on these periods.
 
 Because of their usefulness as a defense, logs may be a target of attacks. See also OWASP [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) and [CWE-117](https://cwe.mitre.org/data/definitions/117.html).
 
+### Log Injection
+
+[Log Injection](https://owasp.org/www-community/attacks/Log_Injection) occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) page.
+
+To prevent an attacker from writing malicious content into the application log, apply defenses such as:
+
+- Do not used an unstructured text log formats. In many logging frameworks, unstructured text log formats are susceptible to log entry injection through Carriage Return (CR) or Line Feed (LF) characters (see [CWE-93](https://cwe.mitre.org/data/definitions/93.html)). [Some logging framework](https://logging.apache.org/security/faq.html#crlf-injection) do not consider log injections through CRLF in unstructured logs to be a vulnerability (which means that this will not be fixed).
+- Instead, use structured log formats, such as JSON.
+- Limit the size of the user input value used to create the log message.
+
+#### Log Injection in Java
+
+In Java, [do not use string concatenation](https://logging.apache.org/log4j/2.x/manual/api.html#best-practice-concat) to build log messages:
+
+~~~java
+// BAD: if `username` contains `{}`, the exception will leak into the message.
+logger.warn("Failure for user " + username + " and role {}.", role, ex);
+
+// OK
+logger.warn("Failure for user {} and role {}.", username, role, ex);
+~~~
+
+This applies equally to Log4j, Logback, SLF4j.
+
+In Log4j, the [`maxStringLength`](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength) parameter of `JsonTemplateLayout` may be used to limit the size of messages:
+
+~~~xml
+<JsonTemplateLayout maxStringLength="500" />
+~~~
+
+References:
+
+- [Log4j API Best Practices](https://logging.apache.org/log4j/2.x/manual/api.html#best-practice).
+
 ### Confidentiality
 
 Who should be able to read what? A confidentiality attack enables an unauthorized party to access sensitive information stored in logs.

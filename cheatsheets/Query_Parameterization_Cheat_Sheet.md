@@ -26,7 +26,7 @@ pstmt.setString( 1, custname);
 ResultSet results = pstmt.executeQuery( );
 ```
 
-#### Using Java with Hibernate
+#### Using Java with JPA/Hibernate
 
 ```java
 // HQL
@@ -56,6 +56,10 @@ String userSuppliedParameter = request.getParameter("Product-Description");
 Inventory inv = (Inventory) session.createCriteria(Inventory.class).add
 (Restrictions.eq("productDescription", userSuppliedParameter)).uniqueResult();
 ```
+
+References:
+
+- [SQLi and JPA](https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-persistence-api-jpa)
 
 #### Using .NET built-in feature
 

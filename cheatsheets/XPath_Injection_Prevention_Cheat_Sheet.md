@@ -43,6 +43,27 @@ During code review, locate calls that evaluate or compile XPath. Trace each expr
 
 For security assessment guidance, see the [Web Security Testing Guide's XPath injection chapter](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/09-XPath_Injection/).
 
+## Other exampless
+
+### Java
+
+Example of XPath request using variables in Java (OK):
+
+```java
+SimpleVariableResolver variableResolver = new SimpleVariableResolver();
+variableResolver.addVariable(new QName("bookId"), bookId);
+XPath xpath = XPathFactory.newInstance().newXPath();
+xpath.setXPathVariableResolver(variableResolver);
+XPathExpression xPathExpression = xpath.compile("//book[@id=$bookId]");
+```
+
+Example of vulnerable code building a XPath query using dynamic input:
+
+```java
+// BAD
+XPathExpression xPathExpression = xpath.compile("//book[@id=" + bookId + "]");
+```
+
 ## References
 
 - [CWE-643: XPath Injection](https://cwe.mitre.org/data/definitions/643.html)
