@@ -319,13 +319,13 @@ See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_
 
 Do:
 
-- Use [`ProcessStartInfo.ArgumentList`](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) instead of `ProcessStartInfo.Arguments`. The former automatically handles arguments without having to manually escape special characters.
+- On modern .NET, use [`ProcessStartInfo.ArgumentList`](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist#remarks) instead of `ProcessStartInfo.Arguments`. It handles argument escaping automatically but does not validate the arguments. This API is unavailable in .NET Framework.
 - Validate any dynamic value to make sure it cannot be interpreted as unexpected options by the called program.
 
 Do not:
 
 - Start programs using `ProcessStartInfo.Arguments` with dynamic input. This requires argument escaping which is error-prone and depends on the operating system.
-- Call command interpreters (such as `cmd.exe` or `powershell.exe`). While it is possible to do it safely, it is very easy to trigger OS command injection vulnerability this way.
+- Call command interpreters (such as `cmd.exe` or `powershell.exe`). Doing so can introduce OS command injection vulnerabilities.
 
 #### LDAP injection
 

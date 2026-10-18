@@ -210,7 +210,7 @@ Process p = pb.start();
 
 ### .Net
 
-See relevant details in the [DotNet Security Cheat Sheet](DotNet_Security_Cheat_Sheet.md#os-injection)
+See relevant details in the [DotNet Security Cheat Sheet](DotNet_Security_Cheat_Sheet.md#os-command-injection)
 
 ### PHP
 
