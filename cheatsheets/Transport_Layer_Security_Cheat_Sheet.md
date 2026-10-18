@@ -5,7 +5,7 @@
 This cheat sheet provides guidance on implementing transport layer protection for applications using Transport Layer Security (TLS). It primarily focuses on how to use TLS to protect clients connecting to a web application over HTTPS, though much of this guidance is also applicable to other uses of TLS. When correctly implemented, TLS can provide several security benefits:
 
 - **Confidentiality**: Provides protection against attackers reading the contents of the traffic.
-- **Integrity**: Provides protection against traffic modification, such as an attacker replaying requests against the server.
+- **Integrity**: Provides protection against traffic tampering, such as an attacker modifying or replaying intercepted requests against the server.
 - **[Authentication](Authentication_Cheat_Sheet.md)**: Enables the client to confirm they are connected to the legitimate server. Note that the identity of the client is not verified unless [client certificates](#client-certificates-and-mutual-tls) are employed.
 
 ### SSL vs TLS
@@ -80,6 +80,8 @@ For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman para
 ### Disable Compression
 
 TLS compression should be disabled in order to protect against a vulnerability (nicknamed [CRIME](https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/)) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.
+
+TLS compression is not available in TLS v1.3 for this reason.
 
 ### Patch Cryptographic Libraries
 
@@ -192,9 +194,11 @@ API-only endpoints should disable HTTP altogether and only support encrypted con
 
 A page that is available over TLS should not include any resources (such as JavaScript or CSS) files which are loaded over unencrypted HTTP. These unencrypted resources could allow an attacker to sniff session cookies or inject malicious code into the page. Modern browsers will also block attempts to load active content over unencrypted HTTP into secure pages.
 
-### Use the "Secure" Cookie Flag
+### Use "Secure" Cookies
 
-All cookies should be marked with the "[Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies)" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed web server on port 80 to the user in order to steal their cookie.
+All cookies must be marked with the "[Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies)" attribute. This instructs the browser to only send them over encrypted HTTPS connections. This is important even if the website does not listen on HTTP, as an attacker performing an active man in the middle attack could redirect the user to a spoofed web server served over HTTP in order to steal their cookie.
+
+In addition, you must use the `__Secure-` prefix for the cookie to ensure that a man in the middle cannot modify the cookie over plain HTTP. This type of attacks could for example be exploited in session fixation attacks.
 
 ### Prevent Caching of Sensitive Data
 
