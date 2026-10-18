@@ -8,7 +8,7 @@
 | 3. Review | Daybreak Blue (Codex CLI access program; current model required) | When account access permits, independently reviews the same commit for threat-model errors and control bypasses. Record the selected model and access program; report this review as unavailable if no current model is eligible. |
 | 3. Review | Mythos 5.1 (`claude-mythos-5-1`, through the Claude Code CLI) | Independently checks difficult security claims against primary sources and looks for unsafe examples or advice outside the threat model. |
 | 3. Review | Sonnet 5.5 (`claude-sonnet-5-5`, through the Claude Code CLI) | Independently reviews concision, duplication, placement, and plain US English. Proposes specific cuts while preserving necessary controls and caveats. |
-| 4. Decide and ship | Astra (`gpt-6-astra`, through Codex) | Resolves every finding with evidence, checks the final commit, and ships within Jim's authorization or gives Jim a concrete decision to make. |
+| 4. Decide and ship | Astra (`gpt-6-astra`, through Codex) | Resolves every finding with evidence, checks the final commit, and gives the operator a concrete decision to make or does the merge if authorized to do so. |
 
 Standalone proposal for Jim's review workflow. Use the full lineup for substantial security-content changes; use focused review for small corrections.
 
