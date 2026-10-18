@@ -1816,10 +1816,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#os-injection" class="md-nav__link">
+  <a href="#os-command-injection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        OS Injection
+        OS Command Injection
       
     </span>
   </a>
@@ -5235,10 +5235,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#os-injection" class="md-nav__link">
+  <a href="#os-command-injection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        OS Injection
+        OS Command Injection
       
     </span>
   </a>
@@ -5905,46 +5905,8 @@ to assess for other threats or get a professionally completed Penetration Test.<
 </code></pre></div>
 <p>DO: Practice Least Privilege - connect to the database using an account with a minimum set of permissions required
 to do its job, not the database administrator account.</p>
-<h4 id="os-injection">OS Injection<a class="headerlink" href="#os-injection" title="Permanent link">&para;</a></h4>
-<p>General guidance about OS Injection can be found in the <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Defense Cheat Sheet</a>.</p>
-<p>DO: Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
-<p>e.g</p>
-<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">startInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span>
-<span class="n">startInfo</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"validatedCommand"</span><span class="p">;</span>
-<span class="n">startInfo</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"validatedArg1 validatedArg2 validatedArg3"</span><span class="p">;</span>
-<span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">startInfo</span><span class="p">;</span>
-<span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
-</code></pre></div>
-<p>DO NOT: Assume that this mechanism will protect against malicious input designed to break out of one argument and then tamper with another argument to the process. This will still be possible.</p>
-<p>DO: Use allowlist validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
-<p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8">IPAddress.TryParse Method</a></p>
-<div class="highlight"><pre><span></span><code><span class="c1">//User input</span>
-<span class="kt">string</span><span class="w"> </span><span class="n">ipAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"127.0.0.1"</span><span class="p">;</span>
-
-<span class="c1">//check to make sure an ip address was provided</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">))</span>
-<span class="p">{</span>
-<span class="w"> </span><span class="c1">// Create an instance of IPAddress for the specified address string (in</span>
-<span class="w"> </span><span class="c1">// dotted-quad, or colon-hexadecimal notation).</span>
-<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IPAddress</span><span class="p">.</span><span class="n">TryParse</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">address</span><span class="p">))</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// Display the address in standard notation.</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
-<span class="w"> </span><span class="p">}</span>
-<span class="w"> </span><span class="k">else</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">//ipAddress is not of type IPAddress</span>
-<span class="w">  </span><span class="p">...</span>
-<span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>DO: Try to only accept characters which are simple alphanumeric.</p>
-<p>DO NOT: Assume you can sanitize special characters without actually removing them. Various combinations of <code>\</code>, <code>'</code> and <code>@</code> may have an unexpected impact on sanitization attempts.</p>
-<p>DO NOT: Rely on methods without a security guarantee.</p>
-<p>e.g. .NET Core 2.2 and greater and .NET 5 and greater support <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist">ProcessStartInfo.ArgumentList</a> which performs some character escaping but the object includes <a href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist#remarks">a disclaimer that it is not safe with untrusted input</a>.</p>
-<p>DO: Look at alternatives to passing raw untrusted arguments via command-line parameters such as encoding using Base64 (which would safely encode any special characters as well) and then decode the parameters in the receiving application.</p>
+<h4 id="os-command-injection">OS Command Injection<a class="headerlink" href="#os-command-injection" title="Permanent link">&para;</a></h4>
+<p>See the <a href="OS_Command_Injection_Defense_Cheat_Sheet.html#net">.NET guidance in the OS Command Injection Defense Cheat Sheet</a>.</p>
 <h4 id="ldap-injection">LDAP injection<a class="headerlink" href="#ldap-injection" title="Permanent link">&para;</a></h4>
 <p>Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash <code>\</code> escape character.
 A table showing which characters that should be escaped for Active Directory can be found at the in the

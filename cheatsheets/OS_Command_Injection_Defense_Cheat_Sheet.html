@@ -3001,7 +3001,7 @@
   <a href="#net" class="md-nav__link">
     <span class="md-ellipsis">
       
-        .Net
+        .NET
       
     </span>
   </a>
@@ -4705,7 +4705,7 @@
   <a href="#net" class="md-nav__link">
     <span class="md-ellipsis">
       
-        .Net
+        .NET
       
     </span>
   </a>
@@ -4903,8 +4903,13 @@ ERROR :
 
 <span class="n">Process</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
-<h3 id="net">.Net<a class="headerlink" href="#net" title="Permanent link">&para;</a></h3>
-<p>See relevant details in the <a href="DotNet_Security_Cheat_Sheet.html#os-injection">DotNet Security Cheat Sheet</a></p>
+<h3 id="net">.NET<a class="headerlink" href="#net" title="Permanent link">&para;</a></h3>
+<ul>
+<li>If starting a process is necessary, use a fixed, fully qualified executable path in <code>FileName</code> and set <a href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.useshellexecute#remarks"><code>UseShellExecute = false</code></a>. This starts the executable directly; it does not validate its arguments.</li>
+<li>On modern .NET, add each argument separately with <a href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist#remarks"><code>ProcessStartInfo.ArgumentList</code></a>. It handles escaping, but untrusted input remains a security risk. Validate each value against the called program's allowed options and operands, such as permitted paths or destinations.</li>
+<li>Do not pass untrusted input to command interpreters such as <code>cmd.exe</code>, <code>powershell.exe</code>, or <code>sh -c</code>.</li>
+<li>.NET Framework has no <code>ArgumentList</code>. Avoid constructing <code>Arguments</code> from untrusted input; if necessary, restrict values to a command-specific allowlist that needs no quoting. <a href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.arguments#remarks"><code>Arguments</code> parsing</a> depends on the target program and platform.</li>
+</ul>
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
 <p>PHP exposes two helper functions when you must pass user input to a shell: <code>escapeshellarg()</code> and <code>escapeshellcmd()</code>.</p>
 <p><code>escapeshellarg()</code>:  Ensures the user can pass only one parameter to the command, cannot add extra parameters, and cannot execute a different command.</p>
