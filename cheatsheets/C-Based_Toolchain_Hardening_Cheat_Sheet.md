@@ -12,8 +12,6 @@ A secure toolchain is not a silver bullet. It is one piece of an overall strateg
 
 The OWASP [ESAPI C++](https://code.google.com/p/owasp-esapi-cplusplus/source) project eats its own dog food. Many of the examples you will see in this article come directly from the ESAPI C++ project.
 
-Finally, a Cheat Sheet is available for those who desire a terse treatment of the material. Please visit [C-Based Toolchain Hardening Cheat Sheet](C-Based_Toolchain_Hardening_Cheat_Sheet.md) for the abbreviated version.
-
 ## Wisdom
 
 Code **must** be correct. It **should** be secure. It **can** be efficient.
