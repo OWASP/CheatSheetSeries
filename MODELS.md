@@ -10,7 +10,7 @@
 | 3. Review | Sonnet 5.5 (`claude-sonnet-5-5`, through the Claude Code CLI) | Independently reviews concision, duplication, placement, and plain US English. Proposes specific cuts while preserving necessary controls and caveats. |
 | 4. Decide and ship | Astra (`gpt-6-astra`, through Codex) | Resolves every finding with evidence, checks the final commit, and gives the operator a concrete decision to make or does the merge if authorized to do so. |
 
-Standalone proposal for Jim's review workflow. Use the full lineup for substantial security-content changes; use focused review for small corrections.
+Standalone proposal for review workflow. Use the full lineup for substantial security-content changes; use focused review for small corrections.
 
 Current model families checked on October 18, 2026 against the installed CLIs and official documentation: [Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), [Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol), and [Claude model selection](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model). Before starting, confirm the latest version of each selected family is available and record its exact model ID. Report unavailable reviewers explicitly.
 
@@ -53,6 +53,6 @@ npm run check-pr-approvals -- <PR> --repo OWASP/CheatSheetSeries --head <SHA>
 ```
 
 - Resolve approval holds across the PR's history using the [maintainer procedure](CONTRIBUTING.md#before-merging-or-closing-a-pull-request). Review held code before approval, verify terminal run status, and check required reviews and final-commit CI separately.
-- Give Jim the verdict, remaining blockers, proposed cuts, and validation results. Post reviews, merge, or close only within his authorization.
+- Give the operator the verdict, remaining blockers, proposed cuts, and validation results. Post reviews, merge, or close only within his authorization.
 
 <!-- markdownlint-disable-file MD041 -->
