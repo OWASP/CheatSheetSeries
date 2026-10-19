@@ -677,3 +677,6 @@ Consider using a standardized logging format and vocabulary such as the [Logging
 - [NIST SP 800-57 Part 1 Rev. 5: Recommendation for Key Management](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final)
 - [AWS Secrets Manager: Best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html)
 - [Azure Key Vault: Secure your secrets](https://learn.microsoft.com/en-us/azure/key-vault/secrets/secure-secrets)
+- [Google Cloud Secret Manager](https://cloud.google.com/secret-manager)
+- [CyberArk Conjur](https://www.conjur.org/)
+- [HashiCorp Vault](https://www.vaultproject.io/)
