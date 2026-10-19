@@ -40,7 +40,7 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 
 ### 3. Stay in scope — one topic, one PR, one branch
 
-- A PR modifies a **single cheat sheet** (or a small, clearly-coordinated set). CI enforces a hard limit of **3 cheat sheets** and **1500 net added lines** without a linked tracking issue. (The scope check counts only `cheatsheets/` and `cheatsheets_draft/` Markdown — dependency/CI/typo-sweep PRs are not bound by it.)
+- A PR modifies a **single cheat sheet** (or a small, clearly-coordinated set). CI enforces a hard limit of **3 cheat sheets** and **1500 net added lines** without a linked tracking issue. (The scope check counts only `cheatsheets/` and `cheatsheets_draft/` Markdown — dependency/CI/typo-sweep PRs are not bound by it. It is skipped for PRs opened by repository owners, members, and collaborators.)
 - Work from a **clean branch off `master`, one topic per branch**. Never open two PRs from the same branch — it leaks unrelated changes between them (this has caused reverts here).
 - A new or substantially updated cheat sheet requires an **approved issue first** (see CONTRIBUTING.md). Do not open a large unsolicited PR.
 - Do not bundle unrelated changes, drive-by reformatting, or mass edits across files.

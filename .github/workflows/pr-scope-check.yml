@@ -11,6 +11,10 @@ permissions:
 
 jobs:
   scope:
+    # Maintainers can merge past a red scope check anyway, so only gate PRs
+    # opened by people without write access. author_association reflects the
+    # PR author, not whoever pushes later commits to the branch.
+    if: ${{ !contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association) }}
     runs-on: ubuntu-24.04
     env:
       MAX_CHEATSHEETS_TOUCHED: 3

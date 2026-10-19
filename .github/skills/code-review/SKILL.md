@@ -59,7 +59,7 @@ already settled.
 | `markdownlint` | the whole repository except `node_modules`, `cheatsheets_excluded` and `.claude/` | `MD013`, `MD040`, `MD059` and `MD060` are disabled, so long lines and untagged code fences are not defects here |
 | `textlint` (`lint-terminology`) | `cheatsheets/` only | `cheatsheets_draft/` gets no terminology or US English check at all |
 | `link-check` | external links added to `cheatsheets/` since the merge base, and local links and anchors across the published site | every other path, including `cheatsheets_draft/` and `README.md`; existing external links (left to the weekly audit); and any link reported as **unverified** (401/403, 429, timeouts, unchecked anchors), which is listed for manual verification but does not fail the check |
-| `pr-scope-check` | 3 changed cheat sheet files, and 1500 net added lines counted across the **entire** diff | whether a wide diff is one coherent change |
+| `pr-scope-check` | 3 changed cheat sheet files, and 1500 net added lines counted across the **entire** diff; skipped when the PR author is an owner, member, or collaborator | whether a wide diff is one coherent change, and any PR from those authors |
 | `citation-check` | a newly added `## H2` in `cheatsheets/` contains an inline `[text](https://...)` link | whether that link resolves, and whether it supports the claim |
 | `index-drift-check` | `Index.md` matches the output of `scripts/Update_CheatSheets_Index.py` | nothing that matters here |
 
@@ -91,7 +91,9 @@ When authorized to merge or close, run `npm run check-pr-approvals -- <PR> --rep
 Skip scope arithmetic. `pr-scope-check` reports it; read its result, and when it
 is red decide whether the breadth is a coordinated change or an unfocused one.
 If you advise an author on a scope failure, note that linking a tracking issue
-waives only the 1500-line limit. The 3-file limit has no exemption.
+waives only the 1500-line limit. The 3-file limit has no exemption for
+contributors; the check does not run at all on PRs opened by owners, members,
+or collaborators, so judge their breadth yourself.
 
 These are checked by nothing and are yours:
 
