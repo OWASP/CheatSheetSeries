@@ -19,7 +19,7 @@ books = xml_document.xpath(
 
 The expression stays fixed; `requested_id` supplies only the value of `$book_id`. The application must separately authorize access to the selected books.
 
-For Java, use the resolver pattern in the [Java Security Cheat Sheet](Java_Security_Cheat_Sheet.md#xml-xpath-injection). Check the documentation for your particular API: accepting an XPath string or compiling an expression does not by itself mean the API provides variable binding.
+For Java, use an API that supports variable binding. Check the documentation for your particular API: accepting an XPath string or compiling an expression does not by itself mean the API provides variable binding.
 
 If the API cannot bind values, prefer one that can. Where practical, use a fixed expression to retrieve an authorized set of records and compare values in application code. Do not substitute ad hoc quote replacement for variable binding.
 
