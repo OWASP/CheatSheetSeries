@@ -4049,10 +4049,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-the-secure-cookie-flag" class="md-nav__link">
+  <a href="#use-secure-cookies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Use the "Secure" Cookie Flag
+        Use "Secure" Cookies
       
     </span>
   </a>
@@ -4933,10 +4933,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-the-secure-cookie-flag" class="md-nav__link">
+  <a href="#use-secure-cookies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Use the "Secure" Cookie Flag
+        Use "Secure" Cookies
       
     </span>
   </a>
@@ -5028,7 +5028,7 @@
 <p>This cheat sheet provides guidance on implementing transport layer protection for applications using Transport Layer Security (TLS). It primarily focuses on how to use TLS to protect clients connecting to a web application over HTTPS, though much of this guidance is also applicable to other uses of TLS. When correctly implemented, TLS can provide several security benefits:</p>
 <ul>
 <li><strong>Confidentiality</strong>: Provides protection against attackers reading the contents of the traffic.</li>
-<li><strong>Integrity</strong>: Provides protection against traffic modification, such as an attacker replaying requests against the server.</li>
+<li><strong>Integrity</strong>: Provides protection against traffic tampering, such as an attacker modifying or replaying intercepted requests against the server.</li>
 <li><strong><a href="Authentication_Cheat_Sheet.html">Authentication</a></strong>: Enables the client to confirm they are connected to the legitimate server. Note that the identity of the client is not verified unless <a href="#client-certificates-and-mutual-tls">client certificates</a> are employed.</li>
 </ul>
 <h3 id="ssl-vs-tls">SSL vs TLS<a class="headerlink" href="#ssl-vs-tls" title="Permanent link">&para;</a></h3>
@@ -5077,6 +5077,7 @@ Groups = X25519MLKEM768:x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 <p>For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman parameters.</p>
 <h3 id="disable-compression">Disable Compression<a class="headerlink" href="#disable-compression" title="Permanent link">&para;</a></h3>
 <p>TLS compression should be disabled in order to protect against a vulnerability (nicknamed <a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/">CRIME</a>) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.</p>
+<p>TLS compression is not available in TLS v1.3 for this reason.</p>
 <h3 id="patch-cryptographic-libraries">Patch Cryptographic Libraries<a class="headerlink" href="#patch-cryptographic-libraries" title="Permanent link">&para;</a></h3>
 <p>As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of historic vulnerability in SSL and TLS libraries, with <a href="https://heartbleed.com">Heartbleed</a> being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.</p>
 <h3 id="test-the-server-configuration">Test the Server Configuration<a class="headerlink" href="#test-the-server-configuration" title="Permanent link">&para;</a></h3>
@@ -5160,8 +5161,9 @@ Groups = X25519MLKEM768:x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 <p>API-only endpoints should disable HTTP altogether and only support encrypted connections. When that is not possible, API endpoints should fail requests made over unencrypted HTTP connections instead of redirecting them.</p>
 <h3 id="do-not-mix-tls-and-non-tls-content">Do Not Mix TLS and Non-TLS Content<a class="headerlink" href="#do-not-mix-tls-and-non-tls-content" title="Permanent link">&para;</a></h3>
 <p>A page that is available over TLS should not include any resources (such as JavaScript or CSS) files which are loaded over unencrypted HTTP. These unencrypted resources could allow an attacker to sniff session cookies or inject malicious code into the page. Modern browsers will also block attempts to load active content over unencrypted HTTP into secure pages.</p>
-<h3 id="use-the-secure-cookie-flag">Use the "Secure" Cookie Flag<a class="headerlink" href="#use-the-secure-cookie-flag" title="Permanent link">&para;</a></h3>
-<p>All cookies should be marked with the "<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">Secure</a>" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed web server on port 80 to the user in order to steal their cookie.</p>
+<h3 id="use-secure-cookies">Use "Secure" Cookies<a class="headerlink" href="#use-secure-cookies" title="Permanent link">&para;</a></h3>
+<p>All cookies must be marked with the "<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">Secure</a>" attribute. This instructs the browser to only send them over encrypted HTTPS connections. This is important even if the website does not listen on HTTP, as an attacker performing an active man in the middle attack could redirect the user to a spoofed web server served over HTTP in order to steal their cookie.</p>
+<p>In addition, you must use the <code>__Secure-</code> prefix for the cookie to ensure that a man in the middle cannot modify the cookie over plain HTTP. This type of attacks could for example be exploited in session fixation attacks.</p>
 <h3 id="prevent-caching-of-sensitive-data">Prevent Caching of Sensitive Data<a class="headerlink" href="#prevent-caching-of-sensitive-data" title="Permanent link">&para;</a></h3>
 <p>Although TLS provides protection of data while it is in transit, it does not provide any protection for data once it has reached the requesting system. As such, this information may be stored in the cache of the user's browser, or by any intercepting proxies which are configured to perform TLS decryption.</p>
 <p>Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy server not to cache the information, in order to prevent it being stored or returned to other users. For modern HTTP/1.1+ clients and intermediaries, a single header is sufficient:</p>
