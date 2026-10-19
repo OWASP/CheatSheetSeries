@@ -2863,17 +2863,6 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#use-flat-promise-chains" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use flat Promise chains
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#set-request-size-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4888,17 +4877,6 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#use-flat-promise-chains" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Use flat Promise chains
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#set-request-size-limits" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5309,109 +5287,6 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 <li><strong>Platform Security</strong></li>
 </ul>
 <h3 id="application-security">Application Security<a class="headerlink" href="#application-security" title="Permanent link">&para;</a></h3>
-<h4 id="use-flat-promise-chains">Use flat Promise chains<a class="headerlink" href="#use-flat-promise-chains" title="Permanent link">&para;</a></h4>
-<p>Asynchronous callback functions are one of the strongest features of Node.js. However, increasing layers of nesting within callback functions can become a problem. Any multistage process can become nested 10 or more levels deep. This problem is referred to as a "Pyramid of Doom" or "Callback Hell". In such code, the errors and results get lost within the callback. Promises are a good way to write asynchronous code without getting into nested pyramids. Promises provide top-down execution while being asynchronous by delivering errors and results to next <code>.then</code> function.</p>
-<p>Another advantage of Promises is the way Promises handle errors. If an error occurs in a Promise class, it skips over the <code>.then</code> functions and invokes the first <code>.catch</code> function it finds. This way Promises provide a higher assurance of capturing and handling errors. As a principle, you can make all your asynchronous code (apart from emitters) return promises. It should be noted that Promise calls can also become a pyramid. In order to completely stay away from "Callback Hell", flat Promise chains should be used. If the module you are using does not support Promises, you can convert base object to a Promise by using <code>Promise.promisifyAll()</code> function.</p>
-<p>The following code snippet is an example of "Callback Hell":</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
-<span class="p">}</span>
-
-<span class="nx">func1</span><span class="p">(</span><span class="s2">"input1"</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result1</span><span class="p">){</span>
-<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
-<span class="w">      </span><span class="c1">// error operations</span>
-<span class="w">   </span><span class="p">}</span>
-<span class="w">   </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">//some operations</span>
-<span class="w">      </span><span class="nx">func2</span><span class="p">(</span><span class="s2">"input2"</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result2</span><span class="p">){</span>
-<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
-<span class="w">            </span><span class="c1">//error operations</span>
-<span class="w">         </span><span class="p">}</span>
-<span class="w">         </span><span class="k">else</span><span class="p">{</span>
-<span class="w">            </span><span class="c1">//some operations</span>
-<span class="w">            </span><span class="nx">func3</span><span class="p">(</span><span class="s2">"input3"</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result3</span><span class="p">){</span>
-<span class="w">               </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
-<span class="w">                  </span><span class="c1">//error operations</span>
-<span class="w">               </span><span class="p">}</span>
-<span class="w">               </span><span class="k">else</span><span class="p">{</span>
-<span class="w">                  </span><span class="c1">// some operations</span>
-<span class="w">                  </span><span class="nx">func4</span><span class="p">(</span><span class="s2">"input 4"</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result4</span><span class="p">){</span>
-<span class="w">                     </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
-<span class="w">                        </span><span class="c1">// error operations</span>
-<span class="w">                     </span><span class="p">}</span>
-<span class="w">                     </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="c1">// some operations</span>
-<span class="w">                     </span><span class="p">}</span>
-<span class="w">                  </span><span class="p">});</span>
-<span class="w">               </span><span class="p">}</span>
-<span class="w">            </span><span class="p">});</span>
-<span class="w">         </span><span class="p">}</span>
-<span class="w">      </span><span class="p">});</span>
-<span class="w">   </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-<p>The above code can be securely written as follows using a flat Promise chain:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-
-<span class="nx">func1</span><span class="p">(</span><span class="s2">"input1"</span><span class="p">)</span>
-<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="s2">"input2"</span><span class="p">);</span>
-<span class="w">   </span><span class="p">})</span>
-<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="s2">"input3"</span><span class="p">);</span>
-<span class="w">   </span><span class="p">})</span>
-<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="s2">"input4"</span><span class="p">);</span>
-<span class="w">   </span><span class="p">})</span>
-<span class="w">   </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="c1">// error operations</span>
-<span class="w">   </span><span class="p">});</span>
-</code></pre></div>
-<p>And using async/await:</p>
-<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
-<span class="p">}</span>
-
-<span class="p">(</span><span class="k">async</span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="s2">"input1"</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="s2">"input2"</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="s2">"input2"</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="s2">"input2"</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// error operations</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">})();</span>
-</code></pre></div>
 <h4 id="set-request-size-limits">Set request size limits<a class="headerlink" href="#set-request-size-limits" title="Permanent link">&para;</a></h4>
 <p>Buffering and parsing of request bodies can be a resource intensive task. If there is no limit on the size of requests, attackers can send requests with large request bodies that can exhaust server memory and/or fill disk space. You can limit the request body size for all requests using <a href="https://www.npmjs.com/package/raw-body">raw-body</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">contentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">'content-type'</span><span class="p">)</span>
