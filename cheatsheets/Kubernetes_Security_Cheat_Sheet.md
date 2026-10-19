@@ -1,25 +1,24 @@
 # Kubernetes Security Cheat Sheet
 
-## Overview
+## Introduction
 
-This cheat sheet provides a starting point for securing a Kubernetes cluster. It is divided into the following categories:
+This cheat sheet provides practical security guidance for Kubernetes
+clusters across deployment, configuration, and runtime operations
+([Kubernetes security concepts](https://kubernetes.io/docs/concepts/security/)).
 
-- Receive Alerts for Kubernetes Updates
-- INTRODUCTION: What is Kubernetes?
-- Securing Kubernetes hosts
-- Securing Kubernetes components
-- Using the Kubernetes dashboard
-- Kubernetes Security Best Practices: Build Phase
-- Kubernetes Security Best Practices: Deploy Phase
-- Kubernetes Security Best Practices: Runtime Phase
+Key areas include:
+
+- Control-plane access and component security
+- Image, workload, and network security
+- Runtime monitoring and managed Kubernetes considerations
 
 ## Receive Alerts for Security Updates and Reporting Vulnerabilities
 
 Join the kubernetes-announce group (<https://kubernetes.io/docs/reference/issues-security/security/>) for emails about security announcements. See the security reporting page (<https://kubernetes.io/docs/reference/issues-security/security>) for more on how to report vulnerabilities.
 
-## INTRODUCTION: What Is Kubernetes?
+## What Is Kubernetes?
 
-Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications. The open source project is hosted by the Cloud Native Computing Foundation (CNCF).
+Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications. The open source project is hosted by the Cloud Native Computing Foundation (CNCF) ([Kubernetes overview](https://kubernetes.io/docs/concepts/overview/)).
 
 When you deploy Kubernetes, you get a cluster. A Kubernetes cluster consists of a set of worker machines, called nodes that run containerized applications. The control plane manages the worker nodes and the Pods in the cluster.
 
@@ -55,13 +54,13 @@ Node components run on every node, maintaining running pods and providing the Ku
 **Container:** runtime  
 **Description:** The container runtime is the software that is responsible for running containers |
 
-## SECTION 1: Securing Kubernetes Hosts
+## Securing Kubernetes Hosts
 
 Kubernetes can be deployed in different ways: on bare metal, on-premise, and in the public cloud (a custom Kubernetes build on virtual machines OR use a managed service). Since Kubernetes is designed to be highly portable, customers can easily and migrate their workloads and switch between multiple installations.
 
 Because Kubernetes can be designed to fit a large variety of scenarios, this flexibility is a weakness when it comes to securing Kubernetes clusters. The engineers responsible for deploying the Kubernetes platform must know about all the potential attack vectors and vulnerabilities for their clusters.
 
-To harden the underlying hosts for Kubernetes clusters, we recommend that you install the latest version of the operating systems, harden the operating systems, implement necessary patch management and configuration management systems, implement essential firewall rules and undertake specific datacenter-based security measures.
+To harden the underlying hosts for Kubernetes clusters, we recommend that you install the latest version of the operating systems, harden the operating systems, implement necessary patch management and configuration management systems, implement essential firewall rules and undertake specific datacenter-based security measures. See [Kubernetes cluster security guidance](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/) for related controls.
 
 ### Updating Kubernetes
 
@@ -83,7 +82,7 @@ There are several techniques such as rolling updates, and node pool migrations t
 
 --
 
-## SECTION 2: Securing Kubernetes Components
+## Securing Kubernetes Components
 
 This section discusses how to secure Kubernetes components. It covers the following topics:
 
@@ -228,7 +227,7 @@ For more information, refer to Kubelet authentication/authorization documentatio
 
 --
 
-## SECTION 3: Kubernetes Security Best Practices: Build Phase
+## Kubernetes Security Best Practices: Build Phase
 
 During the build phase, you should secure your Kubernetes container images by building secure images and scanning those images for any known vulnerabilities.
 
@@ -284,7 +283,7 @@ For more information, refer to <https://hub.docker.com/_/scratch>
 
 ---
 
-## SECTION 4: Kubernetes Security Best Practices: Deploy Phase
+## Kubernetes Security Best Practices: Deploy Phase
 
 Once a Kubernetes infrastructure is in place, you must configure it securely before any workloads are deployed. And as you configure your infrastructure, ensure that you have visibility into what CIs are being deployed and how they are being deployed or else you will not be able to identify and respond to security policy violations. Before deployment, your system should know and be able to tell you:
 
@@ -632,7 +631,7 @@ Remember that open-source tools such as [Trivy](https://github.com/aquasecurity/
 
 ---
 
-## SECTION 5: Kubernetes Security Best Practices: Runtime Phase
+## Kubernetes Security Best Practices: Runtime Phase
 
 When the Kubernetes infrastructure enters the runtime phase, containerized applications are exposed to a slew of new security challenges. You must gain visibility into your running environment so you can detect and respond to threats as they arise.
 
@@ -890,7 +889,7 @@ Events:
   Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
 ```
 
-## SECTION 5: Securing a managed-service Kubernetes on Cloud Service Provider
+## Securing a Managed Kubernetes Service on a Cloud Provider
 
 ### AWS
 
@@ -899,9 +898,9 @@ There are few open source tools that can help you on securing your managed-servi
 - [hardeneks](https://github.com/aws-samples/hardeneks)
 - [MKAD](https://github.com/DataDog/managed-kubernetes-auditing-toolkit) (Managed Kubernetes Auditing Toolkit) from DataDog
 
-## SECTION 6: Supply Chain Security
+## Supply Chain Security
 
-Container supply chain security is critical for preventing attacks that exploit vulnerabilities in the software delivery process. A compromised supply chain can lead to malicious code being deployed into production environments, potentially affecting thousands of containers and applications.
+Container supply chain security is critical for preventing attacks that exploit vulnerabilities in the software delivery process. A compromised supply chain can lead to malicious code being deployed into production environments, potentially affecting thousands of containers and applications. See the [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html) for broader guidance.
 
 Supply chain attacks in Kubernetes environments typically target:
 
@@ -923,7 +922,7 @@ Recent high-profile attacks (SolarWinds, Codecov, ua-parser-js) demonstrate the 
 6. Monitor for vulnerabilities: Continuously monitor for new vulnerabilities in dependencies and base images.
 7. Implement runtime security: Use tools to monitor container behavior at runtime and detect anomalies.
 
-## SECTION 7: Final Thoughts
+## Final Thoughts
 
 ### Embed security into the container lifecycle as early as possible
 
@@ -931,7 +930,7 @@ You must integrate security earlier into the container lifecycle and ensure alig
 
 ### Use Kubernetes-native security controls to reduce operational risk
 
-Leverage the native controls built into Kubernetes whenever available in order to enforce security policies so that your security controls don’t collide with the orchestrator. Instead of using a third-party proxy or shim to enforce network segmentation, you could use Kubernetes network policies to ensure secure network communication.
+Leverage the native controls built into Kubernetes whenever available in order to enforce security policies so that your security controls don’t collide with the orchestrator. Instead of using a third-party proxy or shim to enforce network segmentation, you could use Kubernetes network policies to ensure secure network communication. See the [Kubernetes security checklist](https://kubernetes.io/docs/concepts/security/security-checklist/) for related controls.
 
 ### Leverage the context that Kubernetes provides to prioritize remediation efforts
 
