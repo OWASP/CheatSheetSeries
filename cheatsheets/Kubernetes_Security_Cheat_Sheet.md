@@ -13,8 +13,6 @@ This cheat sheet provides a starting point for securing a Kubernetes cluster. It
 - Kubernetes Security Best Practices: Deploy Phase
 - Kubernetes Security Best Practices: Runtime Phase
 
-For more information about Kubernetes, refer to the Appendix.
-
 ## Receive Alerts for Security Updates and Reporting Vulnerabilities
 
 Join the kubernetes-announce group (<https://kubernetes.io/docs/reference/issues-security/security/>) for emails about security announcements. See the security reporting page (<https://kubernetes.io/docs/reference/issues-security/security>) for more on how to report vulnerabilities.
