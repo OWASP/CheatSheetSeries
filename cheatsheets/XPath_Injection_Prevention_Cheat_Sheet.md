@@ -19,7 +19,7 @@ books = xml_document.xpath(
 
 The expression stays fixed; `requested_id` supplies only the value of `$book_id`. The application must separately authorize access to the selected books.
 
-For Java, use the resolver pattern in the [Java Security Cheat Sheet](Java_Security_Cheat_Sheet.md#xml-xpath-injection). Check the documentation for your particular API: accepting an XPath string or compiling an expression does not by itself mean the API provides variable binding.
+For Java, use the resolver pattern shown in the [Java example](#java) below. Check the documentation for your particular API: accepting an XPath string or compiling an expression does not by itself mean the API provides variable binding.
 
 If the API cannot bind values, prefer one that can. Where practical, use a fixed expression to retrieve an authorized set of records and compare values in application code. Do not substitute ad hoc quote replacement for variable binding.
 
@@ -43,11 +43,11 @@ During code review, locate calls that evaluate or compile XPath. Trace each expr
 
 For security assessment guidance, see the [Web Security Testing Guide's XPath injection chapter](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/09-XPath_Injection/).
 
-## Other exampless
+## Other Examples
 
 ### Java
 
-Example of XPath request using variables in Java (OK):
+Example of XPath request using variables in Java with an [`XPathVariableResolver`](https://docs.oracle.com/en/java/javase/21/docs/api/java.xml/javax/xml/xpath/XPathVariableResolver.html) (OK):
 
 ```java
 SimpleVariableResolver variableResolver = new SimpleVariableResolver();

@@ -146,7 +146,7 @@
 
 [JavaScript and TypeScript Security Cheat Sheet](cheatsheets/JavaScript_and_TypeScript_Security_Cheat_Sheet.md)
 
-[Java Security Cheat Sheet](cheatsheets/Java_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
+[Java Security Cheat Sheet](cheatsheets/Java_Security_Cheat_Sheet.md)
 
 ## K
 
@@ -194,7 +194,7 @@
 
 [Nextjs Security Cheat Sheet](cheatsheets/Nextjs_Security_Cheat_Sheet.md)
 
-[NoSQL Security Cheat Sheet](cheatsheets/NoSQL_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
+[NoSQL Security Cheat Sheet](cheatsheets/NoSQL_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg)
 
 [NodeJS Docker Cheat Sheet](cheatsheets/NodeJS_Docker_Cheat_Sheet.md)
 
@@ -320,7 +320,7 @@
 
 [XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg) ![Bash](assets/Index_Bash.svg)
 
-[XPath Injection Prevention Cheat Sheet](cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
+[XPath Injection Prevention Cheat Sheet](cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg)
 
 [XSS Filter Evasion Cheat Sheet](cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Php](assets/Index_Php.svg)
 

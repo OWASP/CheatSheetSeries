@@ -9,7 +9,7 @@ See as well:
 
 ## Serialization
 
-Java Serialization can potentially be used to trigger arbitrary code execution:
+Java Serialization can potentially be used to trigger arbitrary code execution ([Oracle Secure Coding Guidelines for Java SE, section 8](https://www.oracle.com/java/technologies/javase/seccodeguide.html#8)):
 
 - Do not deserialize untrusted data.
 - Even deserializing trusted data coming from a database could be a security risk. A compromised database could be exploited to execute arbitrary code in your application.
@@ -23,4 +23,4 @@ See the following Cheat Sheets for protection against SQL injection protection:
 - [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md);
 - [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md).
 
-Using an ORM such as JPA/Hibernate does not constitute a blanket protection against injection attacks. JPA/Hibernate applications may be vulnerable to JPQL/HQL injection attacks. Query parameterization is still necessary. See the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) for example of JPA/Hibernate usage.
+Using an ORM such as JPA/Hibernate does not constitute a blanket protection against injection attacks. JPA/Hibernate applications may be vulnerable to [JPQL/HQL injection attacks](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/05.7-ORM_Injection/). Query parameterization is still necessary. See the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) for example of JPA/Hibernate usage.
