@@ -550,55 +550,22 @@ Full source is located [here](https://github.com/righettod/poc-csrf) and provide
 
 ## JavaScript: Automatically Including CSRF Tokens as an AJAX Request Header
 
-Prefer your HTTP client's maintained CSRF integration over global request overrides. For example, [Angular limits its built-in XSRF header to mutating requests to relative and same-origin URLs](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security). Attach tokens only to the application endpoints that validate them; sending a token to an unrelated origin can disclose it to that server if its CORS policy permits the request.
+JavaScript clients can send CSRF tokens in a custom request header on protected state-changing requests. Configure the client to attach the token only to trusted application endpoints, and validate the token on the server. Prefer maintained framework or HTTP client integrations where available.
 
-Keep `GET`, `HEAD`, and `OPTIONS` free of state changes. The server must validate the token on every protected state-changing request; adding a client header alone does not enforce CSRF protection.
+Client-side CSRF handling does not replace server-side token validation. Keep `GET`, `HEAD`, and `OPTIONS` free of state changes, and validate tokens on every protected state-changing request.
 
-### Storing the CSRF Token Value in the DOM
-
-For the [synchronizer token pattern](#synchronizer-token-pattern), the server can include the token in the page, such as a `<meta>` element, and the client can read it when constructing protected requests. Use your template's attribute encoder when rendering the value. Do not put tokens in URLs or logs.
+For the [synchronizer token pattern](#synchronizer-token-pattern), the server can include the token in the page, such as in a `<meta>` element, for the client to read when constructing protected requests. Use your template's attribute encoder when rendering the value. Do not put tokens in URLs or logs.
 
 For a cookie-to-header integration, configure the server to issue and validate the token according to the [Signed Double-Submit Cookie pattern](#signed-double-submit-cookie-recommended). The token cookie must be readable by the client, while the authentication cookie should remain `HttpOnly`.
 
-### Overriding Defaults to Set Custom Header
+Restrict token attachment to explicitly trusted application endpoints. Validate the resolved request URL, not just the HTTP method or a presumed `baseURL`. Cross-origin API integrations require an explicit list of trusted destinations and a matching server-side CSRF policy. [CORS preflight does not keep a manually attached token secret from a destination that allows the request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#preflighted_requests).
 
-Restrict token attachment by the origin of the resolved request URL, not just its HTTP method or a presumed `baseURL`. Cross-origin API integrations need an explicit list of trusted destinations and a matching server-side CSRF policy. [CORS preflight does not keep a manually attached token secret from a destination that allows the request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#preflighted_requests).
+Use the official documentation for client-specific behavior and configuration:
 
-#### XMLHttpRequest (Native JavaScript)
+- [Angular `HttpClient` XSRF protection](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security)
+- [Axios request configuration](https://axios.rest/pages/advanced/request-config#withxsrftoken)
 
-Set the CSRF header when constructing a request to a protected application endpoint. Avoid replacing `XMLHttpRequest.prototype.open` globally: unrelated requests also use it and could receive the token.
-
-#### CSRF Prevention in modern Frameworks
-
-Client frameworks do not replace server-side CSRF validation. Use a maintained HTTP client integration and verify which request destinations receive the token.
-
-#### Angular
-
-Use [Angular's `HttpClient` XSRF integration](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security), and configure the backend to issue the token cookie and validate the matching header. Keep its restriction to relative and same-origin destinations. Use `withXsrfConfiguration` when the server uses different cookie or header names.
-
-#### React
-
-React applications need an HTTP client and matching server-side CSRF protection. For Axios clients, use the configuration described below rather than an interceptor that adds the token to every mutating request.
-
-#### Axios
-
-Use Axios's maintained XSRF cookie-to-header support with cookie and header names that match the backend. Its [`withXSRFToken` default attaches the header only to same-origin requests](https://axios.rest/pages/advanced/request-config#withxsrftoken). Do not enable token attachment to every cross-origin destination or put the token in global method defaults.
-
-#### jQuery
-
-If using `beforeSend` to attach the token, limit it to protected state-changing requests to the same origin. Keep the destination check as well as the method check.
-
-### TypeScript Utilities for CSRF Protection
-
-TypeScript types do not enforce a CSRF trust boundary. Use the same destination restrictions and server validation as other JavaScript clients; avoid maintaining separate generic token parsers and request wrappers solely for each framework.
-
-#### Angular with TypeScript
-
-Use Angular's built-in integration described above instead of a custom interceptor that sends a token to every destination.
-
-#### React with TypeScript
-
-Use a maintained HTTP client integration as described above. If the application uses `fetch` directly, attach the token only after validating that the resolved URL targets an explicitly trusted application endpoint. Test relative URLs, absolute URLs, and rejected external destinations.
+Other JavaScript clients, including `fetch`, `XMLHttpRequest`, and jQuery, should follow the same trusted-destination restrictions and server-side validation requirements.
 
 ## References
 
