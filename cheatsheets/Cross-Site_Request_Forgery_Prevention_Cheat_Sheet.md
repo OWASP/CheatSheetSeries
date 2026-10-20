@@ -405,22 +405,18 @@ For more examples of client-side CSRF, see [this post](https://www.facebook.com/
 
 ### SameSite (Cookie Attribute)
 
-SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in [RFC6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7). This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are `Lax`, `Strict`, or `None`.
+`SameSite` is a cookie attribute that controls whether browsers send cookies with cross-site requests. Its values are `Strict`, `Lax`, and `None`, as defined in [RFC6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7).Its values are `Strict`, `Lax`, and - `None` allows cookies in cross-site contexts and requires the `Secure` attribute in modern browsers.
 
-The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, if a GitHub-like website uses the Strict value, a logged-in GitHub user who tries to follow a link to a private GitHub project posted on a corporate discussion forum or email, the user will not be able to access the project because GitHub will not receive a session cookie. Since a bank website would not allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate for banks.
+- `Strict` prevents cookies from being sent with cross-site requests, including top-level navigations from external links. This can disrupt legitimate navigation into an application.
+- `Lax` allows cookies on cross-site top-level navigations using safe HTTP methods, while generally withholding them from cross-site requests using unsafe methods. This offers a balance between security and usability.
+- `None` permits cookies in cross-site contexts and requires the `Secure` attribute.
 
-If a website wants to maintain a user's logged-in session after the user arrives from an external link, SameSite's default Lax value provides a reasonable balance between security and usability. If the GitHub scenario above uses a Lax value instead, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode have top-level navigations and use [safe](https://tools.ietf.org/html/rfc7231#section-4.2.1) HTTP methods.
-
-For more details on the `SameSite` values, check the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1) from the [rfc](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02).
-
-Example of cookies using this attribute:
+Example:
 
 ```text
-Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
-Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
+Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict; Secure
+Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax; Secure
 ```
-
-All modern desktop and mobile browsers support the `SameSite` attribute. The main exceptions are legacy browsers including Opera Mini (all versions), UC Browser for Android, and older mobile browsers (iOS Safari < 13.2, Android Browser < 97). To track the browsers implementing it and know how the attribute is used, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute). Chrome implemented `SameSite=Lax` as the default behavior in 2020, and Firefox and Edge have followed suit. Additionally, the `Secure` flag is required for cookies that are marked as `SameSite=None`.
 
 #### Limitations of SameSite
 
