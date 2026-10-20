@@ -107,6 +107,8 @@ These additional defenses are:
 
 In Java, use [ProcessBuilder](https://docs.oracle.com/javase/8/docs/api/java/lang/ProcessBuilder.html) and the command must be separated from its arguments.
 
+`Runtime.exec(String)` is [deprecated since Java 18](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html) as error-prone: it splits the command String into tokens on whitespace only, so an argument that contains a space is broken into several tokens, which is how untrusted input can add extra arguments (see [Argument Injection](#argument-injection)). Use `ProcessBuilder` or `Runtime.exec(String[])` instead, passing the program and each argument as separate elements. Separating the arguments does not replace validating them.
+
 *Note about the Java's `Runtime.exec` method behavior:*
 
 There are many sites that will tell you that Java's `Runtime.exec` is exactly the same as `C`'s system function. This is not true. Both allow you to invoke a new program/process.
