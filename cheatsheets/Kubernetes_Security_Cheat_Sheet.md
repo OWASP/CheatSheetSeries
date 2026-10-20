@@ -273,8 +273,6 @@ An empty image, ideal for statically compiled languages like Go, because the ima
 
 For more information, refer to <https://hub.docker.com/_/scratch>
 
----
-
 ## Kubernetes Security Best Practices: Deploy Phase
 
 Once a Kubernetes infrastructure is in place, you must configure it securely before any workloads are deployed. And as you configure your infrastructure, ensure that you have visibility into what CIs are being deployed and how they are being deployed or else you will not be able to identify and respond to security policy violations. Before deployment, your system should know and be able to tell you:
@@ -927,8 +925,6 @@ Leverage the native controls built into Kubernetes whenever available in order t
 Note that manually triaging security incidents and policy violations is time consuming in sprawling Kubernetes environments.
 
 For example, a deployment containing a vulnerability with severity score of 7 or greater should be moved up in remediation priority if that deployment contains privileged containers and is open to the Internet but moved down if it’s in a test environment and supporting a non-critical app.
-
----
 
 ![Kubernetes Architecture](../assets/Kubernetes_Architecture.png)
 
