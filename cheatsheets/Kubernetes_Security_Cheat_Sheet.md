@@ -2,15 +2,7 @@
 
 ## Introduction
 
-This cheat sheet provides practical security guidance for Kubernetes
-clusters across deployment, configuration, and runtime operations
-([Kubernetes security concepts](https://kubernetes.io/docs/concepts/security/)).
-
-Key areas include:
-
-- Control-plane access and component security
-- Image, workload, and network security
-- Runtime monitoring and managed Kubernetes considerations
+This cheat sheet provides practical security guidance for securing Kubernetes clusters during deployment, configuration, and runtime operations.
 
 ## Receive Alerts for Security Updates and Reporting Vulnerabilities
 
@@ -18,7 +10,7 @@ Join the kubernetes-announce group (<https://kubernetes.io/docs/reference/issues
 
 ## What Is Kubernetes?
 
-Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications. The open source project is hosted by the Cloud Native Computing Foundation (CNCF) ([Kubernetes overview](https://kubernetes.io/docs/concepts/overview/)).
+Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications ([Kubernetes overview](https://kubernetes.io/docs/concepts/overview/)). The open source project is hosted by the Cloud Native Computing Foundation (CNCF).
 
 When you deploy Kubernetes, you get a cluster. A Kubernetes cluster consists of a set of worker machines, called nodes that run containerized applications. The control plane manages the worker nodes and the Pods in the cluster.
 
@@ -60,7 +52,7 @@ Kubernetes can be deployed in different ways: on bare metal, on-premise, and in 
 
 Because Kubernetes can be designed to fit a large variety of scenarios, this flexibility is a weakness when it comes to securing Kubernetes clusters. The engineers responsible for deploying the Kubernetes platform must know about all the potential attack vectors and vulnerabilities for their clusters.
 
-To harden the underlying hosts for Kubernetes clusters, we recommend that you install the latest version of the operating systems, harden the operating systems, implement necessary patch management and configuration management systems, implement essential firewall rules and undertake specific datacenter-based security measures. See [Kubernetes cluster security guidance](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/) for related controls.
+To harden the underlying hosts for Kubernetes clusters, we recommend that you install the latest version of the operating systems, harden the operating systems, implement necessary patch management and configuration management systems, implement essential firewall rules and undertake specific datacenter-based security measures.
 
 ### Updating Kubernetes
 
@@ -76,7 +68,7 @@ Example: apt-update
 
 #### Release schedule for Kubernetes
 
-The Kubernetes project maintains release branches for the most recent three minor releases and it backports the applicable fixes, including security fixes, to those three release branches, depending on severity and feasibility. Patch releases are cut from those branches at a regular cadence, plus additional urgent releases, when required. Hence it is always recommended to upgrade the Kubernetes cluster to the latest available stable version. It is recommended to refer to the version skew policy for further details <https://kubernetes.io/docs/setup/release/version-skew-policy/>.
+The Kubernetes project maintains release branches for the most recent three minor releases and it backports the applicable fixes, including security fixes, to those three release branches, depending on severity and feasibility. Patch releases are cut from those branches at a regular cadence, plus additional urgent releases, when required. Hence it is always recommended to upgrade the Kubernetes cluster to the latest available stable version. It is recommended to refer to the version skew policy for further details [Kubernetes version-skew policy](https://kubernetes.io/releases/version-skew-policy/).
 
 There are several techniques such as rolling updates, and node pool migrations that allow you to complete an update with minimal disruption and downtime.
 
@@ -629,8 +621,6 @@ We strongly recommend that you review the secret material present on the contain
 
 Remember that open-source tools such as [Trivy](https://github.com/aquasecurity/trivy) and [Gitleaks](https://github.com/gitleaks/gitleaks) can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.
 
----
-
 ## Kubernetes Security Best Practices: Runtime Phase
 
 When the Kubernetes infrastructure enters the runtime phase, containerized applications are exposed to a slew of new security challenges. You must gain visibility into your running environment so you can detect and respond to threats as they arise.
@@ -930,7 +920,7 @@ You must integrate security earlier into the container lifecycle and ensure alig
 
 ### Use Kubernetes-native security controls to reduce operational risk
 
-Leverage the native controls built into Kubernetes whenever available in order to enforce security policies so that your security controls don’t collide with the orchestrator. Instead of using a third-party proxy or shim to enforce network segmentation, you could use Kubernetes network policies to ensure secure network communication. See the [Kubernetes security checklist](https://kubernetes.io/docs/concepts/security/security-checklist/) for related controls.
+Leverage the native controls built into Kubernetes whenever available in order to enforce security policies so that your security controls don’t collide with the orchestrator. Instead of using a third-party proxy or shim to enforce network segmentation, you could use [Kubernetes network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) to ensure secure network communication.
 
 ### Leverage the context that Kubernetes provides to prioritize remediation efforts
 
