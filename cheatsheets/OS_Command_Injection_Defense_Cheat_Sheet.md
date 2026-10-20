@@ -109,13 +109,13 @@ In Java, use [ProcessBuilder](https://docs.oracle.com/javase/8/docs/api/java/lan
 
 `Runtime.exec(String)` is [deprecated since Java 18](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html) as error-prone: it splits the command String into tokens on whitespace only, so an argument that contains a space is broken into several tokens, which is how untrusted input can add extra arguments (see [Argument Injection](#argument-injection)). Use `ProcessBuilder` or `Runtime.exec(String[])` instead, passing the program and each argument as separate elements. Separating the arguments does not replace validating them.
 
-*Note about the Java's `Runtime.exec` method behavior:*
+*Note about the behavior of Java's `Runtime.exec(String)` method:*
 
 There are many sites that will tell you that Java's `Runtime.exec` is exactly the same as `C`'s system function. This is not true. Both allow you to invoke a new program/process.
 
-However, `C`'s system function passes its arguments to the shell (`/bin/sh`) to be parsed, whereas `Runtime.exec` tries to split the string into an array of words, then executes the first word in the array with the rest of the words as parameters.
+However, `C`'s system function passes its arguments to the shell (`/bin/sh`) to be parsed, whereas `Runtime.exec(String)` tries to split the string into an array of words, then executes the first word in the array with the rest of the words as parameters.
 
-**`Runtime.exec` does NOT try to invoke the shell at any point and does not support shell metacharacters**.
+**`Runtime.exec(String)` does NOT try to invoke the shell at any point and does not support shell metacharacters**.
 
 The key difference is that much of the functionality provided by the shell that could be used for mischief (chaining commands using  `&`, `&&`, `|`, `||`, etc,  redirecting input and output) would simply end up as a parameter being passed to the first command, likely causing a syntax error or being thrown out as an invalid parameter.
 
