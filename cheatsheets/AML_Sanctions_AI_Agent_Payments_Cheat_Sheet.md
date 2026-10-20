@@ -45,6 +45,8 @@ Before an agent is permitted to access sanctions screening services or initiate 
 
 Entity screening against global sanctions lists (OFAC SDN, UK Sanctions List, EU Consolidated, UN Consolidated) remains fundamentally unchanged when agents are the callers. The screening engine matches names, addresses, vessels, and identifiers against the lists. What changes is the context around the screening request. The authoritative source for the United States is the [OFAC Sanctions List Search](https://sanctionssearch.ofac.treas.gov/).
 
+Screening a payment address tells you whether that address is listed. It does not tell you whether the address belongs to the party the agent meant to pay. An agent that pays whatever address a payment request contains can be redirected by a compromised server, an [injected tool result](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) or a lookalike domain, at an amount that passes every spending limit. Bind the recipient address to the counterparty before the payment is signed.
+
 ### Do
 
 - Screen all counterparties (individuals, businesses, vessels, addresses) against applicable sanctions lists before processing a payment.
@@ -52,6 +54,8 @@ Entity screening against global sanctions lists (OFAC SDN, UK Sanctions List, EU
 - Return structured, machine-readable screening results to the agent. Agents cannot interpret PDF reports or HTML pages. Results should be JSON with clear match/no-match/partial-match indicators and match scores.
 - Enforce minimum match thresholds. An agent should not be able to override or lower the match threshold below the institution's configured minimum.
 - Log every screening request and result with the agent's cryptographic identity, a timestamp, and a unique request nonce.
+- Compare the recipient payment address with an independent record of the counterparty's addresses (a pinned allowlist, the counterparty's entry in a payment catalogue or discovery service, or a signed manifest on its own domain) before signing, and treat an address the counterparty has not been seen with as a block or review event.
+- Record the address binding result (matched, not matched, or no record) in the screening log alongside the sanctions result.
 
 ### Don't
 
@@ -59,6 +63,8 @@ Entity screening against global sanctions lists (OFAC SDN, UK Sanctions List, EU
 - Accept unsigned or invalidly signed results when the chosen message-signing profile requires signatures. TLS protects the connection, but does not prevent a compromised component from changing data after termination.
 - Allow agents to cache screening results beyond a configurable time window. Sanctions lists are updated frequently and stale results create compliance gaps.
 - Expose raw sanctions list data to agents. Agents should call a screening API, not download the full list.
+- Trust a recipient address only because it arrived in the counterparty's own payment request; that request is what is being checked.
+- Rely on spending limits to catch a wrong recipient. A redirected payment usually has a normal amount.
 
 ## Section 3: Agent Operator Screening
 
@@ -243,6 +249,7 @@ The consolidated controls below align with the AI-system-specific verification r
 - Verify agent identity cryptographically before every screening request.
 - When using a message-signing profile, sign and verify screening requests and responses and enforce its replay controls.
 - Screen counterparties and relevant operator entities as defined by the institution's applicable compliance program.
+- Bind the recipient payment address to the counterparty before signing a payment.
 - Protect screening audit records against unauthorized changes and deletion; use hash chaining when the chosen audit design requires it.
 - Withhold transaction execution on a screening error, timeout, or ambiguous result until the required assessment permits proceeding.
 - Rate limit based on cryptographic agent identity, not IP address.
