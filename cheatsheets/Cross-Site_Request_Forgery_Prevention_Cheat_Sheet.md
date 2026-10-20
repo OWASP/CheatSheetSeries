@@ -97,52 +97,36 @@ It's a common misconception to include timestamps as a value to specify the CSRF
 This illustrative pseudo-code uses lowercase hexadecimal strings for the random value and HMAC digest. Use the same encoding and length convention during generation and validation: [hex encoding represents each byte with two characters](https://docs.python.org/3/library/stdtypes.html#bytes.hex).
 
 ```code
-// Gather the values
-secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
-sessionID = session.sessionID // Current authenticated user session
-randomValue = cryptographic.randomValue(64).toHex() // 64 random bytes, encoded as 128 hex characters
+secret = getSecretSecurely("CSRF_SECRET")
+sessionID = session.sessionID
+randomValue = cryptographic.randomValue(64).toHex()
 
-// Create the CSRF Token
-message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue // HMAC message payload
-hmac = hmac("SHA256", secret, message) // Generate the HMAC hash
-// Add the `randomValue` to the HMAC hash to create the final CSRF token.
-// Avoid using the `message` because it contains the sessionID in plain text,
-// which the server already stores separately.
-csrfToken = hmac.toHex() + "." + randomValue
+message = sessionID.length + "!" + sessionID + "!" +
+          randomValue.length + "!" + randomValue
+hmac = hmac("SHA256", secret, message).toHex()
 
-// Store the CSRF Token in a cookie
-response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without HttpOnly flag
+csrfToken = hmac + "." + randomValue
+response.setCookie("csrf_token=" + csrfToken + "; Secure")
 ```
 
-Before validation, reject missing tokens or tokens that do not contain exactly two lowercase hexadecimal components: a 64-character SHA-256 HMAC and the 128-character random value. Recompute the HMAC using the current authenticated session, and [compare digests in the same representation with a constant-time function](https://docs.python.org/3/library/hmac.html#hmac.compare_digest):
+Before validation, reject missing tokens or tokens that do not contain exactly two lowercase hexadecimal components: a 64-character SHA-256 HMAC and a 128-character random value. The illustrative `validateTokenFormat` helper below performs these checks. Recompute the HMAC using the current authenticated session, and [compare digests in the same representation with a constant-time function](https://docs.python.org/3/library/hmac.html#hmac.compare_digest):
 
 ```code
-// Get the CSRF token from the request
-csrfToken = request.getParameter("csrf_token") // From header or form field (NOT cookie)
+csrfToken = request.getParameter("csrf_token")
+tokenParts = validateTokenFormat(csrfToken, 64, 128)
+hmacFromRequest = tokenParts[0]
+randomValue = tokenParts[1]
 
-// Split the token to get the randomValue
-const tokenParts = csrfToken.split(".");
-const hmacFromRequest = tokenParts[0];
-const randomValue = tokenParts[1];
-
-// Recreate the HMAC with the current session and the randomValue from the request
-secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
-sessionID = session.sessionID // Current authenticated user session
-message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue
-
-// Generate the expected HMAC
+secret = getSecretSecurely("CSRF_SECRET")
+sessionID = session.sessionID
+message = sessionID.length + "!" + sessionID + "!" +
+          randomValue.length + "!" + randomValue
 expectedHmac = hmac("SHA256", secret, message).toHex()
 
-// Compare the HMAC from the request with the expected HMAC
 if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
-    // HMAC validation failed, reject the request
     response.sendError(403, "Invalid CSRF token")
-    logError("Invalid CSRF token") // Do not log token values
     return
 }
-
-// CSRF validation passed, continue processing the request
-// ...
 ```
 
 Note: The `constantTimeEquals` function should be used to compare the HMACs to prevent timing attacks. This function compares two strings in constant time, regardless of how many characters match.
