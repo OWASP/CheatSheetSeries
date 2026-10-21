@@ -360,167 +360,97 @@ e) Force temporary tables into memory (no unencrypted data to disk).
 
 ## Compiler and Linker
 
-Compiler writers provide a rich set of warnings from the analysis of code during compilation. Both GCC and Visual Studio have static analysis capabilities to help find mistakes early in the development process. The built-in static analysis capabilities of GCC and Visual Studio are usually sufficient to ensure proper API usage and catch a number of mistakes such as using an uninitialized variable or comparing a negative signed int and a positive unsigned int.
+Modern toolchains (compilers and linkers) provide essential defense-in-depth through compile-time diagnostic warnings and binary mitigation flags. Diagnostic warnings detect common implementation flaws—such as buffer boundary violations, integer overflow, format-string issues, and sign-conversion mistakes—before code is deployed. Binary hardening mitigations—such as stack canaries, position-independent execution, non-executable stacks, and control-flow integrity—ensure that even if a flaw exists in source code, exploitation is significantly harder or reliably halted at runtime.
 
-As a concrete example, (and for those not familiar with C/C++ promotion rules), a warning will be issued if a signed integer is promoted to an unsigned integer and then compared because a side effect is `-1 > 1` after promotion! GCC and Visual Studio will not currently catch, for example, SQL injections and other tainted data usage. For that, you will need a tool designed to perform data flow analysis or taint analysis.
+For an extensive taxonomy of flags and rationale, refer to the [OpenSSF Compiler Options Hardening Guide for C and C++](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html). Rather than reproducing exhaustive flag tables, this section provides concise, actionable guidance covering recommended hardening baselines for GCC/Clang and Microsoft Visual C++ (MSVC).
 
-Some in the development community resist static analysis or refute its results. For example, when static analysis warned the Linux kernel's `sys_prctl` was comparing an unsigned value against less than zero, Jesper Juhl offered a patch to clean up the code. Linus Torvalds howled "No, you don't do this… GCC is crap" (referring to compiling with warnings). For the full discussion, see _[\[PATCH\] Don't compare unsigned variable for &lt;0 in sys_prctl()](https://groups.google.com/g/fa.linux.kernel/c/jjk_K4HOemQ/)_ from the Linux Kernel mailing list.
+### GCC and Clang
 
-The following sections will detail steps for three platforms. First is a typical GNU Linux based distribution offering GCC and Binutils, second is Clang and Xcode, and third is modern Windows platforms.
+GCC and Clang share a largely unified command-line syntax for hardening flags across Linux, BSD, and macOS platforms. Detailed reference documentation is available in the [GCC Instrumentation Options](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html), [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html), and the [Clang Compiler User's Manual](https://clang.llvm.org/docs/UsersManual.html).
 
-### Distribution Hardening
+#### Compile-Time Diagnostics and Warnings
 
-Before discussing GCC and Binutils, it would be a good time to point out some of the defenses discussed below are already present in a distribution. Unfortunately, it's design by committee, so what is present is usually only a mild variation of what is available (this way, everyone is mildly offended). For those who are purely worried about performance, you might be surprised to learn you have already taken the small performance hint without even knowing.
+- `-Wall -Wextra`: Enables baseline diagnostic warnings covering potential undefined behaviors, uninitialized variables, and common logical defects.
+- `-Wformat=2 -Wformat-security -Werror=format-security`: Defends against format string vulnerabilities where untrusted input is passed as a format argument (for example, `printf(user_input)`). `-Wformat=2` enables strict checking (equivalent to `-Wformat`, `-Wformat-nonliteral`, `-Wformat-security`, and `-Wformat-y2k`). `-Werror=format-security` treats insecure format string usage as a fatal error.
+    - _Limitations_: Checks format strings only when format arguments are string literals or constants known at compile time; it cannot detect flaws in dynamically constructed format strings.
+- `-Wconversion`: Warns on implicit type conversions that may alter values, such as converting signed negative values to unsigned integers or truncating assignments.
+- `-Wimplicit-fallthrough`: Warns when a switch case falls through without an explicit `break`, `return`, or fallthrough comment or attribute (supported in GCC 7+ and Clang 12+).
+- `-Werror` (or selective `-Werror=<warning>`): Treats compiler warnings as fatal errors. Recommended in continuous integration (CI) pipelines to ensure security warnings are resolved rather than ignored.
 
-Linux and BSD distributions often apply some hardening without intervention via _[GCC Spec Files](https://gcc.gnu.org/onlinedocs/gcc/Spec-Files.html)_. If you are using Debian, Ubuntu, Linux Mint and family, see _[Debian Hardening](https://wiki.debian.org/Hardening)_. For Red Hat and Fedora systems, see _[New hardened build support (coming) in F16](https://lists.fedoraproject.org/pipermail/devel-announce/2011-August/000821.html)_. Gentoo users should visit _[Hardened Gentoo](https://wiki.gentoo.org/wiki/Project:Hardened)_.
+#### Stack and Memory Protections
 
-You can see the settings being used by a distribution via `gcc` `-dumpspecs`. From Linux Mint 12 below, `-fstack-protector` (but not -fstack-protector-all) is used by default.
+- `-fstack-protector-strong`: Protects against stack-based buffer overflows by inserting canaries into functions containing local arrays, addresses taken of local variables, or calls to `alloca()`.
+    - _Protection_: Detects stack corruption before returning and terminates the process immediately.
+    - _Limitations_: Does not protect heap memory or function frames that do not meet canary heuristics. Does not prevent overwriting adjacent local variables situated before the canary.
+    - _Constraints_: Supported in GCC 4.9+ and Clang 3.7+. Preferred over `-fstack-protector` (which only checks character buffers of 8 bytes or larger) and `-fstack-protector-all` (which adds canaries to every function, imposing unnecessary runtime overhead).
+- `-fstack-clash-protection`: Protects against stack clash attacks, where large dynamic stack allocations (such as `alloca()` or large stack frames) jump across the operating system's stack guard page into adjacent memory (such as the heap or shared libraries) without triggering a page fault.
+    - _Protection_: Probes the stack sequentially page by page so any allocation colliding with the guard page immediately triggers an uncatchable segmentation fault.
+    - _Limitations_: Does not prevent stack exhaustion; it prevents silently bypassing the guard page into other valid memory mappings.
+    - _Platform Requirements_: Supported in GCC 8+ and Clang 11+ on Linux (x86_64, AArch64, PowerPC, s390x). Architecture and OS support vary; not supported on all embedded or non-ELF platforms.
+- `-D_FORTIFY_SOURCE=3` (or `-D_FORTIFY_SOURCE=2`): Hardens standard C library functions (`memcpy`, `strcpy`, `sprintf`, `snprintf`, `read`, etc.) by validating destination buffer bounds at runtime and compile time.
+    - _Protection_: Detects buffer overflows during string manipulation and memory copying operations.
+    - _Limitations_: **Requires compiler optimization enabled** (such as `-O2` or `-O1`); it has no effect with `-O0`. Requires C library support (glibc 2.33+ for `=3`; glibc 2.3.4+ or musl 1.2.4+ for `=2`). Level 3 computes buffer sizes dynamically at runtime when possible via `__builtin_dynamic_object_size`.
+- `-D_GLIBCXX_ASSERTIONS`: Enables lightweight runtime bounds checks for C++ standard library containers (`std::vector`, `std::string`, `std::span`, etc.).
+    - _Protection_: Prevents out-of-bounds container access in production code with negligible overhead.
+    - _Compatibility_: Applies to libstdc++. Does not alter ABI (unlike `_GLIBCXX_DEBUG`, which causes ABI incompatibility with external libraries) and introduces minimal runtime overhead, making it safe for production builds.
 
-```bash
-$ gcc -dumpspecs
-…
-*link_ssp: %{fstack-protector:}
+#### Binary Layout and Control-Flow Mitigations
 
-*ssp_default: %{!fno-stack-protector:%{!fstack-protector-all:
-              %{!ffreestanding:%{!nostdlib:-fstack-protector}}}}
-…
-```
+- `-fPIE` (compiler) and `-pie` (linker): Produces a Position Independent Executable (PIE), enabling the OS kernel to randomize the program's base load address via Address Space Layout Randomization (ASLR).
+    - _Protection_: Prevents attackers from relying on predictable code segment addresses in Return-Oriented Programming (ROP) or Jump-Oriented Programming (JOP) exploits.
+    - _Constraints_: Used for executables. Shared libraries must be compiled with `-fPIC` and linked with `-shared`.
+- `-Wl,-z,relro -Wl,-z,now`: Full Read-Only Relocations (Full RELRO).
+    - _Protection_: `-Wl,-z,relro` instructs the linker to mark data sections containing relocations as read-only after dynamic linking. `-Wl,-z,now` enforces immediate binding, resolving all dynamic symbols at startup so the entire Global Offset Table (GOT) is marked read-only before execution begins. This prevents GOT overwrite attacks.
+    - _Limitations_: Slightly increases startup time for large executables with many dynamic symbols because lazy binding is disabled.
+- `-Wl,-z,noexecstack`: Explicitly marks the binary ELF stack segment as non-executable (Data Execution Prevention / NX).
+    - _Protection_: Prevents execution of injected shellcode on the stack.
+    - _Constraints_: Explicitly setting this ensures older assembly files or object files do not inadvertently mark the stack executable.
+- `-fcf-protection=full`: Enables hardware-assisted Control-Flow Enforcement Technology (CET) against ROP/JOP attacks by enforcing indirect branch tracking (IBT) and shadow stacks.
+    - _Platform Requirements_: Requires x86/x86_64 architecture with CPU, Linux kernel (6.6+), and glibc (2.39+) support. Supported in GCC 8+ and Clang 10+.
 
-The "SSP" above stands for Stack Smashing Protector. SSP is a reimplementation of Hiroaki Etoh's work on IBM Pro Police Stack Detector. See Hiroaki Etoh's patch _[gcc stack-smashing protector](https://gcc.gnu.org/ml/gcc-patches/2001-06/msg01753.html)_ and IBM's _[GCC extension for protecting applications from stack-smashing attacks](https://pdfs.semanticscholar.org/9d92/fa9eaa6ca12888d303deffe8bc392b85c09f.pdf)_ for details.
+#### Verification
 
-### GCC/Binutils
+Binaries built on Linux can be inspected to confirm active hardening mitigations (RELRO, Stack Canary, NX, PIE, Fortify) using binary verification tools such as [checksec](https://github.com/slimm609/checksec).
 
-GCC (the compiler collection) and Binutils (the assemblers, linkers, and other tools) are separate projects that work together to produce a final executable. Both the compiler and linker offer options to help you write safer and more secure code. The linker will produce code which takes advantage of platform security features offered by the kernel and PaX, such as no-exec stacks and heaps (NX) and Position Independent Executable (PIE).
+### Microsoft Visual C++ (MSVC)
 
-The table below offers a set of compiler options to build your program. Static analysis warnings help catch mistakes early, while the linker options harden the executable at runtime. In the table below, "GCC" should be loosely taken as "non-ancient distributions." While the GCC team considers 4.2 ancient, you will still encounter it on Apple and BSD platforms due to changes in GPL licensing around 2007. Refer to _[GCC Option Summary](https://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html)_, _[Options to Request or Suppress Warnings](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)_ and _[Binutils (LD) Command Line Options](https://sourceware.org/binutils/docs-2.21/ld/Options.html)_ for usage details.
+Microsoft Visual C++ provides compiler and linker switches for security hardening on Windows platforms. Official reference documentation includes [MSVC Compiler Options Listed by Category](https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category?view=msvc-170), [MSVC Linker Options](https://learn.microsoft.com/en-us/cpp/build/reference/linker-options?view=msvc-170), and [Microsoft Security Best Practices for C++](https://learn.microsoft.com/en-us/cpp/security/security-best-practices-for-cpp?view=msvc-170).
 
-Noteworthy of special mention are `-fno-strict-overflow` and `-fwrapv`ₐ. The flags ensure the compiler does not remove statements that result in overflow or wrap. If your program only runs correctly using the flags, it is likely violating C/C++ rules on overflow and illegal. If the program is illegal due to overflow or wrap checking, you should consider using [safe-iop](https://code.google.com/archive/p/safe-iop/) for C or David LeBlanc's [SafeInt](https://archive.codeplex.com/?p=safeint) in C++.
+#### Compiler Warnings and Static Analysis
 
-For a project compiled and linked with hardened settings, some of those settings can be verified with the [Checksec](https://www.trapkit.de/tools/checksec.html) tool written by Tobias Klein. The `checksec.sh` script is designed to test standard Linux OS and PaX security features being used by an application. See the [Trapkit](https://www.trapkit.de/tools/checksec.html) web page for details.
+- [`/W4`](https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170): Warning level 4, the official Microsoft-recommended baseline for new and production code. Catches uninitialized variables, data truncation, sign mismatches, and problematic casts.
+    - _Note_: While `/Wall` enables all warnings including off-by-default compiler internals, it generates substantial noise in standard library headers; `/W4` provides high-signal diagnostics for production builds.
+- [`/WX`](https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170): Treats all compiler warnings as errors, preventing security issues from being overlooked in build pipelines.
+- [`/sdl`](https://learn.microsoft.com/en-us/cpp/build/reference/sdl-enable-additional-security-checks?view=msvc-170): Enables Additional Security Development Lifecycle (SDL) checks. Promotes security-relevant warnings to errors (including uninitialized variables, format string violations, and improper return checks), enforces safe string buffer generation, and enhances `/GS` buffer checks.
+- [`/analyze`](https://learn.microsoft.com/en-us/cpp/build/reference/analyze-code-analysis?view=msvc-170): Runs MSVC's PREfast static code analysis engine during compilation. Detects memory corruption, null dereferences, buffer overflows, and unsafe API usage without executing the code.
 
-GCC C Warning Options table:
+#### Stack and Memory Protections
 
-![GCCCWarningOptionsTable](../assets/C-Based_Toolchain_Hardening_GCCCWarningOptionsTable.png)
+- [`/GS`](https://learn.microsoft.com/en-us/cpp/build/reference/gs-buffer-security-check?view=msvc-170) (Buffer Security Check): Places a security cookie (stack canary) before the return address on vulnerable stack frames to detect stack buffer overruns. Reorders local variables to place buffers after pointers to prevent pointer corruption.
+    - _Protection_: Detects overwrite of function return addresses and exception handler addresses. Terminates the process immediately if cookie corruption is detected.
+    - _Limitations_: Does not protect functions without buffers or arrays unless forced. For functions parsing untrusted network inputs, `#pragma strict_gs_check(on)` can force cookies on all frames. Does not protect heap allocations.
+    - _Default_: Enabled by default in Visual Studio projects.
 
-- [AddressSanitizer](https://github.com/google/sanitizers)
-- [ThreadSanitizer](https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual)
+#### Control-Flow Integrity and Binary Layout
 
-a) Unlike Clang and -Weverything, GCC does not provide a switch to truly enable all warnings.
-b) -fstack-protector guards functions with high risk objects such as C strings, while -fstack-protector-all guards all objects.
-
-Additional C++ warnings which can be used include the following in Table 3. See _[GCC's Options Controlling C++ Dialect](https://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Dialect-Options.html)_ for additional options and details.
-
-GCC C++ Warning Options table:
-
-![GCCCPPWarningOptionsTable](../assets/C-Based_Toolchain_Hardening_GCCCPPWarningOptionsTable.png)
-
-[Effective C++, Second Edition book](https://www.aristeia.com/books.html).
-
-And additional Objective C warnings which are often useful include the following. See _[Options Controlling Objective-C and Objective-C++ Dialects](https://gcc.gnu.org/onlinedocs/gcc-4.6.0/gcc/Objective_002dC-and-Objective_002dC_002b_002b-Dialect-Options.html)_ for additional options and details.
-
-GCC Objective C Warning Options table:
-
-![GCCObjectiveCWarningOptionsTable](../assets/C-Based_Toolchain_Hardening_GCCObjectiveCWarningOptionsTable.png)
-
-The use of aggressive warnings will produce spurious noise. The noise is a tradeoff - you can learn of potential problems at the cost of wading through some chaff. The following will help reduce spurious noise from the warning system:
-
-- `-Wno-unused-parameter` (GCC)
-- `-Wno-type-limits` (GCC 4.3)
-- `-Wno-tautological-compare` (Clang)
-
-Finally, a simple version based makefile example is shown below. This is different than a feature based makefile produced by Autotools (which will test for a particular feature and then define a symbol or configure a template file). Not all platforms use all options and flags. To address the issue you can pursue one of two strategies. First, you can ship with a weakened posture by servicing the lowest common denominator or, second, you can ship with everything in force. In the latter case, those who don't have a feature available will edit the makefile to accommodate their installation.
-
-```bash
-CXX=g++
-EGREP = egrep
-…
-
-GCC_COMPILER = $(shell $(CXX) -v 2>&1 | $(EGREP) -i -c '^gcc version')
-GCC41_OR_LATER = $(shell $(CXX) -v 2>&1 | $(EGREP) -i -c '^gcc version (4\.[1-9]|[5-9])')
-…
-
-GNU_LD210_OR_LATER = $(shell $(LD) -v 2>&1 | $(EGREP) -i -c '^gnu ld .* (2\.1[0-9]|2\.[2-9])')
-GNU_LD214_OR_LATER = $(shell $(LD) -v 2>&1 | $(EGREP) -i -c '^gnu ld .* (2\.1[4-9]|2\.[2-9])')
-…
-
-ifeq ($(GCC_COMPILER),1)
-    MY_CC_FLAGS += -Wall -Wextra -Wconversion
-    MY_CC_FLAGS += -Wformat=2 -Wformat-security
-    MY_CC_FLAGS += -Wno-unused-parameter
-endif
-
-ifeq ($(GCC41_OR_LATER),1)
-    MY_CC_FLAGS += -fstack-protector-all
-endif
-
-ifeq ($(GCC42_OR_LATER),1)
-    MY_CC_FLAGS += -Wstrict-overflow
-endif
-
-ifeq ($(GCC43_OR_LATER),1)
-    MY_CC_FLAGS += -Wtrampolines
-endif
-
-ifeq ($(GNU_LD210_OR_LATER),1)
-    MY_LD_FLAGS += -z,nodlopen -z,nodump
-endif
-
-ifeq ($(GNU_LD214_OR_LATER),1)
-    MY_LD_FLAGS += -z,noexecstack -z,noexecheap
-endif
-
-ifeq ($(GNU_LD215_OR_LATER),1)
-    MY_LD_FLAGS += -z,relro -z,now
-endif
-
-ifeq ($(GNU_LD216_OR_LATER),1)
-    MY_CC_FLAGS += -fPIE
-    MY_LD_FLAGS += -pie
-endif
-
-## Use 'override' to honor the user's command line
-override CFLAGS := $(MY_CC_FLAGS) $(CFLAGS)
-override CXXFLAGS := $(MY_CC_FLAGS) $(CXXFLAGS)
-override LDFLAGS := $(MY_LD_FLAGS) $(LDFLAGS)
-…
-```
-
-### Clang/Xcode
-
-[Clang](https://clang.llvm.org) and [LLVM](https://llvm.org) have been aggressively developed since Apple lost its GPL compiler back in 2007 (due to Tivoization which resulted in GPLv3). Since that time, a number of developers and Google have joined the effort. While Clang will consume most (all?) GCC/Binutil flags and switches, the project supports a number of its own options, including a static analyzer. In addition, Clang is relatively easy to build with additional diagnostics, such as Dr. John Regher and Peng Li's [Integer Overflow Checker (IOC)](https://embed.cs.utah.edu/ioc/).
-
-IOC is incredibly useful, and has found bugs in a number of projects, from the Linux Kernel (`include/linux/bitops.h`, still unfixed), SQLite, PHP, Firefox (many still unfixed), LLVM, and Python. Future versions of Clang (Clang 3.3 and above) will allow you to enable the checks out of the box with `-fsanitize=integer` and `-fsanitize=shift`.
-
-Clang options can be found at [Clang Compiler User's Manual](https://clang.llvm.org/docs/UsersManual.html). Clang does include an option to turn on all warnings - `-Weverything`. Use it with care but use it regularly since you will get back a lot of noise and issues you missed. For example, add `-Weverything` for production builds and make non-spurious issues a quality gate. Under Xcode, simply add `-Weverything` to `CFLAGS` and `CXXFLAGS`.
-
-In addition to compiler warnings, both static analysis and additional security checks can be performed. Readings on Clang's static analysis capabilities can be found at [Clang Static Analyzer](https://clang-analyzer.llvm.org). Figure 1 below shows some of the security checks utilized by Xcode.
-
-![XCode1](../assets/C-Based_Toolchain_Hardening_XCode1.png)
-
-### Visual Studio
-
-Visual Studio offers a convenient Integrated Development Environment (IDE) for managing solutions and their settings. The section called "Visual Studio Options" discusses options which should be used with Visual Studio, and the section called "Project Properties" demonstrates incorporating those options into a solution's project.
-
-The table below lists the compiler and linker switches which should be used under Visual Studio. Refer to Howard and LeBlanc's Writing Secure Code (Microsoft Press) for a detailed discussion or _[Protecting Your Code with Visual C++ Defenses](https://docs.microsoft.com/en-us/archive/msdn-magazine/2008/march/security-briefs-protecting-your-code-with-visual-c-defenses)_ in Security Briefs by Michael Howard. In the table below, "Visual Studio" refers to nearly all versions of the development environment, including Visual Studio 5.0 and 6.0.
-
-For a project compiled and linked with hardened settings, those settings can be verified with BinScope. BinScope is a verification tool from Microsoft that analyzes binaries to ensure that they have been built-in compliance with Microsoft's Security Development Lifecycle (SDLC) requirements and recommendations. See the _[BinScope Binary Analyzer](https://www.microsoft.com/en-us/download/details.aspx?id=44995)_ download page for details.
-
-![VStudioWarningOptionsTable](../assets/C-Based_Toolchain_Hardening_VStudioWarningOptionsTable.png)
-
-a) See Jon Sturgeon's discussion of the switch at _[Off By Default Compiler Warnings in Visual C++](https://devblogs.microsoft.com/cppblog/off-by-default-compiler-warnings-in-visual-c/)_.
-
-a) When using /GS, there are a number of circumstances which affect the inclusion of a security cookie. For example, the guard is not used if there is no buffer in the stack frame, optimizations are disabled, or the function is declared naked or contains inline assembly.
-
-b) `#pragma` `strict_gs_check(on)` should be used sparingly, but is recommended in high risk situations, such as when a source file parses input from the internet.
+- [`/guard:cf`](https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-control-flow-guard?view=msvc-170) (Control Flow Guard - CFG): Mitigates Jump-Oriented Programming (JOP) and Call-Oriented Programming (COP) exploits by verifying that indirect calls jump only to valid function targets identified by the compiler.
+    - _Constraints_: Must be passed to **both** the compiler (`/guard:cf`) and the linker (`/guard:cf`). Requires `/DYNAMICBASE` at link time. Requires Windows 8.1 / Windows 10+ or Windows Server 2012 R2+ at runtime.
+- [`/guard:ehcont`](https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-eh-continuation-metadata?view=msvc-170) (EH Continuation Guard): Generates a list of valid continuation targets for exception handling, preventing Return-Oriented Programming (ROP) attacks from hijacking control flow during structured exception handling (SEH) dispatch.
+    - _Constraints_: Requires both compiler (`/guard:ehcont`) and linker (`/guard:ehcont`) options. Supported in Visual Studio 2019 version 16.7+ on 64-bit systems.
+- [`/DYNAMICBASE`](https://learn.microsoft.com/en-us/cpp/build/reference/dynamicbase-use-address-space-layout-randomization?view=msvc-170) (Linker): Enables Address Space Layout Randomization (ASLR). Directs the Windows loader to randomly rebase the executable in virtual memory at load time, thwarting fixed-address exploits. Enabled by default in modern MSVC linkers.
+- [`/HIGHENTROPYVA`](https://learn.microsoft.com/en-us/cpp/build/reference/highentropyva-support-64-bit-aslr?view=msvc-170) (Linker): Enables 64-bit ASLR with high entropy (64-bit address space, providing up to 1 TB+ of randomized space).
+    - _Constraints_: Applicable to 64-bit executables (x64 / ARM64). Enabled by default for 64-bit targets when `/DYNAMICBASE` is active.
+- [`/NXCOMPAT`](https://learn.microsoft.com/en-us/cpp/build/reference/nxcompat-compatible-with-data-execution-prevention?view=msvc-170) (Linker): Marks the executable as compatible with Data Execution Prevention (DEP / NX), ensuring code cannot execute from data pages (stack, heap, data segments). Enabled by default in modern MSVC linkers.
+- [`/CETCOMPAT`](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat?view=msvc-170) (Linker): Marks the executable image as compatible with Control-flow Enforcement Technology (CET) Shadow Stack on supported hardware (Intel 11th Gen+, AMD Zen 3+ on Windows 10 version 2004+). Supported in Visual Studio 2019 version 16.7+.
 
 ### Warning Suppression
 
-From the tables above, a lot of warnings have been enabled to help detect possible programming mistakes. The potential mistakes are detected via a compiler which carries around a lot of contextual information during its code analysis phase. At times, you will receive spurious warnings because the compiler is not _that_ smart. It's understandable and even a good thing (how would you like to be out of a job because a program writes its own programs?). At times you will have to learn how to work with the compiler's warning system to suppress warnings. Notice what was not said: turn off the warnings.
+When enabling strict compiler warnings, developers will encounter warnings to help detect possible programming mistakes. The potential mistakes are detected via a compiler which carries around contextual information during its code analysis phase. At times, you will receive spurious warnings because the compiler cannot deduce all runtime invariants. Learning how to work with the compiler's warning system to suppress warnings safely is essential—without disabling warnings globally.
 
-Suppressing warnings placates the compiler for spurious noise so you can get to the issues that matter (you are separating the wheat from the chaff). This section will offer some hints and point out some potential minefields. First is an unused parameter (for example, `argc` or `argv`). Suppressing unused parameter warnings is especially helpful for C++ and interface programming, where parameters are often unused. For this warning, simply define an "UNUSED" macro and warp the parameter:
+Suppressing warnings placates the compiler for spurious noise so you can get to the issues that matter (separating the wheat from the chaff). This section provides practical techniques for addressing common warnings safely. First is an unused parameter (for example, `argc` or `argv`). In modern C++ (C++17 and later), prefer the standard `[[maybe_unused]]` attribute; in C or earlier standards, define an unused parameter macro or cast the parameter to `void`:
 
 ```c
-##define UNUSED_PARAMETER(x) ((void)x)
+#define UNUSED_PARAMETER(x) ((void)(x))
 …
 
 int main(int argc, char* argv[])
@@ -547,7 +477,7 @@ else
     cout << "x is not greater than y" << endl;
 ```
 
-Notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with `x`. Just run the program and wait for it to tell you there is a problem. If there is a problem, the program will snap the debugger (and more importantly, not call a useless `abort()` as specified by Posix). It beats the snot out of `printf`s that are removed when no longer needed or that pollute outputs.
+Notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with `x`. Just run the program and wait for it to tell you there is a problem. If there is a problem, the program will snap the debugger (and more importantly, not call a useless `abort()` as specified by POSIX). It beats the snot out of `printf`s that are removed when no longer needed or that pollute outputs.
 
 Another conversion problem you will encounter is conversion between types, and `-Wconversion` will also catch it for you. The following will always have an opportunity to fail, and should light up like a Christmas tree:
 
@@ -591,7 +521,7 @@ unsigned short port = static_cast<unsigned short>(t);
 
 Again, notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with `port`. This code will continue checking conditions, years after being instrumented (assuming to write code to read a config file early in the project). There's no need to remove the `ASSERT`s as with `printf` since they are silent guardians.
 
-Another useful suppression trick is to avoid ignoring return values. Not only is it useful to suppress the warning, it's required for correct code. For example, `snprint` will alert you to truncations through its return value. You should not make them silent truncations by ignoring the warning or casting to `void`:
+Another useful suppression trick is to avoid ignoring return values. Not only is it useful to suppress the warning, it's required for correct code. For example, `snprintf` will alert you to truncations through its return value. You should not make them silent truncations by ignoring the warning or casting to `void`:
 
 ```c
 char path[PATH_MAX];
