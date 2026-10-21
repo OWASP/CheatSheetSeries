@@ -92,44 +92,11 @@ To generate HMAC CSRF tokens (with a session-dependent user value), the system m
 
 It's a common misconception to include timestamps as a value to specify the CSRF token expiration time. A CSRF Token is not an access token. They are used to verify the authenticity of requests throughout a session, using session information. A new session should generate a new token ([1](https://stackoverflow.com/a/30539335)).
 
-##### Pseudo-Code For Implementing HMAC CSRF Tokens
+##### HMAC CSRF Token Generation and Validation
 
-This illustrative pseudo-code uses lowercase hexadecimal strings for the random value and HMAC digest. Use the same encoding and length convention during generation and validation: [hex encoding represents each byte with two characters](https://docs.python.org/3/library/stdtypes.html#bytes.hex).
+Generate a CSRF token using a cryptographically secure random value and an HMAC computed with a server-side secret key. Bind the HMAC to the current authenticated session using session-specific data; never expose the session ID in plaintext in the token. Store the secret key securely and use the same MAC input construction during generation and validation.
 
-```code
-secret = getSecretSecurely("CSRF_SECRET")
-sessionID = session.sessionID
-randomValue = cryptographic.randomValue(64).toHex()
-
-message = sessionID.length + "!" + sessionID + "!" +
-          randomValue.length + "!" + randomValue
-hmac = hmac("SHA256", secret, message).toHex()
-
-csrfToken = hmac + "." + randomValue
-response.setCookie("csrf_token=" + csrfToken + "; Secure")
-```
-
-Before validation, reject missing tokens or tokens that do not contain exactly two lowercase hexadecimal components: a 64-character SHA-256 HMAC and a 128-character random value. The illustrative `validateTokenFormat` helper below performs these checks. Recompute the HMAC using the current authenticated session, and [compare digests in the same representation with a constant-time function](https://docs.python.org/3/library/hmac.html#hmac.compare_digest):
-
-```code
-csrfToken = request.getParameter("csrf_token")
-tokenParts = validateTokenFormat(csrfToken, 64, 128)
-hmacFromRequest = tokenParts[0]
-randomValue = tokenParts[1]
-
-secret = getSecretSecurely("CSRF_SECRET")
-sessionID = session.sessionID
-message = sessionID.length + "!" + sessionID + "!" +
-          randomValue.length + "!" + randomValue
-expectedHmac = hmac("SHA256", secret, message).toHex()
-
-if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
-    response.sendError(403, "Invalid CSRF token")
-    return
-}
-```
-
-Note: The `constantTimeEquals` function should be used to compare the HMACs to prevent timing attacks. This function compares two strings in constant time, regardless of how many characters match.
+When validating a submitted token, reject malformed tokens and recompute the expected HMAC using the current authenticated session. Compare the submitted and expected HMAC values using a constant-time comparison function to reduce the risk of timing attacks. Reject requests with invalid tokens.
 
 ### Naive Double-Submit Cookie Pattern (DISCOURAGED)
 
