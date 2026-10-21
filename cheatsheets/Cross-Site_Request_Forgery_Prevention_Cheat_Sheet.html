@@ -1742,17 +1742,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reference-sample-jee-filter-demonstrating-csrf-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        REFERENCE: Sample JEE Filter Demonstrating CSRF Protection
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#javascript-automatically-including-csrf-tokens-as-an-ajax-request-header" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5516,17 +5505,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reference-sample-jee-filter-demonstrating-csrf-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        REFERENCE: Sample JEE Filter Demonstrating CSRF Protection
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#javascript-automatically-including-csrf-tokens-as-an-ajax-request-header" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6115,15 +6093,6 @@ In all other cases, using the <code>__Host-</code> prefix in addition to the <co
 <p>Most developers tend to ignore CSRF vulnerabilities on login forms as they assume that CSRF would not be applicable on login forms because user is not authenticated at that stage, however this assumption is not always true. CSRF vulnerabilities can still occur on login forms where the user is not authenticated, but the impact and risk is different.</p>
 <p>For example, if an attacker uses CSRF to assume an authenticated identity of a target victim on a shopping website using the attacker's account, and the victim then enters their credit card information, an attacker may be able to purchase items using the victim's stored card details. For more information about login CSRF and other risks, see section 3 of <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">this</a> paper.</p>
 <p>Login CSRF can be mitigated by creating pre-sessions (sessions before a user is authenticated) and including tokens in login form. You can use any of the techniques mentioned above to generate tokens. Remember that pre-sessions cannot be transitioned to real sessions once the user is authenticated - the session should be destroyed and a new one should be made to avoid <a href="http://www.acrossecurity.com/papers/session_fixation.pdf">session fixation attacks</a>. This technique is described in <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">Robust Defenses for Cross-Site Request Forgery section 4.1</a>. Login CSRF can also be mitigated by including a custom request headers in AJAX request as described <a href="#employing-custom-request-headers-for-ajaxapi">above</a>.</p>
-<h2 id="reference-sample-jee-filter-demonstrating-csrf-protection">REFERENCE: Sample JEE Filter Demonstrating CSRF Protection<a class="headerlink" href="#reference-sample-jee-filter-demonstrating-csrf-protection" title="Permanent link">&para;</a></h2>
-<p>The following <a href="https://github.com/righettod/poc-csrf/blob/master/src/main/java/eu/righettod/poccsrf/filter/CSRFValidationFilter.java">JEE web filter</a> provides an example reference for some of the concepts described in this cheatsheet. It implements the following stateless mitigations (<a href="https://github.com/aramrami/OWASP-CSRFGuard">OWASP CSRFGuard</a>, cover a stateful approach).</p>
-<ul>
-<li>Verifying same origin with standard headers</li>
-<li>Double submit cookie</li>
-<li>SameSite cookie attribute</li>
-</ul>
-<p><strong>Please note</strong> that this is only a reference sample and is not complete (for example: it doesn't have a block to direct the control flow when origin and referrer header check succeeds nor it has a port/host/protocol level validation for referrer header). Developers are recommended to build their complete mitigation on top of this reference sample. Developers should also implement authentication and authorization mechanisms before checking for CSRF is considered effective.</p>
-<p>Full source is located <a href="https://github.com/righettod/poc-csrf">here</a> and provides a runnable POC.</p>
 <h2 id="javascript-automatically-including-csrf-tokens-as-an-ajax-request-header">JavaScript: Automatically Including CSRF Tokens as an AJAX Request Header<a class="headerlink" href="#javascript-automatically-including-csrf-tokens-as-an-ajax-request-header" title="Permanent link">&para;</a></h2>
 <p>Prefer your HTTP client's maintained CSRF integration over global request overrides. For example, <a href="https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security">Angular limits its built-in XSRF header to mutating requests to relative and same-origin URLs</a>. Attach tokens only to the application endpoints that validate them; sending a token to an unrelated origin can disclose it to that server if its CORS policy permits the request.</p>
 <p>Keep <code>GET</code>, <code>HEAD</code>, and <code>OPTIONS</code> free of state changes. The server must validate the token on every protected state-changing request; adding a client header alone does not enforce CSRF protection.</p>
