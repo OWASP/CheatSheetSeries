@@ -33,7 +33,11 @@
   "homepage": "https://github.com/OWASP/CheatSheetSeries#readme",
   "overrides": {
     "markdownlint-cli": {
-      "js-yaml": "^5.4.2"
+      "js-yaml": "^5.4.2",
+      "smol-toml": "^1.9.0"
+    },
+    "micromark-extension-math": {
+      "katex": "^0.18.2"
     }
   }
 }
