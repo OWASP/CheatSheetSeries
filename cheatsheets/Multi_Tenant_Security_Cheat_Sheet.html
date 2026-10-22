@@ -5547,10 +5547,13 @@
 
 <h3 id="7-tenant-onboarding-offboarding-security">7. Tenant Onboarding &amp; Offboarding Security<a class="headerlink" href="#7-tenant-onboarding-offboarding-security" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Implement secure tenant provisioning with isolated resources.</li>
+<li>Implement secure tenant provisioning with isolated resources. Treat onboarding as an all-or-nothing operation: if a step fails, remove partially created resources and record the failure.</li>
 <li>Generate unique encryption keys per tenant where required.</li>
-<li>Apply a documented retention and deletion policy across active stores, caches, object versions, replicas, exports, and backups. Restrict any legally required retained records.</li>
-<li>Maintain audit trail of provisioning/deprovisioning.</li>
+<li>Generate tenant API credentials with a cryptographically secure random generator and at least 128 bits of entropy. Return each credential once and store only a hash, never the plaintext value. An approved hash function such as SHA-256 is enough for a high-entropy random key, as <a href="https://pages.nist.gov/800-63-4/sp800-63b.html#lookupver">NIST SP 800-63B</a> allows for look-up secrets. It does not protect low-entropy or user-chosen secrets; store those according to the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a>.</li>
+<li>Apply a documented retention and deletion policy to every place tenant data lives: active stores, caches, object versions, replicas, exports, backups, and encryption keys. Restrict access to records kept for legal reasons.</li>
+<li>During offboarding, put the tenant into a state that rejects new operations, then revoke all active sessions, API keys, and other tenant-scoped credentials.</li>
+<li>When the retention policy permits deletion, remove the tenant's active data, cached data, and stored objects. Delete a tenant encryption key only after every copy encrypted under it, including backups, replicas, and records under legal hold, has passed its retention period, unless you intend to destroy those copies too.</li>
+<li>Maintain an audit trail of provisioning and deprovisioning, including failed and partial operations.</li>
 <li>Provide tenant data export when contract, regulation, or product policy requires it.</li>
 </ul>
 <h4 id="tenant-backup-restore">Tenant Backup Restore<a class="headerlink" href="#tenant-backup-restore" title="Permanent link">&para;</a></h4>
@@ -5561,168 +5564,6 @@
 <li>Reapply current access and retention rules; a backup can contain old memberships or data that should no longer be accessible.</li>
 <li>Test a backup with two tenants: recover one tenant, verify the other tenant's records and objects are absent, and reject a restore request by an unauthorized actor.</li>
 </ul>
-<details>
-<summary>Illustrative Tenant Lifecycle Management</summary>
-
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">PROVISIONING</span> <span class="o">=</span> <span class="s2">"provisioning"</span>
-    <span class="n">ACTIVE</span> <span class="o">=</span> <span class="s2">"active"</span>
-    <span class="n">SUSPENDED</span> <span class="o">=</span> <span class="s2">"suspended"</span>
-    <span class="n">OFFBOARDING</span> <span class="o">=</span> <span class="s2">"offboarding"</span>
-    <span class="n">DELETED</span> <span class="o">=</span> <span class="s2">"deleted"</span>
-
-<span class="nd">@dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantProvisioningResult</span><span class="p">:</span>
-    <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">status</span><span class="p">:</span> <span class="n">TenantStatus</span>
-    <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">database_schema</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">storage_prefix</span><span class="p">:</span> <span class="nb">str</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantLifecycleManager</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Manages secure tenant onboarding and offboarding."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span> <span class="n">audit_log</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">cache</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">storage</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">audit</span> <span class="o">=</span> <span class="n">audit_log</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">provision_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">admin_email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                               <span class="n">tier</span><span class="p">:</span> <span class="n">TenantTier</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TenantProvisioningResult</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Securely provision a new tenant."""</span>
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_provisioning_started"</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-            <span class="s2">"tenant_name"</span><span class="p">:</span> <span class="n">tenant_name</span><span class="p">,</span>
-            <span class="s2">"tier"</span><span class="p">:</span> <span class="n">tier</span><span class="o">.</span><span class="n">value</span>
-        <span class="p">})</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># 1. Create tenant record</span>
-            <span class="n">tenant</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_tenant</span><span class="p">(</span>
-                <span class="nb">id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">,</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">tenant_name</span><span class="p">,</span>
-                <span class="n">status</span><span class="o">=</span><span class="n">TenantStatus</span><span class="o">.</span><span class="n">PROVISIONING</span><span class="p">,</span>
-                <span class="n">tier</span><span class="o">=</span><span class="n">tier</span>
-            <span class="p">)</span>
-
-            <span class="c1"># 2. Create isolated database schema (if using schema isolation)</span>
-            <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"tenant_</span><span class="si">{</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span><span class="w"> </span><span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CREATE SCHEMA </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_schema_migrations</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span>
-
-            <span class="c1"># 3. Generate a high-entropy random API credential.</span>
-            <span class="c1"># SHA-256 is used for this random key, not for a user password.</span>
-            <span class="n">api_key</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
-            <span class="n">api_key_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">api_key</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">store_api_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">api_key_hash</span><span class="p">)</span>
-
-            <span class="c1"># 4. Create storage prefix</span>
-            <span class="n">storage_prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-
-            <span class="c1"># 5. Initialize tenant-specific encryption key (if required)</span>
-            <span class="k">if</span> <span class="n">tier</span> <span class="ow">in</span> <span class="p">[</span><span class="n">TenantTier</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">,</span> <span class="n">TenantTier</span><span class="o">.</span><span class="n">ENTERPRISE</span><span class="p">]:</span>
-                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_provision_tenant_kms_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-
-            <span class="c1"># 6. Activate tenant</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update_tenant_status</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">TenantStatus</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">)</span>
-
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_provisioning_completed"</span><span class="p">,</span> <span class="p">{</span>
-                <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-                <span class="s2">"schema"</span><span class="p">:</span> <span class="n">schema_name</span>
-            <span class="p">})</span>
-
-            <span class="k">return</span> <span class="n">TenantProvisioningResult</span><span class="p">(</span>
-                <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">,</span>
-                <span class="n">status</span><span class="o">=</span><span class="n">TenantStatus</span><span class="o">.</span><span class="n">ACTIVE</span><span class="p">,</span>
-                <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span>  <span class="c1"># Return only once, never stored in plain text</span>
-                <span class="n">database_schema</span><span class="o">=</span><span class="n">schema_name</span><span class="p">,</span>
-                <span class="n">storage_prefix</span><span class="o">=</span><span class="n">storage_prefix</span>
-            <span class="p">)</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_provisioning_failed"</span><span class="p">,</span> <span class="p">{</span>
-                <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-                <span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-            <span class="p">})</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_failed_provisioning</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-            <span class="k">raise</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">offboard_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">retain_days</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                              <span class="n">export_required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Securely offboard a tenant with data retention."""</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_offboarding_started"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
-
-        <span class="c1"># 1. Mark tenant as offboarding (prevents new operations)</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update_tenant_status</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">TenantStatus</span><span class="o">.</span><span class="n">OFFBOARDING</span><span class="p">)</span>
-
-        <span class="c1"># 2. Revoke all active sessions and API keys</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_revoke_all_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-
-        <span class="c1"># 3. Export data only when the applicable policy requires it</span>
-        <span class="n">export_location</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">export_required</span><span class="p">:</span>
-            <span class="n">export_location</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_tenant_data</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-
-        <span class="c1"># 4. Schedule data deletion after retention period</span>
-        <span class="n">deletion_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">retain_days</span><span class="p">)</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">schedule_tenant_deletion</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">deletion_date</span><span class="p">)</span>
-
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_offboarding_completed"</span><span class="p">,</span> <span class="p">{</span>
-            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-            <span class="s2">"export_location"</span><span class="p">:</span> <span class="n">export_location</span><span class="p">,</span>
-            <span class="s2">"scheduled_deletion"</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="p">})</span>
-
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"offboarding_complete"</span><span class="p">,</span>
-            <span class="s2">"data_export"</span><span class="p">:</span> <span class="n">export_location</span><span class="p">,</span>
-            <span class="s2">"scheduled_active_store_deletion"</span><span class="p">:</span> <span class="n">deletion_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="p">}</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_tenant_deletion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Apply the active-store deletion stage of the retention policy."""</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_deletion_started"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
-
-        <span class="c1"># 1. Delete database schema/data</span>
-        <span class="n">schema_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"tenant_</span><span class="si">{</span><span class="n">tenant_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span><span class="w"> </span><span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">"DROP SCHEMA IF EXISTS </span><span class="si">{</span><span class="n">schema_name</span><span class="si">}</span><span class="s2"> CASCADE"</span><span class="p">)</span>
-
-        <span class="c1"># For shared table model, delete rows</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-            <span class="s2">"DELETE FROM shared_table WHERE tenant_id = :tid"</span><span class="p">,</span>
-            <span class="p">{</span><span class="s2">"tid"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">}</span>
-        <span class="p">)</span>
-
-        <span class="c1"># 2. Delete cached data</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">invalidate_tenant</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-
-        <span class="c1"># 3. Delete stored files</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">delete_tenant_data</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-
-        <span class="c1"># 4. Delete encryption keys</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete_tenant_kms_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span>
-
-        <span class="c1"># 5. Mark as deleted (keep minimal audit record)</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update_tenant_status</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">TenantStatus</span><span class="o">.</span><span class="n">DELETED</span><span class="p">)</span>
-
-        <span class="c1"># Verify replicas, exports, object versions, backups, and legal holds</span>
-        <span class="c1"># through their own retention-policy controls.</span>
-
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"tenant_deletion_completed"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
-</code></pre></div>
-
-</details>
-
-<p>The SHA-256 example applies only to the high-entropy random credential created by <a href="https://docs.python.org/3/library/secrets.html#secrets.token_urlsafe"><code>secrets.token_urlsafe(32)</code></a>. A fast digest does not make a low-entropy or user-chosen secret safe against offline guessing. Store passwords according to the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a>, using a suitable password-hashing function rather than this API-key pattern.</p>
 <h3 id="8-logging-monitoring-audit">8. Logging, Monitoring &amp; Audit<a class="headerlink" href="#8-logging-monitoring-audit" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Include server-verified tenant context in tenant-scoped security and audit events; global infrastructure events may have no tenant.</li>
