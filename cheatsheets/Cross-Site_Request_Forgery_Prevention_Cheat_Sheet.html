@@ -5953,15 +5953,16 @@ Access-Control-Allow-Credentials=true
 <p><strong>Predefined Request Data:</strong> Another mitigation technique is to store a list of predefined, safe request data in the JavaScript code (e.g., combinations of endpoints, request methods and other parameters that are safe to be replayed). The program can then use a switch parameter in the URL fragment to decide which entry of the list should each JavaScript function use.</p>
 <h2 id="defense-in-depth-techniques">Defense In Depth Techniques<a class="headerlink" href="#defense-in-depth-techniques" title="Permanent link">&para;</a></h2>
 <h3 id="samesite-cookie-attribute">SameSite (Cookie Attribute)<a class="headerlink" href="#samesite-cookie-attribute" title="Permanent link">&para;</a></h3>
-<p>SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7">RFC6265bis</a>. This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are <code>Lax</code>, <code>Strict</code>, or <code>None</code>.</p>
-<p>The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, if a GitHub-like website uses the Strict value, a logged-in GitHub user who tries to follow a link to a private GitHub project posted on a corporate discussion forum or email, the user will not be able to access the project because GitHub will not receive a session cookie. Since a bank website would not allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate for banks.</p>
-<p>If a website wants to maintain a user's logged-in session after the user arrives from an external link, SameSite's default Lax value provides a reasonable balance between security and usability. If the GitHub scenario above uses a Lax value instead, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode have top-level navigations and use <a href="https://tools.ietf.org/html/rfc7231#section-4.2.1">safe</a> HTTP methods.</p>
-<p>For more details on the <code>SameSite</code> values, check the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1">section</a> from the <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02">rfc</a>.</p>
-<p>Example of cookies using this attribute:</p>
-<div class="highlight"><pre><span></span><code>Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
-Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
+<p><code>SameSite</code> is a cookie attribute that controls whether browsers send cookies with cross-site requests. It is defined in <a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-22#section-4.1.2.7">RFC6265bis</a> and takes one of three values:</p>
+<ul>
+<li><code>Strict</code> prevents cookies from being sent with cross-site requests, including top-level navigations from external links. This can disrupt legitimate navigation into an application.</li>
+<li><code>Lax</code> sends cookies on cross-site top-level navigations that use safe HTTP methods, such as following a link, and withholds them from other cross-site requests. This balances security and usability.</li>
+<li><code>None</code> permits cookies in cross-site contexts and requires the <code>Secure</code> attribute.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict; Secure
+Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax; Secure
 </code></pre></div>
-<p>All modern desktop and mobile browsers support the <code>SameSite</code> attribute. The main exceptions are legacy browsers including Opera Mini (all versions), UC Browser for Android, and older mobile browsers (iOS Safari &lt; 13.2, Android Browser &lt; 97). To track the browsers implementing it and know how the attribute is used, refer to the following <a href="https://caniuse.com/#feat=same-site-cookie-attribute">service</a>. Chrome implemented <code>SameSite=Lax</code> as the default behavior in 2020, and Firefox and Edge have followed suit. Additionally, the <code>Secure</code> flag is required for cookies that are marked as <code>SameSite=None</code>.</p>
 <h4 id="limitations-of-samesite">Limitations of SameSite<a class="headerlink" href="#limitations-of-samesite" title="Permanent link">&para;</a></h4>
 <p><code>SameSite</code> is useful as a defense-in-depth control but it does not replace a proper CSRF defense in most deployments. Treat the following as known gaps when reasoning about how much protection it actually provides:</p>
 <ul>
