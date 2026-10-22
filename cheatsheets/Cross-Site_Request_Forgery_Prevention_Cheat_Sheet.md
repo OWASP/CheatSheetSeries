@@ -550,7 +550,7 @@ Full source is located [here](https://github.com/righettod/poc-csrf) and provide
 
 ## JavaScript: Automatically Including CSRF Tokens as an AJAX Request Header
 
-JavaScript clients can send CSRF tokens in a custom request header on protected state-changing requests. Configure the client to attach the token only to trusted application endpoints, and validate the token on the server. Prefer maintained framework or HTTP client integrations where available.
+JavaScript clients can send CSRF tokens in a custom request header on protected state-changing requests. Prefer maintained framework or HTTP client integrations where available. Do not add CSRF tokens through global header defaults or by globally overriding `XMLHttpRequest.prototype.open`, because unrelated requests could receive the token.
 
 Client-side CSRF handling does not replace server-side token validation. Keep `GET`, `HEAD`, and `OPTIONS` free of state changes, and validate tokens on every protected state-changing request.
 
