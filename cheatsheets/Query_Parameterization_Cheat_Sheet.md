@@ -26,7 +26,7 @@ pstmt.setString( 1, custname);
 ResultSet results = pstmt.executeQuery( );
 ```
 
-#### Using Java with Hibernate
+#### Using Java with JPA/Hibernate
 
 ```java
 // HQL
