@@ -1,25 +1,16 @@
 # Kubernetes Security Cheat Sheet
 
-## Overview
+## Introduction
 
-This cheat sheet provides a starting point for securing a Kubernetes cluster. It is divided into the following categories:
-
-- Receive Alerts for Kubernetes Updates
-- INTRODUCTION: What is Kubernetes?
-- Securing Kubernetes hosts
-- Securing Kubernetes components
-- Using the Kubernetes dashboard
-- Kubernetes Security Best Practices: Build Phase
-- Kubernetes Security Best Practices: Deploy Phase
-- Kubernetes Security Best Practices: Runtime Phase
+This cheat sheet provides practical security guidance for securing Kubernetes clusters during deployment, configuration, and runtime operations.
 
 ## Receive Alerts for Security Updates and Reporting Vulnerabilities
 
 Join the kubernetes-announce group (<https://kubernetes.io/docs/reference/issues-security/security/>) for emails about security announcements. See the security reporting page (<https://kubernetes.io/docs/reference/issues-security/security>) for more on how to report vulnerabilities.
 
-## INTRODUCTION: What Is Kubernetes?
+## What Is Kubernetes?
 
-Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications. The open source project is hosted by the Cloud Native Computing Foundation (CNCF).
+Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications ([Kubernetes overview](https://kubernetes.io/docs/concepts/overview/)). The open source project is hosted by the Cloud Native Computing Foundation (CNCF).
 
 When you deploy Kubernetes, you get a cluster. A Kubernetes cluster consists of a set of worker machines, called nodes that run containerized applications. The control plane manages the worker nodes and the Pods in the cluster.
 
@@ -55,7 +46,7 @@ Node components run on every node, maintaining running pods and providing the Ku
 **Container:** runtime  
 **Description:** The container runtime is the software that is responsible for running containers |
 
-## SECTION 1: Securing Kubernetes Hosts
+## Securing Kubernetes Hosts
 
 Kubernetes can be deployed in different ways: on bare metal, on-premise, and in the public cloud (a custom Kubernetes build on virtual machines OR use a managed service). Since Kubernetes is designed to be highly portable, customers can easily and migrate their workloads and switch between multiple installations.
 
@@ -77,13 +68,11 @@ Example: apt-update
 
 #### Release schedule for Kubernetes
 
-The Kubernetes project maintains release branches for the most recent three minor releases and it backports the applicable fixes, including security fixes, to those three release branches, depending on severity and feasibility. Patch releases are cut from those branches at a regular cadence, plus additional urgent releases, when required. Hence it is always recommended to upgrade the Kubernetes cluster to the latest available stable version. It is recommended to refer to the version skew policy for further details <https://kubernetes.io/docs/setup/release/version-skew-policy/>.
+The Kubernetes project maintains release branches for the most recent three minor releases and it backports the applicable fixes, including security fixes, to those three release branches, depending on severity and feasibility. Patch releases are cut from those branches at a regular cadence, plus additional urgent releases, when required. Hence it is always recommended to upgrade the Kubernetes cluster to the latest available stable version. It is recommended to refer to the version skew policy for further details [Kubernetes version-skew policy](https://kubernetes.io/releases/version-skew-policy/).
 
 There are several techniques such as rolling updates, and node pool migrations that allow you to complete an update with minimal disruption and downtime.
 
---
-
-## SECTION 2: Securing Kubernetes Components
+## Securing Kubernetes Components
 
 This section discusses how to secure Kubernetes components. It covers the following topics:
 
@@ -93,8 +82,6 @@ This section discusses how to secure Kubernetes components. It covers the follow
 - Controlling access to the Kubernetes API
 - Implementing role-based access control in Kubernetes
 - Limiting access to Kubelets
-
---
 
 ### Securing the Kubernetes Dashboard
 
@@ -110,8 +97,6 @@ To prevent attacks via the dashboard, you should follow some tips:
 - Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
 - Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled. This can be done with either embedded OIDC `id_tokens` or using Kubernetes Impersonation. This allows you to use the dashboard with the user's credentials instead of using a privileged `ServiceAccount`. This method can be used on both on-prem and managed cloud clusters.
 
---
-
 ### Restricting Access To etcd (IMPORTANT)
 
 etcd is a critical Kubernetes component which stores information on states and secrets, and it should be protected differently from the rest of your cluster. Write access to the API server's etcd is equivalent to gaining root on the entire cluster, and even read access can be used to escalate privileges fairly easily.
@@ -123,8 +108,6 @@ Administrators should always use strong credentials from the API servers to thei
 #### Limiting access to the primary etcd instance
 
 Allowing other components within the cluster to access the primary etcd instance with read or write access to the full keyspace is equivalent to granting cluster-admin access. Using separate etcd instances for other components or using etcd ACLs to restrict read and write access to a subset of the keyspace is strongly recommended.
-
---
 
 ### Controlling Network Access to Sensitive Ports
 
@@ -154,8 +137,6 @@ An overview of the default ports used in Kubernetes is provided below. Make sure
 | TCP      | 10256       | Kube-proxy Healthz API |
 | TCP      | 30000-32767 | NodePort Services      |
 
---
-
 ### Controlling Access To The Kubernetes API
 
 The first line of defense of Kubernetes against attackers is limiting and securing access to API requests, because those requests are used to control the Kubernetes platform. For more information, refer to the documentation at <https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/>.
@@ -168,15 +149,11 @@ This part contains the following topics:
 - Implementing role-based access in Kubernetes
 - Limiting access to Kubelets
 
---
-
 #### How Kubernetes handles API authorization
 
 In Kubernetes, you must be authenticated (logged in) before your request can be authorized (granted permission to access), and Kubernetes expects attributes that are common to REST API requests. This means that existing organization-wide or cloud-provider-wide access control systems which may handle other APIs work with Kubernetes authorization.
 
 When Kubernetes authorizes API requests using the API server, permissions are denied by default. It evaluates all of the request attributes against all policies and allows or denies the request. All parts of an API request must be allowed by some policy in order to proceed.
-
---
 
 #### External API Authentication for Kubernetes (RECOMMENDED)
 
@@ -190,8 +167,6 @@ In addition to choosing the appropriate authentication system, API access should
 
 For more information, consult Kubernetes authentication reference documentation at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>.
 
---
-
 #### Options for Kubernetes Built-In API Authentication (NOT RECOMMENDED)
 
 Kubernetes provides a number of internal mechanisms for API server authentication but these are usually only suitable for non-production or small clusters. We will briefly discuss each internal mechanism and explain why you should not use them.
@@ -201,8 +176,6 @@ Kubernetes provides a number of internal mechanisms for API server authenticatio
 - [X509 Client Certs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#x509-client-certs) are available but are unsuitable for production use, since Kubernetes does [not support certificate revocation](https://github.com/kubernetes/kubernetes/issues/18982). As a result, these user credentials cannot be modified or revoked without rotating the root certificate authority key and re-issuing all cluster certificates.
 
 - [Service Accounts Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens) are also available for authentication. Their primary intended use is to allow workloads running in the cluster to authenticate to the API server, however they can also be used for user authentication.
-
---
 
 ### Implementing Role-Based Access Control in Kubernetes
 
@@ -218,21 +191,15 @@ kube-apiserver --authorization-mode=Example,RBAC --other-options --more-options
 
 For detailed examples of utilizing RBAC, refer to Kubernetes documentation at <https://kubernetes.io/docs/reference/access-authn-authz/rbac>
 
---
-
 ### Limiting access to the Kubelets
 
 Kubelets expose HTTPS endpoints which grant powerful control over the node and containers. By default Kubelets allow unauthenticated access to this API. Production clusters should enable Kubelet authentication and authorization.
 
 For more information, refer to Kubelet authentication/authorization documentation at <https://kubernetes.io/docs/reference/access-authn-authz/kubelet-authn-authz/>
 
---
-
-## SECTION 3: Kubernetes Security Best Practices: Build Phase
+## Kubernetes Security Best Practices: Build Phase
 
 During the build phase, you should secure your Kubernetes container images by building secure images and scanning those images for any known vulnerabilities.
-
---
 
 ### What is a container image?
 
@@ -240,19 +207,13 @@ A container image (CI) is an immutable, lightweight, standalone package that con
 
 Your CIs must be built on a approved and secure base image. This base image must be scanned and monitored at regular intervals to ensure that all CIs are based on a secure and authentic image. Implement strong governance policies that determine how images are built and stored in trusted image registries.
 
---
-
 #### Ensure that CIs are up to date
 
 Ensure your images (and any third-party tools you include) are up-to-date and use the latest versions of their components.
 
---
-
 ### Only use authorized images in Your environment
 
 Downloading and running CIs from unknown sources is very dangerous. Make sure that only images adhering to the organization’s policy are allowed to run, or else the organization is open to risk of running vulnerable or even malicious containers.
-
---
 
 ### Use A CI Pipeline To Control and Identify Vulnerabilities
 
@@ -264,15 +225,11 @@ Many source code repositories provide scanning capabilities (e.g. [Github](https
 
 Projects are developing image authorization plugins for Kubernetes that prevent unauthorized images from shipping. For more information, refer to the PR <https://github.com/kubernetes/kubernetes/pull/27129>.
 
---
-
 ### Minimize Features in All CIs
 
 As a best practice, Google and other tech giants have strictly limiting the code in their runtime container for years. This approach improves the signal-to-noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
 Consider using minimal CIs such as distroless images (see below). If this is not possible, do not include OS package managers or shells in CIs because they may have unknown vulnerabilities. If you absolutely must include any OS packages, remove the package manager at a later step in the generation process.
-
---
 
 #### Use distroless or empty images when possible
 
@@ -282,9 +239,7 @@ An empty image, ideal for statically compiled languages like Go, because the ima
 
 For more information, refer to <https://hub.docker.com/_/scratch>
 
----
-
-## SECTION 4: Kubernetes Security Best Practices: Deploy Phase
+## Kubernetes Security Best Practices: Deploy Phase
 
 Once a Kubernetes infrastructure is in place, you must configure it securely before any workloads are deployed. And as you configure your infrastructure, ensure that you have visibility into what CIs are being deployed and how they are being deployed or else you will not be able to identify and respond to security policy violations. Before deployment, your system should know and be able to tell you:
 
@@ -294,13 +249,9 @@ Once a Kubernetes infrastructure is in place, you must configure it securely bef
 - **What it can access** - including secrets, volumes, and other infrastructure components such as the host or orchestrator API.
 - **Is it compliant?** - whether it complies with your policies and security requirements.
 
---
-
 ### Code that uses namespaces to isolate Kubernetes resources
 
 Namespaces give you the ability to create logical partitions, enforce separation of your resources and limit the scope of user permissions.
-
---
 
 #### Setting the namespace for a request
 
@@ -310,8 +261,6 @@ To set the namespace for a current request, use the --namespace flag. Refer to t
 kubectl run nginx --image=nginx --namespace=<insert-namespace-name-here>
 kubectl get pods --namespace=<insert-namespace-name-here>
 ```
-
---
 
 #### Setting the namespace preference
 
@@ -329,8 +278,6 @@ kubectl config view --minify | grep namespace:
 
 Learn more about namespaces at <https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces>
 
---
-
 ### Use the ImagePolicyWebhook to govern image provenance
 
 We strongly recommend that you use the admission controller ImagePolicyWebhook to prevent unapproved images from being used, reject pods that use unapproved images, and refuse CIs that meet the following criteria:
@@ -341,15 +288,11 @@ We strongly recommend that you use the admission controller ImagePolicyWebhook t
 
 Learn more about webhook at <https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook>
 
---
-
 ### Implement continuous security vulnerability scanning
 
 Since new vulnerabilities are always being discovered, you may not always know if your containers may have recently-disclosed vulnerabilities (CVEs) or outdated packages. To maintain a strong security posture, do regular production scanning of first-party containers (applications you have built and previously scanned) as well as third-party containers (which are sourced from trusted repository and vendors).
 
 Open Source projects such as [Trivy](https://github.com/aquasecurity/trivy), [Grype](https://github.com/anchore/grype), and [Clair](https://github.com/quay/clair) can assist in identifying and prioritizing vulnerabilities.
-
---
 
 ### Apply security context to your pods and containers
 
@@ -391,8 +334,6 @@ spec:
 ```
 
 For more information on security context for Pods, refer to the documentation at <https://kubernetes.io/docs/tasks/configure-pod-container/security-context>
-
---
 
 ### Continuously assess the privileges used by containers
 
@@ -445,8 +386,6 @@ All security policies should include the following conditions:
 - If a container does not need to access the Kubernetes API, do not let it mount the service account credentials.
 
 For more information on Pod security policies, refer to the documentation at <https://kubernetes.io/docs/concepts/policy/pod-security-policy/>.
-
---
 
 ### Providing extra security with a service mesh
 
@@ -630,9 +569,7 @@ We strongly recommend that you review the secret material present on the contain
 
 Remember that open-source tools such as [Trivy](https://github.com/aquasecurity/trivy) and [Gitleaks](https://github.com/gitleaks/gitleaks) can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.
 
----
-
-## SECTION 5: Kubernetes Security Best Practices: Runtime Phase
+## Kubernetes Security Best Practices: Runtime Phase
 
 When the Kubernetes infrastructure enters the runtime phase, containerized applications are exposed to a slew of new security challenges. You must gain visibility into your running environment so you can detect and respond to threats as they arise.
 
@@ -890,7 +827,7 @@ Events:
   Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
 ```
 
-## SECTION 5: Securing a managed-service Kubernetes on Cloud Service Provider
+## Securing a Managed Kubernetes Service on a Cloud Provider
 
 ### AWS
 
@@ -899,9 +836,9 @@ There are few open source tools that can help you on securing your managed-servi
 - [hardeneks](https://github.com/aws-samples/hardeneks)
 - [MKAD](https://github.com/DataDog/managed-kubernetes-auditing-toolkit) (Managed Kubernetes Auditing Toolkit) from DataDog
 
-## SECTION 6: Supply Chain Security
+## Supply Chain Security
 
-Container supply chain security is critical for preventing attacks that exploit vulnerabilities in the software delivery process. A compromised supply chain can lead to malicious code being deployed into production environments, potentially affecting thousands of containers and applications.
+Container supply chain security is critical for preventing attacks that exploit vulnerabilities in the software delivery process. A compromised supply chain can lead to malicious code being deployed into production environments, potentially affecting thousands of containers and applications. See the [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html) for broader guidance.
 
 Supply chain attacks in Kubernetes environments typically target:
 
@@ -923,7 +860,7 @@ Recent high-profile attacks (SolarWinds, Codecov, ua-parser-js) demonstrate the 
 6. Monitor for vulnerabilities: Continuously monitor for new vulnerabilities in dependencies and base images.
 7. Implement runtime security: Use tools to monitor container behavior at runtime and detect anomalies.
 
-## SECTION 7: Final Thoughts
+## Final Thoughts
 
 ### Embed security into the container lifecycle as early as possible
 
@@ -931,15 +868,13 @@ You must integrate security earlier into the container lifecycle and ensure alig
 
 ### Use Kubernetes-native security controls to reduce operational risk
 
-Leverage the native controls built into Kubernetes whenever available in order to enforce security policies so that your security controls don’t collide with the orchestrator. Instead of using a third-party proxy or shim to enforce network segmentation, you could use Kubernetes network policies to ensure secure network communication.
+Leverage the native controls built into Kubernetes whenever available in order to enforce security policies so that your security controls don’t collide with the orchestrator. Instead of using a third-party proxy or shim to enforce network segmentation, you could use [Kubernetes network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) to ensure secure network communication.
 
 ### Leverage the context that Kubernetes provides to prioritize remediation efforts
 
 Note that manually triaging security incidents and policy violations is time consuming in sprawling Kubernetes environments.
 
 For example, a deployment containing a vulnerability with severity score of 7 or greater should be moved up in remediation priority if that deployment contains privileged containers and is open to the Internet but moved down if it’s in a test environment and supporting a non-critical app.
-
----
 
 ![Kubernetes Architecture](../assets/Kubernetes_Architecture.png)
 
