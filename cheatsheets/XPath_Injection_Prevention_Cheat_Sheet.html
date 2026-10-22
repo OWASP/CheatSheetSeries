@@ -4274,6 +4274,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#other-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4483,6 +4511,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#other-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4525,7 +4581,7 @@
 <span class="p">)</span>
 </code></pre></div>
 <p>The expression stays fixed; <code>requested_id</code> supplies only the value of <code>$book_id</code>. The application must separately authorize access to the selected books.</p>
-<p>For Java, use the resolver pattern in the <a href="Java_Security_Cheat_Sheet.html#xml-xpath-injection">Java Security Cheat Sheet</a>. Check the documentation for your particular API: accepting an XPath string or compiling an expression does not by itself mean the API provides variable binding.</p>
+<p>For Java, use the resolver pattern shown in the <a href="#java">Java example</a> below. Check the documentation for your particular API: accepting an XPath string or compiling an expression does not by itself mean the API provides variable binding.</p>
 <p>If the API cannot bind values, prefer one that can. Where practical, use a fixed expression to retrieve an authorized set of records and compare values in application code. Do not substitute ad hoc quote replacement for variable binding.</p>
 <h2 id="keep-query-structure-under-application-control">Keep Query Structure Under Application Control<a class="headerlink" href="#keep-query-structure-under-application-control" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.w3.org/TR/xpath-31/#id-variables">XPath variables represent values</a>; they do not substitute expression fragments. When a user chooses a query mode, map that choice to a complete, fixed expression defined by the application. Reject unknown choices and bind any external data values separately.</p>
@@ -4540,6 +4596,17 @@
 </ul>
 <p>During code review, locate calls that evaluate or compile XPath. Trace each expression back to application-controlled text and verify that external values reach it only through variable binding. For fixed query mappings, verify that unknown choices are rejected. Include correctness checks for ordinary valid values, absent records, and access to resources outside the caller's permissions.</p>
 <p>For security assessment guidance, see the <a href="https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/09-XPath_Injection/">Web Security Testing Guide's XPath injection chapter</a>.</p>
+<h2 id="other-examples">Other Examples<a class="headerlink" href="#other-examples" title="Permanent link">&para;</a></h2>
+<h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
+<p>Bind the untrusted value with an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.xml/javax/xml/xpath/XPathVariableResolver.html"><code>XPathVariableResolver</code></a> (OK):</p>
+<div class="highlight"><pre><span></span><code><span class="n">XPath</span><span class="w"> </span><span class="n">xpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XPathFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">().</span><span class="na">newXPath</span><span class="p">();</span>
+<span class="n">xpath</span><span class="p">.</span><span class="na">setXPathVariableResolver</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">name</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">QName</span><span class="p">(</span><span class="s">"bookId"</span><span class="p">))</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">bookId</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
+<span class="n">XPathExpression</span><span class="w"> </span><span class="n">xPathExpression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xpath</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">"//book[@id=$bookId]"</span><span class="p">);</span>
+</code></pre></div>
+<p>Example of vulnerable code building a XPath query using dynamic input:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// BAD</span>
+<span class="n">XPathExpression</span><span class="w"> </span><span class="n">xPathExpression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xpath</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">"//book[@id="</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bookId</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"]"</span><span class="p">);</span>
+</code></pre></div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://cwe.mitre.org/data/definitions/643.html">CWE-643: XPath Injection</a></li>

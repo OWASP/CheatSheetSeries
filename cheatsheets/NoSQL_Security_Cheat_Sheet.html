@@ -2830,6 +2830,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#example-in-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example in Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#authentication-authorization" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4667,6 +4678,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#example-in-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example in Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#authentication-authorization" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4868,6 +4890,12 @@ This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid email"</span><span class="p">)</span>
 <span class="n">user</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s2">"email"</span><span class="p">:</span> <span class="n">email_input</span><span class="p">})</span>
 </code></pre></div>
+<h3 id="example-in-java">Example in Java<a class="headerlink" href="#example-in-java" title="Permanent link">&para;</a></h3>
+<p>This example uses the Java driver's <a href="https://www.mongodb.com/docs/drivers/java/sync/current/builders/filters/">equality filter builder</a> with a string value:</p>
+<div class="highlight"><pre><span></span><code><span class="n">MongoCollection</span><span class="o">&lt;</span><span class="n">Document</span><span class="o">&gt;</span><span class="w"> </span><span class="n">collection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">getCollection</span><span class="p">();</span>
+<span class="n">Bson</span><span class="w"> </span><span class="n">expression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Filters</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"borough"</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">);</span>
+<span class="n">FindIterable</span><span class="o">&lt;</span><span class="n">Document</span><span class="o">&gt;</span><span class="w"> </span><span class="n">restaurants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collection</span><span class="p">.</span><span class="na">find</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span>
+</code></pre></div>
 <h3 id="authentication-authorization">Authentication &amp; Authorization<a class="headerlink" href="#authentication-authorization" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Enable authentication</strong> (do not run databases unauthenticated).</li>
@@ -4951,6 +4979,7 @@ This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p
 <li><a href="https://www.mongodb.com/docs/manual/administration/security-checklist/">MongoDB: Security Checklist for Self-Managed Deployments</a></li>
 <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security-preventative.html">Amazon DynamoDB: Preventative Security Best Practices</a></li>
 <li><a href="https://github.com/OWASP/wstg/blob/master/document/4-Web_Application_Security_Testing/07-Injection/05.6-NoSQL_Injection.md">WSTG - Testing for NoSQL Injection</a></li>
+<li><a href="https://arxiv.org/abs/1506.04082">No SQL, No Injection?</a></li>
 </ul>
 
 
