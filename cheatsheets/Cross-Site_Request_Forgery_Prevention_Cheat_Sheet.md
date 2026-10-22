@@ -405,10 +405,10 @@ For more examples of client-side CSRF, see [this post](https://www.facebook.com/
 
 ### SameSite (Cookie Attribute)
 
-`SameSite` is a cookie attribute that controls whether browsers send cookies with cross-site requests. Its values are `Strict`, `Lax`, and `None`, as defined in [RFC6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7).Its values are `Strict`, `Lax`, and - `None` allows cookies in cross-site contexts and requires the `Secure` attribute in modern browsers.
+`SameSite` is a cookie attribute that controls whether browsers send cookies with cross-site requests. It is defined in [RFC6265bis](https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-22#section-4.1.2.7) and takes one of three values:
 
 - `Strict` prevents cookies from being sent with cross-site requests, including top-level navigations from external links. This can disrupt legitimate navigation into an application.
-- `Lax` allows cookies on cross-site top-level navigations using safe HTTP methods, while generally withholding them from cross-site requests using unsafe methods. This offers a balance between security and usability.
+- `Lax` sends cookies on cross-site top-level navigations that use safe HTTP methods, such as following a link, and withholds them from other cross-site requests. This balances security and usability.
 - `None` permits cookies in cross-site contexts and requires the `Secure` attribute.
 
 Example:
