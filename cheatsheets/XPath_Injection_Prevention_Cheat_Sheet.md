@@ -47,13 +47,11 @@ For security assessment guidance, see the [Web Security Testing Guide's XPath in
 
 ### Java
 
-Example of XPath request using variables in Java with an [`XPathVariableResolver`](https://docs.oracle.com/en/java/javase/21/docs/api/java.xml/javax/xml/xpath/XPathVariableResolver.html) (OK):
+Bind the untrusted value with an [`XPathVariableResolver`](https://docs.oracle.com/en/java/javase/21/docs/api/java.xml/javax/xml/xpath/XPathVariableResolver.html) (OK):
 
 ```java
-SimpleVariableResolver variableResolver = new SimpleVariableResolver();
-variableResolver.addVariable(new QName("bookId"), bookId);
 XPath xpath = XPathFactory.newInstance().newXPath();
-xpath.setXPathVariableResolver(variableResolver);
+xpath.setXPathVariableResolver(name -> name.equals(new QName("bookId")) ? bookId : null);
 XPathExpression xPathExpression = xpath.compile("//book[@id=$bookId]");
 ```
 

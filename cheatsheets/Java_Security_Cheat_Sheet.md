@@ -24,3 +24,8 @@ See the following Cheat Sheets for protection against SQL injection protection:
 - [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md).
 
 Using an ORM such as JPA/Hibernate does not constitute a blanket protection against injection attacks. JPA/Hibernate applications may be vulnerable to [JPQL/HQL injection attacks](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/05.7-ORM_Injection/). Query parameterization is still necessary. See the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) for example of JPA/Hibernate usage.
+
+## References
+
+- [Oracle: Secure Coding Guidelines for Java SE](https://www.oracle.com/java/technologies/javase/seccodeguide.html#8)
+- [OWASP WSTG: ORM Injection](https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/07-Injection/05.7-ORM_Injection/)
