@@ -6,17 +6,10 @@
 | 2. Second build | Opus 5.5 (`claude-opus-5-5`, through the Claude Code CLI) | Works on Astra's change. Reads primary sources, corrects mistakes, fills gaps in the agreed scope, and removes unnecessary prose and code. |
 | 3. Review | Sol 6.1 (`gpt-6.1-sol`, through Codex) | Independently reviews the commit from step 2 for correctness, regressions, missing controls, and practical developer guidance. |
 | 3. Review | Daybreak Blue (`gpt-daybreak-blue-latest`, through the Codex CLI) | When account access permits, independently reviews the same commit for threat-model errors and control bypasses. Record the requested alias and resolved model when exposed; report this review as unavailable if the request fails. |
-| 3. Review | Mythos 5.1 (`claude-mythos-5-1`, through the Claude Code CLI) | Independently checks difficult security claims against primary sources and looks for unsafe examples or advice outside the threat model. |
 | 3. Review | Sonnet 5.5 (`claude-sonnet-5-5`, through the Claude Code CLI) | Independently reviews concision, duplication, placement, and plain US English. Proposes specific cuts while preserving necessary controls and caveats. |
 | 4. Decide and ship | Astra (`gpt-6-astra`, through Codex) | Resolves every finding with evidence, checks the final commit, and gives the operator a concrete decision to make or does the merge if authorized to do so. |
 
-Standalone proposal for review workflow. Use the full lineup for substantial security-content changes; use focused review for small corrections.
-
-Current model families checked on October 18, 2026 against the installed CLIs and official documentation: [Astra](https://developers.openai.com/api/docs/models/gpt-6-astra), [Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol), and [Claude model selection](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model). Before starting, confirm the latest version of each selected family is available and record its exact model ID, except for the explicit Daybreak alias below. Report unavailable reviewers explicitly.
-
-[Daybreak Blue is an access program](https://developers.openai.com/api/docs/guides/daybreak). For this lineup, select `--model gpt-daybreak-blue-latest` in the Codex CLI. Record the resolved model when exposed; otherwise, record the alias and state that the underlying model was not exposed.
-
-During the October 18 reviews, Claude Code reported `claude-opus-5-5` and `claude-mythos-5-1`. Codex CLI accepted `gpt-daybreak-blue-latest`, but rejected Daybreak requests for both `gpt-6-astra` and `gpt-6.1-sol` on this account. Its output did not expose the alias's resolved model. OpenAI marks the [Daybreak alias as deprecated](https://developers.openai.com/api/docs/models/gpt-daybreak-blue-latest); this lineup explicitly uses that alias. Sol and Sonnet remain proposed reviewers, not reviewers that ran on those PRs.
+Use the full lineup for substantial security-content changes; use focused review for small corrections.
 
 ## Review contract
 
