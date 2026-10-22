@@ -94,9 +94,9 @@ It's a common misconception to include timestamps as a value to specify the CSRF
 
 ##### HMAC CSRF Token Generation and Validation
 
-Generate a CSRF token using a cryptographically secure random value and an HMAC computed with a server-side secret key. Bind the HMAC to the current authenticated session using session-specific data; never expose the session ID in plaintext in the token. Store the secret key securely and use the same MAC input construction during generation and validation.
+Compute HMAC-SHA-256 over an unambiguous encoding of the session-dependent value and random value described above, such as length-prefixed fields. Include the HMAC and random value in the token, and set the token cookie with the Secure attribute.
 
-When validating a submitted token, reject malformed tokens and recompute the expected HMAC using the current authenticated session. Compare the submitted and expected HMAC values using a constant-time comparison function to reduce the risk of timing attacks. Reject requests with invalid tokens.
+For each protected request, read the token from a submitted header or form field, never from the cookie alone. Reject requests with missing tokens or tokens with an invalid component count, encoding, or length. Recompute the HMAC using the same encoding, the current session-dependent value, and the random value from the submitted token. Compare the submitted and expected HMACs in the same representation using a [constant-time comparison function](https://docs.python.org/3/library/hmac.html#hmac.compare_digest), and reject mismatches.
 
 ### Naive Double-Submit Cookie Pattern (DISCOURAGED)
 
