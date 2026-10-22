@@ -360,39 +360,39 @@ e) Force temporary tables into memory (no unencrypted data to disk).
 
 ## Compiler and Linker
 
-Modern toolchains (compilers and linkers) provide essential defense-in-depth through compile-time diagnostic warnings and binary mitigation flags. Diagnostic warnings detect common implementation flaws—such as buffer boundary violations, integer overflow, format-string issues, and sign-conversion mistakes—before code is deployed. Binary hardening mitigations—such as stack canaries, position-independent execution, non-executable stacks, and control-flow integrity—ensure that even if a flaw exists in source code, exploitation is significantly harder or reliably halted at runtime.
+Compiler warnings catch some common flaws, such as format string bugs and sign conversion mistakes, before code ships. Binary mitigation flags make memory safety bugs harder to exploit. They can be bypassed and do not replace fixing the bug.
 
-For an extensive taxonomy of flags, rationale, and specific compiler or operating-system version requirements, refer to the [OpenSSF Compiler Options Hardening Guide for C and C++](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html) and vendor documentation. Rather than reproducing exhaustive flag tables, this section provides concise, actionable guidance covering recommended hardening baselines for GCC/Clang and Microsoft Visual C++ (MSVC).
+The flags below are a subset of the [OpenSSF Compiler Options Hardening Guide for C and C++](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html#tldr-what-compiler-options-should-i-use) baseline. Start there for the full list, the rationale, and compiler and operating system version requirements.
 
 ### GCC and Clang
 
-GCC and Clang share a largely unified command-line syntax for hardening flags across Linux, BSD, and macOS platforms. Detailed reference documentation is available in the [GCC Instrumentation Options](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html), [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html), and the [Clang Compiler User's Manual](https://clang.llvm.org/docs/UsersManual.html).
+GCC and Clang use mostly the same hardening flags. The `-Wl,-z,...` linker options below apply to ELF targets such as Linux and BSD, not macOS. See [GCC Instrumentation Options](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html), [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html), and the [Clang Command Line Reference](https://clang.llvm.org/docs/ClangCommandLineReference.html).
 
 #### Compile-Time Diagnostics and Warnings
 
-- `-Wall -Wextra`: Enables baseline diagnostic warnings covering potential undefined behaviors, uninitialized variables, and common implementation flaws; does not catch deeper logic defects or architectural vulnerabilities.
-- `-Wformat=2 -Wformat-security -Werror=format-security`: Prevents format string vulnerabilities by treating calls with untrusted or non-literal format strings as errors; cannot validate dynamically constructed format strings at runtime.
+- `-Wall -Wextra`: Enables baseline diagnostic warnings covering some undefined behavior, uninitialized variables, and common implementation flaws; does not catch deeper logic defects or architectural vulnerabilities.
+- `-Wformat=2 -Wformat-security -Werror=format-security`: Warns about non-literal format strings and makes it an error when one is passed with no arguments, such as `printf(s)`; reduces but does not remove format string bugs, so always use a literal format string.
 - `-Wconversion`: Warns on implicit type conversions that may alter values or signs; can produce noisy diagnostics on benign conversions that require explicit casting.
 - `-Wimplicit-fallthrough`: Warns when a switch case falls through without a break, return, or fallthrough annotation; requires explicitly annotating intentional fallthrough cases.
 - `-Werror` (or selective `-Werror=<warning>`): Treats compiler warnings as fatal errors to prevent ignoring compiler-diagnosed flaws; can break builds when updating toolchains that introduce new diagnostics.
 
 #### Stack and Memory Protections
 
-- `-fstack-protector-strong`: Protects against stack-based buffer overflows by inserting canaries into vulnerable function frames; does not protect heap memory or variables located before the canary.
+- `-fstack-protector-strong`: Inserts stack canaries into functions with vulnerable buffers and checks them when the function returns; detects linear overflows that reach the return address, but not heap overflows, overwrites of other local variables, or arbitrary writes.
 - `-fstack-clash-protection`: Protects against stack-clash attacks by probing the stack page-by-page so dynamic stack allocations cannot bypass the guard page; does not prevent stack exhaustion or buffer overflows within an allocated frame.
-- `-D_FORTIFY_SOURCE=3` (or `-D_FORTIFY_SOURCE=2`): Hardens standard C library memory and string functions by validating buffer bounds at compile time and runtime; requires compiler optimization to be enabled and cannot protect unmeasurable buffer sizes.
-- `-D_GLIBCXX_ASSERTIONS`: Enables runtime bounds checks for standard C++ library containers; applies only to `libstdc++` and incurs runtime overhead.
+- `-D_FORTIFY_SOURCE=3` (or `-D_FORTIFY_SOURCE=2`): Hardens standard C library memory and string functions by validating buffer bounds at compile time and runtime; requires optimization (`-O1` or higher) and cannot check buffers whose size the compiler cannot determine.
+- `-D_GLIBCXX_ASSERTIONS` (libstdc++) or `-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_FAST` (libc++): Enables runtime bounds checks for C++ standard library containers; adds runtime overhead.
 
 #### Binary Layout and Control-Flow Mitigations
 
-- `-fPIE` (compiler) and `-pie` (linker): Produces Position Independent Executables to enable full Address Space Layout Randomization (ASLR); applies only to executable binaries and does not prevent address disclosure leaks.
-- `-Wl,-z,relro -Wl,-z,now`: Enforces Full RELRO by resolving symbols at load time and marking relocation tables and the Global Offset Table read-only; increases program startup time for binaries with many dynamic symbols.
-- `-Wl,-z,noexecstack`: Marks the binary stack segment as non-executable to prevent executing injected code on the stack; does not prevent code-reuse attacks that repurpose existing executable memory.
-- `-fcf-protection=full`: Enables Control-Flow Enforcement Technology (CET) against ROP and JOP attacks via shadow stacks and indirect branch tracking; protection requires compatible operating-system and library support to be enabled.
+- `-fPIE` (compiler) and `-pie` (linker): Produces Position Independent Executables to enable full Address Space Layout Randomization (ASLR); applies only to executable binaries and does not prevent address leaks (information disclosure).
+- `-Wl,-z,relro -Wl,-z,now`: Enables full Relocation Read-Only (RELRO) by resolving symbols at load time and marking relocation tables and the Global Offset Table read-only; increases program startup time for binaries with many dynamic symbols.
+- `-Wl,-z,noexecstack`: Marks the stack as non-executable (NX), so code injected on the stack cannot run; does not prevent code-reuse attacks that repurpose existing executable memory.
+- `-fcf-protection=full` (x86 only): Emits markers for Intel Control-flow Enforcement Technology (CET) shadow stacks and indirect branch tracking (IBT). In Linux user space [only the shadow stack is enforced](https://docs.kernel.org/arch/x86/shstk.html), which protects return addresses against return-oriented programming (ROP); IBT, which targets jump-oriented programming (JOP), is not. Requires CPU, kernel, and C library support.
 
 #### Verification
 
-Binaries built on Linux can be inspected to confirm active hardening mitigations (RELRO, Stack Canary, NX, PIE, Fortify) using binary verification tools such as [checksec](https://github.com/slimm609/checksec).
+Use a tool such as [checksec](https://github.com/slimm609/checksec) to confirm which mitigations a Linux binary has (RELRO, stack canaries, NX, PIE, `_FORTIFY_SOURCE`).
 
 ### Microsoft Visual C++ (MSVC)
 
@@ -400,29 +400,29 @@ Microsoft Visual C++ provides compiler and linker switches for security hardenin
 
 #### Compiler Warnings and Static Analysis
 
-- [`/W4`](https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170): Enables high-signal diagnostic warnings covering uninitialized variables, data truncation, and sign mismatches; does not enable all possible informational warnings provided by `/Wall`.
+- [`/W4`](https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170): Enables a strict, practical warning level covering uninitialized variables, data truncation, and sign mismatches; does not enable all possible informational warnings provided by `/Wall`.
 - [`/WX`](https://learn.microsoft.com/en-us/cpp/build/reference/compiler-option-warning-level?view=msvc-170): Treats all compiler warnings as fatal errors to ensure diagnostics are resolved before deployment; can break builds when updating toolchains that introduce new warnings.
 - [`/sdl`](https://learn.microsoft.com/en-us/cpp/build/reference/sdl-enable-additional-security-checks?view=msvc-170): Enables additional Security Development Lifecycle checks by treating security-relevant warnings as errors and enforcing strict runtime buffer checks; limited to the specific set of warnings and checks defined by the compiler.
-- [`/analyze`](https://learn.microsoft.com/en-us/cpp/build/reference/analyze-code-analysis?view=msvc-170): Runs compile-time static code analysis to detect memory safety issues, null pointer dereferences, and API misuse; significantly increases build times and may produce false positives.
+- [`/analyze`](https://learn.microsoft.com/en-us/cpp/build/reference/analyze-code-analysis?view=msvc-170): Runs compile-time static code analysis to detect memory safety issues, null pointer dereferences, and API misuse; increases build times.
 
 #### Stack and Memory Protections
 
-- [`/GS`](https://learn.microsoft.com/en-us/cpp/build/reference/gs-buffer-security-check?view=msvc-170) (Buffer Security Check): Protects against stack-based buffer overruns by inserting a security cookie before return and exception handler addresses; does not protect heap buffers or stack variables not covered by compiler canary heuristics.
+- [`/GS`](https://learn.microsoft.com/en-us/cpp/build/reference/gs-buffer-security-check?view=msvc-170) (Buffer Security Check): On by default; do not disable it. Places a security cookie before the return address (and, on x86, the exception handler address) of functions with vulnerable buffers; does not protect heap buffers or locals that the compiler does not treat as vulnerable.
 
 #### Control-Flow Integrity and Binary Layout
 
 - [`/guard:cf`](https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-control-flow-guard?view=msvc-170) (Control Flow Guard): Mitigates control-flow hijacking by verifying that indirect call targets point to compiler-approved functions; must be enabled in both compiler and linker and does not protect return addresses on the stack.
-- [`/guard:ehcont`](https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-eh-continuation-metadata?view=msvc-170) (EH Continuation Guard): Generates metadata listing valid exception-handling continuation targets to prevent control-flow hijacking during exception unwinding; must be passed to both compiler and linker and protection requires compatible operating-system and library support to be enabled.
-- [`/DYNAMICBASE`](https://learn.microsoft.com/en-us/cpp/build/reference/dynamicbase-use-address-space-layout-randomization?view=msvc-170) (Linker): Enables Address Space Layout Randomization (ASLR) by instructing the operating system loader to randomize the binary load address; does not prevent memory disclosure attacks that reveal relocated base addresses.
-- [`/HIGHENTROPYVA`](https://learn.microsoft.com/en-us/cpp/build/reference/highentropyva-support-64-bit-aslr?view=msvc-170) (Linker): Enables 64-bit high-entropy Address Space Layout Randomization (ASLR) to increase address randomization space; applies only to 64-bit targets and requires `/DYNAMICBASE`.
-- [`/NXCOMPAT`](https://learn.microsoft.com/en-us/cpp/build/reference/nxcompat-compatible-with-data-execution-prevention?view=msvc-170) (Linker): Marks the executable as compatible with Data Execution Prevention (DEP), preventing code execution from data pages; does not prevent code-reuse attacks executing from existing executable memory.
-- [`/CETCOMPAT`](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat?view=msvc-170) (Linker): Marks the executable image as compatible with Control-flow Enforcement Technology (CET) Shadow Stack; protection requires compatible operating-system and library support to be enabled.
+- [`/guard:ehcont`](https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-eh-continuation-metadata?view=msvc-170) (Exception Handling (EH) Continuation Guard): Generates metadata listing valid exception handling continuation targets to prevent control-flow hijacking during exception unwinding. Pass it to both the compiler and the linker. Supported only for 64-bit processes and meant to work with CET shadow stacks; modules built without it are not protected.
+- [`/DYNAMICBASE`](https://learn.microsoft.com/en-us/cpp/build/reference/dynamicbase-use-address-space-layout-randomization?view=msvc-170) (Linker, on by default): Enables ASLR by instructing the operating system loader to randomize the binary load address; does not prevent memory disclosure attacks that reveal relocated base addresses.
+- [`/HIGHENTROPYVA`](https://learn.microsoft.com/en-us/cpp/build/reference/highentropyva-support-64-bit-aslr?view=msvc-170) (Linker): Enables 64-bit high-entropy ASLR to increase address randomization space; applies only to 64-bit targets and requires `/DYNAMICBASE`.
+- [`/NXCOMPAT`](https://learn.microsoft.com/en-us/cpp/build/reference/nxcompat-compatible-with-data-execution-prevention?view=msvc-170) (Linker, on by default): Marks the executable as compatible with Data Execution Prevention (DEP), preventing code execution from data pages; does not prevent code-reuse attacks executing from existing executable memory.
+- [`/CETCOMPAT`](https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat?view=msvc-170) (Linker): Marks the executable image as compatible with CET shadow stack; x64 only, and requires a CET-capable processor and operating system.
 
 ### Warning Suppression
 
-When enabling strict compiler warnings, developers will encounter warnings to help detect possible programming mistakes. The potential mistakes are detected via a compiler which carries around contextual information during its code analysis phase. At times, you will receive spurious warnings because the compiler cannot deduce all runtime invariants. Learning how to work with the compiler's warning system to suppress warnings safely is essential—without disabling warnings globally.
+Strict warning levels produce some false positives because the compiler cannot know every runtime invariant. Suppress individual false positives in the code. Do not turn warnings off globally.
 
-Suppressing warnings placates the compiler for spurious noise so you can get to the issues that matter (separating the wheat from the chaff). This section provides practical techniques for addressing common warnings safely. First is an unused parameter (for example, `argc` or `argv`). In modern C++ (C++17 and later), prefer the standard `[[maybe_unused]]` attribute; in C or earlier standards, define an unused parameter macro or cast the parameter to `void`:
+Silencing spurious warnings lets you focus on the ones that matter. First is an unused parameter (for example, `argc` or `argv`). In modern C++ (C++17 and later), prefer the standard `[[maybe_unused]]` attribute; in C or earlier standards, define an unused parameter macro or cast the parameter to `void`:
 
 ```c
 #define UNUSED_PARAMETER(x) ((void)(x))
