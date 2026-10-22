@@ -92,60 +92,11 @@ To generate HMAC CSRF tokens (with a session-dependent user value), the system m
 
 It's a common misconception to include timestamps as a value to specify the CSRF token expiration time. A CSRF Token is not an access token. They are used to verify the authenticity of requests throughout a session, using session information. A new session should generate a new token ([1](https://stackoverflow.com/a/30539335)).
 
-##### Pseudo-Code For Implementing HMAC CSRF Tokens
+##### HMAC CSRF Token Generation and Validation
 
-This illustrative pseudo-code uses lowercase hexadecimal strings for the random value and HMAC digest. Use the same encoding and length convention during generation and validation: [hex encoding represents each byte with two characters](https://docs.python.org/3/library/stdtypes.html#bytes.hex).
+Compute HMAC-SHA-256 over an unambiguous encoding of the session-dependent value and random value described above, such as length-prefixed fields. Include the HMAC and random value in the token, and set the token cookie with the Secure attribute.
 
-```code
-// Gather the values
-secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
-sessionID = session.sessionID // Current authenticated user session
-randomValue = cryptographic.randomValue(64).toHex() // 64 random bytes, encoded as 128 hex characters
-
-// Create the CSRF Token
-message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue // HMAC message payload
-hmac = hmac("SHA256", secret, message) // Generate the HMAC hash
-// Add the `randomValue` to the HMAC hash to create the final CSRF token.
-// Avoid using the `message` because it contains the sessionID in plain text,
-// which the server already stores separately.
-csrfToken = hmac.toHex() + "." + randomValue
-
-// Store the CSRF Token in a cookie
-response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without HttpOnly flag
-```
-
-Before validation, reject missing tokens or tokens that do not contain exactly two lowercase hexadecimal components: a 64-character SHA-256 HMAC and the 128-character random value. Recompute the HMAC using the current authenticated session, and [compare digests in the same representation with a constant-time function](https://docs.python.org/3/library/hmac.html#hmac.compare_digest):
-
-```code
-// Get the CSRF token from the request
-csrfToken = request.getParameter("csrf_token") // From header or form field (NOT cookie)
-
-// Split the token to get the randomValue
-const tokenParts = csrfToken.split(".");
-const hmacFromRequest = tokenParts[0];
-const randomValue = tokenParts[1];
-
-// Recreate the HMAC with the current session and the randomValue from the request
-secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
-sessionID = session.sessionID // Current authenticated user session
-message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue
-
-// Generate the expected HMAC
-expectedHmac = hmac("SHA256", secret, message).toHex()
-
-// Compare the HMAC from the request with the expected HMAC
-if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
-    // HMAC validation failed, reject the request
-    response.sendError(403, "Invalid CSRF token")
-    logError("Invalid CSRF token") // Do not log token values
-    return
-}
-
-// CSRF validation passed, continue processing the request
-// ...
-```
-
-Note: The `constantTimeEquals` function should be used to compare the HMACs to prevent timing attacks. This function compares two strings in constant time, regardless of how many characters match.
+For each protected request, read the token from a submitted header or form field, never from the cookie alone. Reject requests with missing tokens or tokens with an invalid component count, encoding, or length. Recompute the HMAC using the same encoding, the current session-dependent value, and the random value from the submitted token. Compare the submitted and expected HMACs in the same representation using a [constant-time comparison function](https://docs.python.org/3/library/hmac.html#hmac.compare_digest), and reject mismatches.
 
 ### Naive Double-Submit Cookie Pattern (DISCOURAGED)
 
