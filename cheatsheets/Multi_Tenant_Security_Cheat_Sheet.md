@@ -683,14 +683,12 @@ class TenantFileStorage:
 
 - Implement secure tenant provisioning with isolated resources. Treat onboarding as an all-or-nothing operation: if a step fails, remove partially created resources and record the failure.
 - Generate unique encryption keys per tenant where required.
-- Generate tenant API credentials as high-entropy random values. Return each credential once and store only a hash, never the plaintext value.
-- Apply a documented retention and deletion policy across active stores, caches, object versions, replicas, exports, backups, and encryption keys. Restrict any legally required retained records.
-- During offboarding, put the tenant into a state that rejects new operations, then revoke all active sessions and API keys along with any other tenant-scoped credentials.
-- When the retention policy permits deletion, remove the tenant's active data, cached data, stored objects, and encryption keys. Verify that replicas, exports, object versions, backups, and legal holds are handled by their own retention controls.
+- Generate tenant API credentials with a cryptographically secure random generator and at least 128 bits of entropy. Return each credential once and store only a hash, never the plaintext value. An approved hash function such as SHA-256 is enough for a high-entropy random key, as [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#lookupver) allows for look-up secrets. It does not protect low-entropy or user-chosen secrets; store those according to the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md).
+- Apply a documented retention and deletion policy to every place tenant data lives: active stores, caches, object versions, replicas, exports, backups, and encryption keys. Restrict access to records kept for legal reasons.
+- During offboarding, put the tenant into a state that rejects new operations, then revoke all active sessions, API keys, and other tenant-scoped credentials.
+- When the retention policy permits deletion, remove the tenant's active data, cached data, and stored objects. Delete a tenant encryption key only after every copy encrypted under it, including backups, replicas, and records under legal hold, has passed its retention period, unless you intend to destroy those copies too.
 - Maintain an audit trail of provisioning and deprovisioning, including failed and partial operations.
 - Provide tenant data export when contract, regulation, or product policy requires it.
-
-A fast hash is appropriate for a high-entropy random API key, but it does not make a low-entropy or user-chosen secret safe against offline guessing. Store passwords according to the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md), using a suitable password-hashing function.
 
 #### Tenant Backup Restore
 
