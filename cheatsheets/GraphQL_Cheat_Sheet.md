@@ -183,7 +183,7 @@ Not properly limiting the amount of resources your API can use (_e.g._ CPU or me
 
 On Linux, a combination of [Control Groups(cgroups)](https://en.wikipedia.org/wiki/Cgroups), [User Limits (ulimits)](https://linuxhint.com/linux_ulimit_command/), and [Linux Containers (LXC)](https://linuxcontainers.org/lxc/security/) can be used.
 
-However, containerization platforms tend to make this task much easier. See the resource limiting section in the [Docker Security Cheat Sheet](Docker_Security_Cheat_Sheet.md#rule-7---limit-resources-memory-cpu-file-descriptors-processes-restarts) for how to prevent DoS when using containers.
+However, containerization platforms tend to make this task much easier. See the resource limiting section in the [Docker Security Cheat Sheet](Docker_Security_Cheat_Sheet.md#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts) for how to prevent DoS when using containers.
 
 ### Access Control
 
