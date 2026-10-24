@@ -15,8 +15,12 @@ The following are out of scope unless they are directly exploitable on the live 
 
 **Do not open public issues for new vulnerabilities**.
 
-Instead, submit a private report including clear steps to reproduce and details about potential impact to:
+Instead, use the **Report a vulnerability** button on the [repository's Security tab](https://github.com/OWASP/CheatSheetSeries/security). That opens a private advisory that only the maintainers can see, and we can work on the fix with you there.
+
+If you prefer email, write to:
 
 - <jim.manico@owasp.org>
 - <jakub.mackowski@owasp.org>
 - <corona.gabriel@gmail.com>
+
+Either way, include clear steps to reproduce and details about the potential impact.
