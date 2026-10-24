@@ -2,109 +2,17 @@
 
 ## Introduction
 
-This cheat sheet will help you prevent SQL injection flaws in your applications. It will define what SQL injection is, explain where those flaws occur, and recommend solutions for defending against SQL injection attacks. [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection) attacks are common because:
+SQL injection occurs when untrusted data becomes part of a query's SQL syntax. It can expose or modify database contents and, depending on database features and privileges, affect files or execute operating system commands. See the [OWASP Web Security Testing Guide](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection/) for the attack model and testing guidance.
 
-1. SQL Injection vulnerabilities are very common.
-2. The application's database is a frequent target for attackers because it typically contains sensitive or critical data.
-
-See as well:
-
-* the [Injection Prevention Cheat Sheet](Injection_Prevention_Cheat_Sheet.md) for general information about injection attacks;
-* the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md).
-
-## Overview
-
-An SQL injection attack consists of insertion (injection) of additional logic into SQL request made by the application through.
-
-This type of attacks happens as a result of building SQL queries using string concatenation with dynamic untrusted malicious data (usually strings).
-
-**Impact:** A successful SQL injection attack can read sensitive data from the database, modify database data (insert/update/delete), execute administration operations on the database (such as shutdown the DBMS), recover the content of a given file existing on the DBMS file system or write files into the file system, and, in some cases, execute operating system commands.
-
-The malicious data can come from various sources such as:
-
-* from a user (eg. from a HTTP request);
-* from a LDAP directory;
-* from an incoming email;
-* from a third party REST API service.
-
-A related class of vulnerability, happens when using ORMs frameworks, such as JPA/Hibernate, which have their own query language (JPQL/HQL). These application might be vulnerable to injections of these requests (eg. **JPQL/SQL injections**).
-
-### Simple example of SQL injections
-
-A simple SQL injection flaw in Java is shown below. The "customerName" parameter is simply concatenated to build the query and an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
-
-```java
-String query = "SELECT account_balance FROM user_data WHERE user_name = '"
-    + request.getParameter("customerName") + "'";
-Statement statement = connection.createStatement();
-ResultSet results = statement.executeQuery(query);
-```
-
-As explained below, a safe implementation would be:
-
-```java
-String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
-PreparedStatement statement = connection.prepareStatement(query);
-statement.setString(1, customerName);
-ResultSet results = statement.executeQuery();
-```
-
-### SQL injection and stored procedures
-
-With stored procedures, the SQL code defined and stored in the database itself, and then called from the application. In this case the vulnerable code actually be stored and executed in the database.
-
-The following contrived example, uses a stored procedure (PostgreSQL) to build a dynamic query from dynamic input and is vulnerable to SQL injections:
-
-```sql
-CREATE OR REPLACE FUNCTION get_user_from_table(
-    p_table TEXT,
-    p_username TEXT
-)
-RETURNS TABLE (user_id INT, username TEXT, email TEXT)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    IF p_table NOT IN ('users', 'archived_users') THEN
-        RAISE EXCEPTION 'Invalid table name';
-    END IF;
-
-    RETURN QUERY EXECUTE format(
-        'SELECT user_id, username, email
-         FROM %I
-         WHERE username = $1',
-        p_table
-    )
-    USING p_username;
-END;
-$$;
-```
-
-### Classes of SQL injections
-
-SQL Injection attacks can be divided into the following three classes:
-
-- **Inband:** data is extracted using the same channel that is used to inject the SQL code. This is the most straightforward kind of attack, in which the retrieved data is presented directly in the application web page.
-- **Out-of-band:** data is retrieved using a different channel (e.g., an email with the results of the query is generated and sent to the tester).
-- **Inferential or Blind:** there is no actual transfer of data, but the tester is able to reconstruct the information by sending particular requests and observing the resulting behavior of the DB Server.
+Use parameterized queries for data values, fixed application-owned choices for dynamic query structure, and least privilege to limit damage. These controls apply regardless of whether data comes from an HTTP request, another service, or previously stored data. For other injection types, see the [Injection Prevention Cheat Sheet](Injection_Prevention_Cheat_Sheet.md).
 
 ## Primary Defenses
 
-When including dynamic data into SQL requests, the recommended pattern is to **parameterized queries** (prepared statement) to including dynamic data into SQL requests. You can as well use **parameterized call statements** (stored precedure calls).
+### Defense Option 1: Prepared Statements (with Parameterized Queries)
 
-Other options can be used to protect against SQL injections but are error-prone and their usage is not recommended:
+Define the SQL structure separately from its data values, then bind those values through the database API. [Prepared statements treat bound values as data rather than SQL syntax](https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html). Concatenating untrusted values into the query before preparing it defeats this protection.
 
-- Input validation (using an allow-list) of dynamic input;
-- Escaping all dynamic inputs.
-
-### Parameterized Queries
-
-Injecting dynamic data through parameterized queries ensure that an attacker is not able to change the intent of a query.
-
-If you need examples of prepared queries/parameterized queries in other languages, including Ruby, PHP, Cold Fusion, Perl, and Rust, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) or this [site](http://bobby-tables.com/).
-
-#### Safe Java Prepared Statement
-
-The following code example uses a `PreparedStatement`, Java's implementation of a parameterized query, to execute the same database query.
+This illustrative Java example assumes an existing connection and a `customerName` value supplied by the application. It shows parameter binding; resource cleanup and error handling are omitted.
 
 ```java
 String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
@@ -113,94 +21,31 @@ statement.setString(1, customerName);
 ResultSet results = statement.executeQuery();
 ```
 
-In this example, if an attacker were to enter the userID as `tom' or '1'='1`, the parameterized query would look for a username that literally matches the entire string `tom' or '1'='1`. Thus, the database would be protected against injections of malicious SQL code.
+An input such as `tom' or '1'='1` is treated as the literal username to match, not as a condition added to the query. Parameter binding prevents this value from changing SQL syntax; it does not decide whether the caller may access the matching account.
 
-The same pattern can be used for stored procedures:
+Object-relational mapping (ORM) frameworks also require parameter binding when constructing queries from untrusted values; [Hibernate queries can be vulnerable to injection](https://cwe.mitre.org/data/definitions/564.html). For language and framework examples, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md).
 
-```java
-CallableStatement statement = connection.prepareCall("{call sp_getAccountBalance(?)}");
-statement.setString(1, customerName);
-ResultSet results = cs.executeQuery();
-```
+### Stored Procedures
 
-#### Safe Parameterized Queries in C\# (.NET)
+Stored procedures keep SQL code in the database, but are not automatically safe from injection. Bind arguments when calling a procedure; see [Oracle's JDBC stored-procedure documentation](https://docs.oracle.com/javase/tutorial/jdbc/basics/storedprocedures.html) for the API.
 
-In .NET, the creation and execution of the query doesn't change. Just pass the parameters to the query using the `Parameters.Add()` call as shown below.
+**Binding procedure arguments protects the call, not dynamic SQL constructed inside the procedure.** Use static SQL with parameters, or separately bind data values in internal dynamic queries instead of concatenating them into SQL text. [Microsoft's secure dynamic SQL guidance](https://learn.microsoft.com/en-us/sql/connect/ado-net/sql/writing-secure-dynamic-sql?view=sql-server-ver17) calls for reviewing procedures that construct SQL and parameterizing their commands.
 
-```csharp
-String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
-OleDbCommand command = new OleDbCommand(query, connection);
-command.Parameters.Add(new OleDbParameter("customerName", CustomerName.Text));
-OleDbDataReader reader = command.ExecuteReader();
-```
-
-#### Safe Parameterized Queries in Hibernate Query Language (HQL)
-
-Some ORM frameworks such as [Hibernate](http://hibernate.org/) use dedicated query languages, such as Hibernate Query Language (HQL), which may suffer from the same injection problems ([HQL Injection](http://cwe.mitre.org/data/definitions/564.html)):
-
-```java
-// UNSAFE: HQL injection!
-Query unsafeHQLQuery = session.createQuery("from Inventory where productID='"+userSuppliedParameter+"'");
-```
-
-Here as well parameterized queries is the recommended solution:
-
-```java
-// Here is a safe version of the same query using named parameters
-Query safeHQLQuery = session.createQuery("from Inventory where productID=:productid");
-safeHQLQuery.setParameter("productid", userSuppliedParameter);
-```
+For example, [PostgreSQL documents `EXECUTE ... USING` for binding values](https://www.postgresql.org/docs/current/plpgsql-statements.html#PLPGSQL-STATEMENTS-EXECUTING-DYN) and `format('%I', ...)` for quoting identifiers. Combining these with application-approved identifier choices is a safe construction for such dynamic queries; identifier quoting alone does not restrict which tables the application may select.
 
 ### Allow-List Input Validation
 
-Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.
+Parameter markers represent data values, not table names, column names, or SQL keywords such as `ASC` and `DESC`; see the [PDO parameter-marker limitations](https://www.php.net/manual/en/pdo.prepare.php). Keep these structural choices fixed in code where possible. When users need to select among them, map their selection to a small set of application-owned tokens allowed for that query and reject unknown choices. For example, map a requested sort direction to the literal `ASC` or `DESC`, rather than appending the supplied text.
 
-But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.
-
-### Allow-list Input Validation (DISCOURAGED)
-
-In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md). Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.
-
-See below for a discussion of using input validation for queries with dynamic table and column names.
-
-This approach may be dangerous, an incomplete validation may allow for SQL injections. Moreover, a safe validation approach for a given SQL dialect may turn out to be unsafe for another SQL dialect.
+This mapping complements parameter binding. Continue binding all data values, even when they pass type, length, or format checks. Validation of a value does not make it safe to concatenate into SQL. See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md) for validation guidance.
 
 ### Escaping All Dynamic Inputs (STRONGLY DISCOURAGED)
 
-This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injection in all situations.
-
-This technique is to escape user input before putting it in a query. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective.
-
-This approach is unsound and dangerous because SQL escaping rules are not always straightforward and different SQL dialects have different rules. Moreover, some databases have configuration which might affect the escaping behavior (such as MySQL [NO_BACKSLASH_ESCAPES](https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html#sqlmode_no_backslash_escapes)). For these reason, parameterized queries must be used.
-
-## Other considerations
-
-#### Dynamic table and columns names
-
-Using user parameter values to target table or column names is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query.
-
-In the example below, since `tableName` is identified as one of the legal and expected values for a table name in this query, it can be directly appended to the SQL query:
-
-```java
-String tableName;
-switch(PARAM) {
-  case "Value1":
-    tableName = "fooTable";
-    break;
-  case "Value2":
-    tableName = "barTable";
-    break;
-  default:
-    throw new InputValidationException("unexpected table name");
-}
-```
+Do not use manual escaping as a substitute for parameter binding. Escaping depends on the SQL dialect and configuration: for example, MySQL's [NO_BACKSLASH_ESCAPES mode](https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html#sqlmode_no_backslash_escapes) disables backslash escaping. Replace query construction that relies on escaping with parameterized queries.
 
 ## Hardening
 
-Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses to provide defense in depth. These additional defenses are:
-
-- **Least Privilege**
-- **Allow-list Input Validation**
+Use least privilege alongside parameterized queries and allow-list mapping. It limits the damage an attacker can cause through a database account; it does not prevent SQL injection.
 
 ### Least Privilege
 
@@ -238,37 +83,12 @@ This limits the data exposed through a compromised application account. Queries 
 
 ## Detection
 
-### Code review
+Review query construction in application code and stored procedures. Check that untrusted values are bound rather than concatenated into SQL, and that dynamic identifiers and sort directions come from the query's fixed mapping. Preparing the outer call is not evidence that a procedure's internal SQL is safe.
 
-Check for any queries to the database which use string concatenation instead of parameterized queries.
-
-Auditors should always look for uses of sp_execute, execute or exec within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
-
-### Manual test
-
-### Dynamic detection
-
-[SQLMap](https://wiki.owasp.org/index.php/Automated_Audit_using_SQLMap) can automatically detect (and exploit) many types of SQL injections.
-
-### Static code analysis
-
-Static Code Analysis Data flow rules can detect use of unsanitized user controlled input into in SQL queries.
-
-### Time delay Exploitation technique
-
-The time delay exploitation technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. This technique consists in sending an injected query and in case the conditional is true, the tester can monitor the time taken to for the server to respond. If there is a delay, the tester can assume the result of the conditional query is true. This exploitation technique can be different from DBMS to DBMS (check DBMS specific section).
-
-```text
-http://www.example.com/product.php?id=10 AND IF(version() like '5%', sleep(10), 'false'))--
-```
-
-In this example the tester is checking whether the MySql version is 5.x or not, making the server delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.
-
-### Out of band Exploitation technique
-
-This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester's server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section.
+Use the [OWASP Web Security Testing Guide's SQL injection tests](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection/) for manual and automated testing, including blind and out-of-band techniques.
 
 ## References
 
 - [Oracle JDBC: Using Prepared Statements](https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
-- [PHP PDO: Prepared Statements and Stored Procedures](https://www.php.net/pdo.prepared-statements)
+- [PostgreSQL: Executing Dynamic Commands](https://www.postgresql.org/docs/current/plpgsql-statements.html#PLPGSQL-STATEMENTS-EXECUTING-DYN)
+- [PHP PDO: Parameter-Marker Limitations](https://www.php.net/manual/en/pdo.prepare.php)
