@@ -5154,9 +5154,7 @@
 <h3 id="a3-productive-closed-source-application">A3: Productive Closed Source Application<a class="headerlink" href="#a3-productive-closed-source-application" title="Permanent link">&para;</a></h3>
 <p>A productive application which cannot or only with difficulty be modified.</p>
 <h2 id="forms-of-injection">Forms of Injection<a class="headerlink" href="#forms-of-injection" title="Permanent link">&para;</a></h2>
-<p>There are several forms of injection targeting different technologies including SQL queries, LDAP queries, XPath queries and OS commands.</p>
-<h3 id="query-languages">Query languages<a class="headerlink" href="#query-languages" title="Permanent link">&para;</a></h3>
-<p>SQL injections constitute a widely known example of attacks of this class but many other types of injections.</p>
+<p>Use the guidance for the query language or interpreter your application uses:</p>
 <table>
 <thead>
 <tr>
@@ -5167,47 +5165,49 @@
 </thead>
 <tbody>
 <tr>
-<td>SQL injections</td>
-<td>Application uses (or communicates with) database or data-source (MySQL, SQlite, PostgreSQL, DuckDB, etc.) using SQL</td>
-<td><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>, <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a></td>
+<td>SQL injection</td>
+<td>Builds SQL queries</td>
+<td><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention</a> and <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization</a></td>
 </tr>
 <tr>
-<td>JPQL/HQL injections</td>
-<td>Application uses JPA/Hibernate</td>
-<td><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>, <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a></td>
+<td>Object-relational mapper query injection</td>
+<td>Builds query strings with tools such as Hibernate</td>
+<td><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention</a> and <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization</a></td>
 </tr>
 <tr>
-<td>CQL injections</td>
-<td>Application uses Cassandra</td>
-<td></td>
+<td>NoSQL injection</td>
+<td>Builds queries for a NoSQL database</td>
+<td><a href="NoSQL_Security_Cheat_Sheet.html">NoSQL Security</a></td>
 </tr>
 <tr>
-<td>NoSQL injections</td>
-<td>Application NoSQL database</td>
-<td><a href="NoSQL_Security_Cheat_Sheet.html">NoSQL Security Cheat Sheet</a></td>
+<td>Cross-site scripting (XSS)</td>
+<td>Places untrusted data into browser content</td>
+<td><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention</a> and <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention</a></td>
 </tr>
 <tr>
-<td>HTML/JavaSCript injection (XSS)</td>
-<td></td>
-<td><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a> and <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a></td>
+<td>LDAP injection</td>
+<td>Builds LDAP queries</td>
+<td><a href="LDAP_Injection_Prevention_Cheat_Sheet.html">LDAP Injection Prevention</a></td>
 </tr>
 <tr>
-<td>LDAP Injection</td>
-<td></td>
-<td><a href="LDAP_Injection_Prevention_Cheat_Sheet.html">LDAP Injection Prevention Cheat Sheet</a></td>
+<td>XPath injection</td>
+<td>Builds XPath queries</td>
+<td><a href="XPath_Injection_Prevention_Cheat_Sheet.html">XPath Injection Prevention</a></td>
 </tr>
 <tr>
-<td>OS/Shell Command Injection</td>
-<td></td>
-<td><a href="OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Defense Cheat Sheet</a>.</td>
+<td>OS command injection</td>
+<td>Invokes operating system commands</td>
+<td><a href="OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Defense</a></td>
 </tr>
 <tr>
-<td>Argument Injection</td>
-<td></td>
-<td></td>
+<td>Argument injection</td>
+<td>Passes untrusted input as command arguments</td>
+<td><a href="OS_Command_Injection_Defense_Cheat_Sheet.html#argument-injection">Argument Injection</a></td>
 </tr>
 </tbody>
 </table>
+<p>For Java-specific guidance, see <a href="Injection_Prevention_in_Java_Cheat_Sheet.html">Injection Prevention in Java</a>.</p>
+<h3 id="query-languages">Query languages<a class="headerlink" href="#query-languages" title="Permanent link">&para;</a></h3>
 <h4 id="ldap-injection">LDAP Injection<a class="headerlink" href="#ldap-injection" title="Permanent link">&para;</a></h4>
 <p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>. LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit <a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a>.</p>
 <p><a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a> attacks are common due to two factors:</p>
