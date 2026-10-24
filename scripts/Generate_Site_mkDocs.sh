@@ -9,6 +9,17 @@ WORK=../generated
 
 echo "Generate a offline portable website with all the cheat sheets..."
 
+echo "Checking the source tree for symbolic links."
+# Everything below copies the repository into the MkDocs tree, and MkDocs copies
+# through symbolic links when it builds the site. A link would publish whatever
+# file or directory it points at, so the build refuses to run with any present.
+SYMLINKS=$(find .. \( -name .git -o -name node_modules -o -name venv -o -name .venv -o -name generated \) -prune -o -type l -print)
+if [[ -n "$SYMLINKS" ]]; then
+    echo "Error: symbolic links are not allowed in the repository, generation failed!"
+    echo "$SYMLINKS"
+    exit 1
+fi
+
 echo "Step 1/7: Init work folder."
 rm -rf $WORK 1>/dev/null 2>&1
 mkdir $WORK

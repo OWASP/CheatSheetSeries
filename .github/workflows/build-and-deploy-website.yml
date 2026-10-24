@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       CI: true
-      WORKFLOW_GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
     steps:
     - name: Setup Action
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        # The build only reads the tree; the deploy job checks out with its own token.
+        persist-credentials: false
     - name: Setup Node
       uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
