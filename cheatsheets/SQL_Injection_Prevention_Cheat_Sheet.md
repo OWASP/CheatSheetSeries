@@ -23,7 +23,7 @@ ResultSet results = statement.executeQuery();
 
 An input such as `tom' or '1'='1` is treated as the literal username to match, not as a condition added to the query. Parameter binding prevents this value from changing SQL syntax; it does not decide whether the caller may access the matching account.
 
-Object-relational mapping (ORM) frameworks also require parameter binding when constructing queries from untrusted values; [Hibernate queries can be vulnerable to injection](https://cwe.mitre.org/data/definitions/564.html). For language and framework examples, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md).
+When using object-relational mapping (ORM) frameworks, bind untrusted values in query strings instead of concatenating them; [Hibernate queries can be vulnerable to injection](https://cwe.mitre.org/data/definitions/564.html). For language and framework examples, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md).
 
 ### Stored Procedures
 
@@ -31,7 +31,7 @@ Stored procedures keep SQL code in the database, but are not automatically safe 
 
 **Binding procedure arguments protects the call, not dynamic SQL constructed inside the procedure.** Use static SQL with parameters, or separately bind data values in internal dynamic queries instead of concatenating them into SQL text. [Microsoft's secure dynamic SQL guidance](https://learn.microsoft.com/en-us/sql/connect/ado-net/sql/writing-secure-dynamic-sql?view=sql-server-ver17) calls for reviewing procedures that construct SQL and parameterizing their commands.
 
-For example, [PostgreSQL documents `EXECUTE ... USING` for binding values](https://www.postgresql.org/docs/current/plpgsql-statements.html#PLPGSQL-STATEMENTS-EXECUTING-DYN) and `format('%I', ...)` for quoting identifiers. Combining these with application-approved identifier choices is a safe construction for such dynamic queries; identifier quoting alone does not restrict which tables the application may select.
+For example, [PostgreSQL documents `EXECUTE ... USING` for binding values](https://www.postgresql.org/docs/current/plpgsql-statements.html#PLPGSQL-STATEMENTS-EXECUTING-DYN) and `format('%I', ...)` for quoting identifiers. Select identifiers from fixed application-owned mappings. Identifier quoting protects SQL syntax, but does not restrict which tables the application may select.
 
 ### Allow-List Input Validation
 
