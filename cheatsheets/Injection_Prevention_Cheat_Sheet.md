@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This article is focused on providing clear, simple, actionable guidance for preventing the entire category of Injection flaws in your applications. Injection attacks, especially [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection), are unfortunately very common.
+This article is focused on providing clear, simple, actionable guidance for preventing injection flaws in your applications. Injection attacks, for example [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection), are unfortunately very common.
 
 Application accessibility is a very important factor in protection and prevention of injection flaws. Only the minority of all applications within a company/enterprise are developed in house, where as most applications are from external sources. Open source applications give at least the opportunity to fix problems, but closed source applications need a different approach to injection flaws.
 
@@ -32,116 +32,18 @@ There are several forms of injection targeting different technologies including 
 
 ### Query languages
 
-The most famous form of injection is SQL Injection where an attacker can modify existing database queries. For more information see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
+SQL injections constitute a widely known example of attacks of this class but many other types of injections.
 
-But also LDAP, SOAP, XPath and REST based queries can be susceptible to injection attacks allowing for data retrieval or control bypass.
-
-#### SQL Injection
-
-An SQL injection attack consists of insertion or "injection" of either a partial or complete SQL query via the data input or transmitted from the client (browser) to the web application.
-
-A successful SQL injection attack can read sensitive data from the database, modify database data (insert/update/delete), execute administration operations on the database (such as shutdown the DBMS), recover the content of a given file existing on the DBMS file system or write files into the file system, and, in some cases, issue commands to the operating system. SQL injection attacks are a type of injection attack, in which SQL commands are injected into data-plane input in order to affect the execution of predefined SQL commands.
-
-SQL Injection attacks can be divided into the following three classes:
-
-- **Inband:** data is extracted using the same channel that is used to inject the SQL code. This is the most straightforward kind of attack, in which the retrieved data is presented directly in the application web page.
-- **Out-of-band:** data is retrieved using a different channel (e.g., an email with the results of the query is generated and sent to the tester).
-- **Inferential or Blind:** there is no actual transfer of data, but the tester is able to reconstruct the information by sending particular requests and observing the resulting behavior of the DB Server.
-
-##### How to test for the issue
-
-###### During code review
-
-please check for any queries to the database are not done via prepared statements.
-
-If dynamic statements are being made please check if the data is sanitized before used as part of the statement.
-
-Auditors should always look for uses of sp_execute, execute or exec within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
-
-###### Automated Exploitation
-
-Most of the situation and techniques below here can be performed in a automated way using some tools. In this article the tester can find information how to perform an automated auditing using [SQLMap](https://wiki.owasp.org/index.php/Automated_Audit_using_SQLMap)
-
-Equally Static Code Analysis Data flow rules can detect of unsanitized user controlled input can change the SQL query.
-
-###### Stored Procedure Injection
-
-When using dynamic SQL within a stored procedure, the application must properly sanitize the user input to eliminate the risk of code injection. If not sanitized, the user could enter malicious SQL that will be executed within the stored procedure.
-
-###### Time delay Exploitation technique
-
-The time delay exploitation technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. This technique consists in sending an injected query and in case the conditional is true, the tester can monitor the time taken to for the server to respond. If there is a delay, the tester can assume the result of the conditional query is true. This exploitation technique can be different from DBMS to DBMS (check DBMS specific section).
-
-```text
-http://www.example.com/product.php?id=10 AND IF(version() like '5%', sleep(10), 'false'))--
-```
-
-In this example the tester is checking whether the MySql version is 5.x or not, making the server delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.
-
-###### Out of band Exploitation technique
-
-This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester's server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section.
-
-##### Remediation
-
-###### Defense Option 1: Prepared Statements (with Parameterized Queries)
-
-Prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker. In the safe example below, if an attacker were to enter the userID of `tom' or '1'='1`, the parameterized query would not be vulnerable and would instead look for a username which literally matched the entire string `tom' or '1'='1`.
-
-###### Defense Option 2: Stored Procedures
-
-The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application.
-
-Both of these techniques have the same effectiveness in preventing SQL injection so your organization should choose which approach makes the most sense for you. Stored procedures are not always safe from SQL injection. However, certain standard stored procedure programming constructs have the same effect as the use of parameterized queries when implemented safely* which is the norm for most stored procedure languages.
-
-*Note:* 'Implemented safely' means the stored procedure does not include any unsafe dynamic SQL generation.
-
-###### Defense Option 3: Allow-List Input Validation
-
-Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.
-
-But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.
-
-###### Defense Option 4: Escaping All User-Supplied Input
-
-This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injection in all situations.
-
-This technique is to escape user input before putting it in a query. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective.
-
-##### Example code - Java
-
-###### Safe Java Prepared Statement Example
-
-The following code example uses a `PreparedStatement`, Java's implementation of a parameterized query, to execute the same database query.
-
-```java
-// This should REALLY be validated too
-String custname = request.getParameter("customerName");
-// Perform input validation to detect attacks
-String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
-PreparedStatement pstmt = connection.prepareStatement(query);
-pstmt.setString(1, custname);
-ResultSet results = pstmt.executeQuery();
-```
-
-We have shown examples in Java, but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces.
-
-###### Safe Java Stored Procedure Example
-
-The following code example uses a `CallableStatement`, Java's implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.
-
-```java
-// This should REALLY be validated
-String custname = request.getParameter("customerName");
-try {
- CallableStatement cs = connection.prepareCall("{call sp_getAccountBalance(?)}");
- cs.setString(1, custname);
- ResultSet results = cs.executeQuery();
- // Result set handling...
-} catch (SQLException se) {
- // Logging and error handling...
-}
-```
+|Type | When | Reference
+|-----|------|----------
+|SQL injections | Application uses (or communicates with) database or data-source (MySQL, SQlite, PostgreSQL, DuckDB, etc.) using SQL | [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md), [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md)
+| JPQL/HQL injections | Application uses JPA/Hibernate | [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md), [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md)
+| CQL injections   | Application uses Cassandra |
+| NoSQL injections | Application NoSQL database | [NoSQL Security Cheat Sheet](NoSQL_Security_Cheat_Sheet.md)
+| HTML/JavaSCript injection (XSS) | | [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) and [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)
+| LDAP Injection   | | [LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md)
+| OS/Shell Command Injection | | [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
+| Argument Injection |
 
 #### LDAP Injection
 
@@ -249,16 +151,6 @@ The preferred option is to use a safe API which avoids the use of the interprete
 ### Rule \#3 (Contextually escape user data)
 
 If a parameterized API is not available, you should carefully escape special characters using the specific escape syntax for that interpreter.
-
-## Other Injection Cheatsheets
-
-[SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md)
-
-[OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md)
-
-[LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md)
-
-[Injection Prevention Cheat Sheet in Java](Injection_Prevention_in_Java_Cheat_Sheet.md)
 
 ## References
 
