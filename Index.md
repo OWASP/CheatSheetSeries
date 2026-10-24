@@ -238,7 +238,7 @@
 
 [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
 
-[SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Vbnet](assets/Index_Vbnet.svg)
+[SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
 
 [Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md)
 

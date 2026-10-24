@@ -28,22 +28,22 @@ A productive application which cannot or only with difficulty be modified.
 
 ## Forms of Injection
 
-There are several forms of injection targeting different technologies including SQL queries, LDAP queries, XPath queries and OS commands.
+Use the guidance for the query language or interpreter your application uses:
+
+| Type | When | Reference |
+|------|------|-----------|
+| SQL injection | Builds SQL queries | [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md) and [Query Parameterization](Query_Parameterization_Cheat_Sheet.md) |
+| Object-relational mapper query injection | Builds query strings with tools such as Hibernate | [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md) and [Query Parameterization](Query_Parameterization_Cheat_Sheet.md) |
+| NoSQL injection | Builds queries for a NoSQL database | [NoSQL Security](NoSQL_Security_Cheat_Sheet.md) |
+| Cross-site scripting (XSS) | Places untrusted data into browser content | [Cross Site Scripting Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) and [DOM based XSS Prevention](DOM_based_XSS_Prevention_Cheat_Sheet.md) |
+| LDAP injection | Builds LDAP queries | [LDAP Injection Prevention](LDAP_Injection_Prevention_Cheat_Sheet.md) |
+| XPath injection | Builds XPath queries | [XPath Injection Prevention](XPath_Injection_Prevention_Cheat_Sheet.md) |
+| OS command injection | Invokes operating system commands | [OS Command Injection Defense](OS_Command_Injection_Defense_Cheat_Sheet.md) |
+| Argument injection | Passes untrusted input as command arguments | [Argument Injection](OS_Command_Injection_Defense_Cheat_Sheet.md#argument-injection) |
+
+For Java-specific guidance, see [Injection Prevention in Java](Injection_Prevention_in_Java_Cheat_Sheet.md).
 
 ### Query languages
-
-SQL injections constitute a widely known example of attacks of this class but many other types of injections.
-
-|Type | When | Reference
-|-----|------|----------
-|SQL injections | Application uses (or communicates with) database or data-source (MySQL, SQlite, PostgreSQL, DuckDB, etc.) using SQL | [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md), [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md)
-| JPQL/HQL injections | Application uses JPA/Hibernate | [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md), [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md)
-| CQL injections   | Application uses Cassandra |
-| NoSQL injections | Application NoSQL database | [NoSQL Security Cheat Sheet](NoSQL_Security_Cheat_Sheet.md)
-| HTML/JavaSCript injection (XSS) | | [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) and [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)
-| LDAP Injection   | | [LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md)
-| OS/Shell Command Injection | | [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
-| Argument Injection |
 
 #### LDAP Injection
 
