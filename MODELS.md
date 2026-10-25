@@ -20,7 +20,7 @@ An explicitly requested full run overrides the focused exception. A failed invoc
 | 2. Second build | Opus 5.5 (`claude-opus-5-5`, through the Claude Code CLI) | Reads Astra's actual change and primary sources. Corrects mistakes, fills gaps in scope, and cuts unnecessary prose and code. Commit any edits before review; a documented no-change result is valid. |
 | 3. Review | Sol 6.1 (`gpt-6.1-sol`, through Codex) | Independently reviews the commit from step 2 for correctness, regressions, missing controls, and practical developer guidance. |
 | 3. Review | Daybreak Blue (`gpt-daybreak-blue-latest`, through the Codex CLI) | Independently reviews the same commit for threat-model errors and control bypasses when account access permits. Record failures as unavailable. |
-| 3. Review | Sonnet 5.5 (`claude-sonnet-5-5`, through the Claude Code CLI) | Independently reviews the same commit for concision, duplication, placement, and plain US English. Proposes specific cuts while preserving controls and caveats. |
+| 3. Review | Opus 5.5 (`claude-opus-5-5`, through the Claude Code CLI) | Independently reviews the same commit for concision, duplication, placement, and plain US English. Proposes specific cuts while preserving controls and caveats. |
 | 4. Decide and ship | Astra (`gpt-6-astra`, through Codex) | Reads all reviewer results, resolves findings against evidence, obtains re-review for fixes, and checks the final commit. Gives the operator a decision or merges only when authorized. |
 
 ## Invoke models explicitly
@@ -55,11 +55,11 @@ codex exec --model gpt-daybreak-blue-latest --cyber-access-program daybreak_blue
   --sandbox read-only --json - < "$run_dir/daybreak.prompt.txt" \
   > "$run_dir/daybreak.jsonl" 2> "$run_dir/daybreak.stderr"
 
-claude -p --model claude-sonnet-5-5 --permission-mode dontAsk \
+claude -p --model claude-opus-5-5 --permission-mode dontAsk \
   --tools 'Read,Grep,Glob,WebFetch,WebSearch' --strict-mcp-config \
   --allowedTools 'Read,Grep,Glob,WebFetch,WebSearch' \
-  --output-format json < "$run_dir/sonnet.prompt.txt" \
-  > "$run_dir/sonnet.json" 2> "$run_dir/sonnet.stderr"
+  --output-format json < "$run_dir/opus.prompt.txt" \
+  > "$run_dir/opus.json" 2> "$run_dir/opus.stderr"
 ```
 
 Astra's decision prompt must contain all reviewer results and the commit they cover. A decision-only turn can remain read-only; any subsequent edits require a new commit and re-review.
