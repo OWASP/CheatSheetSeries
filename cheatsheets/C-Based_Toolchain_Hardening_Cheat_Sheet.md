@@ -90,6 +90,18 @@ You should also change `__attribute__` `((visibility` `("hidden")))` to `__attri
 
 Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify it fails gracefully. Remember, a bad actor is not going to be courteous when they attempt to cause your program to fail, and it's your project that takes egg on the face by way of a bug report or guest appearance on [Full Disclosure](https://nmap.org/mailman/listinfo/fulldisclosure) or [Bugtraq](https://www.securityfocus.com/archive) - not `<some library>` you included.
 
+#### Sanitizers and Valgrind
+
+Run the test suite under runtime error detectors. [AddressSanitizer (ASan)](https://clang.llvm.org/docs/AddressSanitizer.html) finds out-of-bounds accesses and use-after-free; [UndefinedBehaviorSanitizer (UBSan)](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html) finds undefined behavior such as signed integer overflow. With GCC or Clang, compile and link the test build with:
+
+```text
+-O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=all
+```
+
+`-fno-sanitize-recover=all` makes the program stop at the first error; by default UBSan [prints a report and continues](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html), so a test run can still pass. Use sanitizers only in test and CI builds, not in release builds: they add runtime overhead (a [typical ASan slowdown is 2x](https://clang.llvm.org/docs/AddressSanitizer.html)).
+
+For binaries or libraries you cannot rebuild, run the tests under [Valgrind Memcheck](https://valgrind.org/docs/manual/quick-start.html), for example `valgrind --leak-check=full --error-exitcode=1 ./test_suite`. Memcheck cannot detect overruns of static or stack arrays, so use it alongside ASan, not instead of it.
+
 ### Autotools
 
 Auto configuration tools are popular on many Linux and Unix based systems, and the tools include _Autoconf_, _Automake_, _config_, and _Configure_. The tools work together to produce project files from scripts and template files. After the process completes, your project should be set up and ready to be made with `make`.
