@@ -347,6 +347,8 @@ We strongly recommend that all your containers should adhere to the principle of
 - **Baseline**: Minimally restrictive policy designed for common containerized workloads while preventing known privilege escalations. It restricts the most dangerous settings, enforcing default (masked) `/proc` mounts, restricting SELinux options, and prohibiting privileged containers (`securityContext.privileged`), `hostPath` volumes, and host networking or process namespaces (`hostNetwork`, `hostPID`, `hostIPC`).
 - **Restricted**: In addition to Baseline restrictions, it requires non-root execution (`runAsNonRoot: true`). For Linux Pods, it also requires disabling privilege escalation (`allowPrivilegeEscalation: false`), a `RuntimeDefault` or `Localhost` seccomp profile, and dropping `ALL` capabilities; only `NET_BIND_SERVICE` may be added back.
 
+For Pods using [user namespaces](https://kubernetes.io/docs/concepts/workloads/pods/user-namespaces/#integration-with-pod-security-admission-checks), non-root checks are relaxed; Baseline also relaxes its `/proc` masking check.
+
 Each of the profiles has defined settings baselines that can be found in more detail in the [Pod Security Standards profile definitions](https://kubernetes.io/docs/concepts/security/pod-security-standards/#profile-details).
 
 The Pod Security Admission Controller allows you to enforce, audit, or warn upon the violation of a defined policy. `audit` and `warn` modes can be utilized to determine if a particular Pod Security Standard would normally prevent the deployment of a pod when set to `enforce` mode.
@@ -368,7 +370,7 @@ Cluster administrators should properly organize and enforce policy on cluster na
 
 In addition to admission-level profile enforcement, workloads should implement defense-in-depth hardening controls in their pod and container specifications:
 
-- Set `readOnlyRootFilesystem: true` using the [security context guidance](#apply-security-context-to-your-pods-and-containers). [Pod Security Standards do not enforce this setting](https://kubernetes.io/docs/reference/access-authn-authz/psp-to-pod-security-standards/).
+- For Linux containers, set [`readOnlyRootFilesystem: true`](https://kubernetes.io/docs/reference/kubernetes-api/core/pod-v1/#SecurityContext) using the [security context guidance](#apply-security-context-to-your-pods-and-containers). [Pod Security Standards do not enforce this setting](https://kubernetes.io/docs/reference/access-authn-authz/psp-to-pod-security-standards/).
 - Use SELinux options for more fine-grained process controls.
 - Give each application its own dedicated Kubernetes Service Account.
 - If a Pod does not need Kubernetes API credentials, disable automatic token mounting with [`spec.automountServiceAccountToken: false`](https://kubernetes.io/docs/concepts/security/service-accounts/#assign-to-pod).
