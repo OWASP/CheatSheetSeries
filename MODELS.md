@@ -39,6 +39,7 @@ codex exec --model gpt-6-astra --cyber-access-program standard \
   > "$run_dir/astra-build.jsonl" 2> "$run_dir/astra-build.stderr"
 
 claude -p --model claude-opus-5-5 --permission-mode acceptEdits \
+  --allowedTools 'Read,Edit,Write,Glob,Grep,WebFetch,WebSearch' \
   --output-format json < "$run_dir/second-build.prompt.txt" \
   > "$run_dir/opus-build.json" 2> "$run_dir/opus-build.stderr"
 ```
@@ -56,6 +57,7 @@ codex exec --model gpt-daybreak-blue-latest --cyber-access-program daybreak_blue
 
 claude -p --model claude-sonnet-5-5 --permission-mode dontAsk \
   --tools 'Read,Grep,Glob,WebFetch,WebSearch' --strict-mcp-config \
+  --allowedTools 'Read,Grep,Glob,WebFetch,WebSearch' \
   --output-format json < "$run_dir/sonnet.prompt.txt" \
   > "$run_dir/sonnet.json" 2> "$run_dir/sonnet.stderr"
 ```
