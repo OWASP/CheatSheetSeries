@@ -371,7 +371,7 @@ In addition to admission-level profile enforcement, workloads should implement d
 - Set `readOnlyRootFilesystem: true` using the [security context guidance](#apply-security-context-to-your-pods-and-containers). [Pod Security Standards do not enforce this setting](https://kubernetes.io/docs/reference/access-authn-authz/psp-to-pod-security-standards/).
 - Use SELinux options for more fine-grained process controls.
 - Give each application its own dedicated Kubernetes Service Account.
-- If a Pod does not need Kubernetes API credentials, disable automatic token mounting with [`spec.automountServiceAccountToken: false`](https://kubernetes.io/docs/concepts/security/service-accounts/#assign-a-serviceaccount-to-a-pod).
+- If a Pod does not need Kubernetes API credentials, disable automatic token mounting with [`spec.automountServiceAccountToken: false`](https://kubernetes.io/docs/concepts/security/service-accounts/#assign-to-pod).
 
 If more granular policy enforcement is required beyond the three profiles (Privileged, Baseline, Restricted), third-party admission controllers like OPA Gatekeeper or Kyverno, or built-in Validating Admission Policy can be utilized.
 
