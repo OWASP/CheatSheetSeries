@@ -344,10 +344,10 @@ We strongly recommend that all your containers should adhere to the principle of
 [Pod Security Standards](https://kubernetes.io/docs/concepts/security/pod-security-standards/) combined with the [Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/) controller allow cluster administrators to enforce requirements on a pod's `securityContext` and pod specification fields. Three Pod Security Standard profiles exist:
 
 - **Privileged**: Unrestricted, allows for known privilege escalations. Intended for use with system and infrastructure level workloads that require privilege to operate properly. All securityContext settings are permitted.
-- **Baseline**: Minimally restrictive policy designed for common containerized workloads while preventing known privilege escalations. It restricts the most dangerous settings, enforcing default (masked) `/proc` mounts, restricting SELinux options, and prohibiting privileged containers (`securityContext.privileged`), `hostPath` volumes, and host networking or process namespaces (`hostNetwork`, `hostPID`, `hostIPC`). Note that [NetworkPolicy behavior for `hostNetwork` Pods depends on the network plugin](https://kubernetes.io/docs/concepts/services-networking/network-policies/#networkpolicy-and-hostnetwork-pods); verify enforcement rather than assuming these Pods receive the same isolation as other Pods.
-- **Restricted**: The most restrictive policy, designed to enforce current Pod hardening best practices at the expense of some compatibility. In addition to all Baseline restrictions, it enforces non-root execution (`runAsNonRoot: true`), disables privilege escalation (`allowPrivilegeEscalation: false`), enforces a read-only root filesystem (`readOnlyRootFilesystem: true`), and requires dropping unnecessary Linux capabilities (`capabilities.drop: ["ALL"]`).
+- **Baseline**: Minimally restrictive policy designed for common containerized workloads while preventing known privilege escalations. It restricts the most dangerous settings, enforcing default (masked) `/proc` mounts, restricting SELinux options, and prohibiting privileged containers (`securityContext.privileged`), `hostPath` volumes, and host networking or process namespaces (`hostNetwork`, `hostPID`, `hostIPC`).
+- **Restricted**: In addition to Baseline restrictions, it requires non-root execution (`runAsNonRoot: true`). For Linux Pods, it also requires disabling privilege escalation (`allowPrivilegeEscalation: false`), a `RuntimeDefault` or `Localhost` seccomp profile, and dropping `ALL` capabilities; only `NET_BIND_SERVICE` may be added back.
 
-Each of the profiles has defined settings baselines that can be found in more detail [here](https://kubernetes.io/docs/concepts/security/pod-security-standards/#profile-details).
+Each of the profiles has defined settings baselines that can be found in more detail in the [Pod Security Standards profile definitions](https://kubernetes.io/docs/concepts/security/pod-security-standards/#profile-details).
 
 The Pod Security Admission Controller allows you to enforce, audit, or warn upon the violation of a defined policy. `audit` and `warn` modes can be utilized to determine if a particular Pod Security Standard would normally prevent the deployment of a pod when set to `enforce` mode.
 
@@ -368,9 +368,10 @@ Cluster administrators should properly organize and enforce policy on cluster na
 
 In addition to admission-level profile enforcement, workloads should implement defense-in-depth hardening controls in their pod and container specifications:
 
+- Set `readOnlyRootFilesystem: true` using the [security context guidance](#apply-security-context-to-your-pods-and-containers). [Pod Security Standards do not enforce this setting](https://kubernetes.io/docs/reference/access-authn-authz/psp-to-pod-security-standards/).
 - Use SELinux options for more fine-grained process controls.
 - Give each application its own dedicated Kubernetes Service Account.
-- If a container does not need to access the Kubernetes API, disable mounting service account credentials (`automountServiceAccountToken: false`).
+- If a Pod does not need Kubernetes API credentials, disable automatic token mounting with [`spec.automountServiceAccountToken: false`](https://kubernetes.io/docs/concepts/security/service-accounts/#assign-a-serviceaccount-to-a-pod).
 
 If more granular policy enforcement is required beyond the three profiles (Privileged, Baseline, Restricted), third-party admission controllers like OPA Gatekeeper or Kyverno, or built-in Validating Admission Policy can be utilized.
 
@@ -501,6 +502,8 @@ A compromised application can attack neighboring applications. By default, Pods 
 It is strongly recommended that developers implement network segmentation, because it is a key security control that ensures that containers can only communicate with other approved containers and prevents attackers from pursuing lateral movement across containers. However, applying network segmentation in the cloud is challenging because of the “dynamic” nature of container network identities (IPs).
 
 Use the current [`networking.k8s.io/v1` NetworkPolicy API](https://kubernetes.io/docs/concepts/services-networking/network-policies/). Your cluster must use a network plugin that enforces NetworkPolicy; creating the resource alone has no effect without one.
+
+Note that [NetworkPolicy behavior for `hostNetwork` Pods depends on the network plugin](https://kubernetes.io/docs/concepts/services-networking/network-policies/#networkpolicy-and-hostnetwork-pods); verify enforcement rather than assuming these Pods receive the same isolation as other Pods.
 
 This illustrative ingress policy selects `segment=backend` Pods in `tenant-a` and allows TCP port 80 from `segment=frontend` Pods in that same namespace. Policies are additive: another policy can allow additional traffic. This policy does not restrict egress, and traffic from a Pod's own node remains allowed.
 
