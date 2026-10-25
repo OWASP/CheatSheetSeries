@@ -354,61 +354,31 @@ For cloud providers, there are at least four essential topics to touch upon:
 - Identity and access management: decreasing the blast radius
 - API quotas or service limits
 
-### 4.1 Services to Use
+### 4.1 Choosing a Secret Management Service
 
-It is best to use a designated secret management solution in any environment. Most cloud providers have at least one service that offers secret management. Of course, it's also possible to run a different secret management solution (e.g., HashiCorp Vault or Conjur) on compute resources within the cloud. We'll consider cloud provider service offerings in this section.
+When selecting a secret management solution in cloud environments, prioritize designated secret management services over general-purpose configuration stores. Key capabilities to evaluate and require:
 
-Sometimes it's possible to automatically rotate your secret, either via a service provided by your cloud provider or a (custom-built) function. Generally, you should prefer the cloud provider's solution since the barrier of entry and risk of misconfiguration are lower. If you use a custom solution, ensure the function's role to do its rotation can only be assumed by said function.
+- **Granular access control**: Support for fine-grained, least-privilege IAM policies scoped to individual secrets or secret versions rather than account-wide access.
+- **Automated rotation support**: Native lifecycle hooks or integration with automated functions to rotate credentials periodically and on demand, enabling phased or dual-credential rotation patterns to minimize service disruption.
+- **Strong encryption at rest and in transit**: Enforced TLS for all API communication and robust encryption at rest, including support for customer-managed keys (CMK) when policy requires organizational control over root keys.
+- **Centralized audit logging**: Comprehensive logging of secret creation, read, modification, and access attempts integrated with organizational audit trails and alerting.
+- **Version tracking and recovery capabilities**: Support for secret versioning to safely deploy and rotate credentials, alongside rollback and recovery options to prevent accidental data loss.
 
-#### 4.1.1 AWS
+#### 4.1.1 Native Cloud Provider Services
 
-For AWS, the recommended solution is [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html).
+Each major cloud provider offers a managed secrets service that integrates with its identity and monitoring ecosystem:
 
-Permissions are granted at the secret level. Check out the [Secrets Manager best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html).
+- **AWS**: [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html) provides automatic rotation, fine-grained IAM policies, and cross-region replication (see [AWS Secrets Manager best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html)). While [Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) is an alternative for configuration and basic secrets, it requires selecting the `SecureString` type for KMS encryption and relies on custom automation rather than built-in rotation.
+- **Google Cloud**: [Secret Manager](https://cloud.google.com/secret-manager/docs) provides secret-level IAM controls, versioning, and Cloud Audit Logs integration (see [Secret Manager best practices](https://cloud.google.com/secret-manager/docs/best-practices)).
+- **Microsoft Azure**: [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/) provides secret, key, and certificate management with [role-based access control (RBAC)](https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-guide) (see [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices)).
 
-It is also possible to use the [Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html), which is cheaper, but that has a few downsides:
+#### 4.1.2 Hardware Security Modules (HSMs)
 
-- you'll need to make sure you've specified encryption yourself (secrets manager does that by default)
-- it offers fewer auto-rotation capabilities (you will likely need to build a custom function)
-- cross-account sharing is limited to [advanced parameters](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-shared-parameters.html); sharing encrypted `SecureString` values also requires a customer managed AWS KMS key and separately granting access to that key
-- it doesn't support cross-region replication
-- there are fewer [Security Hub Controls](https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp-controls.html) available
+When compliance standards (such as FIPS 140 requirements) or regulatory frameworks mandate single-tenant cryptographic custody, dedicated appliances such as [AWS CloudHSM](https://aws.amazon.com/cloudhsm/) and [Azure Dedicated HSM](https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/) provide tenant-isolated key control, though they introduce operational and backup overhead compared to managed cloud key services.
 
-##### 4.1.1.1 AWS Nitro Enclaves
+#### 4.1.3 Confidential Computing and Enclaves
 
-With [AWS Nitro Enclaves](https://aws.amazon.com/ec2/nitro/nitro-enclaves/), you can create isolated compute environments to further protect and securely process highly sensitive data such as secrets. Enclaves are hardened, and restrict operator access, providing a trusted execution environment. A key feature is cryptographic attestation, which allows you to verify the enclave's identity and ensure only authorized code is running before provisioning secrets to it. This makes it a strong choice for scenarios requiring high assurance in secret handling.
-
-##### 4.1.1.2 AWS CloudHSM
-
-For secrets being used in highly confidential applications, it may be needed to have more control over the encryption and storage of these keys. AWS offers [CloudHSM](https://aws.amazon.com/cloudhsm/), which lets you bring your own key (BYOK) for AWS services. Thus, you will have more control over keys' creation, lifecycle, and durability. Scale a CloudHSM cluster by [adding or removing HSMs](https://docs.aws.amazon.com/cloudhsm/latest/userguide/add-remove-hsm.html); the service makes [periodic encrypted backups of cluster users, keys, and configuration](https://docs.aws.amazon.com/cloudhsm/latest/userguide/manage-backups.html). The cloud service provider, Amazon, will not have any access to the key material stored in **AWS CloudHSM**.
-
-#### 4.1.2 GCP
-
-For GCP, the recommended service is [Secret Manager](https://cloud.google.com/secret-manager/docs).
-
-Permissions are granted at the secret level.
-
-Check out the [Secret Manager best practices](https://cloud.google.com/secret-manager/docs/best-practices).
-
-##### 4.1.2.1 Google Cloud Confidential Computing
-
-[GCP Confidential Computing](https://cloud.google.com/confidential-computing) is a technology that encrypts data in-use, while it is being processed. This is achieved through services like **Confidential VMs** and **Confidential GKE Nodes**, which leverage AMD Secure Encrypted Virtualization (SEV). This ensures that even Google personnel cannot view the contents of the memory of your virtual machines, providing a high degree of protection for secrets that must be held in memory.
-
-#### 4.1.3 Azure
-
-For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/).
-
-Azure's [role-based access control (RBAC)](https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-guide) supports role assignments for individual secrets, keys, and certificates. Follow the [Identity and Access Management guidance](#43-identity-and-access-management-iam) for access scopes and vault boundaries.
-
-Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices).
-
-##### 4.1.3.1 Azure Confidential Computing
-
-With [Azure Confidential Computing](https://azure.microsoft.com/en-us/solutions/confidential-compute/#overview), you can create trusted execution environments. This technology isolates sensitive data within a protected container, ensuring that it is encrypted both at rest, in transit, and in use. Services like **Azure Confidential Virtual Machines** and **Confidential Containers on ACI** utilize technologies like Intel SGX and AMD SEV-SNP to create these secure enclaves. This prevents unauthorized access from cloud administrators, malware, or other tenants, making it a robust solution for secret management.
-
-##### 4.1.3.2 Azure Dedicated HSM
-
-For secrets being used in Azure environments and requiring special security considerations, Azure offers [Azure Dedicated HSM](https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/). This allows you more control over the secrets stored on it, including enhanced administrative and cryptographic control. The cloud service provider, Microsoft, will not have any access to the key material stored in Azure Dedicated HSM.
+To protect secrets in memory during processing from host operators, hypervisors, or adjacent tenants, confidential computing and enclave technologies provide hardware-isolated execution environments. Provider implementations include [AWS Nitro Enclaves](https://aws.amazon.com/ec2/nitro/nitro-enclaves/), [Google Cloud Confidential Computing](https://cloud.google.com/confidential-computing), and [Azure Confidential Computing](https://azure.microsoft.com/en-us/solutions/confidential-compute/#overview).
 
 #### 4.1.4 Other clouds, Multi-cloud, and Cloud agnostic
 
