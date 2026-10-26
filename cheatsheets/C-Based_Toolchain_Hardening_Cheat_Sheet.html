@@ -1144,6 +1144,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sanitizers-and-valgrind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanitizers and Valgrind
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4829,6 +4840,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sanitizers-and-valgrind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sanitizers and Valgrind
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5183,6 +5205,12 @@
 </code></pre></div>
 <p>You should also change <code>__attribute__</code> <code>((visibility</code> <code>("hidden")))</code> to <code>__attribute__</code> <code>((visibility</code> <code>("default")))</code>.</p>
 <p>Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify it fails gracefully. Remember, a bad actor is not going to be courteous when they attempt to cause your program to fail, and it's your project that takes egg on the face by way of a bug report or guest appearance on <a href="https://nmap.org/mailman/listinfo/fulldisclosure">Full Disclosure</a> or <a href="https://www.securityfocus.com/archive">Bugtraq</a> - not <code>&lt;some library&gt;</code> you included.</p>
+<h4 id="sanitizers-and-valgrind">Sanitizers and Valgrind<a class="headerlink" href="#sanitizers-and-valgrind" title="Permanent link">&para;</a></h4>
+<p>Run your tests with runtime checks enabled to catch bugs on paths the tests exercise. <a href="https://clang.llvm.org/docs/AddressSanitizer.html">AddressSanitizer (ASan)</a> can detect out-of-bounds accesses and use-after-free; <a href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">UndefinedBehaviorSanitizer (UBSan)</a> can detect undefined behavior such as signed integer overflow. With GCC or Clang, add these flags when compiling and linking a test build:</p>
+<div class="highlight"><pre><span></span><code>-O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=all
+</code></pre></div>
+<p><code>-O1</code>, <code>-g</code>, and <code>-fno-omit-frame-pointer</code> help produce useful error reports. Most UBSan checks <a href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">report errors and continue by default</a>, so a test can pass despite a reported bug; <code>-fno-sanitize-recover=all</code> makes detected errors terminate the program with a nonzero exit status. Use this combined ASan/UBSan build during development and continuous integration (CI), but do not ship it: <a href="https://clang.llvm.org/docs/AddressSanitizer.html#security-considerations">ASan's runtime is intended for testing</a> and typically doubles execution time.</p>
+<p>On a <a href="https://valgrind.org/info/platforms.html">supported platform</a>, run an executable built without ASan under <a href="https://valgrind.org/docs/manual/quick-start.html">Valgrind Memcheck</a> when you cannot rebuild it or a library it uses. For example, <code>valgrind --leak-check=full --error-exitcode=1 ./test_suite</code> checks for memory errors and <a href="https://valgrind.org/docs/manual/mc-manual.html">reports leaks in detail</a>; <a href="https://valgrind.org/docs/manual/manual-core.html"><code>--error-exitcode</code></a> makes reported errors fail the test. <a href="https://valgrind.org/docs/manual/quick-start.html">Memcheck cannot detect overruns of static or stack arrays</a>. For code you can rebuild, use ASan in a separate test run.</p>
 <h3 id="autotools">Autotools<a class="headerlink" href="#autotools" title="Permanent link">&para;</a></h3>
 <p>Auto configuration tools are popular on many Linux and Unix based systems, and the tools include <em>Autoconf</em>, <em>Automake</em>, <em>config</em>, and <em>Configure</em>. The tools work together to produce project files from scripts and template files. After the process completes, your project should be set up and ready to be made with <code>make</code>.</p>
 <p>When using auto configuration tools, there are a few files of interest worth mentioning. The files are part of the Autotools chain and include <code>m4</code> and the various <code>*.in</code>, <code>*.ac</code> (Autoconf), and <code>*.am</code> (Automake) files. At times, you will have to open them, or the resulting makefiles, to tune the "stock" configuration.</p>
