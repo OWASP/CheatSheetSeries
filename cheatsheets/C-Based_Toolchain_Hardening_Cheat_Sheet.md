@@ -90,6 +90,18 @@ You should also change `__attribute__` `((visibility` `("hidden")))` to `__attri
 
 Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify it fails gracefully. Remember, a bad actor is not going to be courteous when they attempt to cause your program to fail, and it's your project that takes egg on the face by way of a bug report or guest appearance on [Full Disclosure](https://nmap.org/mailman/listinfo/fulldisclosure) or [Bugtraq](https://www.securityfocus.com/archive) - not `<some library>` you included.
 
+#### Sanitizers and Valgrind
+
+Run your tests with runtime checks enabled to catch bugs on paths the tests exercise. [AddressSanitizer (ASan)](https://clang.llvm.org/docs/AddressSanitizer.html) can detect out-of-bounds accesses and use-after-free; [UndefinedBehaviorSanitizer (UBSan)](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html) can detect undefined behavior such as signed integer overflow. With GCC or Clang, add these flags when compiling and linking a test build:
+
+```text
+-O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=all
+```
+
+`-O1`, `-g`, and `-fno-omit-frame-pointer` help produce useful error reports. Most UBSan checks [report errors and continue by default](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html), so a test can pass despite a reported bug; `-fno-sanitize-recover=all` makes detected errors terminate the program with a nonzero exit status. Use this combined ASan/UBSan build during development and continuous integration (CI), but do not ship it: [ASan's runtime is intended for testing](https://clang.llvm.org/docs/AddressSanitizer.html#security-considerations) and typically doubles execution time.
+
+On a [supported platform](https://valgrind.org/info/platforms.html), run an executable built without ASan under [Valgrind Memcheck](https://valgrind.org/docs/manual/quick-start.html) when you cannot rebuild it or a library it uses. For example, `valgrind --leak-check=full --error-exitcode=1 ./test_suite` checks for memory errors and [reports leaks in detail](https://valgrind.org/docs/manual/mc-manual.html); [`--error-exitcode`](https://valgrind.org/docs/manual/manual-core.html) makes reported errors fail the test. [Memcheck cannot detect overruns of static or stack arrays](https://valgrind.org/docs/manual/quick-start.html). For code you can rebuild, use ASan in a separate test run.
+
 ### Autotools
 
 Auto configuration tools are popular on many Linux and Unix based systems, and the tools include _Autoconf_, _Automake_, _config_, and _Configure_. The tools work together to produce project files from scripts and template files. After the process completes, your project should be set up and ready to be made with `make`.
