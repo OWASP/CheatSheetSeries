@@ -92,15 +92,15 @@ Nearly everyone gets a positive test right, so no more needs to be said. The neg
 
 #### Sanitizers and Valgrind
 
-Run the test suite under runtime error detectors. [AddressSanitizer (ASan)](https://clang.llvm.org/docs/AddressSanitizer.html) finds out-of-bounds accesses and use-after-free; [UndefinedBehaviorSanitizer (UBSan)](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html) finds undefined behavior such as signed integer overflow. With GCC or Clang, compile and link the test build with:
+Run your tests with runtime checks enabled to catch bugs on paths the tests exercise. [AddressSanitizer (ASan)](https://clang.llvm.org/docs/AddressSanitizer.html) can detect out-of-bounds accesses and use-after-free; [UndefinedBehaviorSanitizer (UBSan)](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html) can detect undefined behavior such as signed integer overflow. With GCC or Clang, add these flags when compiling and linking a test build:
 
 ```text
 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=all
 ```
 
-`-fno-sanitize-recover=all` makes the program stop at the first error; by default UBSan [prints a report and continues](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html), so a test run can still pass. Use sanitizers only in test and CI builds, not in release builds: they add runtime overhead (a [typical ASan slowdown is 2x](https://clang.llvm.org/docs/AddressSanitizer.html)).
+`-O1`, `-g`, and `-fno-omit-frame-pointer` help produce useful error reports. Most UBSan checks [report errors and continue by default](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html), so a test can pass despite a reported bug; `-fno-sanitize-recover=all` makes detected errors terminate the program with a nonzero exit status. Use this combined ASan/UBSan build during development and continuous integration (CI), but do not ship it: [ASan's runtime is intended for testing](https://clang.llvm.org/docs/AddressSanitizer.html#security-considerations) and typically doubles execution time.
 
-For binaries or libraries you cannot rebuild, run the tests under [Valgrind Memcheck](https://valgrind.org/docs/manual/quick-start.html), for example `valgrind --leak-check=full --error-exitcode=1 ./test_suite`. Memcheck cannot detect overruns of static or stack arrays, so use it alongside ASan, not instead of it.
+On a [supported platform](https://valgrind.org/info/platforms.html), run an executable built without ASan under [Valgrind Memcheck](https://valgrind.org/docs/manual/quick-start.html) when you cannot rebuild it or a library it uses. For example, `valgrind --leak-check=full --error-exitcode=1 ./test_suite` checks for memory errors and [reports leaks in detail](https://valgrind.org/docs/manual/mc-manual.html); [`--error-exitcode`](https://valgrind.org/docs/manual/manual-core.html) makes reported errors fail the test. [Memcheck cannot detect overruns of static or stack arrays](https://valgrind.org/docs/manual/quick-start.html). For code you can rebuild, use ASan in a separate test run.
 
 ### Autotools
 
