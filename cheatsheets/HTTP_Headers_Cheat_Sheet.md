@@ -110,7 +110,7 @@ The HTTP [`Strict-Transport-Security`](https://developer.mozilla.org/en-US/docs/
 
 > `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
 
-- *NOTE*: Read carefully how this header works before using it. If the HSTS header is misconfigured or if there is a problem with the SSL/TLS certificate being used, legitimate users might be unable to access the website. For example, if the HSTS header is set to a very long duration and the SSL/TLS certificate expires or is revoked, legitimate users might be unable to access the website until the HSTS header duration has expired.
+- *NOTE*: Keep HTTPS and certificate renewal working for the host and any subdomains covered by the policy. HSTS [requires browsers to terminate connections with certificate validation errors](https://www.rfc-editor.org/rfc/rfc6797.html#section-8.4). If a certificate expires or is revoked, restore a valid certificate to recover access; the HSTS `max-age` does not need to expire first.
 
 See the [HSTS preload requirements](https://hstspreload.org/) before requesting preload inclusion.
 
