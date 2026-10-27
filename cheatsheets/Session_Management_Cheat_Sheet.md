@@ -312,7 +312,7 @@ Both the idle and absolute timeout values are highly dependent on how critical t
 
 When a session expires, the web application must take active actions to invalidate the session on both sides, client and server. The latter is the most relevant and mandatory from a security perspective.
 
-For most session exchange mechanisms, client side actions to invalidate the session ID are based on clearing out the token value. For example, to invalidate a cookie it is recommended to provide an empty (or invalid) value for the session ID, and set the `Expires` (or `Max-Age`) attribute to a date from the past (in case a persistent cookie is being used): `Set-Cookie: id=; Expires=Friday, 17-May-03 18:45:00 GMT`
+To remove the session cookie from the browser, [set `Max-Age=0` or an `Expires` date in the past, using the original cookie's name, `Path`, and `Domain` (if specified)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#creating_removing_and_updating_cookies). For a host-only `id` cookie set with `Path=/`, an example is `Set-Cookie: id=; Max-Age=0; Path=/`.
 
 In order to close and invalidate the session on the server side, it is mandatory for the web application to take active actions when the session expires, or the user actively logs out, by using the functions and methods offered by the session management mechanisms, such as `HttpSession.invalidate()` (J2EE), `Session.Abandon()` (ASP .NET) or `session_destroy()/unset()` (PHP).
 
