@@ -718,24 +718,6 @@ This attack requires PHP to be installed on the server. Again, if you can run an
 echo('IPT>alert("XSS")</SCRIPT>'); ?>
 ```
 
-### IMG Embedded Commands
-
-This attack only works when this is injected (like a web-board) in a web page behind password protection and that password protection works with other commands on the same domain. This can be used to delete users, add users (if the user who visits the page is an administrator), send credentials elsewhere, etc. This is one of the lesser used but more useful XSS vectors:
-
-```html
-<IMG SRC="http://www.thesiteyouareon.com/somecommand.php?somevariables=maliciouscode">
-```
-
-#### IMG Embedded Commands part II
-
-This is more scary because there are absolutely no identifiers that make it look suspicious other than it is not hosted on your own domain. The vector uses a 302 or 304 (others work too) to redirect the image back to a command. So a normal `<IMG SRC="httx://badguy.com/a.jpg">` could actually be an attack vector to run commands as the user who views the image link. Here is the `.htaccess` (under Apache) line to accomplish the vector:
-
-```log
-Redirect 302 /a.jpg http://victimsite.com/admin.asp&deleteuser
-```
-
-(Thanks to Timo for part of this)
-
 ### Cookie Manipulation
 
 This method is pretty obscure but there are a few examples where `<META` is allowed and it can be used to overwrite cookies. There are other examples of sites where instead of fetching the username from a database it is stored inside of a cookie to be displayed only to the user who visits the page. With these two scenarios combined you can modify the victim's cookie which will be displayed back to them as JavaScript (you can also use this to log people out or change their user states, get them to log in as you, etc):
