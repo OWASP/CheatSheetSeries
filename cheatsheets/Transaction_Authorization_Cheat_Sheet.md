@@ -53,7 +53,7 @@ Some applications allow a user to chose how their transactions will be authorize
 Since developers need to prevent users from authorizing fraudulent operations, their applications should not require a user to perform the same actions for authentication and transaction authorization. Consider the following example:
 
 1. An application is using the same method for user authentication and for transaction authorization {i.e. with an OTP token).
-2. Malware could use a man-in-the-middle attack to present a user with a false error message when they submit credentials to the application, which could trick the user into repeating the authentication procedure. The first credential will be used by the malware for authentication and the second credential would be used to authorize a fraudulent transaction. Even challenge-response schemes could be abused using this scenario, since malware can present a challenge taken from a fraudulent transaction and trick the user to provide a response. Such an attack scenario is used widely in [malware attacks against electronic banking](http://securityintelligence.com/back-basics-malware-authors-downgrade-tactics-stay-radar/#.VX_qI_krLDc).
+2. Malware could use a man-in-the-middle attack to present a user with a false error message when they submit credentials to the application, which could trick the user into repeating the authentication procedure. The first credential will be used by the malware for authentication and the second credential would be used to authorize a fraudulent transaction. Even challenge-response schemes could be abused using this scenario, since malware can present a challenge taken from a fraudulent transaction and trick the user to provide a response. Such an attack scenario is used widely in [malware attacks against electronic banking](https://web.archive.org/web/20241210210645/https://securityintelligence.com/back-basics-malware-authors-downgrade-tactics-stay-radar/).
 
 To stop such attacks, developers can make sure that authentication actions are different than transaction authorizations by:
 
@@ -61,7 +61,7 @@ To stop such attacks, developers can make sure that authentication actions are d
 - Employing different actions in an external security component (i.e using a different mode of operation in a CAP reader)
 - Presenting the user with a clear message about what they are "signing" (What You See Is What You Sign Principle)
 
-Social engineering methods [can be used despite authentication and operation authorization methods](http://securityintelligence.com/tatanga-attack-exposes-chiptan-weaknesses/#.VZAy9PkrLDc) but the application shouldn't make it easier for such attack scenarios.
+Social engineering methods [can be used despite authentication and operation authorization methods](https://web.archive.org/web/20250206121430/https://securityintelligence.com/tatanga-attack-exposes-chiptan-weaknesses/) but the application shouldn't make it easier for such attack scenarios.
 
 ### 1.5 Each transaction should be authorized using unique authorization credentials
 
