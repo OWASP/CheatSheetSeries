@@ -335,7 +335,11 @@ Read more about rootless mode and its limitations, installation and usage instru
 
 ### RULE \#12 - Utilize Docker Secrets for Sensitive Data Management
 
-Docker Secrets provide a secure way to store and manage sensitive data such as passwords, tokens, and SSH keys. Using Docker Secrets helps in avoiding the exposure of sensitive data in container images or in runtime commands.
+Managing sensitive data—such as passwords, private repository tokens, and SSH keys—requires distinct controls at runtime and during the image build process. Never hardcode credentials into container images, configuration files, or image metadata.
+
+#### Runtime Secrets
+
+Docker Secrets provide a secure way to store and manage sensitive data during container runtime without exposing credentials in container images or runtime commands.
 
 ```bash
 docker secret create my_secret /path/to/super-secret-data.txt
@@ -357,6 +361,54 @@ services:
 ```
 
 While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) and [Kubernetes Security Cheat Sheet](Kubernetes_Security_Cheat_Sheet.md) for more information.
+
+#### Build-Time Secrets
+
+Building images often requires accessing private resources, such as private package registries (e.g., npm or PyPI), private repositories via SSH, or internal API services.
+
+**Build-Time Secret Leakage Risks:**
+
+Do not pass sensitive credentials using `ARG` or `ENV` instructions in your Dockerfile. Values passed to `ARG` and `ENV` persist in the image layer metadata, configuration history, and container commit history. Anyone with read access to the image or published container registry can extract these cleartext credentials using tools like `docker history` or container layer inspection tools.
+
+Similarly, do not use `COPY` or `ADD` to stage credential files (such as `.npmrc` or private keys) into intermediate layers with the intent of deleting them in a subsequent `RUN rm` command. Container filesystem layers are immutable; files added in an earlier layer remain fully retrievable from that intermediate layer even if deleted in a later instruction. [NIST SP 800-190 (Section 3.1.3)](https://csrc.nist.gov/publications/detail/sp/800-190/final) identifies embedded cleartext secrets as a primary image vulnerability and advises against baking static secrets into images.
+
+**Recommended Mitigation: BuildKit Secret Mounts:**
+
+To use secrets during a build without baking them into any image layer, use [Docker Build secrets](https://docs.docker.com/build/building/secrets/) with BuildKit (`RUN --mount=type=secret`).
+
+Secret mounts expose sensitive data only as a temporary, in-memory filesystem mount (by default at `/run/secrets/<id>`) or environment variable for the duration of a specific `RUN` command. When the command completes, the secret is detached and is never written to the intermediate layer or final container filesystem:
+
+```dockerfile
+# syntax=docker/dockerfile:1
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+
+# Mount the secret temporarily into memory during package installation
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
+    npm ci --omit=dev
+
+COPY . .
+```
+
+Pass the secret when executing the build command using the `--secret` flag:
+
+```bash
+# Provide secret from a host file
+docker build --secret id=npmrc,src=$HOME/.npmrc -t my-app .
+
+# Provide secret from a host environment variable
+docker build --secret id=npmrc,env=NPM_TOKEN -t my-app .
+```
+
+**Multi-Stage Build Caveats:**
+
+While multi-stage builds help produce minimal production runtime images by copying only compiled artifacts to the final stage, they do not automatically protect build-time secrets if credentials are copied into early stages:
+
+- **Build cache exposure:** Intermediate builder stages and their layers can persist in local build caches or remote cache backends (such as registry cache manifests), exposing credentials to anyone with cache access.
+- **Accidental artifact inclusion:** Unrestricted copy instructions (such as `COPY . .`) without a strict `.dockerignore` file can inadvertently pull host secret files (such as `.env` or credential files) into both intermediate and final images.
+
+Always combine multi-stage builds with BuildKit secret mounts and a comprehensive `.dockerignore` file rather than relying on stage separation or file deletion to conceal sensitive data.
 
 ### RULE \#13 - Enhance Supply Chain Security
 
@@ -380,3 +432,5 @@ Building on the principles in [Rule \#9](#rule-9---integrate-container-scanning-
 
 - [Docker Engine Security](https://docs.docker.com/engine/security/)
 - [Docker Build Attestations](https://docs.docker.com/build/metadata/attestations/)
+- [Docker Build Secrets](https://docs.docker.com/build/building/secrets/)
+- [NIST SP 800-190: Application Container Security Guide](https://csrc.nist.gov/publications/detail/sp/800-190/final)
