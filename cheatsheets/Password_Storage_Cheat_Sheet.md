@@ -176,7 +176,7 @@ The work factor for PBKDF2 is implemented through an iteration count, which shou
 - PPBKDF2-SHA256: cost 5
 - PPBKDF2-SHA1: cost 10
 
-These configuration settings are equivalent in the defense they provide. ([Number as of december 2022, based on testing of RTX 4000 GPUs](https://tobtu.com/minimum-password-settings/))
+These configuration settings are equivalent in the defense they provide. ([Number as of December 2022, based on testing of RTX 4000 GPUs](https://tobtu.com/minimum-password-settings/))
 
 #### PBKDF2 Pre-Hashing
 
