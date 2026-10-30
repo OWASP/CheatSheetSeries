@@ -26,9 +26,9 @@ When you use a modern web framework, you need to know how your framework prevent
 
 ## XSS Defense Philosophy
 
-In order for an XSS attack to be successful, an attacker must be able to insert and execute malicious content in a webpage. Thus, all variables in a web application needs to be protected. Ensuring that **all variables** go through validation and are then escaped or sanitized is known as **perfect injection resistance**. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped or sanitized.
+Preventing XSS requires ensuring that untrusted data is handled safely whenever it reaches a browser sink. This goal is sometimes called perfect injection resistance: untrusted data must be handled safely along every path to a potentially dangerous sink.
 
-However, no framework is perfect and security gaps still exist in popular frameworks like React and Angular. Output encoding and HTML sanitization help address those gaps.
+The appropriate protection depends on how the data is used. Prefer safe APIs that treat data as text. When inserting data into a context that interprets syntax, use the appropriate context-specific output encoding. When an application needs to accept user-authored HTML, use a maintained HTML sanitizer. Input validation can enforce expected formats, but it does not replace these protections. Framework security features help prevent XSS, but unsafe APIs and framework bypasses can reintroduce vulnerabilities.
 
 ## Output Encoding
 
@@ -100,7 +100,7 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 
 ### Output Encoding for “CSS Contexts”
 
-“CSS Contexts” refer to variables placed into inline CSS, which is common when developers want their users to customize the look and feel of their webpages. Since CSS is surprisingly powerful, it has been used for many types of attacks. **Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.**
+“CSS Contexts” refer to data inserted into CSS, such as inline styles or style sheets. Do not interpolate untrusted data directly into CSS source, including selectors, property names, or declaration blocks. Placing data inside a CSS property value does not by itself make arbitrary input safe, because the input may alter the intended CSS syntax.
 
 ```HTML
 <style> selector { property : $varUnsafe; } </style>
@@ -108,7 +108,7 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 <span style="property : $varUnsafe">Oh no</span>
 ```
 
-When changing styles with JavaScript, use a fixed property such as `element.style.color` with a value from an application-defined allowlist. [CSS property assignment](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty) sets a CSS value; it does not automatically CSS-encode it. Do not let untrusted input choose the property or supply an entire declaration block. Properties that accept URLs require URL validation as well.
+When dynamic styling is needed, use a CSSOM API such as [`element.style.setProperty()`](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty) with a fixed property name and a value constrained by an allowlist specific to that property. The API sets a CSS property value, but does not validate whether that value is appropriate for your application's security requirements. Properties that can load resources, such as `background-image`, require separate URL validation against the schemes and destinations your application permits.
 
 ### Output Encoding for “URL Contexts”
 
@@ -202,9 +202,7 @@ Validate attributes separately. Allowing a tag name does not make later DOM oper
 
 [`insertAdjacentText()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentText) requires a position and a text value. In the example, `"beforeend"` appends a text node inside the element. Use text sinks on ordinary elements, not script or style elements.
 
-**Safe HTML Attributes include:** `align`, `alink`, `alt`, `bgcolor`, `border`, `cellpadding`, `cellspacing`, `class`, `color`, `cols`, `colspan`, `coords`, `dir`, `face`, `height`, `hspace`, `ismap`, `lang`, `marginheight`, `marginwidth`, `multiple`, `nohref`, `noresize`, `noshade`, `nowrap`, `ref`, `rel`, `rev`, `rows`, `rowspan`, `scrolling`, `shape`, `span`, `summary`, `tabindex`, `title`, `usemap`, `valign`, `value`, `vlink`, `vspace`, `width`.
-
-For attributes not reported above, ensure that if JavaScript code is provided as a value, it cannot be executed.
+There is no universally safe list of HTML attributes. Safety depends on the element, attribute, value, and how the value is used. Keep element and attribute names fixed, and apply the context-specific protections described above. In particular, URL-bearing attributes require URL validation, while attributes that interpret code or HTML need protections appropriate to those contexts.
 
 ## Other Controls
 
@@ -214,8 +212,8 @@ Consider adopting the following controls in addition to the above.
 
 - Cookie Attributes - These change how JavaScript and browsers can interact with cookies. Cookie attributes try to limit the impact of an XSS attack but don’t prevent the execution of malicious content or address the root cause of the vulnerability.
 - Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so it should not be your primary defense mechanism. Use a CSP as an additional layer of defense and have a look at the [cheatsheet here](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
-- Trusted Types - On Chromium-based browsers, enable [Trusted Types](https://web.dev/articles/trusted-types) by adding `Content-Security-Policy: require-trusted-types-for 'script'`. This causes DOM XSS sinks (`innerHTML`, `outerHTML`, `document.write`, `script.src`, etc.) to reject plain strings, forcing all assignments to go through a vetted policy. It is one of the few controls that eliminates entire classes of DOM XSS rather than mitigating them. Combine with a default policy that delegates to a sanitizer (e.g. DOMPurify) for legacy code paths.
-- Web Application Firewalls - These look for known attack strings and block them. WAF’s are unreliable and new bypass techniques are being discovered regularly. WAFs also don’t address the root cause of an XSS vulnerability. In addition, WAFs also miss a class of XSS vulnerabilities that operate exclusively client-side. WAFs are not recommended for preventing XSS, especially DOM-Based XSS.
+- Trusted Types - Where supported, enforce [Trusted Types](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API) using the Content Security Policy directive `require-trusted-types-for 'script'`. This makes covered DOM XSS injection sinks reject plain strings and require appropriately typed values created through policies. Trusted Types does not sanitize input by itself: policies must apply suitable validation or sanitization, and overly permissive policies can undermine the protection. Consider using the `trusted-types` CSP directive to restrict which policy names may be created. Check [MDN's browser compatibility information](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API#browser_compatibility) for your target browsers. A polyfill or tinyfill can help reuse policy code, but does not provide equivalent native sink-level enforcement in browsers that lack Trusted Types support.
+- Web Application Firewalls (WAFs) - WAFs can provide an additional layer of defense, but they cannot reliably prevent all XSS attacks or fix vulnerable application code. They may miss DOM-based XSS that occurs entirely in the browser. Do not rely on a WAF as a substitute for context-aware output encoding, safe DOM APIs, or HTML sanitization.
 
 ### XSS Prevention Rules Summary
 
@@ -343,3 +341,5 @@ See the [XSS Filter Evasion Cheat Sheet](XSS_Filter_Evasion_Cheat_Sheet.md) for 
 
 - [OWASP Java Encoder: Output Contexts and Boundaries](https://github.com/OWASP/owasp-java-encoder/blob/main/docs/contexts.md#encode-for-the-parser-that-receives-the-value)
 - [DOMPurify Documentation](https://github.com/cure53/DOMPurify)
+- [CSSStyleDeclaration: setProperty() method](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty)
+- [Trusted Types API](https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API)
