@@ -13,12 +13,12 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 ## Common Attacks
 
-- [Injection](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa8-injection.md) - this usually includes but is not limited to:
+- [Injection](https://github.com/OWASP/API-Security/blob/master/editions/2019/en/0xa8-injection.md) - this usually includes but is not limited to:
     - [SQL](https://owasp.org/www-community/attacks/SQL_Injection) and [NoSQL](https://www.netsparker.com/blog/web-security/what-is-nosql-injection/) injection
     - [OS Command injection](https://owasp.org/www-community/attacks/Command_Injection)
     - [SSRF](https://portswigger.net/web-security/ssrf) and [CRLF](https://owasp.org/www-community/vulnerabilities/CRLF_Injection) [injection](https://www.acunetix.com/websitesecurity/crlf-injection/)/[Request](https://portswigger.net/web-security/request-smuggling) [Smuggling](https://www.pentestpartners.com/security-blog/http-request-smuggling-a-how-to/)
 - [DoS](https://owasp.org/www-community/attacks/Denial_of_Service) ([Denial of Service](https://www.cloudflare.com/learning/ddos/glossary/denial-of-service/))
-- Abuse of broken authorization: either [improper](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) or [excessive](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa3-excessive-data-exposure.md) access, including [IDOR](https://portswigger.net/web-security/access-control/idor)
+- Abuse of broken authorization: either [improper](https://github.com/OWASP/API-Security/blob/master/editions/2019/en/0xa1-broken-object-level-authorization.md) or [excessive](https://github.com/OWASP/API-Security/blob/master/editions/2019/en/0xa3-excessive-data-exposure.md) access, including [IDOR](https://portswigger.net/web-security/access-control/idor)
 - Batching Attacks, a GraphQL-specific method of brute force attack
 - Abuse of insecure default configurations
 
@@ -190,7 +190,7 @@ However, containerization platforms tend to make this task much easier. See the 
 To ensure that a GraphQL API has proper access control, do the following:
 
 - Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with [RBAC](Authorization_Cheat_Sheet.md#prefer-attribute-and-relationship-based-access-control-over-rbac) or other access control mechanisms.
-    - This will prevent [IDOR](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) issues, including both [BOLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) and [BFLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md).
+    - This will prevent [IDOR](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) issues, including both [BOLA](https://github.com/OWASP/API-Security/blob/master/editions/2019/en/0xa1-broken-object-level-authorization.md) and [BFLA](https://github.com/OWASP/API-Security/blob/master/editions/2019/en/0xa5-broken-function-level-authorization.md).
 - Enforce authorization checks on both edges and nodes (see example [bug report](https://hackerone.com/reports/489146) where nodes did not have authorization checks but edges did).
 - Use [Interfaces](https://graphql.org/learn/schema/#interfaces) and [Unions](https://graphql.org/learn/schema/#union-types) to create structured, hierarchical data types which can be used to return more or fewer object properties, according to requester permissions.
 - Query and Mutation [Resolvers](https://graphql.org/learn/execution/#root-fields-resolvers) can be used to perform access control validation, possibly using some RBAC middleware.
@@ -199,7 +199,7 @@ To ensure that a GraphQL API has proper access control, do the following:
 
 #### General Data Access
 
-It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called [Broken Object Level Authentication](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md), also known as [IDOR](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md).
+It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called [Broken Object Level Authentication](https://github.com/OWASP/API-Security/blob/master/editions/2019/en/0xa1-broken-object-level-authorization.md), also known as [IDOR](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md).
 
 It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are `node` or `nodes` or both fields in a query object, and these can be used to access objects directly by `ID`. You can check whether your schema has these fields by running this on the command-line (assuming that `schema.json` contains your GraphQL schema): `cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node`. Removing these fields from the schema should disable the functionality, but you should always apply proper authorization checks to verify the caller has access to the object they are requesting.
 
