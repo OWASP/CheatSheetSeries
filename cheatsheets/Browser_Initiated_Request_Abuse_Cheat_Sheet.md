@@ -35,6 +35,8 @@ Location: https://app.example.test/admin/remove-user?id=42
 
 A browser may follow the redirect and request the destination. If that destination performs a privileged operation using GET, the same class of problem can arise. A redirect does **not** automatically bypass browser cookie restrictions or the target application's security controls. Under [RFC 9110, Section 15.4.3](https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.3), `302 Found` is a redirect response. In contrast, [`304 Not Modified`](https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.5) is for conditional cache validation, **not** a redirect to an attacker-selected URI.
 
+**Historical attribution:** The original XSS Filter Evasion Cheat Sheet thanked Timo for part of the redirected-image example.
+
 ## Browser and Session Constraints
 
 The presence of an image request alone does not establish a successful CSRF attack. In particular, [MDN's SameSite cookie documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) explains that `SameSite=Lax` generally excludes cookies from cross-site subresource requests such as images. Browser restrictions on third-party cookies may impose additional limits.
