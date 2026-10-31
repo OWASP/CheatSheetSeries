@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**137** cheat sheets available.
+**138** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -45,6 +45,8 @@
 [Bot Management and Anti-Automation Cheat Sheet](cheatsheets/Bot_Management_and_Anti-Automation_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Python](assets/Index_Python.svg)
 
 [Browser Extension Vulnerabilities Cheat Sheet](cheatsheets/Browser_Extension_Vulnerabilities_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Json](assets/Index_Json.svg)
+
+[Browser Initiated Request Abuse Cheat Sheet](cheatsheets/Browser_Initiated_Request_Abuse_Cheat_Sheet.md) ![Html](assets/Index_Html.svg)
 
 [Business Logic Security Cheat Sheet](cheatsheets/Business_Logic_Security_Cheat_Sheet.md)
 
