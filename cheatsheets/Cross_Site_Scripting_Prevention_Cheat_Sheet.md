@@ -28,7 +28,7 @@ When you use a modern web framework, you need to know how your framework prevent
 
 XSS happens when an application puts untrusted data into a page in a way that lets the browser treat it as code. For example, a user's comment that should appear as plain text instead runs as JavaScript or adds HTML the attacker controls. Untrusted data is anything your application did not create itself, such as form input, URL parameters, data stored by users, and responses from other services.
 
-To prevent XSS, every place where untrusted data is added to the page needs protection. Coverage is what matters: an application that protects 99 places and misses one is still vulnerable.
+To prevent XSS, every place where untrusted data is added to the page needs protection. Coverage is what matters: an application that protects 99 places and misses one is still vulnerable. Many frameworks escape every value they render by default, whether it is trusted or not. We recommend this approach, because it does not depend on deciding correctly which data is untrusted.
 
 The appropriate protection depends on how the data is used. Prefer safe APIs that treat data as text. When inserting data into a context that interprets syntax, use the appropriate context-specific output encoding. When an application needs to accept user-authored HTML, use a maintained HTML sanitizer. Input validation can enforce expected formats, but it does not replace these protections. Framework security features help prevent XSS, but unsafe APIs and framework bypasses can reintroduce vulnerabilities.
 
