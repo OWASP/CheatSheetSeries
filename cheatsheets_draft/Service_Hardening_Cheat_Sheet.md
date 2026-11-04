@@ -140,6 +140,7 @@ Hardening should be introduced in a controlled manner. A configuration that appe
 - Record the platform version, configuration, test procedure, and results for reproducibility.
 - Reassess hardening settings after significant application, operating-system, or service-manager changes.
 
+
 ## References
 
 ### Introduction and Scope
@@ -149,50 +150,66 @@ Hardening should be introduced in a controlled manner. A configuration that appe
 
 ### Keep Service Software and Dependencies Updated
 
-- [NIST SP 800-40 Rev. 4 — Enterprise Patch Management](https://csrc.nist.gov/pubs/sp/800/40/r4/final)
-- [NIST SP 800-53 Rev. 5 — SI-2 (Flaw Remediation) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-2/)
-- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html)
-- [NTIA — Minimum Elements for an SBOM (2021)](https://www.ntia.gov/report/2021/minimum-elements-software-bill-materials-sbom)
+- [NIST SP 800-40 Rev. 4 — Enterprise Patch Management](https://csrc.nist.gov/pubs/sp/800/40/r4/final) — Supports planning, prioritizing, testing, and deploying software updates.
+- [NIST SP 800-53 Rev. 5 — SI-2 (Flaw Remediation) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-2/) — Supports identifying, correcting, and testing security-related flaws.
+- [NIST SP 800-53 Rev. 5 — CM-8 (System Component Inventory) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-8/) — Supports maintaining an inventory of system components.
+- [NIST SP 800-53 Rev. 5 — CM-14 (Signed Components) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-14/) — Supports verifying approved digital signatures before installing designated software and firmware components, including updates.
+- [NIST SP 800-53 Rev. 5 — SI-7 (Software, Firmware, and Information Integrity) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-7/) — Supports detecting unauthorized changes through integrity verification.
+- [NIST SP 800-53 Rev. 5 — SA-22 (Unsupported System Components) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sa/sa-22/) — Supports replacing unsupported components or arranging documented alternative support.
+- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html) — Provides guidance on software dependencies and supply-chain risks.
+- [NTIA — Minimum Elements for an SBOM (2021)](https://www.ntia.gov/report/2021/minimum-elements-software-bill-materials-sbom) — Supports documenting software components and dependencies using an SBOM.
 
 ### Apply the Principle of Least Privilege
 
-- [NIST SP 800-53 Rev. 5 — AC-6 (Least Privilege) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-6/)
+- [NIST SP 800-53 Rev. 5 — AC-6 (Least Privilege) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-6/) — Supports limiting service privileges to those necessary for required operations.
+- [NIST SP 800-53 Rev. 5 — AC-2 (Account Management) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-2/) — Supports managing service accounts, their intended use, and their authorizations.
+- [NIST SP 800-53 Rev. 5 — AC-3 (Access Enforcement) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-3/) — Supports enforcing approved read, write, execute, and other access permissions on system resources.
+- [NIST SP 800-53 Rev. 5 — AC-6(7) (Review of User Privileges) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-6/ac-6-7/) — Supports periodically reviewing assigned privileges and removing privileges that are no longer required.
 
 ### Reduce the Attack Surface
 
-- [NIST SP 800-53 Rev. 5 — CM-7 (Least Functionality) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-7/)
+- [NIST SP 800-53 Rev. 5 — CM-7 (Least Functionality) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-7/) — Supports disabling unnecessary functionality, services, and software.
+- [NIST SP 800-53 Rev. 5 — SC-7 (Boundary Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/) — Supports controlling network communications and limiting unnecessary network exposure.
 
 ### Maintain Secure Service Configurations
 
-- [NIST SP 800-53 Rev. 5 — CM-6 (Configuration Settings) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-6/)
+- [NIST SP 800-53 Rev. 5 — CM-6 (Configuration Settings) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-6/) — Supports establishing, implementing, and monitoring security-relevant configuration settings.
+- [NIST SP 800-53 Rev. 5 — CM-2 (Baseline Configuration) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-2/) — Supports establishing and maintaining documented configuration baselines.
+- [NIST SP 800-53 Rev. 5 — CM-3 (Configuration Change Control) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-3/) — Supports reviewing, documenting, and controlling configuration changes.
+- [NIST SP 800-53 Rev. 5 — CM-5 (Access Restrictions for Change) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-5/) — Supports restricting who can modify system components and configurations.
 
 ### Restrict Network Communication
 
-- [NIST SP 800-53 Rev. 5 — SC-7 (Boundary Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/)
-- [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
+- [NIST SP 800-53 Rev. 5 — SC-7 (Boundary Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/) — Supports controlling communications at system boundaries and managed interfaces.
+- [NIST SP 800-53 Rev. 5 — SC-7(5) (Deny by Default — Allow by Exception) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/sc-7-5/) — Supports default-deny restrictions for inbound and outbound network communications, with approved exceptions.
+- [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final) — Supports explicit authentication and authorization without relying solely on network location.
 
 ### Protect Service Credentials and Sensitive Data
 
 - [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
-- [NIST SP 800-53 Rev. 5 — IA-5 (Authenticator Management) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ia/ia-5/)
+- [NIST SP 800-53 Rev. 5 — IA-5 (Authenticator Management) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ia/ia-5/) — Supports protecting and managing service authenticators and credentials.
 
 ### Enable Security-Relevant Logging and Monitoring
 
 - [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
-- [NIST AU-2 — Event Logging (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-2/)
-- [NIST AU-9 — Protection of Audit Information (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-9/)
-- [NIST AU-12 — Audit Record Generation (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-12/)
-- [NIST SI-4 — System Monitoring (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-4/)
+- [NIST AU-2 — Event Logging (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-2/) — Supports identifying which security-relevant events should be logged.
+- [NIST AU-9 — Protection of Audit Information (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-9/) — Supports protecting audit information against unauthorized access, modification, and deletion.
+- [NIST AU-12 — Audit Record Generation (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-12/) — Supports generating audit records for defined event types.
+- [NIST SI-4 — System Monitoring (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-4/) — Supports monitoring for attacks and indicators of potential compromise.
+- [NIST AU-11 — Audit Record Retention (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-11/) — Supports defining and enforcing audit-record retention periods.
+- [NIST AU-5 — Response to Audit Logging Process Failures (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-5/) — Supports responding to audit-logging failures, including notifying designated personnel.
+- [NIST SI-4(5) — System-Generated Alerts (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-4/si-4-5/) — Supports generating alerts when defined indicators of compromise or potential compromise occur.
 
 ### Limit Resource Consumption
 
-- [NIST SP 800-53 Rev. 5 — SC-5 (Denial-of-Service Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-5/)
-- [systemd.resource-control(5) — Linux/systemd implementation](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html)
+- [NIST SP 800-53 Rev. 5 — SC-5 (Denial-of-Service Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-5/) — Supports protecting service availability against denial-of-service attacks.
+- [NIST SP 800-53 Rev. 5 — SC-6 (Resource Availability) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-6/) — Supports protecting resource availability through allocation mechanisms such as quotas and priorities.
+- [systemd.resource-control(5) — Linux/systemd implementation](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) — Documents systemd mechanisms for controlling resource consumption.
 
 ### Validate Hardening Changes
 
-- [NIST CA-2 — Control Assessments (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ca/ca-2/)
-- [NIST CM-3 — Configuration Change Control (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-3/)
+- [NIST CA-2 — Control Assessments (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ca/ca-2/) — Supports assessing whether security controls are implemented correctly and operate as intended.
+- [NIST CM-3 — Configuration Change Control (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-3/) — Supports documenting, reviewing, and controlling hardening configuration changes.
 
 The NIST control-specific links above use CSF Tools, a third-party navigation aid. The authoritative publication is the official NIST SP 800-53 catalog linked below.
 
