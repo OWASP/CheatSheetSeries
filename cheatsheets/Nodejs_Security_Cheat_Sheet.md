@@ -207,7 +207,7 @@ app.get('/captcha', function (req, res) {
 
 #### Use Anti-CSRF tokens
 
-When developing Node.js applications, check for and use framework-provided CSRF protection mechanisms first. If the framework does not provide built-in CSRF defenses, validate anti-CSRF tokens on all state-changing requests using actively maintained middleware. Avoid deprecated legacy packages such as [csurf](https://www.npmjs.com/package/csurf), whose upstream repository is archived. Setting `SameSite` cookie attributes provides defense-in-depth (see [Set cookie flags appropriately](#set-cookie-flags-appropriately)), but must not be treated as the only CSRF mitigation.
+For Node.js applications that rely on cookies or other credentials browsers attach automatically, check for and use framework-provided cross-site request forgery (CSRF) protection mechanisms first. If the framework does not provide built-in CSRF defenses, validate anti-CSRF tokens on all state-changing requests that rely on those credentials using actively maintained middleware. Avoid deprecated legacy packages such as [csurf](https://www.npmjs.com/package/csurf), whose upstream repository is archived. Setting `SameSite` cookie attributes provides defense-in-depth (see [Set cookie flags appropriately](#set-cookie-flags-appropriately)), but must not be treated as the only CSRF mitigation.
 
 For comprehensive prevention strategies and token architecture, see the [Cross-Site Request Forgery Prevention Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
