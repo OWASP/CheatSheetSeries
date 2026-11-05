@@ -2448,6 +2448,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-to-test-for-the-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to test for the issue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to test for the issue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#during-code-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        During code review
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automated Exploitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4751,6 +4790,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-to-test-for-the-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to test for the issue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to test for the issue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#during-code-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        During code review
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automated Exploitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4784,15 +4862,14 @@
 <h1 id="ldap-injection-prevention-cheat-sheet">LDAP Injection Prevention Cheat Sheet<a class="headerlink" href="#ldap-injection-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>The Lightweight Directory Access Protocol (LDAP) allows an application to remotely perform operations such as searching and modifying records in
-directories. LDAP injection results from inadequate input sanitization and validation and allows malicious users to glean restricted information using the
-directory service. For general information about LDAP please visit <a href="https://www.redhat.com/en/topics/security/what-is-ldap-authentication">lightweight directory access protocol (LDAP)</a>.</p>
-<p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>.</p>
+directories. LDAP injection results from inadequate input sanitization and validation and allows malicious users to glean restricted information using the directory service. For general information about LDAP please visit <a href="https://www.redhat.com/en/topics/security/what-is-ldap-authentication">lightweight directory access protocol (LDAP)</a>.</p>
+<p>LDAP Injection is an attack used to exploit applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it is possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>.</p>
+<p>LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit <a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a>.</p>
 <p>This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications. <a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a> attacks are common due to two factors:</p>
 <ol>
 <li>The lack of safer, parameterized LDAP query interfaces</li>
 <li>The widespread use of LDAP to authenticate users to systems.</li>
 </ol>
-<p>LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree.</p>
 <p>Primary Defenses:</p>
 <ul>
 <li>Escape all variables using the right LDAP encoding function</li>
@@ -4805,6 +4882,7 @@ directory service. For general information about LDAP please visit <a href="http
 </ul>
 <h2 id="primary-defenses">Primary Defenses<a class="headerlink" href="#primary-defenses" title="Permanent link">&para;</a></h2>
 <h3 id="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function">Defense Option 1: Escape all variables using the right LDAP encoding function<a class="headerlink" href="#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function" title="Permanent link">&para;</a></h3>
+<p>LDAP distinguished names and LDAP search filters require different escaping rules, defined by <a href="https://datatracker.ietf.org/doc/html/rfc4514">RFC 4514</a> and <a href="https://datatracker.ietf.org/doc/html/rfc4515">RFC 4515</a>, respectively. Avoid custom escaping code and use a library encoder for the correct context.</p>
 <h4 id="distinguished-name-escaping">Distinguished Name Escaping<a class="headerlink" href="#distinguished-name-escaping" title="Permanent link">&para;</a></h4>
 <p>The main way LDAP stores names is based on DN (distinguished name). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.</p>
 <p>A DN might look like this</p>
@@ -4888,6 +4966,11 @@ Contact the <a href="https://github.com/madhatter22/LinqToLdap/blob/master/READM
 <p>When using name/password authentication, reject empty passwords before binding. A nonempty name with an empty password can perform an <a href="https://datatracker.ietf.org/doc/html/rfc4513#section-5.1.2">unauthenticated bind</a> that establishes anonymous authorization; a successful result in that case does not prove the user's identity. Require authenticated access to protected directory data and use a least-privileged binding account.</p>
 <h3 id="allow-list-input-validation">Allow-List Input Validation<a class="headerlink" href="#allow-list-input-validation" title="Permanent link">&para;</a></h3>
 <p>Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<h2 id="how-to-test-for-the-issue">How to test for the issue<a class="headerlink" href="#how-to-test-for-the-issue" title="Permanent link">&para;</a></h2>
+<h3 id="during-code-review">During code review<a class="headerlink" href="#during-code-review" title="Permanent link">&para;</a></h3>
+<p>Verify that each untrusted input fed into LDAP queries is <a href="LDAP_Injection_Prevention_Cheat_Sheet.html#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function">escaped correctly</a>.</p>
+<h3 id="automated-exploitation">Automated Exploitation<a class="headerlink" href="#automated-exploitation" title="Permanent link">&para;</a></h3>
+<p>Tools like OWASP <a href="https://www.zaproxy.org/">ZAP</a> have modules to detect LDAP injections.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://datatracker.ietf.org/doc/html/rfc4515">RFC 4515: LDAP String Representation of Search Filters</a></li>
