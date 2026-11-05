@@ -207,9 +207,9 @@ app.get('/captcha', function (req, res) {
 
 #### Use Anti-CSRF tokens
 
-[Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) aims to perform authorized actions on behalf of an authenticated user, while the user is unaware of this action. CSRF attacks are generally performed for state-changing requests like changing a password, adding users or placing orders. [Csurf](https://www.npmjs.com/package/csurf) is an express middleware that has been used to mitigate CSRF attacks. But a security hole in this package has been recently discovered. The team behind the package has not fixed the discovered vulnerability and they have marked the package as deprecated, recommending using any other CSRF protection package.
+For Node.js applications that rely on cookies or other credentials browsers attach automatically, check for and use framework-provided cross-site request forgery (CSRF) protection mechanisms first. If the framework does not provide built-in CSRF defenses, validate anti-CSRF tokens on all state-changing requests that rely on those credentials using actively maintained middleware. Avoid deprecated legacy packages such as [csurf](https://www.npmjs.com/package/csurf), whose upstream repository is archived. Setting `SameSite` cookie attributes provides defense-in-depth (see [Set cookie flags appropriately](#set-cookie-flags-appropriately)), but must not be treated as the only CSRF mitigation.
 
-For detailed information on cross-site request forgery (CSRF) attacks and prevention methods, you can refer to [Cross-Site Request Forgery Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
+For comprehensive prevention strategies and token architecture, see the [Cross-Site Request Forgery Prevention Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
 #### Remove unnecessary routes
 
