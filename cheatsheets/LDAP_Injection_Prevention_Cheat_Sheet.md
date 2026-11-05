@@ -3,17 +3,16 @@
 ## Introduction
 
 The Lightweight Directory Access Protocol (LDAP) allows an application to remotely perform operations such as searching and modifying records in
-directories. LDAP injection results from inadequate input sanitization and validation and allows malicious users to glean restricted information using the
-directory service. For general information about LDAP please visit [lightweight directory access protocol (LDAP)](https://www.redhat.com/en/topics/security/what-is-ldap-authentication).
+directories. LDAP injection results from inadequate input sanitization and validation and allows malicious users to glean restricted information using the directory service. For general information about LDAP please visit [lightweight directory access protocol (LDAP)](https://www.redhat.com/en/topics/security/what-is-ldap-authentication).
 
-LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection).
+LDAP Injection is an attack used to exploit applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it is possible to modify LDAP statements through techniques similar to [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection).
+
+LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit [LDAP injection](https://owasp.org/www-community/attacks/LDAP_Injection).
 
 This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications. [LDAP injection](https://owasp.org/www-community/attacks/LDAP_Injection) attacks are common due to two factors:
 
 1. The lack of safer, parameterized LDAP query interfaces
 2. The widespread use of LDAP to authenticate users to systems.
-
-LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree.
 
 Primary Defenses:
 
@@ -28,6 +27,8 @@ Additional Defenses:
 ## Primary Defenses
 
 ### Defense Option 1: Escape all variables using the right LDAP encoding function
+
+LDAP distinguished names and LDAP search filters require different escaping rules, defined by [RFC 4514](https://datatracker.ietf.org/doc/html/rfc4514) and [RFC 4515](https://datatracker.ietf.org/doc/html/rfc4515), respectively. Avoid custom escaping code and use a library encoder for the correct context.
 
 #### Distinguished Name Escaping
 
@@ -159,6 +160,16 @@ When using name/password authentication, reject empty passwords before binding. 
 ### Allow-List Input Validation
 
 Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+
+## How to test for the issue
+
+### During code review
+
+Verify that each untrusted input fed into LDAP queries is [escaped correctly](LDAP_Injection_Prevention_Cheat_Sheet.md#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function).
+
+### Automated Exploitation
+
+Tools like OWASP [ZAP](https://www.zaproxy.org/) have modules to detect LDAP injections.
 
 ## References
 
