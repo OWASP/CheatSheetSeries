@@ -60,6 +60,25 @@ For an original case study, see [the GitLab Duo prompt injection research](https
 - Unicode smuggling with invisible characters
 - KaTeX/LaTeX rendering for invisible text: `$\color{white}{\text{malicious prompt}}$`
 
+### Multilingual and Cross-Script Attacks
+
+**Attack Pattern:** Delivering an attack in a language, script, or mix of languages where the application's safety controls may be weaker than they are in English.
+
+- Translating an English attack into a low-resource language
+- Mixing languages within one prompt (code-switching)
+- Writing a language in Latin letters instead of its native script, such as Arabic transliteration and Arabizi (Arabic chat spelling)
+
+Studies of deployed models report that these inputs can elicit unsafe output:
+
+- Unsafe inputs [translated into low-resource languages bypassed GPT-4's safeguards far more often than the English originals](https://arxiv.org/html/2310.02446v1), and the authors warn that focusing on English-centric benchmarks "may give a false sense of security".
+- [Unsafe content became more likely as the availability of a language decreased](https://arxiv.org/abs/2310.06474), in tests on ChatGPT and GPT-4.
+- [Code-switching queries elicited undesirable behaviors from LLMs](https://aclanthology.org/2025.acl-long.657/).
+- [Arabic transliteration and chatspeak produced unsafe content from GPT-4 and Claude 3 Sonnet](https://aclanthology.org/2024.emnlp-main.1034/), while standardized Arabic prompts were insufficient to provoke unsafe content.
+
+These studies tested open and proprietary LLMs themselves, not the input filters or guardrails that an application adds around them. Treat them as a reason to test your own filters, guardrails, and system prompts in every supported language, not as evidence that those controls fail.
+
+Language-independent controls hold regardless of the language of the injected text: enforce [tool permissions and parameter validation](#agent-specific-defenses) and apply [least privilege](#least-privilege). Pattern lists and normalization do not translate text, so a list written in one language may miss the same phrase in another (see [Input Validation and Sanitization](#input-validation-and-sanitization)). If you use a guardrail model, check its documentation for the languages it supports, and do not assume it protects equally in others.
+
 ### Typoglycemia-Based Attacks
 
 **Attack Pattern:** Exploiting LLMs' ability to read scrambled words where first and last letters remain correct, bypassing keyword-based filters.
@@ -332,6 +351,8 @@ Use [LangChain's human-in-the-loop middleware](https://github.com/langchain-ai/d
 Use the examples below as a **smoke test, not a security benchmark**. These 16 hand-picked attack inputs and nine benign requests are illustrative, not a representative sample of application traffic or attacks. Adapt them to your application's supported tasks, permissions, and input channels; a request outside the application's scope is not a benign control.
 
 Before testing, define each case's intended security violation or legitimate task, required context, and observable outcome. Use dummy data and sandboxed tool substitutes. For indirect injection, place the input in the external content channel being evaluated; submitting it as a user message tests a different boundary.
+
+These examples are in English. Repeat the test in every language and script your application accepts, including code-switched and transliterated text (see [Multilingual and Cross-Script Attacks](#multilingual-and-cross-script-attacks)), and include benign requests in each language so that the false-positive rate is measured per language.
 
 ```python
 # Illustrative inputs; define the objective and test context for each case.
