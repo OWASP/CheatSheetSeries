@@ -350,9 +350,9 @@ Web applications should provide mechanisms that allow security aware users to ac
 
 Web applications must provide a visible and easily accessible logout (logoff, exit, or close session) button that is available on the web application header or menu and reachable from every web application resource and page, so that the user can manually close the session at any time. As described in *Session_Expiration* section, the web application must invalidate the session at least on server side.
 
-All session IDs belonging to the same logical authenticated session, including those issued through successive or concurrent rotations and previous IDs still accepted during the associated grace period, must be revoked together.
+All session IDs belonging to the same logical authenticated session must be revoked together. This includes IDs issued through successive or concurrent rotations, as well as previous IDs still accepted during the associated grace period.
 
-Once [logout of that session](https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x16-V7-Session-Management.md#v74-session-termination) completes, all such IDs, including any issued by a renewal or session-save operation already in progress, must be rejected for authentication and must not be usable to renew the terminated session; broader logout policies may also terminate independently authenticated sessions.
+Once [logout of that session](https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x16-V7-Session-Management.md#v74-session-termination) completes, none of these IDs may be accepted for authentication or renewal of the terminated session. This also applies to IDs issued by renewal or session-save operations already in progress during logout. Applications may also terminate independently authenticated sessions under a broader logout policy.
 
 **NOTE**: Unfortunately, not all web applications facilitate users to close their current session. Thus, client-side enhancements allow conscientious users to protect their sessions by helping to close them diligently.
 
