@@ -34,14 +34,14 @@ Known vulnerabilities in service software, operating systems, and dependencies c
 - Maintain visibility into third-party components and dependencies. Use a Software Bill of Materials (SBOM), where available and appropriate, to support dependency inventory and vulnerability management.
 - Monitor relevant security advisories and prioritize updates according to vulnerability risk and service exposure.
 - Obtain updates from trusted sources and verify their authenticity using supported mechanisms.
-- Test updates before production deployment and confirm that required updates were installed successfully.
-- Remove or replace unsupported components when security fixes are no longer available.
+- Test updates before production deployment where practical, using a process proportionate to the risk and urgency. For emergency updates, use an expedited deployment and rollback procedure, and verify successful installation.
+- Remove or replace unsupported components when security fixes are no longer available. Where immediate replacement is not feasible, apply compensating controls to reduce exposure.
 
 ### Apply the Principle of Least Privilege
 
 A service should have only the permissions necessary to perform its intended functions. Excessive privileges can increase the impact of a vulnerability or compromised service.
 
-- Run services under dedicated, non-administrative identities when elevated privileges are not required.
+- Run services under dedicated, non-administrative identities where possible, and avoid granting unnecessary capabilities or privileged group memberships.
 - Avoid sharing service identities between unrelated applications when separate identities are practical.
 - Restrict read, write, and execute permissions on files, directories, and other resources.
 - Grant privileged operations only when required, and minimize the duration and scope of elevated access where the application architecture permits.
@@ -58,15 +58,14 @@ Every unnecessary interface, component, or enabled feature can introduce additio
 - Remove unused software components and dependencies where doing so is operationally safe.
 - Disable unnecessary services and background processes.
 - Avoid exposing debugging, diagnostic, or development endpoints in production.
-- Restrict service listeners to the network interfaces required by the deployment.
 
-For example, a service used only by applications on the same host should not listen on all network interfaces unless remote access is explicitly required.
+For example, a service used only by applications on the same host should not listen on all network interfaces unless remote access is explicitly required. Binding to a loopback interface does not prevent access by other local processes.
 
 ### Maintain Secure Service Configurations
 
 Default configurations may enable functionality or access that is unnecessary for a particular deployment. Define and maintain a configuration baseline appropriate to the service.
 
-- Review security-relevant defaults before deploying a service.
+- Review security-relevant defaults before deployment, including disabling unused default accounts and changing or disabling insecure default credentials.
 - Disable unnecessary features and replace insecure settings with supported, secure alternatives.
 - Restrict modification of service configuration files to authorized identities.
 - Keep configuration changes under version control or another auditable change-management process, where practical.
@@ -82,7 +81,7 @@ A service should accept and initiate only the network connections required for i
 - Bind listening sockets to the necessary network interfaces.
 - Restrict inbound traffic to required ports, protocols, and authorized sources.
 - Restrict outbound connectivity where supported and operationally feasible.
-- Protect administrative interfaces from unnecessary external access.
+- Restrict administrative interfaces to authorized access paths, require strong authentication and authorization, and prevent exposure to untrusted networks unless explicitly required and adequately protected.
 - Review communication paths between services and remove unnecessary network access.
 - Test network restrictions from relevant source networks rather than assuming that configured rules provide the intended isolation.
 - Use appropriate authentication and authorization for service-to-service communication, including communication over internal or otherwise trusted networks.
@@ -98,8 +97,8 @@ Services frequently use API keys, database credentials, certificates, and other 
 - Do not hardcode secrets in application source code or commit them to version control.
 - Use an appropriate secrets-management mechanism to provide credentials to services.
 - Limit access to secrets to the service identities and processes that require them.
-- Avoid exposing secrets through command-line arguments, logs, error messages, or other unnecessarily accessible interfaces.
-- Revoke or rotate credentials when compromise is suspected and according to the organization's credential lifecycle requirements.
+- Avoid exposing secrets through command-line arguments, environment variables, logs, error messages, or other interfaces where they may be disclosed.
+- Revoke and replace credentials when compromise is suspected, ensuring that exposed credentials are no longer valid. Follow the organization's credential lifecycle requirements for routine rotation.
 - Give each service only the permissions required by its credentials.
 
 For implementation details, see the OWASP Secrets Management Cheat Sheet.
@@ -108,9 +107,10 @@ For implementation details, see the OWASP Secrets Management Cheat Sheet.
 
 Logs and monitoring provide information needed to identify service failures, investigate suspicious activity, and support incident response.
 
-- Record security-relevant events appropriate to the service, such as authentication failures, access-control failures, and significant configuration changes.
+- Record security-relevant events appropriate to the service, such as successful and failed authentication attempts, access-control failures, and significant configuration changes.
 - Include sufficient context to support investigation without logging credentials or other unnecessary sensitive information.
 - Protect logs against unauthorized access, modification, and deletion. Where appropriate, use centralized log collection, access controls, or storage mechanisms that provide tamper resistance.
+- Handle untrusted log data safely to prevent log injection, and monitor logging failures and storage exhaustion that could affect log availability.
 - Monitor service failures, unexpected restarts, and unusual resource consumption.
 - Define log retention and alerting requirements according to operational needs and applicable policies.
 - Test that important events are recorded and can be retrieved during investigation.
@@ -125,7 +125,7 @@ A service that consumes excessive memory, CPU time, processes, or other resource
 - Configure resource limits using controls supported by the operating system or service manager.
 - Limit resource consumption without preventing legitimate workloads from completing.
 - Test limits under representative workloads, including expected peak conditions.
-- Monitor resource-limit events and adjust settings when justified by operational evidence.
+- Monitor resource-limit events and resulting service failures, and adjust limits or recovery behavior when justified by operational evidence.
 
 Resource limits can reduce the impact of some resource-exhaustion conditions, but they do not guarantee availability or replace application-level protections against denial-of-service attacks.
 
