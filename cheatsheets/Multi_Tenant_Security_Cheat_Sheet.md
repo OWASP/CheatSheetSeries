@@ -701,13 +701,15 @@ A shared backup can contain data from several tenants. For a single-tenant recov
 
 ### 8. Logging, Monitoring & Audit
 
-- Include server-verified tenant context in tenant-scoped security and audit events; global infrastructure events may have no tenant.
+- Include server-verified tenant context in tenant-scoped security and audit events, and record the authenticated actor (user or service identity) when available. Do not require an authenticated actor for events where none exists; global infrastructure events may have no tenant.
 - A centralized audit store is acceptable when read access enforces tenant scope. Cross-tenant audit reads and writes require explicit platform authorization.
 - Distinguish tenant audit readers from platform auditors. Tenant administrator rights must not grant platform-wide audit access.
-- Enforce append-only audit behavior and tamper resistance with database permissions, tamper-evident storage, or WORM controls rather than relying on application-level methods alone.
+- Enforce append-only audit behavior through database permissions or storage controls such as write-once, read-many (WORM) rather than relying on application-level methods alone.
+- Use tamper-evident mechanisms to detect modifications to stored audit records; tamper detection identifies modifications rather than preventing them.
 - Monitor denied or unexpected cross-tenant access attempts without treating explicitly authorized platform operations as violations.
 - Alert on tenant-isolation control failures and repeated suspicious denial patterns.
-- Apply the documented access and retention policy for each audit-data class. Avoid logging secrets or sensitive tenant data in plain text.
+- Explicitly exclude secrets from logs and minimize sensitive tenant data. Mask or otherwise protect sensitive fields that genuinely need to be retained, according to the applicable policy.
+- Apply the documented access and retention policy for each audit-data class.
 - Configure collection, protection, and retention according to the [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html).
 
 ## Do's and Don'ts
