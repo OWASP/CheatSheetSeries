@@ -141,6 +141,79 @@ Hardening should be introduced in a controlled manner. A configuration that appe
 - Reassess hardening settings after significant application, operating-system, or service-manager changes.
 
 
+## Hardening Services with systemd
+
+On Linux systems using systemd, service unit settings can restrict a service's privileges and access to system resources. Apply restrictions according to the service's requirements, and test them before deployment. These settings provide defense in depth; they do not replace secure application configuration, patching, or other operating-system security controls.
+
+### Apply Least Privilege and Filesystem Restrictions
+
+The following directives are useful starting points for services that support them:
+
+| Directive | Purpose |
+| --- | --- |
+| `User=` | Run the service under a dedicated, non-root account rather than as root. |
+| `NoNewPrivileges=yes` | Set the kernel's `no_new_privs` restriction for the service and its descendants, preventing privilege gains through mechanisms such as set-user-ID binaries and file capabilities during program execution. |
+| `CapabilityBoundingSet=` | Restrict the Linux capabilities available to the service. An empty value removes all capabilities from the bounding set. |
+| `ProtectSystem=strict` | Make most of the filesystem hierarchy read-only within the service's mount namespace, subject to documented exceptions and additional writable paths. |
+| `StateDirectory=` | Create and manage a service state directory under `/var/lib`, with write access even when `ProtectSystem=strict` is enabled. |
+| `PrivateTmp=yes` | Give the service private `/tmp` and `/var/tmp` directories, separate from the host's corresponding directories. |
+| `ProtectHome=yes` | Make `/home`, `/root`, and `/run/user` inaccessible within the service's filesystem namespace. |
+
+For example, a service that does not require root privileges, Linux capabilities, or access to home directories might use the following settings in its unit configuration:
+
+```ini
+[Service]
+User=example-service
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+ProtectSystem=strict
+StateDirectory=example-service
+PrivateTmp=yes
+ProtectHome=yes
+```
+
+This is an **illustrative configuration, not a universal baseline**. The service account must exist, and the restrictions must be compatible with the application's actual requirements. An empty capability bounding set can break operations requiring Linux capabilities. Filesystem restrictions can also prevent access to required configuration, data, sockets, or other resources.
+
+Prefer explicitly managed writable directories, such as `StateDirectory=`, over granting broad write access. If the service needs additional writable paths, evaluate narrowly scoped exceptions rather than disabling filesystem protection altogether.
+
+See the [systemd.exec manual](https://www.freedesktop.org/software/systemd/man/systemd.exec.html) for directive semantics, exceptions, and interactions.
+
+### Apply and Validate Changes
+
+Use a service-specific drop-in rather than editing a package-managed unit file directly:
+
+```bash
+sudo systemctl edit example.service
+```
+
+Add only the directives appropriate for that service. Saving changes through `systemctl edit` normally reloads the systemd manager configuration automatically. If unit files or drop-ins are modified manually, reload the configuration before restarting the service:
+
+```bash
+sudo systemctl daemon-reload
+```
+
+Restart the service and inspect its status and logs:
+
+```bash
+sudo systemctl restart example.service
+systemctl status example.service
+journalctl -u example.service --no-pager
+```
+
+Verify that the service still performs its required operations, including reading necessary files, writing persistent state, and handling expected requests. Where possible, test the relevant restriction directly: compare access or behavior before and after enabling a directive, while keeping other conditions unchanged.
+
+The following command provides an additional review of a unit's sandboxing and security-related settings:
+
+```bash
+systemd-analyze security example.service
+```
+
+Its exposure score is a **heuristic assessment of unit settings**, not proof that the service is secure or vulnerable. It does not replace functional testing, application review, or verification of the effective restrictions.
+
+Consult the [systemd-analyze manual](https://www.freedesktop.org/software/systemd/man/systemd-analyze.html) and the [systemctl manual](https://www.freedesktop.org/software/systemd/man/systemctl.html) for further details.
+
+Review hardening settings when service requirements change, and validate compatibility with the systemd version and Linux kernel used in the deployment.
+
 ## References
 
 ### Introduction and Scope
