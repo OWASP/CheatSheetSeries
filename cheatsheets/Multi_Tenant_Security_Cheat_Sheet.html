@@ -5566,162 +5566,17 @@
 </ul>
 <h3 id="8-logging-monitoring-audit">8. Logging, Monitoring &amp; Audit<a class="headerlink" href="#8-logging-monitoring-audit" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Include server-verified tenant context in tenant-scoped security and audit events; global infrastructure events may have no tenant.</li>
-<li>A centralized audit store is acceptable when read access enforces tenant scope and cross-tenant access requires an explicit platform permission.</li>
+<li>Include server-verified tenant context in tenant-scoped security and audit events, and record the authenticated actor (user or service identity) when available. Do not require an authenticated actor for events where none exists; global infrastructure events may have no tenant.</li>
+<li>A centralized audit store is acceptable when read access enforces tenant scope. Cross-tenant audit reads and writes require explicit platform authorization.</li>
+<li>Distinguish tenant audit readers from platform auditors. Tenant administrator rights must not grant platform-wide audit access.</li>
+<li>Enforce append-only audit behavior through database permissions or storage controls such as write-once, read-many (WORM) rather than relying on application-level methods alone.</li>
+<li>Use tamper-evident mechanisms to detect modifications to stored audit records; tamper detection identifies modifications rather than preventing them.</li>
 <li>Monitor denied or unexpected cross-tenant access attempts without treating explicitly authorized platform operations as violations.</li>
-<li>Alert on tenant-isolation control failures and suspicious denial patterns.</li>
+<li>Alert on tenant-isolation control failures and repeated suspicious denial patterns.</li>
+<li>Explicitly exclude secrets from logs and minimize sensitive tenant data. Mask or otherwise protect sensitive fields that genuinely need to be retained, according to the applicable policy.</li>
 <li>Apply the documented access and retention policy for each audit-data class.</li>
+<li>Configure collection, protection, and retention according to the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">OWASP Logging Cheat Sheet</a>.</li>
 </ul>
-<details>
-<summary>Tenant-Aware Logging & Monitoring</summary>
-
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">structlog</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareLogger</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Logger that includes verified tenant context when one is active."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">structlog</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_enrich_with_tenant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Add tenant context to log entry."""</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">ctx</span><span class="p">:</span>
-            <span class="n">event_data</span><span class="p">[</span><span class="s2">"tenant_id"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
-            <span class="n">event_data</span><span class="p">[</span><span class="s2">"user_id"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span>
-        <span class="k">return</span> <span class="n">event_data</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_enrich_with_tenant</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_enrich_with_tenant</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_enrich_with_tenant</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">security_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">severity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Log security-relevant events."""</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s2">"security_event"</span><span class="p">,</span>
-            <span class="n">event_type</span><span class="o">=</span><span class="n">event_type</span><span class="p">,</span>
-            <span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">,</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_enrich_with_tenant</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantAuditLog</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Audit API with tenant-aware reads and append-only writes."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> 
-                  <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Record audit entry."""</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="n">ctx</span>
-            <span class="ow">and</span> <span class="n">tenant_id</span>
-            <span class="ow">and</span> <span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="n">has_permission</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"platform:audit:write"</span><span class="p">)</span>
-        <span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot write another tenant's audit log"</span><span class="p">)</span>
-
-        <span class="n">effective_tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span> <span class="ow">or</span> <span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"system"</span><span class="p">)</span>
-
-        <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"id"</span><span class="p">:</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span>
-            <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">effective_tenant_id</span><span class="p">,</span>
-            <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s2">"action"</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
-            <span class="s2">"details"</span><span class="p">:</span> <span class="n">details</span><span class="p">,</span>
-            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">(),</span>
-            <span class="s2">"ip_address"</span><span class="p">:</span> <span class="n">get_client_ip</span><span class="p">(),</span>
-            <span class="s2">"user_agent"</span><span class="p">:</span> <span class="n">get_user_agent</span><span class="p">()</span>
-        <span class="p">}</span>
-
-        <span class="c1"># This API only appends. Database permissions, tamper-evident storage,</span>
-        <span class="c1"># or WORM controls must enforce the required immutability properties.</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"""</span>
-<span class="s2">            INSERT INTO audit_log </span>
-<span class="s2">            (id, tenant_id, user_id, action, details, timestamp, ip_address, user_agent)</span>
-<span class="s2">            VALUES (:id, :tenant_id, :user_id, :action, :details, :timestamp, :ip_address, :user_agent)</span>
-<span class="s2">        """</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_tenant_audit_trail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-                                     <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
-                                     <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Retrieve audit trail for a specific tenant."""</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-
-        <span class="c1"># Tenant audit readers and platform auditors are distinct permissions;</span>
-        <span class="c1"># a tenant-local admin is not implicitly a platform auditor.</span>
-        <span class="n">can_read_tenant</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">ctx</span>
-            <span class="ow">and</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="n">tenant_id</span>
-            <span class="ow">and</span> <span class="n">has_permission</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"tenant:audit:read"</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">can_read_platform</span> <span class="o">=</span> <span class="n">ctx</span> <span class="ow">and</span> <span class="n">has_permission</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"platform:audit:read"</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">can_read_tenant</span> <span class="ow">or</span> <span class="n">can_read_platform</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Audit access denied"</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="s2">"""</span>
-<span class="s2">            SELECT * FROM audit_log </span>
-<span class="s2">            WHERE tenant_id = :tenant_id </span>
-<span class="s2">            AND timestamp BETWEEN :start AND :end</span>
-<span class="s2">            ORDER BY timestamp DESC</span>
-<span class="s2">        """</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span> <span class="s2">"start"</span><span class="p">:</span> <span class="n">start_date</span><span class="p">,</span> <span class="s2">"end"</span><span class="p">:</span> <span class="n">end_date</span><span class="p">})</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">CrossTenantAccessMonitor</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Monitor and alert on potential cross-tenant access attempts."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alert_service</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alerts</span> <span class="o">=</span> <span class="n">alert_service</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_access</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">requested_tenant</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-                          <span class="n">resource_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Check for cross-tenant access attempts."""</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="ow">not</span> <span class="k">await</span> <span class="n">authorize_tenant_access</span><span class="p">(</span>
-            <span class="n">ctx</span><span class="p">,</span> <span class="n">requested_tenant</span><span class="p">,</span> <span class="n">resource_type</span><span class="p">,</span> <span class="n">resource_id</span>
-        <span class="p">):</span>
-            <span class="c1"># Log a denied attempt, not an explicitly authorized platform action</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">security_event</span><span class="p">(</span>
-                <span class="s2">"cross_tenant_access_attempt"</span><span class="p">,</span>
-                <span class="n">severity</span><span class="o">=</span><span class="s2">"HIGH"</span><span class="p">,</span>
-                <span class="n">requested_tenant</span><span class="o">=</span><span class="n">requested_tenant</span><span class="p">,</span>
-                <span class="n">resource_type</span><span class="o">=</span><span class="n">resource_type</span><span class="p">,</span>
-                <span class="n">resource_id</span><span class="o">=</span><span class="n">resource_id</span>
-            <span class="p">)</span>
-
-            <span class="c1"># Track violations per user</span>
-            <span class="n">principal_id</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"anonymous"</span>
-            <span class="n">source_tenant</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="k">if</span> <span class="n">ctx</span> <span class="k">else</span> <span class="s2">"none"</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">principal_id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">source_tenant</span><span class="si">}</span><span class="s2">"</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-
-            <span class="c1"># Alert on repeated attempts</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">alerts</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
-                    <span class="n">severity</span><span class="o">=</span><span class="s2">"CRITICAL"</span><span class="p">,</span>
-                    <span class="n">message</span><span class="o">=</span><span class="s2">"Repeated cross-tenant access attempts detected"</span><span class="p">,</span>
-                    <span class="n">details</span><span class="o">=</span><span class="p">{</span>
-                        <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">principal_id</span><span class="p">,</span>
-                        <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">source_tenant</span><span class="p">,</span>
-                        <span class="s2">"attempts"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">violation_counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                    <span class="p">}</span>
-                <span class="p">)</span>
-
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Access denied"</span><span class="p">)</span>
-</code></pre></div>
-
-</details>
-
 <h2 id="dos-and-donts">Do's and Don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
 <p><strong>Do:</strong></p>
 <ul>
