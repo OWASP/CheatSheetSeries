@@ -2365,6 +2365,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#multilingual-and-cross-script-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multilingual and Cross-Script Attacks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#typoglycemia-based-attacks" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4888,6 +4899,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#multilingual-and-cross-script-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multilingual and Cross-Script Attacks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#typoglycemia-based-attacks" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5325,6 +5347,22 @@
 <li>Unicode smuggling with invisible characters</li>
 <li>KaTeX/LaTeX rendering for invisible text: <code>$\color{white}{\text{malicious prompt}}$</code></li>
 </ul>
+<h3 id="multilingual-and-cross-script-attacks">Multilingual and Cross-Script Attacks<a class="headerlink" href="#multilingual-and-cross-script-attacks" title="Permanent link">&para;</a></h3>
+<p><strong>Attack Pattern:</strong> Delivering an attack in a language, script, or mix of languages where the application's safety controls may be weaker than they are in English.</p>
+<ul>
+<li>Translating an English attack into a low-resource language</li>
+<li>Mixing languages within one prompt (code-switching)</li>
+<li>Writing a language in Latin letters instead of its native script, such as Arabic transliteration and Arabizi (Arabic chat spelling)</li>
+</ul>
+<p>Studies of deployed models report that these inputs can elicit unsafe output:</p>
+<ul>
+<li>Unsafe inputs <a href="https://arxiv.org/html/2310.02446v1">translated into low-resource languages bypassed GPT-4's safeguards far more often than the English originals</a>, and the authors warn that focusing on English-centric benchmarks "may give a false sense of security".</li>
+<li><a href="https://arxiv.org/abs/2310.06474">Unsafe content became more likely as the availability of a language decreased</a>, in tests on ChatGPT and GPT-4.</li>
+<li><a href="https://aclanthology.org/2025.acl-long.657/">Code-switching queries elicited undesirable behaviors from LLMs</a>.</li>
+<li><a href="https://aclanthology.org/2024.emnlp-main.1034/">Arabic transliteration and chatspeak produced unsafe content from GPT-4 and Claude 3 Sonnet</a>, while standardized Arabic prompts were insufficient to provoke unsafe content.</li>
+</ul>
+<p>These studies tested open and proprietary LLMs themselves, not the input filters or guardrails that an application adds around them. Treat them as a reason to test your own filters, guardrails, and system prompts in every supported language, not as evidence that those controls fail.</p>
+<p>Language-independent controls hold regardless of the language of the injected text: enforce <a href="#agent-specific-defenses">tool permissions and parameter validation</a> and apply <a href="#least-privilege">least privilege</a>. Pattern lists and normalization do not translate text, so a list written in one language may miss the same phrase in another (see <a href="#input-validation-and-sanitization">Input Validation and Sanitization</a>). If you use a guardrail model, check its documentation for the languages it supports, and do not assume it protects equally in others.</p>
 <h3 id="typoglycemia-based-attacks">Typoglycemia-Based Attacks<a class="headerlink" href="#typoglycemia-based-attacks" title="Permanent link">&para;</a></h3>
 <p><strong>Attack Pattern:</strong> Exploiting LLMs' ability to read scrambled words where first and last letters remain correct, bypassing keyword-based filters.</p>
 <ul>
@@ -5548,6 +5586,7 @@
 <h2 id="smoke-testing-your-defenses">Smoke-Testing Your Defenses<a class="headerlink" href="#smoke-testing-your-defenses" title="Permanent link">&para;</a></h2>
 <p>Use the examples below as a <strong>smoke test, not a security benchmark</strong>. These 16 hand-picked attack inputs and nine benign requests are illustrative, not a representative sample of application traffic or attacks. Adapt them to your application's supported tasks, permissions, and input channels; a request outside the application's scope is not a benign control.</p>
 <p>Before testing, define each case's intended security violation or legitimate task, required context, and observable outcome. Use dummy data and sandboxed tool substitutes. For indirect injection, place the input in the external content channel being evaluated; submitting it as a user message tests a different boundary.</p>
+<p>These examples are in English. Repeat the test in every language and script your application accepts, including code-switched and transliterated text (see <a href="#multilingual-and-cross-script-attacks">Multilingual and Cross-Script Attacks</a>), and include benign requests in each language so that the false-positive rate is measured per language.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Illustrative inputs; define the objective and test context for each case.</span>
 <span class="n">test_attacks</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Direct injection attempts</span>
