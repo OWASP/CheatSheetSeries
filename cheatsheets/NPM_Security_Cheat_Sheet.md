@@ -62,6 +62,16 @@ Here's how the allowlist would look like in the `package.json` file on a project
 }
 ```
 
+### Inspecting a project you did not write
+
+A fake job interview can hand a candidate a whole project and ask them to install it. The [FBI](https://www.ic3.gov/PSA/2024/PSA240903) lists a "pre-employment test" that runs unknown Node.js packages or GitHub repositories as a warning sign, and [Unit 42](https://unit42.paloaltonetworks.com/two-campaigns-by-north-korea-bad-actors-target-job-hunters/) describes interviewers asking victims to install an npm package hosted on GitHub that carries malware. Here the risky code is in the project itself, not in a dependency you chose. Before the first install:
+
+- Install with `--ignore-scripts`, so the `preinstall`, `install`, `postinstall` and `prepare` scripts that a plain `npm install` [runs](https://docs.npmjs.com/cli/v11/using-npm/scripts) do not execute on the first install. This only postpones them: any code you run later, including these scripts and the app itself, can still be malicious, so the steps below still apply.
+- Check the project's [`.npmrc`](https://docs.npmjs.com/cli/v11/configuring-npm/npmrc) for `registry` and `_authToken` lines, and in Yarn projects the [`.yarnrc.yml`](https://yarnpkg.com/configuration/yarnrc) `npmRegistryServer` and `npmAuthToken` settings. These change where packages are fetched from.
+- Check dependencies for [git URLs, tarball URLs and `file:` paths](https://docs.npmjs.com/cli/v11/configuring-npm/package-json), and in Yarn projects [`link:` paths](https://yarnpkg.com/protocol/link), which come from outside the registry. This only catches the visible cases: a typosquatted package name (see [section 10](#10-understanding-typosquatting-and-slopsquatting-attacks)) or a tampered lockfile is much harder to spot by hand.
+- Open the folder in [VS Code Restricted Mode](https://code.visualstudio.com/docs/editing/workspaces/workspace-trust), which blocks tasks until you trust the folder.
+- Run it in a disposable VM, ideally a remote one rather than on your own machine or LAN, that has no credentials, SSH keys or wallets, and with no network access, or only restricted and logged access, where you can.
+
 ## 4) Assess npm project health
 
 ### npm outdated command
