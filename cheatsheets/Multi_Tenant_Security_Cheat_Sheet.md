@@ -560,11 +560,11 @@ Classify asynchronous work as global, tenant-scoped, or explicitly cross-tenant.
 
 - Classify stored objects as global, tenant-scoped, or user-scoped. Keep intentionally shared assets in an explicit global namespace.
 - Partition tenant-scoped objects with a tenant-aware object key, bucket, account, or enforceable storage policy. Object naming or prefixes alone are not authorization boundaries.
-- Validate canonical tenant identifiers and object paths. Reject absolute paths, traversal components (`..`), and path-separator tricks that could escape the tenant namespace.
-- Authorize the exact tenant, object, and operation before uploads, downloads, deletion, or generating signed URLs.
+- Validate tenant identifiers against an allowlisted canonical format, alongside object-path validation. Reject absolute paths, `..` traversal components, and path-separator tricks that could escape the tenant namespace.
+- Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.
 - Verify object ownership where appropriate; do not trust client-supplied tenant metadata as authorization proof.
 - Restrict signed URLs to the required object and operation, with an appropriate expiration and revocation model. The tenant identifier does not need to appear in the URL when authorization happened before signing.
-- Ensure tenant deletion targets only that tenant's objects. Use an exact tenant-prefix boundary so one tenant's prefix cannot match another tenant's objects.
+- Ensure tenant deletion targets only that tenant's objects. Use an exact tenant-prefix boundary, such as `tenants/acme/` rather than `tenants/acme`, because the latter could also match `tenants/acme-west/`.
 - Account for object versions, replicas, and backups when applying retention and deletion policies.
 - Use tenant-specific encryption keys when required by the risk or compliance model; shared managed keys with enforced access context may also be appropriate.
 
