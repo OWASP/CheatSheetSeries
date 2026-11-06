@@ -67,8 +67,8 @@ Here's how the allowlist would look like in the `package.json` file on a project
 A fake job interview can hand a candidate a whole project and ask them to install it. The [FBI](https://www.ic3.gov/PSA/2024/PSA240903) lists a "pre-employment test" that runs unknown Node.js packages or GitHub repositories as a warning sign, and [Unit 42](https://unit42.paloaltonetworks.com/two-campaigns-by-north-korea-bad-actors-target-job-hunters/) describes interviewers asking victims to install an npm package hosted on GitHub that carries malware. Here the risky code is in the project itself, not in a dependency you chose. Before the first install:
 
 - Read the `preinstall`, `install`, `postinstall` and `prepare` entries in `package.json`, which a plain `npm install` [runs](https://docs.npmjs.com/cli/v11/using-npm/scripts). Then install with `--ignore-scripts`.
-- Check the project's [`.npmrc`](https://docs.npmjs.com/cli/v11/configuring-npm/npmrc) for `registry` and `_authToken` lines, which change where packages are fetched from.
-- Check dependencies for [git URLs, tarball URLs and `file:` paths](https://docs.npmjs.com/cli/v11/configuring-npm/package-json), which are fetched from outside the registry.
+- Check the project's [`.npmrc`](https://docs.npmjs.com/cli/v11/configuring-npm/npmrc) for `registry` and `_authToken` lines, and in Yarn projects the [`.yarnrc.yml`](https://yarnpkg.com/configuration/yarnrc) `npmRegistryServer` and `npmAuthToken` settings. These change where packages are fetched from.
+- Check dependencies for [git URLs, tarball URLs and `file:` paths](https://docs.npmjs.com/cli/v11/configuring-npm/package-json), and in Yarn projects [`link:` paths](https://yarnpkg.com/protocol/link), which come from outside the registry.
 - Open the folder in [VS Code Restricted Mode](https://code.visualstudio.com/docs/editing/workspaces/workspace-trust), which blocks tasks until you trust the folder.
 - Run it in a disposable container or VM that has no credentials, SSH keys or wallets.
 
