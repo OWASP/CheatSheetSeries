@@ -330,11 +330,12 @@ To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out 
 
 | Service | Block IPs/Domains |
 |---------|-------------------|
-| **AWS IMDS** | `169.254.169.254`, `metadata.amazonaws.com` |
+| **AWS IMDS** | `169.254.169.254`, `fd00:ec2::254` ([IPv6 endpoint](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html#instancedata-inside-access)) |
 | **GCP Metadata** | `metadata.google.internal`, `169.254.169.254` |
 | **Azure IMDS** | `169.254.169.254` |
 | **Localhost** | `127.0.0.0/8`, `0.0.0.0/8`, `::1/128` |
 | **RFC1918 Private** | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` |
+| **IPv4 Link-Local** | `169.254.0.0/16` ([RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927#section-1)), which also covers the AWS credential endpoints for [ECS tasks](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html#task-iam-role-considerations) (`169.254.170.2`) and [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-how-it-works.html#pod-id-agent-pod) (`169.254.170.23`) |
 | **IPv6 Unique Local** | `fc00::/7` ([RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193#section-3.1)) |
 | **IPv6 Link-Local** | `fe80::/10` ([RFC 4291](https://datatracker.ietf.org/doc/html/rfc4291#section-2.5.6)) |
 | **Multicast** | `224.0.0.0/4`, `ff00::/8` |
