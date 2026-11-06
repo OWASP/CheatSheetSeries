@@ -9,11 +9,11 @@ While the specifications for XML and XML schemas provide you with the tools need
 
 ## Dealing with malformed XML documents
 
-An XML document is considered malformed if it does not follow the [W3C XML specification](https://www.w3.org/TR/xml/#sec-terminology) for a well-formed document (such as missing closing tags, improper element nesting, or forbidden characters). Conforming XML processors treat well-formedness violations as fatal errors and must halt normal processing immediately without passing partially parsed data to the application.
+An XML document is considered malformed if it does not follow the [W3C XML specification](https://www.w3.org/TR/xml/#sec-terminology) for a well-formed document (such as missing closing tags, improper element nesting, or forbidden characters). Conforming XML processors treat well-formedness violations as fatal errors and must halt normal processing immediately upon detection.
 
 ### Fail Closed on Fatal Errors
 
-- **Reject malformed input immediately:** Once a parser encounters a fatal error, parsing must stop. Do not attempt to process, extract, or execute partially parsed data.
+- **Halt processing on fatal errors:** A fatal parsing error must stop further normal application processing. However, streaming parsers (such as SAX or StAX) may already have delivered earlier events to application handlers before detecting the error. Stopping normal processing after error detection does not withhold earlier events, and rejecting the document does not undo those events or their side effects. Applications must defer irreversible side effects until the entire document has parsed successfully, using staging or an equivalent approach where necessary.
 - **Disable parser recovery mode:** Certain XML parsers (such as `libxml2`, `lxml`, or PHP) provide recovery or lenient parsing modes that attempt to construct a document tree from malformed markup. Because recovery heuristics are non-standard and vary across parsers, recovering malformed documents can introduce data integrity issues, parser differentials, or validation bypasses. Keep parser recovery mode disabled when handling untrusted input.
 - **Prevent asymmetric CPU consumption:** Backtracking or error handling routines in some parsers can take significantly more CPU time on malformed documents than on valid ones. Attackers can exploit this asymmetry with flooded malformed payloads to cause a Denial of Service (DoS). Use conforming parsers that fail fast on syntax errors.
 
