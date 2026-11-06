@@ -70,7 +70,7 @@ A fake job interview can hand a candidate a whole project and ask them to instal
 - Check the project's [`.npmrc`](https://docs.npmjs.com/cli/v11/configuring-npm/npmrc) for `registry` and `_authToken` lines, and in Yarn projects the [`.yarnrc.yml`](https://yarnpkg.com/configuration/yarnrc) `npmRegistryServer` and `npmAuthToken` settings. These change where packages are fetched from.
 - Check dependencies for [git URLs, tarball URLs and `file:` paths](https://docs.npmjs.com/cli/v11/configuring-npm/package-json), and in Yarn projects [`link:` paths](https://yarnpkg.com/protocol/link), which come from outside the registry. This only catches the visible cases: a typosquatted package name (see [section 10](#10-understanding-typosquatting-and-slopsquatting-attacks)) or a tampered lockfile is much harder to spot by hand.
 - Open the folder in [VS Code Restricted Mode](https://code.visualstudio.com/docs/editing/workspaces/workspace-trust), which blocks tasks until you trust the folder.
-- Run it in a disposable container or VM that has no credentials, SSH keys or wallets, and with no network access, or only restricted and logged access, where you can.
+- Run it in a disposable VM, ideally a remote one rather than on your own machine or LAN, that has no credentials, SSH keys or wallets, and with no network access, or only restricted and logged access, where you can.
 
 ## 4) Assess npm project health
 
