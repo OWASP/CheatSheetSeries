@@ -35,7 +35,7 @@ Use the guidance for the query language or interpreter your application uses:
 | SQL injection | Builds SQL queries | [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md) and [Query Parameterization](Query_Parameterization_Cheat_Sheet.md) |
 | Object-relational mapper query injection | Builds query strings with tools such as Hibernate | [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md) and [Query Parameterization](Query_Parameterization_Cheat_Sheet.md) |
 | NoSQL injection | Builds queries for a NoSQL database | [NoSQL Security](NoSQL_Security_Cheat_Sheet.md) |
-| Cross-site scripting (XSS) | Places untrusted data into browser content | [Cross Site Scripting Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) and [DOM based XSS Prevention](DOM_based_XSS_Prevention_Cheat_Sheet.md) |
+| Cross-site scripting (XSS) | Places untrusted data into browser content | [Cross Site Scripting Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), [DOM based XSS Prevention](DOM_based_XSS_Prevention_Cheat_Sheet.md) and [XSS Filter Evasion](XSS_Filter_Evasion_Cheat_Sheet.md) |
 | LDAP injection | Builds LDAP queries | [LDAP Injection Prevention](LDAP_Injection_Prevention_Cheat_Sheet.md) |
 | XPath injection | Builds XPath queries | [XPath Injection Prevention](XPath_Injection_Prevention_Cheat_Sheet.md) |
 | OS command injection | Invokes operating system commands | [OS Command Injection Defense](OS_Command_Injection_Defense_Cheat_Sheet.md) |
@@ -57,57 +57,7 @@ Every time a scripting language is used, the actual implementation of the 'highe
 
 ### Operating System Commands
 
-OS command injection is a technique used via a web interface in order to execute OS commands on a web server. The user supplies operating system commands through a web interface in order to execute OS commands.
-
-Any web interface that is not properly sanitized is subject to this exploit. With the ability to execute OS commands, the user can upload malicious programs or even obtain passwords. OS command injection is preventable when security is emphasized during the design and development of applications.
-
-#### How to test for the issue
-
-##### During code review
-
-Check if any command execute methods are called and in unvalidated user input are taken as data for that command.
-
-Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. `%3B` is URL encoded and decodes to semicolon. This is because the `;` is interpreted as a command separator.
-
-Example: `http://sensitive/something.php?dir=%3Bcat%20/etc/passwd`
-
-If the application responds with the output of the `/etc/passwd` file then you know the attack has been successful. Many web application scanners can be used to test for this attack as they inject variations of command injections and test the response.
-
-Equally Static Code Analysis tools check the data flow of untrusted user input into a web application and check if the data is then entered into a dangerous method which executes the user input as a command.
-
-#### Remediation
-
-If it is considered unavoidable the call to a system command incorporated with user-supplied, the following two layers of defense should be used within software in order to prevent attacks
-
-1. **Parameterization** - If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.
-2. **Input validation** - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:
-    - When it comes to the **commands** used, these must be validated against a list of allowed commands.
-    - In regards to the **arguments** used for these commands, they should be validated using the following options:
-        - Positive or allowlist input validation - where are the arguments allowed explicitly defined
-        - Allow-list Regular Expression - where is explicitly defined a list of good characters allowed and the maximum length of the string. Ensure that metacharacters like `& | ; $ > < \` \ !` and whitespaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:
-
-`^[a-z0-9]{3,10}$`
-
-#### Example code - Java
-
-##### Incorrect Usage
-
-```java
-ProcessBuilder b = new ProcessBuilder("C:\\DoStuff.exe -arg1 -arg2");
-```
-
-This creates a builder with one command-list element, not a program followed by two arguments. [`ProcessBuilder`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html) represents the executable and its arguments as a list. The snippet does not start a process or demonstrate shell-command injection.
-
-##### Correct Usage
-
-This illustrative example starts a process with a modified working directory and passes the executable and each argument separately. Keep the executable and working directory trusted, and validate any untrusted arguments for the invoked program. Argument separation does not replace [argument validation](OS_Command_Injection_Defense_Cheat_Sheet.md#layer-2).
-
-```java
-ProcessBuilder pb = new ProcessBuilder("TrustedCmd", "TrustedArg1", "TrustedArg2");
-Map<String, String> env = pb.environment();
-pb.directory(new File("TrustedDir"));
-Process p = pb.start();
-```
+See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md) for how to test for OS command injection, its layered remediation, and language-specific examples.
 
 ### Network Protocols
 
@@ -130,3 +80,5 @@ If a parameterized API is not available, you should carefully escape special cha
 ## References
 
 - [Oracle JDBC: Using Prepared Statements](https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
+- [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)
+- [XSS Filter Evasion Cheat Sheet](XSS_Filter_Evasion_Cheat_Sheet.md)
