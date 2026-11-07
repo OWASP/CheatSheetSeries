@@ -368,15 +368,15 @@ Building images often requires accessing private resources, such as private pack
 
 **Build-Time Secret Leakage Risks:**
 
-Do not pass sensitive credentials using `ARG` or `ENV` instructions in your Dockerfile. Values passed to `ARG` and `ENV` persist in the image layer metadata, configuration history, and container commit history. Anyone with read access to the image or published container registry can extract these cleartext credentials using tools like `docker history` or container layer inspection tools.
+Do not pass sensitive credentials using `ARG` or `ENV` instructions in your Dockerfile. `ENV` values are stored in the image configuration, while `ARG` values can be exposed in build history or provenance attestations. Build commands can also write these values into image layers. Anyone with access to the resulting image or build metadata may be able to recover exposed credentials.
 
-Similarly, do not use `COPY` or `ADD` to stage credential files (such as `.npmrc` or private keys) into intermediate layers with the intent of deleting them in a subsequent `RUN rm` command. Container filesystem layers are immutable; files added in an earlier layer remain fully retrievable from that intermediate layer even if deleted in a later instruction. [NIST SP 800-190 (Section 3.1.3)](https://csrc.nist.gov/publications/detail/sp/800-190/final) identifies embedded cleartext secrets as a primary image vulnerability and advises against baking static secrets into images.
+Similarly, do not use `COPY` or `ADD` to stage credential files (such as `.npmrc` or private keys) into intermediate layers with the intent of deleting them in a subsequent `RUN rm` command. Container filesystem layers are immutable; files added in an earlier layer remain fully retrievable from that intermediate layer even if deleted in a later instruction. [NIST SP 800-190 (Section 3.1.4)](https://csrc.nist.gov/publications/detail/sp/800-190/final) identifies embedded cleartext secrets as a primary image vulnerability and advises against baking static secrets into images.
 
 **Recommended Mitigation: BuildKit Secret Mounts:**
 
 To use secrets during a build without baking them into any image layer, use [Docker Build secrets](https://docs.docker.com/build/building/secrets/) with BuildKit (`RUN --mount=type=secret`).
 
-Secret mounts expose sensitive data only as a temporary, in-memory filesystem mount (by default at `/run/secrets/<id>`) or environment variable for the duration of a specific `RUN` command. When the command completes, the secret is detached and is never written to the intermediate layer or final container filesystem:
+Secret mounts expose sensitive data for the duration of a specific `RUN` command, either as a file (by default at `/run/secrets/<id>`) or as an environment variable. The mounted secret itself is not committed to the image layer. However, commands using it can still leak its value into image contents or build logs. Ensure the build step does not copy credentials into other files, persist them in generated configuration or caches, or print them:
 
 ```dockerfile
 # syntax=docker/dockerfile:1
@@ -384,10 +384,11 @@ FROM node:20-alpine
 WORKDIR /app
 COPY package*.json ./
 
-# Mount the secret temporarily into memory during package installation
+# Mount the secret temporarily during package installation
 RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
     npm ci --omit=dev
 
+# Use a .dockerignore file to exclude credential files such as .npmrc and .env
 COPY . .
 ```
 
@@ -397,8 +398,8 @@ Pass the secret when executing the build command using the `--secret` flag:
 # Provide secret from a host file
 docker build --secret id=npmrc,src=$HOME/.npmrc -t my-app .
 
-# Provide secret from a host environment variable
-docker build --secret id=npmrc,env=NPM_TOKEN -t my-app .
+# Provide secret from a host environment variable containing .npmrc content
+docker build --secret id=npmrc,env=NPMRC_CONTENT -t my-app .
 ```
 
 **Multi-Stage Build Caveats:**
