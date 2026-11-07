@@ -294,9 +294,9 @@ When secrets are part of your CI/CD tooling (such as GitHub secrets, GitLab repo
 
 Pipelines can retrieve credentials dynamically from a dedicated secrets manager (see [Cloud Providers](#4-cloud-providers)). When integrating pipelines with external secrets managers:
 
-- **Avoid static bootstrap credentials**: Authenticate pipeline runners using short-lived OpenID Connect (OIDC) tokens and workload identity federation, eliminating static cloud access keys from the CI/CD platform.
-- **Scope permissions tightly**: Grant the pipeline identity access only to the specific secrets required for the active build or deployment stage.
-- **Enforce job-scoped temporality**: Issue ephemeral, dynamic credentials that expire automatically after the build completes.
+- **Avoid static bootstrap credentials**: Authenticate pipeline runners using short-lived OpenID Connect (OIDC) tokens and workload identity federation (see the [Workload Identity Federation Cheat Sheet](Workload_Identity_Federation_Cheat_Sheet.md)), eliminating static cloud access keys from the CI/CD platform.
+- **Separate federation from secret access**: Token exchange establishes the workload's identity but does not automatically grant access to secrets. Separate the permission to exchange an OIDC token or impersonate an identity from distinct, least-privilege permissions required to access specific secrets for the active build or deployment stage.
+- **Enforce job-scoped temporality**: Issue ephemeral, dynamic credentials with short time-to-live (TTL) leases. Stopping a runner or completing a build does not itself revoke issued credentials; credentials expire according to configured lease TTLs or must be explicitly revoked when no longer needed.
 - **Preserve caller attribution**: Ensure requests from the CI/CD pipeline to the secrets manager can be attributed to the specific user, job trigger, or commit that initiated the pipeline run.
 
 #### 3.2.3 Not touched by CI/CD at all
@@ -309,15 +309,15 @@ CI/CD service accounts must operate with least privilege, scoped strictly to the
 
 ### 3.4 Logging and Accounting
 
-Define security alerting rules to detect unauthorized access to or attempted exfiltration of secrets, such as anomalous secret retrieval, unexpected outbound network requests, or attempts to dump secrets to logs. For general pipeline logging configurations and audit trail retention, see the [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md#visibility-and-monitoring).
+Define security alerting rules to detect unauthorized access to or attempted exfiltration of secrets, such as anomalous secret retrieval, unexpected outbound network requests, or attempts to dump secrets to logs. Define CI/CD audit-log retention periods according to incident investigation requirements and applicable legal or regulatory compliance mandates. For general pipeline logging configurations and audit trail retention, see the [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md#visibility-and-monitoring).
 
 ### 3.5 Rotation vs Dynamic Creation
 
-Pipelines can trigger automated rotation or request dynamic, ephemeral credentials for deployment operations. When using dynamic secrets, bind credential lifecycles to the provider's [lease expiry or explicit revocation](https://developer.hashicorp.com/vault/docs/concepts/lease); stopping the pipeline runner alone does not revoke the secret. Dynamic credentials significantly reduce the exposure window of deployment credentials and simplify misuse detection.
+Pipelines can trigger automated rotation or request dynamic, ephemeral credentials for deployment operations. When using dynamic secrets, bind credential lifecycles to the provider's [lease expiry or explicit revocation](https://developer.hashicorp.com/vault/docs/concepts/lease); stopping the pipeline runner or completing a build does not itself revoke issued credentials. Credentials remain valid until their configured lease TTL expires or until they are explicitly revoked when no longer needed. Dynamic credentials significantly reduce the exposure window of deployment credentials and simplify misuse detection.
 
 ### 3.6 Pipeline Created Secrets
 
-When pipelines generate secrets during deployment, they can register them directly with a secrets manager or commit asymmetrically encrypted secrets to Git (the GitOps / Sealed Secrets pattern). In a GitOps workflow, encrypt secrets using environment-specific public keys so only the designated environment's decryption controller or sidecar (see [Short-Lived Sidecar Containers](#52-short-lived-sidecar-containers)) can decrypt them. Any pipeline-generated secrets must use cryptographically secure random generation and appropriate key lengths.
+When pipelines generate secrets during deployment, they can register them directly with a secrets manager or commit asymmetrically encrypted secrets to Git (the GitOps pattern). For example, with [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets#sealed-secrets-for-kubernetes), the `kubeseal` CLI encrypts a Kubernetes Secret into a `SealedSecret` custom resource using the cluster's public key. The encrypted resource is committed to Git, and an in-cluster Sealed Secrets controller uses its private key to decrypt the resource and create the standard Kubernetes Secret. In a GitOps workflow, encrypt secrets using environment-specific keys so only the designated environment's controller can decrypt them. Any pipeline-generated secrets must use cryptographically secure random generation and appropriate key lengths.
 
 ## 4 Cloud Providers
 
