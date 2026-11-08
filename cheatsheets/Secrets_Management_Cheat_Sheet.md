@@ -270,80 +270,54 @@ Federation still requires protecting issued tokens and any client credentials. F
 
 ## 3 Continuous Integration (CI) and Continuous Deployment (CD)
 
-Building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets to provide configuration to the application or during deployment. Alternatively, they interact heavily with the secrets management system. Various best practices can help smooth out secret management in CI/CD; we will deal with some of them in this section.
+Continuous Integration (CI) and Continuous Deployment (CD) tools frequently store secrets to configure applications or interact with secrets management systems during deployment. For general CI/CD pipeline hardening, runner isolation, and build-log masking, see the [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md). This section covers architectural patterns and controls for managing secrets accessed or delivered by pipelines.
 
 ### 3.1 Hardening your CI/CD pipeline
 
-CI/CD tooling consumes (high-privilege) credentials regularly. Ensure that the pipeline cannot be easily hacked or misused by employees. Here are a few guidelines which can help you:
-
-- Treat your CI/CD tooling as a production environment: harden it, patch it and harden the underlying infrastructure and services.
-- Have Security Event Monitoring in place.
-- Implement least-privilege access: developers do not need to be able to administer projects. Instead, they only need to be able to execute required functions, such as setting up pipelines, running them, and working with code. Administrative tasks can quickly be done using configuration-as-code in a separate repository used by the CI/CD system to update its configuration. There is no need for privileged roles that might have access to secrets.
-- Make sure that pipeline output does not leak secrets, and you can't listen in on production pipelines with debugging tools.
-- Make sure you cannot exec into any runners and workers for a CI/CD system.
-- Have proper authentication, authorization and accounting in place.
-- Ensure only an approved process can create pipelines, including MR/PR steps to ensure that a created pipeline is security-reviewed.
+For guidance on securing CI/CD infrastructure, pipeline execution environments, and source control configurations, see the [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md) (specifically [Secure SCM Configuration](CI_CD_Security_Cheat_Sheet.md#secure-scm-configuration) and [Pipeline and Execution Environment](CI_CD_Security_Cheat_Sheet.md#pipeline-and-execution-environment)).
 
 ### 3.2 Where should a secret be?
 
-There are various places where you can store a secret to execute CI/CD actions:
-
-- As part of your CI/CD tooling: you can store a secret in [GitLab](https://docs.gitlab.com/charts/installation/secrets.html)/[GitHub](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[Jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
-- As part of your secrets-management system: you can store a secret in a secrets management system, such as facilities provided by a cloud provider ([AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/basic-concepts), [Google Secret Manager](https://cloud.google.com/secret-manager)), or other third-party facilities ([Hashicorp Vault](https://www.vaultproject.io/), [Conjur](https://www.conjur.org/), [Keeper](https://www.keepersecurity.com/)). In this case, the CI/CD pipeline tooling requires credentials to connect to these secret management systems to have secrets in place. See [Cloud Providers](#4-cloud-providers) for more details on using a cloud provider's secret management system.
-
-Another alternative here is using the CI/CD pipeline to leverage the Encryption as a Service from the secrets management systems to do the encryption of a secret. The CI/CD tooling can then commit the encrypted secret to git, which can be fetched by the consuming service on deployment and decrypted again. See section 3.6 for more details.
-
-Note: not all secrets must be in the CI/CD pipeline to get to the actual deployment. Instead, make sure that the deployed services take care of part of their secrets management at their own lifecycle (e.g., deployment, runtime and destruction).
+When deploying applications, select a secret delivery model based on your environment's isolation and lifecycle requirements:
 
 #### 3.2.1 As part of your CI/CD tooling
 
-When secrets are part of your CI/CD tooling, it means that these secrets are exposed to your CI/CD jobs. CI/CD tooling can comprise, e.g., GitHub secrets, GitLab repository secrets, ENV Vars/Var Groups in Microsoft Azure DevOps, Kubernetes Secrets, etc.
-These secrets are often configurable/viewable by people who have the authorization to do so (e.g., a maintainer in GitHub, a project owner in GitLab, an admin in Jenkins, etc.), which together line up for the following best practices:
+When secrets are part of your CI/CD tooling (such as GitHub secrets, GitLab repository secrets, Azure DevOps variable groups, or Jenkins credentials), they are exposed to pipeline jobs and project maintainers. When using tool-stored secrets:
 
-- No "big secret": ensure that secrets in your CI/CD tooling that are not long-term, don't have a wide blast radius, and don't have a high value. Also, limit shared secrets (e.g., never have one password for all administrative users).
-- As is / To be: have a clear overview of which users can view or alter the secrets. Often, maintainers of a GitLab/GitHub project can see or otherwise extract its secrets.
-- Reduce the number of people that can perform administrative tasks on the project to limit exposure.
-- Log & Alert: Assemble all the logs from the CI/CD tooling and have rules in place to detect secret extraction or misuse, whether through accessing them through a web interface or dumping them while double Base64 encoding or encrypting them with OpenSSL.
-- Rotation: Regularly rotate secrets.
-- Forking should not leak: Validate that a fork of the repository or copy of the job definition does not copy the secret.
-- Document: Make sure you document which secrets you store as part of your CI/CD tooling and why so that you can migrate these easily when required.
+- **Limit blast radius**: Avoid storing high-value, long-term, or widely scoped credentials in CI/CD variables; never share credentials across administrative users.
+- **Review access permissions**: Maintain an overview of which users and roles can view or modify stored secrets, and review these permissions periodically.
+- **Prevent fork leakage**: Validate that a repository fork or copied job definition does not expose or copy stored secrets.
+- **Rotate regularly**: Establish a defined rotation schedule for secrets maintained within CI/CD tooling.
+- **Document stored secrets**: Maintain documentation of which secrets are stored as part of your CI/CD tooling, including their purpose and ownership, to simplify audits and future migrations.
 
 #### 3.2.2 Storing it in a secrets management system
 
-Naturally, you can store secrets in a designated secrets management solution. For example, you can use a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Google Secrets Manager](https://cloud.google.com/secret-manager), or [Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/basic-concepts). You can find more information about these in [section 4](#4-cloud-providers) of this cheat sheet. Another option is a dedicated secrets management system, such as [Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Conjur](https://www.conjur.org/).
-Here are a few do's and don'ts for the CI/CD interaction with these systems. Make sure that the following is taken care of:
+Pipelines can retrieve credentials dynamically from a dedicated secrets manager (see [Cloud Providers](#4-cloud-providers)). When integrating pipelines with external secrets managers:
 
-- Rotation/Temporality: credentials used by the CI/CD tooling to authenticate against the secret management system are rotated frequently and expire after a job completes.
-- Scope of authorization: scope credentials used by the CI/CD tooling (e.g., roles, users, etc.), only authorize those secrets and services of the secret management system required for the CI/CD tooling to execute its job.
-- Attribution of the caller: credentials used by the CI/CD tooling still hold attribution of the one calling the secrets management solution. Ensure you can attribute any calls made by the CI/CD tooling to a person or service that requested the actions of the CI/CD tooling. If this is not possible through the default configuration of the secrets manager, make sure that you have a correlation setup in terms of request parameters.
-- All of the above: Still follow those do's and don'ts listed in section 3.2.1: log & alert, take care of forking, etc.
-- Backup: back up secrets to product-critical operations in separate storage (e.g., cold storage), especially encryption keys.
+- **Avoid static bootstrap credentials**: Authenticate pipeline runners using short-lived OpenID Connect (OIDC) tokens and workload identity federation (see the [Workload Identity Federation Cheat Sheet](Workload_Identity_Federation_Cheat_Sheet.md)), eliminating static cloud access keys from the CI/CD platform.
+- **Separate federation from secret access**: Token exchange establishes the workload's identity but does not automatically grant access to secrets. Separate the permission to exchange an OIDC token or impersonate an identity from distinct, least-privilege permissions required to access specific secrets for the active build or deployment stage.
+- **Enforce job-scoped temporality**: Issue ephemeral, dynamic credentials with short time-to-live (TTL) leases. Stopping a runner or completing a build does not itself revoke issued credentials; credentials expire according to configured lease TTLs or must be explicitly revoked when no longer needed.
+- **Preserve caller attribution**: Ensure requests from the CI/CD pipeline to the secrets manager can be attributed to the specific user, job trigger, or commit that initiated the pipeline run.
 
 #### 3.2.3 Not touched by CI/CD at all
 
-Secrets do not necessarily need to be brought to a consumer of the secret by a CI/CD pipeline. It is even better when the consumer of the secret retrieves the secret. In that case, the CI/CD pipeline still needs to instruct the orchestrating system (e.g., [Kubernetes](https://kubernetes.io/)) that it needs to schedule a specific service with a given service account with which the consumer can then retrieve the required secret. The CI/CD tooling then still has credentials for the orchestrating platform but no longer has access to the secrets themselves. The do's and don'ts regarding these credentials types are similar to those described in section 3.2.2.
+The recommended approach avoids passing application runtime secrets through the CI/CD pipeline entirely. The pipeline deploys the application with a platform identity (such as a Kubernetes service account or cloud IAM role), and the deployed service retrieves its own secrets directly from the secrets manager at runtime. This decouples build infrastructure from production application secrets.
 
 ### 3.3 Authentication and Authorization of CI/CD tooling
 
-CI/CD tooling should have designated service accounts, which can only operate in the scope of the required secrets or orchestration of the consumers of a secret. Additionally, a CI/CD pipeline run should be easily attributable to the one who has defined the job or triggered it to detect who has tried to exfiltrate secrets or manipulate them. When you use certificate-based auth, the caller of the pipeline identity should be part of the certificate. If you use a token to authenticate towards the mentioned systems, make sure you set the principal requesting these actions (e.g., the user or the job creator).
-
-Verify on a periodic basis whether this is (still) the case for your system so that you can do logging, attribution, and security alerting on suspicious actions effectively.
+CI/CD service accounts must operate with least privilege, scoped strictly to the required secrets or deployment targets. Where supported, authenticate pipelines using workload identity federation (OIDC), exchanging the pipeline's signed ID token for short-lived credentials from the target secrets store or cloud provider. Ensure pipeline authentication preserves caller identity, such as by passing the triggering user, workflow identity, or job creator in token claims or certificates, so that secret access in external stores can be audited back to a specific initiator. Verify these attribution mappings periodically.
 
 ### 3.4 Logging and Accounting
 
-Attackers can use CI/CD tooling to extract secrets. They could, for example, use administrative interfaces or job creation that exfiltrates the secret using encryption or double Base64 encoding. Therefore, you should log every action in a CI/CD tool. You should define security alerting rules at every non-standard manipulation of the pipeline tool and its administrative interface to monitor secret usage.
-Logs should be queryable for at least 90 days and stored for a more extended period in cold storage. It might take security teams time to understand how attackers can exfiltrate or manipulate a secret using CI/CD tooling.
+Define security alerting rules to detect unauthorized access to or attempted exfiltration of secrets, such as anomalous secret retrieval, unexpected outbound network requests, or attempts to dump secrets to logs. Define CI/CD audit-log retention periods according to incident investigation requirements and applicable legal or regulatory compliance mandates. For general pipeline logging configuration, see [Visibility and Monitoring](CI_CD_Security_Cheat_Sheet.md#visibility-and-monitoring) in the CI/CD Security Cheat Sheet.
 
 ### 3.5 Rotation vs Dynamic Creation
 
-You can leverage CI/CD tooling to rotate secrets or instruct other components to do the rotation of the secret. For instance, the CI/CD tool can request a secrets management system or another application to rotate the secret. Alternatively, the CI/CD tool or another component could set up a dynamic secret: a secret required for a consumer to use for as long as it lives. Tie invalidation to the provider's [lease expiry or explicit revocation](https://developer.hashicorp.com/vault/docs/concepts/lease); stopping the consumer alone does not revoke the secret. This procedure reduces possible leakage of a secret and allows for easy detection of misuse. If an attacker uses a secret from anywhere other than the consumer's IP, you can easily detect it.
+Pipelines can trigger automated rotation or request dynamic, ephemeral credentials for deployment operations. When using dynamic secrets, bind credential lifecycles to the provider's [lease expiry or explicit revocation](https://developer.hashicorp.com/vault/docs/concepts/lease), as described in [3.2.2](#322-storing-it-in-a-secrets-management-system). Dynamic credentials significantly reduce the exposure window of deployment credentials and simplify misuse detection.
 
 ### 3.6 Pipeline Created Secrets
 
-You can use pipeline tooling to generate secrets and either offer them directly to the service deployed by the tooling or provide the secret to a secrets management solution. Alternatively, the secret can be stored encrypted in git so that the secret and its metadata is as close to the developer's daily place of work as possible. A git-stored secret does require that developers cannot decrypt the secrets themselves and that every consumer of a secret has its encrypted variant of the secret. For instance: the secret should then be different per DTAP environment and be encrypted with another key. For each environment, only the designated consumer in that environment should be able to decrypt the specific secret. A secret does not leak cross-environment and can still be easily stored next to the code.
-Consumers of a secret could now decrypt the secret using a sidecar, as described in section 5.2. Instead of retrieving the secrets, the consumer would leverage the sidecar to decrypt the secret.
-
-When a pipeline creates a secret by itself, ensure that the scripts or binaries involved adhere to best practices for secret generation. Best practices include secure randomness, proper length of secret creation, etc. and that the secret is created based on well-defined metadata stored somewhere in git or somewhere else.
+When pipelines generate secrets during deployment, they can register them directly with a secrets manager or commit asymmetrically encrypted secrets to Git (the GitOps pattern). For example, with [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets#sealed-secrets-for-kubernetes), the `kubeseal` CLI encrypts a Kubernetes Secret into a `SealedSecret` custom resource using the cluster's public key. The encrypted resource is committed to Git, and an in-cluster Sealed Secrets controller uses its private key to decrypt the resource and create the standard Kubernetes Secret. In a GitOps workflow, encrypt secrets using environment-specific keys so only the designated environment's controller can decrypt them. Any pipeline-generated secrets must use cryptographically secure random generation and appropriate key lengths.
 
 ## 4 Cloud Providers
 
@@ -636,6 +610,7 @@ Consider using a standardized logging format and vocabulary such as the [Logging
 
 ## 10 Related Cheat Sheets & further reading
 
+- [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md)
 - [Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md)
 - [Logging Cheat Sheet](Logging_Cheat_Sheet.md)
 - [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md)
