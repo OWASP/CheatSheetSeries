@@ -559,125 +559,14 @@ Classify asynchronous work as global, tenant-scoped, or explicitly cross-tenant.
 ### 6. File Storage & Blob Isolation
 
 - Classify stored objects as global, tenant-scoped, or user-scoped. Keep intentionally shared assets in an explicit global namespace.
-- Partition tenant-scoped objects with a tenant-aware key, bucket, account, or enforceable storage policy.
-- Authorize access to the exact object and operation before serving it or generating a signed URL.
-- Limit signed URLs to the required object and method, with a lifetime appropriate to the operation and revocation model. The tenant identifier does not need to appear in the URL when authorization happened before signing.
-- Use tenant-specific encryption keys when the risk or compliance model requires cryptographic isolation. A shared managed key with enforced access context can also be appropriate.
-
-<details>
-<summary>Illustrative Tenant-Scoped File Storage</summary>
-
-```python
-import boto3
-from botocore.config import Config
-from datetime import datetime
-from pathlib import PurePosixPath
-from typing import Optional
-import re
-
-class TenantFileStorage:
-    """Illustrative S3 helper for tenant-scoped objects."""
-    
-    def __init__(self, bucket_name: str, kms_key_id: str = None):
-        self.bucket = bucket_name
-        self.s3 = boto3.client('s3', config=Config(signature_version='s3v4'))
-        self.kms_key_id = kms_key_id
-    
-    def _get_tenant_prefix(self, tenant_id: str) -> str:
-        """Generate tenant-specific path prefix."""
-        # Naming is not authorization. Accept only the application's canonical
-        # tenant identifier format so it cannot alter the object-key structure.
-        if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", tenant_id):
-            raise ValueError("Invalid tenant identifier")
-        return f"tenants/{tenant_id}"
-    
-    def _build_key(self, tenant_id: str, file_path: str) -> str:
-        """Build full S3 key with tenant isolation."""
-        path = PurePosixPath(file_path)
-        if not path.parts or path.is_absolute() or ".." in path.parts or "\\" in file_path:
-            raise ValueError("Invalid object path")
-        return f"{self._get_tenant_prefix(tenant_id)}/{path.as_posix()}"
-    
-    async def upload_file(self, tenant_id: str, file_path: str, 
-                         content: bytes, content_type: str) -> dict:
-        """Upload file for tenant."""
-        await authorize_file_access(tenant_id, file_path, "put_object")
-        key = self._build_key(tenant_id, file_path)
-        
-        extra_args = {
-            'ContentType': content_type,
-            'Metadata': {
-                'tenant-id': tenant_id,
-                'uploaded-at': datetime.utcnow().isoformat()
-            }
-        }
-        
-        # Use tenant-specific KMS key if available
-        if self.kms_key_id:
-            extra_args['ServerSideEncryption'] = 'aws:kms'
-            extra_args['SSEKMSKeyId'] = self.kms_key_id
-        
-        self.s3.put_object(
-            Bucket=self.bucket,
-            Key=key,
-            Body=content,
-            **extra_args
-        )
-        
-        return {"key": key, "size": len(content)}
-    
-    async def get_file(self, tenant_id: str, file_path: str) -> Optional[bytes]:
-        """Get file only if it belongs to tenant."""
-        await authorize_file_access(tenant_id, file_path, "get_object")
-        key = self._build_key(tenant_id, file_path)
-        
-        try:
-            response = self.s3.get_object(Bucket=self.bucket, Key=key)
-            
-            # Verify tenant ownership from metadata
-            metadata_tenant = response.get('Metadata', {}).get('tenant-id')
-            if metadata_tenant != tenant_id:
-                raise SecurityException("Tenant mismatch in file metadata")
-            
-            return response['Body'].read()
-        except self.s3.exceptions.NoSuchKey:
-            return None
-    
-    async def generate_presigned_url(self, tenant_id: str, file_path: str,
-                                     expiration: int = 3600,
-                                     operation: str = 'get_object') -> str:
-        """Authorize and sign one object operation for a verified tenant."""
-        await authorize_file_access(tenant_id, file_path, operation)
-        key = self._build_key(tenant_id, file_path)
-
-        url = self.s3.generate_presigned_url(
-            ClientMethod=operation,
-            Params={
-                'Bucket': self.bucket,
-                'Key': key,
-            },
-            ExpiresIn=expiration
-        )
-        
-        return url
-    
-    async def delete_tenant_data(self, tenant_id: str):
-        """Delete current objects; versions and backups follow retention policy."""
-        # The delimiter prevents a tenant such as "acme" from matching
-        # another tenant's "acme-west" prefix.
-        prefix = f"{self._get_tenant_prefix(tenant_id)}/"
-        
-        paginator = self.s3.get_paginator('list_objects_v2')
-        for page in paginator.paginate(Bucket=self.bucket, Prefix=prefix):
-            objects = page.get('Contents', [])
-            if objects:
-                self.s3.delete_objects(
-                    Bucket=self.bucket,
-                    Delete={'Objects': [{'Key': obj['Key']} for obj in objects]}
-                )
-```
-
-</details>
+- Partition tenant-scoped objects with a tenant-aware object key, bucket, account, or enforceable storage policy. Object naming or prefixes alone are not authorization boundaries.
+- Validate tenant identifiers against an allowlisted canonical format, alongside object-path validation. Reject absolute paths, `..` traversal components, and path-separator tricks that could escape the tenant namespace.
+- Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.
+- Verify object ownership where appropriate; do not trust client-supplied tenant metadata as authorization proof.
+- Restrict signed URLs to the required object and operation, with an appropriate expiration and revocation model. The tenant identifier does not need to appear in the URL when authorization happened before signing.
+- Ensure tenant deletion targets only that tenant's objects. Use an exact tenant-prefix boundary, such as `tenants/acme/` rather than `tenants/acme`, because the latter could also match `tenants/acme-west/`.
+- Account for object versions, replicas, and backups when applying retention and deletion policies.
+- Use tenant-specific encryption keys when required by the risk or compliance model; shared managed keys with enforced access context may also be appropriate.
 
 ### 7. Tenant Onboarding & Offboarding Security
 
