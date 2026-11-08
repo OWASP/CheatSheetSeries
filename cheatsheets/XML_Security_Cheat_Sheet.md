@@ -481,7 +481,7 @@ When third parties host and define schemas, the contents are not under the contr
 
 ### XML Entity Expansion
 
-**If the parser processes a [DTD](https://www.w3.org/TR/xml/#dt-entdecl) containing an external entity, the attacker who controls the document can make the parser read local files ([CWE-611](https://cwe.mitre.org/data/definitions/611.html)), request internal network resources ([SSRF](https://cwe.mitre.org/data/definitions/918.html)), or exhaust memory and CPU while expanding entities ([CWE-776](https://cwe.mitre.org/data/definitions/776.html)).** One small document is enough to read a local file:
+**Processing a [DTD](https://www.w3.org/TR/xml/#dt-entdecl) from untrusted input enables two kinds of attack.** Internal entities alone can exhaust memory and CPU ([CWE-776](https://cwe.mitre.org/data/definitions/776.html)): nested entities that each reference the next layer several times expand exponentially (the "billion laughs" attack), and many references to one large entity expand quadratically. These attacks need no external entity or network access, so blocking external entities does not stop them. External entities add local file disclosure ([CWE-611](https://cwe.mitre.org/data/definitions/611.html)) and requests to internal network resources ([SSRF](https://cwe.mitre.org/data/definitions/918.html)). One small document is enough to read a local file:
 
 ```xml
 <!DOCTYPE contact [
@@ -490,9 +490,9 @@ When third parties host and define schemas, the contents are not under the contr
 <contact>&xxe;</contact>
 ```
 
-When the resolved entity is not reflected in the response or in an error message, the attacker can still confirm the attack or retrieve content out of band through [parameter entities and a remote DTD](https://portswigger.net/web-security/xxe/blind).
+When the resolved entity is not reflected in the response or in an error message, the attacker can still confirm the attack or retrieve content out of band through [parameter entities and a remote DTD](https://portswigger.net/web-security/xxe/blind). An external DTD reference in the `DOCTYPE` makes the parser fetch a URL even without any entity declaration (see [Remote Schema Poisoning](#remote-schema-poisoning)).
 
-All of these attacks share one root cause and one control: application-facing parsers must not process DTDs or resolve external entities. The safe configuration for each language and parser, including the rare cases where a DTD genuinely has to be accepted, is documented in the [XML External Entity Prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html).
+Disable DTD processing for untrusted XML; this blocks all of the attacks above. If a DTD is genuinely required, disable external entities and external DTD loading, and enforce entity expansion and entity size limits (for Java, see the processing limits in the [JAXP Security Guide](https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html)). Parser-specific settings are in the [XML External Entity Prevention Cheat Sheet](XML_External_Entity_Prevention_Cheat_Sheet.md).
 
 ## References
 
