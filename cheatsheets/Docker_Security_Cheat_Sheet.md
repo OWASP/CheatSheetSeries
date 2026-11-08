@@ -358,6 +358,12 @@ services:
 
 While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) and [Kubernetes Security Cheat Sheet](Kubernetes_Security_Cheat_Sheet.md) for more information.
 
+#### Build-Time Secrets
+
+Do not pass credentials to a build with `ARG`, `ENV`, or `COPY` followed by `rm`. Docker warns that build arguments and environment variables [persist in the final image](https://docs.docker.com/build/building/secrets/), and a file added in one layer stays retrievable even if a later layer deletes it. [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) lists embedded clear text secrets as an image risk (§3.1.4) and says secrets should be kept outside images (§4.1.4).
+
+Use BuildKit secret mounts instead (`RUN --mount=type=secret,id=<id>`). The secret is available only during that `RUN`, as a file (default `/run/secrets/<id>`, or a custom `target=`) or as an environment variable (`env=`), and is not saved in the image. The command can still leak it into image files, caches, or logs, so do not write it elsewhere or print it. Multi-stage builds do not fix this on their own: keep credentials out of every stage, and use `.dockerignore` so `COPY . .` does not pull in `.env` or credential files. See the [Node.js Docker Cheat Sheet](NodeJS_Docker_Cheat_Sheet.md#10-mounting-secrets-into-the-docker-build-image) for a worked npm example.
+
 ### RULE \#13 - Enhance Supply Chain Security
 
 Building on the principles in [Rule \#9](#rule-9---integrate-container-scanning-tools-into-your-cicd-pipeline), enhancing supply chain security involves implementing additional measures to secure the entire lifecycle of container images from creation to deployment. Some of the key practices include:
@@ -380,3 +386,5 @@ Building on the principles in [Rule \#9](#rule-9---integrate-container-scanning-
 
 - [Docker Engine Security](https://docs.docker.com/engine/security/)
 - [Docker Build Attestations](https://docs.docker.com/build/metadata/attestations/)
+- [Docker Build Secrets](https://docs.docker.com/build/building/secrets/)
+- [NIST SP 800-190: Application Container Security Guide](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
