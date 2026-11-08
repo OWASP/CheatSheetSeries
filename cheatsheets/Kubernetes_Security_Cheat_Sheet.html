@@ -3025,23 +3025,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Enable audit logging">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#audit-logs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Audit logs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -3052,56 +3035,6 @@
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#understanding-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Understanding Logging
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Understanding Logging">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#container-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Container logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#node-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Node logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cluster-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cluster logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -6169,23 +6102,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Enable audit logging">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#audit-logs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Audit logs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -6196,56 +6112,6 @@
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#understanding-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Understanding Logging
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Understanding Logging">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#container-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Container logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#node-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Node logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cluster-logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cluster logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -6915,134 +6781,22 @@ blacklist sctp
 <h3 id="rotate-infrastructure-credentials-frequently">Rotate infrastructure credentials frequently<a class="headerlink" href="#rotate-infrastructure-credentials-frequently" title="Permanent link">&para;</a></h3>
 <p>The shorter the lifetime of a secret or credential, the harder it is for an attacker to make use of that credential. Set short lifetimes on certificates and automate their rotation. Use an authentication provider that can control how long issued tokens are available and use short lifetimes where possible. If you use service account tokens in external integrations, plan to rotate those tokens frequently. For example, once the bootstrap phase is complete, a bootstrap token used for setting up nodes should be revoked or its authorization removed.</p>
 <h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
-<p>Kubernetes supplies cluster-based logging, which allows you to log container activity into a central log hub. When a cluster is created, the standard output and standard error output of each container can be ingested using a Fluentd agent running on each node (into either Google Stackdriver Logging or into Elasticsearch) and viewed with Kibana.</p>
+<p>Kubernetes does not provide a native persistent log storage solution. Applications should write to the standard output and standard error streams; the kubelet captures those streams and a cluster-level log-shipping agent (commonly <a href="https://fluentbit.io/">Fluent Bit</a> or Fluentd) forwards them to a centralized backend. See <a href="https://kubernetes.io/docs/concepts/cluster-administration/logging/">Logging Architecture</a> in the Kubernetes documentation for the full picture including node and sidecar patterns.</p>
 <h4 id="enable-audit-logging">Enable audit logging<a class="headerlink" href="#enable-audit-logging" title="Permanent link">&para;</a></h4>
-<p>Kubernetes <a href="https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/">audit logging</a> records API activity according to the configured audit policy for later analysis. Enable audit logging and archive the audit file on a secure server.</p>
-<p>Ensure logs that are monitoring for anomalous or unwanted API calls, especially any authorization failures (these log entries will have a status message “Forbidden”). Authorization failures could mean that an attacker is trying to abuse stolen credentials.</p>
-<p>Managed Kubernetes providers, including GKE, provide access to this data in their cloud console and may allow you to set up alerts on authorization failures.</p>
-<h5 id="audit-logs">Audit logs<a class="headerlink" href="#audit-logs" title="Permanent link">&para;</a></h5>
-<p>Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.</p>
-<p>Here is an illustrative <a href="https://kubernetes.io/docs/reference/config-api/apiserver-audit.v1/#audit-k8s-io-v1-Event"><code>audit.k8s.io/v1</code> audit event</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"Event"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"apiVersion"</span><span class="p">:</span><span class="s2">"audit.k8s.io/v1"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"level"</span><span class="p">:</span><span class="s2">"Metadata"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"auditID"</span><span class="p">:</span><span class="s2">"23bc44ds-2452-242g-fsf2-4242fe3ggfes"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"stage"</span><span class="p">:</span><span class="s2">"RequestReceived"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"requestURI"</span><span class="p">:</span><span class="s2">"/api/v1/namespaces/default/persistentvolumeclaims"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"verb"</span><span class="p">:</span><span class="s2">"list"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"username"</span><span class="p">:</span><span class="s2">"user@example.org"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"groups"</span><span class="p">:[</span><span class="w"> </span><span class="s2">"system:authenticated"</span><span class="w"> </span><span class="p">]</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"sourceIPs"</span><span class="p">:[</span><span class="w"> </span><span class="s2">"172.12.56.1"</span><span class="w"> </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">"objectRef"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"resource"</span><span class="p">:</span><span class="s2">"persistentvolumeclaims"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"namespace"</span><span class="p">:</span><span class="s2">"default"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"apiVersion"</span><span class="p">:</span><span class="s2">"v1"</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"requestReceivedTimestamp"</span><span class="p">:</span><span class="s2">"2019-08-22T12:00:00Z"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"stageTimestamp"</span><span class="p">:</span><span class="s2">"2019-08-22T12:00:00Z"</span>
-<span class="p">}</span>
-</code></pre></div>
+<p><a href="https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/">Kubernetes audit logging</a> records requests to the kube-apiserver according to an audit policy: who made the request, what was requested, and when. Enable audit logging and ship the audit log to a secure, append-only destination outside the cluster so that an attacker who gains cluster access cannot tamper with the audit trail.</p>
+<p>Monitor audit logs for authorization failures (<code>responseStatus.code</code> 403, reason <code>Forbidden</code>). A spike in authorization failures may indicate an attacker testing stolen or overly broad credentials.</p>
 <h4 id="define-audit-policies">Define Audit Policies<a class="headerlink" href="#define-audit-policies" title="Permanent link">&para;</a></h4>
-<p>Audit policy sets rules which define what events should be recorded and what data is stored when an event includes. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it is compared against the list of rules in order. The first matching rule sets the "audit level" of the event.</p>
-<p>The known audit levels are:</p>
+<p>Pass an audit policy file to kube-apiserver with the <code>--audit-policy-file</code> flag. If the flag is omitted, no events are logged. Policies are evaluated top-down; the first matching rule sets the audit level for that event.</p>
+<p>The four audit levels, taken directly from the <a href="https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/">audit documentation</a>, are:</p>
 <ul>
-<li>None - don't log events that match this rule</li>
-<li>Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body</li>
-<li>Request - log event metadata and request body but not response body. This does not apply for non-resource requests</li>
-<li>RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests</li>
+<li><strong>None</strong> - do not log events that match this rule</li>
+<li><strong>Metadata</strong> - log events with metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body</li>
+<li><strong>Request</strong> - log events with request metadata and body but not response body; this does not apply for non-resource requests</li>
+<li><strong>RequestResponse</strong> - log events with request metadata, request body and response body; this does not apply for non-resource requests</li>
 </ul>
-<p>You can pass a file with the policy to kube-apiserver using the --audit-policy-file flag. If the flag is omitted, no events are logged. Note that the rules field must be provided in the audit policy file. A policy with no (0) rules is treated as illegal.</p>
-<h4 id="understanding-logging">Understanding Logging<a class="headerlink" href="#understanding-logging" title="Permanent link">&para;</a></h4>
-<p>One main challenge with logging Kubernetes is understanding what logs are generated and how to use them. Let’s start by examining the overall picture of Kubernetes' logging architecture.</p>
-<h5 id="container-logging">Container logging<a class="headerlink" href="#container-logging" title="Permanent link">&para;</a></h5>
-<p>The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications. The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.</p>
-<p>Manifest is as follows.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">'while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">$(date);</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">1;</span><span class="nv"> </span><span class="s">done'</span><span class="p p-Indicator">]</span>
-</code></pre></div>
-<p>To apply the manifest, run:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>example.yaml
-</code></pre></div>
-<p>To look at the logs for this container, run:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>example
-</code></pre></div>
-<p>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown in the pod configuration below, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</p>
-<p>An example of a Pod Manifest is seen below:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
-<span class="w">    </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/sh</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-c</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
-<span class="w">      </span><span class="no">while true;</span>
-<span class="w">      </span><span class="no">do</span>
-<span class="w">        </span><span class="no">echo "$(date)\n" &gt;&gt; /var/log/example.log;</span>
-<span class="w">        </span><span class="no">sleep 1;</span>
-<span class="w">      </span><span class="no">done</span>
-<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span>
-<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sidecar</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
-<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">'tail</span><span class="nv"> </span><span class="s">-f</span><span class="nv"> </span><span class="s">/var/log/example.log'</span><span class="p p-Indicator">]</span>
-<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span>
-<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span>
-<span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span>
-<span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-</code></pre></div>
-<h5 id="node-logging">Node logging<a class="headerlink" href="#node-logging" title="Permanent link">&para;</a></h5>
-<p>When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver set by the Kubernetes configuration.</p>
-<p>In most cases, these logs will end up in the /var/log/containers directory on your host. Docker supports multiple logging drivers but unfortunately, driver configuration is not supported via the Kubernetes API.</p>
-<p>Once a container is terminated or restarted, kubelet stores logs on the node. To prevent these files from consuming all of the host’s storage, the Kubernetes node implements a log rotation mechanism. When a container is evicted from the node, all containers with corresponding log files are evicted.</p>
-<p>Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.</p>
-<p>For example, systemd logs can be retrieved using the following command:</p>
-<div class="highlight"><pre><span></span><code>journalctl<span class="w"> </span>-u<span class="w"> </span>kubelet
-</code></pre></div>
-<h5 id="cluster-logging">Cluster logging<a class="headerlink" href="#cluster-logging" title="Permanent link">&para;</a></h5>
-<p>In the Kubernetes cluster itself, there is a long list of cluster components that can be logged as well as additional data types that can be used (events, audit logs). Together, these different types of data can give you visibility into how Kubernetes is performing as a system.</p>
-<p>Some of these components run in a container, and some of them run on the operating system level (in most cases, a systemd service). The systemd services write to journald, and components running in containers write logs to the /var/log directory, unless the container engine has been configured to stream logs differently.</p>
+<p>Log <code>secrets</code> and <code>configmaps</code> at <code>Metadata</code> level only. <code>Request</code> and <code>RequestResponse</code> record request and response bodies, which would write secret values into the audit log. Because the first matching rule wins, place this rule above any broader <code>Request</code> or <code>RequestResponse</code> rule, as the <a href="https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/#audit-policy">example policy</a> in the documentation does for <code>secrets</code>.</p>
 <h4 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h4>
-<p>Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.</p>
-<p>The following command returns all events within a specific namespace:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
-
-NAMESPACE<span class="w"> </span>LAST<span class="w"> </span>SEEN<span class="w"> </span>TYPE<span class="w">   </span>REASON<span class="w"> </span>OBJECT<span class="w"> </span>MESSAGE
-kube-system<span class="w">  </span>8m22s<span class="w">  </span>Normal<span class="w">   </span>Scheduled<span class="w">            </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Successfully<span class="w"> </span>assigned<span class="w"> </span>kube-system/metrics-server-66dbbb67db-lh865<span class="w"> </span>to<span class="w"> </span>aks-agentpool-42213468-1
-kube-system<span class="w">     </span>8m14s<span class="w">               </span>Normal<span class="w">    </span>Pulling<span class="w">                   </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Pulling<span class="w"> </span>image<span class="w"> </span><span class="s2">"aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"</span>
-kube-system<span class="w">     </span>7m58s<span class="w">               </span>Normal<span class="w">    </span>Pulled<span class="w">                    </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Successfully<span class="w"> </span>pulled<span class="w"> </span>image<span class="w"> </span><span class="s2">"aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"</span>
-kube-system<span class="w">     </span>7m57s<span class="w">               </span>Normal<span class="w">     </span>Created<span class="w">                   </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Created<span class="w"> </span>container<span class="w"> </span>metrics-server
-kube-system<span class="w">     </span>7m57s<span class="w">               </span>Normal<span class="w">    </span>Started<span class="w">                   </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Started<span class="w"> </span>container<span class="w"> </span>metrics-server
-kube-system<span class="w">     </span>8m23s<span class="w">               </span>Normal<span class="w">    </span>SuccessfulCreate<span class="w">          </span>replicaset/metrics-server-66dbbb67db<span class="w">             </span>Created<span class="w"> </span>pod:<span class="w"> </span>metrics-server-66dbbb67db-lh865
-</code></pre></div>
-<p>The following command will show the latest events for this specific Kubernetes resource:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;
-
-Events:
-<span class="w">  </span>Type<span class="w">    </span>Reason<span class="w">     </span>Age<span class="w">   </span>From<span class="w">                               </span>Message
-<span class="w">  </span>----<span class="w">    </span>------<span class="w">     </span>----<span class="w">  </span>----<span class="w">                               </span>-------
-<span class="w">  </span>Normal<span class="w">  </span>Scheduled<span class="w">  </span>14m<span class="w">   </span>default-scheduler<span class="w">                  </span>Successfully<span class="w"> </span>assigned<span class="w"> </span>kube-system/coredns-7b54b5b97c-dpll7<span class="w"> </span>to<span class="w"> </span>aks-agentpool-42213468-1
-<span class="w">  </span>Normal<span class="w">  </span>Pulled<span class="w">     </span>13m<span class="w">   </span>kubelet,<span class="w"> </span>aks-agentpool-42213468-1<span class="w">  </span>Container<span class="w"> </span>image<span class="w"> </span><span class="s2">"aksrepos.azurecr.io/mirror/coredns:1.3.1"</span><span class="w"> </span>already<span class="w"> </span>present<span class="w"> </span>on<span class="w"> </span>machine
-<span class="w">  </span>Normal<span class="w">  </span>Created<span class="w">    </span>13m<span class="w">   </span>kubelet,<span class="w"> </span>aks-agentpool-42213468-1<span class="w">  </span>Created<span class="w"> </span>container<span class="w"> </span>coredns
-<span class="w">  </span>Normal<span class="w">  </span>Started<span class="w">    </span>13m<span class="w">   </span>kubelet,<span class="w"> </span>aks-agentpool-42213468-1<span class="w">  </span>Started<span class="w"> </span>container<span class="w"> </span>coredns
-</code></pre></div>
+<p><a href="https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/event-v1/">Kubernetes Events</a> record state changes and errors across the cluster (exceeded resource quotas, failed image pulls, probe failures, scheduler decisions) and can be queried with <code>kubectl get events -n &lt;namespace&gt;</code>. Events expire after one hour by default (controlled by the <code>--event-ttl</code> flag on the <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/">kube-apiserver</a>) and are not a substitute for audit logging, but they are a useful signal for detecting anomalous workload behavior.</p>
 <h2 id="securing-a-managed-kubernetes-service-on-a-cloud-provider">Securing a Managed Kubernetes Service on a Cloud Provider<a class="headerlink" href="#securing-a-managed-kubernetes-service-on-a-cloud-provider" title="Permanent link">&para;</a></h2>
 <h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link">&para;</a></h3>
 <p>There are few open source tools that can help you on securing your managed-service Kubernetes on AWS <a href="https://aws.amazon.com/eks/">(EKS)</a></p>
