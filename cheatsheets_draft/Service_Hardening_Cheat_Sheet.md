@@ -140,7 +140,6 @@ Hardening should be introduced in a controlled manner. A configuration that appe
 - Record the platform version, configuration, test procedure, and results for reproducibility.
 - Reassess hardening settings after significant application, operating-system, or service-manager changes.
 
-
 ## Hardening Services with systemd
 
 On Linux systems using systemd, service unit settings can restrict a service's privileges and access to system resources. Apply restrictions according to the service's requirements, and test them before deployment. These settings provide defense in depth; they do not replace secure application configuration, patching, or other operating-system security controls.
@@ -213,6 +212,56 @@ Its exposure score is a **heuristic assessment of unit settings**, not proof tha
 Consult the [systemd-analyze manual](https://www.freedesktop.org/software/systemd/man/systemd-analyze.html) and the [systemctl manual](https://www.freedesktop.org/software/systemd/man/systemctl.html) for further details.
 
 Review hardening settings when service requirements change, and validate compatibility with the systemd version and Linux kernel used in the deployment.
+
+## Other Options
+
+Service hardening can also use controls outside systemd. The appropriate mechanisms depend on the operating system, deployment environment, and service requirements. These controls can complement one another, but each must be configured and validated for the service being protected.
+
+### AppArmor and SELinux
+
+AppArmor and SELinux are Linux mandatory access control (MAC) mechanisms that can restrict what a service is permitted to access or perform, beyond traditional file permissions.
+
+For AppArmor, apply an appropriate enforced profile to the service. Processes without an applicable profile may run unconfined. For SELinux, use an enforcing policy and ensure that the service runs in an appropriately confined domain with correct resource labels. An enabled security module does not necessarily mean that a particular service is confined.
+
+See the [Linux kernel AppArmor documentation](https://docs.kernel.org/admin-guide/LSM/apparmor.html) and [Red Hat's SELinux documentation](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_selinux/).
+
+### Firewalls and Network Namespaces
+
+Use host or network firewalls to restrict traffic to the ports, protocols, sources, and destinations required by the service. Consider both inbound and outbound traffic according to the service's communication requirements.
+
+Linux network namespaces can provide separate network interfaces, routing tables, and network stacks for services. However, a network namespace alone does not establish an appropriate traffic-filtering policy. Configure and verify network connectivity and firewall rules explicitly.
+
+See the [nftables documentation](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page) and [network_namespaces(7)](https://man7.org/linux/man-pages/man7/network_namespaces.7.html).
+
+### Application Sandboxing
+
+Application sandboxing tools, such as Firejail, can restrict a service's execution environment using Linux namespaces, seccomp filters, and capability controls.
+
+Evaluate the sandbox's privileges, configuration, security implications, and compatibility before deployment. A sandboxing tool does not automatically provide complete isolation, and some implementations introduce their own privileged components.
+
+See the [Firejail manual](https://man7.org/linux/man-pages/man1/firejail.1.html).
+
+### Landlock
+
+Landlock is a Linux security module that allows processes, including unprivileged processes, to apply additional restrictions to themselves and their descendants.
+
+Developers can use Landlock to limit supported operations on resources such as files. Available restrictions depend on the running kernel and supported Landlock ABI version. Applications should check supported features rather than assume that every restriction is available.
+
+See the [Linux kernel Landlock documentation](https://docs.kernel.org/userspace-api/landlock.html).
+
+### eBPF-Based Security Controls
+
+Security tools built on extended Berkeley Packet Filter (eBPF) can support runtime monitoring and, with appropriate kernel facilities such as BPF LSM, enforcement of security policies.
+
+The protection provided depends on the specific tool, its policies, privileges, and kernel support. eBPF itself is not a security policy, and monitoring alone does not prevent prohibited operations.
+
+See the [Linux kernel BPF LSM documentation](https://docs.kernel.org/bpf/prog_lsm.html).
+
+### Containers
+
+Containers can provide additional isolation for services through Linux namespaces, control groups, and other security mechanisms. However, containerization alone does not guarantee that a service is secure. Apply least privilege, restrict unnecessary capabilities, and avoid privileged containers unless explicitly required.
+
+For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html).
 
 ## References
 
