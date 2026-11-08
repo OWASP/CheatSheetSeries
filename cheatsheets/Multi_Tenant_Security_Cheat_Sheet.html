@@ -5426,125 +5426,15 @@
 <h3 id="6-file-storage-blob-isolation">6. File Storage &amp; Blob Isolation<a class="headerlink" href="#6-file-storage-blob-isolation" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Classify stored objects as global, tenant-scoped, or user-scoped. Keep intentionally shared assets in an explicit global namespace.</li>
-<li>Partition tenant-scoped objects with a tenant-aware key, bucket, account, or enforceable storage policy.</li>
-<li>Authorize access to the exact object and operation before serving it or generating a signed URL.</li>
-<li>Limit signed URLs to the required object and method, with a lifetime appropriate to the operation and revocation model. The tenant identifier does not need to appear in the URL when authorization happened before signing.</li>
-<li>Use tenant-specific encryption keys when the risk or compliance model requires cryptographic isolation. A shared managed key with enforced access context can also be appropriate.</li>
+<li>Partition tenant-scoped objects with a tenant-aware object key, bucket, account, or enforceable storage policy. Object naming or prefixes alone are not authorization boundaries.</li>
+<li>Validate tenant identifiers against an allowlisted canonical format, alongside object-path validation. Reject absolute paths, <code>..</code> traversal components, and path-separator tricks that could escape the tenant namespace.</li>
+<li>Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.</li>
+<li>Verify object ownership where appropriate; do not trust client-supplied tenant metadata as authorization proof.</li>
+<li>Restrict signed URLs to the required object and operation, with an appropriate expiration and revocation model. The tenant identifier does not need to appear in the URL when authorization happened before signing.</li>
+<li>Ensure tenant deletion targets only that tenant's objects. Use an exact tenant-prefix boundary, such as <code>tenants/acme/</code> rather than <code>tenants/acme</code>, because the latter could also match <code>tenants/acme-west/</code>.</li>
+<li>Account for object versions, replicas, and backups when applying retention and deletion policies.</li>
+<li>Use tenant-specific encryption keys when required by the risk or compliance model; shared managed keys with enforced access context may also be appropriate.</li>
 </ul>
-<details>
-<summary>Illustrative Tenant-Scoped File Storage</summary>
-
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">boto3</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">botocore.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">PurePosixPath</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantFileStorage</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Illustrative S3 helper for tenant-scoped objects."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bucket_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kms_key_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bucket</span> <span class="o">=</span> <span class="n">bucket_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">'s3'</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="s1">'s3v4'</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kms_key_id</span> <span class="o">=</span> <span class="n">kms_key_id</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_tenant_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Generate tenant-specific path prefix."""</span>
-        <span class="c1"># Naming is not authorization. Accept only the application's canonical</span>
-        <span class="c1"># tenant identifier format so it cannot alter the object-key structure.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[A-Za-z0-9_-]{1,128}"</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid tenant identifier"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"tenants/</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">"</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Build full S3 key with tenant isolation."""</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">PurePosixPath</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">parts</span> <span class="ow">or</span> <span class="n">path</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">".."</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">parts</span> <span class="ow">or</span> <span class="s2">"</span><span class="se">\\</span><span class="s2">"</span> <span class="ow">in</span> <span class="n">file_path</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Invalid object path"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-                         <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Upload file for tenant."""</span>
-        <span class="k">await</span> <span class="n">authorize_file_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="s2">"put_object"</span><span class="p">)</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
-
-        <span class="n">extra_args</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">'ContentType'</span><span class="p">:</span> <span class="n">content_type</span><span class="p">,</span>
-            <span class="s1">'Metadata'</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">'tenant-id'</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
-                <span class="s1">'uploaded-at'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-
-        <span class="c1"># Use tenant-specific KMS key if available</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kms_key_id</span><span class="p">:</span>
-            <span class="n">extra_args</span><span class="p">[</span><span class="s1">'ServerSideEncryption'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'aws:kms'</span>
-            <span class="n">extra_args</span><span class="p">[</span><span class="s1">'SSEKMSKeyId'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kms_key_id</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span>
-            <span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
-            <span class="n">Key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
-            <span class="n">Body</span><span class="o">=</span><span class="n">content</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">extra_args</span>
-        <span class="p">)</span>
-
-        <span class="k">return</span> <span class="p">{</span><span class="s2">"key"</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="s2">"size"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)}</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Get file only if it belongs to tenant."""</span>
-        <span class="k">await</span> <span class="n">authorize_file_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="s2">"get_object"</span><span class="p">)</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">get_object</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
-
-            <span class="c1"># Verify tenant ownership from metadata</span>
-            <span class="n">metadata_tenant</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Metadata'</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'tenant-id'</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">metadata_tenant</span> <span class="o">!=</span> <span class="n">tenant_id</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant mismatch in file metadata"</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">'Body'</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">NoSuchKey</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate_presigned_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                                     <span class="n">expiration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3600</span><span class="p">,</span>
-                                     <span class="n">operation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'get_object'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Authorize and sign one object operation for a verified tenant."""</span>
-        <span class="k">await</span> <span class="n">authorize_file_access</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">operation</span><span class="p">)</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_key</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
-
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">generate_presigned_url</span><span class="p">(</span>
-            <span class="n">ClientMethod</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span>
-            <span class="n">Params</span><span class="o">=</span><span class="p">{</span>
-                <span class="s1">'Bucket'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
-                <span class="s1">'Key'</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="n">ExpiresIn</span><span class="o">=</span><span class="n">expiration</span>
-        <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">url</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">delete_tenant_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">"""Delete current objects; versions and backups follow retention policy."""</span>
-        <span class="c1"># The delimiter prevents a tenant such as "acme" from matching</span>
-        <span class="c1"># another tenant's "acme-west" prefix.</span>
-        <span class="n">prefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_tenant_prefix</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">)</span><span class="si">}</span><span class="s2">/"</span>
-
-        <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s1">'list_objects_v2'</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span> <span class="n">Prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">):</span>
-            <span class="n">objects</span> <span class="o">=</span> <span class="n">page</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'Contents'</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="k">if</span> <span class="n">objects</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">delete_objects</span><span class="p">(</span>
-                    <span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
-                    <span class="n">Delete</span><span class="o">=</span><span class="p">{</span><span class="s1">'Objects'</span><span class="p">:</span> <span class="p">[{</span><span class="s1">'Key'</span><span class="p">:</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'Key'</span><span class="p">]}</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">]}</span>
-                <span class="p">)</span>
-</code></pre></div>
-
-</details>
-
 <h3 id="7-tenant-onboarding-offboarding-security">7. Tenant Onboarding &amp; Offboarding Security<a class="headerlink" href="#7-tenant-onboarding-offboarding-security" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Implement secure tenant provisioning with isolated resources. Treat onboarding as an all-or-nothing operation: if a step fails, remove partially created resources and record the failure.</li>
