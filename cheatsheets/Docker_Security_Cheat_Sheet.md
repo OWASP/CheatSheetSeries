@@ -335,11 +335,7 @@ Read more about rootless mode and its limitations, installation and usage instru
 
 ### RULE \#12 - Utilize Docker Secrets for Sensitive Data Management
 
-Managing sensitive data—such as passwords, private repository tokens, and SSH keys—requires distinct controls at runtime and during the image build process. Never hardcode credentials into container images, configuration files, or image metadata.
-
-#### Runtime Secrets
-
-Docker Secrets provide a secure way to store and manage sensitive data during container runtime without exposing credentials in container images or runtime commands.
+Docker Secrets provide a secure way to store and manage sensitive data such as passwords, tokens, and SSH keys. Using Docker Secrets helps in avoiding the exposure of sensitive data in container images or in runtime commands.
 
 ```bash
 docker secret create my_secret /path/to/super-secret-data.txt
@@ -364,52 +360,9 @@ While Docker Secrets generally provide a secure way to manage sensitive data in 
 
 #### Build-Time Secrets
 
-Building images often requires accessing private resources, such as private package registries (e.g., npm or PyPI), private repositories via SSH, or internal API services.
+Do not pass credentials to a build with `ARG`, `ENV`, or `COPY` followed by `rm`. Docker warns that build arguments and environment variables [persist in the final image](https://docs.docker.com/build/building/secrets/), and a file added in one layer stays retrievable even if a later layer deletes it. [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) lists embedded clear text secrets as an image risk (§3.1.4) and says secrets should be kept outside images (§4.1.4).
 
-**Build-Time Secret Leakage Risks:**
-
-Do not pass sensitive credentials using `ARG` or `ENV` instructions in your Dockerfile. `ENV` values are stored in the image configuration, while `ARG` values can be exposed in build history or provenance attestations. Build commands can also write these values into image layers. Anyone with access to the resulting image or build metadata may be able to recover exposed credentials.
-
-Similarly, do not use `COPY` or `ADD` to stage credential files (such as `.npmrc` or private keys) into intermediate layers with the intent of deleting them in a subsequent `RUN rm` command. Container filesystem layers are immutable; files added in an earlier layer remain fully retrievable from that intermediate layer even if deleted in a later instruction. [NIST SP 800-190 (Section 3.1.4)](https://csrc.nist.gov/publications/detail/sp/800-190/final) identifies embedded cleartext secrets as a primary image vulnerability and advises against baking static secrets into images.
-
-**Recommended Mitigation: BuildKit Secret Mounts:**
-
-To use secrets during a build without baking them into any image layer, use [Docker Build secrets](https://docs.docker.com/build/building/secrets/) with BuildKit (`RUN --mount=type=secret`).
-
-Secret mounts expose sensitive data for the duration of a specific `RUN` command, either as a file (by default at `/run/secrets/<id>`) or as an environment variable. The mounted secret itself is not committed to the image layer. However, commands using it can still leak its value into image contents or build logs. Ensure the build step does not copy credentials into other files, persist them in generated configuration or caches, or print them:
-
-```dockerfile
-# syntax=docker/dockerfile:1
-FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-
-# Mount the secret temporarily during package installation
-RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
-    npm ci --omit=dev
-
-# Use a .dockerignore file to exclude credential files such as .npmrc and .env
-COPY . .
-```
-
-Pass the secret when executing the build command using the `--secret` flag:
-
-```bash
-# Provide secret from a host file
-docker build --secret id=npmrc,src=$HOME/.npmrc -t my-app .
-
-# Provide secret from a host environment variable containing .npmrc content
-docker build --secret id=npmrc,env=NPMRC_CONTENT -t my-app .
-```
-
-**Multi-Stage Build Caveats:**
-
-While multi-stage builds help produce minimal production runtime images by copying only compiled artifacts to the final stage, they do not automatically protect build-time secrets if credentials are copied into early stages:
-
-- **Build cache exposure:** Intermediate builder stages and their layers can persist in local build caches or remote cache backends (such as registry cache manifests), exposing credentials to anyone with cache access.
-- **Accidental artifact inclusion:** Unrestricted copy instructions (such as `COPY . .`) without a strict `.dockerignore` file can inadvertently pull host secret files (such as `.env` or credential files) into both intermediate and final images.
-
-Always combine multi-stage builds with BuildKit secret mounts and a comprehensive `.dockerignore` file rather than relying on stage separation or file deletion to conceal sensitive data.
+Use BuildKit secret mounts instead (`RUN --mount=type=secret,id=<id>`). The secret is available only during that `RUN`, as a file (default `/run/secrets/<id>`, or a custom `target=`) or as an environment variable (`env=`), and is not saved in the image. The command can still leak it into image files, caches, or logs, so do not write it elsewhere or print it. Multi-stage builds do not fix this on their own: keep credentials out of every stage, and use `.dockerignore` so `COPY . .` does not pull in `.env` or credential files. See the [Node.js Docker Cheat Sheet](NodeJS_Docker_Cheat_Sheet.md#10-mounting-secrets-into-the-docker-build-image) for a worked npm example.
 
 ### RULE \#13 - Enhance Supply Chain Security
 
@@ -434,4 +387,4 @@ Building on the principles in [Rule \#9](#rule-9---integrate-container-scanning-
 - [Docker Engine Security](https://docs.docker.com/engine/security/)
 - [Docker Build Attestations](https://docs.docker.com/build/metadata/attestations/)
 - [Docker Build Secrets](https://docs.docker.com/build/building/secrets/)
-- [NIST SP 800-190: Application Container Security Guide](https://csrc.nist.gov/publications/detail/sp/800-190/final)
+- [NIST SP 800-190: Application Container Security Guide](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
