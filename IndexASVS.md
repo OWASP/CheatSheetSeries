@@ -549,9 +549,9 @@ None.
 
 ### V13.4 Unintended Information Leakage
 
-[Django Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
+[Django Cheat Sheet](cheatsheets/Django_Security_Cheat_Sheet.md)
 
-[GraphQL Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
+[GraphQL Cheat Sheet](cheatsheets/GraphQL_Cheat_Sheet.md)
 
 [Laravel Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
 
