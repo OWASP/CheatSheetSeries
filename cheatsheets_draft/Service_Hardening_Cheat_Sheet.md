@@ -102,7 +102,7 @@ Services frequently use API keys, database credentials, certificates, and other 
 
 - Do not hardcode secrets in source code or commit them to version control. Provide credentials through an appropriate secrets-management mechanism.
 - Limit access to secrets and the permissions they grant to the service identities and processes that require them.
-- Avoid exposing secrets through command-line arguments, environment variables, logs, error messages, or other interfaces where they may be disclosed.
+- Avoid exposing secrets through command-line arguments, logs, error messages, or other interfaces where they may be disclosed. Prefer secrets-management mechanisms that do not expose credentials through environment variables where practical.
 - Revoke and replace credentials when compromise is suspected, ensuring that exposed credentials are no longer valid. Follow organizational requirements for routine rotation.
 
 For implementation and credential lifecycle guidance, see the [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html).
@@ -267,6 +267,12 @@ Containers can provide additional isolation for services through Linux namespace
 
 For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html).
 
+
 ## References
 
-Primary references and relevant OWASP Cheat Sheets are linked alongside the recommendations they support. For the general security-control framework, see [NIST SP 800-53 Rev. 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final).
+- [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html)
+- [NIST SP 800-53 Rev. 5 — Security and Privacy Controls for Information Systems and Organizations](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
+- [NIST SP 800-40 Rev. 4 — Guide to Enterprise Patch Management Planning](https://csrc.nist.gov/pubs/sp/800/40/r4/final)
+- [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
