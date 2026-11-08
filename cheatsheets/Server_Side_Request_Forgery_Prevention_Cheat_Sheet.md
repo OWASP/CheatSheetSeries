@@ -338,6 +338,10 @@ To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out 
 | **IPv6 Unique Local** | `fc00::/7` ([RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193#section-3.1)) |
 | **IPv6 Link-Local** | `fe80::/10` ([RFC 4291](https://datatracker.ietf.org/doc/html/rfc4291#section-2.5.6)) |
 | **Multicast** | `224.0.0.0/4`, `ff00::/8` |
+| **IPv4-mapped IPv6** | `::ffff:0:0/96` ([IANA](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)) |
+| **NAT64** | `64:ff9b::/96`, `64:ff9b:1::/48` ([IANA](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)) |
+
+**Normalize before you compare.** Unmap or canonicalize an address to its native IPv4 form *before* checking it against these ranges. An IPv4-mapped address (`::ffff:169.254.169.254`) reaches the same host as its IPv4 form. A NAT64 address (`64:ff9b::a9fe:a9fe`) does too on networks that run a NAT64 gateway. Both slip past a check that only matches IPv4-shaped strings or compares against IPv4 CIDRs, so a blocked address such as the cloud metadata IP stays reachable.
 
 **Full production example:** [ComputerCraft SSRF deny-list](https://github.com/cc-tweaked/CC-Tweaked/blob/b9ed66983d714bcb5c6bf15b428e01a035106dbf/projects/core/src/main/java/dan200/computercraft/core/apis/http/options/AddressPredicate.java#L112-L157)
 
