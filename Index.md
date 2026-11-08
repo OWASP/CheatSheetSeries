@@ -152,7 +152,7 @@
 
 [Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
 
-[Kubernetes Security Cheat Sheet](cheatsheets/Kubernetes_Security_Cheat_Sheet.md) ![Json](assets/Index_Json.svg) ![Bash](assets/Index_Bash.svg)
+[Kubernetes Security Cheat Sheet](cheatsheets/Kubernetes_Security_Cheat_Sheet.md) ![Bash](assets/Index_Bash.svg)
 
 ## L
 

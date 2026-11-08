@@ -642,182 +642,30 @@ The shorter the lifetime of a secret or credential, the harder it is for an atta
 
 ### Logging
 
-Kubernetes supplies cluster-based logging, which allows you to log container activity into a central log hub. When a cluster is created, the standard output and standard error output of each container can be ingested using a Fluentd agent running on each node (into either Google Stackdriver Logging or into Elasticsearch) and viewed with Kibana.
+Kubernetes does not provide a native persistent log storage solution. Applications should write to the standard output and standard error streams; the kubelet captures those streams and a cluster-level log-shipping agent (commonly [Fluent Bit](https://fluentbit.io/) or Fluentd) forwards them to a centralized backend. See [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/) in the Kubernetes documentation for the full picture including node and sidecar patterns.
 
 #### Enable audit logging
 
-Kubernetes [audit logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) records API activity according to the configured audit policy for later analysis. Enable audit logging and archive the audit file on a secure server.
+[Kubernetes audit logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) records requests to the kube-apiserver according to an audit policy: who made the request, what was requested, and when. Enable audit logging and ship the audit log to a secure, append-only destination outside the cluster so that an attacker who gains cluster access cannot tamper with the audit trail.
 
-Ensure logs that are monitoring for anomalous or unwanted API calls, especially any authorization failures (these log entries will have a status message “Forbidden”). Authorization failures could mean that an attacker is trying to abuse stolen credentials.
-
-Managed Kubernetes providers, including GKE, provide access to this data in their cloud console and may allow you to set up alerts on authorization failures.
-
-##### Audit logs
-
-Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.
-
-Here is an illustrative [`audit.k8s.io/v1` audit event](https://kubernetes.io/docs/reference/config-api/apiserver-audit.v1/#audit-k8s-io-v1-Event):
-
-```json
-{
-  "kind":"Event",
-  "apiVersion":"audit.k8s.io/v1",
-  "level":"Metadata",
-  "auditID":"23bc44ds-2452-242g-fsf2-4242fe3ggfes",
-  "stage":"RequestReceived",
-  "requestURI":"/api/v1/namespaces/default/persistentvolumeclaims",
-  "verb":"list",
-  "user": {
-    "username":"user@example.org",
-    "groups":[ "system:authenticated" ]
-  },
-  "sourceIPs":[ "172.12.56.1" ],
-  "objectRef": {
-    "resource":"persistentvolumeclaims",
-    "namespace":"default",
-    "apiVersion":"v1"
-  },
-  "requestReceivedTimestamp":"2019-08-22T12:00:00Z",
-  "stageTimestamp":"2019-08-22T12:00:00Z"
-}
-```
+Monitor audit logs for authorization failures (`responseStatus.code` 403, reason `Forbidden`). A spike in authorization failures may indicate an attacker testing stolen or overly broad credentials.
 
 #### Define Audit Policies
 
-Audit policy sets rules which define what events should be recorded and what data is stored when an event includes. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it is compared against the list of rules in order. The first matching rule sets the "audit level" of the event.
+Pass an audit policy file to kube-apiserver with the `--audit-policy-file` flag. If the flag is omitted, no events are logged. Policies are evaluated top-down; the first matching rule sets the audit level for that event.
 
-The known audit levels are:
+The four audit levels, taken directly from the [audit documentation](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/), are:
 
-- None - don't log events that match this rule
-- Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body
-- Request - log event metadata and request body but not response body. This does not apply for non-resource requests
-- RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests
+- **None** - do not log events that match this rule
+- **Metadata** - log events with metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body
+- **Request** - log events with request metadata and body but not response body; this does not apply for non-resource requests
+- **RequestResponse** - log events with request metadata, request body and response body; this does not apply for non-resource requests
 
-You can pass a file with the policy to kube-apiserver using the --audit-policy-file flag. If the flag is omitted, no events are logged. Note that the rules field must be provided in the audit policy file. A policy with no (0) rules is treated as illegal.
-
-#### Understanding Logging
-
-One main challenge with logging Kubernetes is understanding what logs are generated and how to use them. Let’s start by examining the overall picture of Kubernetes' logging architecture.
-
-##### Container logging
-
-The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications. The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.
-
-Manifest is as follows.
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: example
-spec:
-  containers:
-    - name: example
-      image: busybox
-      args: [/bin/sh, -c, 'while true; do echo $(date); sleep 1; done']
-```
-
-To apply the manifest, run:
-
-```bash
-kubectl apply -f example.yaml
-```
-
-To look at the logs for this container, run:
-
-```bash
-kubectl logs example
-```
-
-For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown in the pod configuration below, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
-
-An example of a Pod Manifest is seen below:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: example
-spec:
-  containers:
-  - name: example
-    image: busybox
-    args:
-    - /bin/sh
-    - -c
-    - >
-      while true;
-      do
-        echo "$(date)\n" >> /var/log/example.log;
-        sleep 1;
-      done
-    volumeMounts:
-    - name: varlog
-      mountPath: /var/log
-  - name: sidecar
-    image: busybox
-    args: [/bin/sh, -c, 'tail -f /var/log/example.log']
-    volumeMounts:
-    - name: varlog
-      mountPath: /var/log
-  volumes:
-  - name: varlog
-    emptyDir: {}
-```
-
-##### Node logging
-
-When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver set by the Kubernetes configuration.
-
-In most cases, these logs will end up in the /var/log/containers directory on your host. Docker supports multiple logging drivers but unfortunately, driver configuration is not supported via the Kubernetes API.
-
-Once a container is terminated or restarted, kubelet stores logs on the node. To prevent these files from consuming all of the host’s storage, the Kubernetes node implements a log rotation mechanism. When a container is evicted from the node, all containers with corresponding log files are evicted.
-
-Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.
-
-For example, systemd logs can be retrieved using the following command:
-
-```bash
-journalctl -u kubelet
-```
-
-##### Cluster logging
-
-In the Kubernetes cluster itself, there is a long list of cluster components that can be logged as well as additional data types that can be used (events, audit logs). Together, these different types of data can give you visibility into how Kubernetes is performing as a system.
-
-Some of these components run in a container, and some of them run on the operating system level (in most cases, a systemd service). The systemd services write to journald, and components running in containers write logs to the /var/log directory, unless the container engine has been configured to stream logs differently.
+Log `secrets` and `configmaps` at `Metadata` level only. `Request` and `RequestResponse` record request and response bodies, which would write secret values into the audit log. Because the first matching rule wins, place this rule above any broader `Request` or `RequestResponse` rule, as the [example policy](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/#audit-policy) in the documentation does for `secrets`.
 
 #### Events
 
-Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.
-
-The following command returns all events within a specific namespace:
-
-```bash
-kubectl get events -n <namespace>
-
-NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
-kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
-kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
-kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
-kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
-```
-
-The following command will show the latest events for this specific Kubernetes resource:
-
-```bash
-kubectl describe pod <pod-name>
-
-Events:
-  Type    Reason     Age   From                               Message
-  ----    ------     ----  ----                               -------
-  Normal  Scheduled  14m   default-scheduler                  Successfully assigned kube-system/coredns-7b54b5b97c-dpll7 to aks-agentpool-42213468-1
-  Normal  Pulled     13m   kubelet, aks-agentpool-42213468-1  Container image "aksrepos.azurecr.io/mirror/coredns:1.3.1" already present on machine
-  Normal  Created    13m   kubelet, aks-agentpool-42213468-1  Created container coredns
-  Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
-```
+[Kubernetes Events](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/event-v1/) record state changes and errors across the cluster (exceeded resource quotas, failed image pulls, probe failures, scheduler decisions) and can be queried with `kubectl get events -n <namespace>`. Events expire after one hour by default (controlled by the `--event-ttl` flag on the [kube-apiserver](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/)) and are not a substitute for audit logging, but they are a useful signal for detecting anomalous workload behavior.
 
 ## Securing a Managed Kubernetes Service on a Cloud Provider
 
