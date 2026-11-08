@@ -566,9 +566,9 @@ Visual Studio offers a number of debugging aids for use during development. The 
 ![Windows1](../assets/C-Based_Toolchain_Hardening_Windows1.png)
 
 Finally, for runtime hardening, Microsoft provides **Windows Defender Exploit Guard** and the **Process Mitigation Management Tool**.  
-[Windows Defender Exploit Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/exploit-protection) replaces EMET and offers advanced exploit protection features.  
+[Windows Defender Exploit Guard](https://learn.microsoft.com/en-us/defender-endpoint/exploit-protection) replaces EMET and offers advanced exploit protection features.  
 
-Additionally, the [Process Mitigation Management Tool](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/customize-exploit-protection) (`ProcessMitigations` module) allows administrators to configure exploit mitigation policies via PowerShell and Group Policy.
+Additionally, the [Process Mitigation Management Tool](https://learn.microsoft.com/en-us/defender-endpoint/customize-exploit-protection) (`ProcessMitigations` module) allows administrators to configure exploit mitigation policies via PowerShell and Group Policy.
 
 ![Windows2](../assets/C-Based_Toolchain_Hardening_Windows2.png)
 

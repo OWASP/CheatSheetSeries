@@ -283,11 +283,11 @@ None.
 
 ### V4.3 GraphQL
 
-[REST Security Cheat Sheet](cheatsheets/GraphQL_Cheat_Sheet.md)
+[GraphQL Cheat Sheet](cheatsheets/GraphQL_Cheat_Sheet.md)
 
 ### V4.4 WebSocket
 
-[REST Security Cheat Sheet](cheatsheets/WebSocket_Security_Cheat_Sheet.md)
+[WebSocket Security Cheat Sheet](cheatsheets/WebSocket_Security_Cheat_Sheet.md)
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
 
@@ -549,9 +549,9 @@ None.
 
 ### V13.4 Unintended Information Leakage
 
-[Django Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
+[Django Cheat Sheet](cheatsheets/Django_Security_Cheat_Sheet.md)
 
-[GraphQL Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
+[GraphQL Cheat Sheet](cheatsheets/GraphQL_Cheat_Sheet.md)
 
 [Laravel Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
 

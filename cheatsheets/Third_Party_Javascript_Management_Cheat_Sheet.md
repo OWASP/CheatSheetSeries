@@ -225,7 +225,7 @@ You can also put vendor JavaScript into an iframe from different domain (e.g. st
 
 The host main page and sandbox iframe can communicate between each other via the [postMessage mechanism](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
 
-Also, iframes can be secured with the iframe [sandbox attribute](http://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/).
+Also, iframes can be secured with the iframe [sandbox attribute](https://web.dev/articles/sandboxed-iframes).
 
 For high risk applications, consider the use of [Content Security Policy (CSP)](https://www.w3.org/TR/CSP2/) in addition to iframe sandboxing. CSP makes hardening against XSS even stronger.
 
