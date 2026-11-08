@@ -357,7 +357,7 @@ The second Docker image, representing the second stage of the Docker build, will
 Here is the update to our Dockerfile that represents our progress so far, but separated into two stages:
 
     # --------------> The build image
-    FROM node:latest AS build
+    FROM node:lts-alpine AS build
     ARG NPM_TOKEN
     WORKDIR /usr/src/app
     COPY package*.json /usr/src/app/
@@ -434,7 +434,7 @@ This means that it makes sense to have the `.npmrc` file available to the `build
 
 One way to mitigate this `.dockerignore` caveat is to mount a local file system that will be available for the build stage, but there’s a better way.
 
-Docker supports a relatively new capability referred to as Docker secrets, and is a natural fit for the case we need with `.npmrc`. Here is how it works:
+Docker BuildKit supports [build secrets](https://docs.docker.com/build/building/secrets/), which are a natural fit for the case we need with `.npmrc`. Here is how it works:
 
 - When we run the `docker build` command we will specify command-line arguments that define a new secret ID and reference a file as the source of the secret.
 - In the Dockerfile, we will add flags to the `RUN` directive to install the production npm, which mounts the file referred by the secret ID into the target location—the local directory `.npmrc` file which is where we want it available.
@@ -454,7 +454,7 @@ Let’s see how all of it works together. First the updated `.dockerignore` file
 Then, the complete Dockerfile, with the updated RUN directive to install npm packages while specifying the `.npmrc` mount point:
 
     # --------------> The build image
-    FROM node:latest AS build
+    FROM node:lts-alpine AS build
     WORKDIR /usr/src/app
     COPY package*.json /usr/src/app/
     RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/app/.npmrc npm ci --omit=dev
@@ -473,9 +473,9 @@ And finally, the command that builds the Node.js Docker image:
 
     docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 
-**Note:** Secrets are a new feature in Docker and if you’re using an older version, you might need to enable it Buildkit as follows:
+**Note:** [BuildKit](https://docs.docker.com/build/buildkit/) is the default builder in Docker Desktop and in Docker Engine 23.0 and later. On older Docker Engine versions, enable it explicitly:
 
-    DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
+    DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 
 ## References
 
