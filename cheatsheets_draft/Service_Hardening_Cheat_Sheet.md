@@ -1,4 +1,3 @@
-
 # Service Hardening Cheat Sheet
 
 ## Introduction and Scope
@@ -17,7 +16,7 @@ The Cheat Sheet covers:
 
 The systemd section focuses on host-managed Linux services. Its configuration directives are not directly applicable to other service managers or operating systems.
 
-Container and orchestration security are outside the primary scope. For those environments, refer to the OWASP Docker Security Cheat Sheet and OWASP Kubernetes Security Cheat Sheet.
+Container and orchestration security are outside the primary scope. For those environments, refer to the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) and [OWASP Kubernetes Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html).
 
 Hardening controls should be selected according to the service's required functionality and threat model. A restriction that is appropriate for one service may prevent another service from operating correctly. Test configuration changes before deploying them to production.
 
@@ -29,13 +28,12 @@ The following recommendations apply to services regardless of the service manage
 
 Known vulnerabilities in service software, operating systems, and dependencies can expose services to compromise.
 
-- Use supported versions of the operating system, service software, and dependencies.
-- Maintain an inventory of service components and their versions.
-- Maintain visibility into third-party components and dependencies. Use a Software Bill of Materials (SBOM), where available and appropriate, to support dependency inventory and vulnerability management.
-- Monitor relevant security advisories and prioritize updates according to vulnerability risk and service exposure.
-- Obtain updates from trusted sources and verify their authenticity using supported mechanisms.
-- Test updates before production deployment where practical, using a process proportionate to the risk and urgency. For emergency updates, use an expedited deployment and rollback procedure, and verify successful installation.
-- Remove or replace unsupported components when security fixes are no longer available. Where immediate replacement is not feasible, apply compensating controls to reduce exposure.
+- Use supported versions of the operating system, service software, and dependencies. Maintain an inventory of service components and their versions, using an SBOM where appropriate.
+- Monitor relevant security advisories, prioritize updates according to risk and exposure, and obtain updates from trusted sources using supported authenticity checks.
+- Test updates before production deployment where practical. For urgent fixes, use an expedited deployment and rollback procedure and verify successful installation.
+- Remove or replace unsupported components when security fixes are unavailable; apply compensating controls if immediate replacement is not feasible.
+
+See [NIST SP 800-40 Rev. 4](https://csrc.nist.gov/pubs/sp/800/40/r4/final) for patch-management guidance and the [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html) for dependency and supply-chain practices.
 
 ### Apply the Principle of Least Privilege
 
@@ -50,6 +48,8 @@ A service should have only the permissions necessary to perform its intended fun
 
 For example, a service that only reads configuration files should not require permission to modify them. A service that writes application data should not automatically receive write access to application executables or unrelated system directories.
 
+See [NIST SP 800-53 Rev. 5, AC-6 (Least Privilege)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for the underlying least-privilege control.
+
 ### Reduce the Attack Surface
 
 Every unnecessary interface, component, or enabled feature can introduce additional opportunities for attack.
@@ -60,6 +60,8 @@ Every unnecessary interface, component, or enabled feature can introduce additio
 - Avoid exposing debugging, diagnostic, or development endpoints in production.
 
 For example, a service used only by applications on the same host should not listen on all network interfaces unless remote access is explicitly required. Binding to a loopback interface does not prevent access by other local processes.
+
+See [NIST SP 800-53 Rev. 5, CM-7 (Least Functionality)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for supporting guidance.
 
 ### Maintain Secure Service Configurations
 
@@ -73,6 +75,8 @@ Default configurations may enable functionality or access that is unnecessary fo
 - Avoid relying solely on configuration-file contents as proof of enforcement; verify the effective behavior of relevant security controls.
 
 For example, when changing a service's permitted filesystem access, verify both that required application operations still succeed and that prohibited operations are denied.
+
+See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for supporting guidance.
 
 ### Restrict Network Communication
 
@@ -90,32 +94,28 @@ For example, a database service used exclusively by an application on an interna
 
 Network restrictions reduce exposure but do not replace authentication, authorization, or transport protection where those controls are required.
 
+See [NIST SP 800-53 Rev. 5, SC-7 (Boundary Protection)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) and [NIST SP 800-207 (Zero Trust Architecture)](https://csrc.nist.gov/pubs/sp/800/207/final) for supporting guidance.
+
 ### Protect Service Credentials and Sensitive Data
 
 Services frequently use API keys, database credentials, certificates, and other sensitive information. Exposure of these secrets can allow unauthorized access to the service or dependent systems.
 
-- Do not hardcode secrets in application source code or commit them to version control.
-- Use an appropriate secrets-management mechanism to provide credentials to services.
-- Limit access to secrets to the service identities and processes that require them.
+- Do not hardcode secrets in source code or commit them to version control. Provide credentials through an appropriate secrets-management mechanism.
+- Limit access to secrets and the permissions they grant to the service identities and processes that require them.
 - Avoid exposing secrets through command-line arguments, environment variables, logs, error messages, or other interfaces where they may be disclosed.
-- Revoke and replace credentials when compromise is suspected, ensuring that exposed credentials are no longer valid. Follow the organization's credential lifecycle requirements for routine rotation.
-- Give each service only the permissions required by its credentials.
+- Revoke and replace credentials when compromise is suspected, ensuring that exposed credentials are no longer valid. Follow organizational requirements for routine rotation.
 
-For implementation details, see the OWASP Secrets Management Cheat Sheet.
+For implementation and credential lifecycle guidance, see the [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html).
 
 ### Enable Security-Relevant Logging and Monitoring
 
 Logs and monitoring provide information needed to identify service failures, investigate suspicious activity, and support incident response.
 
-- Record security-relevant events appropriate to the service, such as successful and failed authentication attempts, access-control failures, and significant configuration changes.
-- Include sufficient context to support investigation without logging credentials or other unnecessary sensitive information.
-- Protect logs against unauthorized access, modification, and deletion. Where appropriate, use centralized log collection, access controls, or storage mechanisms that provide tamper resistance.
-- Handle untrusted log data safely to prevent log injection, and monitor logging failures and storage exhaustion that could affect log availability.
-- Monitor service failures, unexpected restarts, and unusual resource consumption.
-- Define log retention and alerting requirements according to operational needs and applicable policies.
-- Test that important events are recorded and can be retrieved during investigation.
+- Record security-relevant service events, such as authentication attempts, access-control failures, and significant configuration changes, with sufficient context for investigation.
+- Avoid logging credentials or unnecessary sensitive information. Protect logs against unauthorized access, modification, and deletion, and handle untrusted log data safely.
+- Monitor service failures, unexpected restarts, unusual resource consumption, and logging failures. Define retention and alerting requirements and verify that important events can be retrieved.
 
-Logging alone does not prevent compromise. It supports detection and investigation when relevant events are collected, reviewed, and acted upon.
+Logging alone does not prevent compromise. It supports detection and investigation when relevant events are collected, reviewed, and acted upon. See the [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) for detailed logging, protection, retention, and monitoring guidance.
 
 ### Limit Resource Consumption
 
@@ -129,6 +129,8 @@ A service that consumes excessive memory, CPU time, processes, or other resource
 
 Resource limits can reduce the impact of some resource-exhaustion conditions, but they do not guarantee availability or replace application-level protections against denial-of-service attacks.
 
+See [NIST SP 800-53 Rev. 5, SC-6 (Resource Availability)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for the general principle and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
+
 ### Validate Hardening Changes
 
 Hardening should be introduced in a controlled manner. A configuration that appears restrictive may not provide the expected protection, and an overly restrictive configuration may interrupt legitimate operations.
@@ -139,6 +141,8 @@ Hardening should be introduced in a controlled manner. A configuration that appe
 - Where safe and practical, test that operations intended to be prohibited are actually denied.
 - Record the platform version, configuration, test procedure, and results for reproducibility.
 - Reassess hardening settings after significant application, operating-system, or service-manager changes.
+
+See [NIST SP 800-53 Rev. 5, CA-2 (Control Assessments)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for assessing whether controls operate as intended.
 
 ## Hardening Services with systemd
 
@@ -265,76 +269,4 @@ For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat She
 
 ## References
 
-### Introduction and Scope
-
-- [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
-- [OWASP Kubernetes Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html)
-
-### Keep Service Software and Dependencies Updated
-
-- [NIST SP 800-40 Rev. 4 — Enterprise Patch Management](https://csrc.nist.gov/pubs/sp/800/40/r4/final) — Supports planning, prioritizing, testing, and deploying software updates.
-- [NIST SP 800-53 Rev. 5 — SI-2 (Flaw Remediation) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-2/) — Supports identifying, correcting, and testing security-related flaws.
-- [NIST SP 800-53 Rev. 5 — CM-8 (System Component Inventory) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-8/) — Supports maintaining an inventory of system components.
-- [NIST SP 800-53 Rev. 5 — CM-14 (Signed Components) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-14/) — Supports verifying approved digital signatures before installing designated software and firmware components, including updates.
-- [NIST SP 800-53 Rev. 5 — SI-7 (Software, Firmware, and Information Integrity) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-7/) — Supports detecting unauthorized changes through integrity verification.
-- [NIST SP 800-53 Rev. 5 — SA-22 (Unsupported System Components) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sa/sa-22/) — Supports replacing unsupported components or arranging documented alternative support.
-- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html) — Provides guidance on software dependencies and supply-chain risks.
-- [NTIA — Minimum Elements for an SBOM (2021)](https://www.ntia.gov/report/2021/minimum-elements-software-bill-materials-sbom) — Supports documenting software components and dependencies using an SBOM.
-
-### Apply the Principle of Least Privilege
-
-- [NIST SP 800-53 Rev. 5 — AC-6 (Least Privilege) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-6/) — Supports limiting service privileges to those necessary for required operations.
-- [NIST SP 800-53 Rev. 5 — AC-2 (Account Management) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-2/) — Supports managing service accounts, their intended use, and their authorizations.
-- [NIST SP 800-53 Rev. 5 — AC-3 (Access Enforcement) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-3/) — Supports enforcing approved read, write, execute, and other access permissions on system resources.
-- [NIST SP 800-53 Rev. 5 — AC-6(7) (Review of User Privileges) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-6/ac-6-7/) — Supports periodically reviewing assigned privileges and removing privileges that are no longer required.
-
-### Reduce the Attack Surface
-
-- [NIST SP 800-53 Rev. 5 — CM-7 (Least Functionality) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-7/) — Supports disabling unnecessary functionality, services, and software.
-- [NIST SP 800-53 Rev. 5 — SC-7 (Boundary Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/) — Supports controlling network communications and limiting unnecessary network exposure.
-
-### Maintain Secure Service Configurations
-
-- [NIST SP 800-53 Rev. 5 — CM-6 (Configuration Settings) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-6/) — Supports establishing, implementing, and monitoring security-relevant configuration settings.
-- [NIST SP 800-53 Rev. 5 — CM-2 (Baseline Configuration) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-2/) — Supports establishing and maintaining documented configuration baselines.
-- [NIST SP 800-53 Rev. 5 — CM-3 (Configuration Change Control) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-3/) — Supports reviewing, documenting, and controlling configuration changes.
-- [NIST SP 800-53 Rev. 5 — CM-5 (Access Restrictions for Change) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-5/) — Supports restricting who can modify system components and configurations.
-
-### Restrict Network Communication
-
-- [NIST SP 800-53 Rev. 5 — SC-7 (Boundary Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/) — Supports controlling communications at system boundaries and managed interfaces.
-- [NIST SP 800-53 Rev. 5 — SC-7(5) (Deny by Default — Allow by Exception) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/sc-7-5/) — Supports default-deny restrictions for inbound and outbound network communications, with approved exceptions.
-- [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final) — Supports explicit authentication and authorization without relying solely on network location.
-
-### Protect Service Credentials and Sensitive Data
-
-- [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
-- [NIST SP 800-53 Rev. 5 — IA-5 (Authenticator Management) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ia/ia-5/) — Supports protecting and managing service authenticators and credentials.
-
-### Enable Security-Relevant Logging and Monitoring
-
-- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
-- [NIST AU-2 — Event Logging (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-2/) — Supports identifying which security-relevant events should be logged.
-- [NIST AU-9 — Protection of Audit Information (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-9/) — Supports protecting audit information against unauthorized access, modification, and deletion.
-- [NIST AU-12 — Audit Record Generation (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-12/) — Supports generating audit records for defined event types.
-- [NIST SI-4 — System Monitoring (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-4/) — Supports monitoring for attacks and indicators of potential compromise.
-- [NIST AU-11 — Audit Record Retention (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-11/) — Supports defining and enforcing audit-record retention periods.
-- [NIST AU-5 — Response to Audit Logging Process Failures (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/au/au-5/) — Supports responding to audit-logging failures, including notifying designated personnel.
-- [NIST SI-4(5) — System-Generated Alerts (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/si/si-4/si-4-5/) — Supports generating alerts when defined indicators of compromise or potential compromise occur.
-
-### Limit Resource Consumption
-
-- [NIST SP 800-53 Rev. 5 — SC-5 (Denial-of-Service Protection) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-5/) — Supports protecting service availability against denial-of-service attacks.
-- [NIST SP 800-53 Rev. 5 — SC-6 (Resource Availability) (control-specific view, CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-6/) — Supports protecting resource availability through allocation mechanisms such as quotas and priorities.
-- [systemd.resource-control(5) — Linux/systemd implementation](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) — Documents systemd mechanisms for controlling resource consumption.
-
-### Validate Hardening Changes
-
-- [NIST CA-2 — Control Assessments (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/ca/ca-2/) — Supports assessing whether security controls are implemented correctly and operate as intended.
-- [NIST CM-3 — Configuration Change Control (CSF Tools)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-3/) — Supports documenting, reviewing, and controlling hardening configuration changes.
-
-The NIST control-specific links above use CSF Tools, a third-party navigation aid. The authoritative publication is the official NIST SP 800-53 catalog linked below.
-
-- [NIST SP 800-53 Rev. 5 — Security and Privacy Controls for Information Systems and Organizations](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
-- [NIST SP 800-40 Rev. 4 — Guide to Enterprise Patch Management Planning](https://csrc.nist.gov/pubs/sp/800/40/r4/final)
-- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html)
+Primary references and relevant OWASP Cheat Sheets are linked alongside the recommendations they support. For the general security-control framework, see [NIST SP 800-53 Rev. 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final).
