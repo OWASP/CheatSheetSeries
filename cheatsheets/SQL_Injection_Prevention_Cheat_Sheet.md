@@ -6,8 +6,8 @@ A SQL injection attack occurs when untrusted data (usually strings) becomes part
 
 The malicious data can come from various sources such as:
 
-- a HTTP request (eg. from a malicious user);
-- a LDAP directory;
+- an HTTP request (for example, from a malicious user);
+- an LDAP directory;
 - an incoming email;
 - a third party REST API service;
 - the database itself.
@@ -17,11 +17,11 @@ The malicious data can come from various sources such as:
 **Resolution:** define the SQL structure separately from its data values, then bind those values through the database API:
 
 - use parameterized queries for dynamic data values;
-- use fixed application-owned choices for dynamic table names, columns names, sorting order (`ASC`, `DESC`), etc.
+- use fixed application-owned choices for dynamic table names, column names, sort order (`ASC`, `DESC`), etc.
 
 These controls apply regardless of whether data comes from an HTTP request, another service, or previously stored data.
 
-A related class of vulnerability, happens when using ORMs frameworks, such as JPA/Hibernate, which have their own query language (JPQL/HQL). Applications using these frameworks might be vulnerable to injections of these query languages:
+A related class of vulnerability affects object-relational mapping (ORM) frameworks, such as JPA/Hibernate, which have their own query language (JPQL/HQL). Applications using these frameworks might be vulnerable to injections of these query languages:
 
 - JPQL injections (JPA);
 - HQL injections (Hibernate).
@@ -74,7 +74,7 @@ statement.execute();
 
 While this prevents injection when calling the procedure, the procedure itself might still be vulnerable to SQL injection, as explained in [SQL Injection inside stored Procedures and Functions](#sql-injection-inside-stored-procedures-and-functions).
 
-#### SQL Injection in ORM Query Languages
+### SQL Injection in ORM Query Languages
 
 Some ORM frameworks such as [Hibernate](https://hibernate.org/) use dedicated query languages, such as Hibernate Query Language (HQL), which may suffer from the same injection problems ([HQL Injection](https://cwe.mitre.org/data/definitions/564.html)):
 
@@ -83,7 +83,7 @@ Some ORM frameworks such as [Hibernate](https://hibernate.org/) use dedicated qu
 Query unsafeHQLQuery = session.createQuery("from Inventory where productID='"+userSuppliedParameter+"'");
 ```
 
-Here as well parameterized queries is the recommended solution:
+Parameterized queries are the recommended solution here as well:
 
 ```java
 // Here is a safe version of the same query using named parameters
@@ -112,13 +112,11 @@ Relying on manually escaping dynamic inputs is error-prone and is strongly disco
 
 Define the SQL structure separately from its data values and bind those values through the database API, as shown in the [Basic SQL injection](#basic-sql-injection) example. Concatenating untrusted values into the query before preparing it defeats this protection.
 
-See the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) for additional examples of parameterized queries in in several languages, including Java, .NET, Ruby, PHP, Cold Fusion, Perl, and Rust. Other examples can be found at [Bobby Tables](https://bobby-tables.com/).
+See the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) for additional examples of parameterized queries in several languages, including Java, .NET, Ruby, PHP, Cold Fusion, Perl, and Rust. Other examples can be found at [Bobby Tables](https://bobby-tables.com/).
 
 ### Allow-List Input Validation
 
-Parameterized queries cannot be used with some part SQL queries such as table names, column names, or sort order indicators (ASC or DESC). In this case, input validation or query redesign are the most appropriate defense. When table or column names are needed, ideally those values come from the code and not directly from user parameters.
-
-In the example below, since `tableName` is identified as one of the legal and expected values for a table name in this query, it can be directly appended to the SQL query:
+Parameter markers represent data values, not table names, column names, or SQL keywords such as `ASC` and `DESC`; see the [PDO parameter-marker limitations](https://www.php.net/manual/en/pdo.prepare.php). Keep these structural choices fixed in code where possible. When users need to select among them, map their selection to a small set of application-owned values allowed for that query and reject anything else. In this example, `tableName` can only hold one of two fixed values, so it can be appended to the query:
 
 ```java
 String tableName;
@@ -134,9 +132,7 @@ switch(PARAM) {
 }
 ```
 
-Parameter markers represent data values, not table names, column names, or SQL keywords such as `ASC` and `DESC`; see the [PDO parameter-marker limitations](https://www.php.net/manual/en/pdo.prepare.php). Keep these structural choices fixed in code where possible. When users need to select among them, map their selection to a small set of application-owned tokens allowed for that query and reject unknown choices. For example, map a requested sort direction to the literal `ASC` or `DESC`, rather than appending the supplied text.
-
-WARNING: Using user parameter values to target table or column names is a symptom of poor design. If this approach is used, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query.
+Map a requested sort direction the same way, to the literal `ASC` or `DESC`, rather than appending the supplied text.
 
 ### Manually escaping (STRONGLY DISCOURAGED)
 
@@ -188,7 +184,7 @@ For example, a product catalog can use a view that exposes product names and ret
 
 This limits the data exposed through a compromised application account. Queries against views still require parameterization to prevent SQL injection.
 
-#### Input validation
+### Input Validation
 
 Input validation complements parameter binding; it does not replace it. Continue binding all data values, even when they pass type, length, or format checks. Validation of a value does not make it safe to concatenate into SQL, and a validation approach that is safe for one SQL dialect may be unsafe for another. See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
