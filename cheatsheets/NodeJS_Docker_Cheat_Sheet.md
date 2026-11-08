@@ -375,7 +375,7 @@ Here is the update to our Dockerfile that represents our progress so far, but se
     COPY --chown=node:node . /usr/src/app
     CMD ["dumb-init", "node", "server.js"]
 
-As you can see, I chose a bigger image for the `build` stage because I might need tooling like `gcc` (the GNU Compiler Collection) to compile native npm packages, or for other needs.
+As you can see, the `build` stage is where tooling like `gcc` (the GNU Compiler Collection) belongs if you need to compile native npm packages, or for other needs. Only `node_modules/` is copied out of it, so that tooling never reaches the production image.
 
 In the second stage, there’s a special notation for the `COPY` directive that copies the `node_modules/` folder from the build Docker image into this new production base image.
 
@@ -473,7 +473,7 @@ And finally, the command that builds the Node.js Docker image:
 
     docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 
-**Note:** [BuildKit](https://docs.docker.com/build/buildkit/) is the default builder in Docker Desktop and in Docker Engine 23.0 and later. On older Docker Engine versions, enable it explicitly:
+**Note:** [BuildKit](https://docs.docker.com/build/buildkit/) is the default builder in Docker Desktop and in Docker Engine [23.0](https://docs.docker.com/engine/release-notes/23.0/) and later. On older Docker Engine versions, enable it explicitly:
 
     DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 
