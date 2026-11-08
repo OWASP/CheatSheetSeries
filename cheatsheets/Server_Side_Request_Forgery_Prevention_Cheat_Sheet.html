@@ -5301,8 +5301,17 @@ The user leverages the web application as a proxy to the HR system.</p>
 <td><strong>Multicast</strong></td>
 <td><code>224.0.0.0/4</code>, <code>ff00::/8</code></td>
 </tr>
+<tr>
+<td><strong>IPv4-mapped IPv6</strong></td>
+<td><code>::ffff:0:0/96</code> (<a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">IANA</a>)</td>
+</tr>
+<tr>
+<td><strong>NAT64</strong></td>
+<td><code>64:ff9b::/96</code>, <code>64:ff9b:1::/48</code> (<a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">IANA</a>)</td>
+</tr>
 </tbody>
 </table>
+<p><strong>Normalize before you compare.</strong> Unmap or canonicalize an address to its native IPv4 form <em>before</em> checking it against these ranges. An IPv4-mapped address (<code>::ffff:169.254.169.254</code>) reaches the same host as its IPv4 form. A NAT64 address (<code>64:ff9b::a9fe:a9fe</code>) does too on networks that run a NAT64 gateway. Both slip past a check that only matches IPv4-shaped strings or compares against IPv4 CIDRs, so a blocked address such as the cloud metadata IP stays reachable.</p>
 <p><strong>Full production example:</strong> <a href="https://github.com/cc-tweaked/CC-Tweaked/blob/b9ed66983d714bcb5c6bf15b428e01a035106dbf/projects/core/src/main/java/dan200/computercraft/core/apis/http/options/AddressPredicate.java#L112-L157">ComputerCraft SSRF deny-list</a></p>
 <p><strong>Sources:</strong></p>
 <ul>
