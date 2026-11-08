@@ -644,13 +644,11 @@ The shorter the lifetime of a secret or credential, the harder it is for an atta
 
 Kubernetes does not provide a native persistent log storage solution. Applications should write to the standard output and standard error streams; the kubelet captures those streams and a cluster-level log-shipping agent (commonly [Fluent Bit](https://fluentbit.io/) or Fluentd) forwards them to a centralized backend. See [Logging Architecture](https://kubernetes.io/docs/concepts/cluster-administration/logging/) in the Kubernetes documentation for the full picture including node and sidecar patterns.
 
-The security-relevant logging controls are audit logging and Kubernetes Events, covered below.
-
 #### Enable audit logging
 
 [Kubernetes audit logging](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) records requests to the kube-apiserver according to an audit policy: who made the request, what was requested, and when. Enable audit logging and ship the audit log to a secure, append-only destination outside the cluster so that an attacker who gains cluster access cannot tamper with the audit trail.
 
-Monitor audit logs for authorization failures (entries with a `Forbidden` status message). A spike in authorization failures may indicate an attacker testing stolen or overly broad credentials.
+Monitor audit logs for authorization failures (`responseStatus.code` 403, reason `Forbidden`). A spike in authorization failures may indicate an attacker testing stolen or overly broad credentials.
 
 #### Define Audit Policies
 
@@ -663,7 +661,7 @@ The four audit levels, taken directly from the [audit documentation](https://kub
 - **Request** - log events with request metadata and body but not response body; this does not apply for non-resource requests
 - **RequestResponse** - log events with request metadata, request body and response body; this does not apply for non-resource requests
 
-Log `secrets` and `configmaps` at `Metadata` level only. `Request` and `RequestResponse` record request and response bodies, which would write secret values into the audit log. The [example policy](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/#audit-policy) in the documentation follows this pattern.
+Log `secrets` and `configmaps` at `Metadata` level only. `Request` and `RequestResponse` record request and response bodies, which would write secret values into the audit log. Because the first matching rule wins, place this rule above any broader `Request` or `RequestResponse` rule, as the [example policy](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/#audit-policy) in the documentation does for `secrets`.
 
 #### Events
 
