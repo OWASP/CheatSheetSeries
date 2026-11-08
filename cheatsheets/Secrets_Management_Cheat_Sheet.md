@@ -305,15 +305,15 @@ The recommended approach avoids passing application runtime secrets through the 
 
 ### 3.3 Authentication and Authorization of CI/CD tooling
 
-CI/CD service accounts must operate with least privilege, scoped strictly to the required secrets or deployment targets. Where supported, authenticate pipelines using workload identity federation (OIDC), exchanging the pipeline's signed ID token for short-lived credentials from the target secrets store or cloud provider. Ensure pipeline authentication preserves caller identity—such as by passing the triggering user, workflow identity, or job creator in token claims or certificates—so that secret access in external stores can be audited back to a specific initiator. Verify these attribution mappings periodically.
+CI/CD service accounts must operate with least privilege, scoped strictly to the required secrets or deployment targets. Where supported, authenticate pipelines using workload identity federation (OIDC), exchanging the pipeline's signed ID token for short-lived credentials from the target secrets store or cloud provider. Ensure pipeline authentication preserves caller identity, such as by passing the triggering user, workflow identity, or job creator in token claims or certificates, so that secret access in external stores can be audited back to a specific initiator. Verify these attribution mappings periodically.
 
 ### 3.4 Logging and Accounting
 
-Define security alerting rules to detect unauthorized access to or attempted exfiltration of secrets, such as anomalous secret retrieval, unexpected outbound network requests, or attempts to dump secrets to logs. Define CI/CD audit-log retention periods according to incident investigation requirements and applicable legal or regulatory compliance mandates. For general pipeline logging configurations and audit trail retention, see the [CI/CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md#visibility-and-monitoring).
+Define security alerting rules to detect unauthorized access to or attempted exfiltration of secrets, such as anomalous secret retrieval, unexpected outbound network requests, or attempts to dump secrets to logs. Define CI/CD audit-log retention periods according to incident investigation requirements and applicable legal or regulatory compliance mandates. For general pipeline logging configuration, see [Visibility and Monitoring](CI_CD_Security_Cheat_Sheet.md#visibility-and-monitoring) in the CI/CD Security Cheat Sheet.
 
 ### 3.5 Rotation vs Dynamic Creation
 
-Pipelines can trigger automated rotation or request dynamic, ephemeral credentials for deployment operations. When using dynamic secrets, bind credential lifecycles to the provider's [lease expiry or explicit revocation](https://developer.hashicorp.com/vault/docs/concepts/lease); stopping the pipeline runner or completing a build does not itself revoke issued credentials. Credentials remain valid until their configured lease TTL expires or until they are explicitly revoked when no longer needed. Dynamic credentials significantly reduce the exposure window of deployment credentials and simplify misuse detection.
+Pipelines can trigger automated rotation or request dynamic, ephemeral credentials for deployment operations. When using dynamic secrets, bind credential lifecycles to the provider's [lease expiry or explicit revocation](https://developer.hashicorp.com/vault/docs/concepts/lease), as described in [3.2.2](#322-storing-it-in-a-secrets-management-system). Dynamic credentials significantly reduce the exposure window of deployment credentials and simplify misuse detection.
 
 ### 3.6 Pipeline Created Secrets
 
