@@ -1761,6 +1761,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="RULE #12 - Utilize Docker Secrets for Sensitive Data Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-time-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-Time Secrets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4807,6 +4824,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="RULE #12 - Utilize Docker Secrets for Sensitive Data Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-time-secrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build-Time Secrets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -5138,6 +5172,9 @@ docker<span class="w"> </span>service<span class="w"> </span>create<span class="
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_secret</span>
 </code></pre></div>
 <p>While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> and <a href="Kubernetes_Security_Cheat_Sheet.html">Kubernetes Security Cheat Sheet</a> for more information.</p>
+<h4 id="build-time-secrets">Build-Time Secrets<a class="headerlink" href="#build-time-secrets" title="Permanent link">&para;</a></h4>
+<p>Do not pass credentials to a build with <code>ARG</code>, <code>ENV</code>, or <code>COPY</code> followed by <code>rm</code>. Docker warns that build arguments and environment variables <a href="https://docs.docker.com/build/building/secrets/">persist in the final image</a>, and a file added in one layer stays retrievable even if a later layer deletes it. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf">NIST SP 800-190</a> lists embedded clear text secrets as an image risk (§3.1.4) and says secrets should be kept outside images (§4.1.4).</p>
+<p>Use BuildKit secret mounts instead (<code>RUN --mount=type=secret,id=&lt;id&gt;</code>). The secret is available only during that <code>RUN</code>, as a file (default <code>/run/secrets/&lt;id&gt;</code>, or a custom <code>target=</code>) or as an environment variable (<code>env=</code>), and is not saved in the image. The command can still leak it into image files, caches, or logs, so do not write it elsewhere or print it. Multi-stage builds do not fix this on their own: keep credentials out of every stage, and use <code>.dockerignore</code> so <code>COPY . .</code> does not pull in <code>.env</code> or credential files. See the <a href="NodeJS_Docker_Cheat_Sheet.html#10-mounting-secrets-into-the-docker-build-image">Node.js Docker Cheat Sheet</a> for a worked npm example.</p>
 <h3 id="rule-13-enhance-supply-chain-security">RULE #13 - Enhance Supply Chain Security<a class="headerlink" href="#rule-13-enhance-supply-chain-security" title="Permanent link">&para;</a></h3>
 <p>Building on the principles in <a href="#rule-9---integrate-container-scanning-tools-into-your-cicd-pipeline">Rule #9</a>, enhancing supply chain security involves implementing additional measures to secure the entire lifecycle of container images from creation to deployment. Some of the key practices include:</p>
 <ul>
@@ -5158,6 +5195,8 @@ docker<span class="w"> </span>service<span class="w"> </span>create<span class="
 <ul>
 <li><a href="https://docs.docker.com/engine/security/">Docker Engine Security</a></li>
 <li><a href="https://docs.docker.com/build/metadata/attestations/">Docker Build Attestations</a></li>
+<li><a href="https://docs.docker.com/build/building/secrets/">Docker Build Secrets</a></li>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf">NIST SP 800-190: Application Container Security Guide</a></li>
 </ul>
 
 
