@@ -2706,6 +2706,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#inspecting-a-project-you-did-not-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting a project you did not write
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4772,6 +4783,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#inspecting-a-project-you-did-not-write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting a project you did not write
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5135,6 +5157,15 @@
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<h3 id="inspecting-a-project-you-did-not-write">Inspecting a project you did not write<a class="headerlink" href="#inspecting-a-project-you-did-not-write" title="Permanent link">&para;</a></h3>
+<p>A fake job interview can hand a candidate a whole project and ask them to install it. The <a href="https://www.ic3.gov/PSA/2024/PSA240903">FBI</a> lists a "pre-employment test" that runs unknown Node.js packages or GitHub repositories as a warning sign, and <a href="https://unit42.paloaltonetworks.com/two-campaigns-by-north-korea-bad-actors-target-job-hunters/">Unit 42</a> describes interviewers asking victims to install an npm package hosted on GitHub that carries malware. Here the risky code is in the project itself, not in a dependency you chose. Before the first install:</p>
+<ul>
+<li>Run it in a disposable VM, ideally a remote one rather than on your own machine or LAN, that has no credentials, SSH keys or wallets, and with no network access, or only restricted and logged access, where you can. The FBI <a href="https://www.ic3.gov/PSA/2024/PSA240903">advises</a> insisting on a VM when a test requires running code. The VM is the real control: the steps below only reduce what runs inside it.</li>
+<li>Open the folder in <a href="https://code.visualstudio.com/docs/editing/workspaces/workspace-trust">VS Code Restricted Mode</a>, which blocks tasks until you trust the folder.</li>
+<li>Check the project's <a href="https://docs.npmjs.com/cli/v11/configuring-npm/npmrc"><code>.npmrc</code></a> for <code>registry</code> lines, and in Yarn projects the <a href="https://yarnpkg.com/configuration/yarnrc#npmRegistryServer"><code>.yarnrc.yml</code></a> <code>npmRegistryServer</code> setting. These change where packages are fetched from. Also check <code>.yarnrc.yml</code> for <a href="https://yarnpkg.com/configuration/yarnrc#yarnPath"><code>yarnPath</code></a>: Yarn runs that file instead of itself for any command in the project, so read it before you run <code>yarn</code> at all.</li>
+<li>Check dependencies for <a href="https://docs.npmjs.com/cli/v11/configuring-npm/package-json">git URLs, tarball URLs and <code>file:</code> paths</a>, and in Yarn projects <a href="https://yarnpkg.com/protocol/link"><code>link:</code> paths</a>, which come from outside the registry. This only catches the visible cases: a typosquatted package name (see <a href="#10-understanding-typosquatting-and-slopsquatting-attacks">section 10</a>) or a tampered lockfile is much harder to spot by hand.</li>
+<li>Install with <code>npm install --ignore-scripts</code>, so the <code>preinstall</code>, <code>install</code>, <code>postinstall</code> and <code>prepare</code> scripts that a plain <code>npm install</code> <a href="https://docs.npmjs.com/cli/v11/using-npm/scripts">runs</a> do not execute on the first install. This only postpones them: <a href="https://docs.npmjs.com/cli/v11/using-npm/config#ignore-scripts"><code>npm run</code>, <code>npm start</code> and <code>npm test</code></a> still run their scripts, and the app itself can be malicious. Yarn's <a href="https://yarnpkg.com/configuration/yarnrc#enableScripts"><code>enableScripts</code></a> setting does not cover this case: it skips scripts from third-party packages but still runs the project's own.</li>
+</ul>
 <h2 id="4-assess-npm-project-health">4) Assess npm project health<a class="headerlink" href="#4-assess-npm-project-health" title="Permanent link">&para;</a></h2>
 <h3 id="npm-outdated-command">npm outdated command<a class="headerlink" href="#npm-outdated-command" title="Permanent link">&para;</a></h3>
 <p>Rushing to constantly upgrade dependencies to their latest releases is not necessarily a good practice if it is done without reviewing release notes, the code changes, and generally testing new upgrades in a comprehensive manner. With that said, staying out of date and not upgrading at all, or after a long time, is a source for trouble as well.</p>
