@@ -48,7 +48,7 @@ A service should have only the permissions necessary to perform its intended fun
 
 For example, a service that only reads configuration files should not require permission to modify them. A service that writes application data should not automatically receive write access to application executables or unrelated system directories.
 
-See [NIST SP 800-53 Rev. 5, AC-6 (Least Privilege)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for the underlying least-privilege control.
+See [NIST SP 800-53 Rev. 5, AC-6 (Least Privilege)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-6/) for supporting guidance.
 
 ### Reduce the Attack Surface
 
@@ -61,7 +61,7 @@ Every unnecessary interface, component, or enabled feature can introduce additio
 
 For example, a service used only by applications on the same host should not listen on all network interfaces unless remote access is explicitly required. Binding to a loopback interface does not prevent access by other local processes.
 
-See [NIST SP 800-53 Rev. 5, CM-7 (Least Functionality)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for supporting guidance.
+See [NIST SP 800-53 Rev. 5, CM-7 (Least Functionality)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-7/) for supporting guidance.
 
 ### Maintain Secure Service Configurations
 
@@ -76,7 +76,7 @@ Default configurations may enable functionality or access that is unnecessary fo
 
 For example, when changing a service's permitted filesystem access, verify both that required application operations still succeed and that prohibited operations are denied.
 
-See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for supporting guidance.
+See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-6/) for supporting guidance.
 
 ### Restrict Network Communication
 
@@ -94,7 +94,7 @@ For example, a database service used exclusively by an application on an interna
 
 Network restrictions reduce exposure but do not replace authentication, authorization, or transport protection where those controls are required.
 
-See [NIST SP 800-53 Rev. 5, SC-7 (Boundary Protection)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) and [NIST SP 800-207 (Zero Trust Architecture)](https://csrc.nist.gov/pubs/sp/800/207/final) for supporting guidance.
+See [NIST SP 800-53 Rev. 5, SC-7 (Boundary Protection)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/) and [NIST SP 800-207 (Zero Trust Architecture)](https://csrc.nist.gov/pubs/sp/800/207/final) for supporting guidance.
 
 ### Protect Service Credentials and Sensitive Data
 
@@ -129,7 +129,9 @@ A service that consumes excessive memory, CPU time, processes, or other resource
 
 Resource limits can reduce the impact of some resource-exhaustion conditions, but they do not guarantee availability or replace application-level protections against denial-of-service attacks.
 
-See [NIST SP 800-53 Rev. 5, SC-6 (Resource Availability)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for the general principle and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
+See [NIST SP 800-53 Rev. 5, SC-6 (Resource Availability)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-6/) for the general principle and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
+
+(https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
 
 ### Validate Hardening Changes
 
