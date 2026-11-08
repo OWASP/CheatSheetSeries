@@ -5025,7 +5025,7 @@ b4c2c78acaba   About a minute ago   CMD ["dumb-init" "node" "server.js"]        
 <p>The second Docker image, representing the second stage of the Docker build, will be the production Docker image. This second and last stage is the image that we actually optimize for and publish to a registry, if we have one. That first image that we’ll refer to as the <code>build</code> image, gets discarded and is left as a dangling image in the Docker host that built it, until it gets cleaned.</p>
 <p>Here is the update to our Dockerfile that represents our progress so far, but separated into two stages:</p>
 <div class="highlight"><pre><span></span><code># --------------&gt; The build image
-FROM node:latest AS build
+FROM node:lts-alpine AS build
 ARG NPM_TOKEN
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
@@ -5043,7 +5043,7 @@ COPY --chown=node:node --from=build /usr/src/app/node_modules /usr/src/app/node_
 COPY --chown=node:node . /usr/src/app
 CMD ["dumb-init", "node", "server.js"]
 </code></pre></div>
-<p>As you can see, I chose a bigger image for the <code>build</code> stage because I might need tooling like <code>gcc</code> (the GNU Compiler Collection) to compile native npm packages, or for other needs.</p>
+<p>As you can see, the <code>build</code> stage is where tooling like <code>gcc</code> (the GNU Compiler Collection) belongs if you need to compile native npm packages, or for other needs. Only <code>node_modules/</code> is copied out of it, so that tooling never reaches the production image.</p>
 <p>In the second stage, there’s a special notation for the <code>COPY</code> directive that copies the <code>node_modules/</code> folder from the build Docker image into this new production base image.</p>
 <p>Also, now, do you see that <code>NPM_TOKEN</code> passed as build argument to the <code>build</code> intermediary Docker image? It’s not visible anymore in the <code>docker history nodejs-tutorial</code> command output because it doesn’t exist in our production docker image.</p>
 <h2 id="9-keeping-unnecessary-files-out-of-your-nodejs-docker-images">9) Keeping unnecessary files out of your Node.js Docker images<a class="headerlink" href="#9-keeping-unnecessary-files-out-of-your-nodejs-docker-images" title="Permanent link">&para;</a></h2>
@@ -5087,7 +5087,7 @@ CMD ["dumb-init", "node", "server.js"]
 <p>Why is it important? Ideally, we would want to use the <code>.npmrc</code> file in the build stage, as we may need it because it includes a secret npm token to access private npm packages. Perhaps it also needs a specific proxy or registry configuration to pull packages from.</p>
 <p>This means that it makes sense to have the <code>.npmrc</code> file available to the <code>build</code> stage—however, we don’t need it at all in the second stage for the production image, nor do we want it there as it may include sensitive information, like the secret npm token.</p>
 <p>One way to mitigate this <code>.dockerignore</code> caveat is to mount a local file system that will be available for the build stage, but there’s a better way.</p>
-<p>Docker supports a relatively new capability referred to as Docker secrets, and is a natural fit for the case we need with <code>.npmrc</code>. Here is how it works:</p>
+<p>Docker BuildKit supports <a href="https://docs.docker.com/build/building/secrets/">build secrets</a>, which are a natural fit for the case we need with <code>.npmrc</code>. Here is how it works:</p>
 <ul>
 <li>When we run the <code>docker build</code> command we will specify command-line arguments that define a new secret ID and reference a file as the source of the secret.</li>
 <li>In the Dockerfile, we will add flags to the <code>RUN</code> directive to install the production npm, which mounts the file referred by the secret ID into the target location—the local directory <code>.npmrc</code> file which is where we want it available.</li>
@@ -5105,7 +5105,7 @@ Dockerfile
 </code></pre></div>
 <p>Then, the complete Dockerfile, with the updated RUN directive to install npm packages while specifying the <code>.npmrc</code> mount point:</p>
 <div class="highlight"><pre><span></span><code># --------------&gt; The build image
-FROM node:latest AS build
+FROM node:lts-alpine AS build
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
 RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/app/.npmrc npm ci --omit=dev
@@ -5123,8 +5123,8 @@ CMD ["dumb-init", "node", "server.js"]
 <p>And finally, the command that builds the Node.js Docker image:</p>
 <div class="highlight"><pre><span></span><code>docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 </code></pre></div>
-<p><strong>Note:</strong> Secrets are a new feature in Docker and if you’re using an older version, you might need to enable it Buildkit as follows:</p>
-<div class="highlight"><pre><span></span><code>DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
+<p><strong>Note:</strong> <a href="https://docs.docker.com/build/buildkit/">BuildKit</a> is the default builder in Docker Desktop and in Docker Engine <a href="https://docs.docker.com/engine/release-notes/23.0/">23.0</a> and later. On older Docker Engine versions, enable it explicitly:</p>
+<div class="highlight"><pre><span></span><code>DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 </code></pre></div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
