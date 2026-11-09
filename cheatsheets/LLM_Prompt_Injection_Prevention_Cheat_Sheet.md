@@ -277,11 +277,11 @@ For systems processing external content:
 
 Ingestion pipelines usually pass the model a document's extracted text and discard how it renders, so text a reader cannot see still reaches the model. Check untrusted documents before the model reads them:
 
-- Render each page and flag extracted text that does not appear on it. [PhantomLint](https://arxiv.org/abs/2508.17884) combines phrase matching with an OCR comparison of the rendered region.
+- Render each page and flag extracted text that does not appear on it. [PhantomLint](https://arxiv.org/abs/2508.17884) pairs phrase matching with an optical character recognition (OCR) check of the rendered region.
 - Check all hidden text, not only text that reads like an instruction. In 196,682 resumes from one hiring platform, more than 90% of hidden prompts contained no explicit instruction ([Zhang et al., USENIX Security 2026](https://arxiv.org/abs/2605.28999)).
 - Common techniques are text colored like its background, or tiny, covered, off-page, clipped or transparent; invisible PDF content; malicious fonts; CSS-hidden HTML ([PhantomLint, Section 2.2](https://arxiv.org/abs/2508.17884)); and Office text, sheets, rows and columns marked hidden ([ECMA-376 Part 1](https://ecma-international.org/publications-and-standards/standards/ecma-376/)).
 - Measure false positives on documents from your own domain. OCR errors and fine print both cause them ([PhantomLint, Section 5.2](https://arxiv.org/abs/2508.17884)).
-- Treat a document the check cannot fully read as incomplete, and give the model a cleaned copy or route the document to human review.
+- If the check flags hidden text or cannot read the whole document, send it to human review or give the model only text visible on the rendered pages, marked incomplete.
 
 ### Agent-Specific Defenses
 
