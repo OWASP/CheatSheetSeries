@@ -273,6 +273,16 @@ For systems processing external content:
 - Filter suspicious markup in web content and documents
 - Validate encoding and decode suspicious content for inspection
 
+### Hidden Text in Documents
+
+Ingestion pipelines usually pass the model a document's extracted text and discard how it renders, so text a reader cannot see still reaches the model. Check untrusted documents before the model reads them:
+
+- Render each page and flag extracted text that does not appear on it. [PhantomLint](https://arxiv.org/abs/2508.17884) pairs phrase matching with an optical character recognition (OCR) check of the rendered region.
+- Check all hidden text, not only text that reads like an instruction. In 196,682 resumes from one hiring platform, more than 90% of hidden prompts contained no explicit instruction ([Zhang et al., USENIX Security 2026](https://arxiv.org/abs/2605.28999)).
+- Common techniques are text colored like its background, or tiny, covered, off-page, clipped or transparent; invisible PDF content; malicious fonts; CSS-hidden HTML ([PhantomLint, Section 2.2](https://arxiv.org/abs/2508.17884)); and Office text, sheets, rows and columns marked hidden ([ECMA-376 Part 1](https://ecma-international.org/publications-and-standards/standards/ecma-376/)).
+- Measure false positives on documents from your own domain. OCR errors and fine print both cause them ([PhantomLint, Section 5.2](https://arxiv.org/abs/2508.17884)).
+- If the check flags hidden text or cannot read the whole document, send it to human review or give the model only text visible on the rendered pages, marked incomplete.
+
 ### Agent-Specific Defenses
 
 For LLM agents with tool access:
@@ -428,6 +438,7 @@ For benign controls, record structured policy decisions (allow, block, or human 
 - [ ] Use structured prompt formats separating instructions from data
 - [ ] Apply principle of least privilege
 - [ ] Implement encoding detection and validation
+- [ ] Check untrusted documents for hidden text by comparing rendered pages with extracted text
 - [ ] Understand limitations of current defenses against persistent attacks
 
 **Deployment Phase:**
@@ -453,3 +464,6 @@ For benign controls, record structured policy decisions (allow, block, or human 
 - [StruQ: Defending Against Prompt Injection with Structured Queries](https://arxiv.org/abs/2402.06363)
 - [Defeating Prompt Injections by Design](https://arxiv.org/pdf/2503.18813)
 - [NIST AI 100-2 E2025: Adversarial Machine Learning](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)
+- [PhantomLint: Principled Detection of Hidden LLM Prompts in Structured Documents](https://arxiv.org/abs/2508.17884)
+- [Measuring Real-World Prompt Injection Attacks in LLM-based Resume Screening](https://arxiv.org/abs/2605.28999)
+- [Invisible Text Injection and Peer Review by AI Models (JAMA Network Open)](https://doi.org/10.1001/jamanetworkopen.2025.52099)
