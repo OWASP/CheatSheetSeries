@@ -428,7 +428,7 @@ async def get_country_codes():
 - When tenants share capacity or quotas, include tenant identity as one rate-limit dimension alongside any required global, endpoint, user, or IP limits.
 - Rate limits at the HTTP boundary do not constrain every shared resource. Where tenant load can affect other tenants, apply tenant-aware limits or scheduling to the relevant bottlenecks, such as concurrent work, queued messages, database connections, fan-out, CPU, or memory. Retain global safety limits, and isolate a worker or resource pool when the risk or service commitment justifies the operational cost. The [AWS SaaS Lens](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html) describes scaling, throttling, and selective resource isolation as complementary noisy-neighbor controls.
 - Choose tenant quotas and limits according to capacity, abuse risk, contractual quotas, and service tiers rather than arbitrary hardcoded values. Support appropriate time windows and burst controls where applicable.
-- Use shared, consistently updated counters when limits must apply across multiple application instances.
+- Use shared counters with atomic updates when limits must apply across multiple application instances.
 - Communicate throttling appropriately, such as returning HTTP 429 and a `Retry-After` header where applicable.
 - Validate server-verified tenant context on every tenant-scoped API request, and mount tenant-aware middleware only on routes where tenant context is required. Public or global endpoints need no artificial tenant context.
 - Bind API credentials to explicit tenant sets, environments, and permission scopes. An intentionally cross-tenant service identity must be separately authorized and least privileged.
