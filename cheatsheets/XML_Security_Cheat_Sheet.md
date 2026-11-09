@@ -9,7 +9,7 @@ While the specifications for XML and XML schemas provide you with the tools need
 
 ## Dealing with malformed XML documents
 
-An XML document is considered malformed if it does not follow the [W3C XML specification](https://www.w3.org/TR/xml/#sec-terminology) for a well-formed document (such as missing closing tags, improper element nesting, or forbidden characters). Conforming XML processors treat well-formedness violations as fatal errors and must halt normal processing immediately upon detection.
+An XML document is considered malformed if it does not follow the [W3C XML specification](https://www.w3.org/TR/xml/#sec-terminology) for a well-formed document (such as missing closing tags, improper element nesting, or forbidden characters). Conforming XML processors treat well-formedness violations as fatal errors and must not continue normal processing after detecting one.
 
 ### Fail Closed on Fatal Errors
 
@@ -314,17 +314,17 @@ The previous schema includes a root element named `operation`, which can contain
 
 Jumbo payloads are oversized XML documents designed to cause Denial of Service (DoS) by exhausting server memory, CPU, or network bandwidth during parsing. Attackers typically use one of two structural approaches:
 
-- **Depth attack:** Deeply nested element hierarchies that exhaust parser call stack and tree memory.
+- **Depth attack:** Deeply nested elements (see [Coercive Parsing](#coercive-parsing)).
 - **Width attack:** A document with an excessive number of attributes, extremely large attribute names or values, or an enormous count of sibling elements at the same level.
 
-Large payloads can also be delivered as small network payloads that expand during parsing, such as through external entity resolution or recursive entity expansion (see the [XML External Entity Prevention Cheat Sheet](XML_External_Entity_Prevention_Cheat_Sheet.md) to disable DTD processing).
+Small payloads can also expand during parsing through external entity resolution or recursive entity expansion; see [XML Entity Expansion](#xml-entity-expansion).
 
 #### Mitigations for Jumbo Payloads
 
 To protect applications from oversized XML payloads:
 
 - **Enforce transport request size limits:** Restrict the maximum HTTP request body size at the reverse proxy, API gateway, or web server before the payload reaches the XML parser.
-- **Configure parser resource limits:** Enforce strict parser limits on maximum element depth, maximum attribute count, attribute value length, and total node count (for example, using [Oracle JAXP limits](https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html) such as `maxElementDepth` and `entityExpansionLimit`).
+- **Configure parser resource limits:** Enforce parser limits on element depth, attributes per element, and name size where the parser supports them (for example, the [Oracle JAXP limits](https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html) `jdk.xml.maxElementDepth`, `jdk.xml.elementAttributeLimit`, and `jdk.xml.maxXMLNameLimit`). JAXP has no limit on total node count or attribute value length, so cap document size with the request size limit above.
 - **Use streaming parsers for large documents:** When processing legitimately large XML inputs, use streaming parsers (such as SAX or StAX) rather than DOM parsers to avoid loading entire document trees into memory.
 
 ### Schema Poisoning
