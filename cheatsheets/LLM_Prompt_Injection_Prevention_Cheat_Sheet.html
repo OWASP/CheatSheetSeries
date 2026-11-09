@@ -2586,6 +2586,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#hidden-text-in-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hidden Text in Documents
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#agent-specific-defenses" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5120,6 +5131,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#hidden-text-in-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hidden Text in Documents
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#agent-specific-defenses" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5522,6 +5544,15 @@
 <li>Filter suspicious markup in web content and documents</li>
 <li>Validate encoding and decode suspicious content for inspection</li>
 </ul>
+<h3 id="hidden-text-in-documents">Hidden Text in Documents<a class="headerlink" href="#hidden-text-in-documents" title="Permanent link">&para;</a></h3>
+<p>Ingestion pipelines usually pass the model a document's extracted text and discard how it renders, so text a reader cannot see still reaches the model. Check untrusted documents before the model reads them:</p>
+<ul>
+<li>Render each page and flag extracted text that does not appear on it. <a href="https://arxiv.org/abs/2508.17884">PhantomLint</a> pairs phrase matching with an optical character recognition (OCR) check of the rendered region.</li>
+<li>Check all hidden text, not only text that reads like an instruction. In 196,682 resumes from one hiring platform, more than 90% of hidden prompts contained no explicit instruction (<a href="https://arxiv.org/abs/2605.28999">Zhang et al., USENIX Security 2026</a>).</li>
+<li>Common techniques are text colored like its background, or tiny, covered, off-page, clipped or transparent; invisible PDF content; malicious fonts; CSS-hidden HTML (<a href="https://arxiv.org/abs/2508.17884">PhantomLint, Section 2.2</a>); and Office text, sheets, rows and columns marked hidden (<a href="https://ecma-international.org/publications-and-standards/standards/ecma-376/">ECMA-376 Part 1</a>).</li>
+<li>Measure false positives on documents from your own domain. OCR errors and fine print both cause them (<a href="https://arxiv.org/abs/2508.17884">PhantomLint, Section 5.2</a>).</li>
+<li>If the check flags hidden text or cannot read the whole document, send it to human review or give the model only text visible on the rendered pages, marked incomplete.</li>
+</ul>
 <h3 id="agent-specific-defenses">Agent-Specific Defenses<a class="headerlink" href="#agent-specific-defenses" title="Permanent link">&para;</a></h3>
 <p>For LLM agents with tool access:</p>
 <ul>
@@ -5674,6 +5705,7 @@
 <li class="task-list-item"><input type="checkbox" disabled/> Use structured prompt formats separating instructions from data</li>
 <li class="task-list-item"><input type="checkbox" disabled/> Apply principle of least privilege</li>
 <li class="task-list-item"><input type="checkbox" disabled/> Implement encoding detection and validation</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Check untrusted documents for hidden text by comparing rendered pages with extracted text</li>
 <li class="task-list-item"><input type="checkbox" disabled/> Understand limitations of current defenses against persistent attacks</li>
 </ul>
 <p><strong>Deployment Phase:</strong></p>
@@ -5699,6 +5731,9 @@
 <li><a href="https://arxiv.org/abs/2402.06363">StruQ: Defending Against Prompt Injection with Structured Queries</a></li>
 <li><a href="https://arxiv.org/pdf/2503.18813">Defeating Prompt Injections by Design</a></li>
 <li><a href="https://csrc.nist.gov/pubs/ai/100/2/e2025/final">NIST AI 100-2 E2025: Adversarial Machine Learning</a></li>
+<li><a href="https://arxiv.org/abs/2508.17884">PhantomLint: Principled Detection of Hidden LLM Prompts in Structured Documents</a></li>
+<li><a href="https://arxiv.org/abs/2605.28999">Measuring Real-World Prompt Injection Attacks in LLM-based Resume Screening</a></li>
+<li><a href="https://doi.org/10.1001/jamanetworkopen.2025.52099">Invisible Text Injection and Peer Review by AI Models (JAMA Network Open)</a></li>
 </ul>
 
 
