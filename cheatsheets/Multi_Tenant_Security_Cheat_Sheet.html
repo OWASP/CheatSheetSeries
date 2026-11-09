@@ -5297,124 +5297,13 @@
 <ul>
 <li>When tenants share capacity or quotas, include tenant identity as one rate-limit dimension alongside any required global, endpoint, user, or IP limits.</li>
 <li>Rate limits at the HTTP boundary do not constrain every shared resource. Where tenant load can affect other tenants, apply tenant-aware limits or scheduling to the relevant bottlenecks, such as concurrent work, queued messages, database connections, fan-out, CPU, or memory. Retain global safety limits, and isolate a worker or resource pool when the risk or service commitment justifies the operational cost. The <a href="https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html">AWS SaaS Lens</a> describes scaling, throttling, and selective resource isolation as complementary noisy-neighbor controls.</li>
-<li>Validate server-verified tenant context on every tenant-scoped API request. Public or global endpoints need no artificial tenant context.</li>
+<li>Choose tenant quotas and limits according to capacity, abuse risk, contractual quotas, and service tiers rather than arbitrary hardcoded values. Support appropriate time windows and burst controls where applicable.</li>
+<li>Use shared counters with atomic updates when limits must apply across multiple application instances.</li>
+<li>Communicate throttling appropriately, such as returning HTTP 429 and a <code>Retry-After</code> header where applicable.</li>
+<li>Validate server-verified tenant context on every tenant-scoped API request, and mount tenant-aware middleware only on routes where tenant context is required. Public or global endpoints need no artificial tenant context.</li>
 <li>Bind API credentials to explicit tenant sets, environments, and permission scopes. An intentionally cross-tenant service identity must be separately authorized and least privileged.</li>
 <li>When B2B request signing is required, bind the signature to the security-relevant request context, such as tenant selection, target audience, method, path, body digest, and expiration, as applicable.</li>
 </ul>
-<p>The limits below are illustrative. Choose production limits from capacity, abuse risk, and contractual quotas, and mount tenant-aware middleware only on routes where tenant context is required.</p>
-<details>
-<summary>Tenant-Aware Rate Limiting</summary>
-
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantTier</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">FREE</span> <span class="o">=</span> <span class="s2">"free"</span>
-    <span class="n">STARTER</span> <span class="o">=</span> <span class="s2">"starter"</span>
-    <span class="n">BUSINESS</span> <span class="o">=</span> <span class="s2">"business"</span>
-    <span class="n">ENTERPRISE</span> <span class="o">=</span> <span class="s2">"enterprise"</span>
-
-<span class="nd">@dataclass</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">RateLimitConfig</span><span class="p">:</span>
-    <span class="n">requests_per_minute</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">requests_per_day</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">burst_size</span><span class="p">:</span> <span class="nb">int</span>
-
-<span class="n">TIER_LIMITS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">TenantTier</span><span class="o">.</span><span class="n">FREE</span><span class="p">:</span> <span class="n">RateLimitConfig</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="n">TenantTier</span><span class="o">.</span><span class="n">STARTER</span><span class="p">:</span> <span class="n">RateLimitConfig</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
-    <span class="n">TenantTier</span><span class="o">.</span><span class="n">BUSINESS</span><span class="p">:</span> <span class="n">RateLimitConfig</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-    <span class="n">TenantTier</span><span class="o">.</span><span class="n">ENTERPRISE</span><span class="p">:</span> <span class="n">RateLimitConfig</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
-<span class="p">}</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantRateLimiter</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""One tenant dimension in a broader rate-limiting strategy."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redis_client</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">redis</span> <span class="o">=</span> <span class="n">redis_client</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">check_rate_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tenant_tier</span><span class="p">:</span> <span class="n">TenantTier</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Check and update rate limit for tenant."""</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="n">TIER_LIMITS</span><span class="p">[</span><span class="n">tenant_tier</span><span class="p">]</span>
-        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">minute_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"rl:</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">:min:</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">60</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
-        <span class="n">day_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"rl:</span><span class="si">{</span><span class="n">tenant_id</span><span class="si">}</span><span class="s2">:day:</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">86400</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
-
-        <span class="n">pipe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">redis</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span>
-
-        <span class="c1"># Increment counters</span>
-        <span class="n">pipe</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="n">minute_key</span><span class="p">)</span>
-        <span class="n">pipe</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">minute_key</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-        <span class="n">pipe</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="n">day_key</span><span class="p">)</span>
-        <span class="n">pipe</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">day_key</span><span class="p">,</span> <span class="mi">86400</span><span class="p">)</span>
-
-        <span class="n">results</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-        <span class="n">minute_count</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">day_count</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-
-        <span class="c1"># Check limits</span>
-        <span class="k">if</span> <span class="n">minute_count</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">"allowed"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s2">"reason"</span><span class="p">:</span> <span class="s2">"minute_limit_exceeded"</span><span class="p">,</span>
-                <span class="s2">"retry_after"</span><span class="p">:</span> <span class="mi">60</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">%</span> <span class="mi">60</span><span class="p">),</span>
-                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span>
-            <span class="p">}</span>
-
-        <span class="k">if</span> <span class="n">day_count</span> <span class="o">&gt;</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">"allowed"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="s2">"reason"</span><span class="p">:</span> <span class="s2">"daily_limit_exceeded"</span><span class="p">,</span>
-                <span class="s2">"retry_after"</span><span class="p">:</span> <span class="mi">86400</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">%</span> <span class="mi">86400</span><span class="p">),</span>
-                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span>
-            <span class="p">}</span>
-
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">"allowed"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">"remaining_minute"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_minute</span> <span class="o">-</span> <span class="n">minute_count</span><span class="p">,</span>
-            <span class="s2">"remaining_day"</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">requests_per_day</span> <span class="o">-</span> <span class="n">day_count</span>
-        <span class="p">}</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">RateLimitMiddleware</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Middleware for routes that require tenant-scoped rate limits."""</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">):</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span>
-                <span class="n">status_code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span>
-                <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Tenant context required"</span><span class="p">}</span>
-            <span class="p">)</span>
-
-        <span class="n">tenant</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_service</span><span class="o">.</span><span class="n">get_tenant</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_limiter</span><span class="o">.</span><span class="n">check_rate_limit</span><span class="p">(</span>
-            <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">,</span> 
-            <span class="n">tenant</span><span class="o">.</span><span class="n">tier</span>
-        <span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s2">"allowed"</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span>
-                <span class="n">status_code</span><span class="o">=</span><span class="mi">429</span><span class="p">,</span>
-                <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Rate limit exceeded"</span><span class="p">,</span> <span class="s2">"details"</span><span class="p">:</span> <span class="n">result</span><span class="p">},</span>
-                <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-                    <span class="s2">"Retry-After"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"retry_after"</span><span class="p">])),</span>
-                    <span class="s2">"X-RateLimit-Limit"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"limit"</span><span class="p">]),</span>
-                    <span class="s2">"X-RateLimit-Remaining"</span><span class="p">:</span> <span class="s2">"0"</span>
-                <span class="p">}</span>
-            <span class="p">)</span>
-
-        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_next</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-
-        <span class="c1"># Add rate limit headers</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"X-RateLimit-Remaining-Minute"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"remaining_minute"</span><span class="p">])</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">"X-RateLimit-Remaining-Day"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"remaining_day"</span><span class="p">])</span>
-
-        <span class="k">return</span> <span class="n">response</span>
-</code></pre></div>
-
-</details>
-
 <h4 id="tenant-aware-asynchronous-work">Tenant-Aware Asynchronous Work<a class="headerlink" href="#tenant-aware-asynchronous-work" title="Permanent link">&para;</a></h4>
 <p>Classify asynchronous work as global, tenant-scoped, or explicitly cross-tenant. A shared queue or topic is not itself a tenant-isolation boundary. <a href="https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging">Microsoft's multitenant messaging guidance</a> describes the trade-off between shared and dedicated messaging infrastructure and the need for application-enforced isolation when infrastructure is shared.</p>
 <ul>
