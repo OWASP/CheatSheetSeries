@@ -151,59 +151,15 @@ app.use(function(req, res, next) {
 
 #### Take precautions against brute-forcing
 
-[Brute-forcing](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#protect-against-automated-attacks
-) is a common threat to all web applications. Attackers can use brute-forcing as a password guessing attack to obtain account passwords. Therefore, application developers should take precautions against brute-force attacks especially in login pages.  Node.js has several modules available for this purpose. [Express-bouncer](https://libraries.io/npm/express-bouncer), [express-brute](https://libraries.io/npm/express-brute) and [rate-limiter](https://libraries.io/npm/rate-limiter) are just some examples. Based on your needs and requirements, you should choose one or more of these modules and use accordingly. [Express-bouncer](https://libraries.io/npm/express-bouncer) and [express-brute](https://libraries.io/npm/express-brute) modules work similarly. They increase the delay for each failed request and can be arranged for a specific route. These modules can be used as follows:
+[Brute-force attacks](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#protect-against-automated-attacks) attempt to obtain valid credentials through repeated authentication attempts. Apply rate limiting to sensitive authentication-related endpoints, including login, password reset, account recovery, and verification flows. Consider the complete authentication flow rather than protecting only the login page.
 
-```JavaScript
-const bouncer = require('express-bouncer');
-bouncer.whitelist.push('127.0.0.1'); // allow an IP address
-// give a custom error message
-bouncer.blocked = function (req, res, next, remaining) {
-    res.status(429).send("Too many requests have been made. Please wait " + remaining/1000 + " seconds.");
-};
-// route to protect
-app.post("/login", bouncer.block, function(req, res) {
-    if (LoginFailed){  }
-    else {
-        bouncer.reset( req );
-    }
-});
-```
+Use layered rate limits, such as limits based on both the source IP address and the account identifier, where appropriate. Configure thresholds, time windows, and progressive delays according to the sensitivity of the endpoint, expected user behavior, and the application's risk profile. Avoid relying solely on IP-based limits, since multiple users may share an address and attackers may distribute requests across addresses. Account-based controls should also avoid allowing attackers to permanently or easily lock out legitimate users.
 
-```JavaScript
-const ExpressBrute = require('express-brute');
+For Express applications, [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit) is a maintained middleware that can be used to implement request rate limits. Consult its [documentation](https://express-rate-limit.mintlify.app/overview) for configuration and deployment details.
 
-const store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
-const bruteforce = new ExpressBrute(store);
+In deployments with multiple application instances, an in-memory store on each instance does not provide a coordinated limit. Use a shared store or another centralized rate-limiting mechanism so that requests handled by different instances contribute to the same limits. See the [express-rate-limit configuration documentation](https://express-rate-limit.mintlify.app/reference/configuration) for supported store options.
 
-app.post('/auth',
-    bruteforce.prevent, // error 429 if we hit this route too often
-    function (req, res, next) {
-        res.send('Success!');
-    }
-);
-```
-
-Apart from [express-bouncer](https://libraries.io/npm/express-bouncer) and [express-brute](https://libraries.io/npm/express-brute), the [rate-limiter](https://libraries.io/npm/rate-limiter) module can also help to prevent brute-forcing attacks. It enables specifying how many requests a specific IP address can make during a specified time period.
-
-```JavaScript
-const limiter = new RateLimiter();
-limiter.addLimit('/login', 'GET', 5, 500); // login page can be requested 5 times at max within 500 seconds
-```
-
-[CAPTCHA usage](https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html#captcha) is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is [svg-captcha](https://www.npmjs.com/package/svg-captcha). It can be used as follows:
-
-```JavaScript
-const svgCaptcha = require('svg-captcha');
-app.get('/captcha', function (req, res) {
-    const captcha = svgCaptcha.create();
-    req.session.captcha = captcha.text;
-    res.type('svg');
-    res.status(200).send(captcha.data);
-});
-```
-
-[Account lockout](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#account-lockout) is a recommended solution to keep attackers away from your valid users. Account lockout is possible with many modules like [mongoose](https://www.npmjs.com/package/mongoose). You can refer to [this blog post](http://devsmash.com/blog/implementing-max-login-attempts-with-mongoose) to see how account lockout is implemented in mongoose.
+Monitor rejected requests and authentication failures for suspicious patterns, and ensure rate-limit responses do not disclose whether an account exists. Rate limiting should complement, not replace, other controls such as multi-factor authentication, secure account recovery, and detection of credential-stuffing activity. See the [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) and [Credential Stuffing Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html) for additional guidance.
 
 #### Use Anti-CSRF tokens
 
