@@ -199,8 +199,16 @@ test("the renderer mirrors mkdocs.yml and its pins match requirements.txt", () =
         .map(([, name, version]) => [name.toLowerCase(), version]),
     );
   const site = pins("requirements.txt");
-  for (const [name, version] of pins("scripts/link_check/requirements.txt")) {
-    assert.equal(site.get(name), version, `${name} must match requirements.txt`);
+  const subset = fs
+    .readFileSync(path.join(repoRoot, "scripts/link_check/requirements.txt"), "utf8")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"));
+  assert.equal(subset[0], "-c ../../requirements.txt", "the subset takes its versions from requirements.txt");
+  assert.ok(subset.length > 1, "the subset lists packages");
+  for (const name of subset.slice(1)) {
+    assert.match(name, /^[A-Za-z0-9_.-]+$/, `${name} must not pin its own version`);
+    assert.ok(site.has(name.toLowerCase()), `${name} must be pinned in requirements.txt`);
   }
 });
 
