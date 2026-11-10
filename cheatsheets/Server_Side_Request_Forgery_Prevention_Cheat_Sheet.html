@@ -3494,12 +3494,12 @@
   <a href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 1 - Application can send request only to identified and trusted applications
+        Case 1: Application can send request only to identified and trusted applications
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Case 1 - Application can send request only to identified and trusted applications">
+    <nav class="md-nav" aria-label="Case 1: Application can send request only to identified and trusted applications">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3611,12 +3611,12 @@
   <a href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 2 - Application can send requests to ANY external IP address or domain name
+        Case 2: Application can send requests to ANY external IP address or domain name
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Case 2 - Application can send requests to ANY external IP address or domain name">
+    <nav class="md-nav" aria-label="Case 2: Application can send requests to ANY external IP address or domain name">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4721,12 +4721,12 @@
   <a href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 1 - Application can send request only to identified and trusted applications
+        Case 1: Application can send request only to identified and trusted applications
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Case 1 - Application can send request only to identified and trusted applications">
+    <nav class="md-nav" aria-label="Case 1: Application can send request only to identified and trusted applications">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4838,12 +4838,12 @@
   <a href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Case 2 - Application can send requests to ANY external IP address or domain name
+        Case 2: Application can send requests to ANY external IP address or domain name
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Case 2 - Application can send requests to ANY external IP address or domain name">
+    <nav class="md-nav" aria-label="Case 2: Application can send requests to ANY external IP address or domain name">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5006,7 +5006,7 @@
 <li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allowlist</a> approach is unavailable.</li>
 </ul>
 <p>Because these two cases are very different, this cheat sheet will describe defenses against them separately.</p>
-<h3 id="case-1-application-can-send-request-only-to-identified-and-trusted-applications">Case 1 - Application can send request only to identified and trusted applications<a class="headerlink" href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" title="Permanent link">&para;</a></h3>
+<h3 id="case-1-application-can-send-request-only-to-identified-and-trusted-applications">Case 1: Application can send request only to identified and trusted applications<a class="headerlink" href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" title="Permanent link">&para;</a></h3>
 <p>Sometimes, an application needs to perform a request to another application, often located on another network, to perform a specific task. Depending on the business case, user input is required for the functionality to work.</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <blockquote>
@@ -5210,7 +5210,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>In the schema below, a Firewall component is leveraged to limit the application's access, and in turn, limit the impact of an application vulnerable to SSRF:</p>
 <p><img alt="Case 1 for Network layer protection about flows that we want to prevent" src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png" /></p>
 <p><a href="https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation">Network segregation</a> (see this set of <a href="https://www.cyber.gov.au/acsc/view-all-content/publications/implementing-network-segmentation-and-segregation">implementation advice</a> can also be leveraged and <strong>is highly recommended in order to block illegitimate calls directly at network level itself</strong>.</p>
-<h3 id="case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name">Case 2 - Application can send requests to ANY external IP address or domain name<a class="headerlink" href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" title="Permanent link">&para;</a></h3>
+<h3 id="case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name">Case 2: Application can send requests to ANY external IP address or domain name<a class="headerlink" href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" title="Permanent link">&para;</a></h3>
 <p>This case happens when a user can control a URL to an <strong>External</strong> resource and the application makes a request to this URL (e.g. in case of <a href="https://en.wikipedia.org/wiki/Webhook">WebHooks</a>). Allow lists cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.</p>
 <p>In this scenario, <em>External</em> refers to any IP that doesn't belong to the internal network, and should be reached by going over the public internet.</p>
 <p>Thus, the call from the <em>Vulnerable Application</em>:</p>
@@ -5228,7 +5228,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <h4 id="available-protections_1">Available protections<a class="headerlink" href="#available-protections_1" title="Permanent link">&para;</a></h4>
 <p>Taking into consideration the same assumption in the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#example">example</a> for the following sections.</p>
 <h5 id="application-layer_1">Application layer<a class="headerlink" href="#application-layer_1" title="Permanent link">&para;</a></h5>
-<p>Like for the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#case-1---application-can-send-request-only-to-identified-and-trusted-applications">n°1</a>, it is assumed that the <code>IP Address</code> or <code>domain name</code> is required to create the request that will be sent to the <em>TargetApplication</em>.</p>
+<p>Like for the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#case-1-application-can-send-request-only-to-identified-and-trusted-applications">n°1</a>, it is assumed that the <code>IP Address</code> or <code>domain name</code> is required to create the request that will be sent to the <em>TargetApplication</em>.</p>
 <p>The first validation on the input data presented in the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">n°1</a> on the 3 types of data will be the same for this case <strong>BUT the second validation will differ</strong>. Indeed, here we must use the block-list approach.</p>
 <blockquote>
 <p><strong>Regarding the proof of legitimacy of the request</strong>: The <em>TargetedApplication</em> that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set <code>[a-z]{1,10}</code>) to perform a valid request. The receiving endpoint must only accept HTTP POST requests.</p>
@@ -5271,7 +5271,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <tbody>
 <tr>
 <td><strong>AWS IMDS</strong></td>
-<td><code>169.254.169.254</code>, <code>metadata.amazonaws.com</code></td>
+<td><code>169.254.169.254</code>, <code>fd00:ec2::254</code> (<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html#instancedata-inside-access">IPv6 endpoint</a>)</td>
 </tr>
 <tr>
 <td><strong>GCP Metadata</strong></td>
@@ -5288,6 +5288,10 @@ The user leverages the web application as a proxy to the HR system.</p>
 <tr>
 <td><strong>RFC1918 Private</strong></td>
 <td><code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code></td>
+</tr>
+<tr>
+<td><strong>IPv4 Link-Local</strong></td>
+<td><code>169.254.0.0/16</code> (<a href="https://datatracker.ietf.org/doc/html/rfc3927#section-1">RFC 3927</a>), which also covers the AWS credential endpoints for <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html#task-iam-role-considerations">ECS tasks</a> (<code>169.254.170.2</code>) and <a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-id-how-it-works.html#pod-id-agent-pod">EKS Pod Identity</a> (<code>169.254.170.23</code>)</td>
 </tr>
 <tr>
 <td><strong>IPv6 Unique Local</strong></td>
