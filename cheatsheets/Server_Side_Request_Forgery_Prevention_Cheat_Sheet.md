@@ -32,7 +32,7 @@ Depending on the application's functionality and requirements, there are two bas
 
 Because these two cases are very different, this cheat sheet will describe defenses against them separately.
 
-### Case 1 - Application can send request only to identified and trusted applications
+### Case 1: Application can send request only to identified and trusted applications
 
 Sometimes, an application needs to perform a request to another application, often located on another network, to perform a specific task. Depending on the business case, user input is required for the functionality to work.
 
@@ -263,7 +263,7 @@ In the schema below, a Firewall component is leveraged to limit the application'
 
 [Network segregation](https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation) (see this set of [implementation advice](https://www.cyber.gov.au/acsc/view-all-content/publications/implementing-network-segmentation-and-segregation) can also be leveraged and **is highly recommended in order to block illegitimate calls directly at network level itself**.
 
-### Case 2 - Application can send requests to ANY external IP address or domain name
+### Case 2: Application can send requests to ANY external IP address or domain name
 
 This case happens when a user can control a URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Allow lists cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.
 
@@ -289,7 +289,7 @@ Taking into consideration the same assumption in the following [example](Server_
 
 ##### Application layer
 
-Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1---application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
+Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1-application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
 
 The first validation on the input data presented in the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer) on the 3 types of data will be the same for this case **BUT the second validation will differ**. Indeed, here we must use the block-list approach.
 
