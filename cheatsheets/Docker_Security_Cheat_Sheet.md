@@ -8,13 +8,13 @@ The aim of this cheat sheet is to provide a straightforward list of common secur
 
 ## Rules
 
-### RULE \#0 - Keep Host and Docker up to date
+### RULE \#0: Keep Host and Docker up to date
 
 To protect against known container escape vulnerabilities like [Leaky Vessels](https://snyk.io/blog/cve-2024-21626-runc-process-cwd-container-breakout/), which typically result in the attacker gaining root access to the host, it's vital to keep both the host and Docker up to date. This includes regularly updating the host kernel as well as the Docker Engine.
 
 This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit, [Dirty COW](https://github.com/scumjr/dirtycow-vdso), executed inside a well-insulated container would still result in root access on a vulnerable host.
 
-### RULE \#1 - Do not expose the Docker daemon socket (even to the containers)
+### RULE \#1: Do not expose the Docker daemon socket (even to the containers)
 
 Docker socket _/var/run/docker.sock_ is the UNIX socket that Docker is listening to. This is the primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving unrestricted root access to your host.
 
@@ -28,7 +28,7 @@ volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
-### RULE \#2 - Set a user
+### RULE \#2: Set a user
 
 Configuring the container to use an unprivileged user is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:
 
@@ -49,7 +49,7 @@ USER myuser
 
 3. Enable user namespace support (`--userns-remap=default`) in [Docker daemon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
 
-More information about this topic can be found at [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/). For additional security, you can also run in rootless mode, which is discussed in [Rule \#11](#rule-11---run-docker-in-rootless-mode).
+More information about this topic can be found at [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/). For additional security, you can also run in rootless mode, which is discussed in [Rule \#11](#rule-11-run-docker-in-rootless-mode).
 
 In Kubernetes, this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using the `runAsUser` field with the user ID e.g:
 
@@ -68,7 +68,7 @@ spec:
 
 As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
 
-### RULE \#3 - Limit capabilities (Grant only specific capabilities, needed by a container)
+### RULE \#3: Limit capabilities (Grant only specific capabilities, needed by a container)
 
 [Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are a set of privileges that can be used by privileged. Docker, by default, runs with only a subset of capabilities.
 You can change it and drop some capabilities (using `--cap-drop`) to harden your docker containers, or add some capabilities (using `--cap-add`) if needed.
@@ -102,7 +102,7 @@ spec:
 
 As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
 
-### RULE \#4 - Prevent in-container privilege escalation
+### RULE \#4: Prevent in-container privilege escalation
 
 Always run your docker images with `--security-opt=no-new-privileges` in order to prevent privilege escalation. This will prevent the container from gaining new privileges via `setuid` or `setgid` binaries.
 
@@ -123,7 +123,7 @@ spec:
 
 As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
 
-### RULE \#5 - Be mindful of Inter-Container Connectivity
+### RULE \#5: Be mindful of Inter-Container Connectivity
 
 Inter-Container Connectivity (icc) is enabled by default, allowing all containers to communicate with each other through the [`docker0` bridged network](https://docs.docker.com/network/drivers/bridge/). Instead of using the `--icc=false` flag with the Docker daemon, which completely disables inter-container communication, consider defining specific network configurations. This can be achieved by creating custom Docker networks and specifying which containers should be attached to them. This method provides more granular control over container communication.
 
@@ -131,7 +131,7 @@ For detailed guidance on configuring Docker networks for container communication
 
 In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, [Network Policy Editor](https://networkpolicy.io/) simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.
 
-### RULE \#5a - Be careful when mapping container ports to the host with firewalls like UFW
+### RULE \#5a: Be careful when mapping container ports to the host with firewalls like UFW
 
 [UFW (Uncomplicated Firewall)](https://ubuntu.com/server/docs/how-to/security/firewalls/#ufw-uncomplicated-firewall) is a popular host-based firewall for Linux. A common misconception is that firewall rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` and `nftables` rules directly and bypasses UFW entirely**. Note that other tools that use `iptables` or `nftables` can also have conflicts similar to UFW. If you are using other firewall tools, you should check if they are working correctly.
 
@@ -175,7 +175,7 @@ sudo ufw-docker allow mycontainer 8000/tcp
 
 Refer to the [Docker and iptables documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/) for a deeper explanation of how Docker interacts with the host firewall.
 
-### RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
+### RULE \#6: Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
 
 **First of all, do not disable default security profile!** Always start with Docker’s or your host’s default profile as a baseline.
 
@@ -195,7 +195,7 @@ Refer to the [Docker and iptables documentation](https://docs.docker.com/engine/
 
 - **Kubernetes Security Context**: Configure pods or containers with seccomp and AppArmor profiles in Kubernetes. [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tutorials/security/seccomp/)
 
-### RULE \#7 - Limit resources (memory, CPU, file descriptors, processes, restarts)
+### RULE \#7: Limit resources (memory, CPU, file descriptors, processes, restarts)
 
 The best way to avoid DoS attacks is by limiting resources. You can limit [memory](https://docs.docker.com/config/containers/resource_constraints/#memory), [CPU](https://docs.docker.com/config/containers/resource_constraints/#cpu), maximum number of restarts (`--restart=on-failure:<number_of_restarts>`), maximum number of file descriptors (`--ulimit nofile=<number>`) and maximum number of processes (`--ulimit nproc=<number>`).
 
@@ -203,7 +203,7 @@ The best way to avoid DoS attacks is by limiting resources. You can limit [memor
 
 You can also do this for Kubernetes: [Assign Memory Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/), [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/) and [Assign Extended Resources to a Container](https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/)
 
-### RULE \#8 - Set filesystem and volumes to read-only
+### RULE \#8: Set filesystem and volumes to read-only
 
 **Run containers with a read-only filesystem** using `--read-only` flag. For example:
 
@@ -255,7 +255,7 @@ Or by using `--mount` option:
 docker run --mount source=volume-name,destination=/path/in/container,readonly alpine
 ```
 
-### RULE \#9 - Integrate container scanning tools into your CI/CD pipeline
+### RULE \#9: Integrate container scanning tools into your CI/CD pipeline
 
 [CI/CD pipelines](CI_CD_Security_Cheat_Sheet.md) are a crucial part of the software development lifecycle and should include various security checks such as lint checks, static code analysis, and container scanning.
 
@@ -312,7 +312,7 @@ To detect misconfigurations in Docker Compose files before deployment:
 - [DockSec](https://github.com/OWASP/DockSec) (with `--compose`)
 - [KICS](https://github.com/Checkmarx/kics)
 
-### RULE \#10 - Keep the Docker daemon logging level at `info`
+### RULE \#10: Keep the Docker daemon logging level at `info`
 
 By default, the Docker daemon is configured to have a base logging level of `info`. This can be verified by checking the daemon configuration file `/etc/docker/daemon.json` for the`log-level` key. If the key is not present, the default logging level is `info`. Additionally, if the docker daemon is started with the `--log-level` option, the value of the `log-level` key in the configuration file will be overridden. To check if the Docker daemon is running with a different log level, you can use the following command:
 
@@ -322,7 +322,7 @@ ps aux | grep '[d]ockerd.*--log-level' | awk '{for(i=1;i<=NF;i++) if ($i ~ /--lo
 
 Setting an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except the debug logs. Until and unless required, you should not run docker daemon at the 'debug' log level.
 
-### Rule \#11 - Run Docker in rootless mode
+### Rule \#11: Run Docker in rootless mode
 
 [Rootless mode](https://docs.docker.com/engine/security/rootless/#how-it-works) runs the Docker daemon and containers without host-root privileges, reducing the impact of daemon or runtime compromise. It does not guarantee protection against host privilege escalation through [kernel vulnerabilities](https://docs.docker.com/desktop/troubleshoot-and-support/faqs/linuxfaqs/#why-does-docker-desktop-for-linux-run-a-vm); the shared kernel remains part of the security boundary. Unlike rootless mode, `userns-remap` leaves the daemon running with root privileges.
 
@@ -333,7 +333,7 @@ Evaluate the [specific requirements](Attack_Surface_Analysis_Cheat_Sheet.md) and
 
 Read more about rootless mode and its limitations, installation and usage instructions on [Docker documentation](https://docs.docker.com/engine/security/rootless/) page.
 
-### RULE \#12 - Utilize Docker Secrets for Sensitive Data Management
+### RULE \#12: Utilize Docker Secrets for Sensitive Data Management
 
 Docker Secrets provide a secure way to store and manage sensitive data such as passwords, tokens, and SSH keys. Using Docker Secrets helps in avoiding the exposure of sensitive data in container images or in runtime commands.
 
@@ -364,9 +364,9 @@ Do not pass credentials to a build with `ARG`, `ENV`, or `COPY` followed by `rm`
 
 Use BuildKit secret mounts instead (`RUN --mount=type=secret,id=<id>`). The secret is available only during that `RUN`, as a file (default `/run/secrets/<id>`, or a custom `target=`) or as an environment variable (`env=`), and is not saved in the image. The command can still leak it into image files, caches, or logs, so do not write it elsewhere or print it. Multi-stage builds do not fix this on their own: keep credentials out of every stage, and use `.dockerignore` so `COPY . .` does not pull in `.env` or credential files. See the [Node.js Docker Cheat Sheet](NodeJS_Docker_Cheat_Sheet.md#10-mounting-secrets-into-the-docker-build-image) for a worked npm example.
 
-### RULE \#13 - Enhance Supply Chain Security
+### RULE \#13: Enhance Supply Chain Security
 
-Building on the principles in [Rule \#9](#rule-9---integrate-container-scanning-tools-into-your-cicd-pipeline), enhancing supply chain security involves implementing additional measures to secure the entire lifecycle of container images from creation to deployment. Some of the key practices include:
+Building on the principles in [Rule \#9](#rule-9-integrate-container-scanning-tools-into-your-cicd-pipeline), enhancing supply chain security involves implementing additional measures to secure the entire lifecycle of container images from creation to deployment. Some of the key practices include:
 
 - [Image Provenance](https://slsa.dev/spec/v1.0/provenance): Document the origin and history of container images to ensure traceability and integrity.
 - [SBOM Generation](https://cyclonedx.org/guides/CycloneDX%20One%20Pager.pdf): Create a Software Bill of Materials (SBOM) for each image, detailing all components, libraries, and dependencies for transparency and vulnerability management.
