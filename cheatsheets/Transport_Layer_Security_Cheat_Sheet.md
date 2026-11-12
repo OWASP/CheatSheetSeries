@@ -83,6 +83,16 @@ TLS compression should be disabled in order to protect against a vulnerability (
 
 TLS compression is not available in TLS v1.3 for this reason.
 
+### Be Careful With TLS 1.3 Early Data (0-RTT)
+
+TLS 1.3 lets a client that resumes a session send application data in its first flight, called early data or 0-RTT. Unlike the rest of the connection, early data is not protected against replay across connections ([RFC 8446 section 2.3](https://www.rfc-editor.org/rfc/rfc8446.html#section-2.3), [section 8](https://www.rfc-editor.org/rfc/rfc8446.html#section-8)), so an attacker who captures it can send it again and a request that places an order or moves money may run twice.
+
+- Leave early data disabled unless the latency gain is needed. For example, nginx's [`ssl_early_data`](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_early_data) is off by default.
+- If it is enabled, only accept [safe methods](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.1) in early data and reject anything that changes state with [`425 Too Early`](https://www.rfc-editor.org/rfc/rfc8470.html#section-5.2), so the client retries after the handshake completes.
+- Where TLS terminates at a proxy or CDN, make sure it adds the [`Early-Data: 1`](https://www.rfc-editor.org/rfc/rfc8470.html#section-5.1) header so the application can tell which requests arrived in early data.
+
+This only prevents replay of early data at the TLS layer. It does not protect against an attacker or client resending a complete request after the handshake, which still needs application-level controls such as idempotency keys or CSRF tokens.
+
 ### Patch Cryptographic Libraries
 
 As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of historic vulnerability in SSL and TLS libraries, with [Heartbleed](https://heartbleed.com) being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.
