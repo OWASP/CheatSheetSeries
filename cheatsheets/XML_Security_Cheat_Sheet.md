@@ -11,27 +11,15 @@ While the specifications for XML and XML schemas provide you with the tools need
 
 ### Definition of a malformed XML document
 
- If an XML document does not follow the W3C XML specification's definition of a well-formed document, it is considered "malformed." **If an XML document is malformed, the XML parser will detect a fatal error, it should stop execution, the document should not undergo any additional processing, and the application should display an error message.** A malformed document can include one or more of the following problems: a missing ending tag, the order of elements into a nonsensical structure, introducing forbidden characters, and so on.
+If an XML document does not follow the W3C XML specification's definition of a well-formed document, it is considered "malformed". **If an XML document is malformed, the XML parser will detect a fatal error, it should stop execution, the document should not undergo any additional processing, and the application should display an error message.** A malformed document can include a missing end tag, elements ordered into a nonsensical structure, forbidden characters, and so on.
 
 ### Handling malformed XML documents
 
-**To deal with malformed documents, developers should use an XML processor that follows W3C specifications and does not take significant additional time to process malformed documents.** In addition, they should only use well-formed documents, validate the contents of each element, and process only valid values within predefined boundaries.
+**To deal with malformed documents, use an XML processor that follows the W3C specifications, accept only well-formed documents, verify the contents of each element, and process only values within predefined boundaries.**
 
-#### Malformed XML documents require extra time
+Malformed input can also be expensive: some parsers take longer on malformed documents than on well-formed ones, which enables an asymmetric resource-consumption attack that becomes a denial of service when the attacker can send many documents. Compare the processing time of a malformed document with its well-formed equivalent to judge the exposure.
 
-**A malformed document may affect the consumption of Central Processing Unit (CPU) resources.** In certain scenarios, the amount of time required to process malformed documents may be greater than that required for well-formed documents. When this happens, an attacker may exploit an asymmetric resource consumption attack to take advantage of the greater processing time to cause a Denial of Service (DoS).
-
-**To analyze the likelihood of this attack, analyze the time taken by a regular XML document vs the time taken by a malformed version of that same document.** Then, consider how an attacker could use this vulnerability in conjunction with an XML flood attack using multiple documents to amplify the effect.
-
-### Applications Processing Malformed Data
-
-**Certain XML parsers have the ability to recover malformed documents.** They can be instructed to try their best to return a valid tree with all the content that they can manage to parse, regardless of the document's noncompliance with the specifications. **Since there are no predefined rules for the recovery process, the approach and results from these parsers may not always be the same. Using malformed documents might lead to unexpected issues related to data integrity.**
-
-The following two scenarios illustrate attack vectors a parser will analyze in recovery mode:
-
-#### Malformed Document to Malformed Document
-
-According to the XML specification, the string `--` (double-hyphen) must not occur within comments. Using the recovery mode of lxml and PHP, the following document will remain the same after being recovered:
+**Some parsers can be instructed to recover malformed documents**, returning a best-effort tree regardless of the specification. Recovery has no predefined rules, so the result depends on the parser and its version, and content obtained that way cannot be trusted for integrity-sensitive processing. For example, `lxml` and PHP accept the nested-comment document below in recovery mode (the specification forbids `--` inside comments) and return it unchanged, while libxml2's canonicalisation can rewrite the content of a `CDATA` section even though the document is well formed.
 
 ```xml
 <element>
@@ -41,27 +29,7 @@ According to the XML specification, the string `--` (double-hyphen) must not occ
 </element>
 ```
 
-#### Well-Formed Document to Well-Formed Document Normalized
-
-Certain parsers may consider normalizing the contents of your `CDATA` sections. This means that they will update the special characters contained in the `CDATA` section to contain the safe versions of these characters even though is not required:
-
-```xml
-<element>
- <![CDATA[<script>a=1;</script>]]>
-</element>
-```
-
-Normalization of a `CDATA` section is not a common rule among parsers. Libxml could transform this document to its canonical version, but although well formed, its contents may be considered malformed depending on the situation:
-
-```xml
-<element>
- &lt;script&gt;a=1;&lt;/script&gt;
-</element>
-```
-
-### Handling coercive parsing
-
-**One popular coercive attack in XML involves parsing deeply nested XML documents without their corresponding ending tags. The idea is to make the victim use up -and eventually deplete- the machine's resources and cause a denial of service on the target.** Reports of a DoS attack in Firefox 3.67 included the use of 30,000 open XML elements without their corresponding ending tags. Removing the closing tags simplified the attack since it requires only half of the size of a well-formed document to accomplish the same results. The number of tags being processed eventually caused a stack overflow. A simplified version of such a document would look like this:
+**Coercive parsing** is the resource-exhaustion variant of the same problem: deeply nested elements without their matching end tags make the parser keep far more elements open than a legitimate document would. A reported DoS attack against Firefox 3.67 used 30,000 unterminated elements, needed roughly half the bytes of an equivalent well-formed document, and exhausted the processing stack. Limit nesting depth as well as total size.
 
 ```xml
 <A1>
@@ -347,17 +315,14 @@ The previous schema includes a root element named `operation`, which can contain
 
 ### Jumbo Payloads
 
-**Sending an XML document of 1GB requires only a second of server processing and might not be worth consideration as an attack. Instead, an attacker would look for a way to minimize the CPU and traffic used to generate this type of attack, compared to the overall amount of server CPU or traffic used to handle the requests.**
+Sending a 1 GB document is a poor attack: generating it costs the attacker more than it costs the server. Attackers instead look for documents that consume disproportionate CPU or traffic for their size, which makes the resulting workload an instance of [uncontrolled resource consumption](https://cwe.mitre.org/data/definitions/400.html).
 
 #### Traditional Jumbo Payloads
 
-**There are two primary methods to make a document larger than normal:**
+Traditional jumbo payloads make the document itself very large, in one of two ways:
 
-**- Depth attack: using a huge number of elements, element names, and/or element values.**
-
-**- Width attack: using a huge number of attributes, attribute names, and/or attribute values.**
-
-In most cases, the overall result will be a huge document. This is a short example of what this looks like:
+- **Depth attack:** a huge number of elements, element names, and/or element values.
+- **Width attack:** a huge number of attributes, attribute names, and/or attribute values.
 
 ```xml
 <SOAPENV:ENVELOPE XMLNS:SOAPENV="HTTP://SCHEMAS.XMLSOAP.ORG/SOAP/ENVELOPE/"
@@ -370,7 +335,7 @@ In most cases, the overall result will be a huge document. This is a short examp
 
 #### "Small" Jumbo Payloads
 
-**The following example is a very small document, but the results of processing this could be similar to those of processing traditional jumbo payloads.** The purpose of such a small payload is that it allows an attacker to send many documents fast enough to make the application consume most or all of the available resources:
+A very small document can produce the same effect and can be sent many times per second, so it consumes most or all of the available resources:
 
 ```xml
 <?xml version="1.0"?>
@@ -379,6 +344,8 @@ In most cases, the overall result will be a huge document. This is a short examp
 ]>
 <root>&file;</root>
 ```
+
+Caps on total document size, nesting depth, and element and attribute counts, applied by the parser before any content is expanded, address both forms; the [XML External Entity Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html) covers the parser settings that disable the entity-driven variant.
 
 ### Schema Poisoning
 
