@@ -57,7 +57,7 @@ Every time a scripting language is used, the actual implementation of the 'highe
 
 ### Operating System Commands
 
-See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md) for how to test for OS command injection, its layered remediation, and language-specific examples.
+See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md) for testing guidance, layered remediation, and language-specific examples.
 
 ### Network Protocols
 
