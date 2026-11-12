@@ -165,7 +165,7 @@ The header accepts only one valid value: `true`. If credentials are not required
 
 - Avoid dynamically reflecting arbitrary values from the [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin) request header. Validate the requesting origin against an explicit allowlist.
 
-- Ensure that cookies used for authentication and session management have appropriate `Secure`, `HttpOnly`, and `SameSite` attributes. Use `SameSite=None; Secure` when cookies must be sent with cross-site requests, and enable `HttpOnly` for cookies that do not need to be accessed through JavaScript. Refer to [MDN's Set-Cookie documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) for more information.
+- Ensure that cookies used for authentication and session management have appropriate `Secure`, `HttpOnly`, and `SameSite` attributes. Use `SameSite=None; Secure` when cookies must be sent with cross-site requests, and enable `HttpOnly` for cookies that do not need to be accessed through JavaScript. Refer to [MDN's Set-Cookie documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) for more information. Browser third-party-cookie policies can still prevent cookies from being sent even when these attributes and CORS are configured; see [MDN's CORS credentials guidance](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#requests_with_credentials).
 
 - Remember that enabling credentialed CORS does not replace CSRF protection. Implement appropriate CSRF defenses for state-changing requests. Refer to [MDN's Cross-Site Request Forgery (CSRF) documentation](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF).
 
