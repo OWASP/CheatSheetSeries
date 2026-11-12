@@ -186,6 +186,7 @@ fetch("https://api.example.com/user", {
 ```
 
 **NOTE:**
+
 - CORS preflight requests do not include credentials. However, when the subsequent request uses credentials, the preflight response must include Access-Control-Allow-Credentials: true to allow the credentialed request.
 
 - Using `Access-Control-Allow-Credentials: true` does not automatically send cookies or authentication information; the client must opt in to credentialed requests.
