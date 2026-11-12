@@ -96,6 +96,15 @@ However, hashing remains useful to:
 
 The goal is short-term exposure protection, not long-term cryptographic secrecy.
 
+#### TOTP Seeds and Validation Window
+
+The guidance above is for OTPs the server generates and sends. With TOTP the server instead keeps a long-lived shared seed and computes the expected codes from it, so the seed can't be hashed, and anyone who obtains it can generate valid codes until the user enrolls a new one.
+
+- Store TOTP seeds encrypted, ideally with a key held in tamper-resistant hardware such as an HSM or a KMS, and decrypt a seed only while verifying a code ([RFC 6238 section 5.1](https://www.rfc-editor.org/rfc/rfc6238.html#section-5.1)). Never return the seed to the client after enrollment.
+- Accept the current time step and at most one previous step for network delay ([RFC 6238 section 5.2](https://www.rfc-editor.org/rfc/rfc6238.html#section-5.2)). To handle clock drift, record the drift detected for each token instead of widening the window for everyone ([RFC 6238 section 6](https://www.rfc-editor.org/rfc/rfc6238.html#section-6)).
+- Reject a code that has already been accepted for that user, even if it is still inside the window ([RFC 6238 section 5.2](https://www.rfc-editor.org/rfc/rfc6238.html#section-5.2)). This stops a code that was observed or captured after use from being replayed, but it does not stop a real-time phishing proxy that relays the code before the user submits it.
+- If a seed may have been exposed, for example in a database breach, have the user enroll a new seed. Changing the password or other credentials does not invalidate the old seed.
+
 ### Improving User Experience
 
 #### Risk Based Authentication
