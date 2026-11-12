@@ -161,9 +161,9 @@ The header accepts only one valid value: `true`. If credentials are not required
 
 - Set the `Access-Control-Allow-Credentials` header to `true` only for trusted origins.
 
-- The `Access-Control-Allow-Origin` header must not use the wildcard (`*`) when handling credentialed cross-origin requests. Browsers reject such responses, even if `Access-Control-Allow-Credentials: true` is present. An explicit origin must be specified instead.
+- For [credentialed CORS requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#requests_with_credentials), the `Access-Control-Allow-Origin` header must not use the wildcard (`*`). Browsers reject such responses, even if `Access-Control-Allow-Credentials: true` is present. An explicit origin must be specified instead.
 
-- Avoid dynamically reflecting arbitrary values from the [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin) request header. Validate the requesting origin against an explicit allowlist.
+- Avoid dynamically reflecting arbitrary values from the [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin) request header. Validate the requesting origin against an explicit allowlist, and include `Vary: Origin` whenever the response reflects an allowlisted origin.
 
 - Ensure that cookies used for authentication and session management have appropriate `Secure`, `HttpOnly`, and `SameSite` attributes. Use `SameSite=None; Secure` when cookies must be sent with cross-site requests, and enable `HttpOnly` for cookies that do not need to be accessed through JavaScript. Refer to [MDN's Set-Cookie documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) for more information. Browser third-party-cookie policies can still prevent cookies from being sent even when these attributes and CORS are configured; see [MDN's CORS credentials guidance](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#requests_with_credentials).
 
