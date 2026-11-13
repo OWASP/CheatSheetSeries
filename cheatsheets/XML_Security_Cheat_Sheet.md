@@ -9,27 +9,20 @@ While the specifications for XML and XML schemas provide you with the tools need
 
 ## Dealing with malformed XML documents
 
-### Definition of a malformed XML document
-
-**Malformed** XML violates the W3C XML specification's well-formedness rules — a syntax-level failure, as opposed to a document that is well-formed but invalid against its schema. Typical causes are a missing end tag, elements ordered into a nonsensical structure, and forbidden characters. **If an XML document is malformed, the XML parser will detect a fatal error, it should stop execution, the document should not undergo any additional processing, and the application should display an error message.**
-
-### Handling malformed XML documents
+An XML document is malformed if it does not adhere to the XML syntax. A conforming parser rejects a malformed document and stops processing it, and the application should display an error message rather than continue. This is a syntax-level failure, distinct from a document that is well-formed but invalid against its schema. Typical causes are a missing end tag, elements ordered into a nonsensical structure, and forbidden characters.
 
 **To deal with malformed documents, use an XML processor that follows the W3C specifications, accept only well-formed documents, verify the contents of each element, and process only values within predefined boundaries.**
 
 Malformed input can also be expensive: some parsers take longer on malformed documents than on well-formed ones, which enables an asymmetric resource-consumption attack that becomes a denial of service when the attacker can send many documents. Compare the processing time of a malformed document with its well-formed equivalent to judge the exposure.
 
-**Some parsers can be instructed to recover malformed documents**, returning a best-effort tree regardless of the specification. Recovery has no predefined rules, so the result depends on the parser and its version, and content obtained that way cannot be trusted for integrity-sensitive processing. For example, `lxml` and PHP accept the nested-comment document below in recovery mode (the specification forbids `--` inside comments) and return it unchanged. Separately, libxml2's canonicalization replaces CDATA sections with escaped character data, changing the serialized representation while preserving the parsed character value.
+Some parsers can be configured to operate in a relaxed mode that accepts and corrects some malformed documents. Recovery has no predefined rules, so the result depends on the parser and its version, and content obtained that way cannot be trusted for integrity-sensitive processing. Relaxed parsing introduces risks such as:
 
-```xml
-<element>
- <!-- one
-  <!-- another comment
- comment -->
-</element>
-```
+- increased resource consumption, up to denial of service;
+- unexpected interpretation of the document, which can lead to vulnerabilities.
 
-**Coercive parsing** is the resource-exhaustion variant of the same problem: deeply nested elements without their matching end tags make the parser keep far more elements open than a legitimate document would. A reported denial-of-service attack against Firefox 3.67 used 30,000 unterminated elements, needed roughly half the bytes of an equivalent well-formed document, and exhausted the processing stack. Limit nesting depth as well as total size.
+For example, `lxml` and PHP accept nested comments in recovery mode (the specification forbids `--` inside comments), and libxml2's canonicalization replaces CDATA sections with escaped character data, changing the serialized representation while preserving the parsed character value.
+
+**Coercive parsing** is the resource-exhaustion variant of the same problem: deeply nested elements without their matching end tags make the parser keep far more elements open than a legitimate document would ([Arnaboldi, *Assessing and Exploiting XML*, §1.3](https://www.ioactive.com/wp-content/uploads/2018/05/Arnaboldi-XML-Schema-Vulnerabilities-1.pdf)). A reported denial-of-service attack against Firefox 3.0.x ([CVE-2009-1232](https://nvd.nist.gov/vuln/detail/CVE-2009-1232)) used 30,000 unterminated elements, needed roughly half the bytes of an equivalent well-formed document, and exhausted the processing stack. Limit nesting depth as well as total size.
 
 ```xml
 <A1>
