@@ -138,6 +138,13 @@ Agentic coding tools execute commands, install packages, write files, and access
 - Use ephemeral credentials scoped to the current task rather than long-lived developer credentials.
 - Understand and evaluate the risk of flags like `--dangerously-skip-permissions` or auto-accept modes. These bypass confirmation prompts and give the agent unrestricted execution.
 - Set resource limits (CPU, memory, disk, process count) on agent execution environments.
+- Check each action before it executes, with a control that runs outside the agent. Sandboxes and allowlists limit where the agent can act, but they don't judge what an allowed action does. Use the pre-execution hook your agent exposes (for example, Claude Code [PreToolUse hooks](https://code.claude.com/docs/en/hooks)) to inspect every command, file edit and push before it runs, and to allow, block, or ask a human.
+- Keep the check outside the agent's context and process. A guardrail written as an instruction in the prompt or rules file can be [dropped when a long session compacts its context](https://code.claude.com/docs/en/hooks-guide#re-inject-context-after-compaction), or overridden by injected content. A hook enforced by the host is not subject to either.
+- Fail closed. If the hook errors, times out, or can't run, the action should not run. Some agents let the action proceed when a hook fails unless you [configure the hook to block on failure](https://code.claude.com/docs/en/hooks#block-the-action-when-a-hook-fails). Test this deliberately.
+- Judge the data flow, not just the command name. Check whether a secret, token or private key can reach a network call, a commit, or a pasted log, including after the command is decoded (base64, hex) or built up from variables. Decide by file contents, not filenames.
+- Resolve where a command actually executes before matching it. The text `rm -rf /` inside a commit message or a string argument is not the same as running it.
+- Log every decision (action, verdict, reason) in a place the agent can't write to, and send it to your SIEM. Start in log-only mode to learn what your agents do before you enforce.
+- Use one policy across every coding agent the team uses, deployed through the device management you already run, so a developer can't turn it off with a local setting (for example, Claude Code [`allowManagedHooksOnly`](https://code.claude.com/docs/en/settings-reference#allowmanagedhooksonly) in managed settings).
 
 ### Don't
 
@@ -145,6 +152,8 @@ Agentic coding tools execute commands, install packages, write files, and access
 - Enable auto-accept mode on untrusted or unfamiliar codebases.
 - Allow agents to access production credentials, deployment keys, or org-level secrets from the development environment.
 - Assume the agent will only touch files relevant to the current task.
+- Rely on per-command human approval as the main control. People approve most prompts out of habit; [Anthropic reports](https://www.anthropic.com/engineering/claude-code-auto-mode) that Claude Code users approve 93% of permission prompts. Reserve prompts for the few actions that are high-impact or hard to undo.
+- Treat a hook as a perimeter. It does not replace least privilege, scoped short-lived credentials or egress policy, and it is weakest against exfiltration split across several separate calls. Layer it with the sandbox controls above.
 
 ## Section 6: Rules Files and Persistent Steering
 
