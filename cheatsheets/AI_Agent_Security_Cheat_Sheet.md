@@ -61,6 +61,21 @@ tools = [
 
 Enforce authorization in the execution component, outside the agent's context. A `user_confirmed` flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Check and consume the approval in one atomic step immediately before execution so concurrent or repeated requests cannot reuse it. Changes to the target or parameters require new approval. Apply the [High-Impact Action Integrity Controls](#high-impact-action-integrity-controls) and the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md). Fail closed for unknown tools or missing approval requirements.
 
+#### Coding Agents: Check Each Action at a Pre-Execution Hook
+
+Coding agents (CLI and IDE agents that run shell commands, edit files and push code) take many actions per session, so per-action human approval does not scale and tends to become habitual ([Anthropic reports](https://www.anthropic.com/engineering/claude-code-auto-mode) that Claude Code users approve 93% of permission prompts). Put an automated check on each action instead, and run it outside the agent's context.
+
+- Enforce at the agent's pre-execution hook (for example, Claude Code's [`PreToolUse` hook](https://code.claude.com/docs/en/hooks)), so the command, file edit or push is checked before it runs. A check that runs after the action, or that only reads logs, can report damage but not prevent it.
+- Check the pending action, not the agent's description of it. Parse the command rather than matching strings, so the same text inside a commit message or a quoted argument is not treated as a command, and decode common encodings (base64, hex) before inspection.
+- Judge secrets by content, not filename. A filename can nominate a file for inspection, but the decision should depend on what the bytes contain (a `.pem` holding a public certificate is not a private key).
+- Trace data flow to the sink. Treat a credential or confidential file reaching a network call (`curl`, `git push` to an unknown remote, package publish) as a dangerous flow, even when each step looks harmless alone.
+- Fail closed where the platform allows it. Some hook implementations treat a crash, timeout or non-blocking error as "proceed", so [configure the hook to block on failure](https://code.claude.com/docs/en/hooks#block-the-action-when-a-hook-fails) and test that behavior.
+- Keep the hook out of the agent's and developer's easy reach. Project-level hook configuration can be edited by the agent or arrive through a repository, so deploy security hooks through managed, organization-level settings and restrict user, project and plugin hooks where the agent supports it (for example, Claude Code's [`allowManagedHooksOnly`](https://code.claude.com/docs/en/settings-reference#allowmanagedhooksonly)).
+- Return the reason on a block so the agent can retry a safe way, and log every decision (allow, deny, ask) with the action, policy version and reason.
+- Start in log-only mode to see what agents actually do, then enforce on the classes of action you have measured.
+
+Limits: a hook is one layer. It does not replace least privilege, scoped short-lived credentials, egress policy or sandboxing, and an attacker who controls the code can defeat static analysis. Exfiltration split across several separate calls is hard to catch at a single action.
+
 ### 2. Input Validation & Prompt Injection Defense
 
 - Treat all external data as untrusted (user messages, retrieved documents, API responses, emails).
