@@ -170,7 +170,7 @@ A normal `SET` persists until the session ends after its transaction commits, wh
 
 SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
 
-ORM-level filtering is defense in depth, not a complete tenant-isolation boundary. Raw SQL and Core connections bypass ORM event hooks and require separate controls, while bulk operations and other session types must not bypass tenant isolation. Database-level policies and constrained database roles should remain the final enforcement boundary where possible.
+- ORM-level filtering is defense in depth, not a complete tenant-isolation boundary. Raw SQL is not automatically tenant-filtered by `with_loader_criteria`, even when executed through a session that invokes `do_orm_execute`; direct Core connections bypass that session hook entirely. These paths, bulk operations, and other session types require separate tenant-isolation controls. Database-level policies and constrained database roles should remain the final enforcement boundary where possible.
 
 #### Verify Tenant Isolation
 
