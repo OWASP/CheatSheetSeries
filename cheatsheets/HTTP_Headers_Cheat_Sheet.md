@@ -147,6 +147,50 @@ If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/G
 
 - *NOTE*: The use of '\*' might be necessary depending on your needs. For example, for a public API that should be accessible from any origin, it might be necessary to allow '\*'.
 
+### Access-Control-Allow-Credentials
+
+The [`Access-Control-Allow-Credentials`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Credentials) HTTP response header is also a CORS (Cross-Origin Resource Sharing) header that indicates whether a browser is allowed to expose the response to frontend JavaScript when the cross-origin request includes credentials.
+
+Credentials include cookies, HTTP authentication information, and TLS client certificates. This header is particularly relevant when a web application needs to make cross-origin requests while maintaining an authenticated user session.
+
+The header accepts only one valid value: `true`. If credentials are not required, the header should be omitted rather than explicitly set to `false`.
+
+#### Recommendation
+
+- Only enable credentialed cross-origin requests when required by the application.
+
+- Set the `Access-Control-Allow-Credentials` header to `true` only for trusted origins.
+
+- For [credentialed CORS requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#requests_with_credentials), the `Access-Control-Allow-Origin` header must not use the wildcard (`*`). Browsers reject such responses, even if `Access-Control-Allow-Credentials: true` is present. An explicit origin must be specified instead.
+
+- Avoid dynamically reflecting arbitrary values from the [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin) request header. Validate the requesting origin against an explicit allowlist, and include `Vary: Origin` whenever the response reflects an allowlisted origin.
+
+- Ensure that cookies used for authentication and session management have appropriate `Secure`, `HttpOnly`, and `SameSite` attributes. Use `SameSite=None; Secure` when cookies must be sent with cross-site requests, and enable `HttpOnly` for cookies that do not need to be accessed through JavaScript. Refer to [MDN's Set-Cookie documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) for more information. Browser third-party-cookie policies can still prevent cookies from being sent even when these attributes and CORS are configured; see [MDN's CORS credentials guidance](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#requests_with_credentials).
+
+- Remember that enabling credentialed CORS does not replace CSRF protection. Implement appropriate CSRF defenses for state-changing requests. Refer to [MDN's Cross-Site Request Forgery (CSRF) documentation](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF).
+
+For applications that require credentialed cross-origin access, configure the following response headers:
+
+```http
+Access-Control-Allow-Origin: https://trusted-site.com
+Access-Control-Allow-Credentials: true
+```
+
+The requesting client must also explicitly opt in to sending [credentials](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials). For example, using the Fetch API:
+
+```javascript
+fetch("https://api.example.com/user", {
+    method: "GET",
+    credentials: "include"
+});
+```
+
+**NOTE:**
+
+- CORS preflight requests do not include credentials according to the Fetch standard. However, some browsers deviate from this behaviour regarding TLS client certificates: Chromium-based browsers send TLS client certificates during CORS preflight requests, while Firefox allows this behaviour to be enabled through the `network.cors_preflight.allow_client_cert` preference, introduced in Firefox 87. This behaviour is non-compliant with the Fetch specification. See [Chromium issue #775438](https://crbug.com/775438) and [Firefox issue #1511151](https://bugzil.la/1511151).
+
+- Using `Access-Control-Allow-Credentials: true` does not automatically send cookies or authentication information; the client must opt in to credentialed requests.
+
 ### Cross-Origin-Opener-Policy (COOP)
 
 The HTTP `Cross-Origin-Opener-Policy` (COOP) response header allows you to ensure a top-level document does not share a browsing context group with cross-origin documents.
