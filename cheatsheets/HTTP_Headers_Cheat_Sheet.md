@@ -187,7 +187,7 @@ fetch("https://api.example.com/user", {
 
 **NOTE:**
 
-- CORS preflight requests do not include credentials. However, when the subsequent request uses credentials, the preflight response must include Access-Control-Allow-Credentials: true to allow the credentialed request.
+- CORS preflight requests do not include credentials according to the Fetch standard. However, some browsers deviate from this behaviour regarding TLS client certificates: Chromium-based browsers send TLS client certificates during CORS preflight requests, while Firefox allows this behaviour to be enabled through the `network.cors_preflight.allow_client_cert` preference, introduced in Firefox 87. This behaviour is non-compliant with the Fetch specification. See [Chromium issue #775438](https://crbug.com/775438) and [Firefox issue #1511151](https://bugzil.la/1511151).
 
 - Using `Access-Control-Allow-Credentials: true` does not automatically send cookies or authentication information; the client must opt in to credentialed requests.
 
