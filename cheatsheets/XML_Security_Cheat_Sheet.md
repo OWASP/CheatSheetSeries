@@ -11,7 +11,7 @@ While the specifications for XML and XML schemas provide you with the tools need
 
 ### Definition of a malformed XML document
 
-If an XML document does not follow the W3C XML specification's definition of a well-formed document, it is considered "malformed." **If an XML document is malformed, the XML parser will detect a fatal error, it should stop execution, the document should not undergo any additional processing, and the application should display an error message.** A malformed document can include a missing end tag, elements ordered into a nonsensical structure, forbidden characters, and so on.
+**Malformed** XML violates the W3C XML specification's well-formedness rules — a syntax-level failure, as opposed to a document that is well-formed but invalid against its schema. Typical causes are a missing end tag, elements ordered into a nonsensical structure, and forbidden characters. **If an XML document is malformed, the XML parser will detect a fatal error, it should stop execution, the document should not undergo any additional processing, and the application should display an error message.**
 
 ### Handling malformed XML documents
 
