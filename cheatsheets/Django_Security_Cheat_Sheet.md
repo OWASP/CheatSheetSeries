@@ -170,6 +170,76 @@ The recommendations in this section are in addition to XSS recommendations alrea
 - Set the `SECURE_SSL_REDIRECT = True` in the `settings.py` file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.
 - Configure `SECURE_PROXY_SSL_HEADER` only behind a trusted proxy that strips client-supplied copies of the chosen header and sets its HTTPS-indicating value only for requests originally received over HTTPS. Prevent clients from bypassing that proxy to supply the trusted header directly. If these conditions cannot be guaranteed, leave the setting at `None`; see [Django's proxy-header security warning](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-proxy-ssl-header).
 
+## Application security configuration
+
+For reliability reasons in production environment `settings.py` configurations must be secured by default. If you want to run application in `dev` environment just override them with `.env` file and `django-environ` library. In this example used `django.utils.csp` module available from Django 6.0+.
+
+Snippet for secure `settings.py` configuration:
+
+```python
+from django.utils.csp import CSP
+import environ
+
+env = environ.Env()
+
+DEBUG = env.bool("DEBUG", default=False)
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["example.com", "www.example.com"])
+
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
+if env.bool("USE_REVERSE_PROXY_SSL", default=True):
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=31536000)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
+
+SESSION_COOKIE_AGE = env.int("SESSION_COOKIE_AGE", default=86400)
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = env("SESSION_COOKIE_SAMESITE", default="Strict")
+SESSION_COOKIE_NAME = env("SESSION_COOKIE_NAME", default="__Host-sessionid")
+
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=True)
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = env("CSRF_COOKIE_SAMESITE", default="Strict")
+CSRF_COOKIE_NAME = env("CSRF_COOKIE_NAME", default="__Host-csrftoken")
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["https://example.com"])
+
+SECURE_CSP = {
+    "default-src": [CSP.NONE],
+    "base-uri": [CSP.SELF],
+    "script-src": [CSP.SELF, CSP.NONCE] + env.list("CSP_SCRIPT_SRC", default=[]),
+    "style-src": [CSP.SELF] + env.list("CSP_STYLE_SRC", default=[]),
+    "font-src": [CSP.SELF] + env.list("CSP_FONT_SRC", default=[]),
+    "img-src": [CSP.SELF] + env.list("CSP_IMG_SRC", default=[]),
+    "connect-src": [CSP.SELF] + env.list("CSP_CONNECT_SRC", default=[]),
+    "frame-ancestors": [CSP.NONE],
+    "form-action": [CSP.SELF],
+    "upgrade-insecure-requests": not DEBUG,
+}
+```
+
+For local `dev` environment override required parameters:
+
+**Warning**: Make sure your local `.env` file will not end up in production. Also add `.env` file in `.gitignore`.
+
+```dotenv
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+SECURE_SSL_REDIRECT=False
+USE_REVERSE_PROXY_SSL=False
+SECURE_HSTS_SECONDS=0
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
+SESSION_COOKIE_NAME=sessionid
+CSRF_COOKIE_NAME=csrftoken
+CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000
+```
+
 ## Admin panel URL
 
 It is advisable to modify the default URL leading to the admin panel (example.com/admin/), in order to slightly increase the difficulty for automated attacks. Here’s how to do it:
