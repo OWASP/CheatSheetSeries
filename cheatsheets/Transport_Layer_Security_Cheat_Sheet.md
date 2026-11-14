@@ -49,9 +49,9 @@ The `supported_groups` extension is used to negotiate which Diffie-Hellman group
 
 - the available Finite Field Diffie-Hellman groups are `ffdhe2048`, `ffdhe3072`, `ffdhe4096`, `ffdhe6144`, `ffdhe8192` as specified in [RFC7919](https://www.rfc-editor.org/rfc/rfc7919);
 - Elliptic Curve Diffie-Hellman groups include `x25519`, `prime256v1`, `x448`, `secp384r1`;
-- for post-quantum cryptography, the hybrid [`X25519MLKEM768`](https://www.rfc-editor.org/rfc/rfc10024.html) is currently used (though it is not a group, proper).
+- for post-quantum cryptography, the hybrid [`X25519MLKEM768`](https://www.rfc-editor.org/rfc/rfc10024.html) is currently used.
 
-`X25519MLKEM768` and the other ML-KEM groups require [OpenSSL 3.5 or later](https://docs.openssl.org/3.5/man3/SSL_CTX_set1_curves/#history). Earlier versions, including OpenSSL 3.0, reject the name: with the examples below, NGINX and Apache refuse to start, and the `openssl.cnf` `Groups` line is ignored without an error, so none of the groups it lists are applied. Check which OpenSSL version the server uses first (for example with `openssl version` or `nginx -V`), and omit `X25519MLKEM768` from the list on older versions.
+`X25519MLKEM768` and the other ML-KEM groups require [OpenSSL 3.5 or later](https://docs.openssl.org/3.5/man3/SSL_CTX_set1_curves/#history). Earlier versions, including OpenSSL 3.0, do not recognize the name. If it appears in the NGINX or Apache configurations below, the server refuses to start; an `openssl.cnf` `Groups` line is instead ignored without an error, so none of the groups it lists are applied. Check which OpenSSL version the server uses first (for example with `openssl version` or `nginx -V`), and omit `X25519MLKEM768` from the list on older versions.
 
 For OpenSSL, the list of enabled groups can be configured in `openssl.cnf`. For example
 
