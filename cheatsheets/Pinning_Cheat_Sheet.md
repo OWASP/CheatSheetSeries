@@ -6,14 +6,13 @@ The Pinning Cheat Sheet is a technical guide to implementing public key pinning.
 
 **Note:** Pinning of the whole certificate is discouraged. If the site rotates its certificate, then your application would need to be updated. If you do not control when this certificate is put into service, then pinning will lead to an outage. Instead the hash of the public key of the X.509 certificate should be pinned, as this stays the same if the same Certificate Signing Request (CSR) is used.
 
-
 ## What's the problem
 
 For baseline TLS configuration, see the [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md).
 
 Users expect security on their communication channels, but some channels may not meet this expectation. Channels built using well known protocols like TLS can be vulnerable to Machine-in-the-Middle (MITM) attacks if certificate-based trusts are misused. Malicious attacks come in two forms:
 
-1. An attacker is able to generate a forged digital certificate from a trusted certificate authority (CA) in the name of the victim site;
+1. An attacker is able to obtain a fraudulently issued digital certificate from a trusted certificate authority (CA) in the name of the victim site;
 2. The attacker is able to place a CA controlled by the attacker into the client’s trust store.
 
 In the case of the latter issue, an attacker with the access to update a trust store will have the access to change the workings of the mobile application, potentially defeating pinning.
@@ -24,7 +23,7 @@ As [Certificate and Public Key Pinning](https://owasp.org/www-community/controls
 
 Pinning is the process of associating a host with their *expected* X509 public key. Once a public key is known or seen for a host, the public key is associated or 'pinned' to the host. If more than one certificate or public key is acceptable, then the program holds a *pinset* (taken from [Jon Larimer and Kenny Root Google I/O talk](https://www.youtube.com/watch?v=RPJENzweI-A)). In this case, the advertised credential must match one of the elements in the pinset.
 
-**Note:** Implementing pinning also introduces a risk, as the certificate and public key need to be maintained in the mobile app. [Changing to another CA, render apps with pinned certificates unable to connect to the server without receiving a client software update.](https://developer.android.com/privacy-and-security/security-ssl#Pinning)
+**Note:** Implementing pinning also introduces a risk, as the certificate and public key need to be maintained in the mobile app. [Changing to another CA renders apps with pinned certificates unable to connect to the server without receiving a client software update.](https://developer.android.com/privacy-and-security/security-ssl#Pinning)
 
 ### When to Add a Pin
 
@@ -60,17 +59,19 @@ In order to decide what should be pinned you can follow the following steps.
 
 1. Decide if you want to pin the root CA, intermediate CA or leaf certificate:
 
-- Pinning the **root CA** is generally recommended and sufficient to implement identity pinning, since it reduces risk of trusting all CA's in the trust store to only the one you are using.
-- Pinning a specific **issuing or intermediate CA** reduces the risk further but the application will be also trusting any other certificates issued by that CA or sub-CAs, not only the ones meant for your application.
-- Pinning a **leaf certificate** is recommended but must include backup (e.g. intermediate CA or a pinset containing alternates). This provides 100% certainty that the app exclusively trusts the remote hosts it was designed to connect to while adding resiliency for failover or certificate rotation.
+- Pinning the **root CA** narrows trust from every CA in the device trust store down to one, but the app still trusts every certificate that root and its intermediates ever issue. Use it only as a backup pin, not as the primary pin.
+- Pinning a specific **issuing or intermediate CA** reduces the risk further, but the application will still trust any other certificate issued by that CA or its sub-CAs, not only the ones meant for your application. Apple's [Identity Pinning](https://developer.apple.com/news/?id=g9ejcf8y) guidance recommends pinning CA public keys rather than server keys so that the server can rotate its certificate under the same CA without an app update, and pinning more than one key for redundancy.
+- Pinning a **leaf certificate** gives the strongest guarantee that the app talks only to the hosts it was designed for, but it must include a backup (e.g. the intermediate CA or a pinset containing alternates) to survive failover and certificate rotation.
+
+**Recommendation:** pin the leaf or issuing CA public key as the primary pin, and add a backup pin for the intermediate or root CA. Never ship a single pin.
 
 For example, the application pins the remote endpoint leaf certificate but includes a backup pin for the intermediate CA. This increases the risk by trusting more certificate authorities but decreases the chances of bricking your app. If there's any issue with the leaf certificate, the app can always fall back to the intermediate CA until you release an app update.
 
-To pin the public key, pin the SHA-256 hash of the `SubjectPublicKeyInfo`, which is what Android, iOS, and 3rd party networking libraries all offer and to be aligned with RFC 7469.
+To pin the public key, pin the SHA-256 hash of the `SubjectPublicKeyInfo`. This is the format expected by [Android's Network Security Configuration](https://developer.android.com/privacy-and-security/security-config#CertificatePinning), [Apple's `NSPinnedDomains`](https://developer.apple.com/documentation/bundleresources/information-property-list/nsapptransportsecurity/nspinneddomains), and third-party networking libraries, and it matches the pin format defined in [RFC 7469](https://datatracker.ietf.org/doc/html/rfc7469).
 
 ## Examples of Pinning
 
-This section discusses certificate and public key pinning in Android Java, iOS, .Net, and OpenSSL. Code has been omitted for brevity, but the key points for the platform are highlighted.
+This section discusses public key pinning in Android Java, iOS, .Net, and OpenSSL. Code has been omitted for brevity, but the key points for the platform are highlighted.
 
 Implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities.
 
@@ -80,19 +81,19 @@ Since Android N, the preferred way for implementing pinning is by leveraging And
 
 To enable pinning, [the `<pin-set>` configuration setting](https://developer.android.com/training/articles/security-config.html#CertificatePinning) can be used.
 
-Alternatively you can use several methods to set specific pins programmatically, as explained in the [OWASP MAS - MASTG-KNOW-0015: Certificate Pinning)](https://mas.owasp.org/MASTG/knowledge/android/MASVS-NETWORK/MASTG-KNOW-0015/).
+Alternatively you can use several methods to set specific pins programmatically, as explained in the [OWASP MAS - MASTG-KNOW-0015: Certificate Pinning](https://mas.owasp.org/MASTG/knowledge/android/MASVS-NETWORK/MASTG-KNOW-0015/).
 
 The Android documentation provides information of how you can trust additional CAs that aren't trusted by the system SSL validation in the [Unknown Certificate Authority](https://developer.android.com/training/articles/security-ssl.html#UnknownCa) section, by using the Network Security Configuration.
 
-Lastly, if you want to validate whether the pinning is successful, please follow the technique [MASTG-TECH-0012: Bypassing Certificate Pinning](https://mas.owasp.org/MASTG/techniques/android/MASTG-TECH-0012/) and the [OWAPS MASWE-0028: Insecure Identity Pinning](https://mas.owasp.org/MASWE/MASVS-NETWORK/MASWE-0028/) that summarizes all information including the test cases for Android.
+Lastly, if you want to validate whether the pinning is successful, please follow the technique [MASTG-TECH-0012: Bypassing Certificate Pinning](https://mas.owasp.org/MASTG/techniques/android/MASTG-TECH-0012/) and the [OWASP MASWE-0028: Insecure Identity Pinning](https://mas.owasp.org/MASWE/MASVS-NETWORK/MASWE-0028/) that summarizes all information including the test cases for Android.
 
 ### iOS
 
-Apple suggests pinning a CA public key by specifying it in `Info.plist` file under [App Transport Security Settings](https://developer.apple.com/documentation/security/preventing_insecure_network_connections). More details in the article ["Identity Pinning: How to configure server certificates for your app"](https://developer.apple.com/news/?id=g9ejcf8y).
+Apple supports declarative pinning through `NSPinnedDomains` in the [App Transport Security (ATS)](https://developer.apple.com/documentation/security/preventing-insecure-network-connections) settings of `Info.plist`. Apple advises against pinning unless you have a specific regulatory or threat-model reason, and recommends pinning CA public keys with backups rather than a single leaf key. See the article ["Identity Pinning: How to configure server certificates for your app"](https://developer.apple.com/news/?id=g9ejcf8y).
 
-Use ATS pinning through `NSPinnedDomains` as the only pinning mechanism on iOS. Do not write custom server trust evaluation in a URLSessionDelegate; it is error-prone and offers no additional protection over a correctly configured `NSPinnedDomains` entry.
+Use ATS pinning through `NSPinnedDomains` as the only pinning mechanism on iOS. Do not write custom server trust evaluation in a `URLSessionDelegate`; it is error-prone and offers no additional protection over a correctly configured `NSPinnedDomains` entry.
 
-Lastly, if you want to validate whether the pinning is successful, please follow the technique [MASTG-TECH-0064: Bypassing Certificate Pinning](https://mas.owasp.org/MASTG/techniques/ios/MASTG-TECH-0064/) and the [OWAPS MASWE-0028: Insecure Identity Pinning](https://mas.owasp.org/MASWE/MASVS-NETWORK/MASWE-0028/) that summarizes all information including the test cases for iOS.
+Lastly, if you want to validate whether the pinning is successful, please follow the technique [MASTG-TECH-0064: Bypassing Certificate Pinning](https://mas.owasp.org/MASTG/techniques/ios/MASTG-TECH-0064/) and the [OWASP MASWE-0028: Insecure Identity Pinning](https://mas.owasp.org/MASWE/MASVS-NETWORK/MASWE-0028/) that summarizes all information including the test cases for iOS.
 
 ### .Net
 
