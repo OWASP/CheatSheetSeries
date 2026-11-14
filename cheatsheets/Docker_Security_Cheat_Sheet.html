@@ -5058,8 +5058,7 @@ sudo<span class="w"> </span>ufw-docker<span class="w"> </span>allow<span class="
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>--tmpfs<span class="w"> </span>/tmp<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo "whatever" &gt; /tmp/file'</span>
 </code></pre></div>
 <p>The Docker Compose <code>compose.yml</code> equivalent would be:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3"</span>
-<span class="nt">services</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">alpine</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine</span>
 <span class="w">    </span><span class="nt">read_only</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -5161,8 +5160,7 @@ Rootless mode does not require root privileges even during the installation of t
 docker<span class="w"> </span>service<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>--secret<span class="w"> </span>my_secret<span class="w"> </span>nginx:latest
 </code></pre></div>
 <p>For local Docker Compose, <a href="https://docs.docker.com/compose/how-tos/use-secrets/#use-secrets">file-backed secrets are bind mounts</a>. Protect the source files on the host with appropriate access permissions and storage encryption; declaring a Compose secret does not encrypt these files. This differs from <a href="https://docs.docker.com/engine/swarm/secrets/#how-docker-manages-secrets">Swarm-managed secrets</a>, which are distributed over mutual TLS and stored in an encrypted Raft log:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"3.8"</span>
-<span class="nt">secrets</span><span class="p">:</span>
+<div class="highlight"><pre><span></span><code><span class="nt">secrets</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">my_secret</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./super-secret-data.txt</span>
 <span class="nt">services</span><span class="p">:</span>
