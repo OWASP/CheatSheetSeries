@@ -91,7 +91,7 @@ TLS 1.3 lets a client that resumes a session send application data in its first 
 - Clients only send [safe methods](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.1) such as `GET` in early data unless they know more ([RFC 8470 section 4](https://www.rfc-editor.org/rfc/rfc8470.html#section-4)), so the main defense is making sure safe methods have no side effects. A `GET` that changes state, such as a logout or confirmation link, is what a replay can trigger.
 - If some requests aren't safe to replay, reject them in early data with [`425 Too Early`](https://www.rfc-editor.org/rfc/rfc8470.html#section-5.2) so the client retries after the handshake completes. Where TLS terminates at a proxy or CDN, make sure it adds the [`Early-Data: 1`](https://www.rfc-editor.org/rfc/rfc8470.html#section-5.1) header so the application can tell which requests arrived in early data.
 
-This only prevents replay of early data at the TLS layer. It does not protect against an attacker or client resending a complete request after the handshake, which still needs application-level controls such as idempotency keys or CSRF tokens.
+This only prevents replay of early data at the TLS layer. It does not protect against an attacker or client resending a complete request after the handshake, which still needs application-level controls such as idempotency keys.
 
 ### Patch Cryptographic Libraries
 
