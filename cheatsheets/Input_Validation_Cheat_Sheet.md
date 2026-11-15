@@ -63,6 +63,22 @@ Treat the submitted filename and content type as untrusted metadata. Validate fi
 
 Use a maintained email validation library compatible with the addresses your mail system supports. Format validation does not prove mailbox access. Follow [Email Validation and Verification](Email_Validation_and_Verification_Cheat_Sheet.md) for comparison policies, ownership verification, and email change workflows.
 
+### Host and Forwarded Headers
+
+The `Host` header (`:authority` in HTTP/2 and HTTP/3) is chosen by the client, and so are `Forwarded` and `X-Forwarded-*` headers unless a proxy you control sets them ([RFC 9110: Host and :authority](https://www.rfc-editor.org/rfc/rfc9110.html#section-7.2), [RFC 7239](https://www.rfc-editor.org/rfc/rfc7239.html)). An application that uses them to build links, pick a tenant or route a request can be made to send password reset links to an attacker's domain, poison a cache, or reach an internal virtual host ([PortSwigger: HTTP Host header attacks](https://portswigger.net/web-security/host-header), [WSTG: Testing for Host Header Injection](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection/)).
+
+- Build absolute URLs, such as password reset and email links, from configuration instead of the request ([Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md)).
+- Accept only the host names the application serves and reject other requests. Most frameworks have a setting for it, such as Django's [`ALLOWED_HOSTS`](https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts), ASP.NET Core's [`AllowedHosts`](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/host-filtering) and Rails' [`config.hosts`](https://guides.rubyonrails.org/configuring.html#config-hosts). Don't use a wildcard such as `*`, which allows any host.
+- Use `Forwarded` and `X-Forwarded-*` values only when they come from your own proxies, and have the proxy at the edge remove any that arrive from clients ([Spring: Forwarded headers security considerations](https://docs.spring.io/spring-framework/reference/web/webmvc/filters.html#filters-forwarded-headers-security)).
+- Give the reverse proxy or load balancer a default virtual host that doesn't serve the application, so a request with an unexpected `Host` can't reach other sites behind it.
+
+```python
+# Django settings.py
+ALLOWED_HOSTS = ["www.example.com"]
+```
+
+For host handling in cache keys, see the [Web Cache Security Cheat Sheet](Web_Cache_Security_Cheat_Sheet.md).
+
 ## Common Pitfalls
 
 - **Client-only checks:** Validate on the server even when the browser checks the same fields. [Client-side validation is bypassable](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation); use it for immediate feedback.
