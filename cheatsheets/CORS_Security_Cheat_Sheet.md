@@ -68,4 +68,6 @@ A public website can make the user's browser send requests to services on `local
 
 - [Fetch Standard: CORS protocol](https://fetch.spec.whatwg.org/#http-cors-protocol)
 - [MDN: Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS)
+- [MDN: Access-Control-Expose-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers)
+- [MDN: Access-Control-Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Max-Age)
 - [OWASP WSTG-CLNT-07 Testing Cross Origin Resource Sharing](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/11-Client-side_Testing/07-Testing_Cross_Origin_Resource_Sharing/)
