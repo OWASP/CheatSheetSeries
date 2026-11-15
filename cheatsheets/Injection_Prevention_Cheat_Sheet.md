@@ -57,7 +57,7 @@ Every time a scripting language is used, the actual implementation of the 'highe
 
 ### Operating System Commands
 
-See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md) for testing guidance, layered remediation, and language-specific examples.
+See the [OS Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md) for defenses, argument injection, and language-specific examples.
 
 ### Network Protocols
 
@@ -80,5 +80,3 @@ If a parameterized API is not available, you should carefully escape special cha
 ## References
 
 - [Oracle JDBC: Using Prepared Statements](https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
-- [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)
-- [XSS Filter Evasion Cheat Sheet](XSS_Filter_Evasion_Cheat_Sheet.md)
