@@ -45,21 +45,21 @@ If you are working for an organization which practices "egress filtering" as par
 
 ### How Do You Pin
 
-Declare the pinset in the platform's network security configuration rather than in application code. On Android this is the Network Security Configuration file, on iOS the App Transport Security settings in `Info.plist`. The platform's TLS stack then checks the server's certificate chain against the pinset during every handshake and fails the connection on a mismatch, with no callback or custom trust code in the app. See the [examples](#examples-of-pinning) below.
+Declare the pinset in the platform's network security configuration rather than in application code. On Android this is the Network Security Configuration file, on iOS the App Transport Security settings in `Info.plist`. For traffic that goes through the platform's standard networking stack, the system then checks the server's certificate chain against the pinset on every handshake and fails the connection on a mismatch, with no callback or custom trust code in the app. Traffic that bypasses that stack, such as lower-level networking APIs or a bundled third-party TLS library, is not covered and needs explicit validation code. See the [examples](#examples-of-pinning) below.
 
 ### What Should Be Pinned
 
 Decide whether to pin the root CA, an intermediate CA, or the leaf public key.
 
-- Pinning the **root CA** narrows trust from every CA in the device trust store down to one, but the app still trusts every certificate that root and its intermediates ever issue. Use it only as a backup pin, not as the primary pin.
-- Pinning a specific **issuing or intermediate CA** reduces the risk further, but the application will still trust any other certificate issued by that CA or its sub-CAs, not only the ones meant for your application. Apple's [Identity Pinning](https://developer.apple.com/news/?id=g9ejcf8y) guidance recommends pinning CA public keys rather than server keys so that the server can rotate its certificate under the same CA without an app update, and pinning more than one key for redundancy.
-- Pinning a **leaf public key** gives the strongest guarantee that the app talks only to the hosts it was designed for, but it must include a backup (e.g. the intermediate CA or a pinset containing alternates) to survive failover and certificate rotation.
+- Pinning the **root CA** narrows trust from every CA in the device trust store down to one and is the most rotation-tolerant option, because the root key outlives every intermediate and leaf. The cost is that the app still trusts every certificate that root and its intermediates ever issue. For a private CA that you operate, this is usually the right pin.
+- Pinning a specific **issuing or intermediate CA** narrows trust further, but the application still trusts any other certificate issued by that CA or its sub-CAs, not only the ones meant for your application. Apple's [Identity Pinning](https://developer.apple.com/news/?id=g9ejcf8y) guidance recommends pinning CA public keys, in an intermediate or root certificate, rather than server keys so that the server can rotate its certificate under the same CA without an app update, and pinning more than one key for redundancy.
+- Pinning a **leaf public key** gives the strongest guarantee that the app talks only to the hosts it was designed for, but it breaks on every renewal that changes the key pair. Treat it as breakage-on-renewal unless you control key rotation, and always pair it with a backup CA pin.
 
 Check your CA's published chain policy before relying on an intermediate pin. Public CAs rotate intermediates, and [Let's Encrypt](https://letsencrypt.org/certificates/) states that it may start issuing from its backup intermediates at any time without warning, so include every active and backup intermediate in the pinset or pin the root instead.
 
-**Recommendation:** pin the leaf or issuing CA public key as the primary pin, and add a backup pin for the intermediate or root CA. Never ship a single pin.
+**Recommendation:** pin a CA public key, intermediate or root, as the primary identity, with at least one backup CA pin. CA pins survive certificate renewal, which is why Apple recommends them; the cost is that you still trust everything that CA issues. Add a leaf pin only when you control key rotation and need to narrow trust further. Never ship a single pin.
 
-With this setup, if the leaf key changes unexpectedly, the backup CA pin still matches and the app keeps working until you ship an update with the new leaf pin. The backup widens trust slightly, which is the price of not bricking your app.
+With at least two CA pins, the app keeps working when one intermediate is retired or a leaf key changes, until you ship an update with the new pin. The backup widens trust slightly, which is the price of not bricking your app.
 
 To pin the public key, pin the SHA-256 hash of the `SubjectPublicKeyInfo`. This is the format expected by [Android's Network Security Configuration](https://developer.android.com/privacy-and-security/security-config#CertificatePinning), [Apple's `NSPinnedDomains`](https://developer.apple.com/documentation/bundleresources/information-property-list/nsapptransportsecurity/nspinneddomains), and third-party networking libraries, and it matches the pin format defined in [RFC 7469](https://datatracker.ietf.org/doc/html/rfc7469).
 
@@ -67,7 +67,7 @@ To pin the public key, pin the SHA-256 hash of the `SubjectPublicKeyInfo`. This 
 
 This section covers public key pinning on Android, iOS, .NET, OpenSSL, and Electron. Code is omitted for brevity; the key points for each platform are highlighted.
 
-Implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities. Android and iOS provide declarative mechanisms, so no validation code is needed there. The other platforms require a small amount of code; keep it minimal and let the platform's default chain validation run first.
+Implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities. Android and iOS provide declarative mechanisms, so no validation code is needed for traffic through their standard networking stacks. Everything else requires a small amount of code; keep it minimal and let the platform's default chain validation run first.
 
 ### Android
 
@@ -83,7 +83,7 @@ To verify that pinning is enforced, attempt to bypass it as described in [MASTG-
 
 On iOS 14 and later, declare pins with [`NSPinnedDomains`](https://developer.apple.com/documentation/bundleresources/information-property-list/nsapptransportsecurity/nspinneddomains) in the [App Transport Security (ATS)](https://developer.apple.com/documentation/security/preventing-insecure-network-connections) settings of `Info.plist`. Each domain takes `NSPinnedCAIdentities`, `NSPinnedLeafIdentities`, or both, each holding SPKI SHA-256 hashes; if you specify both, ATS requires a match in each category. Apple advises against pinning unless you have a specific regulatory or threat-model reason, and recommends pinning CA public keys with backups rather than a single leaf key. See the article ["Identity Pinning: How to configure server certificates for your app"](https://developer.apple.com/news/?id=g9ejcf8y).
 
-Use ATS as the only pinning mechanism on iOS. Do not write custom server trust evaluation in a `URLSessionDelegate`; it is error-prone and offers no additional protection over a correctly configured `NSPinnedDomains` entry.
+Prefer ATS pinning for all connections made through the URL Loading System (`URLSession` and `WKWebView`): it is declarative, auditable, and enforced by the system. Do not add custom server trust evaluation in a `URLSessionDelegate` on top of it; it is error-prone and offers no additional protection over a correctly configured `NSPinnedDomains` entry. Two limitations apply. `NSPinnedDomains` has no expiration date, so rotation must be managed by app updates, and [ATS pinning applies only to the URL Loading System](https://mas.owasp.org/MASTG/knowledge/ios/MASVS-NETWORK/MASTG-KNOW-0072/); it does not cover the Network framework, `CFNetwork`, BSD sockets, bundled third-party TLS libraries, or SDKs that cannot edit the host app's `Info.plist`. For those cases use a maintained library such as [TrustKit](https://github.com/datatheorem/TrustKit) rather than hand-rolled `SecTrust` evaluation, and confine the custom validation to the code that needs it.
 
 To verify that pinning is enforced, attempt to bypass it as described in [MASTG-TECH-0064: Bypassing Certificate Pinning](https://mas.owasp.org/MASTG/techniques/ios/MASTG-TECH-0064/). [MASWE-0028: Insecure Identity Pinning](https://mas.owasp.org/MASWE/MASVS-NETWORK/MASWE-0028/) lists the related test cases for iOS.
 
