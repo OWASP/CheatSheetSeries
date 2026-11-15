@@ -3068,23 +3068,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Securing a Managed Kubernetes Service on a Cloud Provider">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#aws" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AWS
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -6145,23 +6128,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Securing a Managed Kubernetes Service on a Cloud Provider">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#aws" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        AWS
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -6798,11 +6764,24 @@ blacklist sctp
 <h4 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h4>
 <p><a href="https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/event-v1/">Kubernetes Events</a> record state changes and errors across the cluster (exceeded resource quotas, failed image pulls, probe failures, scheduler decisions) and can be queried with <code>kubectl get events -n &lt;namespace&gt;</code>. Events expire after one hour by default (controlled by the <code>--event-ttl</code> flag on the <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/">kube-apiserver</a>) and are not a substitute for audit logging, but they are a useful signal for detecting anomalous workload behavior.</p>
 <h2 id="securing-a-managed-kubernetes-service-on-a-cloud-provider">Securing a Managed Kubernetes Service on a Cloud Provider<a class="headerlink" href="#securing-a-managed-kubernetes-service-on-a-cloud-provider" title="Permanent link">&para;</a></h2>
-<h3 id="aws">AWS<a class="headerlink" href="#aws" title="Permanent link">&para;</a></h3>
-<p>There are few open source tools that can help you on securing your managed-service Kubernetes on AWS <a href="https://aws.amazon.com/eks/">(EKS)</a></p>
+<p>Managed services such as Amazon EKS, Google Kubernetes Engine (GKE), and Azure Kubernetes Service (AKS) run the control plane for you. You still own cluster configuration, workloads, and most node security, and the defaults differ between providers. See <a href="Secure_Cloud_Architecture_Cheat_Sheet.html#avoid-gaps-in-managed-service-security">Avoid Gaps in Managed Service Security</a> for the shared responsibility model, and keep node pools patched as described in <a href="#updating-kubernetes">Updating Kubernetes</a>.</p>
 <ul>
-<li><a href="https://github.com/aws-samples/hardeneks">hardeneks</a></li>
-<li><a href="https://github.com/DataDog/managed-kubernetes-auditing-toolkit">MKAD</a> (Managed Kubernetes Auditing Toolkit) from DataDog</li>
+<li><strong>Limit network access to the API server.</strong> Unless you restrict it, the control plane is reachable from the internet on all three providers. Network controls limit who can reach it, but <a href="#controlling-access-to-the-kubernetes-api">authentication and RBAC</a> still decide what they can do.<ul>
+<li><strong>EKS:</strong> the API server endpoint is <a href="https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html">public by default</a>. Enable the private endpoint, and turn off public access or limit it to trusted public access CIDRs.</li>
+<li><strong>AKS:</strong> the API server gets a <a href="https://learn.microsoft.com/en-us/azure/aks/api-server-authorized-ip-ranges">public IP address by default</a>. Use a private cluster, or allow only authorized IP ranges.</li>
+<li><strong>GKE:</strong> Google recommends the <a href="https://docs.cloud.google.com/kubernetes-engine/docs/concepts/network-isolation#dns-based_endpoint">DNS-based endpoint</a>, which is reachable from the public internet by default and controlled by IAM. Grant access to it only to identities that need it, and add VPC Service Controls for network-based limits. With IP-based endpoints, use <a href="https://docs.cloud.google.com/kubernetes-engine/docs/concepts/network-isolation#how_authorized_networks_work">authorized networks</a> or expose only the internal endpoint.</li>
+</ul>
+</li>
+<li><strong>Check who can administer the cluster through cloud IAM.</strong> In GKE, IAM permissions alone are enough to work with cluster resources, even without RBAC permissions (<a href="https://docs.cloud.google.com/kubernetes-engine/docs/concepts/access-control">GKE access control</a>). In EKS, review IAM access with <a href="https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html">access entries</a>, including the cluster-admin access given to the cluster creator. If the cluster still uses the <code>aws-auth</code> ConfigMap, review those mappings too, because custom mappings aren't migrated to access entries automatically. In AKS, <a href="https://learn.microsoft.com/en-us/azure/aks/local-accounts">disable local accounts</a>. Otherwise <code>--admin</code> credentials stay available as a non-auditable backdoor, even with Microsoft Entra integration. On an existing cluster, also rotate the cluster certificates, because disabling local accounts doesn't revoke certificates that were already issued.</li>
+<li><strong>Give each workload its own cloud identity.</strong> Use <a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html">EKS Pod Identity</a> or <a href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">IAM roles for service accounts</a> on EKS, <a href="https://docs.cloud.google.com/kubernetes-engine/docs/concepts/workload-identity">Workload Identity Federation for GKE</a>, or <a href="https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview">Microsoft Entra Workload ID</a> on AKS. Don't give workload permissions to the node identity, because every pod on that node could use them.</li>
+<li><strong>Block pod access to the node's metadata endpoint.</strong> A pod that can reach it can use the node's cloud credentials (see <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#imdsv2-in-aws">IMDSv2 in AWS</a>). Pods with <code>hostNetwork: true</code> keep metadata access on <a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html">EKS</a> and <a href="https://docs.cloud.google.com/kubernetes-engine/docs/concepts/workload-identity#metadata_server">GKE</a>, and <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/#networkpolicy-and-hostnetwork-pods">network policies may not apply to them</a>, so disallow host networking for untrusted workloads with the <a href="#utilize-pod-security-standards-and-the-built-in-pod-security-admission-controller-to-enforce-container-privilege-levels">Baseline profile</a>.<ul>
+<li><strong>EKS:</strong> require IMDSv2 only with a hop count of 1, as the <a href="https://docs.aws.amazon.com/eks/latest/best-practices/identity-and-access-management.html">EKS best practices guide</a> recommends. This breaks pods and add-ons that still read IMDS, because their token requests time out. AWS recommends a hop limit of 2 where an application needs IMDS, which lets pods on those nodes reach it again. Don't disable instance metadata, because node components rely on it.</li>
+<li><strong>AKS:</strong> all pods can reach IMDS <a href="https://learn.microsoft.com/en-us/azure/aks/imds-restriction">by default</a>. Add a network policy in every user namespace that blocks pod egress to <code>169.254.169.254</code>, as the <a href="https://learn.microsoft.com/en-us/azure/aks/operator-best-practices-cluster-security#restrict-access-to-instance-metadata-api">AKS cluster security best practices</a> recommend. This needs a <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/#prerequisites">network policy engine</a> enabled on the cluster; without one the policy has no effect.</li>
+<li><strong>GKE:</strong> the <a href="https://docs.cloud.google.com/kubernetes-engine/docs/concepts/workload-identity#metadata_server">GKE metadata server</a> stops pods from reaching the Compute Engine metadata server, but only on node pools where it's enabled. Enable it on every node pool.</li>
+</ul>
+</li>
+<li><strong>Turn on control-plane audit logs.</strong> EKS doesn't send <a href="https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html">control plane logs</a> to CloudWatch Logs by default, so enable the <code>audit</code> log type. AKS needs a <a href="https://learn.microsoft.com/en-us/azure/aks/monitor-aks">diagnostic setting</a> to collect them. GKE always writes Admin Activity audit logs, but <a href="https://docs.cloud.google.com/kubernetes-engine/docs/how-to/audit-logging">Data Access audit logs</a> are off by default.</li>
+<li><strong>Benchmark the cluster.</strong> <a href="https://www.cisecurity.org/benchmark/kubernetes">CIS</a> publishes benchmarks for EKS, GKE, and AKS. <a href="https://github.com/aquasecurity/kube-bench">kube-bench</a> can run them, but on a managed cluster it only checks worker nodes, not the control plane the provider runs (<a href="https://github.com/aquasecurity/kube-bench/blob/main/docs/running.md">kube-bench docs</a>). For EKS, <a href="https://github.com/aws-samples/hardeneks">hardeneks</a> checks a cluster against the EKS best practices, and DataDog's <a href="https://github.com/DataDog/managed-kubernetes-auditing-toolkit">Managed Kubernetes Auditing Toolkit</a> finds common security issues.</li>
 </ul>
 <h2 id="supply-chain-security">Supply Chain Security<a class="headerlink" href="#supply-chain-security" title="Permanent link">&para;</a></h2>
 <p>Container supply chain security is critical for preventing attacks that exploit vulnerabilities in the software delivery process. A compromised supply chain can lead to malicious code being deployed into production environments, potentially affecting thousands of containers and applications. See the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html">OWASP Software Supply Chain Security Cheat Sheet</a> for broader guidance.</p>
