@@ -2685,6 +2685,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#orm-level-tenant-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ORM-Level Tenant Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#verify-tenant-isolation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4696,6 +4707,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#orm-level-tenant-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ORM-Level Tenant Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#verify-tenant-isolation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5048,90 +5070,9 @@
 <li>Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.</li>
 <li>Commit or roll back before returning the connection to the pool.</li>
 </ul>
+<h4 id="orm-level-tenant-filtering">ORM-Level Tenant Filtering<a class="headerlink" href="#orm-level-tenant-filtering" title="Permanent link">&para;</a></h4>
 <p>SQLAlchemy <a href="https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile">deprecated <code>QueryEvents.before_compile</code></a> because it does not cover ORM-level attribute and relationship loads. The current <a href="https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria">recommended pattern</a> combines <code>SessionEvents.do_orm_execute</code> with <code>with_loader_criteria</code> so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.</p>
-<details>
-<summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
-
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">event</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">text</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">declared_attr</span><span class="p">,</span> <span class="n">with_loader_criteria</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantMixin</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Mixin that adds tenant_id to models that inherit it."""</span>
-
-    <span class="nd">@declared_attr</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tenant_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">36</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantAwareSession</span><span class="p">(</span><span class="n">Session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Session carrying tenant context for participating ORM operations."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tenant_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tenant_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant ID not set on session"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tenant_id</span>
-
-<span class="c1"># Add tenant criteria to ORM SELECTs issued through TenantAwareSession.</span>
-<span class="c1"># with_loader_criteria propagates this rule to eager and lazy relationship loads.</span>
-<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">TenantAwareSession</span><span class="p">,</span> <span class="s2">"do_orm_execute"</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">add_tenant_filter</span><span class="p">(</span><span class="n">execute_state</span><span class="p">):</span>
-    <span class="k">if</span> <span class="p">(</span>
-        <span class="n">execute_state</span><span class="o">.</span><span class="n">is_select</span>
-        <span class="ow">and</span> <span class="ow">not</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">is_column_load</span>
-        <span class="ow">and</span> <span class="ow">not</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">is_relationship_load</span>
-    <span class="p">):</span>
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">tenant_id</span>
-        <span class="n">execute_state</span><span class="o">.</span><span class="n">statement</span> <span class="o">=</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">options</span><span class="p">(</span>
-            <span class="n">with_loader_criteria</span><span class="p">(</span>
-                <span class="n">TenantMixin</span><span class="p">,</span>
-                <span class="k">lambda</span> <span class="n">model</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="n">tenant_id</span><span class="p">,</span>
-                <span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-
-<span class="c1"># Set and validate tenant_id for new mapped objects in this session.</span>
-<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">TenantAwareSession</span><span class="p">,</span> <span class="s2">"before_flush"</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">set_tenant_on_insert</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">flush_context</span><span class="p">,</span> <span class="n">instances</span><span class="p">):</span>
-    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">tenant_id</span>
-    <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">new</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">TenantMixin</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">tenant_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Object tenant does not match session"</span><span class="p">)</span>
-            <span class="n">target</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span>
-
-<span class="c1"># Secure session factory</span>
-<span class="nd">@contextmanager</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">tenant_session</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Create a tenant-scoped database session."""</span>
-    <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">!=</span> <span class="n">tenant_id</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant session requires verified context"</span><span class="p">)</span>
-
-    <span class="n">session</span> <span class="o">=</span> <span class="n">TenantAwareSession</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">)</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># The final true makes the tenant context transaction-local</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-            <span class="n">text</span><span class="p">(</span><span class="s2">"SELECT set_config('app.current_tenant', :tenant_id, true)"</span><span class="p">),</span>
-            <span class="p">{</span><span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">}</span>
-        <span class="p">)</span>
-        <span class="k">yield</span> <span class="n">session</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-        <span class="k">raise</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</code></pre></div>
-
-</details>
-
-<p>This ORM helper is defense in depth, not complete enforcement. It applies tenant criteria to ORM SELECTs issued through <code>TenantAwareSession</code>, with the criteria propagated to relationship loaders. Raw SQL, Core connections, bulk operations, and code using another session type require separate controls; use database policies or constrained roles as the final boundary where possible.</p>
+<p>ORM-level filtering is defense in depth, not a complete tenant-isolation boundary. The handler in the SQLAlchemy documentation adds its criteria to ORM <code>SELECT</code> statements only, and only on sessions it is registered on. <a href="https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.SessionEvents.do_orm_execute"><code>do_orm_execute</code></a> does not run for flush writes or for Core connections, and raw SQL and Core statements run through the session get no tenant criteria. Set or validate <code>tenant_id</code> from the verified tenant context in a <code>before_flush</code> listener, add an explicit tenant predicate to raw SQL and bulk statements, and keep database policies and constrained roles as the final boundary where possible.</p>
 <h4 id="verify-tenant-isolation">Verify Tenant Isolation<a class="headerlink" href="#verify-tenant-isolation" title="Permanent link">&para;</a></h4>
 <p>Test isolation through the same role, connection path, and pooling mode used by the application. A privileged test connection can make a correct policy appear broken, while a test that never exercises the deployed request role can miss a bypass.</p>
 <ul>
