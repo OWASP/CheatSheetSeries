@@ -60,11 +60,11 @@ Manual code reviews are an important, relatively low cost technique for reducing
 
 #### Secure Config of Version Control Systems
 
-Compromise or abuse of the source control system is consistently recognized as a significant SSC risk ([Google supply-chain threat categories](https://cloud.google.com/software-supply-chain-security/docs/attack-vectors), [SLSA 1.0 threats](https://slsa.dev/spec/v1.0/threats)). The general security best practices of strong access control and logging and monitoring are two methods to help secure VCS. Security features specific to the VCS system, such as protected branches and merge policies in git, should also be leveraged. You can find a wide variety of recommended policies in this [documentation](https://policies.legitify.dev/). There are tools available to help manage configuration of SCM systems, such as [Legitify](https://github.com/Legit-Labs/legitify), an open-source tool by [Legit security](https://www.legitsecurity.com/). Legitify is designed to detect misconfigurations in GitHub and GitLab and assist with the implementation of best practices. Regardless of any security controls added to a VCS, it must be remembered that secrets should never be committed to these systems.
+Compromise or abuse of the source control system is consistently recognized as a significant SSC risk ([Google supply-chain threat categories](https://cloud.google.com/software-supply-chain-security/docs/attack-vectors), [SLSA 1.0 threats](https://slsa.dev/spec/v1.0/threats)). The general security best practices of strong access control and logging and monitoring are two methods to help secure VCS. Security features specific to the VCS system, such as protected branches and merge policies in Git, should also be leveraged. You can find a wide variety of recommended policies in this [documentation](https://policies.legitify.dev/). There are tools available to help manage configuration of SCM systems, such as [Legitify](https://github.com/Legit-Labs/legitify), an open-source tool by [Legit security](https://www.legitsecurity.com/). Legitify is designed to detect misconfigurations in GitHub and GitLab and assist with the implementation of best practices. Regardless of any security controls added to a VCS, it must be remembered that secrets should never be committed to these systems.
 
 #### Secure Development Platform
 
-IDEs, development plugins, and similar tools can help assist the development process. However, like all pieces of software, these components can have vulnerabilities and become an attack vector. Thus, it is important to take steps not only to ensure these tools are used securely, but also to secure the underlying system. The development system should have endpoint security software installed and should have threat assessments performed against it ([ESF developer practices](https://www.nsa.gov/Press-Room/Digital-Media-Center/Document-Gallery/igphoto/2003068942/)). Only trusted, well-vetted software should be used in the development process; this includes not only "core" development tools such as IDEs, but also any plugins or extensions.  Additionally, these tools should be included as part of an organization's system inventory.
+IDEs, development plugins, and similar tools can help assist the development process. However, like all pieces of software, these components can have vulnerabilities and become an attack vector. Thus, it is important to take steps not only to ensure these tools are used securely, but also to secure the underlying system. The development system should have endpoint security software installed and should have threat assessments performed against it ([ESF developer practices](https://www.nsa.gov/Press-Room/Digital-Media-Center/Document-Gallery/igphoto/2003068942/)). Only trusted, well-vetted software should be used in the development process; this includes not only "core" development tools such as IDEs, but also any plugins or extensions. Additionally, these tools should be included as part of an organization's system inventory.
 
 ### Mitigating Dependency Threats
 
@@ -104,7 +104,7 @@ To reduce the likelihood that a compromised or vulnerable version is unwittingly
 
 ### Build Threats
 
-The section below describes techniques that are especially relevant for securing build related threats.
+The section below describes techniques that are especially relevant for mitigating build related threats.
 
 #### Inventory Build Tools
 
@@ -129,7 +129,7 @@ Using a private artifact repository increases the control an organization has ov
 
 #### Use Source Control for Build Scripts and Config
 
-The benefits of VCSs can be realized for items beyond source control; this is especially true for config and scripts related to CI/CD pipelines. Enforcing version control for these files allows one to incorporate reviews, merge rules, and like controls into the config update process. Using VCS also increases visibility, allowing one easy visibility into any changes introduced, whether malicious or benign ([ESF developer practices](https://www.nsa.gov/Press-Room/Digital-Media-Center/Document-Gallery/igphoto/2003068942/)).
+The benefits of VCSs can be realized for items beyond source control; this is especially true for config and scripts related to CI/CD pipelines. Enforcing version control for these files allows one to incorporate reviews, merge rules, and like controls into the config update process. Using VCS also increases visibility into any changes introduced, whether malicious or benign ([ESF developer practices](https://www.nsa.gov/Press-Room/Digital-Media-Center/Document-Gallery/igphoto/2003068942/)).
 
 #### Verify Provenance/Ensure Sufficient Metadata is Generated
 
