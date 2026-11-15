@@ -168,9 +168,11 @@ A normal `SET` persists until the session ends after its transaction commits, wh
 - Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.
 - Commit or roll back before returning the connection to the pool.
 
+#### ORM-Level Tenant Filtering
+
 SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
 
-- ORM-level filtering is defense in depth, not a complete tenant-isolation boundary. Raw SQL is not automatically tenant-filtered by `with_loader_criteria`, even when executed through a session that invokes `do_orm_execute`; direct Core connections bypass that session hook entirely. These paths, bulk operations, and other session types require separate tenant-isolation controls. Database-level policies and constrained database roles should remain the final enforcement boundary where possible.
+ORM-level filtering is defense in depth, not a complete tenant-isolation boundary. The documented handler adds tenant criteria to ORM SELECTs only. [`do_orm_execute`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.SessionEvents.do_orm_execute) does not run for flush writes or for Core connections, and raw SQL run through the session gets no tenant criteria. Validate `tenant_id` on new and changed objects, add an explicit tenant predicate to raw SQL and bulk statements, and keep database policies and constrained roles as the final boundary where possible.
 
 #### Verify Tenant Isolation
 
