@@ -53,8 +53,8 @@ Authentication is a complex topic and there are many pitfalls. Authentication
 logic must be written and tested with extreme care. The tips here are only a
 starting point and barely scratch the surface. For more information, see the
 [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) and
-[M1: Insecure Authentication/Authorization](
-https://owasp.org/www-project-mobile-top-10/2023-risks/m1-insecure-authentication-authorization.html)
+[M3: Insecure Authentication/Authorization](
+https://owasp.org/www-project-mobile-top-10/2023-risks/m3-insecure-authentication-authorization)
 from the OWASP Mobile Top 10.
 
 ### 1. Don't Trust the Client
@@ -328,7 +328,7 @@ disabled; do not use it as an authentication check.
 #### Siri Permissions
 
 - Siri can access app functionalities through voice or [Type to Siri](
-  https://support.apple.com/guide/iphone/change-siri-accessibility-settings-iphaff1d606/ios.)
+  https://support.apple.com/guide/iphone/change-siri-accessibility-settings-iphaff1d606/ios)
   commands, which is by default accessible even when the device is locked
   potentially enabling unauthorized actions.
 - **How**: Apply the App Intent authentication policy above to sensitive Siri

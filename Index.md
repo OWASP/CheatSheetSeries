@@ -152,7 +152,7 @@
 
 [Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
 
-[Kubernetes Security Cheat Sheet](cheatsheets/Kubernetes_Security_Cheat_Sheet.md) ![Json](assets/Index_Json.svg) ![Bash](assets/Index_Bash.svg)
+[Kubernetes Security Cheat Sheet](cheatsheets/Kubernetes_Security_Cheat_Sheet.md) ![Bash](assets/Index_Bash.svg)
 
 ## L
 
@@ -318,7 +318,7 @@
 
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Cpp](assets/Index_Cpp.svg) ![Php](assets/Index_Php.svg)
 
-[XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg) ![Bash](assets/Index_Bash.svg)
+[XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md) ![Xml](assets/Index_Xml.svg) ![Bash](assets/Index_Bash.svg)
 
 [XPath Injection Prevention Cheat Sheet](cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg)
 

@@ -32,7 +32,7 @@ Depending on the application's functionality and requirements, there are two bas
 
 Because these two cases are very different, this cheat sheet will describe defenses against them separately.
 
-### Case 1 - Application can send request only to identified and trusted applications
+### Case 1: Application can send request only to identified and trusted applications
 
 Sometimes, an application needs to perform a request to another application, often located on another network, to perform a specific task. Depending on the business case, user input is required for the functionality to work.
 
@@ -263,7 +263,7 @@ In the schema below, a Firewall component is leveraged to limit the application'
 
 [Network segregation](https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation) (see this set of [implementation advice](https://www.cyber.gov.au/acsc/view-all-content/publications/implementing-network-segmentation-and-segregation) can also be leveraged and **is highly recommended in order to block illegitimate calls directly at network level itself**.
 
-### Case 2 - Application can send requests to ANY external IP address or domain name
+### Case 2: Application can send requests to ANY external IP address or domain name
 
 This case happens when a user can control a URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Allow lists cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.
 
@@ -289,7 +289,7 @@ Taking into consideration the same assumption in the following [example](Server_
 
 ##### Application layer
 
-Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1---application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
+Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1-application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
 
 The first validation on the input data presented in the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer) on the 3 types of data will be the same for this case **BUT the second validation will differ**. Indeed, here we must use the block-list approach.
 
@@ -330,14 +330,19 @@ To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out 
 
 | Service | Block IPs/Domains |
 |---------|-------------------|
-| **AWS IMDS** | `169.254.169.254`, `metadata.amazonaws.com` |
+| **AWS IMDS** | `169.254.169.254`, `fd00:ec2::254` ([IPv6 endpoint](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html#instancedata-inside-access)) |
 | **GCP Metadata** | `metadata.google.internal`, `169.254.169.254` |
 | **Azure IMDS** | `169.254.169.254` |
 | **Localhost** | `127.0.0.0/8`, `0.0.0.0/8`, `::1/128` |
 | **RFC1918 Private** | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` |
+| **IPv4 Link-Local** | `169.254.0.0/16` ([RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927#section-1)), which also covers the AWS credential endpoints for [ECS tasks](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html#task-iam-role-considerations) (`169.254.170.2`) and [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-id-how-it-works.html#pod-id-agent-pod) (`169.254.170.23`) |
 | **IPv6 Unique Local** | `fc00::/7` ([RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193#section-3.1)) |
 | **IPv6 Link-Local** | `fe80::/10` ([RFC 4291](https://datatracker.ietf.org/doc/html/rfc4291#section-2.5.6)) |
 | **Multicast** | `224.0.0.0/4`, `ff00::/8` |
+| **IPv4-mapped IPv6** | `::ffff:0:0/96` ([IANA](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)) |
+| **NAT64** | `64:ff9b::/96`, `64:ff9b:1::/48` ([IANA](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)) |
+
+**Normalize before you compare.** Unmap or canonicalize an address to its native IPv4 form *before* checking it against these ranges. An IPv4-mapped address (`::ffff:169.254.169.254`) reaches the same host as its IPv4 form. A NAT64 address (`64:ff9b::a9fe:a9fe`) does too on networks that run a NAT64 gateway. Both slip past a check that only matches IPv4-shaped strings or compares against IPv4 CIDRs, so a blocked address such as the cloud metadata IP stays reachable.
 
 **Full production example:** [ComputerCraft SSRF deny-list](https://github.com/cc-tweaked/CC-Tweaked/blob/b9ed66983d714bcb5c6bf15b428e01a035106dbf/projects/core/src/main/java/dan200/computercraft/core/apis/http/options/AddressPredicate.java#L112-L157)
 
