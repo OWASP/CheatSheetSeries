@@ -131,8 +131,6 @@ Resource limits can reduce the impact of some resource-exhaustion conditions, bu
 
 See [NIST SP 800-53 Rev. 5, SC-6 (Resource Availability)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-6/) for the general principle and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
 
-(https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
-
 ### Validate Hardening Changes
 
 Hardening should be introduced in a controlled manner. A configuration that appears restrictive may not provide the expected protection, and an overly restrictive configuration may interrupt legitimate operations.
@@ -144,7 +142,7 @@ Hardening should be introduced in a controlled manner. A configuration that appe
 - Record the platform version, configuration, test procedure, and results for reproducibility.
 - Reassess hardening settings after significant application, operating-system, or service-manager changes.
 
-See [NIST SP 800-53 Rev. 5, CA-2 (Control Assessments)](https://csf.tools/reference/nist-sp-800-53/r5/ca/ca-2/) for supporting guidance.
+See [NIST SP 800-53 Rev. 5, CA-2 (Control Assessments)](https://csf.tools/reference/nist-sp-800-53/r5/ca/ca-2/) for assessing whether controls operate as intended, and [CM-3 (Configuration Change Control)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-3/) for managing configuration changes.
 
 ## Hardening Services with systemd
 
