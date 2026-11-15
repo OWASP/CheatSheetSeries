@@ -43,7 +43,7 @@ Prefer your framework's CORS support over writing headers by hand, and check wha
 
 ## Credentials
 
-`Access-Control-Allow-Credentials: true` lets the browser send cookies and other credentials with cross-origin requests and lets the calling origin read the responses. The Fetch Standard calls sharing such responses "rather unsafe" and warns about the confused deputy problem ([Fetch Standard: CORS protocol and credentials](https://fetch.spec.whatwg.org/#cors-protocol-and-credentials)).
+`Access-Control-Allow-Credentials: true` lets a cross-origin script read the response to a request that includes credentials such as cookies or an `Authorization` header. It doesn't decide whether cookies are sent: that depends on the request's credentials mode and the cookie's `SameSite` attribute, so the server still processes the request and the browser only withholds the response. The Fetch Standard calls sharing such responses "rather unsafe" and warns about the confused deputy problem ([Fetch Standard: CORS protocol and credentials](https://fetch.spec.whatwg.org/#cors-protocol-and-credentials)).
 
 - Only enable credentials for endpoints and origins that need them, and keep public, unauthenticated endpoints separate.
 - Browsers reject `Access-Control-Allow-Origin: *` on credentialed requests, so a server that wants credentials has to name the origin ([MDN: Credentialed requests and wildcards](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#credentialed_requests_and_wildcards)). Don't work around this by reflecting the request origin.
@@ -53,7 +53,8 @@ Prefer your framework's CORS support over writing headers by hand, and check wha
 
 - **Send `Vary: Origin`** whenever `Access-Control-Allow-Origin` depends on the request's `Origin`. Without it, a cache can serve a response with one origin's CORS headers to a different origin ([Fetch Standard: CORS protocol and HTTP caches](https://fetch.spec.whatwg.org/#cors-protocol-and-http-caches)).
 - **Don't treat a preflight as authorization.** A preflight `OPTIONS` request never includes credentials ([Fetch Standard: CORS protocol and credentials](https://fetch.spec.whatwg.org/#cors-protocol-and-credentials)), so answer it without requiring a session, never perform an action on it, and authorize the actual request.
-- **Keep `Access-Control-Allow-Methods` and `Access-Control-Allow-Headers` to what the client needs**, and keep `Access-Control-Max-Age` short enough that a change to the policy takes effect in reasonable time ([MDN: Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#preflighted_requests)).
+- **Keep `Access-Control-Allow-Methods` and `Access-Control-Allow-Headers` to what the client needs**, and keep `Access-Control-Max-Age` short enough that a change to the policy takes effect in reasonable time. Browsers cap it anyway, at 2 hours in Chromium and 24 hours in Firefox, and use 5 seconds when it's missing ([MDN: Preflighted requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#preflighted_requests), [MDN: Access-Control-Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Max-Age)).
+- **List response headers the client needs in `Access-Control-Expose-Headers`.** Scripts can only read the CORS-safelisted response headers by default, so a header like `X-Total-Count` stays hidden even from an allowed origin. Only expose headers that are meant for the client ([MDN: Access-Control-Expose-Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Expose-Headers)).
 
 ## Internal Network Services
 
