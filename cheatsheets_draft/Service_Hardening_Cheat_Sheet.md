@@ -76,7 +76,7 @@ Default configurations may enable functionality or access that is unnecessary fo
 
 For example, when changing a service's permitted filesystem access, verify both that required application operations still succeed and that prohibited operations are denied.
 
-See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-6/) for supporting guidance.
+See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-6/) for establishing, implementing, and monitoring security-relevant configuration settings.
 
 ### Restrict Network Communication
 
