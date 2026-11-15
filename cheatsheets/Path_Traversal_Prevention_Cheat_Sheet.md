@@ -53,12 +53,16 @@ if (!target.startsWith(base)) {
 }
 ```
 
-**Python**: [`os.path.realpath`](https://docs.python.org/3/library/os.path.html#os.path.realpath) resolves symbolic links and [`os.path.commonpath`](https://docs.python.org/3/library/os.path.html#os.path.commonpath) compares whole path components.
+**Python**: [`os.path.realpath`](https://docs.python.org/3/library/os.path.html#os.path.realpath) resolves symbolic links and [`os.path.commonpath`](https://docs.python.org/3/library/os.path.html#os.path.commonpath) compares whole path components. On Windows, `commonpath` raises `ValueError` when the paths are on different drives, which an input like `D:foo` causes, so treat that as a rejection too.
 
 ```python
 base = os.path.realpath("/srv/uploads")
 target = os.path.realpath(os.path.join(base, user_path))
-if os.path.commonpath([base, target]) != base:
+try:
+    contained = os.path.commonpath([base, target]) == base
+except ValueError:
+    contained = False
+if not contained:
     raise ValueError("Invalid path")
 ```
 
@@ -67,7 +71,10 @@ if os.path.commonpath([base, target]) != base:
 ```csharp
 string baseDir = Path.GetFullPath("/srv/uploads/");
 string target = Path.GetFullPath(userPath, baseDir);
-if (!target.StartsWith(baseDir, StringComparison.Ordinal))
+StringComparison comparison = OperatingSystem.IsWindows()
+    ? StringComparison.OrdinalIgnoreCase
+    : StringComparison.Ordinal;
+if (!target.StartsWith(baseDir, comparison))
 {
     throw new UnauthorizedAccessException("Invalid path");
 }
@@ -79,12 +86,12 @@ if (!target.StartsWith(baseDir, StringComparison.Ordinal))
 const base = path.resolve('/srv/uploads');
 const target = path.resolve(base, userPath);
 const rel = path.relative(base, target);
-if (rel === '' || rel === '..' || rel.startsWith('..' + path.sep) || path.isAbsolute(rel)) {
+if (rel === '..' || rel.startsWith('..' + path.sep) || path.isAbsolute(rel)) {
   throw new Error('Invalid path');
 }
 ```
 
-The Java, .NET and Node.js examples check the path lexically, so a symbolic link inside the base directory can still point outside it. See the next section.
+The Java, Python, .NET and Node.js examples all accept the base directory itself. The Java, .NET and Node.js examples check the path lexically, so a symbolic link inside the base directory can still point outside it. The Python example resolves existing links with `realpath` first, but a link created after the check still can. See the next section.
 
 ## Symbolic Links and Race Conditions
 
@@ -111,6 +118,7 @@ Windows accepts path forms that checks written for Unix often miss ([Microsoft: 
 - Filenames that end with a space or a period aren't supported by Windows tools, so reject them.
 - On NTFS, `file.txt::$DATA` is another name for `file.txt` and `file.txt:name` refers to a named stream of it, so a check on the name or extension can see a different string than the file that gets opened. Reject `:` in filenames ([Microsoft: File Streams](https://learn.microsoft.com/en-us/windows/win32/fileio/file-streams)).
 - Names are case-insensitive by default, so compare them case-insensitively.
+- Paths starting with `\\?\` skip the normalization that removes trailing spaces and periods, and paths starting with `\\.\` address devices directly. Reject both.
 
 Use the platform's path functions for these cases instead of parsing paths yourself.
 
