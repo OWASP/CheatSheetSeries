@@ -130,7 +130,7 @@
 
 [Infrastructure as Code Security Cheat Sheet](cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md)
 
-[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
+[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
 [Injection Prevention in Java Cheat Sheet](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
 
