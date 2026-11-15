@@ -2734,6 +2734,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#totp-seeds-and-validation-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TOTP Seeds and Validation Window
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5594,6 +5605,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#totp-seeds-and-validation-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TOTP Seeds and Validation Window
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6715,6 +6737,14 @@
 <li>Enforce good secret-handling discipline and avoid plaintext storage by default</li>
 </ul>
 <p>The goal is short-term exposure protection, not long-term cryptographic secrecy.</p>
+<h4 id="totp-seeds-and-validation-window">TOTP Seeds and Validation Window<a class="headerlink" href="#totp-seeds-and-validation-window" title="Permanent link">&para;</a></h4>
+<p>The storage guidance above is for OTPs the server generates and sends. With TOTP the server instead keeps a long-lived shared seed and computes the expected codes from it, so the seed can't be hashed, and anyone who obtains it can generate valid codes until the user enrolls a new one. Strict attempt limits still apply to TOTP verification.</p>
+<ul>
+<li>Store TOTP seeds encrypted, ideally with a key held in a hardware security module (HSM) or managed by a key management service (KMS), and decrypt a seed only while verifying a code (<a href="https://www.rfc-editor.org/rfc/rfc6238.html#section-5.1">RFC 6238 section 5.1</a>). Never return the seed to the client after enrollment.</li>
+<li>Accept the current time step and at most one previous step for network delay (<a href="https://www.rfc-editor.org/rfc/rfc6238.html#section-5.2">RFC 6238 section 5.2</a>). To handle clock drift, record the drift detected for each token instead of widening the window for everyone (<a href="https://www.rfc-editor.org/rfc/rfc6238.html#section-6">RFC 6238 section 6</a>).</li>
+<li>Reject a code that has already been accepted for that user, even if it is still inside the window (<a href="https://www.rfc-editor.org/rfc/rfc6238.html#section-5.2">RFC 6238 section 5.2</a>). For example, store the last accepted time step per token, reject that step and any earlier one, and update the record atomically so parallel verifier instances can't both accept the same code. This stops a code that was observed or captured after use from being replayed, but it does not stop a real-time phishing proxy that relays the code before the user submits it.</li>
+<li>If a seed may have been exposed, for example in a database breach, have the user enroll a new seed. Changing the password or other credentials does not invalidate the old seed.</li>
+</ul>
 <h3 id="improving-user-experience">Improving User Experience<a class="headerlink" href="#improving-user-experience" title="Permanent link">&para;</a></h3>
 <h4 id="risk-based-authentication">Risk Based Authentication<a class="headerlink" href="#risk-based-authentication" title="Permanent link">&para;</a></h4>
 <p>Having to frequently login with MFA creates an additional burden for users, and may cause them to disable MFA on the application. Risk based authentication can be used to reduce the frequency of MFA prompts, by only requiring MFA when the user is performing an action that is considered to be high risk. Some examples of this include:</p>

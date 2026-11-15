@@ -3894,6 +3894,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#be-careful-with-tls-13-early-data-0-rtt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Be Careful With TLS 1.3 Early Data (0-RTT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#patch-cryptographic-libraries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4778,6 +4789,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#be-careful-with-tls-13-early-data-0-rtt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Be Careful With TLS 1.3 Early Data (0-RTT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#patch-cryptographic-libraries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5057,9 +5079,10 @@
 <ul>
 <li>the available Finite Field Diffie-Hellman groups are <code>ffdhe2048</code>, <code>ffdhe3072</code>, <code>ffdhe4096</code>, <code>ffdhe6144</code>, <code>ffdhe8192</code> as specified in <a href="https://www.rfc-editor.org/rfc/rfc7919">RFC7919</a>;</li>
 <li>Elliptic Curve Diffie-Hellman groups include <code>x25519</code>, <code>prime256v1</code>, <code>x448</code>, <code>secp384r1</code>;</li>
-<li>for post-quantum cryptography, <code>X25519MLKEM768</code> it currently used (though it is not a group, proper).</li>
+<li>for post-quantum cryptography, the hybrid <a href="https://www.rfc-editor.org/rfc/rfc10024.html"><code>X25519MLKEM768</code></a> is currently used.</li>
 </ul>
-<p>For OpenSSL, the list of enabled groups can be configured ins in <code>openssl.cnf</code>. For example</p>
+<p><code>X25519MLKEM768</code> and the other ML-KEM groups require <a href="https://docs.openssl.org/3.5/man3/SSL_CTX_set1_curves/#history">OpenSSL 3.5 or later</a>. Earlier versions, including OpenSSL 3.0, do not recognize the name. If it appears in the NGINX or Apache configurations below, the server refuses to start; an <code>openssl.cnf</code> <code>Groups</code> line is instead ignored without an error, so none of the groups it lists are applied. Check which OpenSSL version the server uses first (for example with <code>openssl version</code> or <code>nginx -V</code>), and omit <code>X25519MLKEM768</code> from the list on older versions.</p>
+<p>For OpenSSL, the list of enabled groups can be configured in <code>openssl.cnf</code>. For example</p>
 <div class="highlight"><pre><span></span><code>openssl_conf = openssl_init
 [openssl_init]
 ssl_conf = ssl_module
@@ -5078,6 +5101,14 @@ Groups = X25519MLKEM768:x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 <h3 id="disable-compression">Disable Compression<a class="headerlink" href="#disable-compression" title="Permanent link">&para;</a></h3>
 <p>TLS compression should be disabled in order to protect against a vulnerability (nicknamed <a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/">CRIME</a>) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.</p>
 <p>TLS compression is not available in TLS v1.3 for this reason.</p>
+<h3 id="be-careful-with-tls-13-early-data-0-rtt">Be Careful With TLS 1.3 Early Data (0-RTT)<a class="headerlink" href="#be-careful-with-tls-13-early-data-0-rtt" title="Permanent link">&para;</a></h3>
+<p>TLS 1.3 lets a client that resumes a session send application data in its first flight, called early data or 0-RTT. Unlike the rest of the connection, early data is not protected against replay across connections (<a href="https://www.rfc-editor.org/rfc/rfc8446.html#section-2.3">RFC 8446 section 2.3</a>, <a href="https://www.rfc-editor.org/rfc/rfc8446.html#section-8">section 8</a>), so an attacker who captures it can send it again and a request with side effects may run twice.</p>
+<ul>
+<li>Leave early data disabled unless the latency gain is needed. For example, nginx's <a href="https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_early_data"><code>ssl_early_data</code></a> is off by default.</li>
+<li>Clients only send <a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.1">safe methods</a> such as <code>GET</code> in early data unless they know more (<a href="https://www.rfc-editor.org/rfc/rfc8470.html#section-4">RFC 8470 section 4</a>), so the main defense is making sure safe methods have no side effects. A <code>GET</code> that changes state, such as a logout or confirmation link, is what a replay can trigger.</li>
+<li>If some requests aren't safe to replay, reject them in early data with <a href="https://www.rfc-editor.org/rfc/rfc8470.html#section-5.2"><code>425 Too Early</code></a> so the client retries after the handshake completes. Where TLS terminates at a proxy or CDN, make sure it adds the <a href="https://www.rfc-editor.org/rfc/rfc8470.html#section-5.1"><code>Early-Data: 1</code></a> header so the application can tell which requests arrived in early data.</li>
+</ul>
+<p>This only prevents replay of early data at the TLS layer. It does not protect against an attacker or client resending a complete request after the handshake, which still needs application-level controls such as idempotency keys.</p>
 <h3 id="patch-cryptographic-libraries">Patch Cryptographic Libraries<a class="headerlink" href="#patch-cryptographic-libraries" title="Permanent link">&para;</a></h3>
 <p>As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of historic vulnerability in SSL and TLS libraries, with <a href="https://heartbleed.com">Heartbleed</a> being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.</p>
 <h3 id="test-the-server-configuration">Test the Server Configuration<a class="headerlink" href="#test-the-server-configuration" title="Permanent link">&para;</a></h3>
