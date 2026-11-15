@@ -2110,90 +2110,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Operating System Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#how-to-test-for-the-issue" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How to test for the issue
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How to test for the issue">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#during-code-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        During code review
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remediation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Remediation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-code-java" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example code - Java
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example code - Java">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#incorrect-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Incorrect Usage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#correct-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Correct Usage
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -4788,90 +4704,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Operating System Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#how-to-test-for-the-issue" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        How to test for the issue
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How to test for the issue">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#during-code-review" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        During code review
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remediation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Remediation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-code-java" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example code - Java
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example code - Java">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#incorrect-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Incorrect Usage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#correct-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Correct Usage
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -5014,7 +4846,7 @@
 <tr>
 <td>Cross-site scripting (XSS)</td>
 <td>Places untrusted data into browser content</td>
-<td><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention</a> and <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention</a></td>
+<td><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention</a>, <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention</a> and <a href="XSS_Filter_Evasion_Cheat_Sheet.html">XSS Filter Evasion</a></td>
 </tr>
 <tr>
 <td>LDAP injection</td>
@@ -5046,42 +4878,7 @@
 <p>All scripting languages used in web applications have a form of an <code>eval</code> call which receives code at runtime and executes it. If code is crafted using unvalidated and unescaped user input code injection can occur which allows an attacker to subvert application logic and eventually to gain local access.</p>
 <p>Every time a scripting language is used, the actual implementation of the 'higher' scripting language is done using a 'lower' language like C. If the scripting language has a flaw in the data handling code '<a href="http://projects.webappsec.org/w/page/13246949/Null%20Byte%20Injection">Null Byte Injection</a>' attack vectors can be deployed to gain access to other areas in memory, which results in a successful attack.</p>
 <h3 id="operating-system-commands">Operating System Commands<a class="headerlink" href="#operating-system-commands" title="Permanent link">&para;</a></h3>
-<p>OS command injection is a technique used via a web interface in order to execute OS commands on a web server. The user supplies operating system commands through a web interface in order to execute OS commands.</p>
-<p>Any web interface that is not properly sanitized is subject to this exploit. With the ability to execute OS commands, the user can upload malicious programs or even obtain passwords. OS command injection is preventable when security is emphasized during the design and development of applications.</p>
-<h4 id="how-to-test-for-the-issue">How to test for the issue<a class="headerlink" href="#how-to-test-for-the-issue" title="Permanent link">&para;</a></h4>
-<h5 id="during-code-review">During code review<a class="headerlink" href="#during-code-review" title="Permanent link">&para;</a></h5>
-<p>Check if any command execute methods are called and in unvalidated user input are taken as data for that command.</p>
-<p>Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. <code>%3B</code> is URL encoded and decodes to semicolon. This is because the <code>;</code> is interpreted as a command separator.</p>
-<p>Example: <code>http://sensitive/something.php?dir=%3Bcat%20/etc/passwd</code></p>
-<p>If the application responds with the output of the <code>/etc/passwd</code> file then you know the attack has been successful. Many web application scanners can be used to test for this attack as they inject variations of command injections and test the response.</p>
-<p>Equally Static Code Analysis tools check the data flow of untrusted user input into a web application and check if the data is then entered into a dangerous method which executes the user input as a command.</p>
-<h4 id="remediation">Remediation<a class="headerlink" href="#remediation" title="Permanent link">&para;</a></h4>
-<p>If it is considered unavoidable the call to a system command incorporated with user-supplied, the following two layers of defense should be used within software in order to prevent attacks</p>
-<ol>
-<li><strong>Parameterization</strong> - If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.</li>
-<li><strong>Input validation</strong> - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:<ul>
-<li>When it comes to the <strong>commands</strong> used, these must be validated against a list of allowed commands.</li>
-<li>In regards to the <strong>arguments</strong> used for these commands, they should be validated using the following options:<ul>
-<li>Positive or allowlist input validation - where are the arguments allowed explicitly defined</li>
-<li>Allow-list Regular Expression - where is explicitly defined a list of good characters allowed and the maximum length of the string. Ensure that metacharacters like <code>&amp; | ; $ &gt; &lt; \</code> \ !` and whitespaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<p><code>^[a-z0-9]{3,10}$</code></p>
-<h4 id="example-code-java">Example code - Java<a class="headerlink" href="#example-code-java" title="Permanent link">&para;</a></h4>
-<h5 id="incorrect-usage">Incorrect Usage<a class="headerlink" href="#incorrect-usage" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">"C:\\DoStuff.exe -arg1 -arg2"</span><span class="p">);</span>
-</code></pre></div>
-<p>This creates a builder with one command-list element, not a program followed by two arguments. <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ProcessBuilder.html"><code>ProcessBuilder</code></a> represents the executable and its arguments as a list. The snippet does not start a process or demonstrate shell-command injection.</p>
-<h5 id="correct-usage">Correct Usage<a class="headerlink" href="#correct-usage" title="Permanent link">&para;</a></h5>
-<p>This illustrative example starts a process with a modified working directory and passes the executable and each argument separately. Keep the executable and working directory trusted, and validate any untrusted arguments for the invoked program. Argument separation does not replace <a href="OS_Command_Injection_Defense_Cheat_Sheet.html#layer-2">argument validation</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">pb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">"TrustedCmd"</span><span class="p">,</span><span class="w"> </span><span class="s">"TrustedArg1"</span><span class="p">,</span><span class="w"> </span><span class="s">"TrustedArg2"</span><span class="p">);</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">environment</span><span class="p">();</span>
-<span class="n">pb</span><span class="p">.</span><span class="na">directory</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">"TrustedDir"</span><span class="p">));</span>
-<span class="n">Process</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-</code></pre></div>
+<p>See the <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Defense Cheat Sheet</a> for defenses, argument injection, and language-specific examples.</p>
 <h3 id="network-protocols">Network Protocols<a class="headerlink" href="#network-protocols" title="Permanent link">&para;</a></h3>
 <p>Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.</p>
 <h2 id="injection-prevention-rules">Injection Prevention Rules<a class="headerlink" href="#injection-prevention-rules" title="Permanent link">&para;</a></h2>
