@@ -371,6 +371,13 @@ add_header "X-Frame-Options" "DENY" always;
 
 Also note that `add_header` directives are inherited from the previous configuration level only if there are no `add_header` directives defined on the current level, as described in [the nginx documentation](https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header). For example, adding `add_header Cache-Control "no-cache";` inside a `location` block silently drops every security header set in the enclosing `server` block for that location. Repeat the security headers in each such block, keep them in a shared file pulled in with `include`, or, from nginx 1.29.3, set [`add_header_inherit merge;`](https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header_inherit) so that the headers from the previous level are kept.
 
+When Nginx proxies an application that already sends security headers, `add_header` does not replace them: the response carries both copies, possibly with conflicting values (for example `X-Frame-Options: DENY` from the application and `SAMEORIGIN` from Nginx). Set each header in one layer only, or drop the upstream copy with [`proxy_hide_header`](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_hide_header) before adding your own:
+
+```lang-none
+proxy_hide_header X-Frame-Options;
+add_header "X-Frame-Options" "DENY" always;
+```
+
 ### Express
 
 You can use [helmet](https://www.npmjs.com/package/helmet) to setup HTTP headers in Express. The code below is a sample for adding the `X-Frame-Options` header.
