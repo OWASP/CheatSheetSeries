@@ -172,7 +172,7 @@ The recommendations in this section are in addition to XSS recommendations alrea
 
 ## Application security configuration
 
-For reliability reasons in production environment `settings.py` configurations must be secured by default. If you want to run application in `dev` environment just override them with `.env` file and `django-environ` library. In this example used `django.utils.csp` module available from Django 6.0+.
+For reliability reasons in production environment `settings.py` configurations must be [secured by default](https://docs.djangoproject.com/en/stable/ref/settings/#security). If you want to run application in `dev` environment just override them with `.env` file and `django-environ` library. In this example used `django.utils.csp` module available from Django 6.0+.
 
 Snippet for secure `settings.py` configuration:
 
