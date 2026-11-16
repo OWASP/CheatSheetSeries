@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**137** cheat sheets available.
+**138** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -53,6 +53,8 @@
 [C-Based Toolchain Hardening Cheat Sheet](cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md) ![C](assets/Index_C.svg) ![Bash](assets/Index_Bash.svg)
 
 [CI CD Security Cheat Sheet](cheatsheets/CI_CD_Security_Cheat_Sheet.md)
+
+[CORS Security Cheat Sheet](cheatsheets/CORS_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg)
 
 [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
 
