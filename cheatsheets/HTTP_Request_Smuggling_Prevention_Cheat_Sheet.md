@@ -49,6 +49,7 @@ If HTTP/2 has to be translated to HTTP/1.1, validate the result as an HTTP/1.1 r
 - Request smuggling defeats controls that only the front end applies, because the smuggled request never passes through them. [RFC 9112 Section 11.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-11.2) describes this class of attack on message framing. Enforce authorization in the application as well, not only in the proxy or WAF.
 - A desync can poison a shared cache with another user's response. See the [Web Cache Security Cheat Sheet](Web_Cache_Security_Cheat_Sheet.md) for cache keys and what to cache.
 - Header injection through CR and LF in values the application writes into responses is a related but separate problem.
+
 ## Testing
 
 Test through the same chain of CDN, load balancer, and proxies that production uses, since the bug is in how those components disagree. [PortSwigger](https://portswigger.net/web-security/request-smuggling/finding#finding-http-request-smuggling-vulnerabilities-using-timing-techniques) describes timing-based probes. Some probes can disrupt other users' requests on a vulnerable system, so test in a non-production environment where possible.
