@@ -124,6 +124,8 @@
 
 [HTTP Headers Cheat Sheet](cheatsheets/HTTP_Headers_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Xml](assets/Index_Xml.svg) ![Php](assets/Index_Php.svg)
 
+[HTTP Request Smuggling Prevention Cheat Sheet](cheatsheets/HTTP_Request_Smuggling_Prevention_Cheat_Sheet.md)
+
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
 
 ## I
