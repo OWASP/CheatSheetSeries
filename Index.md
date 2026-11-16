@@ -216,6 +216,8 @@
 
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 
+[Path Traversal Prevention Cheat Sheet](cheatsheets/Path_Traversal_Prevention_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Python](assets/Index_Python.svg)
+
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
 
 [Post Quantum Cryptography Cheat Sheet](cheatsheets/Post_Quantum_Cryptography_Cheat_Sheet.md)

@@ -57,7 +57,7 @@ When accepting user-authored HTML, use a maintained [HTML sanitization library](
 
 ### File Upload Validation
 
-Treat the submitted filename and content type as untrusted metadata. Validate filenames after protocol decoding; an allowed extension alone does not establish safe content. Follow the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md) for content checks, size limits, storage, and safe serving.
+Treat the submitted filename and content type as untrusted metadata. Validate filenames after protocol decoding; an allowed extension alone does not establish safe content. Follow the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md) for content checks, size limits, storage, and safe serving. If a filename or any other input becomes part of a file system path, follow the [Path Traversal Prevention Cheat Sheet](Path_Traversal_Prevention_Cheat_Sheet.md).
 
 ### Email Address Validation
 
