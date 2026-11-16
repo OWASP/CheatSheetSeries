@@ -25,6 +25,7 @@ Apply the framing rules from [RFC 9112](https://www.rfc-editor.org/rfc/rfc9112.h
 - Reject a request that has both `Content-Length` and `Transfer-Encoding`. If a component processes it instead, it must use `Transfer-Encoding` alone. Either way, close the connection after responding.
 - Respond with `400 (Bad Request)` and close the connection when `Transfer-Encoding` is present and `chunked` is not the final coding.
 - Treat an invalid `Content-Length`, including several different values, as an unrecoverable error.
+- Respond with `400 (Bad Request)` and close the connection for a request with whitespace between a header field name and the colon (for example `Transfer-Encoding : chunked`), with obsolete line folding, or with a bare CR. A component that doesn't recognize such an obfuscated `Transfer-Encoding` header won't see it, which is how `TE.TE` slips past the rule above ([RFC 9112 section 5.1](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.1), [section 5.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.2), [section 2.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-2.2)).
 
 Have the front end normalize or reject ambiguous requests, and have the back end reject any that are still ambiguous and close the connection ([PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-prevent-http-request-smuggling-vulnerabilities)).
 
@@ -47,11 +48,10 @@ If HTTP/2 has to be translated to HTTP/1.1, validate the result as an HTTP/1.1 r
 
 - Request smuggling defeats controls that only the front end applies, because the smuggled request never passes through them. [RFC 9112 Section 11.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-11.2) describes this class of attack on message framing. Enforce authorization in the application as well, not only in the proxy or WAF.
 - A desync can poison a shared cache with another user's response. See the [Web Cache Security Cheat Sheet](Web_Cache_Security_Cheat_Sheet.md) for cache keys and what to cache.
-- Header injection through CR and LF in values the application writes into responses is a related but separate problem. See the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md).
-
+- Header injection through CR and LF in values the application writes into responses is a related but separate problem.
 ## Testing
 
-Test through the same chain of CDN, load balancer, and proxies that production uses, since the bug is in how those components disagree. The [OWASP Web Security Testing Guide](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/15-Testing_for_HTTP_Splitting_Smuggling/) and [PortSwigger](https://portswigger.net/web-security/request-smuggling/finding#finding-http-request-smuggling-vulnerabilities-using-timing-techniques) describe timing-based probes. Some probes can disrupt other users' requests on a vulnerable system, so test in a non-production environment where possible.
+Test through the same chain of CDN, load balancer, and proxies that production uses, since the bug is in how those components disagree. [PortSwigger](https://portswigger.net/web-security/request-smuggling/finding#finding-http-request-smuggling-vulnerabilities-using-timing-techniques) describes timing-based probes. Some probes can disrupt other users' requests on a vulnerable system, so test in a non-production environment where possible.
 
 ## References
 
