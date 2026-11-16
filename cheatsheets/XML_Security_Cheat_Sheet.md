@@ -77,273 +77,30 @@ Unexpected consequences may result from manipulating documents using parsers tha
 
 ## Dealing with invalid XML documents
 
-**Attackers may introduce unexpected values in documents to take advantage of an application that does not verify whether the document contains a valid set of values.** Schemas specify restrictions that help identify whether documents are valid, and a valid document is well formed and complies with the restrictions of a schema. More than one schema can be used to validate a document, and these restrictions may appear in multiple files, either using a single schema language or relying on the strengths of the different schema languages.
+**Attackers may introduce unexpected values in documents to take advantage of an application that does not verify whether the document contains a valid set of values.** Treat schema validation as a fail-closed contract: accept a document only after the entire document passes validation; otherwise reject it. More than one schema language can be layered (structural validation first, value restrictions second, for example). Streaming validators can deliver content before reporting a later validation failure, so do not commit application effects until all validation succeeds, and discard buffered results on failure.
 
-The recommendation to avoid these vulnerabilities is that each XML document must have a precisely defined XML Schema (not [DTD](https://www.w3schools.com/xml/xml_dtd_intro.asp)) with every piece of information properly restricted to avoid problems of improper data validation. Use a local copy or a known good repository instead of the schema reference supplied in the XML document. Also, perform an integrity check of the XML schema file being referenced, bearing in mind the possibility that the repository could be compromised. In cases where the XML documents are using remote schemas, configure servers to use only secure, encrypted communications to prevent attackers from eavesdropping on network traffic.
+Each XML document should be validated against a precisely defined [XML Schema](https://www.w3.org/TR/xmlschema-2/) (not a [DTD](https://www.w3schools.com/xml/xml_dtd_intro.asp)) in which every element and attribute carries explicit restrictions. The principles:
 
-### Document without Schema
+- **Validate against a strict, versioned, local schema.** Compile the schema from files kept with the application (or from a known-good, integrity-checked repository) instead of following the schema location hints embedded in the document. If schema files are retrieved remotely, use secure, encrypted transport. Hint-driven loading fetches attacker-influenced URLs, and the Java Development Kit (JDK) documentation notes that "the use of schema location hints introduces a vulnerability to denial-of-service attacks" ([javax.xml.validation.SchemaFactory](https://docs.oracle.com/javase/8/docs/api/javax/xml/validation/SchemaFactory.html)). Keep the schema under version control, and re-validate whenever either the schema or the documents change.
+- **Reject, do not repair.** If validation fails, refuse the entire document. "Mostly valid" documents are exactly the shape used to smuggle a semantics-changing element past review.
+- **Restrict every value with the schema's own [facets](https://www.w3.org/TR/xmlschema-2/#facets).** For strings, use `length` for a fixed length, or `minLength` and `maxLength` for a range, together with `pattern` or `enumeration` for allowed values. For numbers and amounts, use decimal types with `minInclusive`/`maxInclusive` and `totalDigits`/`fractionDigits` rather than floating point. Specify explicit units for measures, and explicit formats where a value is consumed by a legacy backend instead of the schema-checked pipeline.
+- **Type by meaning, not by length.** Where the receiving system enforces its own type (a database column, a currency type), the schema type should express the same size and range so the two layers cannot disagree about what was stored.
+- **Keep documents small and shallow.** Enforce document-size, nesting-depth, and element-count limits when receiving and parsing XML. In the schema, set an appropriate finite `maxOccurs` for repeated elements rather than `maxOccurs="unbounded"`. Follow the [XML External Entity Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html) for DTD and external-entity hardening. Schema validation is a second line of defense, not a replacement for parser hardening and resource limits.
 
-Consider a bookseller that uses a web service through a web interface to make transactions. The XML document for transactions is composed of two elements: an `id` value related to an item and a certain `price`. The user may only introduce a certain `id` value using the web interface:
+Schema validity is not data authorization: a valid document can still come from an unprivileged user, so value-level authorization (resolving identifiers against server-side state instead of trusting document content, for example) remains the application's job.
 
-```xml
-<buy>
- <id>123</id>
- <price>10</price>
-</buy>
-```
-
-**If there is no control on the document's structure, the application could also process different well-formed messages with unintended consequences. The previous document could have contained additional tags to affect the behavior of the underlying application processing its contents**:
+The following element definition is the concise example for this section; facets restrict both its size and its vocabulary:
 
 ```xml
-<buy>
- <id>123</id><price>0</price><id></id>
- <price>10</price>
-</buy>
-```
-
-Notice again how the value 123 is supplied as an `id`, but now the document includes additional opening and closing tags. The attacker closed the `id` element and sets a bogus `price` element to the value 0. The final step to keep the structure well-formed is to add one empty `id` element. After this, the application adds the closing tag for `id` and set the `price` to 10. If the application processes only the first values provided for the ID and the value without performing any type of control on the structure, it could benefit the attacker by providing the ability to buy a book without actually paying for it.
-
-### Unrestrictive Schema
-
-**Certain schemas do not offer enough restrictions for the type of data that each element can receive.** This is what normally happens when using [DTD](https://www.w3schools.com/xml/xml_dtd_intro.asp); it has a very limited set of possibilities compared to the type of restrictions that can be applied in XML documents. This could expose the application to undesired values within elements or attributes that would be easy to constrain when using other schema languages. In the following example, a person's `age` is validated against an inline [DTD](https://www.w3schools.com/xml/xml_dtd_intro.asp) schema:
-
-```xml
-<!DOCTYPE person [
- <!ELEMENT person (name, age)>
- <!ELEMENT name (#PCDATA)>
- <!ELEMENT age (#PCDATA)>
-]>
-<person>
- <name>John Doe</name>
- <age>11111..(1.000.000digits)..11111</age>
-</person>
-```
-
-The previous document contains an inline [DTD](https://www.w3schools.com/xml/xml_dtd_intro.asp) with a root element named `person`. This element contains two elements in a specific order: `name` and then `age`. The element `name` is then defined to contain `PCDATA` as well as the element `age`.
-
-After this definition begins the well-formed and valid XML document. The element name contains an irrelevant value but the `age` element contains one million digits. Since there are no restrictions on the maximum size for the `age` element, this one-million-digit string could be sent to the server for this element.
-
-Typically this type of element should be restricted to contain no more than a certain amount of characters and constrained to a certain set of characters (for example, digits from 0 to 9, the + sign and the - sign). If not properly restricted, applications may handle potentially invalid values contained in documents.
-
-Since it is not possible to indicate specific restrictions (a maximum length for the element `name` or a valid range for the element `age`), this type of schema increases the risk of affecting the integrity and availability of resources.
-
-### Improper Data Validation
-
-**When schemas are insecurely defined and do not provide strict rules, they may expose the application to diverse situations. The result of this could be the disclosure of internal errors or documents that hit the application's functionality with unexpected values.**
-
-#### String Data Types
-
-Provided you need to use a hexadecimal value, there is no point in defining this value as a string that will later be restricted to the specific 16 hexadecimal characters. To exemplify this scenario, when using XML encryption some values must be encoded using base64 . This is the schema definition of how these values should look:
-
-```xml
-<element name="CipherData" type="xenc:CipherDataType"/>
- <complexType name="CipherDataType">
-  <choice>
-   <element name="CipherValue" type="base64Binary"/>
-   <element ref="xenc:CipherReference"/>
-  </choice>
- </complexType>
-```
-
-The previous schema defines the element `CipherValue` as a base64 data type. As an example, the IBM WebSphere DataPower SOA Appliance allowed any type of characters within this element after a valid base64 value, and will consider it valid.
-
-The first portion of this data is properly checked as a base64 value, but the remaining characters could be anything else (including other sub-elements of the `CipherData` element). Restrictions are partially set for the element, which means that the information is probably tested using an application instead of the proposed sample schema.
-
-#### Numeric Data Types
-
-**Defining the correct data type for numbers can be more complex since there are more options than there are for strings.**
-
-##### Negative and Positive Restrictions
-
-XML Schema numeric data types can include different ranges of numbers. They can include:
-
-- **negativeInteger**: Only negative numbers
-- **nonNegativeInteger**: Positive numbers and the zero value
-- **positiveInteger**: Only positive numbers
-- **nonPositiveInteger**: Negative numbers and the zero value
-
-The following sample document defines an `id` for a product, a `price`, and a `quantity` value that is under the control of an attacker:
-
-```xml
-<buy>
- <id>1</id>
- <price>10</price>
- <quantity>1</quantity>
-</buy>
-```
-
-**To avoid repeating old errors, an XML schema may be defined to prevent processing the incorrect structure in cases where an attacker wants to introduce additional elements:**
-
-```xml
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
- <xs:element name="buy">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element name="id" type="xs:integer"/>
-    <xs:element name="price" type="xs:decimal"/>
-    <xs:element name="quantity" type="xs:integer"/>
-   </xs:sequence>
-  </xs:complexType>
- </xs:element>
-</xs:schema>
-```
-
-Limiting that `quantity` to an integer data type will avoid any unexpected characters. Once the application receives the previous message, it may calculate the final price by doing `price*quantity`. **However, since this data type may allow negative values, it might allow a negative result on the user's account if an attacker provides a negative number. What you probably want to see in here to avoid that logical vulnerability is positiveInteger instead of integer.**
-
-##### Divide by Zero
-
-**Whenever using user controlled values as denominators in a division, developers should avoid allowing the number zero. In cases where the value zero is used for division in XSLT, the error `FOAR0001` will occur. Other applications may throw other exceptions and the program may crash.** There are specific data types for XML schemas that specifically avoid using the zero value. For example, in cases where negative values and zero are not considered valid, the schema could specify the data type `positiveInteger` for the element.
-
-```xml
-<xs:element name="denominator">
- <xs:simpleType>
-  <xs:restriction base="xs:positiveInteger"/>
- </xs:simpleType>
-</xs:element>
-```
-
-The element `denominator` is now restricted to positive integers. This means that only values greater than zero will be considered valid. If you see any other type of restriction being used, you may trigger an error if the denominator is zero.
-
-##### Special Values: Infinity and Not a Number (NaN)
-
-The data types `float` and `double` contain real numbers and some special values: `-Infinity` or `-INF`, `NaN`, and `+Infinity` or `INF`. These possibilities may be useful to express certain values, but they are sometimes misused. The problem is that they are commonly used to express only real numbers such as prices. This is a common error seen in other programming languages, not solely restricted to these technologies.
-
-Not considering the whole spectrum of possible values for a data type could make underlying applications fail. **If the special values `Infinity` and `NaN` are not required and only real numbers are expected, the data type `decimal` is recommended:**
-
-```xml
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
- <xs:element name="buy">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element name="id" type="xs:integer"/>
-    <xs:element name="price" type="xs:decimal"/>
-    <xs:element name="quantity" type="xs:positiveInteger"/>
-   </xs:sequence>
-  </xs:complexType>
- </xs:element>
-</xs:schema>
-```
-
-**The price value will not trigger any errors when set at Infinity or NaN, because these values will not be valid. An attacker can exploit this issue if those values are allowed.**
-
-#### General Data Restrictions
-
-After selecting the appropriate data type, developers may apply additional restrictions. Sometimes only a certain subset of values within a data type will be considered valid:
-
-##### Prefixed Values
-
-**Certain types of values should only be restricted to specific sets: traffic lights will have only three types of colors, only 12 months are available, and so on. It is possible that the schema has these restrictions in place for each element or attribute. This is the most perfect allow-list scenario for an application: only specific values will be accepted. Such a constraint is called `enumeration` in an XML schema.** The following example restricts the contents of the element month to 12 possible values:
-
-```xml
-<xs:element name="month">
+<xs:element name="country">
  <xs:simpleType>
   <xs:restriction base="xs:string">
-   <xs:enumeration value="January"/>
-   <xs:enumeration value="February"/>
-   <xs:enumeration value="March"/>
-   <xs:enumeration value="April"/>
-   <xs:enumeration value="May"/>
-   <xs:enumeration value="June"/>
-   <xs:enumeration value="July"/>
-   <xs:enumeration value="August"/>
-   <xs:enumeration value="September"/>
-   <xs:enumeration value="October"/>
-   <xs:enumeration value="November"/>
-   <xs:enumeration value="December"/>
+   <xs:length value="2"/>
+   <xs:pattern value="[A-Z]{2}"/>
   </xs:restriction>
  </xs:simpleType>
 </xs:element>
 ```
-
-By limiting the month element's value to any of the previous values, the application will not be manipulating random strings.
-
-##### Ranges
-
-Software applications, databases, and programming languages normally store information within specific ranges. **Whenever using an element or an attribute in locations where certain specific sizes matter (to avoid overflows or underflows), it would be logical to check whether the data length is considered valid.** The following schema could constrain a name using a minimum and a maximum length to avoid unusual scenarios:
-
-```xml
-<xs:element name="name">
- <xs:simpleType>
-  <xs:restriction base="xs:string">
-   <xs:minLength value="3"/>
-   <xs:maxLength value="256"/>
-  </xs:restriction>
- </xs:simpleType>
-</xs:element>
-```
-
-In cases where the possible values are restricted to a certain specific length (let's say 8), this value can be specified as follows to be valid:
-
-```xml
-<xs:element name="name">
- <xs:simpleType>
-  <xs:restriction base="xs:string">
-   <xs:length value="8"/>
-  </xs:restriction>
- </xs:simpleType>
-</xs:element>
-```
-
-##### Patterns
-
-Certain elements or attributes may follow a specific syntax. You can add `pattern` restrictions when using XML schemas. **When you want to ensure that the data complies with a specific pattern, you can create a specific definition for it. Social security numbers (SSN) may serve as a good example; they must use a specific set of characters, a specific length, and a specific `pattern`:**
-
-```xml
-<xs:element name="SSN">
- <xs:simpleType>
-  <xs:restriction base="xs:token">
-   <xs:pattern value="[0-9]{3}-[0-9]{2}-[0-9]{4}"/>
-  </xs:restriction>
- </xs:simpleType>
-</xs:element>
-```
-
-Only numbers between `000-00-0000` and `999-99-9999` will be allowed as values for a SSN.
-
-##### Assertions
-
-**Assertion components constrain the existence and values of related elements and attributes on XML schemas. An element or attribute will be considered valid with regard to an assertion only if the test evaluates to true without raising any error. The variable `$value` can be used to reference the contents of the value being analyzed.**
-
-The *Divide by Zero* section above referenced the potential consequences of using data types containing the zero value for denominators, proposing a data type containing only positive values. An opposite example would consider valid the entire range of numbers except zero. To avoid disclosing potential errors, values could be checked using an `assertion` disallowing the number zero:
-
-```xml
-<xs:element name="denominator">
- <xs:simpleType>
-  <xs:restriction base="xs:integer">
-   <xs:assertion test="$value != 0"/>
-  </xs:restriction>
- </xs:simpleType>
-</xs:element>
-```
-
-The assertion guarantees that the `denominator` will not contain the value zero as a valid number and also allows negative numbers to be a valid denominator.
-
-##### Occurrences
-
-**The consequences of not defining a maximum number of occurrences could be worse than coping with the consequences of what may happen when receiving extreme numbers of items to be processed.** Two attributes specify minimum and maximum limits: `minOccurs` and `maxOccurs`.
-
- The default value for both the `minOccurs` and the `maxOccurs` attributes is `1`, but certain elements may require other values. For instance, if a value is optional, it could contain a `minOccurs` of 0, and if there is no limit on the maximum amount, it could contain a `maxOccurs` of `unbounded`, as in the following example:
-
-```xml
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
- <xs:element name="operation">
-  <xs:complexType>
-   <xs:sequence>
-    <xs:element name="buy" maxOccurs="unbounded">
-     <xs:complexType>
-      <xs:all>
-       <xs:element name="id" type="xs:integer"/>
-       <xs:element name="price" type="xs:decimal"/>
-       <xs:element name="quantity" type="xs:integer"/>
-      </xs:all>
-     </xs:complexType>
-    </xs:element>
-  </xs:complexType>
- </xs:element>
-</xs:schema>
-```
-
-The previous schema includes a root element named `operation`, which can contain an unlimited (`unbounded`) amount of buy elements. This is a common finding, since developers do not normally want to restrict maximum numbers of occurrences. **Applications using limitless occurrences should test what happens when they receive an extremely large amount of elements to be processed. Since computational resources are limited, the consequences should be analyzed and eventually a maximum number ought to be used instead of an `unbounded` value.**
 
 ### Jumbo Payloads
 
