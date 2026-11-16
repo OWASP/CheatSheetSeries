@@ -41,7 +41,8 @@ A service should have only the permissions necessary to perform its intended fun
 - Avoid sharing service identities between unrelated applications when separate identities are practical.
 - Restrict read, write, and execute permissions on files, directories, and other resources.
 
-See the [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for additional guidance on least privilege and access control.
+See the [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for additional guidance on least privilege and access control and 
+See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) for the `User=`, `Group=`, and `CapabilityBoundingSet=` directives used to restrict service identities and Linux capabilities.
 
 ### Reduce the Attack Surface
 
@@ -61,7 +62,8 @@ Default configurations may enable functionality or access that is unnecessary fo
 - Restrict modification of service configuration files to authorized identities.
 - Keep configuration changes under version control or another auditable change-management process, where practical.
 
-See the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) for related configuration-hardening practices in containerized environments.
+See the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) for related configuration-hardening practices in containerized environments and 
+See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for guidance on establishing, implementing, and monitoring security-relevant configuration settings.
 
 ### Restrict Network Communication
 
@@ -101,7 +103,7 @@ A service that consumes excessive memory, CPU time, processes, or other resource
 - Configure resource limits using controls supported by the operating system or service manager.
 - Test limits under representative workloads, including expected peak conditions.
 
-See the [OWASP Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) for guidance on mitigating resource-exhaustion and denial-of-service risks.
+See the [OWASP Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) for guidance on mitigating resource-exhaustion and denial-of-service risks and and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for service-level resource limits using `MemoryMax=` and `TasksMax=`.
 
 ## Hardening Services with systemd
 
