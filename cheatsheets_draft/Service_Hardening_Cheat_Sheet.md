@@ -131,19 +131,6 @@ Resource limits can reduce the impact of some resource-exhaustion conditions, bu
 
 See [NIST SP 800-53 Rev. 5, SC-6 (Resource Availability)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-6/) for the general principle and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
 
-### Validate Hardening Changes
-
-Hardening should be introduced in a controlled manner. A configuration that appears restrictive may not provide the expected protection, and an overly restrictive configuration may interrupt legitimate operations.
-
-- Identify the resources and operations required by the service before applying restrictions.
-- Apply controls incrementally so that compatibility problems can be isolated.
-- Verify that required service functionality continues to work.
-- Where safe and practical, test that operations intended to be prohibited are actually denied.
-- Record the platform version, configuration, test procedure, and results for reproducibility.
-- Reassess hardening settings after significant application, operating-system, or service-manager changes.
-
-See [NIST SP 800-53 Rev. 5, CA-2 (Control Assessments)](https://csf.tools/reference/nist-sp-800-53/r5/ca/ca-2/) for assessing whether controls operate as intended, and [CM-3 (Configuration Change Control)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-3/) for managing configuration changes.
-
 ## Hardening Services with systemd
 
 On Linux systems using systemd, service unit settings can restrict a service's privileges and access to system resources. Apply restrictions according to the service's requirements, and test them before deployment. These settings provide defense in depth; they do not replace secure application configuration, patching, or other operating-system security controls.
