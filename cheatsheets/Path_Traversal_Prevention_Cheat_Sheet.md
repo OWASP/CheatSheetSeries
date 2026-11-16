@@ -107,7 +107,7 @@ Archive entries are filenames chosen by whoever built the archive. Extracting an
 
 - Validate every entry name with the containment check above before writing it, and reject the archive if any entry fails.
 - Reject or skip symbolic link and hard link entries unless the application needs them.
-- Use the library's safe extraction mode where one exists. Python's `tarfile` extraction filters do this, and the `data` filter is the default from Python 3.14. Pass `filter='data'` explicitly on older versions ([Python tarfile extraction filters](https://docs.python.org/3/library/tarfile.html#extraction-filters)).
+- Use the library's safe extraction mode where one exists. Python's `tarfile` extraction filters do this, and the `data` filter is the default from Python 3.14. Pass `filter='data'` explicitly on older versions, and use a Python release that includes the June 2025 `tarfile` security fixes, since earlier releases let crafted archives bypass the filters ([Python tarfile extraction filters](https://docs.python.org/3/library/tarfile.html#extraction-filters), [CPython issue 135034](https://github.com/python/cpython/issues/135034)).
 
 ## Windows Paths
 
