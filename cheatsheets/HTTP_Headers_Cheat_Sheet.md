@@ -149,47 +149,26 @@ If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/G
 
 ### Access-Control-Allow-Credentials
 
-The [`Access-Control-Allow-Credentials`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Credentials) HTTP response header is also a CORS (Cross-Origin Resource Sharing) header that indicates whether a browser is allowed to expose the response to frontend JavaScript when the cross-origin request includes credentials.
-
-Credentials include cookies, HTTP authentication information, and TLS client certificates. This header is particularly relevant when a web application needs to make cross-origin requests while maintaining an authenticated user session.
-
-The header accepts only one valid value: `true`. If credentials are not required, the header should be omitted rather than explicitly set to `false`.
+The [`Access-Control-Allow-Credentials`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Credentials) HTTP response header indicates whether a browser can expose a cross-origin response to frontend JavaScript when the request's credentials mode is `include`. Its only valid value is `true`; omit the header when credentials are not required.
 
 #### Recommendation
 
-- Only enable credentialed cross-origin requests when required by the application.
+- Enable credentialed cross-origin requests only when required by the application.
+- Send `Access-Control-Allow-Credentials: true` only together with an `Access-Control-Allow-Origin` value selected from an exact-match allowlist of trusted origins. Never allow the `null` origin.
+- For credentialed CORS requests, never use the wildcard (`*`) for `Access-Control-Allow-Origin`. An explicit, allowlisted origin must be specified instead.
+- Send `Vary: Origin` whenever the `Access-Control-Allow-Origin` response value depends on the request's `Origin` header.
 
-- Set the `Access-Control-Allow-Credentials` header to `true` only for trusted origins.
+For secure cookie configuration, refer to the [Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies).
 
-- For [credentialed CORS requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#requests_with_credentials), the `Access-Control-Allow-Origin` header must not use the wildcard (`*`). Browsers reject such responses, even if `Access-Control-Allow-Credentials: true` is present. An explicit origin must be specified instead.
+**Example:**
 
-- Avoid dynamically reflecting arbitrary values from the [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin) request header. Validate the requesting origin against an explicit allowlist, and include `Vary: Origin` whenever the response reflects an allowlisted origin.
+> ```http
+> Access-Control-Allow-Origin: https://trusted-site.com
+> Access-Control-Allow-Credentials: true
+> Vary: Origin
+> ```
 
-- Ensure that cookies used for authentication and session management have appropriate `Secure`, `HttpOnly`, and `SameSite` attributes. Use `SameSite=None; Secure` when cookies must be sent with cross-site requests, and enable `HttpOnly` for cookies that do not need to be accessed through JavaScript. Refer to [MDN's Set-Cookie documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) for more information. Browser third-party-cookie policies can still prevent cookies from being sent even when these attributes and CORS are configured; see [MDN's CORS credentials guidance](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS#requests_with_credentials).
-
-- Remember that enabling credentialed CORS does not replace CSRF protection. Implement appropriate CSRF defenses for state-changing requests. Refer to [MDN's Cross-Site Request Forgery (CSRF) documentation](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF).
-
-For applications that require credentialed cross-origin access, configure the following response headers:
-
-```http
-Access-Control-Allow-Origin: https://trusted-site.com
-Access-Control-Allow-Credentials: true
-```
-
-The requesting client must also explicitly opt in to sending [credentials](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials). For example, using the Fetch API:
-
-```javascript
-fetch("https://api.example.com/user", {
-    method: "GET",
-    credentials: "include"
-});
-```
-
-**NOTE:**
-
-- CORS preflight requests do not include credentials according to the Fetch standard. However, some browsers deviate from this behaviour regarding TLS client certificates: Chromium-based browsers send TLS client certificates during CORS preflight requests, while Firefox allows this behaviour to be enabled through the `network.cors_preflight.allow_client_cert` preference, introduced in Firefox 87. This behaviour is non-compliant with the Fetch specification. See [Chromium issue #775438](https://crbug.com/775438) and [Firefox issue #1511151](https://bugzil.la/1511151).
-
-- Using `Access-Control-Allow-Credentials: true` does not automatically send cookies or authentication information; the client must opt in to credentialed requests.
+For more information about credentialed CORS and its security implications, refer to the [CORS Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/CORS_Security_Cheat_Sheet.html).
 
 ### Cross-Origin-Opener-Policy (COOP)
 
