@@ -30,10 +30,8 @@ Known vulnerabilities in service software, operating systems, and dependencies c
 
 - Use supported versions of the operating system, service software, and dependencies. Maintain an inventory of service components and their versions, using an SBOM where appropriate.
 - Monitor relevant security advisories, prioritize updates according to risk and exposure, and obtain updates from trusted sources using supported authenticity checks.
-- Test updates before production deployment where practical. For urgent fixes, use an expedited deployment and rollback procedure and verify successful installation.
-- Remove or replace unsupported components when security fixes are unavailable; apply compensating controls if immediate replacement is not feasible.
 
-See [NIST SP 800-40 Rev. 4](https://csrc.nist.gov/pubs/sp/800/40/r4/final) for patch-management guidance and the [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html) for dependency and supply-chain practices.
+See the [OWASP Vulnerable Dependency Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html) for detailed guidance on identifying, monitoring, and managing vulnerable dependencies.
 
 ### Apply the Principle of Least Privilege
 
@@ -42,41 +40,28 @@ A service should have only the permissions necessary to perform its intended fun
 - Run services under dedicated, non-administrative identities where possible, and avoid granting unnecessary capabilities or privileged group memberships.
 - Avoid sharing service identities between unrelated applications when separate identities are practical.
 - Restrict read, write, and execute permissions on files, directories, and other resources.
-- Grant privileged operations only when required, and minimize the duration and scope of elevated access where the application architecture permits.
-- Review service permissions when functionality, dependencies, or deployment requirements change.
-- Periodically verify the service's effective privileges and resource access rather than relying solely on its intended configuration.
 
-For example, a service that only reads configuration files should not require permission to modify them. A service that writes application data should not automatically receive write access to application executables or unrelated system directories.
-
-See [NIST SP 800-53 Rev. 5, AC-6 (Least Privilege)](https://csf.tools/reference/nist-sp-800-53/r5/ac/ac-6/) for supporting guidance.
+See the [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for additional guidance on least privilege and access control.
 
 ### Reduce the Attack Surface
 
 Every unnecessary interface, component, or enabled feature can introduce additional opportunities for attack.
 
 - Disable service features, plugins, modules, and administrative interfaces that are not required.
-- Remove unused software components and dependencies where doing so is operationally safe.
 - Disable unnecessary services and background processes.
 - Avoid exposing debugging, diagnostic, or development endpoints in production.
 
-For example, a service used only by applications on the same host should not listen on all network interfaces unless remote access is explicitly required. Binding to a loopback interface does not prevent access by other local processes.
-
-See [NIST SP 800-53 Rev. 5, CM-7 (Least Functionality)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-7/) for supporting guidance.
+See the [OWASP Attack Surface Analysis Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html) for guidance on identifying and reducing exposed functionality and attack surfaces.
 
 ### Maintain Secure Service Configurations
 
 Default configurations may enable functionality or access that is unnecessary for a particular deployment. Define and maintain a configuration baseline appropriate to the service.
 
 - Review security-relevant defaults before deployment, including disabling unused default accounts and changing or disabling insecure default credentials.
-- Disable unnecessary features and replace insecure settings with supported, secure alternatives.
 - Restrict modification of service configuration files to authorized identities.
 - Keep configuration changes under version control or another auditable change-management process, where practical.
-- Review configuration changes during application updates and deployment changes.
-- Avoid relying solely on configuration-file contents as proof of enforcement; verify the effective behavior of relevant security controls.
 
-For example, when changing a service's permitted filesystem access, verify both that required application operations still succeed and that prohibited operations are denied.
-
-See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csf.tools/reference/nist-sp-800-53/r5/cm/cm-6/) for establishing, implementing, and monitoring security-relevant configuration settings.
+See the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) for related configuration-hardening practices in containerized environments.
 
 ### Restrict Network Communication
 
@@ -85,16 +70,8 @@ A service should accept and initiate only the network connections required for i
 - Bind listening sockets to the necessary network interfaces.
 - Restrict inbound traffic to required ports, protocols, and authorized sources.
 - Restrict outbound connectivity where supported and operationally feasible.
-- Restrict administrative interfaces to authorized access paths, require strong authentication and authorization, and prevent exposure to untrusted networks unless explicitly required and adequately protected.
-- Review communication paths between services and remove unnecessary network access.
-- Test network restrictions from relevant source networks rather than assuming that configured rules provide the intended isolation.
-- Use appropriate authentication and authorization for service-to-service communication, including communication over internal or otherwise trusted networks.
 
-For example, a database service used exclusively by an application on an internal network should not be directly accessible from the public internet.
-
-Network restrictions reduce exposure but do not replace authentication, authorization, or transport protection where those controls are required.
-
-See [NIST SP 800-53 Rev. 5, SC-7 (Boundary Protection)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-7/) and [NIST SP 800-207 (Zero Trust Architecture)](https://csrc.nist.gov/pubs/sp/800/207/final) for supporting guidance.
+See the [OWASP Network Segmentation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Network_Segmentation_Cheat_Sheet.html) for detailed guidance on restricting network communication and isolating services.
 
 ### Protect Service Credentials and Sensitive Data
 
@@ -103,7 +80,6 @@ Services frequently use API keys, database credentials, certificates, and other 
 - Do not hardcode secrets in source code or commit them to version control. Provide credentials through an appropriate secrets-management mechanism.
 - Limit access to secrets and the permissions they grant to the service identities and processes that require them.
 - Avoid exposing secrets through command-line arguments, logs, error messages, or other interfaces where they may be disclosed. Prefer secrets-management mechanisms that do not expose credentials through environment variables where practical.
-- Revoke and replace credentials when compromise is suspected, ensuring that exposed credentials are no longer valid. Follow organizational requirements for routine rotation.
 
 For implementation and credential lifecycle guidance, see the [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html).
 
@@ -114,8 +90,8 @@ Logs and monitoring provide information needed to identify service failures, inv
 - Record security-relevant service events, such as authentication attempts, access-control failures, and significant configuration changes, with sufficient context for investigation.
 - Avoid logging credentials or unnecessary sensitive information. Protect logs against unauthorized access, modification, and deletion, and handle untrusted log data safely.
 - Monitor service failures, unexpected restarts, unusual resource consumption, and logging failures. Define retention and alerting requirements and verify that important events can be retrieved.
-
-Logging alone does not prevent compromise. It supports detection and investigation when relevant events are collected, reviewed, and acted upon. See the [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) for detailed logging, protection, retention, and monitoring guidance.
+  
+ See the [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) for detailed logging, protection, retention, and monitoring guidance.
 
 ### Limit Resource Consumption
 
@@ -123,13 +99,9 @@ A service that consumes excessive memory, CPU time, processes, or other resource
 
 - Identify the service's expected resource requirements under normal and peak load.
 - Configure resource limits using controls supported by the operating system or service manager.
-- Limit resource consumption without preventing legitimate workloads from completing.
 - Test limits under representative workloads, including expected peak conditions.
-- Monitor resource-limit events and resulting service failures, and adjust limits or recovery behavior when justified by operational evidence.
 
-Resource limits can reduce the impact of some resource-exhaustion conditions, but they do not guarantee availability or replace application-level protections against denial-of-service attacks.
-
-See [NIST SP 800-53 Rev. 5, SC-6 (Resource Availability)](https://csf.tools/reference/nist-sp-800-53/r5/sc/sc-6/) for the general principle and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for a Linux/systemd implementation.
+See the [OWASP Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) for guidance on mitigating resource-exhaustion and denial-of-service risks.
 
 ## Hardening Services with systemd
 
