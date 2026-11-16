@@ -20,9 +20,11 @@ Some parsers can be configured to operate in a relaxed mode that accepts and cor
 - increased resource consumption, up to denial of service;
 - unexpected interpretation of the document, which can lead to vulnerabilities.
 
-For example, `lxml` and PHP accept nested comments in recovery mode (the specification forbids `--` inside comments), and libxml2's canonicalization replaces CDATA sections with escaped character data, changing the serialized representation while preserving the parsed character value.
+For example, `lxml` and PHP accept nested comments in recovery mode (the specification forbids `--` inside comments).
 
-**Coercive parsing** is the resource-exhaustion variant of the same problem: deeply nested elements without their matching end tags make the parser keep far more elements open than a legitimate document would ([Arnaboldi, *Assessing and Exploiting XML*, §1.3](https://www.ioactive.com/wp-content/uploads/2018/05/Arnaboldi-XML-Schema-Vulnerabilities-1.pdf)). A reported denial-of-service attack against Firefox 3.0.x ([CVE-2009-1232](https://nvd.nist.gov/vuln/detail/CVE-2009-1232)) used 30,000 unterminated elements, needed roughly half the bytes of an equivalent well-formed document, and exhausted the processing stack. Limit nesting depth as well as total size.
+Separately, canonicalization replaces CDATA sections with their character content, escaping the special characters in it ([W3C: Canonical XML 1.1](https://www.w3.org/TR/xml-c14n11/)). libxml2's canonicalization does this, changing the serialized representation while preserving the parsed character value. It applies to well-formed input as well, so it is not a consequence of relaxed parsing.
+
+**Coercive parsing** is a separate attack on nesting depth: deeply nested elements without their matching end tags make the parser keep every unclosed element open until it reaches the end of the document ([Arnaboldi, *Assessing and Exploiting XML*, §1.3](https://www.ioactive.com/wp-content/uploads/2018/05/Arnaboldi-XML-Schema-Vulnerabilities-1.pdf)). A strict parser behaves the same way, since it can only reject the document after parsing it, so disabling recovery mode does not prevent this. A reported denial-of-service attack against Firefox 3.0.x ([CVE-2009-1232](https://nvd.nist.gov/vuln/detail/CVE-2009-1232)) used 30,000 unterminated elements, needed roughly half the bytes of an equivalent well-formed document, and exhausted the processing stack. Limit nesting depth as well as total size.
 
 ```xml
 <A1>
