@@ -1062,6 +1062,34 @@
   
   
     <li class="md-nav__item">
+      <a href="CORS_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CORS Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -3173,6 +3201,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Path_Traversal_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Path Traversal Prevention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -4916,7 +4972,7 @@ to bypass such a check.</p>
 <li>Implement a maximum length</li>
 <li>Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods<ul>
 <li>Consider telling the user what an acceptable filename is.</li>
-<li>Restrict use of leading periods (hidden files) and sequential periods (directory traversal).</li>
+<li>Restrict use of leading periods (hidden files) and sequential periods (directory traversal). Character rules alone don't prevent traversal, so also check the final path as described in the <a href="Path_Traversal_Prevention_Cheat_Sheet.html">Path Traversal Prevention Cheat Sheet</a>.</li>
 <li>Restrict the use of a leading hyphen or spaces to make it safer to use shell scripts to process files.</li>
 <li>If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.</li>
 </ul>

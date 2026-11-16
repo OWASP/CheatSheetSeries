@@ -1062,6 +1062,34 @@
   
   
     <li class="md-nav__item">
+      <a href="CORS_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CORS Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -3123,6 +3151,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Path_Traversal_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Path Traversal Prevention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -4793,7 +4849,7 @@
 <h3 id="validating-rich-user-content">Validating Rich User Content<a class="headerlink" href="#validating-rich-user-content" title="Permanent link">&para;</a></h3>
 <p>When accepting user-authored HTML, use a maintained <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization">HTML sanitization library</a>. Input validation and regular expressions cannot replace that control.</p>
 <h3 id="file-upload-validation">File Upload Validation<a class="headerlink" href="#file-upload-validation" title="Permanent link">&para;</a></h3>
-<p>Treat the submitted filename and content type as untrusted metadata. Validate filenames after protocol decoding; an allowed extension alone does not establish safe content. Follow the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheat Sheet</a> for content checks, size limits, storage, and safe serving.</p>
+<p>Treat the submitted filename and content type as untrusted metadata. Validate filenames after protocol decoding; an allowed extension alone does not establish safe content. Follow the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheat Sheet</a> for content checks, size limits, storage, and safe serving. If a filename or any other input becomes part of a file system path, follow the <a href="Path_Traversal_Prevention_Cheat_Sheet.html">Path Traversal Prevention Cheat Sheet</a>.</p>
 <h3 id="email-address-validation">Email Address Validation<a class="headerlink" href="#email-address-validation" title="Permanent link">&para;</a></h3>
 <p>Use a maintained email validation library compatible with the addresses your mail system supports. Format validation does not prove mailbox access. Follow <a href="Email_Validation_and_Verification_Cheat_Sheet.html">Email Validation and Verification</a> for comparison policies, ownership verification, and email change workflows.</p>
 <h3 id="host-and-forwarded-headers">Host and Forwarded Headers<a class="headerlink" href="#host-and-forwarded-headers" title="Permanent link">&para;</a></h3>
