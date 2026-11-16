@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**137** cheat sheets available.
+**138** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -53,6 +53,8 @@
 [C-Based Toolchain Hardening Cheat Sheet](cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md) ![C](assets/Index_C.svg) ![Bash](assets/Index_Bash.svg)
 
 [CI CD Security Cheat Sheet](cheatsheets/CI_CD_Security_Cheat_Sheet.md)
+
+[CORS Security Cheat Sheet](cheatsheets/CORS_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg)
 
 [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
 
@@ -130,11 +132,11 @@
 
 [Infrastructure as Code Security Cheat Sheet](cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md)
 
-[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
+[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
 [Injection Prevention in Java Cheat Sheet](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
 
-[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
 
 [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Html](assets/Index_Html.svg) ![Ruby](assets/Index_Ruby.svg)
 
@@ -213,6 +215,8 @@
 [Passkey Security Cheat Sheet](cheatsheets/Passkey_Security_Cheat_Sheet.md)
 
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
+
+[Path Traversal Prevention Cheat Sheet](cheatsheets/Path_Traversal_Prevention_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Python](assets/Index_Python.svg)
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
 

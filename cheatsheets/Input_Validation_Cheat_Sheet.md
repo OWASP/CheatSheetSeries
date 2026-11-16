@@ -57,11 +57,27 @@ When accepting user-authored HTML, use a maintained [HTML sanitization library](
 
 ### File Upload Validation
 
-Treat the submitted filename and content type as untrusted metadata. Validate filenames after protocol decoding; an allowed extension alone does not establish safe content. Follow the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md) for content checks, size limits, storage, and safe serving.
+Treat the submitted filename and content type as untrusted metadata. Validate filenames after protocol decoding; an allowed extension alone does not establish safe content. Follow the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md) for content checks, size limits, storage, and safe serving. If a filename or any other input becomes part of a file system path, follow the [Path Traversal Prevention Cheat Sheet](Path_Traversal_Prevention_Cheat_Sheet.md).
 
 ### Email Address Validation
 
 Use a maintained email validation library compatible with the addresses your mail system supports. Format validation does not prove mailbox access. Follow [Email Validation and Verification](Email_Validation_and_Verification_Cheat_Sheet.md) for comparison policies, ownership verification, and email change workflows.
+
+### Host and Forwarded Headers
+
+The `Host` header (`:authority` in HTTP/2 and HTTP/3) is chosen by the client, and so are `Forwarded` and `X-Forwarded-*` headers unless a proxy you control sets them ([RFC 9110: Host and :authority](https://www.rfc-editor.org/rfc/rfc9110.html#section-7.2), [RFC 7239](https://www.rfc-editor.org/rfc/rfc7239.html#section-8.1)). An application that uses them to build links, pick a tenant or route a request can be made to put an attacker's domain in the password reset links it sends, poison a cache, or reach an internal virtual host ([PortSwigger: HTTP Host header attacks](https://portswigger.net/web-security/host-header), [WSTG: Testing for Host Header Injection](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection/)).
+
+- Build absolute URLs, such as password reset and email links, from configuration instead of the request ([Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md)).
+- Accept only the hostnames the application serves and reject other requests. Most frameworks have a setting for it, such as Django's [`ALLOWED_HOSTS`](https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts), ASP.NET Core's [`AllowedHosts`](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/host-filtering) and Rails' [`config.hosts`](https://guides.rubyonrails.org/configuring.html#actiondispatch-hostauthorization). Set it explicitly, because Rails does no `Host` checks outside development until `config.hosts` is set and ASP.NET Core's host filtering is disabled by default. Do not use the catch-all `*`, which allows any host.
+- Use `Forwarded` and `X-Forwarded-*` values only when they come from your own proxies, and have the proxy at the edge remove any that arrive from clients ([Spring: Forwarded headers security considerations](https://docs.spring.io/spring-framework/reference/web/webmvc/filters.html#filters-forwarded-headers-security)).
+- Give the reverse proxy or load balancer a default virtual host that does not serve the application. It only receives requests whose `Host` matches no site, so a request that names an internal site still reaches it ([nginx: How nginx processes a request](https://nginx.org/en/docs/http/request_processing.html)).
+
+```python
+# Django settings.py
+ALLOWED_HOSTS = ["www.example.com"]
+```
+
+For host handling in cache keys, see the [Web Cache Security Cheat Sheet](Web_Cache_Security_Cheat_Sheet.md).
 
 ## Common Pitfalls
 

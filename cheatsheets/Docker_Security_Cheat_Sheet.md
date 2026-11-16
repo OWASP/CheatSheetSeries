@@ -220,7 +220,6 @@ docker run --read-only --tmpfs /tmp alpine sh -c 'echo "whatever" > /tmp/file'
 The Docker Compose `compose.yml` equivalent would be:
 
 ```yaml
-version: "3"
 services:
   alpine:
     image: alpine
@@ -345,7 +344,6 @@ docker service create --name web --secret my_secret nginx:latest
 For local Docker Compose, [file-backed secrets are bind mounts](https://docs.docker.com/compose/how-tos/use-secrets/#use-secrets). Protect the source files on the host with appropriate access permissions and storage encryption; declaring a Compose secret does not encrypt these files. This differs from [Swarm-managed secrets](https://docs.docker.com/engine/swarm/secrets/#how-docker-manages-secrets), which are distributed over mutual TLS and stored in an encrypted Raft log:
 
 ```yaml
-version: "3.8"
 secrets:
   my_secret:
     file: ./super-secret-data.txt
