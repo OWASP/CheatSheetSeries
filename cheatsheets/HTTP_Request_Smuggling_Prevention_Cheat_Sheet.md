@@ -2,17 +2,22 @@
 
 ## Introduction
 
-Most applications sit behind at least one front-end component, such as a CDN, load balancer, reverse proxy, or web application firewall (WAF), that forwards requests to a back-end server over shared, reused connections. Both sides have to agree where each request ends. When they disagree, an attacker can send one request that the front end sees as a single request and the back end sees as two. The leftover part is prepended to whatever comes next on that connection, which may be another user's request ([RFC 9112: Request Smuggling](https://www.rfc-editor.org/rfc/rfc9112.html#section-11.2), [CWE-444](https://cwe.mitre.org/data/definitions/444.html)).
+Most applications sit behind at least one front-end component, such as a CDN, load balancer, reverse proxy, or web application firewall (WAF), that forwards requests to a back-end server over shared, reused connections. In this sheet, front end and back end mean these servers on the request path, the outbound and inbound sides in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#section-3.7) terms, not browser code and server code. Both sides have to agree where each request ends. When they disagree, an attacker can send one request that the front end sees as a single request and the back end sees as two. The leftover part is prepended to whatever comes next on that connection, which may be another user's request ([RFC 9112: Request Smuggling](https://www.rfc-editor.org/rfc/rfc9112.html#section-11.2), [CWE-444](https://cwe.mitre.org/data/definitions/444.html)).
 
-This lets an attacker bypass access controls that only the front end enforces, capture other users' requests, and poison caches ([PortSwigger: Exploiting HTTP request smuggling](https://portswigger.net/web-security/request-smuggling/exploiting#using-http-request-smuggling-to-bypass-front-end-security-controls)). The root cause is in how components parse message framing, so the defenses below are about removing ambiguity rather than filtering payloads.
+Depending on the application, this may let an attacker bypass access controls that only the front end enforces, capture other users' requests, and poison caches ([PortSwigger: Exploiting HTTP request smuggling](https://portswigger.net/web-security/request-smuggling/exploiting#using-http-request-smuggling-to-bypass-front-end-security-controls)). The root cause is in how components parse message framing, so the defenses below are about removing ambiguity rather than filtering payloads.
 
 ## How Desync Happens
 
-- **Content-Length and Transfer-Encoding disagree.** An HTTP/1.1 request body is delimited either by `Content-Length` or by `Transfer-Encoding: chunked`. If a request carries both, or a `Transfer-Encoding` value that one component accepts and another ignores, each side can pick a different length. These are the CL.TE, TE.CL, and TE.TE variants ([RFC 9112: Message Body Length](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3)).
+These are the common ways components end up disagreeing, not a complete list. More generally, any difference in how two components interpret a request, and so any lax parsing, can lead to request smuggling.
+
+- **Content-Length and Transfer-Encoding disagree.** An HTTP/1.1 request body is delimited either by `Content-Length` or by `Transfer-Encoding: chunked`. If a request carries both, or a `Transfer-Encoding` value that one component accepts and another ignores, each side can pick a different length ([RFC 9112: Message Body Length](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3)). [PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-perform-an-http-request-smuggling-attack) calls these CL.TE and TE.CL, after which header each side uses, and TE.TE when both support `Transfer-Encoding` but one of them can be made to ignore an obfuscated version of it.
 - **HTTP/2 is downgraded to HTTP/1.1.** HTTP/2 frames carry their own length, but a front end that rewrites requests into HTTP/1.1 for the back end can pass along a `content-length` or `transfer-encoding` header, or a header value with a CR or LF in it, that then decides the framing on the back end ([PortSwigger: HTTP/2 desync attacks](https://portswigger.net/research/http2)).
 - **A server ignores a body it did not expect.** If the back end does not read the body of a request to an endpoint that normally has none, such as a static file or a redirect, the unread bytes are treated as the next request. Some of these cases can be triggered from a victim's browser, which poisons the browser's own connection to the site ([PortSwigger: Browser-powered desync attacks](https://portswigger.net/research/browser-powered-desync-attacks)).
+- **Line endings are parsed differently.** One component may accept a bare LF or a bare CR as the end of a line while another doesn't, so they split headers, or chunk sizes, at different places ([Zeyu: HTTP Request Smuggling in the Multiverse of Parsing Flaws](https://infosec.zeyu2001.com/2022/http-request-smuggling-in-the-multiverse-of-parsing-flaws)).
 
 ## Prevention
+
+Most of these controls live in the proxy, load balancer or HTTP server rather than in application code. Administrators choose and configure those components so that they parse strictly, and the developers of those components implement the framing rules. Application developers mostly need to make sure the server reads every request body, closes connections on errors, and enforces authorization in the application itself.
 
 ### Use HTTP/2 End-to-End
 
@@ -41,7 +46,7 @@ If HTTP/2 has to be translated to HTTP/1.1, validate the result as an HTTP/1.1 r
 
 - Read or discard the body of every request according to its declared length, even on endpoints that ignore the body. Never assume a request has no body ([PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-prevent-http-request-smuggling-vulnerabilities)).
 - Close the connection instead of reusing it after a framing error or a server-level exception while handling a request.
-- Disabling the reuse of back-end connections limits some attacks but does not stop request tunneling, so do not rely on it alone.
+- Disabling the reuse of back-end connections limits some attacks but does not stop request tunneling and hurts performance, so it may not be worth it and should not be relied on alone.
 - Keep proxies, load balancers, and servers up to date, and check each product's own documentation for how it handles ambiguous requests and which settings make it strict.
 
 ## What These Controls Do Not Cover
