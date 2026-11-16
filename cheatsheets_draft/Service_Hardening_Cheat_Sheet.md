@@ -267,7 +267,6 @@ Containers can provide additional isolation for services through Linux namespace
 
 For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html).
 
-
 ## References
 
 - [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
@@ -276,6 +275,3 @@ For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat She
 - [NIST SP 800-53 Rev. 5 — Security and Privacy Controls for Information Systems and Organizations](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
 - [NIST SP 800-40 Rev. 4 — Guide to Enterprise Patch Management Planning](https://csrc.nist.gov/pubs/sp/800/40/r4/final)
 - [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
-  
-The control-specific NIST SP 800-53 links use CSF Tools, a third-party reference site. The authoritative source is the [official NIST SP 800-53 publication](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final).
-
