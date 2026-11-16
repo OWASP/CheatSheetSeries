@@ -2173,6 +2173,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#host-and-forwarded-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host and Forwarded Headers
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4666,6 +4677,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#host-and-forwarded-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host and Forwarded Headers
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4774,6 +4796,18 @@
 <p>Treat the submitted filename and content type as untrusted metadata. Validate filenames after protocol decoding; an allowed extension alone does not establish safe content. Follow the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheat Sheet</a> for content checks, size limits, storage, and safe serving.</p>
 <h3 id="email-address-validation">Email Address Validation<a class="headerlink" href="#email-address-validation" title="Permanent link">&para;</a></h3>
 <p>Use a maintained email validation library compatible with the addresses your mail system supports. Format validation does not prove mailbox access. Follow <a href="Email_Validation_and_Verification_Cheat_Sheet.html">Email Validation and Verification</a> for comparison policies, ownership verification, and email change workflows.</p>
+<h3 id="host-and-forwarded-headers">Host and Forwarded Headers<a class="headerlink" href="#host-and-forwarded-headers" title="Permanent link">&para;</a></h3>
+<p>The <code>Host</code> header (<code>:authority</code> in HTTP/2 and HTTP/3) is chosen by the client, and so are <code>Forwarded</code> and <code>X-Forwarded-*</code> headers unless a proxy you control sets them (<a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-7.2">RFC 9110: Host and :authority</a>, <a href="https://www.rfc-editor.org/rfc/rfc7239.html#section-8.1">RFC 7239</a>). An application that uses them to build links, pick a tenant or route a request can be made to put an attacker's domain in the password reset links it sends, poison a cache, or reach an internal virtual host (<a href="https://portswigger.net/web-security/host-header">PortSwigger: HTTP Host header attacks</a>, <a href="https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection/">WSTG: Testing for Host Header Injection</a>).</p>
+<ul>
+<li>Build absolute URLs, such as password reset and email links, from configuration instead of the request (<a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a>).</li>
+<li>Accept only the hostnames the application serves and reject other requests. Most frameworks have a setting for it, such as Django's <a href="https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts"><code>ALLOWED_HOSTS</code></a>, ASP.NET Core's <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/host-filtering"><code>AllowedHosts</code></a> and Rails' <a href="https://guides.rubyonrails.org/configuring.html#actiondispatch-hostauthorization"><code>config.hosts</code></a>. Set it explicitly, because Rails does no <code>Host</code> checks outside development until <code>config.hosts</code> is set and ASP.NET Core's host filtering is disabled by default. Do not use the catch-all <code>*</code>, which allows any host.</li>
+<li>Use <code>Forwarded</code> and <code>X-Forwarded-*</code> values only when they come from your own proxies, and have the proxy at the edge remove any that arrive from clients (<a href="https://docs.spring.io/spring-framework/reference/web/webmvc/filters.html#filters-forwarded-headers-security">Spring: Forwarded headers security considerations</a>).</li>
+<li>Give the reverse proxy or load balancer a default virtual host that does not serve the application. It only receives requests whose <code>Host</code> matches no site, so a request that names an internal site still reaches it (<a href="https://nginx.org/en/docs/http/request_processing.html">nginx: How nginx processes a request</a>).</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># Django settings.py</span>
+<span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"www.example.com"</span><span class="p">]</span>
+</code></pre></div>
+<p>For host handling in cache keys, see the <a href="Web_Cache_Security_Cheat_Sheet.html">Web Cache Security Cheat Sheet</a>.</p>
 <h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Client-only checks:</strong> Validate on the server even when the browser checks the same fields. <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation">Client-side validation is bypassable</a>; use it for immediate feedback.</li>

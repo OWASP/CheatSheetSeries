@@ -4731,7 +4731,7 @@
 <li>Cache only routes that are explicitly intended to be shared.</li>
 <li>Do not let unkeyed headers or a body on a <code>GET</code> request alter a cacheable response.</li>
 <li>Trust <code>Forwarded</code> and <code>X-Forwarded-*</code> headers only when they were added or replaced by a trusted proxy.</li>
-<li>Canonicalize the host and scheme before using them to generate links, redirects, or security-sensitive headers.</li>
+<li>Canonicalize the host and scheme before using them to generate links, redirects, or security-sensitive headers. For validating <code>Host</code> and forwarded headers in general, see <a href="Input_Validation_Cheat_Sheet.html#host-and-forwarded-headers">Input Validation: Host and Forwarded Headers</a>.</li>
 <li>Do not reflect unvalidated request metadata into cached HTML, JSON, redirects, or response headers.</li>
 <li>Separate static assets and dynamic application routes by hostname or an unambiguous path namespace where practical.</li>
 <li>If poisoning occurs, purge every affected cache layer and fix the key or origin behavior before re-enabling caching.</li>
