@@ -70,7 +70,7 @@ Do not put session tokens, API keys, or other secrets in cache keys because keys
 - Cache only routes that are explicitly intended to be shared.
 - Do not let unkeyed headers or a body on a `GET` request alter a cacheable response.
 - Trust `Forwarded` and `X-Forwarded-*` headers only when they were added or replaced by a trusted proxy.
-- Canonicalize the host and scheme before using them to generate links, redirects, or security-sensitive headers.
+- Canonicalize the host and scheme before using them to generate links, redirects, or security-sensitive headers. For validating `Host` and forwarded headers in general, see [Input Validation: Host and Forwarded Headers](Input_Validation_Cheat_Sheet.md#host-and-forwarded-headers).
 - Do not reflect unvalidated request metadata into cached HTML, JSON, redirects, or response headers.
 - Separate static assets and dynamic application routes by hostname or an unambiguous path namespace where practical.
 - If poisoning occurs, purge every affected cache layer and fix the key or origin behavior before re-enabling caching.
