@@ -62,7 +62,6 @@ Default configurations may enable functionality or access that is unnecessary fo
 - Restrict modification of service configuration files to authorized identities.
 - Keep configuration changes under version control or another auditable change-management process, where practical.
 
-See the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) for related configuration-hardening practices in containerized environments.
 See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for guidance on establishing, implementing, and monitoring security-relevant configuration settings.
 
 ### Restrict Network Communication
