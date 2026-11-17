@@ -147,6 +147,29 @@ If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/G
 
 - *NOTE*: The use of '\*' might be necessary depending on your needs. For example, for a public API that should be accessible from any origin, it might be necessary to allow '\*'.
 
+### Access-Control-Allow-Credentials
+
+The [`Access-Control-Allow-Credentials`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Credentials) HTTP response header indicates whether a browser can expose a cross-origin response to frontend JavaScript when the request's credentials mode is `include`. Its only valid value is `true`; omit the header when credentials are not required.
+
+#### Recommendation
+
+- Enable credentialed cross-origin requests only when required by the application.
+- Send `Access-Control-Allow-Credentials: true` only together with an `Access-Control-Allow-Origin` value selected from an exact-match allowlist of trusted origins. Never allow the `null` origin.
+- For credentialed CORS requests, never use the wildcard (`*`) for `Access-Control-Allow-Origin`. An explicit, allowlisted origin must be specified instead.
+- Send `Vary: Origin` whenever the `Access-Control-Allow-Origin` response value depends on the request's `Origin` header.
+
+For secure cookie configuration, refer to the [Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies).
+
+**Example:**
+
+> ```http
+> Access-Control-Allow-Origin: https://trusted-site.com
+> Access-Control-Allow-Credentials: true
+> Vary: Origin
+> ```
+
+For more information about credentialed CORS and its security implications, refer to the [CORS Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/CORS_Security_Cheat_Sheet.html).
+
 ### Cross-Origin-Opener-Policy (COOP)
 
 The HTTP `Cross-Origin-Opener-Policy` (COOP) response header allows you to ensure a top-level document does not share a browsing context group with cross-origin documents.
