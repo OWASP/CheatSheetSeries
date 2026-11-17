@@ -41,7 +41,7 @@ A service should have only the permissions necessary to perform its intended fun
 - Avoid sharing service identities between unrelated applications when separate identities are practical.
 - Restrict read, write, and execute permissions on files, directories, and other resources.
 
-See the [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for additional guidance on least privilege and access control and 
+See the [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for additional guidance on least privilege and access control.
 See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) for the `User=`, `Group=`, and `CapabilityBoundingSet=` directives used to restrict service identities and Linux capabilities.
 
 ### Reduce the Attack Surface
@@ -62,7 +62,7 @@ Default configurations may enable functionality or access that is unnecessary fo
 - Restrict modification of service configuration files to authorized identities.
 - Keep configuration changes under version control or another auditable change-management process, where practical.
 
-See the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) for related configuration-hardening practices in containerized environments and 
+See the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) for related configuration-hardening practices in containerized environments.
 See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for guidance on establishing, implementing, and monitoring security-relevant configuration settings.
 
 ### Restrict Network Communication
@@ -103,7 +103,7 @@ A service that consumes excessive memory, CPU time, processes, or other resource
 - Configure resource limits using controls supported by the operating system or service manager.
 - Test limits under representative workloads, including expected peak conditions.
 
-See the [OWASP Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) for guidance on mitigating resource-exhaustion and denial-of-service risks and and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for service-level resource limits using `MemoryMax=` and `TasksMax=`.
+See the [OWASP Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) for guidance on mitigating resource-exhaustion and denial-of-service risks and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for service-level resource limits using `MemoryMax=` and `TasksMax=`.
 
 ## Hardening Services with systemd
 
@@ -120,7 +120,6 @@ The following directives are useful starting points for services that support th
 | `CapabilityBoundingSet=` | Restrict the Linux capabilities available to the service. An empty value removes all capabilities from the bounding set. |
 | `ProtectSystem=strict` | Make most of the filesystem hierarchy read-only within the service's mount namespace, subject to documented exceptions and additional writable paths. |
 | `StateDirectory=` | Create and manage a service state directory under `/var/lib`, with write access even when `ProtectSystem=strict` is enabled. |
-`ProtectSystem=strict` restricts filesystem writes but does not prevent reading accessible files. The `/dev`, `/proc`, and `/sys` subtrees are excluded from its read-only protection. Additional controls may be needed to restrict access to these resources. Writable-directory exceptions and other filesystem namespace limitations must also be considered.
 | `PrivateTmp=yes` | Give the service private `/tmp` and `/var/tmp` directories, separate from the host's corresponding directories. |
 | `ProtectHome=yes` | Make `/home`, `/root`, and `/run/user` inaccessible within the service's filesystem namespace. |
 
@@ -140,6 +139,8 @@ ProtectHome=yes
 This is an **illustrative configuration, not a universal baseline**. The service account must exist, and the restrictions must be compatible with the application's actual requirements. An empty capability bounding set can break operations requiring Linux capabilities. Filesystem restrictions can also prevent access to required configuration, data, sockets, or other resources.
 
 Prefer explicitly managed writable directories, such as `StateDirectory=`, over granting broad write access. If the service needs additional writable paths, evaluate narrowly scoped exceptions rather than disabling filesystem protection altogether.
+
+`ProtectSystem=strict` restricts filesystem writes but does not prevent reading accessible files. The `/dev`, `/proc`, and `/sys` subtrees are excluded from its read-only protection. Additional controls may be needed to restrict access to these resources. Writable-directory exceptions and other filesystem namespace limitations must also be considered.
 
 See the [systemd.exec manual](https://www.freedesktop.org/software/systemd/man/systemd.exec.html) for directive semantics, exceptions, and interactions.
 
@@ -162,7 +163,7 @@ systemd can restrict the system calls available to a service using seccomp filte
 
 | Directive | Purpose |
 | --- | --- |
-| `SystemCallFilter=@system-service` |Apply a system-call allowlist using the @system-service group. System calls outside the permitted set are blocked, subject to systemd's filtering behavior and exceptions.|
+| `SystemCallFilter=@system-service` | Apply a system-call allowlist using the `@system-service` group. System calls outside the permitted set are blocked, subject to systemd's filtering behavior and exceptions. |
 
 This filter is suitable for consideration by many system services, but it can prevent applications from using required system calls. Test compatibility before enabling it. By default, prohibited system calls cause the affected process to receive `SIGSYS`.
 
@@ -275,11 +276,10 @@ Containers can provide additional isolation for services through Linux namespace
 
 For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html).
 
+
 ## References
 
-- [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
-- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
-- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html)
-- [NIST SP 800-53 Rev. 5 — Security and Privacy Controls for Information Systems and Organizations](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
-- [NIST SP 800-40 Rev. 4 — Guide to Enterprise Patch Management Planning](https://csrc.nist.gov/pubs/sp/800/40/r4/final)
-- [NIST SP 800-207 — Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
+- [systemd.exec(5) — Execution Environment Configuration](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html)
+- [systemd.resource-control(5) — Resource Control Unit Settings](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html)
+- [NIST SP 800-53 Rev. 5 — Security and Privacy Controls](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
+
