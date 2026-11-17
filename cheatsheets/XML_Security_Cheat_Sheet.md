@@ -15,16 +15,11 @@ An XML document is malformed if it does not adhere to the XML syntax. A conformi
 
 Malformed input can also be expensive: some parsers take longer on malformed documents than on well-formed ones, which enables an asymmetric resource-consumption attack that becomes a denial of service when the attacker can send many documents. Compare the processing time of a malformed document with its well-formed equivalent to judge the exposure.
 
-Some parsers can be configured to operate in a relaxed mode that accepts and corrects some malformed documents. Recovery has no predefined rules, so the result depends on the parser and its version, and content obtained that way cannot be trusted for integrity-sensitive processing. Relaxed parsing introduces risks such as:
+Some parsers can be configured to run in recovery mode, which accepts and corrects some malformed documents. Recovery has no predefined rules, so the result depends on the parser and its version, and two parsers can disagree about what the document contains. For example, `lxml` and PHP accept nested comments in recovery mode, although the specification forbids `--` inside comments. Content obtained this way cannot be trusted for integrity-sensitive processing. **Do not enable recovery mode (for example, `recover=True` in lxml or `XML_PARSE_RECOVER` in libxml2) for untrusted input.**
 
-- increased resource consumption, up to denial of service;
-- unexpected interpretation of the document, which can lead to vulnerabilities.
+Separately, canonicalization replaces CDATA sections with their character content and escapes the special characters in it ([W3C: Canonical XML 1.1](https://www.w3.org/TR/xml-c14n11/)). The parsed value stays the same, but the serialized bytes change, and this happens to well-formed input too. Code that compares, signs, or filters the serialized form must account for this.
 
-For example, `lxml` and PHP accept nested comments in recovery mode (the specification forbids `--` inside comments).
-
-Separately, canonicalization replaces CDATA sections with their character content, escaping the special characters in it ([W3C: Canonical XML 1.1](https://www.w3.org/TR/xml-c14n11/)). libxml2's canonicalization does this, changing the serialized representation while preserving the parsed character value. It applies to well-formed input as well, so it is not a consequence of relaxed parsing.
-
-**Coercive parsing** is a separate attack on nesting depth: deeply nested elements without their matching end tags make the parser keep every unclosed element open until it reaches the end of the document ([Arnaboldi, *Assessing and Exploiting XML*, §1.3](https://www.ioactive.com/wp-content/uploads/2018/05/Arnaboldi-XML-Schema-Vulnerabilities-1.pdf)). A strict parser behaves the same way, since it can only reject the document after parsing it, so disabling recovery mode does not prevent this. A reported denial-of-service attack against Firefox 3.0.x ([CVE-2009-1232](https://nvd.nist.gov/vuln/detail/CVE-2009-1232)) used 30,000 unterminated elements, needed roughly half the bytes of an equivalent well-formed document, and exhausted the processing stack. Limit nesting depth as well as total size.
+**Coercive parsing** is a separate attack on nesting depth: deeply nested elements can deplete the parser's resources and overflow the stack ([Arnaboldi, Assessing and Exploiting XML Schema's Vulnerabilities, section 1.3](https://www.ioactive.com/wp-content/uploads/2018/05/Arnaboldi-XML-Schema-Vulnerabilities-1.pdf)). Leaving out the end tags only halves the payload size. The same attack works with a well-formed document, so disabling recovery mode does not prevent it. Arnaboldi reports a denial-of-service attack on Firefox that used 30,000 unterminated elements, tracked for Firefox 3.0.x as [CVE-2009-1232](https://nvd.nist.gov/vuln/detail/CVE-2009-1232). Limit nesting depth as well as total size. A simplified example:
 
 ```xml
 <A1>
@@ -67,7 +62,7 @@ The following element definition is the concise example for this section; facets
 
 ### Jumbo Payloads
 
-Large XML documents can exhaust server resources through buffering, parsing, validation, or application processing. Small documents can also trigger disproportionate resource use through expansion or external resource retrieval. Both can lead to [uncontrolled resource consumption](https://cwe.mitre.org/data/definitions/400.html).
+Large XML documents can exhaust server resources through buffering, parsing, validation, or application processing. Small documents can also trigger disproportionate resource use through entity expansion or external resource retrieval. Both can lead to [uncontrolled resource consumption](https://cwe.mitre.org/data/definitions/400.html).
 
 #### Traditional Jumbo Payloads
 
@@ -87,7 +82,7 @@ Traditional jumbo payloads make the document itself very large, in one of two wa
 
 #### "Small" Jumbo Payloads
 
-A very small document can produce the same effect and can be sent many times per second, so it consumes most or all of the available resources:
+A very small document can have the same effect. An attacker can send it many times per second to consume most or all of the available resources:
 
 ```xml
 <?xml version="1.0"?>
@@ -97,7 +92,9 @@ A very small document can produce the same effect and can be sent many times per
 <root>&file;</root>
 ```
 
-Enforce input-size limits and parser limits on nesting depth, element and attribute counts, and text and attribute lengths during parsing, before excessive resources are consumed. These limits on the original input do not bound entity expansion or external resource retrieval. Disable DTD processing for untrusted XML; if DTDs are required, disable external entities and external DTD loading and enforce entity expansion and entity size limits. The [XML External Entity Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html) documents parser-specific settings.
+#### Limiting Jumbo Payloads
+
+Enforce the size, depth, and count limits from [Dealing with invalid XML documents](#dealing-with-invalid-xml-documents) while parsing, before excessive resources are consumed, and also limit text and attribute-value lengths. These limits on the original input do not bound entity expansion or external resource retrieval. For those, follow [XML Entity Expansion](#xml-entity-expansion).
 
 ### Schema Poisoning
 
