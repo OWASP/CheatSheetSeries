@@ -120,6 +120,7 @@ The following directives are useful starting points for services that support th
 | `CapabilityBoundingSet=` | Restrict the Linux capabilities available to the service. An empty value removes all capabilities from the bounding set. |
 | `ProtectSystem=strict` | Make most of the filesystem hierarchy read-only within the service's mount namespace, subject to documented exceptions and additional writable paths. |
 | `StateDirectory=` | Create and manage a service state directory under `/var/lib`, with write access even when `ProtectSystem=strict` is enabled. |
+`ProtectSystem=strict` restricts filesystem writes but does not prevent reading accessible files. The `/dev`, `/proc`, and `/sys` subtrees are excluded from its read-only protection. Additional controls may be needed to restrict access to these resources. Writable-directory exceptions and other filesystem namespace limitations must also be considered.
 | `PrivateTmp=yes` | Give the service private `/tmp` and `/var/tmp` directories, separate from the host's corresponding directories. |
 | `ProtectHome=yes` | Make `/home`, `/root`, and `/run/user` inaccessible within the service's filesystem namespace. |
 
@@ -141,6 +142,52 @@ This is an **illustrative configuration, not a universal baseline**. The service
 Prefer explicitly managed writable directories, such as `StateDirectory=`, over granting broad write access. If the service needs additional writable paths, evaluate narrowly scoped exceptions rather than disabling filesystem protection altogether.
 
 See the [systemd.exec manual](https://www.freedesktop.org/software/systemd/man/systemd.exec.html) for directive semantics, exceptions, and interactions.
+
+### Restrict Network Communication
+
+systemd can restrict the network address families and IP destinations available to a service.
+
+| Directive | Purpose |
+| --- | --- |
+| `RestrictAddressFamilies=` | Restrict the socket address families a service can create, such as `AF_UNIX`, `AF_INET`, and `AF_INET6`. Allow only those required by the service. |
+| `IPAddressDeny=` / `IPAddressAllow=` | Restrict inbound and outbound IPv4 and IPv6 traffic using denied and permitted address ranges. |
+
+`RestrictAddressFamilies=` does not restrict sockets passed to a service through socket activation. IP address filtering requires supported kernel functionality and may have no effect where the necessary eBPF support is unavailable. For socket-activated services, configure appropriate IP restrictions on both the socket and service units.
+
+See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for network restriction options and their limitations.
+
+### Restrict System Calls
+
+systemd can restrict the system calls available to a service using seccomp filtering.
+
+| Directive | Purpose |
+| --- | --- |
+| `SystemCallFilter=@system-service` |Apply a system-call allowlist using the @system-service group. System calls outside the permitted set are blocked, subject to systemd's filtering behavior and exceptions.|
+
+This filter is suitable for consideration by many system services, but it can prevent applications from using required system calls. Test compatibility before enabling it. By default, prohibited system calls cause the affected process to receive `SIGSYS`.
+
+See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) for system-call filtering behavior and supported system-call groups.
+
+### Limit Service Resource Consumption
+
+systemd can use Linux control groups to limit resources consumed by a service.
+
+| Directive | Purpose |
+| --- | --- |
+| `MemoryMax=` | Set an absolute memory usage limit for the service. Exceeding the limit can trigger out-of-memory termination within the unit. |
+| `TasksMax=` | Limit the number of tasks, including processes and threads, that the service can create. |
+
+Select limits based on the service's expected workload and test them under representative conditions. `MemoryMax=` is a final safeguard rather than a substitute for appropriate memory management; `MemoryHigh=` is recommended as the primary memory-control mechanism.
+
+See [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for resource limits and control-group requirements.
+
+### Protect Service Credentials
+
+Do not pass secrets through `Environment=` or `EnvironmentFile=`. systemd warns that environment variables may be exposed through D-Bus IPC and inherited by processes that should not receive them.
+
+Use `LoadCredential=` to provide credentials through a restricted, read-only credential directory instead. The service must be configured to read the supplied credential files.
+
+See [systemd.exec(5): Credentials](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#Credentials) for credential-loading options and their security properties.
 
 ### Apply and Validate Changes
 
