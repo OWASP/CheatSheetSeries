@@ -84,17 +84,29 @@ The selection of token security approach should consider the application's secur
 
 16. The Resource Owner password credentials grant is not used. This grant type insecurely exposes the credentials of the Resource Owner to the client, increasing the attack surface of the application.
 
+## Device Authorization Grant and Cross-Device Flows
+
+The Device Authorization Grant ([RFC 8628](https://www.rfc-editor.org/rfc/rfc8628.html)) lets a device with no browser or keyboard, such as a TV or a CLI tool, get tokens after the user signs in on a second device with a short user code. Nothing ties the two devices together, so an attacker can start the flow on their own machine and send the code and the genuine sign-in page to a victim, then receive the tokens once the victim signs in. This device code phishing is used in real campaigns, for example [Storm-2372](https://www.microsoft.com/en-us/security/blog/2025/02/13/storm-2372-conducts-device-code-phishing-campaign/). [RFC 10027](https://www.rfc-editor.org/rfc/rfc10027.html) (BCP 247) describes these attacks and the mitigations for all cross-device flows.
+
+17. The Device Authorization Grant is enabled only for clients that are actually input-constrained and blocked for all others, for example with conditional access policies. Before offering any cross-device flow, implementers perform a risk assessment and avoid the flow if its risks cannot be sufficiently mitigated ([RFC 10027 Section 2](https://www.rfc-editor.org/rfc/rfc10027.html#section-2)).
+18. User codes are short-lived, single-use and rate-limited, and have enough entropy that brute forcing is infeasible within those limits ([RFC 8628 Section 5.1](https://www.rfc-editor.org/rfc/rfc8628.html#section-5.1)), for example 8 characters from the base 20 set `BCDFGHJKLMNPQRSTVWXZ` ([RFC 8628 Section 6.1](https://www.rfc-editor.org/rfc/rfc8628.html#section-6.1)) with a strict limit on attempts. Their lifetime is long enough for the user to switch devices but short enough to limit codes sent by email or text message ([RFC 8628 Section 5.4](https://www.rfc-editor.org/rfc/rfc8628.html#section-5.4)).
+19. The verification page tells the user that they are authorizing a device, shows the client and device details, and asks the user to confirm that the device is in their possession ([RFC 8628 Section 5.4](https://www.rfc-editor.org/rfc/rfc8628.html#section-5.4)). When `verification_uri_complete` is used, the user no longer types the code, so the page displays it and asks the user to check that it matches the code shown on the device.
+20. Tokens issued through cross-device flows are limited to the scopes the client needs and are short-lived, and refresh tokens are sender-constrained or rotated (see [Token Replay Prevention](#token-replay-prevention)). Limited scopes reduce the impact of a successful attack but do not prevent it ([RFC 10027 Section 6.1](https://www.rfc-editor.org/rfc/rfc10027.html#section-6.1)).
+21. Where possible, the flow establishes that the two devices are close to each other, which makes codes sent to remote victims useless ([RFC 10027 Section 6.1.1](https://www.rfc-editor.org/rfc/rfc10027.html#section-6.1.1)), and the protocol is chosen following the guidance in [RFC 10027 Section 6.2](https://www.rfc-editor.org/rfc/rfc10027.html#section-6.2).
+
 ## Client Authentication
 
-17. Authorization Servers are using client authentication if possible. It is recommended to use asymmetric (public-key based) methods for client authentication such as mTLS or "private_key_jwt" (OpenID Connect). When asymmetric methods for client authentication are used, Authorization Servers do not need to store sensitive symmetric keys, making these methods more robust against several attacks.
+22. Authorization Servers are using client authentication if possible. It is recommended to use asymmetric (public-key based) methods for client authentication such as mTLS or "private_key_jwt" (OpenID Connect). When asymmetric methods for client authentication are used, Authorization Servers do not need to store sensitive symmetric keys, making these methods more robust against several attacks.
 
 ## Other Recommendations
 
-18. Authorization Servers do not allow clients to influence their "client_id" or "sub" value or any other Claim that can be confused with a genuine Resource Owner. It is recommended to use end-to-end TLS.
-19. Authorization responses are not transmitted over unencrypted network connections. Authorization Servers must not allow redirect URIs that use the "http" scheme except for native clients that use Loopback Interface Redirection.
+23. Authorization Servers do not allow clients to influence their "client_id" or "sub" value or any other Claim that can be confused with a genuine Resource Owner. It is recommended to use end-to-end TLS.
+24. Authorization responses are not transmitted over unencrypted network connections. Authorization Servers must not allow redirect URIs that use the "http" scheme except for native clients that use Loopback Interface Redirection.
 
 ## References
 
 - [RFC 9700: Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html)
 - [RFC 9449: OAuth 2.0 Demonstrating Proof of Possession (DPoP)](https://www.rfc-editor.org/rfc/rfc9449.html)
 - [RFC 8705: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens](https://www.rfc-editor.org/rfc/rfc8705.html)
+- [RFC 8628: OAuth 2.0 Device Authorization Grant](https://www.rfc-editor.org/rfc/rfc8628.html)
+- [RFC 10027: Best Current Practice for Security of Cross-Device Flows](https://www.rfc-editor.org/rfc/rfc10027.html)
