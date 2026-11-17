@@ -69,7 +69,7 @@ See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csrc.nist.gov
 
 A service should accept and initiate only the network connections required for its operation.
 
-- Bind listening sockets to the necessary network interfaces.
+- Prefer Unix domain sockets (`AF_UNIX`/`PF_LOCAL`) for local inter-process communication where supported. Otherwise, bind services intended only for local access to the loopback interface rather than exposing them on external network interfaces.
 - Restrict inbound traffic to required ports, protocols, and authorized sources.
 - Restrict outbound connectivity where supported and operationally feasible.
 
