@@ -76,26 +76,28 @@ There are several techniques such as rolling updates, and node pool migrations t
 
 This section discusses how to secure Kubernetes components. It covers the following topics:
 
-- Securing the Kubernetes Dashboard
+- Securing cluster web UIs such as the Kubernetes Dashboard
 - Restricting access to etcd (Important)
 - Controlling network access to sensitive ports
 - Controlling access to the Kubernetes API
 - Implementing role-based access control in Kubernetes
 - Limiting access to Kubelets
 
-### Securing the Kubernetes Dashboard
+### Securing Cluster Web UIs
 
-The Kubernetes dashboard is a webapp for managing your cluster. It is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/>)
+Web UIs for managing a cluster are not part of Kubernetes itself, they have to be installed by the owners of the cluster. Many tutorials install them with a service account that has very high privileges. This caused Tesla and some others to be hacked via a poorly configured Kubernetes Dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/>)
 
-To prevent attacks via the dashboard, you should follow some tips:
+The Kubernetes Dashboard project is now archived and no longer maintained, so it does not receive security fixes ([kubernetes/dashboard](https://github.com/kubernetes/dashboard)). Remove existing Dashboard installs, or replace them with a maintained UI such as [Headlamp](https://github.com/kubernetes-sigs/headlamp), which the Dashboard project recommends.
 
-- Do not expose the dashboard without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN
-- Turn on Role-Based Access Control (see below), so you can limit the service account the dashboard uses
-- Do not grant the service account of the dashboard high privileges
+Whichever UI you run, follow these tips:
+
+- Do not expose the UI without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN
+- Turn on Role-Based Access Control (see below), so you can limit the service account the UI uses
+- Do not grant the service account of the UI high privileges
 - Grant permissions per user, so each user only can see what they are supposed to see
-- If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
-- Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
-- Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled. This can be done with either embedded OIDC `id_tokens` or using Kubernetes Impersonation. This allows you to use the dashboard with the user's credentials instead of using a privileged `ServiceAccount`. This method can be used on both on-prem and managed cloud clusters.
+- If you are using network policies, you can block requests to the UI even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
+- Check that no role binding gives the UI's service account `cluster-admin`.
+- Deploy the UI with an authenticating reverse proxy, with multi-factor authentication enabled. This can be done with either embedded OIDC `id_tokens` or using Kubernetes Impersonation. This allows you to use the UI with the user's credentials instead of using a privileged `ServiceAccount`. This method can be used on both on-prem and managed cloud clusters.
 
 ### Restricting Access To etcd (IMPORTANT)
 
