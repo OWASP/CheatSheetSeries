@@ -194,11 +194,11 @@ A hand-maintained table list can drift: the same omission that leaves RLS off a 
 - Apply object-level access control checks according to the [OWASP Insecure Direct Object Reference Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html).
 
 <details>
-<summary>Illustrative Example: Tenant-Scoped Resource Lookup</summary>
+<summary>Illustrative example: Tenant-scoped resource lookup</summary>
 
 ```python
-# Illustrative tenant-scoped lookup when using composite keys or tenant attributes.
-# Architectures using separate schemas, databases, or RLS enforce this boundary at the data layer.
+# verified_tenant_id comes from the server-verified tenant context (see section 1), never from request input
+# Architectures using separate schemas, databases, or RLS enforce this boundary at the data layer
 document = (
     db.query(Document)
     .filter(
@@ -208,7 +208,10 @@ document = (
     .first()
 )
 if not document:
+    # Return 404 rather than 403 so the response does not reveal that the object exists in another tenant
     raise HTTPException(status_code=404, detail="Document not found")
+
+# Tenant scoping is necessary but not sufficient: also check the caller's permission on this object (owner, role or ACL)
 ```
 
 </details>
