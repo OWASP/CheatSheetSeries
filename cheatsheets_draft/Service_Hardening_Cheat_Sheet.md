@@ -92,8 +92,8 @@ Logs and monitoring provide information needed to identify service failures, inv
 - Record security-relevant service events, such as authentication attempts, access-control failures, and significant configuration changes, with sufficient context for investigation.
 - Avoid logging credentials or unnecessary sensitive information. Protect logs against unauthorized access, modification, and deletion, and handle untrusted log data safely.
 - Monitor service failures, unexpected restarts, unusual resource consumption, and logging failures. Define retention and alerting requirements and verify that important events can be retrieved.
-  
- See the [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) for detailed logging, protection, retention, and monitoring guidance.
+
+See the [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) for detailed logging, protection, retention, and monitoring guidance.
 
 ### Limit Resource Consumption
 
@@ -275,7 +275,6 @@ See the [Linux kernel BPF LSM documentation](https://docs.kernel.org/bpf/prog_ls
 Containers can provide additional isolation for services through Linux namespaces, control groups, and other security mechanisms. However, containerization alone does not guarantee that a service is secure. Apply least privilege, restrict unnecessary capabilities, and avoid privileged containers unless explicitly required.
 
 For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html).
-
 
 ## References
 
