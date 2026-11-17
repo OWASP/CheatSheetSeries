@@ -10,6 +10,16 @@ The Django framework provides some built-in security features that aim to be sec
 
 - Always keep Django and your application's dependencies up-to-date to keep up with security vulnerabilities.
 - Ensure that the application is never in `DEBUG` mode in a production environment. Never run `DEBUG = True` in production.
+- Make production values the defaults in `settings.py`, and loosen them only through explicit development overrides. Read values that each deployment must supply, such as `SECRET_KEY` and `ALLOWED_HOSTS`, from the environment without a fallback, as Django's [deployment checklist](https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/#secret-key) shows for `SECRET_KEY`. A missing value then stops the application at startup:
+
+  ```python
+  import os
+  SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+  ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
+  DEBUG = os.environ.get("DJANGO_DEBUG") == "True"  # enabled only by an explicit override
+  ```
+
+- Keep settings whose safety depends on the infrastructure out of these defaults, and enable them only in deployments that meet their conditions. This applies to `SECURE_PROXY_SSL_HEADER` (see [HTTPS](#https)) and to HSTS `preload`, which is [hard to undo](HTTP_Strict_Transport_Security_Cheat_Sheet.md#examples).
 - Use packages like [`django_ratelimit`](https://django-ratelimit.readthedocs.io/en/stable/) or [`django-axes`](https://django-axes.readthedocs.io/en/latest/index.html) to prevent brute-force attacks.
 
 ## Authentication
@@ -115,6 +125,8 @@ Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDL
 
 - `SECURE_CONTENT_TYPE_NOSNIFF`: Set this key to `True`. Protects against MIME type sniffing attacks by enabling the header `X-Content-Type-Options: nosniff`.
 - `SECURE_HSTS_SECONDS`: A positive value adds [HTTP Strict Transport Security (HSTS)](https://docs.djangoproject.com/en/5.2/ref/middleware/#http-strict-transport-security) to HTTPS responses, instructing supporting browsers to use HTTPS for the specified period. It does not reject HTTP requests on the server or protect a browser's first connection before it knows the policy; [preloading addresses that initial-connection gap](https://www.rfc-editor.org/rfc/rfc6797.html#section-12.3).
+- `SECURE_REFERRER_POLICY`: Keep the [default](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-referrer-policy), `same-origin`, which sends no referrer to other origins. It is stricter than the `strict-origin-when-cross-origin` baseline in the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md#referrer-policy). Do not tighten it to `no-referrer`, because [Django's CSRF protection needs the `Referer` header over HTTPS](https://docs.djangoproject.com/en/5.2/ref/middleware/#referrer-policy).
+- `SECURE_CROSS_ORIGIN_OPENER_POLICY`: Keep the [default](https://docs.djangoproject.com/en/5.2/ref/middleware/#cross-origin-opener-policy), `same-origin`, which the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md#cross-origin-opener-policy-coop) also recommends. If your page opens a cross-origin popup that must reach back through `window.opener`, such as some sign-in flows, use `same-origin-allow-popups` instead of disabling the header.
 
 Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` (This module should be listed after the `django.middleware.security.SecurityMiddleware` module as ordering is important). This module is used to set the following parameters:
 
@@ -133,6 +145,7 @@ For more details:
 
 - `SESSION_COOKIE_SECURE`: Set this key to `True` in the `settings.py` file. This will send the session cookie over secure (HTTPS) connections only.
 - `CSRF_COOKIE_SECURE`: Set this key to `True` in the `settings.py` file. This will ensure that the CSRF cookie is sent over secure connections only.
+- Prefix the session and CSRF cookie names with [`__Host-`](Session_Management_Cheat_Sheet.md#cookie-name-prefixes), for example `SESSION_COOKIE_NAME = "__Host-sessionid"` and `CSRF_COOKIE_NAME = "__Host-csrftoken"`. A subdomain then cannot set these cookies for your host, which mitigates the [subdomain CSRF bypass](https://docs.djangoproject.com/en/5.2/ref/csrf/#limitations) that Django documents. Browsers accept the prefix only on `Secure` cookies with `Path=/` and no `Domain`, so it requires the two settings above and the default `SESSION_COOKIE_PATH`, `SESSION_COOKIE_DOMAIN`, `CSRF_COOKIE_PATH` and `CSRF_COOKIE_DOMAIN`. Renaming the cookies logs out existing users and breaks JavaScript that reads the CSRF cookie by its old name.
 - Whenever you set a custom cookie in a view using the `HttpResponse.set_cookie()` method, make sure to set its secure parameter to `True`.
 
   ```python
@@ -169,76 +182,6 @@ The recommendations in this section are in addition to XSS recommendations alrea
 - Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` if not already added.
 - Set the `SECURE_SSL_REDIRECT = True` in the `settings.py` file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.
 - Configure `SECURE_PROXY_SSL_HEADER` only behind a trusted proxy that strips client-supplied copies of the chosen header and sets its HTTPS-indicating value only for requests originally received over HTTPS. Prevent clients from bypassing that proxy to supply the trusted header directly. If these conditions cannot be guaranteed, leave the setting at `None`; see [Django's proxy-header security warning](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-proxy-ssl-header).
-
-## Application security configuration
-
-For reliability reasons in production environment `settings.py` configurations must be [secured by default](https://docs.djangoproject.com/en/stable/ref/settings/#security). If you want to run application in `dev` environment just override them with `.env` file and `django-environ` library. In this example used `django.utils.csp` module available from Django 6.0+.
-
-Snippet for secure `settings.py` configuration:
-
-```python
-from django.utils.csp import CSP
-import environ
-
-env = environ.Env()
-
-DEBUG = env.bool("DEBUG", default=False)
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["example.com", "www.example.com"])
-
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
-if env.bool("USE_REVERSE_PROXY_SSL", default=True):
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=31536000)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
-SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
-
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
-SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
-
-SESSION_COOKIE_AGE = env.int("SESSION_COOKIE_AGE", default=86400)
-SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
-SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = env("SESSION_COOKIE_SAMESITE", default="Strict")
-SESSION_COOKIE_NAME = env("SESSION_COOKIE_NAME", default="__Host-sessionid")
-
-CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=True)
-CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SAMESITE = env("CSRF_COOKIE_SAMESITE", default="Strict")
-CSRF_COOKIE_NAME = env("CSRF_COOKIE_NAME", default="__Host-csrftoken")
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["https://example.com"])
-
-SECURE_CSP = {
-    "default-src": [CSP.NONE],
-    "base-uri": [CSP.SELF],
-    "script-src": [CSP.SELF, CSP.NONCE] + env.list("CSP_SCRIPT_SRC", default=[]),
-    "style-src": [CSP.SELF] + env.list("CSP_STYLE_SRC", default=[]),
-    "font-src": [CSP.SELF] + env.list("CSP_FONT_SRC", default=[]),
-    "img-src": [CSP.SELF] + env.list("CSP_IMG_SRC", default=[]),
-    "connect-src": [CSP.SELF] + env.list("CSP_CONNECT_SRC", default=[]),
-    "frame-ancestors": [CSP.NONE],
-    "form-action": [CSP.SELF],
-    "upgrade-insecure-requests": not DEBUG,
-}
-```
-
-For local `dev` environment override required parameters:
-
-**Warning**: Make sure your local `.env` file will not end up in production. Also add `.env` file in `.gitignore`.
-
-```dotenv
-DEBUG=True
-ALLOWED_HOSTS=127.0.0.1,localhost
-SECURE_SSL_REDIRECT=False
-USE_REVERSE_PROXY_SSL=False
-SECURE_HSTS_SECONDS=0
-SESSION_COOKIE_SECURE=False
-CSRF_COOKIE_SECURE=False
-SESSION_COOKIE_NAME=sessionid
-CSRF_COOKIE_NAME=csrftoken
-CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8000,http://localhost:8000
-```
 
 ## Admin panel URL
 
