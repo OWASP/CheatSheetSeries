@@ -242,6 +242,8 @@ See the [Linux kernel AppArmor documentation](https://docs.kernel.org/admin-guid
 
 Use host or network firewalls to restrict traffic to the ports, protocols, sources, and destinations required by the service. Consider both inbound and outbound traffic according to the service's communication requirements.
 
+On Linux, nftables can apply service-specific outbound traffic restrictions using the `output` chain and socket user identity matching (`meta skuid`). This can help restrict network connections initiated by services running under dedicated user accounts. When multiple services share an account, user-based rules cannot distinguish between them.
+
 Linux network namespaces can provide separate network interfaces, routing tables, and network stacks for services. However, a network namespace alone does not establish an appropriate traffic-filtering policy. Configure and verify network connectivity and firewall rules explicitly.
 
 See the [nftables documentation](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page) and [network_namespaces(7)](https://man7.org/linux/man-pages/man7/network_namespaces.7.html).
