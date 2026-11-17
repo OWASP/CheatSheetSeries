@@ -5195,16 +5195,19 @@ gem<span class="w"> </span><span class="s1">'omniauth'</span>
 <h3 id="sensitive-files">Sensitive Files<a class="headerlink" href="#sensitive-files" title="Permanent link">&para;</a></h3>
 <p>Many Ruby on Rails apps are open source and hosted on publicly available source code repositories. Whether that is the case or the code is committed to a corporate source control system, there are certain files that should be either excluded or carefully managed.</p>
 <div class="highlight"><pre><span></span><code>/config/database.yml                 -  May contain production credentials.
-/config/initializers/secret_token.rb -  Contains a secret used to hash session cookie.
+/config/master.key                   -  Decrypts config/credentials.yml.enc, including secret_key_base.
+/config/credentials/*.key            -  Decrypt per-environment credentials files.
 /db/seeds.rb                         -  May contain seed data including bootstrap admin user.
 /db/development.sqlite3              -  May contain real data.
 </code></pre></div>
+<p>The encrypted credentials files can be committed, but never commit the key files. Rails reads the key from <code>config/master.key</code> or the <code>RAILS_MASTER_KEY</code> environment variable, so supply it from your secrets store or deployment platform instead (<a href="https://guides.rubyonrails.org/security.html#custom-credentials">Rails security guide: custom credentials</a>). Per-environment credentials have their own key files, such as <code>config/credentials/production.key</code> (<a href="https://github.com/rails/rails/blob/main/railties/lib/rails/commands/credentials/USAGE">Rails credentials command usage</a>).</p>
 <h3 id="encryption">Encryption<a class="headerlink" href="#encryption" title="Permanent link">&para;</a></h3>
 <p>Rails uses OS encryption. Generally speaking, it is always a bad idea to write your own encryption.</p>
 <p>Devise by default uses bcrypt for password hashing, which is an appropriate solution.</p>
-<p>Typically, the following config causes the 10 stretches for production: <code>/config/initializers/devise.rb</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">stretches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span><span class="w"> </span><span class="p">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<p>The bcrypt cost is set with <code>config.stretches</code> in <code>/config/initializers/devise.rb</code>. The current Devise initializer template uses a cost of 12 outside the test environment (<a href="https://github.com/heartcombo/devise/blob/main/lib/generators/templates/devise.rb">Devise initializer template</a>):</p>
+<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">stretches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span><span class="w"> </span><span class="p">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">12</span>
 </code></pre></div>
+<p>Applications generated with older Devise versions may still have 10. See the <a href="Password_Storage_Cheat_Sheet.html#bcrypt">Password Storage Cheat Sheet</a> for choosing the cost.</p>
 <h2 id="updating-rails-and-having-a-process-for-updating-dependencies">Updating Rails and Having a Process for Updating Dependencies<a class="headerlink" href="#updating-rails-and-having-a-process-for-updating-dependencies" title="Permanent link">&para;</a></h2>
 <p>In early 2013, a number of critical vulnerabilities were identified in the Rails Framework. Organizations that had fallen behind current versions had more trouble updating and harder decisions along the way, including patching the source code for the framework itself.</p>
 <p>An additional concern with Ruby applications in general is that most libraries (gems) are not signed by their authors. It is literally impossible to build a Rails based project with libraries that come from trusted sources. One good practice might be to audit the gems you are using.</p>

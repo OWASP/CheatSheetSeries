@@ -1709,6 +1709,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#docker-swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker Swarm
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4800,6 +4811,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#docker-swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker Swarm
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5076,6 +5098,17 @@ sudo<span class="w"> </span>ufw-docker<span class="w"> </span>install
 sudo<span class="w"> </span>ufw-docker<span class="w"> </span>allow<span class="w"> </span>mycontainer<span class="w"> </span><span class="m">8000</span>/tcp
 </code></pre></div>
 <p>Refer to the <a href="https://docs.docker.com/engine/network/packet-filtering-firewalls/">Docker and iptables documentation</a> for a deeper explanation of how Docker interacts with the host firewall.</p>
+<h4 id="docker-swarm">Docker Swarm<a class="headerlink" href="#docker-swarm" title="Permanent link">&para;</a></h4>
+<p>Option 1 does not apply to Swarm services: a port published with <code>docker service create --publish</code> or <code>docker stack deploy</code> cannot be bound to a single host IP (<a href="https://github.com/moby/moby/issues/26696">moby/moby#26696</a>).</p>
+<ul>
+<li><strong>Publishing:</strong> with the default ingress routing mesh, the published port listens on every IP address of every node in the swarm (<a href="https://docs.docker.com/engine/swarm/ingress/">Docker docs, routing mesh</a>); <code>mode=host</code> bypasses the routing mesh but still opens the port on all interfaces of the node that runs the task. A service that only needs to be reached by other services should not be published: attach it to an overlay network (optionally <a href="https://docs.docker.com/reference/cli/docker/network/create/"><code>--internal</code></a>) and reach it by service name.</li>
+<li><strong>Firewall:</strong> if a service must be published, the remaining control on the node is the host firewall. Inbound IPv4 traffic for both publishing modes is NATed, so filter it in the <a href="https://docs.docker.com/engine/network/firewall-iptables/#add-iptables-policies-before-dockers-rules"><code>DOCKER-USER</code> chain</a> and match the published port with conntrack's <code>--ctorigdstport</code> (<a href="https://docs.docker.com/engine/network/firewall-iptables/#match-the-original-ip-and-ports-for-requests">match the original IP and ports</a>), which works for both modes, or match the incoming interface or source. Do not rely on <code>--dport</code>: in <code>DOCKER-USER</code> it sees the container port for <code>mode=host</code> but the published port for the ingress routing mesh, which rewrites the port later inside the task's network namespace, so a rule written on the wrong port matches nothing and leaves the service exposed.</li>
+<li><strong>IPv6:</strong> the path depends on the task's network. If the network has no IPv6, the userland proxy serves a <code>mode=host</code> port on the host's IPv6 addresses (<a href="https://docs.docker.com/engine/network/port-publishing/">port publishing</a>) and that traffic goes through the <code>INPUT</code> chain. If the network has IPv6 and <code>ip6tables</code> is enabled, Docker NATs it as well and it is filtered in the ip6tables <code>DOCKER-USER</code> chain. Check which path your hosts use (DNAT rules in <code>ip6tables -t nat -S</code>) and filter that one.</li>
+<li><strong>Ports between nodes:</strong> by default Swarm listens on 7946/tcp+udp (node discovery) and 4789/udp (overlay network traffic, VXLAN) on every node, and on 2377/tcp (cluster management) on manager nodes; 4789 can be changed with <code>docker swarm init --data-path-port</code> and 2377 with <code>--listen-addr</code>. Allow the ports your swarm actually uses only from the other Swarm nodes (<a href="https://docs.docker.com/engine/network/drivers/overlay/">Docker docs, overlay network ports</a>, <a href="https://docs.docker.com/engine/swarm/networking/">Swarm networking</a>).</li>
+<li><strong>Overlay encryption:</strong> overlay traffic is not encrypted by default and VXLAN has no authentication, so an open 4789/udp lets anyone who can reach it inject Ethernet frames into overlay networks (<a href="https://github.com/moby/moby/security/advisories/GHSA-vwm3-crmr-xfxw">GHSA-vwm3-crmr-xfxw</a>). When nodes communicate over untrusted links, create overlay networks with <code>--opt encrypted</code>, allow IP protocol 50 (ESP) between the nodes, and still never accept 4789/udp from untrusted sources.</li>
+<li><strong>The <code>ingress</code> network is not covered:</strong> <code>--opt encrypted</code> applies only to the network it is set on; the default <code>ingress</code> network used by the routing mesh stays unencrypted unless it is <a href="https://docs.docker.com/engine/swarm/networking/#customize-ingress">recreated with encryption</a>.</li>
+<li><strong>Vulnerable versions:</strong> before Docker Engine 23.0.3 and 20.10.24, encrypted overlay networks could silently accept cleartext VXLAN packets, for example when the <code>xt_u32</code> kernel module was missing or on a node with a single endpoint (<a href="https://github.com/advisories/GHSA-232p-vwff-86mp">CVE-2023-28840</a>, <a href="https://github.com/advisories/GHSA-6wrf-mxfj-pf5p">CVE-2023-28842</a>).</li>
+</ul>
 <h3 id="rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security">RULE #6: Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security<a class="headerlink" href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security" title="Permanent link">&para;</a></h3>
 <p><strong>First of all, do not disable default security profile!</strong> Always start with Docker’s or your host’s default profile as a baseline.</p>
 <p><strong>Security Profile Recommendations:</strong></p>
