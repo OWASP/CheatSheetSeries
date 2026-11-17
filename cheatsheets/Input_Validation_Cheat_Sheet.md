@@ -79,6 +79,17 @@ ALLOWED_HOSTS = ["www.example.com"]
 
 For host handling in cache keys, see the [Web Cache Security Cheat Sheet](Web_Cache_Security_Cheat_Sheet.md).
 
+### CRLF in Response Header Values
+
+A value the application copies from the request into a response header, such as the target of a redirect in `Location` or a cookie value in `Set-Cookie`, must not contain CR or LF. If it does, an attacker can end the header line and add headers of their own or start a second response, which can poison a cache or deliver script to other users ([CWE-113](https://cwe.mitre.org/data/definitions/113.html), [WSTG: Testing for HTTP Splitting/Smuggling](https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/15-Testing_for_HTTP_Splitting_Smuggling/)). [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#section-5.5) calls field values with CR, LF or NUL "invalid and dangerous" and says a recipient must reject them or replace each with a space.
+
+- Reject a value that contains CR, LF or NUL instead of stripping the characters, and allow only the format the header expects, for example a path from an allowlist for a redirect ([Unvalidated Redirects and Forwards Cheat Sheet](Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)).
+- Decode a value once, then validate it. A check on the encoded form misses `%0d%0a`, and decoding again after the check brings the characters back ([CWE-113](https://cwe.mitre.org/data/definitions/113.html)).
+- Set headers through the framework's header API instead of writing raw header lines. Check that your framework version rejects CR and LF in header values, and do not rely on it where it doesn't.
+- Test with an encoded CRLF in each parameter that ends up in a response header.
+
+For CR and LF in log entries, see the [Logging Cheat Sheet](Logging_Cheat_Sheet.md).
+
 ## Common Pitfalls
 
 - **Client-only checks:** Validate on the server even when the browser checks the same fields. [Client-side validation is bypassable](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation); use it for immediate feedback.
