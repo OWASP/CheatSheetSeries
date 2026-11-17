@@ -30,22 +30,17 @@ php artisan key:generate
 
 By default, Laravel is configured in a secure manner. However, if you change your cookie or session configurations, make sure of the following:
 
-- Enable the cookie encryption middleware if you use the `cookie` session store or if you store any kind of data that should not be readable or tampered with by clients. In general, this should be enabled unless your application has a very specific use case that requires disabling this. To enable this middleware, simply add the `EncryptCookies` middleware to the `web` middleware group in your `App\Http\Kernel` class:
+- Keep cookie encryption enabled if you use the `cookie` session store or if you store any kind of data that should not be readable or tampered with by clients. The `EncryptCookies` middleware is part of the `web` middleware group by default ([Laravel: default middleware groups](https://laravel.com/docs/12.x/middleware#laravels-default-middleware-groups)). If a specific cookie must stay unencrypted, exclude it by name in `bootstrap/app.php` instead of removing the middleware ([Laravel: cookies and encryption](https://laravel.com/docs/12.x/responses#cookies-and-encryption)):
 
 ```php
-/**
- * The application's route middleware groups.
- *
- * @var array
- */
-protected $middlewareGroups = [
-    'web' => [
-        \App\Http\Middleware\EncryptCookies::class,
-        ...
-    ],
-    ...
-];
+->withMiddleware(function (Middleware $middleware): void {
+    $middleware->encryptCookies(except: [
+        'cookie_name',
+    ]);
+})
 ```
+
+Applications created before Laravel 11 register this middleware in the `web` group of `App\Http\Kernel` instead.
 
 - Enable the `HttpOnly` attribute on your session cookies via your `config/session.php` file, so that your session cookies are inaccessible from JavaScript:
 
@@ -365,22 +360,7 @@ This code redirects the user to any external URL provided by user input. This co
 
 [Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user's web browser to perform an unwanted action on a trusted site when the user is authenticated.
 
-Laravel provides CSRF protection out-of-the-box with the `VerifyCSRFToken` middleware. Generally, if you have this middleware in the `web` middleware group of your `App\Http\Kernel` class, you should be well protected:
-
-```php
-/**
- * The application's route middleware groups.
- *
- * @var array
- */
-protected $middlewareGroups = [
-    'web' => [
-        ...
-         \App\Http\Middleware\VerifyCsrfToken::class,
-         ...
-    ],
-];
-```
+Laravel provides CSRF protection out-of-the-box with the `ValidateCsrfToken` middleware, which is part of the `web` middleware group by default, so routes in `routes/web.php` are protected unless you remove it ([Laravel: CSRF protection](https://laravel.com/docs/12.x/csrf#preventing-csrf-requests)). In applications created before Laravel 11, the middleware is called `VerifyCsrfToken` and is registered in `App\Http\Kernel`.
 
 Next, for all your `POST` request forms, you may use the `@csrf` blade directive to generate the hidden CSRF input token fields:
 
@@ -395,7 +375,15 @@ Next, for all your `POST` request forms, you may use the `@csrf` blade directive
 
 For AJAX requests, you can setup the [X-CSRF-Token header](https://laravel.com/docs/csrf#csrf-x-csrf-token).
 
-Laravel also provides the ability to exclude certain routes from CSRF protection using the `$except` variable in your CSRF middleware class. Typically, you would want to exclude only stateless routes (e.g. APIs or webhooks) from CSRF protection. If any other routes are excluded, these may result in CSRF vulnerabilities.
+Laravel also provides the ability to exclude certain routes from CSRF protection with the `validateCsrfTokens` method in `bootstrap/app.php` ([Laravel: excluding URIs](https://laravel.com/docs/12.x/csrf#csrf-excluding-uris)), or the `$except` property of the middleware in older applications. Typically, you would want to exclude only stateless routes (e.g. APIs or webhooks) from CSRF protection. If any other routes are excluded, these may result in CSRF vulnerabilities.
+
+```php
+->withMiddleware(function (Middleware $middleware): void {
+    $middleware->validateCsrfTokens(except: [
+        'stripe/*',
+    ]);
+})
+```
 
 ## Command Injection
 
@@ -481,21 +469,21 @@ Route::middleware('throttle:custom-limit')->get('/dashboard', fn () => 'Dashboar
 
 ### 4. Global API / Web Rate Limiting
 
-Laravel allows you to apply global rate limiting to entire route groups like `api` or `web` by including the `throttle` middleware in `Kernel.php` (note that the `api` group is rate-limited by default).
+Laravel allows you to apply global rate limiting to entire route groups like `api` or `web` by adding the `throttle` middleware to the group in `bootstrap/app.php` ([Laravel: middleware groups](https://laravel.com/docs/12.x/middleware#laravels-default-middleware-groups)). In new applications the `api` group isn't rate-limited by default, so add a limit explicitly.
 
 ```php
-protected $middlewareGroups = [
-    'api' => [
+->withMiddleware(function (Middleware $middleware): void {
+    $middleware->api(prepend: [
         'throttle:60,1', // 60 requests per minute globally for API
-        // ...
-    ],
+    ]);
 
-    'web' => [
+    $middleware->web(append: [
         'throttle:30,1', // 30 requests per minute globally for web
-        // ...
-    ],
-];
+    ]);
+})
 ```
+
+Applications created before Laravel 11 add the same entries to the groups in `App\Http\Kernel`.
 
 For more details, see the official Laravel documentation on [rate limiting](https://laravel.com/docs/12.x/routing#rate-limiting).
 
