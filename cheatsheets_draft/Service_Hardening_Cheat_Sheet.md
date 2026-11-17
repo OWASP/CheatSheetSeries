@@ -141,7 +141,7 @@ Prefer explicitly managed writable directories, such as `StateDirectory=`, over 
 
 `ProtectSystem=strict` restricts filesystem writes but does not prevent reading accessible files. The `/dev`, `/proc`, and `/sys` subtrees are excluded from its read-only protection. Additional controls may be needed to restrict access to these resources. Writable-directory exceptions and other filesystem namespace limitations must also be considered.
 
-See the [systemd.exec manual](https://www.freedesktop.org/software/systemd/man/systemd.exec.html) for directive semantics, exceptions, and interactions.
+See the [systemd.exec manual](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) for directive semantics, exceptions, and interactions.
 
 ### Restrict Network Communication
 
@@ -221,7 +221,7 @@ systemd-analyze security example.service
 
 Its exposure score is a **heuristic assessment of unit settings**, not proof that the service is secure or vulnerable. It does not replace functional testing, application review, or verification of the effective restrictions.
 
-Consult the [systemd-analyze manual](https://www.freedesktop.org/software/systemd/man/systemd-analyze.html) and the [systemctl manual](https://www.freedesktop.org/software/systemd/man/systemctl.html) for further details.
+Consult the [systemd-analyze manual](https://www.freedesktop.org/software/systemd/man/latest/systemd-analyze.html) and the [systemctl manual](https://www.freedesktop.org/software/systemd/man/latest/systemctl.html) for further details.
 
 Review hardening settings when service requirements change, and validate compatibility with the systemd version and Linux kernel used in the deployment.
 
