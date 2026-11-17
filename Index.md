@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**137** cheat sheets available.
+**138** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -243,6 +243,8 @@
 [Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md)
 
 [Secure AI Model Ops Cheat Sheet](cheatsheets/Secure_AI_Model_Ops_Cheat_Sheet.md)
+
+[Secure Application Development Cheat Sheet](cheatsheets/Secure_Application_Development_Cheat_Sheet.md)
 
 [Secure Cloud Architecture Cheat Sheet](cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.md)
 

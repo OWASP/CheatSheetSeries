@@ -8,7 +8,7 @@ Modern application development requires embedding security across the entire sof
 
 ## 1. Identity, Authentication, and Access Control
 
-Identity, authentication, and access control establish who is interacting with an application—whether a human user or an automated service—and enforce what actions that subject is permitted to perform. These controls matter whenever an application manages sensitive assets, user accounts, multi-tenant boundaries, or service-to-service transactions. Inadequate controls allow attackers to impersonate legitimate entities, hijack active sessions, or execute unauthorized operations.
+Identity, authentication, and access control establish who is interacting with an application—whether a human user or an automated service—and enforce what actions that subject is permitted to perform. **Authentication** verifies who an entity is by validating credentials, authenticators, or cryptographic assertions. **Authorization** determines what that authenticated identity is permitted to access or execute. Both controls are necessary because verifying an identity alone does not establish permission to perform any given operation. Inadequate controls allow attackers to impersonate legitimate entities, hijack active sessions, bypass tenant boundaries, or execute unauthorized actions.
 
 **OWASP Top 10 Mapping:**
 
@@ -35,7 +35,7 @@ Identity, authentication, and access control establish who is interacting with a
 
 ## 2. Input Handling and Injection Prevention
 
-Input handling and injection defense govern how an application receives, inspects, processes, and displays data from untrusted sources. These controls matter whenever an application processes data from users, client requests, external APIs, webhooks, or file uploads. When applications process untrusted data without validation, parameterization, or context-aware encoding, attackers can manipulate query interpreters, execute unauthorized commands, or run malicious scripts in user browsers.
+Input handling and injection defense govern how an application receives, inspects, processes, and displays data from untrusted sources. Untrusted input is not limited to direct user submissions; it encompasses data arriving from external services, incoming emails, third-party APIs, webhooks, uploaded files, database feeds, and message queues. When applications process untrusted data without validation, parameterization, or context-aware encoding, attackers can manipulate query interpreters, execute unauthorized commands, or run malicious scripts in client contexts.
 
 **OWASP Top 10 Mapping:**
 
@@ -60,7 +60,13 @@ Input handling and injection defense govern how an application receives, inspect
 
 ## 3. Cryptography and Sensitive Data Protection
 
-Cryptography and sensitive data protection ensure the confidentiality and integrity of information both while moving across networks and while stored on disk. These controls matter whenever an application handles personal information, credentials, financial records, or operational secrets. Flaws in algorithm selection, encryption implementation, or credential storage can expose sensitive assets even if the rest of the application remains secure.
+Cryptography and sensitive data protection preserve the confidentiality and integrity of information across different operational states:
+
+- **Protection in Transit**: Safeguards data flowing across networks against eavesdropping and tampering. Modern [Transport Layer Security (TLS)](Transport_Layer_Security_Cheat_Sheet.md) is the baseline expectation for all network communications—including standard application traffic and internal service calls—regardless of whether traditionally sensitive data is present.
+- **Protection at Rest**: Safeguards information stored persistently in databases, object stores, files, and backups using robust encryption algorithms and secure key handling, as detailed in the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
+- **End-to-End Protection**: Secures data from the originating endpoint to the ultimate destination so that intermediate systems, service providers, or infrastructure operators cannot access the plaintext. This control is necessary when intermediate transport hops cannot be fully trusted.
+
+These controls serve distinct purposes and are not interchangeable; TLS protects data while moving across the wire, but does not protect stored records or untrusted intermediaries. Prioritize establishing TLS across all communication boundaries first, apply at-rest encryption to sensitive assets and backups, and implement end-to-end encryption with sound [Key Management](Key_Management_Cheat_Sheet.md) when architecture requires zero-trust intermediate handling.
 
 **OWASP Top 10 Mapping:**
 
@@ -107,7 +113,7 @@ Application architecture and communication boundaries define how services intera
 
 ## 5. Dependencies, Deployment, and Security Operations
 
-Dependencies, deployment, and security operations protect software throughout its build pipeline, execution environment, and production lifecycle. These controls matter whenever an application incorporates third-party libraries, runs within automated CI/CD pipelines, deploys onto containerized or cloud platforms, or requires operational visibility into potential attacks. Flaws in supply chain governance, infrastructure configurations, or security logging can compromise otherwise secure application code.
+Dependencies, deployment, and security operations protect software throughout its build pipeline, execution environment, and production lifecycle. Organizations must maintain and promptly update third-party dependencies, operating systems, middleware, and runtime environments to prevent the accumulation of known vulnerabilities. Security operations require actively tracking vulnerability advisories and remediating affected components in a timely manner, as covered in the [Vulnerable Dependency Management Cheat Sheet](Vulnerable_Dependency_Management_Cheat_Sheet.md) and [Software Supply Chain Security Cheat Sheet](Software_Supply_Chain_Security_Cheat_Sheet.md). Inadequate patch management, insecure pipeline triggers, misconfigured container hosts, or unmonitored logs leave applications vulnerable to supply chain compromise and undetected intrusion.
 
 **OWASP Top 10 Mapping:**
 
