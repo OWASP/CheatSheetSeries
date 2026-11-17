@@ -283,4 +283,3 @@ For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat She
 - [systemd.exec(5) — Execution Environment Configuration](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html)
 - [systemd.resource-control(5) — Resource Control Unit Settings](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html)
 - [NIST SP 800-53 Rev. 5 — Security and Privacy Controls](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
-
