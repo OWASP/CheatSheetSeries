@@ -133,6 +133,10 @@ ProtectSystem=strict
 StateDirectory=example-service
 PrivateTmp=yes
 ProtectHome=yes
+ProtectProc=invisible
+ProcSubset=pid
+ProtectControlGroups=yes
+PrivateDevices=yes
 ```
 
 This is an **illustrative configuration, not a universal baseline**. The service account must exist, and the restrictions must be compatible with the application's actual requirements. An empty capability bounding set can break operations requiring Linux capabilities. Filesystem restrictions can also prevent access to required configuration, data, sockets, or other resources.
