@@ -260,6 +260,8 @@
 
 [Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
 
+[Server Side Document and Media Rendering Cheat Sheet](cheatsheets/Server_Side_Document_and_Media_Rendering_Cheat_Sheet.md)
+
 [Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg) ![Ruby](assets/Index_Ruby.svg) ![Bash](assets/Index_Bash.svg)
 
 [Server Side Template Injection Prevention Cheat Sheet](cheatsheets/Server_Side_Template_Injection_Prevention_Cheat_Sheet.md)
