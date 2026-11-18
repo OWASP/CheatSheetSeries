@@ -27,10 +27,10 @@ Where the front end and the back end both support it, use HTTP/2 between them as
 
 Apply the framing rules from [RFC 9112](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.1) in every component, and prefer the strict option where the specification allows a choice:
 
-- Reject a request that has both `Content-Length` and `Transfer-Encoding`. If a component processes it instead, it must use `Transfer-Encoding` alone. Either way, close the connection after responding.
-- Respond with `400 (Bad Request)` and close the connection when `Transfer-Encoding` is present and `chunked` is not the final coding.
+- Reject a request that has both `Content-Length` and `Transfer-Encoding`. If a component processes it instead, it must use `Transfer-Encoding` alone, and an intermediary that forwards it must first remove the received `Content-Length` field and process `Transfer-Encoding` before forwarding. Either way, close the connection after responding.
+- Respond with `400 (Bad Request)` and close the connection when `Transfer-Encoding` is present and `chunked` is not the final coding ([RFC 9112 section 6.3](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3)).
 - Treat an invalid `Content-Length`, including several different values, as an unrecoverable error.
-- Respond with `400 (Bad Request)` and close the connection for a request with whitespace between a header field name and the colon (for example `Transfer-Encoding : chunked`), with obsolete line folding, or with a bare CR. A component that doesn't recognize such an obfuscated `Transfer-Encoding` header won't see it, which is how `TE.TE` slips past the rule above ([RFC 9112 section 5.1](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.1), [section 5.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.2), [section 2.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-2.2)).
+- Respond with `400 (Bad Request)` and close the connection for a request with whitespace between a header field name and the colon (for example `Transfer-Encoding : chunked`), with obsolete line folding, or with a bare CR or bare LF in the request line or headers. A component that doesn't recognize such an obfuscated `Transfer-Encoding` header won't see it, which is how `TE.TE` slips past the rule above ([RFC 9112 section 5.1](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.1), [section 5.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.2), [section 2.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-2.2)).
 
 Have the front end normalize or reject ambiguous requests, and have the back end reject any that are still ambiguous and close the connection ([PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-prevent-http-request-smuggling-vulnerabilities)).
 
@@ -38,8 +38,8 @@ Have the front end normalize or reject ambiguous requests, and have the back end
 
 If HTTP/2 has to be translated to HTTP/1.1, validate the result as an HTTP/1.1 request before forwarding it ([RFC 9113: Field Validity](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.2.1)):
 
-- Treat an HTTP/2 request as malformed if a header value contains CR, LF, or NUL, or a header name contains a colon (other than the leading one of a pseudo-header), whitespace, or uppercase characters.
-- Treat an HTTP/2 request that contains `transfer-encoding` or other connection-specific headers as malformed ([RFC 9113: Connection-Specific Header Fields](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.2.2)).
+- Treat an HTTP/2 request as malformed if a header value contains CR, LF, or NUL, or starts or ends with whitespace, or if a header name contains a colon (other than the leading one of a pseudo-header), uppercase characters, or any character in the ranges 0x00-0x20 or 0x7F-0xFF, which cover whitespace, control characters, and non-ASCII bytes.
+- Treat an HTTP/2 request that contains `transfer-encoding` or other connection-specific headers as malformed, except for a `TE` header field whose only value is `trailers` ([RFC 9113: Connection-Specific Header Fields](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.2.2)).
 - Treat a `content-length` that does not match the length of the DATA frames as malformed ([RFC 9113: Malformed Messages](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.1.1)).
 
 ### Handle Connections Defensively
