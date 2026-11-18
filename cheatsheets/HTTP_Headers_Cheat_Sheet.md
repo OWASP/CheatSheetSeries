@@ -147,6 +147,29 @@ If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/G
 
 - *NOTE*: The use of '\*' might be necessary depending on your needs. For example, for a public API that should be accessible from any origin, it might be necessary to allow '\*'.
 
+### Access-Control-Allow-Credentials
+
+The [`Access-Control-Allow-Credentials`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Credentials) HTTP response header indicates whether a browser can expose a cross-origin response to frontend JavaScript when the request's credentials mode is `include`. Its only valid value is `true`; omit the header when credentials are not required.
+
+#### Recommendation
+
+- Enable credentialed cross-origin requests only when required by the application.
+- Send `Access-Control-Allow-Credentials: true` only together with an `Access-Control-Allow-Origin` value selected from an exact-match allowlist of trusted origins. Never allow the `null` origin.
+- For credentialed CORS requests, never use the wildcard (`*`) for `Access-Control-Allow-Origin`. An explicit, allowlisted origin must be specified instead.
+- Send `Vary: Origin` whenever the `Access-Control-Allow-Origin` response value depends on the request's `Origin` header.
+
+For secure cookie configuration, refer to the [Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies).
+
+**Example:**
+
+> ```http
+> Access-Control-Allow-Origin: https://trusted-site.com
+> Access-Control-Allow-Credentials: true
+> Vary: Origin
+> ```
+
+For more information about credentialed CORS and its security implications, refer to the [CORS Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/CORS_Security_Cheat_Sheet.html).
+
 ### Cross-Origin-Opener-Policy (COOP)
 
 The HTTP `Cross-Origin-Opener-Policy` (COOP) response header allows you to ensure a top-level document does not share a browsing context group with cross-origin documents.
@@ -366,6 +389,15 @@ http-response set-header X-Frame-Options DENY
 Below is a sample configuration, it sets the `X-Frame-Options` header in Nginx. Note that without the `always` option, the header will only be sent for certain status codes, as described in [the nginx documentation](https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header).
 
 ```lang-none
+add_header "X-Frame-Options" "DENY" always;
+```
+
+Also note that `add_header` directives are inherited from the previous configuration level only if there are no `add_header` directives defined on the current level, as described in [the nginx documentation](https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header). For example, adding `add_header Cache-Control "no-cache";` inside a `location` block silently drops every security header set in the enclosing `server` block for that location. Repeat the security headers in each such block, keep them in a shared file pulled in with `include`, or, from nginx 1.29.3, set [`add_header_inherit merge;`](https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header_inherit) so that the headers from the previous level are kept.
+
+When Nginx proxies an application that already sends security headers, `add_header` does not replace them: the response carries both copies, possibly with conflicting values (for example `X-Frame-Options: DENY` from the application and `SAMEORIGIN` from Nginx). Set each header in one layer only, or drop the upstream copy with [`proxy_hide_header`](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_hide_header) before adding your own:
+
+```lang-none
+proxy_hide_header X-Frame-Options;
 add_header "X-Frame-Options" "DENY" always;
 ```
 

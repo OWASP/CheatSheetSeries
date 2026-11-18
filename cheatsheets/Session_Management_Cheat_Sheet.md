@@ -10,7 +10,7 @@ Web applications can create sessions to keep track of anonymous users after the 
 
 Once an authenticated session has been established, the session ID (or token) is temporarily equivalent to the strongest authentication method used by the application, such as username and password, passphrases, one-time passwords (OTP), client-based digital certificates, smartcards, or biometrics (such as fingerprint or eye retina). See the OWASP [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
-HTTP is a stateless protocol ([RFC2616](https://www.ietf.org/rfc/rfc2616.txt) section 5), where each request and response pair is independent of other web interactions. Therefore, in order to introduce the concept of a session, it is required to implement session management capabilities that link both the authentication and access control (or authorization) modules commonly available in web applications:
+HTTP is a stateless protocol ([RFC 9110, Section 3.3](https://www.rfc-editor.org/rfc/rfc9110#section-3.3)), where each request and response pair is independent of other web interactions. Therefore, in order to introduce the concept of a session, it is required to implement session management capabilities that link both the authentication and access control (or authorization) modules commonly available in web applications:
 
 ![SessionDiagram](../assets/Session_Management_Cheat_Sheet_Diagram.png)
 

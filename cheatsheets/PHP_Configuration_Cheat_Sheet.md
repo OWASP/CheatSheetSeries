@@ -42,11 +42,9 @@ doc_root                = /path/DocumentRoot/PHP-scripts/
 open_basedir            = /path/DocumentRoot/PHP-scripts/
 include_path            = /path/PHP-pear/
 extension_dir           = /path/PHP-extensions/
-mime_magic.magicfile    = /path/PHP-magic.mime
 allow_url_fopen         = Off
 allow_url_include       = Off
 variables_order         = "GPCS"
-allow_webdav_methods    = Off
 session.gc_maxlifetime  = 600
 ```
 
@@ -67,7 +65,7 @@ If your application is not using file uploads, and say the only data the user wi
 
 ```text
 enable_dl               = Off
-disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, highlight_file, popen, proc_open, fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file, chdir, mkdir, rmdir, chmod, rename, filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo
+disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, highlight_file, popen, proc_open, dbase_open, putenv, move_uploaded_file, chdir, mkdir, rmdir, chmod, rename, posix_mkfifo
 disable_classes         =
 ```
 
@@ -92,14 +90,13 @@ Session settings are some of the MOST important values to concentrate on in conf
  session.cookie_httponly          = 1
  session.cookie_samesite          = Strict
  session.cache_expire             = 30
- session.sid_length               = 256
- session.sid_bits_per_character   = 6
 ```
+
+Leave `session.sid_length` and `session.sid_bits_per_character` at their defaults, which give a 32 character hexadecimal session ID. Changing them is deprecated as of PHP 8.4 ([PHP 8.4 deprecated features](https://www.php.net/manual/en/migration84.deprecated.php#migration84.deprecated.session)). The same release deprecates changing `session.use_only_cookies` and `session.use_trans_sid`, which are shown above at their default values.
 
 #### Some more security paranoid checks
 
 ```text
-session.referer_check   = /application/path
 memory_limit            = 50M
 post_max_size           = 20M
 max_execution_time      = 60

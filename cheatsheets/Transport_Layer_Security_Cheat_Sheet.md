@@ -49,9 +49,11 @@ The `supported_groups` extension is used to negotiate which Diffie-Hellman group
 
 - the available Finite Field Diffie-Hellman groups are `ffdhe2048`, `ffdhe3072`, `ffdhe4096`, `ffdhe6144`, `ffdhe8192` as specified in [RFC7919](https://www.rfc-editor.org/rfc/rfc7919);
 - Elliptic Curve Diffie-Hellman groups include `x25519`, `prime256v1`, `x448`, `secp384r1`;
-- for post-quantum cryptography, `X25519MLKEM768` it currently used (though it is not a group, proper).
+- for post-quantum cryptography, the hybrid [`X25519MLKEM768`](https://www.rfc-editor.org/rfc/rfc10024.html) is currently used.
 
-For OpenSSL, the list of enabled groups can be configured ins in `openssl.cnf`. For example
+`X25519MLKEM768` and the other ML-KEM groups require [OpenSSL 3.5 or later](https://docs.openssl.org/3.5/man3/SSL_CTX_set1_curves/#history). Earlier versions, including OpenSSL 3.0, do not recognize the name. If it appears in the NGINX or Apache configurations below, the server refuses to start; an `openssl.cnf` `Groups` line is instead ignored without an error, so none of the groups it lists are applied. Check which OpenSSL version the server uses first (for example with `openssl version` or `nginx -V`), and omit `X25519MLKEM768` from the list on older versions.
+
+For OpenSSL, the list of enabled groups can be configured in `openssl.cnf`. For example
 
 ```text
 openssl_conf = openssl_init
@@ -82,6 +84,16 @@ For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman para
 TLS compression should be disabled in order to protect against a vulnerability (nicknamed [CRIME](https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/)) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.
 
 TLS compression is not available in TLS v1.3 for this reason.
+
+### Be Careful With TLS 1.3 Early Data (0-RTT)
+
+TLS 1.3 lets a client that resumes a session send application data in its first flight, called early data or 0-RTT. Unlike the rest of the connection, early data is not protected against replay across connections ([RFC 8446 section 2.3](https://www.rfc-editor.org/rfc/rfc8446.html#section-2.3), [section 8](https://www.rfc-editor.org/rfc/rfc8446.html#section-8)), so an attacker who captures it can send it again and a request with side effects may run twice.
+
+- Leave early data disabled unless the latency gain is needed. For example, nginx's [`ssl_early_data`](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_early_data) is off by default.
+- Clients only send [safe methods](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.1) such as `GET` in early data unless they know more ([RFC 8470 section 4](https://www.rfc-editor.org/rfc/rfc8470.html#section-4)), so the main defense is making sure safe methods have no side effects. A `GET` that changes state, such as a logout or confirmation link, is what a replay can trigger.
+- If some requests aren't safe to replay, reject them in early data with [`425 Too Early`](https://www.rfc-editor.org/rfc/rfc8470.html#section-5.2) so the client retries after the handshake completes. Where TLS terminates at a proxy or CDN, make sure it adds the [`Early-Data: 1`](https://www.rfc-editor.org/rfc/rfc8470.html#section-5.1) header so the application can tell which requests arrived in early data.
+
+This only prevents replay of early data at the TLS layer. It does not protect against an attacker or client resending a complete request after the handshake, which still needs application-level controls such as idempotency keys.
 
 ### Patch Cryptographic Libraries
 
