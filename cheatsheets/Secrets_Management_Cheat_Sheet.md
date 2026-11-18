@@ -10,11 +10,11 @@ This cheat sheet offers best practices and guidelines to help properly implement
 
 ## 2 General Secrets Management
 
-Secrets management relies on foundational principles spanning lifecycle governance, least-privilege access, automated rotation, and runtime memory protection to prevent credential compromise and limit breach impact.
+Secrets management spans lifecycle governance, least-privilege access, automated rotation, auditing, and runtime memory protection.
 
 ### 2.1 High Availability
 
-Secrets management systems sit on the critical path for both application availability and operational recovery. Latency or outages in secrets infrastructure degrade dependent services, delay application startup, and impede incident responders retrieving emergency credentials. Deploy secrets management solutions with clustering, multi-region replication, and automated failover capable of reliably serving production traffic and disaster-recovery operations.
+Secrets management systems sit on the critical path for application availability and operational recovery. Latency or outages in secrets infrastructure degrade dependent services, delay application startup, and impede incident responders' ability to retrieve emergency credentials. Design secrets management architectures with redundancy, clustering, or automated failover calibrated to organizational availability requirements, recovery time objectives (RTO), and recovery point objectives (RPO).
 
 ### 2.2 Centralize and Standardize
 
@@ -34,45 +34,49 @@ Automating secret provisioning and rotation eliminates error-prone manual interv
 
 #### 2.4.1 Architectural Patterns for Automated Rotation
 
-Automated rotation must update credentials without interrupting active workloads:
+Automated rotation patterns depend on whether the target service supports concurrent active credentials:
 
-- **Dual-Credential Phased Rotation:** For services supporting multiple active credentials (such as API keys, cryptographic verification keys, or database accounts), introduce the new credential while maintaining the previous credential for verification or read operations. Once all clients transition to the new credential, decommission and revoke the old credential.
-- **Orchestrated Multi-Step Rotation:** For target services supporting only one active credential per identity, automated rotation must execute an orchestrated, multi-step sequence rather than an immediate in-place overwrite. The rotation orchestrator (such as a cloud function or controller; see [Choosing a Secret Management Service](#41-choosing-a-secret-management-service)) creates a new pending credential, updates the target service to accept it, tests authentication against the service with the pending credential, and then promotes the pending credential to active before invalidating the prior version.
+- **Dual-Credential Phased Rotation:** Where services support multiple concurrent credentials (such as API keys or database accounts), introduce the new credential while keeping the previous credential active. Once all consumers transition to the new credential, decommission and revoke the prior credential. For cryptographic keys, do not delete retired keys if they are needed to decrypt retained data or verify past signatures; instead, restrict them from new signing or encryption operations, retain them under restricted access policies, and handle them per compromise procedures.
+- **Orchestrated Multi-Step Rotation:** For target services supporting only one active credential per identity, updating the backing service may immediately invalidate the prior credential, making uninterrupted rotation difficult without brief downtime or coordinated failover. Rotation orchestrators (such as a cloud function or controller; see [Choosing a Secret Management Service](#41-choosing-a-secret-management-service)) should follow an orchestrated sequence: create a pending credential; validate the request and pending version against the intended secret, service, and identity while handling idempotent retries; update the backing service; test authentication; promote the tested credential; and coordinate consumer refresh or process recovery. Where uninterrupted continuity is critical, prefer provisioning overlapping credentials or separate service identities instead.
 
-Sidecars and local agents (such as Vault Agent or Kubernetes secrets sidecars) serve as client delivery mechanisms that continuously fetch updated or refreshed secrets from the vault into local in-memory mounts without requiring application code changes or restarts (see [Short-Lived Sidecar Containers](#52-short-lived-sidecar-containers)).
+Sidecars and local agents (such as Vault Agent or Kubernetes secrets sidecars) act as secret delivery and refresh mechanisms rather than orchestrating rotation at the backing service. Updating a delivered secret file does not automatically update credentials cached in memory by a running application; workloads must reload configuration or coordinate restarts to consume updated credentials (see [Short-Lived Sidecar Containers](#52-short-lived-sidecar-containers)).
 
 ### 2.5 Handling Secrets in Memory
 
-Protecting secrets in memory minimizes the exposure window during which plaintext credentials reside in process memory. In-memory defenses protect against credential extraction from crash reports, core dumps, unencrypted swap or paging files, and unauthorized local process inspection. They cannot defend against an attacker with root or kernel access on the host; where untrusted host environments or hypervisors are part of the threat model, deploy hardware-isolated enclaves (see [Confidential Computing and Enclaves](#413-confidential-computing-and-enclaves)).
+Protecting secrets in memory minimizes the exposure window during which plaintext credentials reside in process memory. In-memory defenses reduce exposure to credential extraction from crash reports, core dumps, unencrypted swap or paging files, and unauthorized local process inspection. They cannot defend against an attacker with root, kernel, or hypervisor access; where untrusted host environments are in scope, use hardware-isolated enclaves (see [Confidential Computing and Enclaves](#413-confidential-computing-and-enclaves)).
 
 Implementation approaches depend on the runtime environment:
 
-- **Unmanaged Runtimes (C/C++):** Use explicit secure zeroing functions (`memset_s()`, `explicit_bzero()`, `SecureZeroMemory()`) to overwrite memory buffers immediately after use, preventing compilers from optimizing away the zeroing operation as dead code.
-- **Managed Runtimes (Java, .NET, Go):** Avoid immutable string types (`String`) for sensitive credentials, as they remain in the managed heap until garbage collection occurs and cannot be overwritten in place. Instead, store secrets in mutable primitive arrays (`char[]` or `byte[]`) and explicitly overwrite them (`Arrays.fill()`) immediately after consumption. However, developers must recognize that managed runtimes may create internal copies or relocate objects during garbage collection compaction, JIT compilation, or I/O operations without developer visibility, so reliable zeroization in managed environments cannot always be guaranteed.
-- **Operating System Safeguards:** Disable core dumps (`RLIMIT_CORE` limits or setting the process non-dumpable flag) and lock sensitive memory pages where supported to prevent credentials from being flushed to unencrypted swap or crash artifacts.
+- **Unmanaged Runtimes (C/C++):** Use explicit secure zeroing functions (`memset_s()`, `explicit_bzero()`, `SecureZeroMemory()`) to overwrite memory buffers immediately after use, preventing compilers from optimizing away the zeroing operation as dead code. Note that intermediate copies in registers or stack frames may still persist until overwritten.
+- **Managed Runtimes (Java, .NET, Go):** Avoid immutable string types for sensitive credentials, as they remain in the managed heap until garbage collection occurs and cannot be overwritten in place. Prefer mutable byte buffers or primitive arrays and overwrite them using runtime-appropriate clearing mechanisms immediately after consumption as a best-effort exposure-reduction practice. However, developers must recognize that managed runtimes may create internal copies or relocate objects during garbage collection compaction, JIT compilation, or runtime I/O without application control, so complete zeroization in managed environments cannot be guaranteed.
+- **Process Separation:** Isolate sensitive secret-handling or cryptographic operations in dedicated helper processes running under restricted OS user accounts with limited inter-process communication (IPC) permissions, reducing the exposure surface of the primary application.
+- **Operating System Safeguards:** Disable core dumps (`RLIMIT_CORE` limits or setting the process non-dumpable flag) and lock sensitive memory pages where supported (`mlock()`, `VirtualLock()`) to prevent credentials from being written to unencrypted swap or crash artifacts.
 
 For mobile and client-side memory testing methodologies, see [Testing Memory for Sensitive Data](https://mas.owasp.org/MASTG/tests/android/MASVS-STORAGE/MASTG-TEST-0011) from the OWASP MAS project.
 
 ### 2.6 Auditing
 
-Comprehensive, tamper-resistant auditing of the secrets management system is essential for detecting unauthorized access, policy violations, and credential compromise. Audit logs must capture:
+Comprehensive audit logs from secrets management systems are essential for detecting unauthorized access, policy violations, and credential compromise. Audit logs must capture secrets-specific events:
 
-- Secret access requests, approvals, and rejections, recording the requesting identity, target resource, and role.
+- Secret access requests, approvals, and rejections, recording the requesting identity, target secret, and role.
 - Secret creation, updates, manual or automated rotations, and revocations.
 - Authorization and authentication errors, abnormal access patterns, or attempts to access expired credentials.
 - Administrative actions, policy modifications, and underlying infrastructure events.
 
-Audit logs must use synchronized timestamps generated by secure time-synchronization protocols (such as authenticated NTP) to ensure reliable forensic reconstruction. Protect audit logs against unauthorized modification or deletion, and forward them promptly to a centralized, monitored log repository.
+For general guidance on log integrity, timestamp synchronization, tamper resistance, and log forwarding, see the [Logging Cheat Sheet](Logging_Cheat_Sheet.md).
 
 ### 2.7 Secret Lifecycle
 
-Secrets must be managed systematically across their operational lifecycle:
+Secrets must be managed systematically across their operational lifecycle per cryptographic lifecycle recommendations such as [NIST SP 800-57 Part 1](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final):
 
-- **Creation:** Generate secrets using cryptographically secure pseudo-random number generators (CSPRNG) with sufficient entropy and appropriate key lengths for their cryptographic purpose. Scope newly created credentials to the minimum privileges required. For secret creation recommendations, see [the Open CRE project on secrets lookup](https://www.opencre.org/cre/223-780).
-- **Distribution:** Provision secrets directly to authorized workloads over encrypted transport channels (TLS) or through platform injection mechanisms (such as in-memory volume mounts or environment configurations). Never transmit credentials across unencrypted or out-of-band channels like email or SMS.
-- **Rotation:** Regularly rotate machine credentials and API keys through automated workflows to limit the validity window of compromised secrets. For human user passwords, follow [NIST recommendations](https://pages.nist.gov/800-63-FAQ/#q-b05) avoiding arbitrary periodic expiration without suspicion of compromise, as forced password changes prompt users to select predictable permutations.
+- **Creation:** Generate secrets using cryptographically secure pseudo-random number generators based on approved deterministic random bit generator (DRBG) mechanisms (see [NIST SP 800-90A Rev. 1](https://csrc.nist.gov/pubs/sp/800/90/a/r1/final)) seeded with sufficient entropy, and choose appropriate key lengths for their cryptographic purpose. Scope newly created credentials to the minimum privileges required.
+- **Distribution:** Deliver secrets directly to authorized workloads over cryptographically secure channels providing server authentication, integrity, and confidentiality (such as TLS), or through platform injection mechanisms (such as access-restricted in-memory volume mounts). Avoid passing secrets through environment variables where feasible, as environment variables risk exposure through process listing, child-process inheritance, crash dumps, and application diagnostic logs. Never transmit credentials over unencrypted channels or via messaging systems such as email or SMS.
+- **Rotation:** Regularly rotate machine credentials and API keys through automated workflows to limit the validity window of compromised secrets. Manage human authentication credentials according to their specific credential type:
+    - For memorized passwords, follow [NIST recommendations](https://pages.nist.gov/800-63-FAQ/#q-b05) avoiding arbitrary periodic expiration without suspicion of compromise, as forced rotation encourages predictable permutations.
+    - For TOTP shared secrets, manage lifecycle through secure enrollment, authenticator rebinding, and prompt revocation upon device loss.
+    - For WebAuthn and passkey credentials, manage lifecycle through credential registration, device lifecycle events, and explicit revocation.
 - **Revocation:** Explicitly and immediately revoke secrets when they are no longer required, when associated workloads are decommissioned, or upon any suspicion of compromise. Certificate management must include corresponding certificate revocation workflows.
-- **Expiration:** Enforce explicit validity bounds and time-to-live (TTL) leases on all issued credentials. Applications and consuming services should verify that a secret is currently active before accepting it, triggering renewal or automated rotation when approaching expiration.
+- **Expiration:** Enforce explicit validity bounds and time-to-live (TTL) leases where supported. Note that a TTL configured in a secrets manager only expires the lease in the vault; credential expiration is not enforced unless the target backing service validates validity windows or the secrets manager explicitly revokes the credential upon lease expiry.
 
 ### 2.8 Transport Layer Security (TLS) Everywhere
 
