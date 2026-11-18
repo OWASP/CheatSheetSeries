@@ -14,7 +14,7 @@ To protect against known container escape vulnerabilities like [Leaky Vessels](h
 
 This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit, [Dirty COW](https://github.com/scumjr/dirtycow-vdso), executed inside a well-insulated container would still result in root access on a vulnerable host.
 
-Updating the host and Docker is not enough on its own. The software inside a container image (the base image, OS packages and application dependencies) is only patched when the image is rebuilt and redeployed; a running container never updates itself. Have a defined process to rebuild images regularly, redeploy the updated images and retire outdated ones. See [Rule \#9](#rule-9-integrate-container-scanning-tools-into-your-cicd-pipeline) and [Rule \#13](#rule-13-enhance-supply-chain-security) for detecting vulnerabilities in images.
+Updating the host and Docker is not enough on its own. The software inside a container image (the base image, OS packages and application dependencies) is only patched when the image is rebuilt and redeployed; a running container is not updated in place ([NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) §3.1.1). Have a defined process to rebuild images regularly and redeploy the updated versions. Also retire outdated images: [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) §4.2.2 recommends pruning vulnerable images from registries and making sure deployments use the most recent specific image version, because stale images make accidental deployment of a known-vulnerable version more likely. See [Rule \#9](#rule-9-integrate-container-scanning-tools-into-your-cicd-pipeline) and [Rule \#13](#rule-13-enhance-supply-chain-security) for detecting vulnerabilities in images.
 
 ### RULE \#1: Do not expose the Docker daemon socket (even to the containers)
 
@@ -325,7 +325,7 @@ To detect misconfigurations in Docker Compose files before deployment:
 - [DockSec](https://github.com/OWASP/DockSec) (with `--compose`)
 - [KICS](https://github.com/Checkmarx/kics)
 
-A scan at build time only reflects what was known on that day. New vulnerabilities are regularly disclosed for software that is already deployed, so also rescan images in your registry and in production on a regular schedule. Define who reviews the findings and how quickly critical ones must be fixed by rebuilding and redeploying the image (see [Rule \#0](#rule-0-keep-host-and-docker-up-to-date)). Pinned base image versions keep builds reproducible but do not update themselves, so review and update them regularly.
+A scan at build time only reflects what was known on that day. [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) recommends vulnerability management that covers the whole lifecycle of an image, from the build through the registry to runtime (§4.1.1), so also rescan images in your registry and in production. Define a policy for which findings must be fixed, and how quickly, by rebuilding and redeploying the image (see [Rule \#0](#rule-0-keep-host-and-docker-up-to-date)). Pinned base image versions keep builds reproducible but do not update themselves, so review and update them regularly.
 
 ### RULE \#10: Keep the Docker daemon logging level at `info`
 
