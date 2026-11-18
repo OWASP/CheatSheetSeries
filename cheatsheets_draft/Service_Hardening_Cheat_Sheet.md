@@ -149,14 +149,14 @@ See the [systemd.exec manual](https://www.freedesktop.org/software/systemd/man/l
 
 ### Restrict Network Communication
 
-systemd can restrict the network address families and IP destinations available to a service.Combined with socket activation, these controls can allow a service to handle TCP connections passed by systemd without permitting the service to create its own network sockets.
+systemd can restrict the network address families and IP destinations available to a service. Combined with socket activation, these controls can allow a service to handle TCP connections passed by systemd without permitting the service to create its own network sockets.
 
 | Directive | Purpose |
 | --- | --- |
 | `RestrictAddressFamilies=` | Restrict the socket address families a service can create, such as `AF_UNIX`, `AF_INET`, and `AF_INET6`. Allow only those required by the service. |
 | `IPAddressDeny=` / `IPAddressAllow=` | Restrict inbound and outbound IPv4 and IPv6 traffic using denied and permitted address ranges. |
 
-`RestrictAddressFamilies=` does not restrict sockets passed to a service through socket activation. IP address filtering requires supported kernel functionality and may have no effect where the necessary eBPF support is unavailable. For socket-activated services,consider the network restrictions on the socket and service units separately,according to their respective communication requirements. 
+`RestrictAddressFamilies=` does not restrict sockets passed to a service through socket activation. IP address filtering requires supported kernel functionality and may have no effect where the necessary eBPF support is unavailable. For socket-activated services, consider the network restrictions on the socket and service units separately, according to their respective communication requirements. 
 
 See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for network restriction options and their limitations.
 
