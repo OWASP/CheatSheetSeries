@@ -8,7 +8,7 @@ Depending on the application, this may let an attacker bypass access controls th
 
 ## How Desync Happens
 
-These are the common ways components end up disagreeing, not a complete list. More generally, any difference in how two components interpret a request, and so any lax parsing, can lead to request smuggling.
+These are common ways components can disagree, not a complete list. More generally, any difference in how two components interpret a request can lead to request smuggling. Lax parsing can create these differences.
 
 - **Content-Length and Transfer-Encoding disagree.** An HTTP/1.1 request body is delimited either by `Content-Length` or by `Transfer-Encoding: chunked`. If a request carries both, or a `Transfer-Encoding` value that one component accepts and another ignores, each side can pick a different length ([RFC 9112: Message Body Length](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3)). [PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-perform-an-http-request-smuggling-attack) calls these CL.TE and TE.CL, after which header each side uses, and TE.TE when both support `Transfer-Encoding` but one of them can be made to ignore an obfuscated version of it.
 - **HTTP/2 is downgraded to HTTP/1.1.** HTTP/2 frames carry their own length, but a front end that rewrites requests into HTTP/1.1 for the back end can pass along a `content-length` or `transfer-encoding` header, or a header value with a CR or LF in it, that then decides the framing on the back end ([PortSwigger: HTTP/2 desync attacks](https://portswigger.net/research/http2)).
