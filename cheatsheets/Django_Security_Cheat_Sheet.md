@@ -15,7 +15,7 @@ The Django framework provides some built-in security features that aim to be sec
   ```python
   import os
   SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
-  ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
+  ALLOWED_HOSTS = [host.strip() for host in os.environ["DJANGO_ALLOWED_HOSTS"].split(",") if host.strip()]
   DEBUG = os.environ.get("DJANGO_DEBUG") == "True"  # enabled only by an explicit override
   ```
 
@@ -114,7 +114,7 @@ The `SECRET_KEY` parameter in settings.py is used for cryptographic signing and 
 
   ```python
   import os
-  SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+  SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
   ```
 
 - Regularly rotate the key, keeping in mind that this action can invalidate sessions, password reset tokens, etc. Rotate the key immediately it if it ever gets exposed.
@@ -125,7 +125,7 @@ Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDL
 
 - `SECURE_CONTENT_TYPE_NOSNIFF`: Set this key to `True`. Protects against MIME type sniffing attacks by enabling the header `X-Content-Type-Options: nosniff`.
 - `SECURE_HSTS_SECONDS`: A positive value adds [HTTP Strict Transport Security (HSTS)](https://docs.djangoproject.com/en/5.2/ref/middleware/#http-strict-transport-security) to HTTPS responses, instructing supporting browsers to use HTTPS for the specified period. It does not reject HTTP requests on the server or protect a browser's first connection before it knows the policy; [preloading addresses that initial-connection gap](https://www.rfc-editor.org/rfc/rfc6797.html#section-12.3).
-- `SECURE_REFERRER_POLICY`: Keep the [default](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-referrer-policy), `same-origin`, which sends no referrer to other origins. It is stricter than the `strict-origin-when-cross-origin` baseline in the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md#referrer-policy). Do not tighten it to `no-referrer`, because [Django's CSRF protection needs the `Referer` header over HTTPS](https://docs.djangoproject.com/en/5.2/ref/middleware/#referrer-policy).
+- `SECURE_REFERRER_POLICY`: Keep the [default](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-referrer-policy), `same-origin`, which sends no referrer to other origins. It is stricter than the `strict-origin-when-cross-origin` baseline in the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md#referrer-policy). Do not tighten it to `no-referrer`, which [interferes with Django's CSRF protection](https://docs.djangoproject.com/en/5.2/ref/middleware/#referrer-policy). Under that policy, browsers send form posts with [`Origin: null`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy#effect_on_the_origin_header), which fails Django's origin check, and HTTPS requests without an `Origin` header lose the `Referer` header that [Django checks instead](https://docs.djangoproject.com/en/5.2/ref/csrf/#how-csrf-works).
 - `SECURE_CROSS_ORIGIN_OPENER_POLICY`: Keep the [default](https://docs.djangoproject.com/en/5.2/ref/middleware/#cross-origin-opener-policy), `same-origin`, which the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md#cross-origin-opener-policy-coop) also recommends. If your page opens a cross-origin popup that must reach back through `window.opener`, such as some sign-in flows, use `same-origin-allow-popups` instead of disabling the header.
 
 Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` (This module should be listed after the `django.middleware.security.SecurityMiddleware` module as ordering is important). This module is used to set the following parameters:
