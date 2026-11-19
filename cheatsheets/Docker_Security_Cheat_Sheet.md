@@ -14,6 +14,8 @@ To protect against known container escape vulnerabilities like [Leaky Vessels](h
 
 This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit, [Dirty COW](https://github.com/scumjr/dirtycow-vdso), executed inside a well-insulated container would still result in root access on a vulnerable host.
 
+Updating the host and Docker is not enough on its own. The software inside a container image (the base image, OS packages and application dependencies) is only patched when the image is rebuilt and redeployed; a running container is not updated in place ([NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) §3.1.1). Have a defined process to rebuild images regularly and redeploy the updated versions. Also retire outdated images: [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) §4.2.2 recommends pruning vulnerable images from registries and making sure deployments use the most recent specific image version, because stale images make accidental deployment of a known-vulnerable version more likely. See [Rule \#9](#rule-9-integrate-container-scanning-tools-into-your-cicd-pipeline) and [Rule \#13](#rule-13-enhance-supply-chain-security) for detecting vulnerabilities in images.
+
 ### RULE \#1: Do not expose the Docker daemon socket (even to the containers)
 
 Docker socket _/var/run/docker.sock_ is the UNIX socket that Docker is listening to. This is the primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving unrestricted root access to your host.
@@ -323,6 +325,8 @@ To detect misconfigurations in Docker Compose files before deployment:
 - [DockSec](https://github.com/OWASP/DockSec) (with `--compose`)
 - [KICS](https://github.com/Checkmarx/kics)
 
+A scan at build time only reflects what was known on that day. [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) recommends vulnerability management that covers the whole lifecycle of an image, from the build through the registry to runtime (§4.1.1), so also rescan images in your registry and in production. Define a policy for which findings must be fixed, and how quickly, by rebuilding and redeploying the image (see [Rule \#0](#rule-0-keep-host-and-docker-up-to-date)). Pinned base image versions keep builds reproducible but do not update themselves, so review and update them regularly.
+
 ### RULE \#10: Keep the Docker daemon logging level at `info`
 
 By default, the Docker daemon is configured to have a base logging level of `info`. This can be verified by checking the daemon configuration file `/etc/docker/daemon.json` for the`log-level` key. If the key is not present, the default logging level is `info`. Additionally, if the docker daemon is started with the `--log-level` option, the value of the `log-level` key in the configuration file will be overridden. To check if the Docker daemon is running with a different log level, you can use the following command:
@@ -383,6 +387,7 @@ Building on the principles in [Rule \#9](#rule-9-integrate-container-scanning-to
 - [Image Signing](https://github.com/notaryproject/notary): Digitally sign images to verify their integrity and authenticity, establishing trust in their security.
 - [Trusted Registry](https://snyk.io/learn/container-security/container-registry-security/): Store the documented, signed images with their SBOMs in a secure registry that enforces strict [access controls](Access_Control_Cheat_Sheet.md) and supports metadata management.
 - [Secure Deployment](https://www.openpolicyagent.org/docs/latest/#overview): Implement secure deployment polices, such as image validation, runtime security, and continuous monitoring, to ensure the security of the deployed images.
+- Continuous Vulnerability Management: Match the SBOM of each deployed image against newly disclosed vulnerabilities, and rebuild and redeploy patched images. See the [Vulnerable Dependency Management Cheat Sheet](Vulnerable_Dependency_Management_Cheat_Sheet.md).
 
 ## Podman as an alternative to Docker
 
