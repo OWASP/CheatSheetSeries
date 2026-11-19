@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**139** cheat sheets available.
+**140** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -123,6 +123,8 @@
 [HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Html](assets/Index_Html.svg)
 
 [HTTP Headers Cheat Sheet](cheatsheets/HTTP_Headers_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Xml](assets/Index_Xml.svg) ![Php](assets/Index_Php.svg)
+
+[HTTP Request Smuggling Prevention Cheat Sheet](cheatsheets/HTTP_Request_Smuggling_Prevention_Cheat_Sheet.md)
 
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
 
