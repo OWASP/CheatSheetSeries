@@ -34,81 +34,43 @@ Use the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md) for baseline a
 - Propagate server-verified tenant context to components that need it for tenant-sensitive decisions or observability; do not let downstream components replace it with unverified input.
 
 <details>
-<summary>Bad example: Trusting client-supplied tenant ID</summary>
+<summary>Illustrative example: Establishing verified tenant context</summary>
 
 ```python
-# Dangerous: The header selects a tenant without checking the caller's membership.
-# Query parameterization prevents injection, not cross-tenant access.
-def get_tenant_data(request):
-    tenant_id = request.headers.get("X-Tenant-ID")  # Attacker can modify!
-    return db.execute("SELECT * FROM data WHERE tenant_id = :tid", {"tid": tenant_id})
-```
-
-</details>
-
-<details>
-<summary>Good example: Verifying tenant context against authenticated identity</summary>
-
-```python
-from functools import wraps
 from contextvars import ContextVar
-from typing import Optional
 
-class TenantContext:
-    def __init__(self, tenant_id: str, user_id: str, roles: list):
-        self.tenant_id = tenant_id
-        self.user_id = user_id
-        self.roles = roles
-        self.is_validated = True
+# Request-scoped context ensures isolation across concurrent tasks and reused worker threads
+current_tenant = ContextVar("current_tenant", default=None)
 
-# Request-local tenant context
-current_tenant: ContextVar[Optional[TenantContext]] = ContextVar(
-    'current_tenant', default=None
-)
+async def tenant_context_middleware(request, call_next):
+    # Client-supplied headers (e.g., X-Tenant-ID) are untrusted selectors, not verified context.
+    # Obtain tenant identity and principal from server-verified authentication claims.
+    # A verified claim may select the tenant, but authorization still depends on issuer
+    # guarantees or checking current tenant membership for the authenticated principal.
+    claims = getattr(request.state, "verified_claims", None)
+    if not claims or "tenant_id" not in claims:
+        # Fail closed if verified tenant authentication context is missing
+        return JSONResponse(status_code=401, content={"error": "Missing verified tenant context"})
 
-class TenantMiddleware:
-    """Verify tenant context against authenticated identity and membership."""
-    
-    async def __call__(self, request, call_next):
-        # A verified claim may select the tenant, but authorization still
-        # depends on the issuer's guarantees or a current membership check.
-        token_claims = request.state.verified_claims  # Set by auth middleware
-        
-        if not token_claims or "tenant_id" not in token_claims:
-            return JSONResponse(status_code=401, content={"error": "Missing tenant context"})
-        
-        tenant_id = token_claims["tenant_id"]
-        
-        principal_id = token_claims["sub"]
-        membership = await self.tenant_service.get_active_membership(
-            principal_id, tenant_id
-        )
-        if not membership:
-            return JSONResponse(status_code=403, content={"error": "Tenant access denied"})
-        
-        # Set tenant context for this request
-        ctx = TenantContext(
-            tenant_id=tenant_id,
-            user_id=principal_id,
-            roles=membership.roles
-        )
-        token = current_tenant.set(ctx)
-        
-        try:
-            response = await call_next(request)
-            return response
-        finally:
-            current_tenant.reset(token)
+    tenant_id = claims["tenant_id"]
+    principal_id = claims["sub"]
 
-def require_tenant(func):
-    """Decorator ensuring tenant context is present."""
-    @wraps(func)
-    async def wrapper(*args, **kwargs):
-        ctx = current_tenant.get()
-        if not ctx or not ctx.is_validated:
-            raise SecurityException("Tenant context required")
-        return await func(*args, **kwargs)
-    return wrapper
+    membership = await tenant_service.get_active_membership(principal_id, tenant_id)
+    if not membership:
+        # Fail closed if the principal is not authorized for the tenant
+        return JSONResponse(status_code=403, content={"error": "Tenant access denied"})
+
+    # Bind verified context to request-scoped storage
+    token = current_tenant.set({
+        "tenant_id": tenant_id,
+        "user_id": principal_id,
+        "roles": membership.roles,
+    })
+    try:
+        return await call_next(request)
+    finally:
+        # Reliably reset context to prevent leakage across requests or reused workers
+        current_tenant.reset(token)
 ```
 
 </details>
