@@ -5144,83 +5144,26 @@
 <li>Include tenant scope in the lookup or authorization policy when ownership is tenant-specific. A composite key (<code>tenant_id</code> + <code>resource_id</code>) is one option, not a universal requirement.</li>
 <li>Enforce authorization at a boundary traversed by every tenant-owned access path. Add data-layer checks as defense in depth where the architecture supports them.</li>
 <li>Treat opaque or random identifiers as defense in depth against enumeration, not as a substitute for authorization.</li>
+<li>Apply object-level access control checks according to the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">OWASP Insecure Direct Object Reference Prevention Cheat Sheet</a>.</li>
 </ul>
 <details>
-<summary>Bad example: Direct object reference without tenant validation</summary>
+<summary>Illustrative example: Tenant-scoped resource lookup</summary>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Only checks resource_id, not tenant ownership</span>
-<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/api/documents/</span><span class="si">{document_id}</span><span class="s2">"</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_document</span><span class="p">(</span><span class="n">document_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Document</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Document</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">document_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">doc</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">doc</span>  <span class="c1"># Could return another tenant's document!</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># verified_tenant_id comes from the server-verified tenant context (see section 1), never from request input</span>
+<span class="c1"># Architectures using separate schemas, databases, or RLS enforce this boundary at the data layer</span>
+<span class="n">document</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Document</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">Document</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">document_id</span><span class="p">,</span>
+        <span class="n">Document</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="n">verified_tenant_id</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">document</span><span class="p">:</span>
+    <span class="c1"># Return 404 rather than 403 so the response does not reveal that the object exists in another tenant</span>
+    <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">"Document not found"</span><span class="p">)</span>
 
-</details>
-
-<details>
-<summary>Good example: Tenant-scoped resource access</summary>
-
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">UUID</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Type</span>
-
-<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'T'</span><span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantScopedRepository</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
-<span class="w">    </span><span class="sd">"""Repository that scopes the operations provided below to one tenant."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">session</span><span class="p">:</span> <span class="n">Session</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tenant_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant context required"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ctx</span><span class="o">.</span><span class="n">tenant_id</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""Get resource only if it belongs to current tenant."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">resource_id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>  <span class="c1"># Tenant-owned resource</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">list_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""List resources for current tenant only."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">limit</span><span class="p">)</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Create resource with tenant_id automatically set."""</span>
-        <span class="k">if</span> <span class="s1">'tenant_id'</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">'tenant_id'</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Cannot create resource for different tenant"</span><span class="p">)</span>
-
-        <span class="n">kwargs</span><span class="p">[</span><span class="s1">'tenant_id'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>
-        <span class="n">instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">instance</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Delete resource only if it belongs to current tenant."""</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">resource_id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">result</span> <span class="o">&gt;</span> <span class="mi">0</span>
-
-<span class="c1"># Usage</span>
-<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/api/documents/</span><span class="si">{document_id}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nd">@require_tenant</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_document</span><span class="p">(</span><span class="n">document_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">db</span><span class="p">:</span> <span class="n">Session</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_db</span><span class="p">)):</span>
-    <span class="n">repo</span> <span class="o">=</span> <span class="n">TenantScopedRepository</span><span class="p">(</span><span class="n">Document</span><span class="p">,</span> <span class="n">db</span><span class="p">)</span>
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="n">document_id</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">doc</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s2">"Document not found"</span><span class="p">)</span>  <span class="c1"># Don't reveal if it exists for other tenant</span>
-    <span class="k">return</span> <span class="n">doc</span>
+<span class="c1"># Tenant scoping is necessary but not sufficient: also check the caller's permission on this object (owner, role or ACL)</span>
 </code></pre></div>
 
 </details>
