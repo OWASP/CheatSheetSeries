@@ -36,19 +36,11 @@ For more details regarding HSTS, please visit:
 
 ### Digital Certificate Pinning
 
-Certificate Pinning is the practice of hardcoding or storing a predefined set of information (usually hashes) for digital certificates/public keys in the user agent (be it web browser, mobile app or browser plugin) such that only the predefined certificates/public keys are used for secure communication, and all others will fail, even if the user trusted (implicitly or explicitly) the other certificates/public keys.
+Certificate pinning limits which certificates or public keys a client accepts for a host. It can protect against a misissued certificate, but a certificate or key rotation can cause an outage if clients still expect the old pin. Only consider pinning in rare cases for native mobile apps where you control both the app and server and can update the pins securely. See the [Pinning Cheat Sheet](Pinning_Cheat_Sheet.md#when-do-you-perform-pinning) for the full decision criteria.
 
-Some advantages for pinning are:
+Websites can no longer use HTTP Public Key Pinning (HPKP) to set pins in Chrome or Firefox. [Chrome 72 removed HPKP](https://developer.chrome.com/blog/chrome-72-deps-rems), and [Firefox 72 began ignoring HPKP headers](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/72#security). Chrome, for example, [enforces its own pins for certain Google sites](https://www.chromium.org/Home/chromium-security/education/tls/).
 
-- In the event of a CA compromise, in which a compromised CA trusted by a user can issue certificates for any domain, allowing evil perpetrators to eavesdrop on users.
-- In environments where users are forced to accept a potentially-malicious root CA, such as corporate environments or national PKI schemes.
-- In applications where the target demographic may not understand certificate warnings, and is likely to just allow any invalid certificate.
-
-For details regarding certificate pinning, please refer to the following:
-
-1. [OWASP Certificate Pinning Cheat Sheet](Pinning_Cheat_Sheet.md).
-2. [Public Key Pinning Extension for HTTP RFC](https://tools.ietf.org/html/rfc7469).
-3. [Securing the SSL channel against man-in-the-middle attacks: Future technologies - HTTP Strict Transport Security and Pinning of Certs, by Tobias Gondrom](https://owasp.org/www-pdf-archive/OWASP_defending-MITMA_APAC2012.pdf).
+For HTTPS deployment guidance, see the [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md).
 
 ### Panic Modes
 
