@@ -61,6 +61,23 @@ tools = [
 
 Enforce authorization in the execution component, outside the agent's context. A `user_confirmed` flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Check and consume the approval in one atomic step immediately before execution so concurrent or repeated requests cannot reuse it. Changes to the target or parameters require new approval. Apply the [High-Impact Action Integrity Controls](#high-impact-action-integrity-controls) and the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md). Fail closed for unknown tools or missing approval requirements.
 
+#### Running Git in Repository-Controlled Workspaces
+
+Coding agents and their editors often run `git status`, `git diff` or `git log` automatically. Git reads the repository's own configuration, and some options name a program for Git to run:
+
+- [`core.fsmonitor`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-corefsmonitor): a hook command that speeds up commands which refresh the index, such as `git status`.
+- [`diff.external`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-diffexternal) and [`diff.<driver>.textconv`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-diffdrivertextconv): commands that produce a diff, or convert a file to text first, for `git diff` (textconv [also for `git log -p`](https://git-scm.com/docs/git-diff#Documentation/git-diff.txt---no-textconv)).
+- A [filter driver](https://git-scm.com/docs/gitattributes#_filter)'s `clean` command: runs when files are added.
+
+Protecting only `.git/` is not enough: Git's documentation for [`safe.bareRepository`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-safebareRepository) describes attacks "that involve cloning a repository that contains a bare repository and running a Git command within that directory".
+
+When an agent can write this configuration, or an untrusted workspace already contains it, Git runs these programs outside the agent's approval flow, the editor's untrusted mode or the sandbox, as in the advisories for GitHub Copilot CLI ([CVE-2026-45033](https://github.com/advisories/GHSA-9ccr-r5hg-74gf)), Zed ([CVE-2026-44465](https://github.com/zed-industries/zed/security/advisories/GHSA-fj2r-rmw6-h222)) and Docker Sandboxes ([CVE-2026-121614](https://github.com/advisories/GHSA-vv2q-qr3q-w59x)).
+
+- Run Git on agent-controlled workspaces inside the agent's sandbox, not on the host.
+- Do not auto-approve `git status`, `git diff` or `git log` as read-only commands in such workspaces.
+- Require approval before the agent's file tools write to `.git/` or to any directory containing `HEAD`, `objects/` and `refs/`.
+- If the host must run Git there, pass at least `-c core.fsmonitor=false -c safe.bareRepository=explicit` and, for diffs, `--no-ext-diff --no-textconv`. The [`-c` option](https://git-scm.com/docs/git#Documentation/git.txt--cnamevalue) overrides repository configuration. These overrides cover only the options they name.
+
 ### 2. Input Validation & Prompt Injection Defense
 
 - Treat all external data as untrusted (user messages, retrieved documents, API responses, emails).
@@ -602,3 +619,4 @@ For production agents, retain evidence that shows:
 
 - [OWASP LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)
 - [NIST Artificial Intelligence Risk Management Framework (AI RMF 1.0)](https://doi.org/10.6028/NIST.AI.100-1)
+- [Git: git-config documentation](https://git-scm.com/docs/git-config)
