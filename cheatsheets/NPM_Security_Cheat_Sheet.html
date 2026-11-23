@@ -5201,6 +5201,7 @@
 <li>Before upgrading, make sure to review changelog and release notes for the upgraded version.</li>
 <li>When installing packages make sure to add the <code>--ignore-scripts</code> suffix to disable the execution of any scripts by third-party packages.</li>
 <li>Consider adding <code>ignore-scripts=true</code> to your <code>.npmrc</code> project file, or to your global npm configuration.</li>
+<li>In an npm workspaces monorepo, put this setting in the <code>.npmrc</code> at the repository root. npm <a href="https://github.com/npm/cli/issues/4605">does not read</a> a <code>.npmrc</code> inside a workspace folder: a root <code>npm install</code> ignores it without a warning, and commands run from inside the workspace only log <code>ignoring workspace config at &lt;path&gt;/.npmrc</code> (<a href="https://github.com/npm/cli/blob/latest/workspaces/config/lib/index.js">source</a>).</li>
 </ul>
 <h3 id="using-an-allowlist-for-lifecycle-scripts">Using an allowlist for lifecycle scripts<a class="headerlink" href="#using-an-allowlist-for-lifecycle-scripts" title="Permanent link">&para;</a></h3>
 <p>Disabling lifecycle scripts by default by adding <code>ignore-scripts=true</code> to your <code>.npmrc</code> file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like <a href="https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts"><code>@lavamoat/allow-scripts</code></a> to create an <em>allowlist</em> of packages authorized to run lifecycle scripts.</p>
