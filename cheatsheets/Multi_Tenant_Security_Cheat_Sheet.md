@@ -32,6 +32,7 @@ Use the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md) for baseline a
 - Treat client-supplied tenant identifiers as selectors only. Verify that the authenticated principal is authorized to act in the selected tenant.
 - Bind tenant context to a server-verified identity and current tenant membership or service authorization.
 - Propagate server-verified tenant context to components that need it for tenant-sensitive decisions or observability; do not let downstream components replace it with unverified input.
+- Query parameterization prevents injection but does not enforce tenant isolation; tenant authorization and tenant-scoped queries are still required.
 
 <details>
 <summary>Illustrative example: Establishing verified tenant context</summary>
@@ -39,7 +40,8 @@ Use the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md) for baseline a
 ```python
 from contextvars import ContextVar
 
-# Request-scoped context ensures isolation across concurrent tasks and reused worker threads
+# ContextVar stores per-context values; the finally block restores the previous value.
+# Tenant-sensitive consumers must reject a missing context, never run an unscoped query.
 current_tenant = ContextVar("current_tenant", default=None)
 
 async def tenant_context_middleware(request, call_next):
