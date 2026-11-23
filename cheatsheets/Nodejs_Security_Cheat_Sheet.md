@@ -115,21 +115,13 @@ Use output encoding that matches the destination context to prevent cross-site s
 
 #### Perform application activity logging
 
-Logging application activity is an encouraged good practice. It makes it easier to debug any errors encountered during application runtime. It is also useful for security concerns, since it can be used during incident response. In addition, these logs can be used to feed Intrusion Detection/Prevention Systems (IDS/IPS). In Node.js, there are modules such as [Winston](https://www.npmjs.com/package/winston), [Bunyan](https://www.npmjs.com/package/bunyan), or [Pino](https://www.npmjs.com/package/pino) to perform application activity logging. These modules enable streaming and querying logs, and they provide a way to handle uncaught exceptions.
+Ensure Node.js applications log security-relevant events—such as authentication failures, authorization decisions, input validation failures, administrative actions, and unhandled errors—to support incident detection and response.
 
-With the following code, you can log application activities in both console and a desired log file:
+Use an actively maintained logging framework, such as [Pino](https://github.com/pinojs/pino) or [Winston](https://github.com/winstonjs/winston), to generate structured logs (such as JSON). Structured logging separates event metadata from log message text, simplifying automated ingestion, correlation, and querying in centralized log management systems. When logging untrusted input, sanitize or encode newline characters and control sequences to mitigate log injection attacks, as structured serializers do not automatically neutralize all injection risks in downstream log viewers or SIEM pipelines.
 
-```JavaScript
-const logger = new (Winston.Logger) ({
-    transports: [
-        new (winston.transports.Console)(),
-        new (winston.transports.File)({ filename: 'application.log' })
-    ],
-    level: 'verbose'
-});
-```
+Never write sensitive data to application logs, including passwords, API keys, session tokens, authorization headers, or sensitive personal data. When logging HTTP requests or error contexts, explicitly filter, redact, or mask sensitive fields and headers before outputting log records.
 
-You can provide different transports so that you can save errors to a separate log file and general application logs to a different log file. Additional information on security logging can be found in [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html).
+For comprehensive guidance on security event taxonomies, data sanitization, log protection, and tamper resistance, see the [Logging Cheat Sheet](Logging_Cheat_Sheet.md).
 
 #### Monitor the event loop
 
