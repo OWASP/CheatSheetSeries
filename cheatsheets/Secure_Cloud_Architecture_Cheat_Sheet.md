@@ -228,6 +228,18 @@ Cloud service providers offer a range of DDoS protection products, from simple t
 
 The decision to enable advanced DDoS protections for a specific application should be based off risk and business criticality of application, taking into account mitigating factors and cost (these services can be very inexpensive compared to large company budgets).
 
+### East-West Traffic Inspection and TLS Decryption
+
+Multi-VPC and landing-zone architectures often route internal (east-west) traffic through a centralized firewall or Intrusion Prevention System (IPS) between [network segments](Network_Segmentation_Cheat_Sheet.md). Because [TLS encrypts application data between endpoints](https://www.rfc-editor.org/rfc/rfc8446.html#section-1) and [TLS 1.3 forward secrecy prevents passive decryption](https://csrc.nist.gov/pubs/sp/1800/37/final), a firewall without active TLS inspection [cannot see inside the encrypted tunnel](https://learn.microsoft.com/en-us/azure/firewall/premium-features#tls-inspection). It enforces Layer 3 and Layer 4 rules on IP addresses and ports, but cannot inspect HTTPS payloads for application-layer lateral movement such as remote code execution or command-and-control traffic.
+
+Active TLS decryption (terminating and re-encrypting traffic at the firewall) restores Layer 7 visibility, but it is a trade-off rather than a default control. Every participating workload must trust the firewall's [inspection Certificate Authority (CA)](https://docs.aws.amazon.com/network-firewall/latest/developerguide/tls-inspection-configurations.html), so trust-store gaps or rotation mistakes can break internal calls. Decryption also increases latency and compute cost, can impose [protocol limitations on HTTP/2 or HTTP/3](https://docs.cloud.google.com/firewall/docs/about-tls-inspection), and breaks certificate pinning and mutual TLS (mTLS) client authentication (see the [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md#client-certificates-and-mutual-tls)).
+
+Choose an approach that matches how your environment terminates TLS:
+
+- Enable firewall TLS decryption selectively at high-risk cross-zone or cross-account boundaries where mTLS and certificate pinning are not used, and maintain explicit bypass rules for incompatible flows.
+- Where mTLS, latency, or CA management rules out firewall decryption, treat the firewall strictly as a Layer 3/4 [network segmentation policy](Network_Segmentation_Cheat_Sheet.md#network-security-policy) control and rely on workload-level telemetry and [host-based intrusion detection and prevention systems (IDPS)](https://csrc.nist.gov/pubs/sp/800/94/final) to detect lateral movement on the host.
+- If the architecture already terminates TLS at internal API gateways or service-mesh proxies, enforce Layer 7 inspection and authorization at those endpoints instead of decrypting traffic again at a middlebox (see the [Microservices Security Cheat Sheet](Microservices_Security_Cheat_Sheet.md#service-to-service-authentication)).
+
 ## Shared Responsibility Model
 
 The Shared Responsibility Model is a framework for cloud service providers (CSPs) and those selling cloud based services to properly identify and segment the responsibilities of the developer and the provider. This is broken down into different levels of control, corresponding to different elements/layers of the technology stack. Generally, components like physical computing devices and data center space are the responsibility of the CSP. Depending on the level of [management](#self-managed-tooling), the developer could be responsible for the entire stack from operating system on up, or only for some ancillary functionality, code or administration.
@@ -337,3 +349,4 @@ Refer to the documentation provided by the cloud service provider to understand 
 
 - [CISA: Cloud Security Technical Reference Architecture](https://www.cisa.gov/sites/default/files/publications/Cloud%20Security%20Technical%20Reference%20Architecture.pdf)
 - [CISA: Zero Trust Maturity Model Version 2.0](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)
+- [NIST SP 1800-37: Addressing Visibility Challenges with TLS 1.3 within the Enterprise](https://csrc.nist.gov/pubs/sp/1800/37/final)
