@@ -4739,19 +4739,9 @@
 <li><a href="http://www.youtube.com/watch?v=zEV3HOuM_Vw">OWASP Appsec Tutorial Series - Episode 4: Strict Transport Security</a>.</li>
 </ol>
 <h3 id="digital-certificate-pinning">Digital Certificate Pinning<a class="headerlink" href="#digital-certificate-pinning" title="Permanent link">&para;</a></h3>
-<p>Certificate Pinning is the practice of hardcoding or storing a predefined set of information (usually hashes) for digital certificates/public keys in the user agent (be it web browser, mobile app or browser plugin) such that only the predefined certificates/public keys are used for secure communication, and all others will fail, even if the user trusted (implicitly or explicitly) the other certificates/public keys.</p>
-<p>Some advantages for pinning are:</p>
-<ul>
-<li>In the event of a CA compromise, in which a compromised CA trusted by a user can issue certificates for any domain, allowing evil perpetrators to eavesdrop on users.</li>
-<li>In environments where users are forced to accept a potentially-malicious root CA, such as corporate environments or national PKI schemes.</li>
-<li>In applications where the target demographic may not understand certificate warnings, and is likely to just allow any invalid certificate.</li>
-</ul>
-<p>For details regarding certificate pinning, please refer to the following:</p>
-<ol>
-<li><a href="Pinning_Cheat_Sheet.html">OWASP Certificate Pinning Cheat Sheet</a>.</li>
-<li><a href="https://tools.ietf.org/html/rfc7469">Public Key Pinning Extension for HTTP RFC</a>.</li>
-<li><a href="https://owasp.org/www-pdf-archive/OWASP_defending-MITMA_APAC2012.pdf">Securing the SSL channel against man-in-the-middle attacks: Future technologies - HTTP Strict Transport Security and Pinning of Certs, by Tobias Gondrom</a>.</li>
-</ol>
+<p>Certificate pinning limits which certificates or public keys a client accepts for a host. It can protect against a misissued certificate, but a certificate or key rotation can cause an outage if clients still expect the old pin. Only consider pinning in rare cases for native mobile apps where you control both the app and server and can update the pins securely. See the <a href="Pinning_Cheat_Sheet.html#when-do-you-perform-pinning">Pinning Cheat Sheet</a> for the full decision criteria.</p>
+<p>Websites can no longer use HTTP Public Key Pinning (HPKP) to set pins in Chrome or Firefox. <a href="https://developer.chrome.com/blog/chrome-72-deps-rems">Chrome 72 removed HPKP</a>, and <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/72#security">Firefox 72 began ignoring HPKP headers</a>. Chrome, for example, <a href="https://www.chromium.org/Home/chromium-security/education/tls/">enforces its own pins for certain Google sites</a>.</p>
+<p>For HTTPS deployment guidance, see the <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>.</p>
 <h3 id="panic-modes">Panic Modes<a class="headerlink" href="#panic-modes" title="Permanent link">&para;</a></h3>
 <p>A panic mode is a mode that threatened users can refer to when they fall under direct threat to disclose account credentials.</p>
 <p>Giving users the ability to create a panic mode can help them survive these threats, especially in tumultuous regions around the world. Unfortunately many users around the world are subject to types of threats that most web developers do not know of or take into account.</p>
