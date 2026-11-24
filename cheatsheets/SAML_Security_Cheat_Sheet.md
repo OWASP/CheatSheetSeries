@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The **S**ecurity **A**ssertion **M**arkup **L**anguage ([SAML](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language)) is an open standard for exchanging authorization and authentication information. The *Web Browser SAML/SSO Profile with Redirect/POST bindings* is one of the most common SSO implementation. This cheatsheet will focus primarily on that profile.
+The **S**ecurity **A**ssertion **M**arkup **L**anguage ([SAML](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language)) is an open standard for exchanging authorization and authentication information. The *Web Browser SAML/SSO Profile with Redirect/POST bindings* is one of the most common SSO implementations. This cheatsheet will focus primarily on that profile.
 
 ## Validate Message Confidentiality and Integrity
 
@@ -33,7 +33,7 @@ The SSO Web Browser Profile is most susceptible to attacks from trusted partners
 
 The *AVANTSSAR* team suggested the following data elements should be required:
 
-- **AuthnRequest(ID, SP):** An `AuthnRequest` must contain and `ID` and `SP`. Where `ID` is a string uniquely identifying the request and an `SP` identifies the `Service Provider` that initiated the request. Furthermore, the request `ID` attribute must be returned in the response (`InResponseTo="<requestId>"`). `InResponseTo` helps guarantee authenticity of the response from the trusted IdP. This was one of the missing attributes that left Google's SSO vulnerable.
+- **AuthnRequest(ID, SP):** An `AuthnRequest` must contain an `ID` and `SP`. Where `ID` is a string uniquely identifying the request and an `SP` identifies the `Service Provider` that initiated the request. Furthermore, the request `ID` attribute must be returned in the response (`InResponseTo="<requestId>"`). `InResponseTo` helps guarantee authenticity of the response from the trusted IdP. This was one of the missing attributes that left Google's SSO vulnerable.
 - **Response(ID, SP, IdP, {AA} K -1/IdP):** A Response must contain all these elements. Where `ID` is a string uniquely identifying the response. `SP` identifies the recipient of the response. `IdP` identifies the identity provider authorizing the response. `{AA} K -1/IdP` is the assertion digitally signed with the private key of the `IdP`.
 - **AuthAssert(ID, C, IdP, SP):** An authentication assertion must exist within the Response. It must contain an `ID`, a client `(C)`, an identity provider `(IdP)`, and a service provider `(SP)` identifier.
 
@@ -43,7 +43,7 @@ Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks we
 
 The following recommendations were proposed in response ([Secure SAML validation to prevent XML signature wrapping attacks](https://arxiv.org/pdf/1401.7483v1.pdf)):
 
-- Without exception, always perform schema validation on the XML document prior to using it for any security-related purposes::
+- Without exception, always perform schema validation on the XML document prior to using it for any security-related purposes:
     - Always use local, trusted copies of schemas for validation.
     - Never allow automatic download of schemas from third party locations.
     - If possible, inspect schemas and perform schema hardening, to disable possible wildcard type or relaxed processing statements.
@@ -79,7 +79,7 @@ Revisit each security threat that exists within the [SAML Security](https://docs
 
 Additional countermeasures considered should include:
 
-- Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and setup an IP filter for each endpoint. This step will help counter the following attacks:
+- Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and set up an IP filter for each endpoint. This step will help counter the following attacks:
     - Stolen Assertion (6.4.1)
     - Man-in-the-middle (6.4.2)
 - Prefer short lifetimes on the SAML Response. This step will help counter the following attacks:
@@ -121,7 +121,7 @@ Keep in mind that the certificate's signature type can be different from that of
 
 #### SAML Parties vs Organizations
 
-The most common SAML use cases are those of business-to-business (B2B). This means that the two parties have different security polices, practices, and risk tolerances. This guidance focuses mainly on the B2B use case. However SAML based federation or SSO is commonly used inside of an organization. In this case the term third-party CA does not apply. It is likely that the CA has been built and run to company standards and it poses no more or less risk to the SAML systems. The term third-party CA is meant to indicate a private CA run by a third-party.
+The most common SAML use cases are those of business-to-business (B2B). This means that the two parties have different security policies, practices, and risk tolerances. This guidance focuses mainly on the B2B use case. However SAML based federation or SSO is commonly used inside of an organization. In this case the term third-party CA does not apply. It is likely that the CA has been built and run to company standards and it poses no more or less risk to the SAML systems. The term third-party CA is meant to indicate a private CA run by a third-party.
 
 #### Certificate Use Cases
 
@@ -129,7 +129,7 @@ There are actually 5 separate use cases for certificates in a SAML system. While
 
 ##### IdP SAML Signing
 
-This is the certificate that an SP uses to validate an IdD’s SAML response. The IdP signs that response with the certificate’s corresponding private key. This is often the most important certificate and private key, as this protects the identity assertions being sent to the SP.
+This is the certificate that an SP uses to validate an IdP’s SAML response. The IdP signs that response with the certificate’s corresponding private key. This is often the most important certificate and private key, as this protects the identity assertions being sent to the SP.
 
 ##### IdP SAML Encryption
 
@@ -162,7 +162,7 @@ At least one major vendor [Microsoft Entra](https://learn.microsoft.com/en-us/en
 
 ###### Signing Algorithms
 
-When public key cryptography is used for signing data, the data is first hashed with an chosen algorithm and then the hash is signed using the private key.
+When public key cryptography is used for signing data, the data is first hashed with a chosen algorithm and then the hash is signed using the private key.
 
 No IdP should use SHA-1 as the certificate signing hash. SHA-256 is the minimum bar. That said, if possible moving to larger hash algorithms like SHA-384 or SHA-512 means you are better future-proofing your service. In this context we are talking about the certificate’s signing algorithm and not the one used to sign the SAML response XML.
 
@@ -280,7 +280,7 @@ SAML Signing keys are a top security asset and [target of attackers](https://www
 - Validate IDP certificates for revocation against CRL/OCSP if they are present
 - Validate the `Destination` attribute on `<samlp:Response>` exactly matches the SP's expected Assertion Consumer Service (ACS) URL ([SAML Core 2.0 §3.2.2.1](https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf)). Reject responses that are missing `Destination` or where it does not match — this prevents cross-SP assertion replay.
 - Validate `<saml:Audience>` matches the SP's EntityID
-- Validate NotBefore and NotOnorAfter
+- Validate NotBefore and NotOnOrAfter
 - Validate Recipient attribute, `InResponseTo`, and `<saml:SubjectConfirmationData>` (`Recipient`, `NotOnOrAfter`, `InResponseTo`)
 - Explicitly verify the signature algorithm is at least RSA-SHA-256 (or stronger). Reject SHA-1-based algorithms (`http://www.w3.org/2000/09/xmldsig#rsa-sha1`, `...#hmac-sha1`) and `<ds:DigestMethod Algorithm="...sha1">`. NIST SP 800-131A Rev. 2 disallows SHA-1 in digital signatures.
 - Verify that the XML signature's `<ds:Reference URI>` resolves to the signed Assertion or Response, and that the exact assertion used for authentication is protected by that validated signature. [SAML Core sections 5.3 and 5.4](https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) define signature inheritance and references; [approved errata E93](https://docs.oasis-open.org/security/saml/v2.0/errata05/os/saml-v2.0-errata05-os.html#__RefHeading__10669_188893729) permits Response signatures in the browser SSO profile. Reject assertions outside the validated signed content and follow the [signature-wrapping defenses](#validate-signatures).
@@ -297,7 +297,7 @@ Just because SAML is a security protocol does not mean that input validation goe
 
 ## Cryptography
 
-Solutions relying cryptographic algorithms need to follow the latest developments in cryptoanalysis.
+Solutions relying on cryptographic algorithms need to follow the latest developments in cryptanalysis.
 
 - Ensure all SAML elements in the chain use [strong encryption](Cryptographic_Storage_Cheat_Sheet.md#algorithms)
 - Consider deprecating support for [insecure XMLEnc algorithms](https://www.w3.org/TR/xmlenc-core1/#sec-RSA-1_5)
