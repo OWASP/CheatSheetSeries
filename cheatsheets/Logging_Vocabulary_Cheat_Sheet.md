@@ -654,7 +654,7 @@ WARN
 When server-side validation of a value against a discrete list of options (e.g. drop down list, radio buttons) fails, it is a strong indication of malicious activity as this indicates the client-side code has been tampered with.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
