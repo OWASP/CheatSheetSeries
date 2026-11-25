@@ -5399,7 +5399,7 @@
 
 <h1 id="saml-security-cheat-sheet">SAML Security Cheat Sheet<a class="headerlink" href="#saml-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>The <strong>S</strong>ecurity <strong>A</strong>ssertion <strong>M</strong>arkup <strong>L</strong>anguage (<a href="https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language">SAML</a>) is an open standard for exchanging authorization and authentication information. The <em>Web Browser SAML/SSO Profile with Redirect/POST bindings</em> is one of the most common SSO implementation. This cheatsheet will focus primarily on that profile.</p>
+<p>The <strong>S</strong>ecurity <strong>A</strong>ssertion <strong>M</strong>arkup <strong>L</strong>anguage (<a href="https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language">SAML</a>) is an open standard for exchanging authorization and authentication information. The <em>Web Browser SAML/SSO Profile with Redirect/POST bindings</em> is one of the most common SSO implementations. This cheatsheet will focus primarily on that profile.</p>
 <h2 id="validate-message-confidentiality-and-integrity">Validate Message Confidentiality and Integrity<a class="headerlink" href="#validate-message-confidentiality-and-integrity" title="Permanent link">&para;</a></h2>
 <p><a href="Transport_Layer_Security_Cheat_Sheet.html">TLS 1.2</a> is the most common solution to guarantee message confidentiality and integrity at the transport layer. Refer to <a href="https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf">SAML Security (section 4.2.1)</a> for additional information. This step will help counter the following attacks:</p>
 <ul>
@@ -5425,7 +5425,7 @@
 <p>The SSO Web Browser Profile is most susceptible to attacks from trusted partners. This particular security flaw was exposed because the SAML Response did not contain all of the required data elements necessary for a secure message exchange. Following the <a href="https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf">SAML Profile</a> usage requirements for AuthnRequest (4.1.4.1) and Response (4.1.4.2) will help counter this attack.</p>
 <p>The <em>AVANTSSAR</em> team suggested the following data elements should be required:</p>
 <ul>
-<li><strong>AuthnRequest(ID, SP):</strong> An <code>AuthnRequest</code> must contain and <code>ID</code> and <code>SP</code>. Where <code>ID</code> is a string uniquely identifying the request and an <code>SP</code> identifies the <code>Service Provider</code> that initiated the request. Furthermore, the request <code>ID</code> attribute must be returned in the response (<code>InResponseTo="&lt;requestId&gt;"</code>). <code>InResponseTo</code> helps guarantee authenticity of the response from the trusted IdP. This was one of the missing attributes that left Google's SSO vulnerable.</li>
+<li><strong>AuthnRequest(ID, SP):</strong> An <code>AuthnRequest</code> must contain an <code>ID</code> and <code>SP</code>. Where <code>ID</code> is a string uniquely identifying the request and an <code>SP</code> identifies the <code>Service Provider</code> that initiated the request. Furthermore, the request <code>ID</code> attribute must be returned in the response (<code>InResponseTo="&lt;requestId&gt;"</code>). <code>InResponseTo</code> helps guarantee authenticity of the response from the trusted IdP. This was one of the missing attributes that left Google's SSO vulnerable.</li>
 <li><strong>Response(ID, SP, IdP, {AA} K -1/IdP):</strong> A Response must contain all these elements. Where <code>ID</code> is a string uniquely identifying the response. <code>SP</code> identifies the recipient of the response. <code>IdP</code> identifies the identity provider authorizing the response. <code>{AA} K -1/IdP</code> is the assertion digitally signed with the private key of the <code>IdP</code>.</li>
 <li><strong>AuthAssert(ID, C, IdP, SP):</strong> An authentication assertion must exist within the Response. It must contain an <code>ID</code>, a client <code>(C)</code>, an identity provider <code>(IdP)</code>, and a service provider <code>(SP)</code> identifier.</li>
 </ul>
@@ -5433,7 +5433,7 @@
 <p>Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks were described in 2012, <a href="https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf">On Breaking SAML: Be Whoever You Want to Be</a>.</p>
 <p>The following recommendations were proposed in response (<a href="https://arxiv.org/pdf/1401.7483v1.pdf">Secure SAML validation to prevent XML signature wrapping attacks</a>):</p>
 <ul>
-<li>Without exception, always perform schema validation on the XML document prior to using it for any security-related purposes::<ul>
+<li>Without exception, always perform schema validation on the XML document prior to using it for any security-related purposes:<ul>
 <li>Always use local, trusted copies of schemas for validation.</li>
 <li>Never allow automatic download of schemas from third party locations.</li>
 <li>If possible, inspect schemas and perform schema hardening, to disable possible wildcard type or relaxed processing statements.</li>
@@ -5475,7 +5475,7 @@
 <p>Revisit each security threat that exists within the <a href="https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf">SAML Security</a> document and assert you have applied the appropriate countermeasures for threats that may exist for your particular implementation.</p>
 <p>Additional countermeasures considered should include:</p>
 <ul>
-<li>Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and setup an IP filter for each endpoint. This step will help counter the following attacks:<ul>
+<li>Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and set up an IP filter for each endpoint. This step will help counter the following attacks:<ul>
 <li>Stolen Assertion (6.4.1)</li>
 <li>Man-in-the-middle (6.4.2)</li>
 </ul>
@@ -5518,11 +5518,11 @@
 <p>In many cases, the method of manually setting the association is akin to <a href="https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html">Certificate Pinning</a>, which is not ideal. Depending on the IdP and SP software, or various design considerations, this may be unavoidable.</p>
 <p>Keep in mind that the certificate's signature type can be different from that of the XML document signing type. The certificate's corresponding private key is the only key that can be used to sign the XML document, but the signing algorithm is chosen at the IdP's discretion. The most commonly supported signing algorithm is rsa-sha256.</p>
 <h4 id="saml-parties-vs-organizations">SAML Parties vs Organizations<a class="headerlink" href="#saml-parties-vs-organizations" title="Permanent link">&para;</a></h4>
-<p>The most common SAML use cases are those of business-to-business (B2B). This means that the two parties have different security polices, practices, and risk tolerances. This guidance focuses mainly on the B2B use case. However SAML based federation or SSO is commonly used inside of an organization. In this case the term third-party CA does not apply. It is likely that the CA has been built and run to company standards and it poses no more or less risk to the SAML systems. The term third-party CA is meant to indicate a private CA run by a third-party.</p>
+<p>The most common SAML use cases are those of business-to-business (B2B). This means that the two parties have different security policies, practices, and risk tolerances. This guidance focuses mainly on the B2B use case. However SAML based federation or SSO is commonly used inside of an organization. In this case the term third-party CA does not apply. It is likely that the CA has been built and run to company standards and it poses no more or less risk to the SAML systems. The term third-party CA is meant to indicate a private CA run by a third-party.</p>
 <h4 id="certificate-use-cases">Certificate Use Cases<a class="headerlink" href="#certificate-use-cases" title="Permanent link">&para;</a></h4>
 <p>There are actually 5 separate use cases for certificates in a SAML system. While this document mainly talks about the IdP’s SAML signing certificate, the security considerations apply to all four SAML related certificates. The fifth certificate, the IdP’s TLS server certificate is no more or less special than any other server certificate.</p>
 <h5 id="idp-saml-signing">IdP SAML Signing<a class="headerlink" href="#idp-saml-signing" title="Permanent link">&para;</a></h5>
-<p>This is the certificate that an SP uses to validate an IdD’s SAML response. The IdP signs that response with the certificate’s corresponding private key. This is often the most important certificate and private key, as this protects the identity assertions being sent to the SP.</p>
+<p>This is the certificate that an SP uses to validate an IdP’s SAML response. The IdP signs that response with the certificate’s corresponding private key. This is often the most important certificate and private key, as this protects the identity assertions being sent to the SP.</p>
 <h5 id="idp-saml-encryption">IdP SAML Encryption<a class="headerlink" href="#idp-saml-encryption" title="Permanent link">&para;</a></h5>
 <p>This is less commonly used, as this is used when the SP wants to protect the SAML request sent to the IdP, not just from tampering, but from information disclosure. There should be no sensitive information in the SAML request, so it is less commonly used. If used, the certificate and private key must be different from that of the SAML signing certificate.</p>
 <h5 id="sp-signing">SP Signing<a class="headerlink" href="#sp-signing" title="Permanent link">&para;</a></h5>
@@ -5539,7 +5539,7 @@
 <p>ECC Keys can be much smaller while providing more security than RSA keys and the math involved is faster to perform. These are preferred when all parties can use them. ECC keys can be as low as 256 bit and still be secure. RSA keys are more interoperable. The minimum RSA key size should be 2048 bit.
 At least one major vendor <a href="https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-saml-idp">Microsoft Entra</a> doesn’t support ECC keys.</p>
 <h6 id="signing-algorithms">Signing Algorithms<a class="headerlink" href="#signing-algorithms" title="Permanent link">&para;</a></h6>
-<p>When public key cryptography is used for signing data, the data is first hashed with an chosen algorithm and then the hash is signed using the private key.</p>
+<p>When public key cryptography is used for signing data, the data is first hashed with a chosen algorithm and then the hash is signed using the private key.</p>
 <p>No IdP should use SHA-1 as the certificate signing hash. SHA-256 is the minimum bar. That said, if possible moving to larger hash algorithms like SHA-384 or SHA-512 means you are better future-proofing your service. In this context we are talking about the certificate’s signing algorithm and not the one used to sign the SAML response XML.</p>
 <h5 id="certificate-lifetime">Certificate Lifetime<a class="headerlink" href="#certificate-lifetime" title="Permanent link">&para;</a></h5>
 <p>X.509 certificates contain <a href="https://www.rfc-editor.org/rfc/rfc5280.html#section-4.1.2.5"><code>notBefore</code> and <code>notAfter</code> validity dates</a>. Plan certificate replacement before expiry rather than ignoring the validity period. Choose the signing key's usage period based on its protection, use, and threat model; see <a href="Key_Management_Cheat_Sheet.html#cryptoperiods-and-rotation">Cryptoperiods and Rotation</a>. <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf#page=50">NIST SP 800-57 Part 1 Rev. 5, Section 5.3.4</a> distinguishes certificate validity from key usage periods: renewing a certificate with the same public key does not rotate the private key or restart its usage period.</p>
@@ -5624,7 +5624,7 @@ openssl req -x509 -new -nodes -key private.key -sha256 -days 365 -out certificat
 <li>Validate IDP certificates for revocation against CRL/OCSP if they are present</li>
 <li>Validate the <code>Destination</code> attribute on <code>&lt;samlp:Response&gt;</code> exactly matches the SP's expected Assertion Consumer Service (ACS) URL (<a href="https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf">SAML Core 2.0 §3.2.2.1</a>). Reject responses that are missing <code>Destination</code> or where it does not match — this prevents cross-SP assertion replay.</li>
 <li>Validate <code>&lt;saml:Audience&gt;</code> matches the SP's EntityID</li>
-<li>Validate NotBefore and NotOnorAfter</li>
+<li>Validate NotBefore and NotOnOrAfter</li>
 <li>Validate Recipient attribute, <code>InResponseTo</code>, and <code>&lt;saml:SubjectConfirmationData&gt;</code> (<code>Recipient</code>, <code>NotOnOrAfter</code>, <code>InResponseTo</code>)</li>
 <li>Explicitly verify the signature algorithm is at least RSA-SHA-256 (or stronger). Reject SHA-1-based algorithms (<code>http://www.w3.org/2000/09/xmldsig#rsa-sha1</code>, <code>...#hmac-sha1</code>) and <code>&lt;ds:DigestMethod Algorithm="...sha1"&gt;</code>. NIST SP 800-131A Rev. 2 disallows SHA-1 in digital signatures.</li>
 <li>Verify that the XML signature's <code>&lt;ds:Reference URI&gt;</code> resolves to the signed Assertion or Response, and that the exact assertion used for authentication is protected by that validated signature. <a href="https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf">SAML Core sections 5.3 and 5.4</a> define signature inheritance and references; <a href="https://docs.oasis-open.org/security/saml/v2.0/errata05/os/saml-v2.0-errata05-os.html#__RefHeading__10669_188893729">approved errata E93</a> permits Response signatures in the browser SSO profile. Reject assertions outside the validated signed content and follow the <a href="#validate-signatures">signature-wrapping defenses</a>.</li>
@@ -5639,7 +5639,7 @@ openssl req -x509 -new -nodes -key private.key -sha256 -days 365 -out certificat
 <li>Ensure that all SAML providers/consumers do proper <a href="Input_Validation_Cheat_Sheet.html">input validation</a>.</li>
 </ul>
 <h2 id="cryptography">Cryptography<a class="headerlink" href="#cryptography" title="Permanent link">&para;</a></h2>
-<p>Solutions relying cryptographic algorithms need to follow the latest developments in cryptoanalysis.</p>
+<p>Solutions relying on cryptographic algorithms need to follow the latest developments in cryptanalysis.</p>
 <ul>
 <li>Ensure all SAML elements in the chain use <a href="Cryptographic_Storage_Cheat_Sheet.html#algorithms">strong encryption</a></li>
 <li>Consider deprecating support for <a href="https://www.w3.org/TR/xmlenc-core1/#sec-RSA-1_5">insecure XMLEnc algorithms</a></li>
