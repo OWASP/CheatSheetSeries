@@ -256,6 +256,8 @@ Here is a non-exhaustive selection of security related REST API **status codes**
 | 501         | Not Implemented        | The REST service does not implement the requested operation yet.                                                                                                                                                      |
 | 503         | Service Unavailable    |  The REST service is temporarily unable to process the request. Used to inform the client it should retry at a later time.                                                                                         |
 
+Do not return `200` with an empty body when an API key is missing or invalid: a client cannot tell "no data" from "not authenticated". Return `401` for a missing or invalid key, and `403` for a valid key that lacks access to the resource.
+
 Additional information about HTTP return code usage in REST API can be found [here](https://www.restapitutorial.com/httpstatuscodes.html) and [here](https://restfulapi.net/http-status-codes).
 
 ## References
