@@ -1,6 +1,6 @@
 # Service Hardening Cheat Sheet
 
-## Introduction and Scope
+## Introduction 
 
 Services are software components that perform tasks for applications, users, or other systems. They may process network requests, execute scheduled jobs, access databases, or perform background operations. A service can become an entry point for an attacker if it exposes unnecessary functionality, runs with excessive privileges, or has access to resources beyond those required for its operation.
 
@@ -22,87 +22,18 @@ Hardening controls should be selected according to the service's required functi
 
 ## General Service Hardening Principles
 
-The following recommendations apply to services regardless of the service manager used. Use the equivalent controls provided by the target platform, and verify that the configured restrictions are enforced.
+The following principles apply regardless of the service manager used. Use the equivalent controls provided by the target platform and verify that the configured restrictions are enforced.
 
-### Keep Service Software and Dependencies Updated
-
-Known vulnerabilities in service software, operating systems, and dependencies can expose services to compromise.
-
-- Use supported versions of the operating system, service software, and dependencies. Maintain an inventory of service components and their versions, using an SBOM where appropriate.
-- Monitor relevant security advisories, prioritize updates according to risk and exposure, and obtain updates from trusted sources using supported authenticity checks.
-
-See the [OWASP Vulnerable Dependency Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html) for detailed guidance on identifying, monitoring, and managing vulnerable dependencies.
-
-### Apply the Principle of Least Privilege
-
-A service should have only the permissions necessary to perform its intended functions. Excessive privileges can increase the impact of a vulnerability or compromised service.
-
-- Run services under dedicated, non-administrative identities where possible, and avoid granting unnecessary capabilities or privileged group memberships.
-- Avoid sharing service identities between unrelated applications when separate identities are practical.
-- Restrict read, write, and execute permissions on files, directories, and other resources.
-
-See the [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for additional guidance on least privilege and access control.
-See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) for the `User=`, `Group=`, and `CapabilityBoundingSet=` directives used to restrict service identities and Linux capabilities.
-
-### Reduce the Attack Surface
-
-Every unnecessary interface, component, or enabled feature can introduce additional opportunities for attack.
-
-- Disable service features, plugins, modules, and administrative interfaces that are not required.
-- Disable unnecessary services and background processes.
-- Avoid exposing debugging, diagnostic, or development endpoints in production.
-
-See the [OWASP Attack Surface Analysis Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html) for guidance on identifying and reducing exposed functionality and attack surfaces.
-
-### Maintain Secure Service Configurations
-
-Default configurations may enable functionality or access that is unnecessary for a particular deployment. Define and maintain a configuration baseline appropriate to the service.
-
-- Review security-relevant defaults before deployment, including disabling unused default accounts and changing or disabling insecure default credentials.
-- Restrict modification of service configuration files to authorized identities.
-- Keep configuration changes under version control or another auditable change-management process, where practical.
-
-See [NIST SP 800-53 Rev. 5, CM-6 (Configuration Settings)](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final) for guidance on establishing, implementing, and monitoring security-relevant configuration settings.
-
-### Restrict Network Communication
-
-A service should accept and initiate only the network connections required for its operation.
-
-- Prefer Unix domain sockets (`AF_UNIX`/`PF_LOCAL`) for local inter-process communication where supported. Otherwise, bind services intended only for local access to the loopback interface rather than exposing them on external network interfaces.
-- Restrict inbound traffic to required ports, protocols, and authorized sources.
-- Restrict outbound connectivity where supported and operationally feasible.
-
-See the [OWASP Network Segmentation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Network_Segmentation_Cheat_Sheet.html) for detailed guidance on restricting network communication and isolating services.
-
-### Protect Service Credentials and Sensitive Data
-
-Services frequently use API keys, database credentials, certificates, and other sensitive information. Exposure of these secrets can allow unauthorized access to the service or dependent systems.
-
-- Do not hardcode secrets in source code or commit them to version control. Provide credentials through an appropriate secrets-management mechanism.
-- Limit access to secrets and the permissions they grant to the service identities and processes that require them.
-- Avoid exposing secrets through command-line arguments, logs, error messages, or other interfaces where they may be disclosed. Prefer secrets-management mechanisms that do not expose credentials through environment variables where practical.
-
-For implementation and credential lifecycle guidance, see the [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html).
-
-### Enable Security-Relevant Logging and Monitoring
-
-Logs and monitoring provide information needed to identify service failures, investigate suspicious activity, and support incident response.
-
-- Record security-relevant service events, such as authentication attempts, access-control failures, and significant configuration changes, with sufficient context for investigation.
-- Avoid logging credentials or unnecessary sensitive information. Protect logs against unauthorized access, modification, and deletion, and handle untrusted log data safely.
-- Monitor service failures, unexpected restarts, unusual resource consumption, and logging failures. Define retention and alerting requirements and verify that important events can be retrieved.
-
-See the [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) for detailed logging, protection, retention, and monitoring guidance.
-
-### Limit Resource Consumption
-
-A service that consumes excessive memory, CPU time, processes, or other resources can affect its own availability and that of other workloads.
-
-- Identify the service's expected resource requirements under normal and peak load.
-- Configure resource limits using controls supported by the operating system or service manager.
-- Test limits under representative workloads, including expected peak conditions.
-
-See the [OWASP Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) for guidance on mitigating resource-exhaustion and denial-of-service risks and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for service-level resource limits using `MemoryMax=` and `TasksMax=`.
+| Principle | Recommendation | Further Guidance |
+| --- | --- | --- |
+| Keep Software and Dependencies Updated | Use supported software versions, maintain a component inventory, and prioritize security updates according to risk and exposure. | [Vulnerable Dependency Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html) |
+| Apply Least Privilege | Use dedicated, non-administrative service identities and grant only the permissions required for operation. | [Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) |
+| Reduce the Attack Surface | Disable unnecessary services, features, modules, and administrative or debugging interfaces. | [Attack Surface Analysis Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html) |
+| Maintain Secure Configurations | Review security defaults, restrict configuration changes, and maintain an auditable configuration baseline. | [NIST SP 800-53 Rev. 5, CM-6](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf) |
+| Restrict Network Communication | Limit inbound and outbound traffic to operational requirements. Prefer Unix domain sockets for local communication where supported, or bind local-only services to loopback interfaces. | [Network Segmentation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Network_Segmentation_Cheat_Sheet.html) |
+| Protect Credentials and Sensitive Data | Avoid hardcoded secrets, use appropriate secrets-management mechanisms, and restrict access to sensitive data. | [Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html) |
+| Enable Security-Relevant Logging and Monitoring | Record security-relevant events, protect logs, and monitor service failures and suspicious activity. | [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) |
+| Limit Resource Consumption | Configure resource limits according to service requirements and test them under representative workloads. | [Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) |
 
 ## Hardening Services with systemd
 
@@ -121,6 +52,10 @@ The following directives are useful starting points for services that support th
 | `StateDirectory=` | Create and manage a service state directory under `/var/lib`, with write access even when `ProtectSystem=strict` is enabled. |
 | `PrivateTmp=yes` | Give the service private `/tmp` and `/var/tmp` directories, separate from the host's corresponding directories. |
 | `ProtectHome=yes` | Make `/home`, `/root`, and `/run/user` inaccessible within the service's filesystem namespace. |
+| `ProtectProc=invisible` | Hide processes belonging to other users from the service's `/proc` view, subject to documented limitations. |
+| `ProtectControlGroups=yes` | Make the control-group filesystem read-only within the service's mount namespace. |
+| `PrivateDevices=yes` | Provide a restricted `/dev` environment that limits access to physical devices. |
+| `ProtectKernelTunables=yes` | Restrict modification of kernel tunables through filesystem interfaces such as `/proc/sys` and `/sys`. |
 
 For example, a service that does not require root privileges, Linux capabilities, or access to home directories might use the following settings in its unit configuration:
 
@@ -134,14 +69,14 @@ StateDirectory=example-service
 PrivateTmp=yes
 ProtectHome=yes
 ProtectProc=invisible
-ProcSubset=pid
 ProtectControlGroups=yes
 PrivateDevices=yes
+ProtectKernelTunables=yes
 ```
 
 This is an **illustrative configuration, not a universal baseline**. The service account must exist, and the restrictions must be compatible with the application's actual requirements. An empty capability bounding set can break operations requiring Linux capabilities. Filesystem restrictions can also prevent access to required configuration, data, sockets, or other resources.
 
-Prefer explicitly managed writable directories, such as `StateDirectory=`, over granting broad write access. If the service needs additional writable paths, evaluate narrowly scoped exceptions rather than disabling filesystem protection altogether.
+Prefer explicitly managed writable directories, such as `StateDirectory=`, over granting broad write access. If the service needs additional writable paths, evaluate narrowly scoped exceptions using `ReadWritePaths=` rather than disabling filesystem protection altogether.
 
 `ProtectSystem=strict` restricts filesystem writes but does not prevent reading accessible files. The `/dev`, `/proc`, and `/sys` subtrees are excluded from its read-only protection. Additional controls may be needed to restrict access to these resources. Writable-directory exceptions and other filesystem namespace limitations must also be considered.
 
@@ -149,14 +84,18 @@ See the [systemd.exec manual](https://www.freedesktop.org/software/systemd/man/l
 
 ### Restrict Network Communication
 
-systemd can restrict the network address families and IP destinations available to a service. Combined with socket activation, these controls can allow a service to handle TCP connections passed by systemd without permitting the service to create its own network sockets.
+systemd provides controls that can restrict socket creation and IP communication. Combined with socket activation, these controls can allow a service to handle TCP connections passed by systemd while restricting its ability to create additional network sockets.
 
 | Directive | Purpose |
 | --- | --- |
-| `RestrictAddressFamilies=` | Restrict the socket address families a service can create, such as `AF_UNIX`, `AF_INET`, and `AF_INET6`. Allow only those required by the service. |
-| `IPAddressDeny=` / `IPAddressAllow=` | Restrict inbound and outbound IPv4 and IPv6 traffic using denied and permitted address ranges. |
+| `RestrictAddressFamilies=` | Restrict the socket address families available through the `socket(2)` system call on supported architectures. Allow only those required by the service, such as `AF_UNIX`, `AF_INET`, and `AF_INET6`. |
+| `IPAddressDeny=` / `IPAddressAllow=` | Filter inbound and outbound IPv4 and IPv6 traffic using denied and permitted IP address ranges. |
 
-`RestrictAddressFamilies=` does not restrict sockets passed to a service through socket activation. IP address filtering requires supported kernel functionality and may have no effect where the necessary eBPF support is unavailable. For socket-activated services, consider the network restrictions on the socket and service units separately, according to their respective communication requirements.
+To implement an IP address allowlist, use `IPAddressDeny=any` together with `IPAddressAllow=` entries for the required IP address ranges. Using `IPAddressAllow=` alone does not restrict unmatched traffic unless an applicable deny policy is configured.
+
+`RestrictAddressFamilies=` only filters the `socket(2)` system call. It does not restrict sockets passed to a service through socket activation, sockets created through `socketpair(2)`, or socket creation through `io_uring`. Filtering also has architecture-specific limitations. Use `SystemCallArchitectures=native` where compatible to reduce the risk of bypasses through alternative system-call ABIs.
+
+IP address filtering requires supported kernel functionality and may have no effect where the necessary eBPF support is unavailable. For socket-activated services, consider the network restrictions on the socket and service units separately, according to their respective communication requirements.
 
 See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) and [systemd.resource-control(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html) for network restriction options and their limitations.
 
@@ -167,8 +106,11 @@ systemd can restrict the system calls available to a service using seccomp filte
 | Directive | Purpose |
 | --- | --- |
 | `SystemCallFilter=@system-service` | Apply a system-call allowlist using the `@system-service` group. System calls outside the permitted set are blocked, subject to systemd's filtering behavior and exceptions. |
+| `SystemCallArchitectures=native` | Restrict system calls to the native architecture, reducing opportunities to bypass system-call restrictions through alternative ABIs. |
 
 This filter is suitable for consideration by many system services, but it can prevent applications from using required system calls. Test compatibility before enabling it. By default, prohibited system calls cause the affected process to receive `SIGSYS`.
+
+Use `SystemCallArchitectures=native` where compatible, as it may prevent applications that require alternative system-call ABIs from functioning correctly.
 
 See [systemd.exec(5)](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) for system-call filtering behavior and supported system-call groups.
 
@@ -178,6 +120,7 @@ systemd can use Linux control groups to limit resources consumed by a service.
 
 | Directive | Purpose |
 | --- | --- |
+| `MemoryHigh=` | Set a memory usage threshold above which the service is subject to increased memory reclaim and throttling. |
 | `MemoryMax=` | Set an absolute memory usage limit for the service. Exceeding the limit can trigger out-of-memory termination within the unit. |
 | `TasksMax=` | Limit the number of tasks, including processes and threads, that the service can create. |
 
@@ -249,13 +192,13 @@ On Linux, nftables can apply service-specific outbound traffic restrictions usin
 
 Linux network namespaces can provide separate network interfaces, routing tables, and network stacks for services. However, a network namespace alone does not establish an appropriate traffic-filtering policy. Configure and verify network connectivity and firewall rules explicitly.
 
-See the [nftables documentation](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page) and [network_namespaces(7)](https://man7.org/linux/man-pages/man7/network_namespaces.7.html).
+See the [nftables packet metainformation matching documentation](https://wiki.nftables.org/wiki-nftables/index.php/Matching_packet_metainformation) and [network_namespaces(7)](https://man7.org/linux/man-pages/man7/network_namespaces.7.html).
 
 ### Application Sandboxing
 
 Application sandboxing tools, such as Firejail, can restrict a service's execution environment using Linux namespaces, seccomp filters, and capability controls.
 
-Evaluate the sandbox's privileges, configuration, security implications, and compatibility before deployment. A sandboxing tool does not automatically provide complete isolation, and some implementations introduce their own privileged components.
+Evaluate the sandbox's privileges, configuration, security implications, and compatibility before deployment. A sandboxing tool does not automatically provide complete isolation. Firejail uses a set-user-ID (SUID) root executable, which introduces an additional privileged component whose security must also be considered.
 
 See the [Firejail manual](https://man7.org/linux/man-pages/man1/firejail.1.html).
 
@@ -285,4 +228,4 @@ For Docker-specific hardening guidance, see the [OWASP Docker Security Cheat She
 
 - [systemd.exec(5) — Execution Environment Configuration](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html)
 - [systemd.resource-control(5) — Resource Control Unit Settings](https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html)
-- [NIST SP 800-53 Rev. 5 — Security and Privacy Controls](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
+- [NIST SP 800-53 Rev. 5 — Security and Privacy Controls](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf)
