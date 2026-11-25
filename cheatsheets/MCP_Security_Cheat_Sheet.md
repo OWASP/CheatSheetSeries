@@ -41,6 +41,8 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - Use scoped, per-server credentials — never share tokens across servers.
 - Request narrow OAuth scopes (e.g., `mail.readonly` instead of `mail.modify` or `mail.full_access`).
 - Prefer ephemeral, short-lived tokens over long-lived PATs.
+- Enforce read-only access at the data source, with a read-only database role or API token, instead of filtering the queries or requests the model sends. In [CVE-2026-61788](https://github.com/advisories/GHSA-mwwr-p57h-56pf), a read-only mode that relied on inspecting each query let writes through.
+- After enabling a read-only mode, verify that it actually took effect, for example by confirming that write operations are rejected. In the same advisory, the read-only setting's enforcement at the database never ran.
 
 ### 2. Tool Description & Schema Integrity
 
