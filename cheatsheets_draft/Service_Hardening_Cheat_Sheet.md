@@ -1,6 +1,6 @@
 # Service Hardening Cheat Sheet
 
-## Introduction 
+## Introduction
 
 Services are software components that perform tasks for applications, users, or other systems. They may process network requests, execute scheduled jobs, access databases, or perform background operations. A service can become an entry point for an attacker if it exposes unnecessary functionality, runs with excessive privileges, or has access to resources beyond those required for its operation.
 
