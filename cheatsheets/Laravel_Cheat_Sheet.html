@@ -5224,23 +5224,12 @@
 <h2 id="cookie-security-and-session-management">Cookie Security and Session Management<a class="headerlink" href="#cookie-security-and-session-management" title="Permanent link">&para;</a></h2>
 <p>By default, Laravel is configured in a secure manner. However, if you change your cookie or session configurations, make sure of the following:</p>
 <ul>
-<li>Enable the cookie encryption middleware if you use the <code>cookie</code> session store or if you store any kind of data that should not be readable or tampered with by clients. In general, this should be enabled unless your application has a very specific use case that requires disabling this. To enable this middleware, simply add the <code>EncryptCookies</code> middleware to the <code>web</code> middleware group in your <code>App\Http\Kernel</code> class:</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="x">/**</span>
-<span class="x"> * The application's route middleware groups.</span>
-<span class="x"> *</span>
-<span class="x"> * @var array</span>
-<span class="x"> */</span>
-<span class="x">protected $middlewareGroups = [</span>
-<span class="x">    'web' =&gt; [</span>
-<span class="x">        \App\Http\Middleware\EncryptCookies::class,</span>
-<span class="x">        ...</span>
-<span class="x">    ],</span>
-<span class="x">    ...</span>
-<span class="x">];</span>
-</code></pre></div>
-<ul>
-<li>Enable the <code>HttpOnly</code> attribute on your session cookies via your <code>config/session.php</code> file, so that your session cookies are inaccessible from JavaScript:</li>
+<li>
+<p>Keep cookie encryption enabled if you use the <code>cookie</code> session store or if you store any kind of data that should not be readable or tampered with by clients. Laravel encrypts and signs cookies by default through middleware in the <code>web</code> group (<a href="https://laravel.com/docs/12.x/middleware#laravels-default-middleware-groups">Laravel: default middleware groups</a>). If a specific cookie really must stay unencrypted, exclude that cookie by name rather than removing the middleware (<a href="https://laravel.com/docs/12.x/responses#cookies-and-encryption">Laravel: cookies and encryption</a>).</p>
+</li>
+<li>
+<p>Enable the <code>HttpOnly</code> attribute on your session cookies via your <code>config/session.php</code> file, so that your session cookies are inaccessible from JavaScript:</p>
+</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="x">'http_only' =&gt; true,</span>
 </code></pre></div>
@@ -5439,20 +5428,7 @@
 <p>This code redirects the user to any external URL provided by user input. This could enable attackers to create seemingly safe URLs like <code>https://example.com/redirect?url=http://evil.com</code>. For instance, attackers may use a URL of this type to spoof password reset emails and lead victims to expose their credentials on the attacker's website.</p>
 <h2 id="cross-site-request-forgery-csrf">Cross Site Request Forgery (CSRF)<a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permanent link">&para;</a></h2>
 <p><a href="https://owasp.org/www-community/attacks/csrf">Cross-Site Request Forgery (CSRF)</a> is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user's web browser to perform an unwanted action on a trusted site when the user is authenticated.</p>
-<p>Laravel provides CSRF protection out-of-the-box with the <code>VerifyCSRFToken</code> middleware. Generally, if you have this middleware in the <code>web</code> middleware group of your <code>App\Http\Kernel</code> class, you should be well protected:</p>
-<div class="highlight"><pre><span></span><code><span class="x">/**</span>
-<span class="x"> * The application's route middleware groups.</span>
-<span class="x"> *</span>
-<span class="x"> * @var array</span>
-<span class="x"> */</span>
-<span class="x">protected $middlewareGroups = [</span>
-<span class="x">    'web' =&gt; [</span>
-<span class="x">        ...</span>
-<span class="x">         \App\Http\Middleware\VerifyCsrfToken::class,</span>
-<span class="x">         ...</span>
-<span class="x">    ],</span>
-<span class="x">];</span>
-</code></pre></div>
+<p>Laravel provides CSRF protection out-of-the-box with its CSRF token validation middleware, which is part of the <code>web</code> middleware group by default, so routes in <code>routes/web.php</code> are protected. Keep it enabled (<a href="https://laravel.com/docs/12.x/csrf#preventing-csrf-requests">Laravel: CSRF protection</a>).</p>
 <p>Next, for all your <code>POST</code> request forms, you may use the <code>@csrf</code> blade directive to generate the hidden CSRF input token fields:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">"POST"</span> <span class="na">action</span><span class="o">=</span><span class="s">"/profile"</span><span class="p">&gt;</span>
     @csrf
@@ -5462,7 +5438,7 @@
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>For AJAX requests, you can setup the <a href="https://laravel.com/docs/csrf#csrf-x-csrf-token">X-CSRF-Token header</a>.</p>
-<p>Laravel also provides the ability to exclude certain routes from CSRF protection using the <code>$except</code> variable in your CSRF middleware class. Typically, you would want to exclude only stateless routes (e.g. APIs or webhooks) from CSRF protection. If any other routes are excluded, these may result in CSRF vulnerabilities.</p>
+<p>Laravel also lets you exclude URIs from CSRF protection (<a href="https://laravel.com/docs/12.x/csrf#csrf-excluding-uris">Laravel: excluding URIs</a>). Only exclude stateless routes such as webhooks that authenticate in another way, since any other excluded route may be vulnerable to CSRF.</p>
 <h2 id="command-injection">Command Injection<a class="headerlink" href="#command-injection" title="Permanent link">&para;</a></h2>
 <p>Command Injection vulnerabilities involve executing shell commands constructed with unescaped user input data.</p>
 <p>For example, the following code performs a <code>whois</code> on a user provided domain name:</p>
@@ -5515,19 +5491,7 @@
 <div class="highlight"><pre><span></span><code><span class="x">Route::middleware('throttle:custom-limit')-&gt;get('/dashboard', fn () =&gt; 'Dashboard');</span>
 </code></pre></div>
 <h3 id="4-global-api-web-rate-limiting">4. Global API / Web Rate Limiting<a class="headerlink" href="#4-global-api-web-rate-limiting" title="Permanent link">&para;</a></h3>
-<p>Laravel allows you to apply global rate limiting to entire route groups like <code>api</code> or <code>web</code> by including the <code>throttle</code> middleware in <code>Kernel.php</code> (note that the <code>api</code> group is rate-limited by default).</p>
-<div class="highlight"><pre><span></span><code><span class="x">protected $middlewareGroups = [</span>
-<span class="x">    'api' =&gt; [</span>
-<span class="x">        'throttle:60,1', // 60 requests per minute globally for API</span>
-<span class="x">        // ...</span>
-<span class="x">    ],</span>
-
-<span class="x">    'web' =&gt; [</span>
-<span class="x">        'throttle:30,1', // 30 requests per minute globally for web</span>
-<span class="x">        // ...</span>
-<span class="x">    ],</span>
-<span class="x">];</span>
-</code></pre></div>
+<p>Laravel can also apply a rate limit to a whole route group such as <code>api</code> or <code>web</code> by adding the <code>throttle</code> middleware to that group. Where you register it depends on the application layout and Laravel version, so follow the <a href="https://laravel.com/docs/12.x/middleware#laravels-default-middleware-groups">middleware groups documentation</a> for your version. Don't assume the <code>api</code> group is limited already: in applications created with Laravel 11 or later it only contains <code>SubstituteBindings</code>, so add a limit explicitly.</p>
 <p>For more details, see the official Laravel documentation on <a href="https://laravel.com/docs/12.x/routing#rate-limiting">rate limiting</a>.</p>
 <h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
 <p>You should consider adding the following security headers to your web server or Laravel application middleware:</p>

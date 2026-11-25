@@ -5350,6 +5350,7 @@
 </tr>
 </tbody>
 </table>
+<p>Do not return <code>200</code> with an empty body when an API key is missing or invalid: a client cannot tell "no data" from "not authenticated". Return <code>401</code> for a missing or invalid key, and <code>403</code> for a valid key that lacks access to the resource.</p>
 <p>Additional information about HTTP return code usage in REST API can be found <a href="https://www.restapitutorial.com/httpstatuscodes.html">here</a> and <a href="https://restfulapi.net/http-status-codes">here</a>.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>

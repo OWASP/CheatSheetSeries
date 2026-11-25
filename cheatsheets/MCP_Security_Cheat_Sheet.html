@@ -4929,6 +4929,8 @@
 <li>Use scoped, per-server credentials — never share tokens across servers.</li>
 <li>Request narrow OAuth scopes (e.g., <code>mail.readonly</code> instead of <code>mail.modify</code> or <code>mail.full_access</code>).</li>
 <li>Prefer ephemeral, short-lived tokens over long-lived PATs.</li>
+<li>Enforce read-only access at the data source, with a read-only database role or API token, instead of filtering the queries or requests the model sends. In <a href="https://github.com/advisories/GHSA-mwwr-p57h-56pf">CVE-2026-61788</a>, a read-only mode that relied on inspecting each query let writes through.</li>
+<li>After enabling a read-only mode, verify that it actually took effect, for example by confirming that write operations are rejected. In the same advisory, the read-only setting's enforcement at the database never ran.</li>
 </ul>
 <h3 id="2-tool-description-schema-integrity">2. Tool Description &amp; Schema Integrity<a class="headerlink" href="#2-tool-description-schema-integrity" title="Permanent link">&para;</a></h3>
 <ul>
