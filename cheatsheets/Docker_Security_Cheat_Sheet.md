@@ -14,6 +14,8 @@ To protect against known container escape vulnerabilities like [Leaky Vessels](h
 
 This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit, [Dirty COW](https://github.com/scumjr/dirtycow-vdso), executed inside a well-insulated container would still result in root access on a vulnerable host.
 
+Updating the host and Docker is not enough on its own. The software inside a container image (the base image, OS packages and application dependencies) is only patched when the image is rebuilt and redeployed; a running container is not updated in place ([NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) §3.1.1). Have a defined process to rebuild images regularly and redeploy the updated versions. Also retire outdated images: [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) §4.2.2 recommends pruning vulnerable images from registries and deploying specific image versions, because stale images make accidental deployment of a known-vulnerable version more likely (§3.2.2). See [Rule \#9](#rule-9-integrate-container-scanning-tools-into-your-cicd-pipeline) and [Rule \#13](#rule-13-enhance-supply-chain-security) for detecting vulnerabilities in images.
+
 ### RULE \#1: Do not expose the Docker daemon socket (even to the containers)
 
 Docker socket _/var/run/docker.sock_ is the UNIX socket that Docker is listening to. This is the primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving unrestricted root access to your host.
@@ -175,6 +177,18 @@ sudo ufw-docker allow mycontainer 8000/tcp
 
 Refer to the [Docker and iptables documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/) for a deeper explanation of how Docker interacts with the host firewall.
 
+#### Docker Swarm
+
+Option 1 does not apply to Swarm services: a port published with `docker service create --publish` or `docker stack deploy` cannot be bound to a single host IP ([moby/moby#26696](https://github.com/moby/moby/issues/26696)).
+
+- **Publishing:** with the default ingress routing mesh, the published port listens on every IP address of every node in the swarm ([Docker docs, routing mesh](https://docs.docker.com/engine/swarm/ingress/)); `mode=host` bypasses the routing mesh but still opens the port on all interfaces of the node that runs the task. A service that only needs to be reached by other services should not be published: attach it to an overlay network (optionally [`--internal`](https://docs.docker.com/reference/cli/docker/network/create/)) and reach it by service name.
+- **Firewall:** if a service must be published, the remaining control on the node is the host firewall. Inbound IPv4 traffic for both publishing modes is NATed, so filter it in the [`DOCKER-USER` chain](https://docs.docker.com/engine/network/firewall-iptables/#add-iptables-policies-before-dockers-rules) and match the published port with conntrack's `--ctorigdstport` ([match the original IP and ports](https://docs.docker.com/engine/network/firewall-iptables/#match-the-original-ip-and-ports-for-requests)), which works for both modes, or match the incoming interface or source. Do not rely on `--dport`: in `DOCKER-USER` it sees the container port for `mode=host` but the published port for the ingress routing mesh, which rewrites the port later inside the task's network namespace, so a rule written on the wrong port matches nothing and leaves the service exposed.
+- **IPv6:** the path depends on the task's network. If the network has no IPv6, the userland proxy serves a `mode=host` port on the host's IPv6 addresses ([port publishing](https://docs.docker.com/engine/network/port-publishing/)) and that traffic goes through the `INPUT` chain. If the network has IPv6 and `ip6tables` is enabled, Docker NATs it as well and it is filtered in the ip6tables `DOCKER-USER` chain. Check which path your hosts use (DNAT rules in `ip6tables -t nat -S`) and filter that one.
+- **Ports between nodes:** by default Swarm listens on 7946/tcp+udp (node discovery) and 4789/udp (overlay network traffic, VXLAN) on every node, and on 2377/tcp (cluster management) on manager nodes; 4789 can be changed with `docker swarm init --data-path-port` and 2377 with `--listen-addr`. Allow the ports your swarm actually uses only from the other Swarm nodes ([Docker docs, overlay network ports](https://docs.docker.com/engine/network/drivers/overlay/), [Swarm networking](https://docs.docker.com/engine/swarm/networking/)).
+- **Overlay encryption:** overlay traffic is not encrypted by default and VXLAN has no authentication, so an open 4789/udp lets anyone who can reach it inject Ethernet frames into overlay networks ([GHSA-vwm3-crmr-xfxw](https://github.com/moby/moby/security/advisories/GHSA-vwm3-crmr-xfxw)). When nodes communicate over untrusted links, create overlay networks with `--opt encrypted`, allow IP protocol 50 (ESP) between the nodes, and still never accept 4789/udp from untrusted sources.
+- **The `ingress` network is not covered:** `--opt encrypted` applies only to the network it is set on; the default `ingress` network used by the routing mesh stays unencrypted unless it is [recreated with encryption](https://docs.docker.com/engine/swarm/networking/#customize-ingress).
+- **Vulnerable versions:** before Docker Engine 23.0.3 and 20.10.24, encrypted overlay networks could silently accept cleartext VXLAN packets, for example when the `xt_u32` kernel module was missing or on a node with a single endpoint ([CVE-2023-28840](https://github.com/advisories/GHSA-232p-vwff-86mp), [CVE-2023-28842](https://github.com/advisories/GHSA-6wrf-mxfj-pf5p)).
+
 ### RULE \#6: Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
 
 **First of all, do not disable default security profile!** Always start with Docker’s or your host’s default profile as a baseline.
@@ -220,7 +234,6 @@ docker run --read-only --tmpfs /tmp alpine sh -c 'echo "whatever" > /tmp/file'
 The Docker Compose `compose.yml` equivalent would be:
 
 ```yaml
-version: "3"
 services:
   alpine:
     image: alpine
@@ -312,6 +325,8 @@ To detect misconfigurations in Docker Compose files before deployment:
 - [DockSec](https://github.com/OWASP/DockSec) (with `--compose`)
 - [KICS](https://github.com/Checkmarx/kics)
 
+A scan at build time only reflects what was known on that day. [NIST SP 800-190](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf) recommends vulnerability management that covers the whole lifecycle of an image, from the build through the registry to runtime (§4.1.1), so also rescan images in your registry and in production. Define a policy for which findings must be fixed, and how quickly, by rebuilding and redeploying the image (see [Rule \#0](#rule-0-keep-host-and-docker-up-to-date)). Pinned base image versions keep builds reproducible but do not update themselves, so review and update them regularly.
+
 ### RULE \#10: Keep the Docker daemon logging level at `info`
 
 By default, the Docker daemon is configured to have a base logging level of `info`. This can be verified by checking the daemon configuration file `/etc/docker/daemon.json` for the`log-level` key. If the key is not present, the default logging level is `info`. Additionally, if the docker daemon is started with the `--log-level` option, the value of the `log-level` key in the configuration file will be overridden. To check if the Docker daemon is running with a different log level, you can use the following command:
@@ -345,7 +360,6 @@ docker service create --name web --secret my_secret nginx:latest
 For local Docker Compose, [file-backed secrets are bind mounts](https://docs.docker.com/compose/how-tos/use-secrets/#use-secrets). Protect the source files on the host with appropriate access permissions and storage encryption; declaring a Compose secret does not encrypt these files. This differs from [Swarm-managed secrets](https://docs.docker.com/engine/swarm/secrets/#how-docker-manages-secrets), which are distributed over mutual TLS and stored in an encrypted Raft log:
 
 ```yaml
-version: "3.8"
 secrets:
   my_secret:
     file: ./super-secret-data.txt
@@ -373,6 +387,7 @@ Building on the principles in [Rule \#9](#rule-9-integrate-container-scanning-to
 - [Image Signing](https://github.com/notaryproject/notary): Digitally sign images to verify their integrity and authenticity, establishing trust in their security.
 - [Trusted Registry](https://snyk.io/learn/container-security/container-registry-security/): Store the documented, signed images with their SBOMs in a secure registry that enforces strict [access controls](Access_Control_Cheat_Sheet.md) and supports metadata management.
 - [Secure Deployment](https://www.openpolicyagent.org/docs/latest/#overview): Implement secure deployment polices, such as image validation, runtime security, and continuous monitoring, to ensure the security of the deployed images.
+- Continuous Vulnerability Management: Match the SBOM of each deployed image against newly disclosed vulnerabilities, and rebuild and redeploy patched images. See the [Vulnerable Dependency Management Cheat Sheet](Vulnerable_Dependency_Management_Cheat_Sheet.md).
 
 ## Podman as an alternative to Docker
 

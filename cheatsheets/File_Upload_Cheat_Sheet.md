@@ -98,7 +98,7 @@ In order to avoid the above mentioned threat, creating a **random string** as a 
 - Implement a maximum length
 - Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods
     - Consider telling the user what an acceptable filename is.
-    - Restrict use of leading periods (hidden files) and sequential periods (directory traversal).
+    - Restrict use of leading periods (hidden files) and sequential periods (directory traversal). Character rules alone don't prevent traversal, so also check the final path as described in the [Path Traversal Prevention Cheat Sheet](Path_Traversal_Prevention_Cheat_Sheet.md).
     - Restrict the use of a leading hyphen or spaces to make it safer to use shell scripts to process files.
     - If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.
 

@@ -413,10 +413,13 @@ Many Ruby on Rails apps are open source and hosted on publicly available source 
 
 ```text
 /config/database.yml                 -  May contain production credentials.
-/config/initializers/secret_token.rb -  Contains a secret used to hash session cookie.
+/config/master.key                   -  Decrypts config/credentials.yml.enc, including secret_key_base.
+/config/credentials/*.key            -  Decrypt per-environment credentials files.
 /db/seeds.rb                         -  May contain seed data including bootstrap admin user.
 /db/development.sqlite3              -  May contain real data.
 ```
+
+The encrypted credentials files can be committed, but never commit the key files. Rails reads the key from `config/master.key` or the `RAILS_MASTER_KEY` environment variable, so supply it from your secrets store or deployment platform instead ([Rails security guide: custom credentials](https://guides.rubyonrails.org/security.html#custom-credentials)). Per-environment credentials have their own key files, such as `config/credentials/production.key` ([Rails credentials command usage](https://github.com/rails/rails/blob/main/railties/lib/rails/commands/credentials/USAGE)).
 
 ### Encryption
 
@@ -424,11 +427,13 @@ Rails uses OS encryption. Generally speaking, it is always a bad idea to write y
 
 Devise by default uses bcrypt for password hashing, which is an appropriate solution.
 
-Typically, the following config causes the 10 stretches for production: `/config/initializers/devise.rb`
+The bcrypt cost is set with `config.stretches` in `/config/initializers/devise.rb`. The current Devise initializer template uses a cost of 12 outside the test environment ([Devise initializer template](https://github.com/heartcombo/devise/blob/main/lib/generators/templates/devise.rb)):
 
 ```ruby
-config.stretches = Rails.env.test? ? 1 : 10
+config.stretches = Rails.env.test? ? 1 : 12
 ```
+
+Applications generated with older Devise versions may still have 10. See the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#bcrypt) for choosing the cost.
 
 ## Updating Rails and Having a Process for Updating Dependencies
 

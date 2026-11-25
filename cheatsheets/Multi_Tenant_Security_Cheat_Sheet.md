@@ -168,92 +168,11 @@ A normal `SET` persists until the session ends after its transaction commits, wh
 - Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.
 - Commit or roll back before returning the connection to the pool.
 
+#### ORM-Level Tenant Filtering
+
 SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
 
-<details>
-<summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
-
-```python
-from sqlalchemy import event, Column, String, text
-from sqlalchemy.orm import Session, declared_attr, with_loader_criteria
-from contextlib import contextmanager
-
-class TenantMixin:
-    """Mixin that adds tenant_id to models that inherit it."""
-    
-    @declared_attr
-    def tenant_id(cls):
-        return Column(String(36), nullable=False, index=True)
-
-class TenantAwareSession(Session):
-    """Session carrying tenant context for participating ORM operations."""
-    
-    def __init__(self, *args, tenant_id: str | None = None, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._tenant_id = tenant_id
-    
-    @property
-    def tenant_id(self):
-        if not self._tenant_id:
-            raise SecurityException("Tenant ID not set on session")
-        return self._tenant_id
-
-# Add tenant criteria to ORM SELECTs issued through TenantAwareSession.
-# with_loader_criteria propagates this rule to eager and lazy relationship loads.
-@event.listens_for(TenantAwareSession, "do_orm_execute")
-def add_tenant_filter(execute_state):
-    if (
-        execute_state.is_select
-        and not execute_state.is_column_load
-        and not execute_state.is_relationship_load
-    ):
-        tenant_id = execute_state.session.tenant_id
-        execute_state.statement = execute_state.statement.options(
-            with_loader_criteria(
-                TenantMixin,
-                lambda model: model.tenant_id == tenant_id,
-                include_aliases=True,
-            )
-        )
-
-# Set and validate tenant_id for new mapped objects in this session.
-@event.listens_for(TenantAwareSession, "before_flush")
-def set_tenant_on_insert(session, flush_context, instances):
-    tenant_id = session.tenant_id
-    for target in session.new:
-        if isinstance(target, TenantMixin):
-            if target.tenant_id not in (None, tenant_id):
-                raise SecurityException("Object tenant does not match session")
-            target.tenant_id = tenant_id
-
-# Secure session factory
-@contextmanager
-def tenant_session(tenant_id: str):
-    """Create a tenant-scoped database session."""
-    ctx = current_tenant.get()
-    if not ctx or ctx.tenant_id != tenant_id:
-        raise SecurityException("Tenant session requires verified context")
-
-    session = TenantAwareSession(bind=engine, tenant_id=tenant_id)
-    
-    try:
-        # The final true makes the tenant context transaction-local
-        session.execute(
-            text("SELECT set_config('app.current_tenant', :tenant_id, true)"),
-            {"tenant_id": tenant_id}
-        )
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
-    finally:
-        session.close()
-```
-
-</details>
-
-This ORM helper is defense in depth, not complete enforcement. It applies tenant criteria to ORM SELECTs issued through `TenantAwareSession`, with the criteria propagated to relationship loaders. Raw SQL, Core connections, bulk operations, and code using another session type require separate controls; use database policies or constrained roles as the final boundary where possible.
+ORM-level filtering is defense in depth, not a complete tenant-isolation boundary. The handler in the SQLAlchemy documentation adds its criteria to ORM `SELECT` statements only, and only on sessions it is registered on. [`do_orm_execute`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.SessionEvents.do_orm_execute) does not run for flush writes or for Core connections, and raw SQL and Core statements run through the session get no tenant criteria. Set or validate `tenant_id` from the verified tenant context in a `before_flush` listener, add an explicit tenant predicate to raw SQL and bulk statements, and keep database policies and constrained roles as the final boundary where possible.
 
 #### Verify Tenant Isolation
 
@@ -272,85 +191,27 @@ A hand-maintained table list can drift: the same omission that leaves RLS off a 
 - Include tenant scope in the lookup or authorization policy when ownership is tenant-specific. A composite key (`tenant_id` + `resource_id`) is one option, not a universal requirement.
 - Enforce authorization at a boundary traversed by every tenant-owned access path. Add data-layer checks as defense in depth where the architecture supports them.
 - Treat opaque or random identifiers as defense in depth against enumeration, not as a substitute for authorization.
+- Apply object-level access control checks according to the [OWASP Insecure Direct Object Reference Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html).
 
 <details>
-<summary>Bad example: Direct object reference without tenant validation</summary>
+<summary>Illustrative example: Tenant-scoped resource lookup</summary>
 
 ```python
-# Dangerous: Only checks resource_id, not tenant ownership
-@app.get("/api/documents/{document_id}")
-async def get_document(document_id: str):
-    doc = db.query(Document).filter(Document.id == document_id).first()
-    if not doc:
-        raise HTTPException(404)
-    return doc  # Could return another tenant's document!
-```
+# verified_tenant_id comes from the server-verified tenant context (see section 1), never from request input
+# Architectures using separate schemas, databases, or RLS enforce this boundary at the data layer
+document = (
+    db.query(Document)
+    .filter(
+        Document.id == document_id,
+        Document.tenant_id == verified_tenant_id,
+    )
+    .first()
+)
+if not document:
+    # Return 404 rather than 403 so the response does not reveal that the object exists in another tenant
+    raise HTTPException(status_code=404, detail="Document not found")
 
-</details>
-
-<details>
-<summary>Good example: Tenant-scoped resource access</summary>
-
-```python
-from uuid import UUID
-from typing import TypeVar, Generic, Type
-
-T = TypeVar('T')
-
-class TenantScopedRepository(Generic[T]):
-    """Repository that scopes the operations provided below to one tenant."""
-    
-    def __init__(self, model: Type[T], session: Session):
-        self.model = model
-        self.session = session
-    
-    @property
-    def tenant_id(self) -> str:
-        ctx = current_tenant.get()
-        if not ctx:
-            raise SecurityException("Tenant context required")
-        return ctx.tenant_id
-    
-    def get_by_id(self, resource_id: UUID) -> Optional[T]:
-        """Get resource only if it belongs to current tenant."""
-        return self.session.query(self.model).filter(
-            self.model.id == resource_id,
-            self.model.tenant_id == self.tenant_id  # Tenant-owned resource
-        ).first()
-    
-    def list_all(self, limit: int = 100, offset: int = 0) -> list[T]:
-        """List resources for current tenant only."""
-        return self.session.query(self.model).filter(
-            self.model.tenant_id == self.tenant_id
-        ).limit(limit).offset(offset).all()
-    
-    def create(self, **kwargs) -> T:
-        """Create resource with tenant_id automatically set."""
-        if 'tenant_id' in kwargs and kwargs['tenant_id'] != self.tenant_id:
-            raise SecurityException("Cannot create resource for different tenant")
-        
-        kwargs['tenant_id'] = self.tenant_id
-        instance = self.model(**kwargs)
-        self.session.add(instance)
-        return instance
-    
-    def delete(self, resource_id: UUID) -> bool:
-        """Delete resource only if it belongs to current tenant."""
-        result = self.session.query(self.model).filter(
-            self.model.id == resource_id,
-            self.model.tenant_id == self.tenant_id
-        ).delete()
-        return result > 0
-
-# Usage
-@app.get("/api/documents/{document_id}")
-@require_tenant
-async def get_document(document_id: UUID, db: Session = Depends(get_db)):
-    repo = TenantScopedRepository(Document, db)
-    doc = repo.get_by_id(document_id)
-    if not doc:
-        raise HTTPException(404, "Document not found")  # Don't reveal if it exists for other tenant
-    return doc
+# Tenant scoping is necessary but not sufficient: also check the caller's permission on this object (owner, role or ACL)
 ```
 
 </details>

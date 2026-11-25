@@ -10,6 +10,16 @@ The Django framework provides some built-in security features that aim to be sec
 
 - Always keep Django and your application's dependencies up-to-date to keep up with security vulnerabilities.
 - Ensure that the application is never in `DEBUG` mode in a production environment. Never run `DEBUG = True` in production.
+- Make production values the defaults in `settings.py`, and loosen them only through explicit development overrides. Read values that each deployment must supply, such as `SECRET_KEY` and `ALLOWED_HOSTS`, from the environment without a fallback, as Django's [deployment checklist](https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/#secret-key) shows for `SECRET_KEY`. A missing value then stops the application at startup:
+
+  ```python
+  import os
+  SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+  ALLOWED_HOSTS = [host.strip() for host in os.environ["DJANGO_ALLOWED_HOSTS"].split(",") if host.strip()]
+  DEBUG = os.environ.get("DJANGO_DEBUG") == "True"  # enabled only by an explicit override
+  ```
+
+- Keep settings whose safety depends on the infrastructure out of these defaults, and enable them only in deployments that meet their conditions. This applies to `SECURE_PROXY_SSL_HEADER` (see [HTTPS](#https)) and to HSTS `preload`, which is [hard to undo](HTTP_Strict_Transport_Security_Cheat_Sheet.md#examples).
 - Use packages like [`django_ratelimit`](https://django-ratelimit.readthedocs.io/en/stable/) or [`django-axes`](https://django-axes.readthedocs.io/en/latest/index.html) to prevent brute-force attacks.
 
 ## Authentication
@@ -104,7 +114,7 @@ The `SECRET_KEY` parameter in settings.py is used for cryptographic signing and 
 
   ```python
   import os
-  SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+  SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
   ```
 
 - Regularly rotate the key, keeping in mind that this action can invalidate sessions, password reset tokens, etc. Rotate the key immediately it if it ever gets exposed.
@@ -115,6 +125,8 @@ Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDL
 
 - `SECURE_CONTENT_TYPE_NOSNIFF`: Set this key to `True`. Protects against MIME type sniffing attacks by enabling the header `X-Content-Type-Options: nosniff`.
 - `SECURE_HSTS_SECONDS`: A positive value adds [HTTP Strict Transport Security (HSTS)](https://docs.djangoproject.com/en/5.2/ref/middleware/#http-strict-transport-security) to HTTPS responses, instructing supporting browsers to use HTTPS for the specified period. It does not reject HTTP requests on the server or protect a browser's first connection before it knows the policy; [preloading addresses that initial-connection gap](https://www.rfc-editor.org/rfc/rfc6797.html#section-12.3).
+- `SECURE_REFERRER_POLICY`: Keep the [default](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-referrer-policy), `same-origin`, which sends no referrer to other origins. It is stricter than the `strict-origin-when-cross-origin` baseline in the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md#referrer-policy). Do not tighten it to `no-referrer`, which [interferes with Django's CSRF protection](https://docs.djangoproject.com/en/5.2/ref/middleware/#referrer-policy). Under that policy, browsers send form posts with [`Origin: null`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy#effect_on_the_origin_header), which fails Django's origin check, and HTTPS requests without an `Origin` header lose the `Referer` header that [Django checks instead](https://docs.djangoproject.com/en/5.2/ref/csrf/#how-csrf-works).
+- `SECURE_CROSS_ORIGIN_OPENER_POLICY`: Keep the [default](https://docs.djangoproject.com/en/5.2/ref/middleware/#cross-origin-opener-policy), `same-origin`, which the [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md#cross-origin-opener-policy-coop) also recommends. If your page opens a cross-origin popup that must reach back through `window.opener`, such as some sign-in flows, use `same-origin-allow-popups` instead of disabling the header.
 
 Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` (This module should be listed after the `django.middleware.security.SecurityMiddleware` module as ordering is important). This module is used to set the following parameters:
 
@@ -133,6 +145,7 @@ For more details:
 
 - `SESSION_COOKIE_SECURE`: Set this key to `True` in the `settings.py` file. This will send the session cookie over secure (HTTPS) connections only.
 - `CSRF_COOKIE_SECURE`: Set this key to `True` in the `settings.py` file. This will ensure that the CSRF cookie is sent over secure connections only.
+- Prefix the session and CSRF cookie names with [`__Host-`](Session_Management_Cheat_Sheet.md#cookie-name-prefixes), for example `SESSION_COOKIE_NAME = "__Host-sessionid"` and `CSRF_COOKIE_NAME = "__Host-csrftoken"`. A subdomain then cannot set these cookies for your host, which mitigates the [subdomain CSRF bypass](https://docs.djangoproject.com/en/5.2/ref/csrf/#limitations) that Django documents. Browsers accept the prefix only on `Secure` cookies with `Path=/` and no `Domain`, so it requires the two settings above and the default `SESSION_COOKIE_PATH`, `SESSION_COOKIE_DOMAIN`, `CSRF_COOKIE_PATH` and `CSRF_COOKIE_DOMAIN`. Renaming the cookies logs out existing users and breaks JavaScript that reads the CSRF cookie by its old name.
 - Whenever you set a custom cookie in a view using the `HttpResponse.set_cookie()` method, make sure to set its secure parameter to `True`.
 
   ```python
