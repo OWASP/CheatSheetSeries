@@ -61,6 +61,18 @@ tools = [
 
 Enforce authorization in the execution component, outside the agent's context. A `user_confirmed` flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Check and consume the approval in one atomic step immediately before execution so concurrent or repeated requests cannot reuse it. Changes to the target or parameters require new approval. Apply the [High-Impact Action Integrity Controls](#high-impact-action-integrity-controls) and the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md). Fail closed for unknown tools or missing approval requirements.
 
+#### Coding Agents: Pre-Execution Hooks
+
+Coding agents (CLI and IDE agents that run shell commands, edit files and push code) take many actions per session, so per-action human approval becomes habitual ([Anthropic reports](https://www.anthropic.com/engineering/claude-code-auto-mode) that Claude Code users approve 93% of permission prompts). Many of these agents expose a pre-execution hook (for example, Claude Code's [`PreToolUse` hook](https://code.claude.com/docs/en/hooks)) where a check outside the agent can allow, block or escalate each pending action. If you use one:
+
+- Check the pending action itself, not the agent's description of it. Parse the command rather than matching strings, and decode common encodings (base64, hex) before inspecting it.
+- Judge secrets by content, not filename, and treat a secret reaching a network call (`curl`, a push to an unknown remote, a package publish) as a dangerous flow even when each step looks harmless.
+- Fail closed. Some hook implementations let the action proceed when the hook crashes or times out, so configure the hook to block on failure where the platform supports it (for example, Claude Code's [`onFailure` setting](https://code.claude.com/docs/en/hooks#block-the-action-when-a-hook-fails)) and test it.
+- Deploy security hooks through managed, organization-level settings. Project-level hook configuration can be edited by the agent or arrive with a repository, so restrict it where the agent allows (for example, Claude Code's [`allowManagedHooksOnly`](https://code.claude.com/docs/en/settings-reference#allowmanagedhooksonly)).
+- Return the reason when an action is blocked so the agent can take a safe path, log every decision where the agent can't write, and start in log-only mode before enforcing.
+
+Limits: a hook only sees what the agent sends through it. It does not replace least privilege, short-lived credentials, egress policy or sandboxing, and exfiltration split across several separate calls is hard to catch at a single action.
+
 ### 2. Input Validation & Prompt Injection Defense
 
 - Treat all external data as untrusted (user messages, retrieved documents, API responses, emails).
