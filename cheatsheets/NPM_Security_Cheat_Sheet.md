@@ -45,7 +45,7 @@ Apply these npm security best practices to minimize the malicious module attack 
 - Before upgrading, make sure to review changelog and release notes for the upgraded version.
 - When installing packages make sure to add the `--ignore-scripts` suffix to disable the execution of any scripts by third-party packages.
 - Consider adding `ignore-scripts=true` to your `.npmrc` project file, or to your global npm configuration.
-- In an npm workspaces monorepo, put this setting in the `.npmrc` at the repository root. npm [does not read](https://github.com/npm/cli/issues/4605) a `.npmrc` inside a workspace folder: a root `npm install` ignores it without a warning, and commands run from inside the workspace only log `ignoring workspace config at <path>/.npmrc` ([source](https://github.com/npm/cli/blob/latest/workspaces/config/lib/index.js)).
+- In an npm workspaces monorepo, put this setting in the `.npmrc` at the repository root. npm [does not read](https://github.com/npm/cli/issues/4605) a `.npmrc` inside a workspace folder. A root `npm install` ignores that file without a warning. Commands run from inside the workspace only log `ignoring workspace config at <path>/.npmrc` ([source](https://github.com/npm/cli/blob/9741b645b011ae83c9dda66c9b0d5fe0dce9c766/workspaces/config/lib/index.js#L839)).
 
 ### Using an allowlist for lifecycle scripts
 
