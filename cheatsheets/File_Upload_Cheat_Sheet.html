@@ -3761,6 +3761,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Server_Side_Document_and_Media_Rendering_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server Side Document and Media Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -5039,7 +5067,7 @@ to bypass such a check.</p>
 <p>As mentioned in the <a href="#public-file-retrieval">Public File Retrieval</a> section, file content can contain malicious, inappropriate, or illegal data.</p>
 <p>Based on the expected type, special file content validation can be applied:</p>
 <ul>
-<li>For <strong>images</strong>, decode and re-encode to an allowed image format, explicitly <a href="https://imagemagick.org/command-line-options/#strip">removing unnecessary metadata</a>. Rewriting does not guarantee that all malicious content is removed, and the image processor itself handles untrusted input. Use an up-to-date library with <a href="https://imagemagick.org/security-policy/#other">restricted formats, resource limits, and sandboxing</a>.</li>
+<li>For <strong>images</strong>, decode and re-encode to an allowed image format, explicitly <a href="https://imagemagick.org/command-line-options/#strip">removing unnecessary metadata</a>. Rewriting does not guarantee that all malicious content is removed, and the image processor itself handles untrusted input. Use an up-to-date library with <a href="https://imagemagick.org/security-policy/#other">restricted formats, resource limits, and sandboxing</a>. The <a href="Server_Side_Document_and_Media_Rendering_Cheat_Sheet.html">Server-Side Document and Media Rendering Cheat Sheet</a> covers hardening ImageMagick and other converters.</li>
 <li>For <strong>Microsoft documents</strong>, the usage of <a href="https://poi.apache.org/">Apache POI</a> helps validating the uploaded documents.</li>
 <li><strong>ZIP files</strong> are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.</li>
 </ul>
