@@ -138,6 +138,7 @@ Agentic coding tools execute commands, install packages, write files, and access
 - Use ephemeral credentials scoped to the current task rather than long-lived developer credentials.
 - Understand and evaluate the risk of flags like `--dangerously-skip-permissions` or auto-accept modes. These bypass confirmation prompts and give the agent unrestricted execution.
 - Set resource limits (CPU, memory, disk, process count) on agent execution environments.
+- If your agent exposes a pre-execution hook, use it to check each command, file edit and push before it runs, with the check outside the agent's context, failing closed and deployed through managed settings. See [Coding Agents: Pre-Execution Hooks](AI_Agent_Security_Cheat_Sheet.md#coding-agents-pre-execution-hooks) in the AI Agent Security Cheat Sheet.
 
 ### Don't
 
@@ -145,6 +146,7 @@ Agentic coding tools execute commands, install packages, write files, and access
 - Enable auto-accept mode on untrusted or unfamiliar codebases.
 - Allow agents to access production credentials, deployment keys, or org-level secrets from the development environment.
 - Assume the agent will only touch files relevant to the current task.
+- Rely on per-action approval prompts as the main control. [Anthropic reports](https://www.anthropic.com/engineering/claude-code-auto-mode) that Claude Code users approve 93% of permission prompts.
 
 ## Section 6: Rules Files and Persistent Steering
 
