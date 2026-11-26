@@ -313,99 +313,28 @@ app.use(session({
 
 #### Use appropriate security headers
 
-There are several [HTTP security headers](https://owasp.org/www-project-secure-headers/) that can help you prevent some common attack vectors.
-The [helmet](https://www.npmjs.com/package/helmet) package can help to set those headers:
+Node.js web applications should set defensive HTTP security headers to restrict browser features, control resource loading, and enforce transport security. Use maintained middleware such as [Helmet](https://github.com/helmetjs/helmet) for Express or [`@fastify/helmet`](https://github.com/fastify/fastify-helmet) for Fastify to manage security headers centrally:
 
-```Javascript
-const express = require("express");
-const helmet = require("helmet");
+```javascript
+const express = require('express');
+const helmet = require('helmet');
 
 const app = express();
 
-app.use(helmet()); // Add various HTTP headers
+app.use(helmet());
 ```
 
-The top-level `helmet` function is a wrapper around 14 smaller middlewares.
-Below is a list of HTTP security headers covered by `helmet` middlewares:
+For Fastify applications, select a `@fastify/helmet` version that matches the application's Fastify major version, as documented in the [`@fastify/helmet` compatibility table](https://github.com/fastify/fastify-helmet#compatibility).
 
-- **[Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)**: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. In order to use it in your application, add the following codes:
+By default, `helmet()` sets defensive defaults for common security headers (including `Content-Security-Policy`, `Strict-Transport-Security`, and `X-Content-Type-Options`) and removes identifying headers like `X-Powered-By`.
 
-```JavaScript
-app.use(helmet.hsts()); // default configuration
-app.use(
-  helmet.hsts({
-    maxAge: 123456,
-    includeSubDomains: false,
-  })
-); // custom configuration
-```
+When deploying security headers in production, consider the following controls:
 
-- **[X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options):** determines if a page can be loaded via a `<frame>` or an `<iframe>` element. Allowing the page to be framed may result in [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking) attacks.
+- **Review and customize Content Security Policy (CSP):** The default CSP directives may block external resources, inline scripts, or styles required by the application. Audit and configure directives to match expected application assets.
+- **Review HSTS before deploying Helmet's defaults:** Helmet enables HTTP Strict Transport Security (HSTS) by default with a one-year `max-age` and the `includeSubDomains` directive. Deploy this default only after HTTPS is correctly configured for the application host and all its subdomains. Otherwise, configure or disable `strictTransportSecurity` according to the deployment requirements.
+- **Understand legacy XSS filter handling:** Helmet sets `X-XSS-Protection: 0` by default to disable buggy or deprecated browser XSS auditors that can introduce client-side vulnerabilities. This setting disables the legacy filter rather than providing active protection; protect against XSS using context-appropriate output encoding alongside a robust Content Security Policy.
 
-```JavaScript
-app.use(helmet.frameguard()); // default behavior (SAMEORIGIN)
-```
-
-- **[X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection):** stops pages from loading when they detect reflected cross-site scripting (XSS) attacks. This header has been deprecated by modern browsers and its use can introduce additional security issues on the client side. As such, it is recommended to set the header as **X-XSS-Protection: 0** in order to disable the XSS Auditor, and not allow it to take the default behavior of the browser handling the response.
-
-```JavaScript
-app.use(helmet.xssFilter()); // sets "X-XSS-Protection: 0"
-```
-
-For moderns browsers, it is recommended to implement a strong **Content-Security-Policy** policy, as detailed in the next section.
-
-- **[Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy):** Content Security Policy is developed to reduce the risk of attacks like [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) and [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking). It allows content from a list that you decide. It has several directives each of which prohibits loading specific type of a content. You can refer to [Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) for detailed explanation of each directive and how to use it. You can implement these settings in your application as follows:
-
-```JavaScript
-app.use(
-  helmet.contentSecurityPolicy({
-    // the following directives will be merged into the default helmet CSP policy
-    directives: {
-      defaultSrc: ["'self'"],  // default value for all directives that are absent
-      scriptSrc: ["'self'"],   // helps prevent XSS attacks
-      frameAncestors: ["'none'"],  // helps prevent Clickjacking attacks
-      imgSrc: ["'self'", "'http://imgexample.com'"],
-      styleSrc: ["'none'"]
-    }
-  })
-);
-```
-
-As this middleware performs very little validation, it is recommended to rely on CSP checkers like [CSP Evaluator](https://csp-evaluator.withgoogle.com/) instead.
-
-- **[X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options):** Even if the server sets a valid `Content-Type` header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in `Content-Type` header. It can be configured in the following way:
-
-```JavaScript
-app.use(helmet.noSniff());
-```
-
-- **[Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) and [Pragma](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Pragma):** Cache-Control header can be used to prevent browsers from caching the given responses. This should be done for pages that contain sensitive information about either the user or the application. However, disabling caching for pages that do not contain sensitive information may seriously affect the performance of the application. Therefore, caching should only be disabled for pages that return sensitive information. Appropriate caching controls and headers can be set easily using the [nocache](https://www.npmjs.com/package/nocache) package:
-
-```JavaScript
-const nocache = require("nocache");
-
-app.use(nocache());
-```
-
-The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers accordingly.
-
-- **X-Download-Options:** This header prevents Internet Explorer from executing downloaded files in the site's context. This is achieved with noopen directive. You can do so with the following piece of code:
-
-```JavaScript
-app.use(helmet.ieNoOpen());
-```
-
-- **X-Powered-By:** X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the `hidePoweredBy` as follows:
-
-```JavaScript
-app.use(helmet.hidePoweredBy());
-```
-
-Also, you can lie about the technologies used with this header. For example, even if your application does not use PHP, you can set X-Powered-By header to seem so.
-
-```JavaScript
-app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
-```
+For detailed explanations, browser support, and recommended directives for each header, see the [HTTP Security Response Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md).
 
 ### Platform Security
 
