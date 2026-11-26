@@ -1,0 +1,66 @@
+# HTTP Request Smuggling Prevention Cheat Sheet
+
+## Introduction
+
+Most applications sit behind at least one front-end component, such as a CDN, load balancer, reverse proxy, or web application firewall (WAF), that forwards requests to a back-end server over shared, reused connections. In this sheet, front end and back end mean these servers on the request path, the outbound and inbound sides in [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#section-3.7) terms, not browser code and server code. Both sides have to agree where each request ends. When they disagree, an attacker can send one request that the front end sees as a single request and the back end sees as two. The leftover part is prepended to whatever comes next on that connection, which may be another user's request ([RFC 9112: Request Smuggling](https://www.rfc-editor.org/rfc/rfc9112.html#section-11.2), [CWE-444](https://cwe.mitre.org/data/definitions/444.html)).
+
+Depending on the application, this may let an attacker bypass access controls that only the front end enforces, capture other users' requests, and poison caches ([PortSwigger: Exploiting HTTP request smuggling](https://portswigger.net/web-security/request-smuggling/exploiting#using-http-request-smuggling-to-bypass-front-end-security-controls)). The root cause is in how components parse message framing, so the defenses below are about removing ambiguity rather than filtering payloads.
+
+## How Desync Happens
+
+These are common ways components can disagree, not a complete list. More generally, any difference in how two components interpret a request can lead to request smuggling. Lax parsing can create these differences.
+
+- **Content-Length and Transfer-Encoding disagree.** An HTTP/1.1 request body is delimited either by `Content-Length` or by `Transfer-Encoding: chunked`. If a request carries both, or a `Transfer-Encoding` value that one component accepts and another ignores, each side can pick a different length ([RFC 9112: Message Body Length](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3)). [PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-perform-an-http-request-smuggling-attack) calls these CL.TE and TE.CL, after which header each side uses, and TE.TE when both support `Transfer-Encoding` but one of them can be made to ignore an obfuscated version of it.
+- **HTTP/2 is downgraded to HTTP/1.1.** HTTP/2 frames carry their own length, but a front end that rewrites requests into HTTP/1.1 for the back end can pass along a `content-length` or `transfer-encoding` header, or a header value with a CR or LF in it, that then decides the framing on the back end ([PortSwigger: HTTP/2 desync attacks](https://portswigger.net/research/http2)).
+- **A server ignores a body it did not expect.** If the back end does not read the body of a request to an endpoint that normally has none, such as a static file or a redirect, the unread bytes are treated as the next request. Some of these cases can be triggered from a victim's browser, which poisons the browser's own connection to the site ([PortSwigger: Browser-powered desync attacks](https://portswigger.net/research/browser-powered-desync-attacks)).
+- **Line endings are parsed differently.** One component may accept a bare LF as the end of a line while another allows it inside a header value, so they see different headers, and a `Content-Length` hidden in one can frame the body in the other ([Zeyu: HTTP Request Smuggling in the Multiverse of Parsing Flaws](https://infosec.zeyu2001.com/2022/http-request-smuggling-in-the-multiverse-of-parsing-flaws)).
+
+## Prevention
+
+Most of these controls live in the proxy, load balancer or HTTP server rather than in application code. Administrators choose and configure those components so that they parse strictly, and the developers of those components implement the framing rules. Application developers mostly need to make sure the server reads every request body, closes connections on errors, and enforces authorization in the application itself.
+
+### Use HTTP/2 End-to-End
+
+Where the front end and the back end both support it, use HTTP/2 between them as well as towards clients, and turn off downgrading to HTTP/1.1. HTTP/2 determines the length of a request from its frames, so there is no second length to disagree about ([PortSwigger: How to prevent HTTP request smuggling](https://portswigger.net/web-security/request-smuggling#how-to-prevent-http-request-smuggling-vulnerabilities)).
+
+### Reject Ambiguous HTTP/1.1 Framing
+
+Apply the framing rules from [RFC 9112](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.1) in every component, and prefer the strict option where the specification allows a choice:
+
+- Reject a request that has both `Content-Length` and `Transfer-Encoding`. If a component processes it instead, it must use `Transfer-Encoding` alone, and an intermediary that forwards it must first remove the received `Content-Length` field and process `Transfer-Encoding` before forwarding. Either way, close the connection after responding.
+- Respond with `400 (Bad Request)` and close the connection when `Transfer-Encoding` is present and `chunked` is not the final coding ([RFC 9112 section 6.3](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3)).
+- Treat an invalid `Content-Length`, including several different values, as an unrecoverable error.
+- Respond with `400 (Bad Request)` and close the connection for a request with whitespace between a header field name and the colon (for example `Transfer-Encoding : chunked`), with obsolete line folding, or with a bare CR or bare LF in the request line or headers. A component that doesn't recognize such an obfuscated `Transfer-Encoding` header won't see it, which is how `TE.TE` slips past the rule above ([RFC 9112 section 5.1](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.1), [section 5.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-5.2), [section 2.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-2.2)).
+
+Have the front end normalize or reject ambiguous requests, and have the back end reject any that are still ambiguous and close the connection ([PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-prevent-http-request-smuggling-vulnerabilities)).
+
+### Validate Requests That Are Downgraded
+
+If HTTP/2 has to be translated to HTTP/1.1, validate the result as an HTTP/1.1 request before forwarding it ([RFC 9113: Field Validity](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.2.1)):
+
+- Treat an HTTP/2 request as malformed if a header value contains CR, LF, or NUL, or starts or ends with whitespace, or if a header name contains a colon (other than the leading one of a pseudo-header), uppercase characters, or any character in the ranges 0x00-0x20 or 0x7F-0xFF, which cover whitespace, control characters, and non-ASCII bytes.
+- Treat an HTTP/2 request that contains `transfer-encoding` or other connection-specific headers as malformed, except for a `TE` header field whose only value is `trailers` ([RFC 9113: Connection-Specific Header Fields](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.2.2)).
+- Treat a `content-length` that does not match the length of the DATA frames as malformed ([RFC 9113: Malformed Messages](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.1.1)).
+
+### Handle Connections Defensively
+
+- Read or discard the body of every request according to its declared length, even on endpoints that ignore the body. Never assume a request has no body ([PortSwigger](https://portswigger.net/web-security/request-smuggling#how-to-prevent-http-request-smuggling-vulnerabilities)).
+- Close the connection instead of reusing it after a framing error or a server-level exception while handling a request.
+- Disabling the reuse of back-end connections limits some attacks but does not stop request tunneling and hurts performance, so it may not be worth it and should not be relied on alone.
+- Keep proxies, load balancers, and servers up to date, and check each product's own documentation for how it handles ambiguous requests and which settings make it strict.
+
+## What These Controls Do Not Cover
+
+- Request smuggling defeats controls that only the front end applies, because the smuggled request never passes through them. [RFC 9112 Section 11.2](https://www.rfc-editor.org/rfc/rfc9112.html#section-11.2) describes this class of attack on message framing. Enforce authorization in the application as well, not only in the proxy or WAF.
+- A desync can poison a shared cache with another user's response. See the [Web Cache Security Cheat Sheet](Web_Cache_Security_Cheat_Sheet.md) for cache keys and what to cache.
+- Header injection through CR and LF in values the application writes into responses is a related but separate problem.
+
+## Testing
+
+Test through the same chain of CDN, load balancer, and proxies that production uses, since the bug is in how those components disagree. [PortSwigger](https://portswigger.net/web-security/request-smuggling/finding#finding-http-request-smuggling-vulnerabilities-using-timing-techniques) describes timing-based probes. Some probes can disrupt other users' requests on a vulnerable system, so test in a non-production environment where possible.
+
+## References
+
+- [RFC 9112: HTTP/1.1, Section 6.3 Message Body Length](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3)
+- [RFC 9113: HTTP/2, Section 8.2 HTTP Fields](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.2)
+- [CWE-444: Inconsistent Interpretation of HTTP Requests](https://cwe.mitre.org/data/definitions/444.html)

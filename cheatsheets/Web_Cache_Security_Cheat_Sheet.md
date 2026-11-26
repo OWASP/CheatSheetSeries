@@ -53,7 +53,7 @@ Every request input that can change a cacheable response must either be represen
 - Do not use `Vary: Cookie` as a general authorization boundary. Prefer disabling shared caching for personalized responses.
 - Derive tenant and user identifiers from trusted, authenticated server-side context, not directly from an untrusted header or query parameter.
 - Apply the same URL normalization and parameter handling at the CDN, reverse proxy, and origin.
-- Reject ambiguous requests, including conflicting host information, duplicate parameters with inconsistent meanings, and malformed path encodings.
+- Reject ambiguous requests, including conflicting host information, duplicate parameters with inconsistent meanings, and malformed path encodings. For ambiguous message framing between the cache and the origin, see the [HTTP Request Smuggling Prevention Cheat Sheet](HTTP_Request_Smuggling_Prevention_Cheat_Sheet.md).
 
 For an application-level cache, use a structured, versioned key:
 
