@@ -5030,81 +5030,46 @@
 <li>Treat client-supplied tenant identifiers as selectors only. Verify that the authenticated principal is authorized to act in the selected tenant.</li>
 <li>Bind tenant context to a server-verified identity and current tenant membership or service authorization.</li>
 <li>Propagate server-verified tenant context to components that need it for tenant-sensitive decisions or observability; do not let downstream components replace it with unverified input.</li>
+<li>Query parameterization prevents injection but does not enforce tenant isolation; tenant authorization and tenant-scoped queries are still required.</li>
 </ul>
 <details>
-<summary>Bad example: Trusting client-supplied tenant ID</summary>
+<summary>Illustrative example: Establishing verified tenant context</summary>
 
-<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: The header selects a tenant without checking the caller's membership.</span>
-<span class="c1"># Query parameterization prevents injection, not cross-tenant access.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_tenant_data</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"X-Tenant-ID"</span><span class="p">)</span>  <span class="c1"># Attacker can modify!</span>
-    <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM data WHERE tenant_id = :tid"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"tid"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">})</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">contextvars</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextVar</span>
 
-</details>
+<span class="c1"># ContextVar stores per-context values; the finally block restores the previous value.</span>
+<span class="c1"># Tenant-sensitive consumers must reject a missing context, never run an unscoped query.</span>
+<span class="n">current_tenant</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span><span class="s2">"current_tenant"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-<details>
-<summary>Good example: Verifying tenant context against authenticated identity</summary>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">tenant_context_middleware</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">):</span>
+    <span class="c1"># Client-supplied headers (e.g., X-Tenant-ID) are untrusted selectors, not verified context.</span>
+    <span class="c1"># Obtain tenant identity and principal from server-verified authentication claims.</span>
+    <span class="c1"># A verified claim may select the tenant, but authorization still depends on issuer</span>
+    <span class="c1"># guarantees or checking current tenant membership for the authenticated principal.</span>
+    <span class="n">claims</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="s2">"verified_claims"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">claims</span> <span class="ow">or</span> <span class="s2">"tenant_id"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">claims</span><span class="p">:</span>
+        <span class="c1"># Fail closed if verified tenant authentication context is missing</span>
+        <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Missing verified tenant context"</span><span class="p">})</span>
 
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">contextvars</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContextVar</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+    <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">claims</span><span class="p">[</span><span class="s2">"tenant_id"</span><span class="p">]</span>
+    <span class="n">principal_id</span> <span class="o">=</span> <span class="n">claims</span><span class="p">[</span><span class="s2">"sub"</span><span class="p">]</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantContext</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">roles</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tenant_id</span> <span class="o">=</span> <span class="n">tenant_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">roles</span> <span class="o">=</span> <span class="n">roles</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_validated</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">membership</span> <span class="o">=</span> <span class="k">await</span> <span class="n">tenant_service</span><span class="o">.</span><span class="n">get_active_membership</span><span class="p">(</span><span class="n">principal_id</span><span class="p">,</span> <span class="n">tenant_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">membership</span><span class="p">:</span>
+        <span class="c1"># Fail closed if the principal is not authorized for the tenant</span>
+        <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Tenant access denied"</span><span class="p">})</span>
 
-<span class="c1"># Request-local tenant context</span>
-<span class="n">current_tenant</span><span class="p">:</span> <span class="n">ContextVar</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">TenantContext</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ContextVar</span><span class="p">(</span>
-    <span class="s1">'current_tenant'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
-<span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">TenantMiddleware</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Verify tenant context against authenticated identity and membership."""</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">):</span>
-        <span class="c1"># A verified claim may select the tenant, but authorization still</span>
-        <span class="c1"># depends on the issuer's guarantees or a current membership check.</span>
-        <span class="n">token_claims</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">verified_claims</span>  <span class="c1"># Set by auth middleware</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">token_claims</span> <span class="ow">or</span> <span class="s2">"tenant_id"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">token_claims</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Missing tenant context"</span><span class="p">})</span>
-
-        <span class="n">tenant_id</span> <span class="o">=</span> <span class="n">token_claims</span><span class="p">[</span><span class="s2">"tenant_id"</span><span class="p">]</span>
-
-        <span class="n">principal_id</span> <span class="o">=</span> <span class="n">token_claims</span><span class="p">[</span><span class="s2">"sub"</span><span class="p">]</span>
-        <span class="n">membership</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">tenant_service</span><span class="o">.</span><span class="n">get_active_membership</span><span class="p">(</span>
-            <span class="n">principal_id</span><span class="p">,</span> <span class="n">tenant_id</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">membership</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">JSONResponse</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Tenant access denied"</span><span class="p">})</span>
-
-        <span class="c1"># Set tenant context for this request</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">TenantContext</span><span class="p">(</span>
-            <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="o">=</span><span class="n">principal_id</span><span class="p">,</span>
-            <span class="n">roles</span><span class="o">=</span><span class="n">membership</span><span class="o">.</span><span class="n">roles</span>
-        <span class="p">)</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_next</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">response</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="n">current_tenant</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">require_tenant</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Decorator ensuring tenant context is present."""</span>
-    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">ctx</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">is_validated</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">SecurityException</span><span class="p">(</span><span class="s2">"Tenant context required"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
+    <span class="c1"># Bind verified context to request-scoped storage</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">current_tenant</span><span class="o">.</span><span class="n">set</span><span class="p">({</span>
+        <span class="s2">"tenant_id"</span><span class="p">:</span> <span class="n">tenant_id</span><span class="p">,</span>
+        <span class="s2">"user_id"</span><span class="p">:</span> <span class="n">principal_id</span><span class="p">,</span>
+        <span class="s2">"roles"</span><span class="p">:</span> <span class="n">membership</span><span class="o">.</span><span class="n">roles</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">call_next</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Reliably reset context to prevent leakage across requests or reused workers</span>
+        <span class="n">current_tenant</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
