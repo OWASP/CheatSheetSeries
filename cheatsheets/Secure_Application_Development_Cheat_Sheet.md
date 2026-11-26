@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet provides a concise entry point to the OWASP Cheat Sheet Series for developers designing and building applications. Rather than replicating in-depth implementation guidance or serving as an exhaustive manual, this guide helps development teams identify the security concerns that apply to their software architecture and directs them to authoritative OWASP Cheat Sheets for actionable practices.
+This cheat sheet helps developers identify security concerns that apply to their application architecture and find actionable guidance in OWASP Cheat Sheets.
 
 Modern application development requires embedding security across the entire software development lifecycle. The [OWASP Top 10:2025](https://owasp.org/Top10/2025/) provides an essential awareness document highlighting the most critical application security risks, while frameworks such as the [NIST Secure Software Development Framework (SSDF)](https://csrc.nist.gov/pubs/sp/800/218/final) outline secure development practices. Each of the following sections addresses a core architectural domain, outlines when and why that domain matters, provides a light mapping to relevant [OWASP Top 10:2025](https://owasp.org/Top10/2025/) categories, and points to the relevant specialized cheat sheets.
 
@@ -66,7 +66,7 @@ Cryptography and sensitive data protection preserve the confidentiality and inte
 - **Protection at Rest**: Safeguards information stored persistently in databases, object stores, files, and backups using robust encryption algorithms and secure key handling, as detailed in the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
 - **End-to-End Protection**: Secures data from the originating endpoint to the ultimate destination so that intermediate systems, service providers, or infrastructure operators cannot access the plaintext. This control is necessary when intermediate transport hops cannot be fully trusted.
 
-These controls serve distinct purposes and are not interchangeable; TLS protects data while moving across the wire, but does not protect stored records or untrusted intermediaries. Prioritize establishing TLS across all communication boundaries first, apply at-rest encryption to sensitive assets and backups, and implement end-to-end encryption with sound [Key Management](Key_Management_Cheat_Sheet.md) when architecture requires zero-trust intermediate handling.
+These controls serve distinct purposes and are not interchangeable; TLS protects data while moving across the wire, but does not protect stored records or untrusted intermediaries. Prioritize establishing TLS across all communication boundaries first, apply at-rest encryption to sensitive assets and backups, and implement end-to-end encryption with sound [Key Management](Key_Management_Cheat_Sheet.md) when the architecture requires that intermediaries cannot read the plaintext.
 
 **OWASP Top 10 Mapping:**
 
@@ -108,7 +108,7 @@ Application architecture and communication boundaries define how services intera
 - **Secure Defaults, Browser Defense, and Error Handling:**
     - [HTTP Headers Cheat Sheet](HTTP_Headers_Cheat_Sheet.md): Hardening browser clients through defensive HTTP response headers.
     - [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md): Restricting script sources, resource loading, and frame ancestry.
-    - [Cross-Site Request Forgery Prevention Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md): Mitigating cross-site request forgery using SameSite cookies and anti-CSRF tokens.
+    - [Cross-Site Request Forgery Prevention Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md): Mitigating cross-site request forgery with anti-CSRF tokens and SameSite cookies as defense in depth.
     - [Error Handling Cheat Sheet](Error_Handling_Cheat_Sheet.md): Fail-safe error processing and preventing sensitive information disclosure in stack traces.
 
 ## 5. Dependencies, Deployment, and Security Operations
