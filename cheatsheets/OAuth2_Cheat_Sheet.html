@@ -2963,6 +2963,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#device-authorization-grant-and-cross-device-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Authorization Grant and Cross-Device Flows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#client-authentication" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4739,6 +4750,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#device-authorization-grant-and-cross-device-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Authorization Grant and Cross-Device Flows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#client-authentication" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4873,12 +4895,21 @@
 <ol start="16">
 <li>The Resource Owner password credentials grant is not used. This grant type insecurely exposes the credentials of the Resource Owner to the client, increasing the attack surface of the application.</li>
 </ol>
-<h2 id="client-authentication">Client Authentication<a class="headerlink" href="#client-authentication" title="Permanent link">&para;</a></h2>
+<h2 id="device-authorization-grant-and-cross-device-flows">Device Authorization Grant and Cross-Device Flows<a class="headerlink" href="#device-authorization-grant-and-cross-device-flows" title="Permanent link">&para;</a></h2>
+<p>The Device Authorization Grant (<a href="https://www.rfc-editor.org/rfc/rfc8628.html">RFC 8628</a>) lets a device with no browser or keyboard, such as a TV or a command-line tool, get tokens after the user signs in on a second device with a short user code. Nothing ties the two devices together, so an attacker can start the flow on their own machine and send the code and the genuine sign-in page to a victim, then receive the tokens once the victim signs in. This device code phishing is used in real campaigns, for example <a href="https://www.microsoft.com/en-us/security/blog/2025/02/13/storm-2372-conducts-device-code-phishing-campaign/">Storm-2372</a>. <a href="https://www.rfc-editor.org/rfc/rfc10027.html">RFC 10027</a>, Best Current Practice (BCP) 247, describes these attacks and the mitigations for all cross-device flows.</p>
 <ol start="17">
+<li>The Device Authorization Grant is enabled only for clients that are actually input-constrained and blocked for all others, for example with conditional access policies. This reduces the attack surface but does not stop phishing through the clients that are still allowed, because an attacker can start the flow with any of them. Before offering any cross-device flow, implementers perform a risk assessment and avoid the flow if its risks cannot be sufficiently mitigated (<a href="https://www.rfc-editor.org/rfc/rfc10027.html#section-2">RFC 10027 Section 2</a>).</li>
+<li>User codes are short-lived and rate-limited, and have enough entropy that brute forcing is infeasible within those limits (<a href="https://www.rfc-editor.org/rfc/rfc8628.html#section-5.1">RFC 8628 Section 5.1</a>), for example 8 characters from the base 20 character set <code>BCDFGHJKLMNPQRSTVWXZ</code> (<a href="https://www.rfc-editor.org/rfc/rfc8628.html#section-6.1">RFC 8628 Section 6.1</a>) with a strict limit on attempts. Each code can be used only once, or a few times at most (<a href="https://www.rfc-editor.org/rfc/rfc10027.html#section-6.1.3">RFC 10027 Section 6.1.3</a>). Their lifetime is long enough for the user to switch devices but short enough to limit codes sent by email or text message. A short lifetime does not stop an attacker who starts a fresh flow while interacting with the victim in real time (<a href="https://www.rfc-editor.org/rfc/rfc8628.html#section-5.4">RFC 8628 Section 5.4</a>).</li>
+<li>The verification page tells the user that they are authorizing a device, shows the client and device details, and asks the user to confirm that the device is in their possession (<a href="https://www.rfc-editor.org/rfc/rfc8628.html#section-5.4">RFC 8628 Section 5.4</a>). When <code>verification_uri_complete</code> is used, the user no longer types the code, so the page displays it and asks the user to check that it matches the code shown on the device. These prompts reduce the risk but do not prevent device code phishing when an attacker sends the victim both the genuine link and the matching code.</li>
+<li>Tokens issued through cross-device flows are limited to the scopes the client needs (<a href="https://www.rfc-editor.org/rfc/rfc10027.html#section-6.1.9">RFC 10027 Section 6.1.9</a>) and are short-lived, including refresh tokens (<a href="https://www.rfc-editor.org/rfc/rfc10027.html#section-6.1.10">RFC 10027 Section 6.1.10</a>). This reduces the impact of a successful attack but does not prevent it. Sender-constrained tokens (see <a href="#token-replay-prevention">Token Replay Prevention</a>) do not prevent it either, because the attacker holds the key on their own device; they only stop the tokens from being moved to another device (<a href="https://www.rfc-editor.org/rfc/rfc10027.html#section-6.1.12">RFC 10027 Section 6.1.12</a>).</li>
+<li>Where possible, the flow establishes that the two devices are close to each other, which makes it harder to phish remote victims with codes started elsewhere (<a href="https://www.rfc-editor.org/rfc/rfc10027.html#section-6.1.1">RFC 10027 Section 6.1.1</a>). How much this helps depends on how proximity is established: IP address or geolocation comparisons alone do not prove that the devices are physically close. The protocol is chosen following the guidance in <a href="https://www.rfc-editor.org/rfc/rfc10027.html#section-6.2">RFC 10027 Section 6.2</a>.</li>
+</ol>
+<h2 id="client-authentication">Client Authentication<a class="headerlink" href="#client-authentication" title="Permanent link">&para;</a></h2>
+<ol start="22">
 <li>Authorization Servers are using client authentication if possible. It is recommended to use asymmetric (public-key based) methods for client authentication such as mTLS or "private_key_jwt" (OpenID Connect). When asymmetric methods for client authentication are used, Authorization Servers do not need to store sensitive symmetric keys, making these methods more robust against several attacks.</li>
 </ol>
 <h2 id="other-recommendations">Other Recommendations<a class="headerlink" href="#other-recommendations" title="Permanent link">&para;</a></h2>
-<ol start="18">
+<ol start="23">
 <li>Authorization Servers do not allow clients to influence their "client_id" or "sub" value or any other Claim that can be confused with a genuine Resource Owner. It is recommended to use end-to-end TLS.</li>
 <li>Authorization responses are not transmitted over unencrypted network connections. Authorization Servers must not allow redirect URIs that use the "http" scheme except for native clients that use Loopback Interface Redirection.</li>
 </ol>
@@ -4887,6 +4918,8 @@
 <li><a href="https://www.rfc-editor.org/rfc/rfc9700.html">RFC 9700: Best Current Practice for OAuth 2.0 Security</a></li>
 <li><a href="https://www.rfc-editor.org/rfc/rfc9449.html">RFC 9449: OAuth 2.0 Demonstrating Proof of Possession (DPoP)</a></li>
 <li><a href="https://www.rfc-editor.org/rfc/rfc8705.html">RFC 8705: OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8628.html">RFC 8628: OAuth 2.0 Device Authorization Grant</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc10027.html">RFC 10027: Best Current Practice for Security of Cross-Device Flows</a></li>
 </ul>
 
 
