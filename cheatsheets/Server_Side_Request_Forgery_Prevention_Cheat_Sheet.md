@@ -11,6 +11,7 @@ This cheat sheet will focus on the defensive point of view and will not explain 
 SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples:
 
 - Image on an external server (*e.g.* user enters image URL of their avatar for the application to download and use).
+- Server-side rendering of user-influenced content, such as HTML to PDF or image and video conversion, where the engine fetches URLs found in the document (see the [Server-Side Document and Media Rendering Cheat Sheet](Server_Side_Document_and_Media_Rendering_Cheat_Sheet.md)).
 - Custom [WebHook](https://en.wikipedia.org/wiki/Webhook) (users have to specify Webhook handlers or Callback URLs).
 - Internal requests to interact with another service to serve a specific functionality. Most of the times, user data is sent along to be processed, and if poorly handled, can perform specific injection attacks.
 

@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**141** cheat sheets available.
+**142** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -261,6 +261,8 @@
 [Secure Product Design Cheat Sheet](cheatsheets/Secure_Product_Design_Cheat_Sheet.md)
 
 [Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
+
+[Server Side Document and Media Rendering Cheat Sheet](cheatsheets/Server_Side_Document_and_Media_Rendering_Cheat_Sheet.md)
 
 [Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg) ![Ruby](assets/Index_Ruby.svg) ![Bash](assets/Index_Bash.svg)
 
