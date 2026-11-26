@@ -183,65 +183,29 @@ if not document:
 ### 4. Cache & Session Isolation
 
 - Classify each cached value as global, tenant-scoped, or user-scoped.
-- Include the tenant identifier in every cache key whose value or authorization varies by tenant.
-- Give intentionally shared entries an explicit global namespace and document why they are safe to share.
+- Include the tenant identifier in every cache key whose value or authorization varies by tenant. Storing tenant-scoped data under a global or unpartitioned key risks cross-tenant leakage, especially when user identifiers collide across tenants.
+- Give intentionally shared entries an explicit global namespace and document why they are safe to share. Global caching is appropriate only when data is genuinely identical and safe to share across all tenants.
 - Include every other attribute that changes the result, such as user, locale, feature set, or permission version.
 - Authorize the request before reading a protected cached value; cache-key separation does not replace authorization.
 - Use separate cache instances for tenants that require stronger physical isolation.
 - Choose TTL and invalidation behavior from freshness and authorization risk. Immutable, versioned global entries may not require expiry.
 
 <details>
-<summary>Bad example: Tenant-scoped data stored under a shared key</summary>
+<summary>Illustrative example: Scoped cache keys and authorization</summary>
 
 ```python
-# Dangerous: user IDs are not guaranteed to be unique across tenants,
-# and the key incorrectly places tenant-scoped data in a global namespace.
-def get_user_preferences(user_id: str):
-    cache_key = f"global:user-preferences:{user_id}"
-    cached = redis.get(cache_key)
-    if cached:
-        return json.loads(cached)
-    # ...
-```
+# Authorize the request before reading protected cache entries;
+# cache-key separation does not replace authorization.
+tenant_id = require_authenticated_tenant()
+authorize_user_access(tenant_id, user_id)
 
-</details>
+# Tenant-scoped key includes tenant identity and user scope
+user_cache_key = f"tenant:{tenant_id}:user-preferences:{user_id}"
+user_preferences = cache.get(user_cache_key)
 
-<details>
-<summary>Good example: Explicit tenant and global cache scopes</summary>
-
-```python
-import json
-
-def tenant_cache_key(tenant_id: str, resource: str, item_id: str) -> str:
-    return f"tenant:{tenant_id}:{resource}:{item_id}"
-
-def global_cache_key(resource: str, version: str) -> str:
-    return f"global:{resource}:{version}"
-
-async def get_user_preferences(user_id: str):
-    # These application-specific helpers derive tenant context from the
-    # verified session and enforce access before the cache lookup.
-    tenant_id = require_authenticated_tenant()
-    await authorize_user_access(tenant_id, user_id)
-
-    # Preferences vary by tenant, so tenant_id is part of the key.
-    key = tenant_cache_key(tenant_id, "user-preferences", user_id)
-    if cached := redis.get(key):
-        return json.loads(cached)
-
-    preferences = await db.fetch_preferences(tenant_id, user_id)
-    redis.setex(key, 1800, json.dumps(preferences))
-    return preferences
-
-async def get_country_codes():
-    # This versioned reference data is identical and authorized for all tenants.
-    key = global_cache_key("country-codes", "v1")
-    if cached := redis.get(key):
-        return json.loads(cached)
-
-    country_codes = await db.fetch_public_country_codes()
-    redis.setex(key, 86400, json.dumps(country_codes))
-    return country_codes
+# Global keys are reserved for data genuinely identical and safe to share across all tenants
+global_cache_key = f"global:country-codes:{version}"
+country_codes = cache.get(global_cache_key)
 ```
 
 </details>
