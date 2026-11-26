@@ -236,6 +236,8 @@
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
 
+[React Security Cheat Sheet](cheatsheets/React_Security_Cheat_Sheet.md)
+
 [Ruby on Rails Cheat Sheet](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Ruby](assets/Index_Ruby.svg) ![Bash](assets/Index_Bash.svg)
 
 ## S
@@ -328,7 +330,7 @@
 
 [XPath Injection Prevention Cheat Sheet](cheatsheets/XPath_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg)
 
-[XSS Filter Evasion Cheat Sheet](cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Php](assets/Index_Php.svg)
+[XSS Filter Evasion Cheat Sheet](cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md) ![Html](assets/Index_Html.svg)
 
 [XS Leaks Cheat Sheet](cheatsheets/XS_Leaks_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Html](assets/Index_Html.svg)
 
