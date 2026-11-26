@@ -640,6 +640,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#running-git-in-repository-controlled-workspaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Git in Repository-Controlled Workspaces
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4936,6 +4947,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#running-git-in-repository-controlled-workspaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Git in Repository-Controlled Workspaces
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5290,6 +5312,24 @@
 </code></pre></div>
 <h4 id="tool-authorization-middleware">Tool Authorization Middleware<a class="headerlink" href="#tool-authorization-middleware" title="Permanent link">&para;</a></h4>
 <p>Enforce authorization in the execution component, outside the agent's context. A <code>user_confirmed</code> flag is insufficient: the component must verify that the approval belongs to the current actor and exact tool call, remains valid, and has not already been consumed. Check and consume the approval in one atomic step immediately before execution so concurrent or repeated requests cannot reuse it. Changes to the target or parameters require new approval. Apply the <a href="#high-impact-action-integrity-controls">High-Impact Action Integrity Controls</a> and the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>. Fail closed for unknown tools or missing approval requirements.</p>
+<h4 id="running-git-in-repository-controlled-workspaces">Running Git in Repository-Controlled Workspaces<a class="headerlink" href="#running-git-in-repository-controlled-workspaces" title="Permanent link">&para;</a></h4>
+<p>Coding agents and their editors often run <code>git status</code>, <code>git diff</code>, or <code>git log</code> automatically. Git reads the repository's own configuration, and some options name a program for Git to run:</p>
+<ul>
+<li><a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-corefsmonitor"><code>core.fsmonitor</code></a>: a hook command that speeds up commands which refresh the index, such as <code>git status</code>.</li>
+<li><a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-diffexternal"><code>diff.external</code></a>: a command that produces the diff for <code>git diff</code>.</li>
+<li><a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-diffdrivertextconv"><code>diff.&lt;driver&gt;.textconv</code></a>: a command that converts a file to text first, for <code>git diff</code>, <a href="https://git-scm.com/docs/git-diff#Documentation/git-diff.txt---no-textconv"><code>git log -p</code></a>, <code>git show</code>, and <code>git blame</code>.</li>
+<li>A <a href="https://git-scm.com/docs/gitattributes#_filter">filter driver</a>'s <code>clean</code>, <code>smudge</code>, or <code>process</code> command: <code>clean</code> runs when content enters the repository, <code>smudge</code> on checkout, and <code>process</code> in either direction. <code>git status</code> and <code>git diff</code> can also run <code>clean</code> or <code>process</code> when a tracked file looks modified (a <code>touch</code> is enough). No single option turns filter drivers off, because the repository chooses which drivers apply.</li>
+<li><a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-logshowSignature"><code>log.showSignature</code></a> together with a repository-set <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgprogram"><code>gpg.program</code></a> or <code>gpg.&lt;format&gt;.program</code>: <code>git log</code> and <code>git show</code> run that program to verify a signed commit.</li>
+</ul>
+<p>The list is not exhaustive. For example, <code>git status</code> and <code>git diff</code> can run the <a href="https://git-scm.com/docs/githooks#_post_index_change"><code>post-index-change</code> hook</a>, and <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-corepager"><code>core.pager</code></a> runs a program when output goes to a terminal.</p>
+<p>Protecting only <code>.git/</code> is not enough. A bare repository keeps its Git metadata (<code>HEAD</code>, <code>objects/</code>, <code>refs/</code>, and its <code>config</code>) directly in its own directory instead of under <code>.git/</code>, so a bare repository nested in the workspace escapes a rule that covers only <code>.git/</code>. Git's documentation for <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-safebareRepository"><code>safe.bareRepository</code></a> describes attacks "that involve cloning a repository that contains a bare repository and running a Git command within that directory".</p>
+<p>When an agent can write this configuration, or an untrusted workspace already contains it, automatic Git commands can run repository-selected programs. Approval prompts and editor trust modes do not stop these programs when the integration runs Git outside them, and when Git runs on the host, the programs also run outside the agent's sandbox. For example, a nested bare repository's <code>core.fsmonitor</code> ran commands without approval in GitHub Copilot CLI (<a href="https://github.com/advisories/GHSA-9ccr-r5hg-74gf">CVE-2026-45033</a>). A repository's <code>core.fsmonitor</code> ran when Zed opened a folder in untrusted mode (<a href="https://github.com/zed-industries/zed/security/advisories/GHSA-fj2r-rmw6-h222">CVE-2026-44465</a>). Git configuration written inside a Docker Sandboxes sandbox ran on the host during a later Git command (<a href="https://github.com/advisories/GHSA-vv2q-qr3q-w59x">CVE-2026-121614</a>).</p>
+<ul>
+<li>Run Git in untrusted workspaces, including any the agent can write to, inside the agent's sandbox, not on the host. This includes Git that an editor or agent host runs automatically; if it cannot run in the sandbox, do not run it automatically there.</li>
+<li>Do not auto-approve any Git command, including <code>git status</code>, <code>git diff</code>, <code>git log</code>, and <code>git show</code>, as read-only in such workspaces.</li>
+<li>Require approval before the agent's file tools write to <code>.git/</code>, to a <code>.git</code> file, or to repository files such as <code>HEAD</code>, <code>config</code>, <code>hooks/</code>, <code>objects/</code>, and <code>refs/</code> anywhere in the workspace. Check the path as the file system resolves it, including symlinks, letter case, and Windows short names.</li>
+<li>As defense in depth, also pass <code>--no-pager --no-optional-locks -c core.fsmonitor=false -c safe.bareRepository=explicit -c log.showSignature=false</code> to Git inside the sandbox and, for diffs, <code>--no-ext-diff --no-textconv</code>. The <a href="https://git-scm.com/docs/git#Documentation/git.txt--cnamevalue"><code>-c</code> option</a> overrides repository configuration. These options leave filter drivers, hooks, and every option not named here enabled, so they do not replace the sandbox.</li>
+</ul>
 <h3 id="2-input-validation-prompt-injection-defense">2. Input Validation &amp; Prompt Injection Defense<a class="headerlink" href="#2-input-validation-prompt-injection-defense" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Treat all external data as untrusted (user messages, retrieved documents, API responses, emails).</li>
@@ -5830,6 +5870,7 @@
 <ul>
 <li><a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">OWASP LLM06:2025 Excessive Agency</a></li>
 <li><a href="https://doi.org/10.6028/NIST.AI.100-1">NIST Artificial Intelligence Risk Management Framework (AI RMF 1.0)</a></li>
+<li><a href="https://git-scm.com/docs/git-config">Git: git-config documentation</a></li>
 </ul>
 
 
