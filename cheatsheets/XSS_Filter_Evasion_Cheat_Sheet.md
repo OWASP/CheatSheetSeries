@@ -332,6 +332,7 @@ The following event handler content attributes are defined for the `body` elemen
 - `onunload`
 
 References:
+
 - [WHATWG HTML Standard – The `body` element](https://html.spec.whatwg.org/multipage/sections.html#the-body-element)
 - [MDN – HTMLBodyElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLBodyElement)
 
