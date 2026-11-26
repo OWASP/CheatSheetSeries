@@ -86,7 +86,7 @@ Agentic coding tools ingest context from the repository, the network, and connec
 - **README and documentation files.** Cloned repositories, dependencies, and fetched documentation can contain instructions invisible to human readers but parsed by the agent.
 - **Error traces and log output.** When an agent reads error output to debug a failure, crafted error messages can inject instructions.
 - **Dependency changelogs and release notes.** Agents reading changelogs to understand version differences can be influenced by injected content.
-- **Fetched web pages.** Agents with web access can be influenced by content on pages they are asked to reference.
+- **Fetched web pages.** Hidden or untrusted instructions on referenced pages enter the session history and can steer later turns, trigger SSRF, or exfiltrate local data through crafted URLs.
 
 ### Do
 
@@ -95,12 +95,16 @@ Agentic coding tools ingest context from the repository, the network, and connec
 - Use tools that sanitize or flag potential injection patterns in repository content before the agent processes it.
 - Restrict agent context to the minimum files and content needed for the task.
 - Audit agent actions after processing content from external contributors or public repositories.
+- Prefer search tools that return bounded snippets over raw full-page fetches so untrusted web content does not pollute the primary coding session.
+- Apply controls from the [Server-Side Request Forgery Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md) to agent fetch tools, and block dynamically constructed URLs from encoding local secrets or source code in paths or query parameters.
 
 ### Don't
 
 - Allow agents to process issue bodies, PR descriptions, or comments from untrusted contributors without review of the agent's resulting actions.
 - Assume that content an agent reads is safe because it appears in a familiar context (e.g. a GitHub issue).
 - Give agents unrestricted access to browse the web or fetch arbitrary URLs without egress controls.
+- Treat `web_fetch` or HTTP GET tools as harmless read-only operations exempt from approval and destination checks.
+- Try to prompt an already-poisoned session back on course after an untrusted fetch -- roll back workspace changes and start a fresh session.
 
 ## Section 4: MCP and Tool Security
 
