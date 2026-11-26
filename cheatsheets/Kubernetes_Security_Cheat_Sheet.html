@@ -2388,10 +2388,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#securing-the-kubernetes-dashboard" class="md-nav__link">
+  <a href="#securing-cluster-web-uis" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Securing the Kubernetes Dashboard
+        Securing Cluster Web UIs
       
     </span>
   </a>
@@ -4295,6 +4295,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Secure_Application_Development_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secure Application Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Secure_Cloud_Architecture_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -5504,10 +5532,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#securing-the-kubernetes-dashboard" class="md-nav__link">
+  <a href="#securing-cluster-web-uis" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Securing the Kubernetes Dashboard
+        Securing Cluster Web UIs
       
     </span>
   </a>
@@ -6367,24 +6395,25 @@
 <h2 id="securing-kubernetes-components">Securing Kubernetes Components<a class="headerlink" href="#securing-kubernetes-components" title="Permanent link">&para;</a></h2>
 <p>This section discusses how to secure Kubernetes components. It covers the following topics:</p>
 <ul>
-<li>Securing the Kubernetes Dashboard</li>
+<li>Securing cluster web UIs such as the Kubernetes Dashboard</li>
 <li>Restricting access to etcd (Important)</li>
 <li>Controlling network access to sensitive ports</li>
 <li>Controlling access to the Kubernetes API</li>
 <li>Implementing role-based access control in Kubernetes</li>
 <li>Limiting access to Kubelets</li>
 </ul>
-<h3 id="securing-the-kubernetes-dashboard">Securing the Kubernetes Dashboard<a class="headerlink" href="#securing-the-kubernetes-dashboard" title="Permanent link">&para;</a></h3>
-<p>The Kubernetes dashboard is a webapp for managing your cluster. It is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <a href="https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/">https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/</a>)</p>
-<p>To prevent attacks via the dashboard, you should follow some tips:</p>
+<h3 id="securing-cluster-web-uis">Securing Cluster Web UIs<a class="headerlink" href="#securing-cluster-web-uis" title="Permanent link">&para;</a></h3>
+<p>Web UIs for managing a cluster are not part of Kubernetes itself, they have to be installed by the owners of the cluster. Many tutorials install them with a service account that has very high privileges. This caused Tesla and some others to be hacked via a poorly configured Kubernetes Dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <a href="https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/">https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/</a>)</p>
+<p>The Kubernetes Dashboard project is now archived and no longer maintained, so it does not receive security fixes (<a href="https://github.com/kubernetes/dashboard">kubernetes/dashboard</a>). Remove existing Dashboard installs, or replace them with a maintained UI such as <a href="https://github.com/kubernetes-sigs/headlamp">Headlamp</a>, which the Dashboard project recommends.</p>
+<p>Whichever UI you run, follow these tips:</p>
 <ul>
-<li>Do not expose the dashboard without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN</li>
-<li>Turn on Role-Based Access Control (see below), so you can limit the service account the dashboard uses</li>
-<li>Do not grant the service account of the dashboard high privileges</li>
+<li>Do not expose the UI without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN</li>
+<li>Turn on Role-Based Access Control (see below), so you can limit the service account the UI uses</li>
+<li>Do not grant the service account of the UI high privileges</li>
 <li>Grant permissions per user, so each user only can see what they are supposed to see</li>
-<li>If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)</li>
-<li>Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.</li>
-<li>Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled. This can be done with either embedded OIDC <code>id_tokens</code> or using Kubernetes Impersonation. This allows you to use the dashboard with the user's credentials instead of using a privileged <code>ServiceAccount</code>. This method can be used on both on-prem and managed cloud clusters.</li>
+<li>If you are using network policies, you can block requests to the UI even from internal pods (this will not affect the proxy tunnel via kubectl proxy)</li>
+<li>Check that no role binding gives the UI's service account <code>cluster-admin</code>.</li>
+<li>Deploy the UI with an authenticating reverse proxy, with multi-factor authentication enabled. This can be done with either embedded OIDC <code>id_tokens</code> or using Kubernetes Impersonation. This allows you to use the UI with the user's credentials instead of using a privileged <code>ServiceAccount</code>. This method can be used on both on-prem and managed cloud clusters.</li>
 </ul>
 <h3 id="restricting-access-to-etcd-important">Restricting Access To etcd (IMPORTANT)<a class="headerlink" href="#restricting-access-to-etcd-important" title="Permanent link">&para;</a></h3>
 <p>etcd is a critical Kubernetes component which stores information on states and secrets, and it should be protected differently from the rest of your cluster. Write access to the API server's etcd is equivalent to gaining root on the entire cluster, and even read access can be used to escalate privileges fairly easily.</p>
