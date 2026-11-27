@@ -138,15 +138,17 @@ All cryptographic operations (such as key generation, encryption, decryption, an
 
 ### Generation
 
-Cryptographic keys shall be generated within cryptographic module with at least a `FIPS 140-2 or 140-3` compliance. For explanatory purposes, consider the cryptographic module in which a key is generated to be the key-generating module.
+> NIST's Cryptographic Module Validation Program (CMVP) states that federal agencies can accept FIPS 140-2 validated modules through 21 September 2026. After that date FIPS 140-2 modules move to the Historical list, which allows agencies to keep using them in existing systems only, so new designs should use FIPS 140-3 validated modules ([NIST CMVP](https://csrc.nist.gov/projects/cryptographic-module-validation-program), "Applicability of Validated Modules").
 
-Any random value required by the key-generating module shall be generated within that module; that is, the Random Bit Generator that generates the random value shall be implemented within cryptographic module with at least a `FIPS 140-2 or 140-3` compliance that generates the key.
+Cryptographic keys shall be generated within cryptographic module with at least a `FIPS 140-3` compliance. For explanatory purposes, consider the cryptographic module in which a key is generated to be the key-generating module.
+
+Any random value required by the key-generating module shall be generated within that module; that is, the Random Bit Generator that generates the random value shall be implemented within cryptographic module with at least a `FIPS 140-3` compliance that generates the key.
 
 Hardware cryptographic modules are preferred over software cryptographic modules for protection.
 
 ### Distribution
 
-The generated keys shall be transported (when necessary) using secure channels and shall be used by their associated cryptographic algorithm within at least a `FIPS 140-2 or 140-3` compliant cryptographic modules. For additional detail for the recommendations in this section refer to `NIST Special Paper 800-133`.
+The generated keys shall be transported (when necessary) using secure channels and shall be used by their associated cryptographic algorithm within at least a `FIPS 140-3` compliant cryptographic modules. For additional detail for the recommendations in this section refer to `NIST Special Paper 800-133`.
 
 ### Storage
 
@@ -185,7 +187,7 @@ Representative cryptoperiods vary depending on the algorithm, key strength, oper
 
 Data that has been encrypted with lost cryptographic keys will never be recovered. Therefore, it is essential that the application incorporate a secure key backup capability, especially for applications that support data at rest encryption for long-term data stores.
 
-When backing up keys, ensure that the database that is used to store the keys is encrypted using at least a `FIPS 140-2 or 140-3` validated module. It is sometimes useful to escrow key material for use in investigations and for re-provisioning of key material to users in the event that the key is lost or corrupted.
+When backing up keys, ensure that the database that is used to store the keys is encrypted using at least a `FIPS 140-3` validated module. It is sometimes useful to escrow key material for use in investigations and for re-provisioning of key material to users in the event that the key is lost or corrupted.
 
 Never escrow keys used for performing digital signatures, but consider the need to escrow keys that support encryption. Oftentimes, escrow can be performed by the [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (CA) or key management system that provisions certificates and keys, however in some instances separate APIs must be implemented to allow the system to perform the escrow for the application.
 
